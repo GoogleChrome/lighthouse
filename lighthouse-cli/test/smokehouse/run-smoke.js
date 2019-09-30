@@ -40,12 +40,13 @@ function displaySmokehouseOutput(result) {
  */
 async function runSmokehouse(smokes) {
   const cmdPromises = [];
-  for (const {id, expectations, config} of smokes) {
+  for (const {id, expectations, config, flags} of smokes) {
     console.log(`${purpleify(id)} smoketest starting…`);
     console.time(`smoketest-${id}`);
     const cmd = [
       'node lighthouse-cli/test/smokehouse/smokehouse.js',
       `--config-path=${config}`,
+      flags ? `--cli-flags-path=${flags}` : '',
       `--expectations-path=${expectations}`,
     ].join(' ');
 

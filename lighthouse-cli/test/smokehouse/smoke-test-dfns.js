@@ -79,6 +79,12 @@ const SMOKE_TEST_DFNS = [{
   expectations: 'tricky-metrics/expectations.js',
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'parallel-second',
+}, {
+  id: 'visibility',
+  expectations: 'visibility-expectations.js',
+  config: 'visibility-config.js',
+  flags: 'visibility-cli-flags.json',
+  batch: 'visibility',
 }];
 
 /**
@@ -122,6 +128,7 @@ function getSmokeTests() {
       id: smokeTestDfn.id,
       config: loadConfig(resolveLocalOrProjectRoot(smokeTestDfn.config)),
       expectations: loadExpectations(resolveLocalOrProjectRoot(smokeTestDfn.expectations)),
+      flagsPath: smokeTestDfn.flags,
       batch: smokeTestDfn.batch,
     };
   });

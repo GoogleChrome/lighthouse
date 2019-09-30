@@ -43,10 +43,11 @@ function resolveLocalOrCwd(payloadPath) {
  * Launch Chrome and do a full Lighthouse run.
  * @param {string} url
  * @param {string} configPath
+ * @param {string=} cliFlagsPath
  * @param {boolean=} isDebug
  * @return {Smokehouse.ExpectedRunnerResult}
  */
-function runLighthouse(url, configPath, isDebug) {
+function runLighthouse(url, configPath, cliFlagsPath, isDebug) {
   isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
 
   const command = 'node';
@@ -57,6 +58,7 @@ function runLighthouse(url, configPath, isDebug) {
     'lighthouse-cli/index.js',
     url,
     `--config-path=${configPath}`,
+    cliFlagsPath ? `--cli-flags-path=${cliFlagsPath}` : '',
     `--output-path=${outputPath}`,
     '--output=json',
     `-G=${artifactsDirectory}`,
@@ -130,6 +132,7 @@ const cli = yargs
   .help('help')
   .describe({
     'config-path': 'The path to the config JSON file',
+    'cli-flags-path': 'The path to the CLI flags JSON file',
     'expectations-path': 'The path to the expected audit results file',
     'debug': 'Save the artifacts along with the output',
   })
@@ -138,6 +141,7 @@ const cli = yargs
   .argv;
 
 const configPath = resolveLocalOrCwd(cli['config-path']);
+const cliFlagsPath = cli['cli-flags-path'] ? resolveLocalOrCwd(cli['cli-flags-path']) : undefined;
 /** @type {Smokehouse.ExpectedRunnerResult[]} */
 const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 
@@ -147,7 +151,7 @@ let passingCount = 0;
 let failingCount = 0;
 expectations.forEach(expected => {
   console.log(`Doing a run of '${expected.lhr.requestedUrl}'...`);
-  const results = runLighthouse(expected.lhr.requestedUrl, configPath, cli.debug);
+  const results = runLighthouse(expected.lhr.requestedUrl, configPath, cliFlagsPath, cli.debug);
 
   console.log(`Asserting expected results match those found. (${expected.lhr.requestedUrl})`);
   const collated = collateResults(results, expected);

@@ -1,0 +1,60 @@
+<!--
+ * Copyright 2019 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+-->
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Visibility</title>
+  </head>
+  <body>
+    now you see me
+    <script>
+      window.addEventListener('visibilitychange', e => console.log(document.visibilityState));
+
+      function waitForVisibilityChange() {
+        return new Promise(resolve => window.addEventListener('visibilitychange', function() {
+          window.removeEventListener('visibilitychange', this);
+          resolve();
+        }));
+      }
+
+      function waitForFirstPaint() {
+        return new Promise((resolve) => {
+          const observer = new PerformanceObserver((list) => {
+            if (!list.getEntries().length) return;
+            observer.disconnect();
+            resolve();
+          });
+          observer.observe({entryTypes: ['paint']});
+        });
+      }
+
+      async function toggle(openNumTimes) {
+        for (let i = 0; i < openNumTimes; i++) {
+          const coverWindow = window.open();
+          await waitForVisibilityChange();
+          coverWindow.close();
+          await waitForVisibilityChange();
+        }
+      }
+
+      async function main() {
+        // Avoid NO_FCP, which can happen when tabs are created and steal focus at all the wrong times.
+        await waitForFirstPaint();
+
+        const searchParams = new URL(document.location.href).searchParams;
+        if (searchParams.has('toggle')) {
+          const openNumTimes = parseInt(searchParams.get('toggle'));
+          await toggle(openNumTimes);
+        } else if (searchParams.has('hidden')) {
+          window.open();
+        }
+      }
+
+      main();
+    </script>
+  </body>
+</html>

@@ -14,7 +14,11 @@ const MetricsAudit = require('../../audits/metrics.js');
 
 describe('minify-trace', () => {
   it('has identical metrics to unminified', async () => {
-    const artifacts = {traces: {defaultPass: trace}, devtoolsLogs: {defaultPass: devtoolsLog}};
+    const artifacts = {
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+      Visibility: [],
+    };
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details: {items: [before]}} = await MetricsAudit.audit(artifacts, context);
     const beforeSize = JSON.stringify(trace).length;

@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
+const i18n = require('../lib/i18n/i18n.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
 const Speedline = require('../computed/speedline.js');
 const FirstContentfulPaint = require('../computed/metrics/first-contentful-paint.js');
@@ -15,6 +16,15 @@ const Interactive = require('../computed/metrics/interactive.js');
 const SpeedIndex = require('../computed/metrics/speed-index.js');
 const EstimatedInputLatency = require('../computed/metrics/estimated-input-latency.js');
 const TotalBlockingTime = require('../computed/metrics/total-blocking-time.js');
+
+const UIStrings = {
+  /**
+   * @description Warning that the page wasn't visible during the entire Lighthouse run. Metrics may be inaccurate.
+   */
+  warningVisibility: 'Window was hidden for part of all of the audit. Metrics may be inaccurate.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class Metrics extends Audit {
   /**
@@ -26,7 +36,7 @@ class Metrics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Metrics',
       description: 'Collects all available metrics.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'Visibility'],
     };
   }
 
@@ -39,7 +49,6 @@ class Metrics extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-
 
     /**
      * @template TArtifacts
@@ -118,6 +127,10 @@ class Metrics extends Audit {
       items: [metrics],
     };
 
+    if (artifacts.Visibility.some(event => event.state === 'hidden')) {
+      context.LighthouseRunWarnings.push(str_(UIStrings.warningVisibility));
+    }
+
     return {
       score: 1,
       numericValue: (interactive && interactive.timing) || 0,
@@ -164,3 +177,4 @@ class Metrics extends Audit {
  */
 
 module.exports = Metrics;
+module.exports.UIStrings = UIStrings;

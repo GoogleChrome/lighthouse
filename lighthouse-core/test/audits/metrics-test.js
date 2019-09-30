@@ -22,6 +22,7 @@ describe('Performance: metrics', () => {
       devtoolsLogs: {
         [MetricsAudit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
+      Visibility: [{state: 'visible'}],
     };
 
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
@@ -37,6 +38,7 @@ describe('Performance: metrics', () => {
       devtoolsLogs: {
         [MetricsAudit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
+      Visibility: [{state: 'visible'}],
     };
 
     const mockTTIFn = jest.spyOn(TTIComputed, 'request');
