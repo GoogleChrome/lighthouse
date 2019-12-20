@@ -1,3 +1,236 @@
+Monorepo
+    /projectA/src
+    /projectB/src
+coverage:
+  status:
+    project:
+      target: 90%
+      threshold: null
+    projectA:
+      flags: projectA
+      target: 90%
+    projectB:
+      target: 50%
+      flags: projectB
+flags:
+  projectA:  
+    paths:
+      - projectA/src
+  projectB:
+    paths:
+      - projectB/src
+projectA/output/coverage.xml
+bash <(curl https://codecov.io/bash) -t <token> -f projectA/output/coverage.xml -F projectA
+bash <(curl https://codecov.io/bash) -t <token> -f coverage.xml -F projectA -F projectB
+# example running unittests only
+py.test --cov=./ -k tests/unittests/
+bash <(curl -s https://codecov.io/bash) -c -F unittests
+4.0Guides
+
+Flags
+Group coverage reports based on type of tests or system.
+
+SUGGEST EDITS
+Flags allow you to isolate coverage reports for different tests. This is particularly helpful if you have multiple types of tests (e.g., unit, integration, frontend, backend, etc), or you're employing a monorepo setup where you'd like to encapsulate each project's test coverage independently.
+
+Flags in the Codecov UI
+Flags feature on the Codecov Compare page
+As of June 2019, Codecov has suspended flags for Codecov.io users on the Codecov Compare page.
+
+Flags were causing the compare page to consistently timeout for a minority of users. The Codecov team is investigating refactoring flags to make the compare page more usable, even with many flags turned on.
+
+The compare page will still work for comparing changed code
+
+The flags feature will still be viewable on each individual commit view
+
+Flags will still be functional on pull and merge request status checks
+
+We will continue to iterate on this feature and push out updates here.
+
+Flags Example
+As a minimal example, consider a project called Monorepo that has the following folder structure:
+
+Text
+
+Monorepo
+    /projectA/src
+    /projectB/src
+
+Monorepo
+    /projectA/src
+    /projectB/src
+To generate a flag and individual coverage gates per project in the mono repo the codecov.yml can be structured as follows:
+
+Text
+
+coverage:
+  status:
+    project:
+      target: 90%
+      threshold: null
+    projectA:
+      flags: projectA
+      target: 90%
+    projectB:
+      target: 50%
+      flags: projectB
+flags:
+  projectA:  
+    paths:
+      - projectA/src
+  projectB:
+    paths:
+      - projectB/src
+coverage:
+  status:
+    project:
+      target: 90%
+      threshold: null
+    projectA:
+      flags: projectA
+      target: 90%
+    projectB:
+      target: 50%
+      flags: projectB
+flags:
+  projectA:  
+    paths:
+      - projectA/src
+  projectB:
+    paths:
+      - projectB/src
+This yaml configuration will fail a Pull Request if...
+
+• ...the entire Monorepo project is below 90% covered (this is the default specification of the yaml above)
+• ...the projectA coverage is less than 90%
+• ...the projectB coverage is less than 50%
+
+It is important to note that for flagging to work, separate coverage reports must be uploaded and flagged per project in the mono repo. For example, in a CI run for the MonoRepo project example, assume that coverage for projectA is written to
+
+projectA/output/coverage.xml
+
+Then that report would be uploaded as follows:
+
+bash <(curl https://codecov.io/bash) -t <token> -f projectA/output/coverage.xml -F projectA
+
+The projectA flag can be used for any number of reports (unit tests, integration tests, etc) by flagging each report with projectA. The reports will be merged and contribute the project's total coverage and the total coverage of the files covered under the projectA flag.
+
+However, specifying multiple flags for a single report upload can result in erroneous coverage unless the contents of that report fully encompass each flag. For example, one report that contains coverage information for projectA and project B, can be uploaded in a manner that is valid but technically incorrect:
+
+bash <(curl https://codecov.io/bash) -t <token> -f coverage.xml -F projectA -F projectB
+
+This will apply the entire coverage of the report to both flags, resulting in incorrect coverage. Specifically, the projectA and projectB flags will display the coverage of the entire uploaded report, not just the subset of the report that happens to cover the files under their purview.
+
+Flag Creation
+For coverage information to be properly tracked per flag, the flags must be applied at upload time.
+
+To apply a flag simply submit coverage reports with the -F flagname included in the upload command; Codecov will do the rest.
+
+The following example illustrates how you may run specific test groups and upload coverage, flagging each coverage group. This strategy for uploading is preferred as it cleanly associates a single flag with a single report.
+
+Shell
+
+# example running unittests only
+py.test --cov=./ -k tests/unittests/
+bash <(curl -s https://codecov.io/bash) -c -F unittests
+
+# example running integration tests only
+py.test --cov=./ -k tests/integration/
+bash <(curl -s https://codecov.io/bash) -c -F integration
+
+# example running ui tests only
+npm test
+bash <(curl -s https://codecov.io/bash) -c -F ui
+
+# example running unittests only
+py.test --cov=./ -k tests/unittests/
+bash <(curl -s https://codecov.io/bash) -c -F unittests
+
+# example running integration tests only
+py.test --cov=./ -k tests/integration/
+bash <(curl -s https://codecov.io/bash) -c -F integration
+
+# example running ui tests only
+npm test
+bash <(curl -s https://codecov.io/bash) -c -F ui
+Remove old reports after uploading (optional)
+Apply the -c argument to clear the workspace of all coverage reports before running you next set of tests.
+
+Flags must be lowercase, alphanumeric, and not exceed 45 characters
+Only lowercase, alphanumeric values are accepted. ^[a-z0-9_]{1,45}$
+
+Flag Usage
+Create custom notifications
+Flags can be used to create custom notifications to your repository provider. This makes it easy to see per-flag converage information alongside pull requests.
+
+You can specify Flags in your Codecov Yaml for statuses and all notifications.
+
+YAML
+
+coverage:
+  status:
+    project:
+      default: off
+      frontend:
+        flags: frontend
+      backend:
+        target: 50%
+        flags: backend
+      api:
+        target: 89%
+        flags: api
+
+flags:
+  # filter the folder(s) you wish to measure by that flag
+  backend:
+    # only include files in the backend folder
+    paths:
+      - app/backend/
+  frontend:
+    paths:
+      - app/frontend/
+  api:
+    paths:
+      - app/api/
+  tests:
+    paths:
+      - tests/
+coverage:
+  status:
+    project:
+      default: off
+      frontend:
+        flags: frontend
+      backend:
+        target: 50%
+        flags: backend
+      api:
+        target: 89%
+        flags: api
+
+flags:
+  # filter the folder(s) you wish to measure by that flag
+  backend:
+    # only include files in the backend folder
+    paths:
+      - app/backend/
+  frontend:
+    paths:
+      - app/frontend/
+  api:
+    paths:
+      - app/api/
+  tests:
+    paths:
+      - tests/
+# example running integration tests only
+py.test --cov=./ -k tests/integration/
+bash <(curl -s https://codecov.io/bash) -c -F integration
+
+# example running ui tests only
+npm test
+bash <(curl -s https://codecov.io/bash) -c -F ui
+
 # THIS IS AN AUTOGENERATED FILE. DO NOT EDIT THIS FILE DIRECTLY.
 # yarn lockfile v1
 
