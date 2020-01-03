@@ -177,6 +177,7 @@ const defaultConfig = {
     'viewport',
     'without-javascript',
     'metrics/first-contentful-paint',
+    'metrics/largest-contentful-paint',
     'metrics/first-meaningful-paint',
     'metrics/largest-contentful-paint',
     'load-fast-enough-for-pwa',
@@ -382,15 +383,17 @@ const defaultConfig = {
     'performance': {
       title: str_(UIStrings.performanceCategoryTitle),
       auditRefs: [
-        {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
-        {id: 'first-meaningful-paint', weight: 1, group: 'metrics'},
-        {id: 'largest-contentful-paint', weight: 0, group: 'metrics'},
-        {id: 'speed-index', weight: 4, group: 'metrics'},
-        {id: 'interactive', weight: 5, group: 'metrics'},
-        {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
-        {id: 'max-potential-fid', weight: 0, group: 'metrics'},
-        {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
-        {id: 'total-blocking-time', weight: 0}, // intentionally left out of metrics so it won't be displayed
+        {id: 'first-contentful-paint', weight: 25, group: 'metrics'},
+        {id: 'speed-index', weight: 15, group: 'metrics'},
+        {id: 'interactive', weight: 15, group: 'metrics'},
+        {id: 'largest-contentful-paint', weight: 20, group: 'metrics'},
+        {id: 'total-blocking-time', weight: 25, group: 'metrics'},
+        // intentionally left out of metrics group so they won't be displayed
+        {id: 'first-cpu-idle', weight: 0},
+        {id: 'max-potential-fid', weight: 0},
+        {id: 'first-meaningful-paint', weight: 0},
+        {id: 'estimated-input-latency', weight: 0},
+
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},
         {id: 'offscreen-images', weight: 0, group: 'load-opportunities'},
