@@ -3551,6 +3551,58 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
+    "json-ld": {
+      "id": "json-ld",
+      "title": "JSON-LD structured data syntax is invalid",
+      "description": "This audit currently validates a subset of JSON-LD rules used in search engines. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data.",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "displayValue": "1 invalid snippet",
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "snippet",
+            "lines": [
+              {
+                "content": "{",
+                "lineNumber": 1
+              },
+              {
+                "content": "  \"@context\": \"http://schema.org\",",
+                "lineNumber": 2
+              },
+              {
+                "content": "  \"@type\": \"Event\",",
+                "lineNumber": 3
+              },
+              {
+                "content": "  \"unknownProp\": \"Oh no\"",
+                "lineNumber": 4
+              },
+              {
+                "content": "}",
+                "lineNumber": 5
+              }
+            ],
+            "title": "@type Event (1 Error)",
+            "lineMessages": [
+              {
+                "lineNumber": 4,
+                "message": "Invalid [Event](https://schema.org/Event): Unexpected property \"unknownProp\""
+              }
+            ],
+            "generalMessages": [],
+            "lineCount": 5,
+            "node": {
+              "type": "node",
+              "path": "3,HTML,0,HEAD,41,SCRIPT",
+              "snippet": "<script type=\"application/ld+json\">"
+            }
+          }
+        ]
+      }
+    },
     "structured-data": {
       "id": "structured-data",
       "title": "Structured data is valid",
@@ -4298,6 +4350,11 @@
           "group": "seo-content"
         },
         {
+          "id": "json-ld",
+          "weight": 1,
+          "group": "seo-content"
+        },
+        {
           "id": "font-size",
           "weight": 1,
           "group": "seo-mobile"
@@ -4318,7 +4375,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.73
+      "score": 0.67
     },
     "pwa": {
       "title": "Progressive Web App",
@@ -5561,6 +5618,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:canonical",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:json-ld",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6836,6 +6899,20 @@
       ],
       "lighthouse-core/audits/seo/canonical.js | description": [
         "audits.canonical.description"
+      ],
+      "lighthouse-core/audits/seo/json-ld.js | failureTitle": [
+        "audits[json-ld].title"
+      ],
+      "lighthouse-core/audits/seo/json-ld.js | description": [
+        "audits[json-ld].description"
+      ],
+      "lighthouse-core/audits/seo/json-ld.js | displayValue": [
+        {
+          "values": {
+            "invalidSnippetCount": 1
+          },
+          "path": "audits[json-ld].displayValue"
+        }
       ],
       "lighthouse-core/audits/seo/manual/structured-data.js | title": [
         "audits[structured-data].title"

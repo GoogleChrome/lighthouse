@@ -115,6 +115,15 @@
 <!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
 <!-- even when other forces were responsible for delaying the render. -->
 <script src="./fcp-delayer.js?delay=5000"></script>
+
+<!-- FAIL(json-ld): unknown property in JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Event",
+  "unknownProp": "Oh no"
+}
+</script>
 </head>
 <body>
 

@@ -71,7 +71,14 @@ async function browserifyFile(entryPath, distPath) {
     .ignore('intl-pluralrules')
     .ignore('raven')
     .ignore('rimraf')
-    .ignore('pako/lib/zlib/inflate.js');
+    .ignore('pako/lib/zlib/inflate.js')
+    .ignore('file') // required by jsonlint-mod
+    .ignore('system'); // required by jsonlint-mod
+
+  // There is no way to add './doug-json-parse' to ignored packages via public API
+  // w/o browserify resolving the path into an absolute path
+  // @ts-ignore
+  bundle._ignore.push('./doug-json-parse');
 
   // Don't include the desktop protocol connection.
   bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));

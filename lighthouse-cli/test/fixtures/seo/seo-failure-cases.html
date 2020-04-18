@@ -20,6 +20,14 @@
   <link rel="alternate" href="http://example.com/" hreflang=" x-default" />
   <!-- FAIL(canonical): multiple canonical URLs provided (another one is in the HTTP header) -->
   <link rel="canonical" href="https://example.com/other" />
+  <!-- FAIL(json-ld): invalid @type -->
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "CatConvention",
+      "name": "Cat Global"
+    }
+  </script>
 </head>
 <body>
   <h1>SEO</h1>

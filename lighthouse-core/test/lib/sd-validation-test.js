@@ -171,7 +171,10 @@ describe('schema.org validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].validTypes[0], 'http://schema.org/Article');
+    assert.deepEqual(errors[0].validTypes, [{
+      name: 'Article',
+      uri: 'https://schema.org/Article',
+    }]);
     assert.equal(errors[0].message, 'Unexpected property "controversial"');
     assert.strictEqual(errors[0].lineNumber, 11);
   });

@@ -123,7 +123,7 @@ const expectations = [
                 source: {
                   url: /seo-tester\.html.+$/,
                   urlProvider: 'network',
-                  line: 23,
+                  line: 31,
                   column: 12,
                 },
                 selector: '.small',
@@ -133,7 +133,7 @@ const expectations = [
                 source: {
                   url: /seo-tester\.html.+$/,
                   urlProvider: 'network',
-                  line: 27,
+                  line: 35,
                   column: 55,
                 },
                 selector: '.small-2',
@@ -218,6 +218,9 @@ const expectations = [
           score: null,
           scoreDisplayMode: 'notApplicable',
         },
+        'json-ld': {
+          score: 1,
+        },
       },
     }},
   {
@@ -278,6 +281,21 @@ const expectations = [
         'canonical': {
           score: 0,
           explanation: 'Multiple conflicting URLs (https://example.com/other, https://example.com/)',
+        },
+        'json-ld': {
+          score: 0,
+          details: {
+            items: [
+              {
+                'lineMessages': [
+                  {
+                    'lineNumber': 3,
+                    'message': 'Unrecognized schema.org type: http://schema.org/CatConvention',
+                  },
+                ],
+              },
+            ],
+          },
         },
       },
     },

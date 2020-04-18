@@ -1290,6 +1290,58 @@
             "scoreDisplayMode": "binary",
             "title": "Detected JavaScript libraries"
         },
+        "json-ld": {
+            "description": "This audit currently validates a subset of JSON-LD rules used in search engines. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data.",
+            "details": {
+                "items": [
+                    {
+                        "generalMessages": [],
+                        "lineCount": 5.0,
+                        "lineMessages": [
+                            {
+                                "lineNumber": 4.0,
+                                "message": "Invalid [Event](https://schema.org/Event): Unexpected property \"unknownProp\""
+                            }
+                        ],
+                        "lines": [
+                            {
+                                "content": "{",
+                                "lineNumber": 1.0
+                            },
+                            {
+                                "content": "  \"@context\": \"http://schema.org\",",
+                                "lineNumber": 2.0
+                            },
+                            {
+                                "content": "  \"@type\": \"Event\",",
+                                "lineNumber": 3.0
+                            },
+                            {
+                                "content": "  \"unknownProp\": \"Oh no\"",
+                                "lineNumber": 4.0
+                            },
+                            {
+                                "content": "}",
+                                "lineNumber": 5.0
+                            }
+                        ],
+                        "node": {
+                            "path": "3,HTML,0,HEAD,41,SCRIPT",
+                            "snippet": "<script type=\"application/ld+json\">",
+                            "type": "node"
+                        },
+                        "title": "@type Event (1 Error)",
+                        "type": "snippet"
+                    }
+                ],
+                "type": "list"
+            },
+            "displayValue": "1 invalid snippet",
+            "id": "json-ld",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "JSON-LD structured data syntax is invalid"
+        },
         "label": {
             "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://web.dev/label/).",
             "details": {
@@ -4214,6 +4266,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "seo-content",
+                    "id": "json-ld",
+                    "weight": 1.0
+                },
+                {
                     "group": "seo-mobile",
                     "id": "font-size",
                     "weight": 1.0
@@ -4236,7 +4293,7 @@
             "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
             "id": "seo",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
-            "score": 0.73,
+            "score": 0.67,
             "title": "SEO"
         }
     },
@@ -5476,6 +5533,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:canonical",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:json-ld",
                 "startTime": 0.0
             },
             {

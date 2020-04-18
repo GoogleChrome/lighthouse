@@ -819,17 +819,11 @@ limitations under the License.
 <template id="tmpl-lh-snippet">
     <div class="lh-snippet">
       <style>
-          :root {
-            --snippet-highlight-light: #fbf1f2;
-            --snippet-highlight-dark: #ffd6d8;
-          }
-
          .lh-snippet__header {
           position: relative;
           overflow: hidden;
           padding: 10px;
           border-bottom: none;
-          color: var(--snippet-color);
           background-color: var(--snippet-background-color);
           border: 1px solid var(--report-border-color-secondary);
         }
@@ -871,7 +865,7 @@ limitations under the License.
         }
 
         .lh-snippet__line {
-          background: white;
+          background: var(--snippet-background-color, white);
           white-space: pre;
           display: flex;
         }
@@ -882,10 +876,10 @@ limitations under the License.
           padding-bottom: 4px;
         }
         .lh-snippet__line--content-highlighted {
-          background: var(--snippet-highlight-dark);
+          background: var(--snippet-highlight-background-color);
         }
         .lh-snippet__line--message {
-          background: var(--snippet-highlight-light);
+          background: var(--snippet-annotation-background-color);
         }
         .lh-snippet__line--message .lh-snippet__line-number {
           padding-top: 10px;

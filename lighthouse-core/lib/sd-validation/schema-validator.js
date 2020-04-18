@@ -96,11 +96,18 @@ function validateObjectKeys(typeOrTypes, keys) {
     // remove Schema.org input/output constraints http://schema.org/docs/actions.html#part-4
     .map(key => key.replace(/-(input|output)$/, ''))
     .filter(key => !allKnownProps.has(key))
-    .map(key => ({
-      message: `Unexpected property "${key}"`,
-      key,
-      validTypes: types,
-    }));
+    .map(key => {
+      return ({
+        message: `Unexpected property "${key}"`,
+        key,
+        validTypes: types.map(typeUri => {
+          const typeNameMatch = typeUri.match(/[\w]+$/);
+          const name = typeNameMatch ? typeNameMatch[0] : typeUri;
+          const uri = typeUri.replace('http://', 'https://');
+          return {name, uri};
+        }),
+      });
+    });
 }
 
 /**
