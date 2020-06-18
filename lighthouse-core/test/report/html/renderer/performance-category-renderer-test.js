@@ -288,10 +288,19 @@ describe('PerfCategoryRenderer', () => {
       }
     });
 
-    it('uses null if the metric is missing its value', () => {
+    it('uses null if the metric\'s value is undefined', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
       const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
       lcp.result.numericValue = undefined;
+      lcp.result.score = null;
+      const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
+      expect(href).toContain('largest-contentful-paint=null');
+    });
+
+    it('uses null if the metric\'s value is null (LR)', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
+      lcp.result.numericValue = null;  // In LR, undefined becomes null
       lcp.result.score = null;
       const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
       expect(href).toContain('largest-contentful-paint=null');

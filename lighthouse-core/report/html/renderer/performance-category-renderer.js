@@ -117,7 +117,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     if (fmp) v5andv6metrics.push(fmp);
 
     const metricPairs = v5andv6metrics.map(audit => {
-      const value = typeof audit.result.numericValue !== 'undefined' ?
+      const value = typeof audit.result.numericValue === 'number' ?
         audit.result.numericValue.toString() : 'null';
       return [audit.id, value];
     });
