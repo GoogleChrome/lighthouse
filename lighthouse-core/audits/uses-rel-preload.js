@@ -115,8 +115,6 @@ class UsesRelPreloadAudit extends Audit {
     if (request.isLinkPreload) return false;
     // It's not critical, don't recommend it.
     if (!CriticalRequestChains.isCritical(request, mainResource)) return false;
-    // It's not a request loaded over the network, don't recommend it.
-    if (URL.NON_NETWORK_PROTOCOLS.includes(request.protocol)) return false;
     // It's not at the right depth, don't recommend it.
     if (initiatorPath.length !== mainResourceDepth + 2) return false;
     // It's not a request for the main frame, it wouldn't get reused even if you did preload it.

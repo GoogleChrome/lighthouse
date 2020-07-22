@@ -9,6 +9,7 @@ const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRequest = require('../lib/network-request.js');
 const NetworkRecords = require('./network-records.js');
 const MainResource = require('./main-resource.js');
+const URL = require('../lib/url-shim.js');
 
 class CriticalRequestChains {
   /**
@@ -55,6 +56,9 @@ class CriticalRequestChains {
         request.mimeType && request.mimeType.startsWith('image/')) {
       return false;
     }
+
+    // If it's not a request loaded over the network, it's not "critical to load"; it arrived already.
+    if (URL.NON_NETWORK_PROTOCOLS.includes(request.protocol)) return false;
 
     return ['VeryHigh', 'High', 'Medium'].includes(request.priority);
   }

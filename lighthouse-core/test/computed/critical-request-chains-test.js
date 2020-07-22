@@ -299,21 +299,39 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     // 2nd record is a favicon
     networkRecords[1].url = 'https://example.com/favicon.ico';
     networkRecords[1].mimeType = 'image/x-icon';
-    networkRecords[1].parsedURL = {
-      lastPathComponent: 'favicon.ico',
-    };
+
     // 3rd record is a favicon
     networkRecords[2].url = 'https://example.com/favicon-32x32.png';
     networkRecords[2].mimeType = 'image/png';
-    networkRecords[2].parsedURL = {
-      lastPathComponent: 'favicon-32x32.png',
-    };
+
     // 4th record is a favicon
     networkRecords[3].url = 'https://example.com/android-chrome-192x192.png';
     networkRecords[3].mimeType = 'image/png';
-    networkRecords[3].parsedURL = {
-      lastPathComponent: 'android-chrome-192x192.png',
-    };
+
+
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
+    assert.deepEqual(criticalChains, {
+      0: {
+        request: networkRecords[0],
+        children: {},
+      },
+    });
+  });
+
+
+  it('discards datauris as non-critical', () => {
+    const networkRecords = mockTracingData([HIGH, HIGH, HIGH], [[0, 1], [0, 2]]);
+    const mainResource = networkRecords[0];
+
+    // 2nd record is a favicon
+    networkRecords[1].url = 'data:application/font-woff2;base64,d09GMgABA';
+    networkRecords[1].mimeType = 'application/font-woff2';
+    networkRecords[1].protocol = 'data';
+
+    // 3rd record is a favicon
+    networkRecords[2].url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAAWBAM';
+    networkRecords[2].mimeType = 'image/png';
+    networkRecords[2].protocol = 'data';
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
