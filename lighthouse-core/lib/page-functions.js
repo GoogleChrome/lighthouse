@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node ShadowRoot */
+/* global window document Node ShadowRoot __nativeError:readonly */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -20,14 +20,14 @@
  */
 /* istanbul ignore next */
 function wrapRuntimeEvalErrorInBrowser(err) {
-  err = err || new Error();
+  err = err || new __nativeError();
   const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
 
   return {
     __failedInBrowser: true,
     name: err.name || 'Error',
     message: err.message || fallbackMessage,
-    stack: err.stack || (new Error()).stack,
+    stack: err.stack || (new __nativeError()).stack,
   };
 }
 

@@ -13,7 +13,7 @@ const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
-/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet */
+/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet, __nativeError:readonly, __nativePromise:readonly */
 
 
 /** @param {Element} element */
@@ -148,9 +148,12 @@ function collectImageElementInfo() {
  */
 /* istanbul ignore next */
 function determineNaturalSize(url) {
-  return new Promise((resolve, reject) => {
+  // @ts-expect-error nativePromise installed by driver.cacheNatives()
+  return new __nativePromise((resolve, reject) => {
     const img = new Image();
-    img.addEventListener('error', _ => reject(new Error('determineNaturalSize failed img load')));
+    img.addEventListener('error', _ =>
+        // @ts-expect-error __nativeError installed by driver.cacheNatives()
+        reject(new __nativeError('determineNaturalSize failed img load')));
     img.addEventListener('load', () => {
       resolve({
         naturalWidth: img.naturalWidth,
