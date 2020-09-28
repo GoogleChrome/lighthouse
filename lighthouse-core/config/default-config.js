@@ -140,6 +140,7 @@ const defaultConfig = {
       'viewport-dimensions',
       'runtime-exceptions',
       'console-messages',
+      'dom-timeline',
       'anchor-elements',
       'image-elements',
       'link-elements',
@@ -244,6 +245,7 @@ const defaultConfig = {
     'unsized-images',
     'large-javascript-libraries',
     'valid-source-maps',
+    'injected-iframes',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -476,6 +478,7 @@ const defaultConfig = {
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
         {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
+        {id: 'injected-iframes', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},

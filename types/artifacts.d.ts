@@ -104,6 +104,8 @@ declare global {
       Doctype: Artifacts.Doctype | null;
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
+      /** Timestamps of injected iframes into the DOM & layout shift timing windows according to the trace. */
+      DOMTimeline: {timestamps: Artifacts.DOMTimestamp[], windows: Artifacts.DOMWindow[]};
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information for font faces used in the page. */
@@ -207,6 +209,20 @@ declare global {
         totalBodyElements: number;
         width: {max: number, pathToElement: Array<string>, snippet: string};
         depth: {max: number, pathToElement: Array<string>, snippet: string};
+      }
+
+      export interface DOMTimestamp {
+        time: number;
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        snippet: string;
+        selector: string;
+        nodeLabel: string;
+      }
+
+      export interface DOMWindow {
+        start: number;
+        end: number;
       }
 
       export interface EmbeddedContentInfo {
@@ -631,6 +647,8 @@ declare global {
         fmpFellBack: boolean;
         /** Whether LCP was invalidated without a new candidate. */
         lcpInvalidated: boolean;
+        /** A timeline of UpdateLayerTree & LayoutShift events. */
+        layoutShiftTimelineEvents: Array<{event: TraceEvent, timing: number}>
       }
 
       /** Information on a tech stack (e.g. a JS library) used by the page. */
