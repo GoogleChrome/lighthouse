@@ -356,6 +356,9 @@ const defaultConfig = {
       title: str_(UIStrings.diagnosticsGroupTitle),
       description: str_(UIStrings.diagnosticsGroupDescription),
     },
+    'filmstrip': {
+      title: '',
+    },
     'pwa-fast-reliable': {
       title: str_(UIStrings.pwaFastReliableGroupTitle),
     },
@@ -476,6 +479,7 @@ const defaultConfig = {
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
         {id: 'large-javascript-libraries', weight: 0, group: 'diagnostics'},
+        {id: 'screenshot-thumbnails', weight: 0, group: 'filmstrip'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -483,7 +487,6 @@ const defaultConfig = {
         {id: 'main-thread-tasks', weight: 0},
         {id: 'diagnostics', weight: 0},
         {id: 'metrics', weight: 0},
-        {id: 'screenshot-thumbnails', weight: 0},
         {id: 'final-screenshot', weight: 0},
       ],
     },

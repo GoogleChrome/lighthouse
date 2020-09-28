@@ -210,23 +210,26 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Filmstrip
     const timelineEl = this.dom.createChildOf(element, 'div', 'lh-filmstrip-container');
-    const thumbnailAudit = category.auditRefs.find(audit => audit.id === 'screenshot-thumbnails');
-    const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
-    if (thumbnailResult && thumbnailResult.details) {
-      timelineEl.id = thumbnailResult.id;
-      const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
-      filmstripEl && timelineEl.appendChild(filmstripEl);
+    // We only expect one of these, but the renderer will support multiple
+    const thumbnailAudits = category.auditRefs.filter(audit => audit.group === 'filmstrip');
+    for (const thumbnailAudit of thumbnailAudits) {
+      const result = thumbnailAudit.result;
+      if (result && result.details) {
+        timelineEl.id = result.id;
+        const filmstripEl = this.detailsRenderer.render(result.details);
+        filmstripEl && timelineEl.appendChild(filmstripEl);
+      }
     }
 
     // Budgets
     /** @type {Array<Element>} */
     const budgetTableEls = [];
-    ['performance-budget', 'timing-budget'].forEach((id) => {
-      const audit = category.auditRefs.find(audit => audit.id === id);
+    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets');
+    budgetAudits.forEach(audit => {
       if (audit && audit.result.details) {
         const table = this.detailsRenderer.render(audit.result.details);
         if (table) {
-          table.id = id;
+          table.id = audit.id;
           table.classList.add('lh-audit');
           budgetTableEls.push(table);
         }
@@ -281,19 +284,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(groupEl);
     }
 
-    // Passed audits
-    const passedAudits = category.auditRefs
-        .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
-            Util.showAsPassed(audit.result));
+    // Everything else (passed, passed with warnings, n/a)
+    const renderedAudits = [...metricAudits, ...thumbnailAudits, ...budgetAudits,
+      ...opportunityAudits, ...diagnosticAudits];
+    const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
+    const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
 
-    if (!passedAudits.length) return element;
-
-    const clumpOpts = {
-      auditRefs: passedAudits,
-      groupDefinitions: groups,
-    };
-    const passedElem = this.renderClump('passed', clumpOpts);
-    element.appendChild(passedElem);
+    const clumpElems = this.renderClumps(remainingAudits, groups);
+    element.append(...clumpElems);
     return element;
   }
 }

@@ -425,6 +425,22 @@ class CategoryRenderer {
   }
 
   /**
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
+   * @return {Element}
+   */
+  render(category, groupDefinitions = {}) {
+    const element = this.dom.createElement('div', 'lh-category');
+    this.createPermalinkSpan(element, category.id);
+    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+
+    const clumpElems = this.renderClumps(category.auditRefs, groupDefinitions,
+      category.manualDescription);
+    element.append(...clumpElems);
+    return element;
+  }
+
+  /**
    * Renders a set of top level sections (clumps), under a status of failed, warning,
    * manual, passed, or notApplicable. The result ends up something like:
    *
@@ -442,14 +458,13 @@ class CategoryRenderer {
    *   ├── audit 2
    *   ├── …
    *   ⋮
-   * @param {LH.ReportResult.Category} category
-   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
-   * @return {Element}
+   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {LH.Result.Category['manualDescription']} [manualDescription]
+   * @return {Array<Element>}
    */
-  render(category, groupDefinitions = {}) {
-    const element = this.dom.createElement('div', 'lh-category');
-    this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+  renderClumps(auditRefs, groupDefinitions = {}, manualDescription) {
+    const clumpElems = [];
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */
@@ -461,7 +476,7 @@ class CategoryRenderer {
     clumps.set('notApplicable', []);
 
     // Sort audits into clumps.
-    for (const auditRef of category.auditRefs) {
+    for (const auditRef of auditRefs) {
       const clumpId = this._getClumpIdForAuditRef(auditRef);
       const clump = /** @type {Array<LH.ReportResult.AuditRef>} */ (clumps.get(clumpId)); // already defined
       clump.push(auditRef);
@@ -475,16 +490,16 @@ class CategoryRenderer {
       if (clumpId === 'failed') {
         const clumpElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
         clumpElem.classList.add(`lh-clump--failed`);
-        element.appendChild(clumpElem);
+        clumpElems.push(clumpElem);
         continue;
       }
 
-      const description = clumpId === 'manual' ? category.manualDescription : undefined;
+      const description = clumpId === 'manual' ? manualDescription : undefined;
       const clumpElem = this.renderClump(clumpId, {auditRefs, description});
-      element.appendChild(clumpElem);
+      clumpElems.push(clumpElem);
     }
 
-    return element;
+    return clumpElems;
   }
 
   /**
