@@ -49,6 +49,11 @@ declare global {
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
     prepareLabData: typeof _prepareLabData;
+    Lighthouse?: LighthouseModule;
+  }
+
+  interface LighthouseModule {
+    i18n: typeof import('../lighthouse-core/lib/i18n/i18n-module.js');
   }
 
   module LH {

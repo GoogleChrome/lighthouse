@@ -455,6 +455,17 @@ message I18n {
 
   // The message holding all formatted strings
   RendererFormattedStrings renderer_formatted_strings = 1;
+
+  message MessagePath {
+    map<string, Value> values = 1;
+    string path = 2;
+  }
+
+  message MessagePathsContainer {
+    repeated MessagePath messages = 1;
+  }
+
+  map<string, MessagePathsContainer> icu_message_paths = 2;
 }
 
 // Message containing Stack Pack information.

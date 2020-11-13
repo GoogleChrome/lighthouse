@@ -266,12 +266,14 @@ limitations under the License.
     }
 
     .lh-tools {
+      display: flex;
       margin-left: auto;
       will-change: transform;
       min-width: var(--tools-icon-size);
     }
     .lh-tools__button {
       width: var(--tools-icon-size);
+      min-width: 24px;
       height: var(--tools-icon-size);
       cursor: pointer;
       margin-right: 5px;
@@ -350,6 +352,13 @@ limitations under the License.
       display: none;
     }
 
+    .lh-locale-selector {
+      width: 100%;
+      color: var(--report-text-color);
+      background-color: var(--locale-selector-background-color);
+      padding: 2px;
+    }
+
     @media screen and (max-width: 964px) {
       .lh-tools__dropdown {
         right: 0;
@@ -403,6 +412,10 @@ limitations under the License.
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
 
     <div class="lh-tools">
+      <div class="lh-tools-locale">
+        <!-- Filled by ReportUIFeatures._enableSwapLocale -->
+      </div>
+
       <button id="lh-tools-button" class="report-icon report-icon--share lh-tools__button" title="Tools menu" aria-label="Toggle report tools menu" aria-haspopup="menu" aria-expanded="false" aria-controls="lh-tools-dropdown">
         <svg width="100%" height="100%" viewBox="0 0 24 24">
             <path d="M0 0h24v24H0z" fill="none"/>

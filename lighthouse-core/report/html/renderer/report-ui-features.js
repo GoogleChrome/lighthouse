@@ -27,6 +27,8 @@
 
 /** @typedef {import('./dom')} DOM */
 
+/** @typedef {import('../../../lib/i18n/locales').LhlMessages} LhlMessages */
+
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLElement>}
@@ -150,6 +152,91 @@ class ReportUIFeatures {
       const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
       node.textContent = Util.i18n.strings[i18nAttr];
     }
+  }
+
+  /**
+   * @param {{i18nModuleSrc: string, fetchData: (localeModuleName: string) => Promise<LhlMessages|undefined>}} options
+   */
+  async initSwapLocale(options) {
+    this._swapLocaleOptions = options;
+
+    try {
+      await this._enableSwapLocale();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('failed to enable swap locale feature', err);
+    }
+  }
+
+  async _getI18nModule() {
+    if (!this._swapLocaleOptions) throw new Error('must call .initSwapLocale first');
+
+    if (!window.Lighthouse || !window.Lighthouse.i18n) {
+      const script = this._document.createElement('script');
+      script.src = this._swapLocaleOptions.i18nModuleSrc;
+      this._document.body.appendChild(script);
+      await new Promise(resolve =>
+        this._document.addEventListener(
+          ReportUIFeatures.Events.lighthouseI18nModuleLoaded, resolve, {once: true}));
+    }
+
+    // @ts-ignore: Should be loaded now.
+    return window.Lighthouse.i18n;
+  }
+
+  async _enableSwapLocale() {
+    const i18nModule = await this._getI18nModule();
+    const currentLocale = this.json.configSettings.locale;
+
+    const toolsEl = this._dom.find('.lh-tools-locale', this._document);
+    const inputEl = this._dom.createChildOf(toolsEl, 'select', 'lh-locale-selector', {
+      type: 'text',
+      name: 'lh-locale-list',
+    });
+
+    for (const locale of i18nModule.availableLocales) {
+      const optionEl = this._dom.createChildOf(inputEl, 'option', '', {
+        value: locale,
+      });
+      optionEl.textContent = locale;
+      if (locale === currentLocale) optionEl.selected = true;
+
+      // @ts-ignore
+      if (window.Intl && window.Intl.DisplayNames) {
+        // @ts-ignore
+        const currentLocaleDisplay = new Intl.DisplayNames([currentLocale], {type: 'language'});
+        // @ts-ignore
+        const optionLocaleDisplay = new Intl.DisplayNames([locale], {type: 'language'});
+
+        const optionLocaleName = optionLocaleDisplay.of(locale);
+        const currentLocaleName = currentLocaleDisplay.of(locale);
+        if (optionLocaleName !== currentLocaleName) {
+          optionEl.textContent = `${optionLocaleName} – ${currentLocaleName}`;
+        } else {
+          optionEl.textContent = currentLocaleName;
+        }
+      }
+    }
+
+    inputEl.addEventListener('change', () => {
+      const locale = /** @type {LH.Locale} */ (inputEl.value);
+      this._swapLocale(locale);
+    });
+  }
+
+  /**
+   * @param {LH.Locale} locale
+   */
+  async _swapLocale(locale) {
+    if (!this._swapLocaleOptions) throw new Error('must call .initSwapLocale first');
+
+    const i18nModule = await this._getI18nModule();
+    const lhlMessages = await this._swapLocaleOptions.fetchData(locale);
+    if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
+
+    i18nModule.registerLocaleData(locale, lhlMessages);
+    const newLhr = i18nModule.swapLocale(this.json, locale).lhr;
+    this._refresh(newLhr);
   }
 
   /**
@@ -419,7 +506,7 @@ class ReportUIFeatures {
    * Handler for tool button.
    * @param {Event} e
    */
-  onDropDownMenuClick(e) {
+  async onDropDownMenuClick(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -472,6 +559,18 @@ class ReportUIFeatures {
     }
 
     this._dropDown.close();
+  }
+
+  /**
+   * @param {LH.Result=} newLhr
+   */
+  _refresh(newLhr) {
+    this._document.dispatchEvent(new CustomEvent(ReportUIFeatures.Events.refreshLighthouseReport, {
+      detail: {
+        features: this,
+        newLhr,
+      },
+    }));
   }
 
   _print() {
@@ -853,6 +952,11 @@ class DropDown {
     return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
   }
 }
+
+ReportUIFeatures.Events = {
+  lighthouseI18nModuleLoaded: 'lighthouseModuleLoaded-i18n',
+  refreshLighthouseReport: 'refreshLighthouseReport',
+};
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ReportUIFeatures;
