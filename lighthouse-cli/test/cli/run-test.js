@@ -39,9 +39,10 @@ describe('CLI run', function() {
       const url = 'chrome://version';
       const timeoutFlag = `--max-wait-for-load=${9000}`;
       const pluginsFlag = '--plugins=lighthouse-plugin-simple';
+      const localeFlag = '--locale=en-XL';
 
       // eslint-disable-next-line max-len
-      const flags = getFlags(`--output=json --output-path=${filename} ${pluginsFlag} ${timeoutFlag} ${url}`);
+      const flags = getFlags(`--output=json --output-path=${filename} ${pluginsFlag} ${timeoutFlag} ${localeFlag} ${url}`);
 
       const rawResult = await run.runLighthouse(url, flags, fastConfig);
 
@@ -83,8 +84,9 @@ describe('CLI run', function() {
 
     it('merged the plugin into the config', () => {
       // Audits have been pruned because of onlyAudits, but groups get merged in.
-      const groupNames = Object.keys(passedResults.lhr.categoryGroups || {});
-      assert.ok(groupNames.includes('lighthouse-plugin-simple-new-group'));
+      const groups = passedResults.lhr.categoryGroups || {};
+      assert.ok(Object.keys(groups).includes('lighthouse-plugin-simple-new-group'));
+      assert.strictEqual(groups['lighthouse-plugin-simple-new-group'].title, 'Néŵ Gŕôup');
     });
   });
 });

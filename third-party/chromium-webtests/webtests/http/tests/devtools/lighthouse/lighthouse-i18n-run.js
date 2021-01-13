@@ -23,7 +23,7 @@
 
   TestRunner.override(LighthouseTestRunner._panel()._protocolService, 'getLocales', overrideLookupLocale, true);
 
-  const locales = ['invalid-locale', 'es'];
+  const locales = ['invalid-locale', 'en-XL'];
   function overrideLookupLocale() {
     return locales;
   }
@@ -33,9 +33,11 @@
 
   const {lhr} = await LighthouseTestRunner.waitForResults();
 
-  TestRunner.addResult(`resolved to locale ${lhr.configSettings.locale}`);
-  TestRunner.addResult(`\ni18n footerIssue: "${lhr.i18n.rendererFormattedStrings.footerIssue}"`);
+  TestRunner.addResult(`resolved to locale ${lhr.configSettings.locale}\n`);
 
+  TestRunner.addResult(`ads-performance group title: ${lhr.categoryGroups['lighthouse-plugin-publisher-ads-ads-performance']?.title}`)
+
+  TestRunner.addResult(`\ni18n footerIssue: "${lhr.i18n.rendererFormattedStrings.footerIssue}"`);
   const footerIssueLink = LighthouseTestRunner.getResultsElement().querySelector('.lh-footer__version_issue');
   TestRunner.addResult(`\nFooter Issue Link Text: "${footerIssueLink.textContent}"`);
 

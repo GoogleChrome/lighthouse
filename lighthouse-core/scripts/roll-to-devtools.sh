@@ -48,10 +48,10 @@ fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"
 rsync -avh dist/dt-report-resources/ "$fe_lh_report_assets_dir" --delete
 echo -e "$check Report resources copied."
 
-# copy locale JSON files (but not the .ctc.json ones)
-lh_locales_dir="lighthouse-core/lib/i18n/locales/"
+# copy locale JSON files
+lh_locales_dir="dist/dt-locales/"
 fe_locales_dir="$fe_lh_dir/locales"
-rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
+rsync -avh "$lh_locales_dir" "$fe_locales_dir" --delete
 echo -e "$check Locale JSON files copied."
 
 # copy webtests

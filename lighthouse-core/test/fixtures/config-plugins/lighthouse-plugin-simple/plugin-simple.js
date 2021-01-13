@@ -5,11 +5,19 @@
  */
 'use strict';
 
+const i18n = require('lighthouse/lighthouse-core/lib/i18n/i18n.js');
+
+const UIStrings = {
+  groupTitle: 'New Group',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
 /** @type {LH.Config.Plugin} */
 module.exports = {
   groups: {
     'new-group': {
-      title: 'New Group',
+      title: str_(UIStrings.groupTitle),
     },
   },
   audits: [
@@ -21,5 +29,9 @@ module.exports = {
     auditRefs: [
       {id: 'redirects', weight: 1, group: 'new-group'},
     ],
+  },
+  locales: {
+    'en': require('./en-US.json'),
+    'en-XL': require('./en-XL.json'),
   },
 };

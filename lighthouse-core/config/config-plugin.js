@@ -6,6 +6,8 @@
 'use strict';
 
 const i18n = require('../lib/i18n/i18n.js');
+const coreLocales = require('../lib/i18n/locales.js');
+const path = require('path');
 
 /**
  * @param {unknown} arr
@@ -190,13 +192,65 @@ class ConfigPlugin {
   }
 
   /**
+   * Extract and validate locales JSON added by the plugin.
+   * @param {unknown} localesJson
+   * @param {string} pluginName
+   * @param {string} pluginPath
+   * @returns {LH.LocaleConfig|undefined}
+   */
+  static _parseLocales(localesJson, pluginName, pluginPath) {
+    if (localesJson === undefined) {
+      return;
+    }
+
+    if (!isObjectOfUnknownProperties(localesJson)) {
+      throw new Error(`${pluginName} locales json is not defined as an object.`);
+    }
+
+    /** @type {Record<string, Record<string, Object>>} */
+    const parsedLocalesJson = {};
+
+    const pluginDir = path.dirname(pluginPath);
+
+    const validLocales = new Set(Object.keys(coreLocales));
+
+    Object.keys(localesJson).forEach((locale) => {
+      if (!validLocales.has(locale)) {
+        throw new Error(`${pluginName} contains unsupported locale: '${locale}'.`);
+      }
+
+      const localeMessages = localesJson[locale];
+      if (!isObjectOfUnknownProperties(localeMessages)) {
+        throw new Error(`${pluginName} locale: '${locale}' is not an object.`);
+      }
+      Object.keys(localeMessages).forEach((key) => {
+        const messageObj = localeMessages[key];
+        if (!isObjectOfUnknownProperties(messageObj)) {
+          throw new Error(`${pluginName} locale: '${locale}' contains invalid message: '${key}'.`);
+        }
+        const {message, ...invalidRest} = messageObj;
+        assertNoExcessProperties(invalidRest, pluginName, 'locale');
+
+        const [filename, keyname] = key.split(' | ');
+
+        const i18nId = i18n.createI18nId(path.join(pluginDir, filename), keyname);
+        parsedLocalesJson[locale] = parsedLocalesJson[locale] || {};
+        parsedLocalesJson[locale][i18nId] = {message};
+      });
+    });
+
+    return /** @type LH.LocaleConfig */ (parsedLocalesJson);
+  }
+
+  /**
    * Extracts and validates a ConfigJson from the provided plugin input, throwing
    * if it deviates from the expected object shape.
    * @param {unknown} pluginJson
    * @param {string} pluginName
+   * @param {string} pluginPath
    * @return {LH.Config.Json}
    */
-  static parsePlugin(pluginJson, pluginName) {
+  static parsePlugin(pluginJson, pluginName, pluginPath) {
     // Clone to prevent modifications of original and to deactivate any live properties.
     pluginJson = JSON.parse(JSON.stringify(pluginJson));
     if (!isObjectOfUnknownProperties(pluginJson)) {
@@ -207,6 +261,7 @@ class ConfigPlugin {
       audits: pluginAuditsJson,
       category: pluginCategoryJson,
       groups: pluginGroupsJson,
+      locales: pluginLocalesJson,
       ...invalidRest
     } = pluginJson;
 
@@ -218,6 +273,7 @@ class ConfigPlugin {
         [pluginName]: ConfigPlugin._parseCategory(pluginCategoryJson, pluginName),
       },
       groups: ConfigPlugin._parseGroups(pluginGroupsJson, pluginName),
+      pluginLocales: ConfigPlugin._parseLocales(pluginLocalesJson, pluginName, pluginPath),
     };
   }
 }

@@ -26,6 +26,7 @@ declare global {
         categories?: Record<string, CategoryJson> | null;
         groups?: Record<string, Config.GroupJson> | null;
         plugins?: Array<string>,
+        pluginLocales?: LH.LocaleConfig | null
       }
 
       /**
@@ -157,6 +158,8 @@ declare global {
         category: LH.Config.Category;
         /** Optionally provide more groups in addition to those specified by the base config. */
         groups?: Record<string, LH.Config.GroupJson>;
+        /** Optionally provide a locale config for i18n. */
+        locales?: LH.LocaleConfig, 
       }
 
       export type MergeOptionsOfItems = <T extends {path?: string, options: Record<string, any>}>(items: T[]) => T[];

@@ -977,9 +977,11 @@ describe('Config', () => {
       assert.ok(groupIds.length === 2);
       assert.strictEqual(groupIds[0], 'configGroup');
       assert.strictEqual(groupIds[1], 'lighthouse-plugin-simple-new-group');
-      assert.strictEqual(config.groups['lighthouse-plugin-simple-new-group'].title, 'New Group');
+      assert.strictEqual(
+        config.groups['lighthouse-plugin-simple-new-group'].title.formattedDefault, 'New Group');
       assert.strictEqual(config.categories['lighthouse-plugin-simple'].auditRefs[0].group,
         'lighthouse-plugin-simple-new-group');
+      assert.strictEqual(Object.values(config.pluginLocales['en-XL'])[0].message, 'Néŵ Gŕôup');
     });
 
     it('should append a category', () => {
