@@ -231,8 +231,13 @@ class Runner {
       requestedUrl,
       settings: runnerOpts.config.settings,
     };
-    const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
-    return artifacts;
+    const gatherPromise = GatherRunner.run(runnerOpts.config.passes, gatherOpts);
+    await Promise.race([
+      gatherPromise,
+      GatherRunner.getGatherTerminatedPromise(driver),
+    ]);
+
+    return gatherPromise;
   }
 
   /**

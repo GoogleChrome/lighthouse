@@ -55,10 +55,16 @@ enum LighthouseError {
   DNS_FAILURE = 19;
   // A timeout in the initial connection to the debugger protocol.
   CRI_TIMEOUT = 20;
-  // The page requested was not HTML. 
+  // The page requested was not HTML.
   NOT_HTML = 21;
   // The trace did not contain a ResourceSendRequest event.
   NO_RESOURCE_REQUEST = 22;
+  // Used when any Chrome interstitial error prevents page load.
+  CHROME_INTERSTITIAL_ERROR = 23;
+  // The page has crashed and will no longer respond to 99% of CDP commmands.
+  TARGET_CRASHED = 24;
+  // The protocol connection is broken.
+  TARGET_DETACHED = 25;
 }
 
 // The overarching Lighthouse Response object (LHR)
@@ -378,70 +384,70 @@ message I18n {
 
     // Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor.
     string runtime_desktop_emulation = 21;
-    
+
     // Descriptive explanation for emulation setting when emulating a Nexus 5X mobile device.
     string runtime_mobile_emulation = 22;
-    
+
     // Descriptive explanation for emulation setting when no device emulation is set.
     string runtime_no_emulation = 23;
-    
+
     // Label for a row in a table that shows the estimated CPU power of the machine running Lighthouse. Example row values: 532, 1492, 783.
     string runtime_settings_benchmark = 24;
-    
+
     // Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.
     string runtime_settings_CPU_throttling = 25;
-    
+
     // Label for a row in a table that describes the kind of device that was emulated for the Lighthouse run.  Example values for row elements: 'No Emulation', 'Emulated Desktop', etc.
     string runtime_settings_device = 26;
-    
+
     // Label for a row in a table that shows the time at which a Lighthouse run was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC.
     string runtime_settings_fetch_time = 27;
-    
+
     // Label for a row in a table that describes the network throttling conditions that were used during a Lighthouse run, if any.
     string runtime_settings_network_throttling = 28;
-    
+
     // Title of the Runtime settings table in a Lighthouse report.  Runtime settings are the environment configurations that a specific report used at auditing time.
     string runtime_settings_title = 29;
-    
+
     // Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse.
     string runtime_settings_UA = 30;
-    
+
     // Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run.
     string runtime_settings_UA_network = 31;
-    
+
     // Label for a row in a table that shows the URL that was audited during a Lighthouse run.
     string runtime_settings_Url = 32;
-    
+
     // Descriptive explanation for a runtime setting that is set to an unknown value.
     string runtime_unknown = 33;
-    
+
     // Option in a dropdown menu that copies the Lighthouse JSON object to the system clipboard.
     string dropdown_copy_JSON = 34;
-    
+
     // Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes.
     string dropdown_dark_theme = 35;
-    
-    // Option in a dropdown menu that opens a full Lighthouse report in a print dialog. 
+
+    // Option in a dropdown menu that opens a full Lighthouse report in a print dialog.
     string dropdown_print_expanded = 36;
-    
-    // Option in a dropdown menu that opens a small, summary report in a print dialog. 
+
+    // Option in a dropdown menu that opens a small, summary report in a print dialog.
     string dropdown_print_summary = 37;
-    
+
     // Option in a dropdown menu that saves the current report as a new Github Gist.
     string dropdown_save_gist = 38;
-    
+
     // Option in a dropdown menu that saves the Lighthouse report HTML locally to the system as a '.html' file.
     string dropdown_save_HTML = 39;
-    
+
     // Option in a dropdown menu that saves the Lighthouse JSON object to the local system as a '.json' file.
     string dropdown_save_JSON = 40;
-    
+
     // Option in a dropdown menu that opens the current report in the Lighthouse Viewer Application.
     string dropdown_viewer = 41;
-    
+
     // Label for button to create an issue against the Lighthouse Github project.
     string footer_issue = 42;
-    
+
     // Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling.
     string throttling_provided = 43;
 

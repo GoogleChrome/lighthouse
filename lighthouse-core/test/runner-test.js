@@ -14,6 +14,10 @@ const Config = require('../config/config.js');
 const Audit = require('../audits/audit.js');
 const Gatherer = require('../gather/gatherers/gatherer.js');
 const assetSaver = require('../lib/asset-saver.js');
+
+const Driver = require('../gather/driver.js');
+const Connection = require('../gather/connections/connection.js');
+
 const fs = require('fs');
 const assert = require('assert').strict;
 const path = require('path');
@@ -787,6 +791,25 @@ describe('Runner', () => {
       // And it bubbled up to the runtimeError.
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
       expect(lhr.runtimeError.message).toBeDisplayString(/did not paint any content.*\(NO_FCP\)/);
+    });
+
+
+    it('includes a crash runtimeError when there\'s a crash during gathering', async () => {
+      const connectionStub = new Connection();
+      connectionStub.connect = _ => Promise.resolve();
+      // @ts-expect-error - driver has a mocked version of on/once implemented in each test
+      const driver = new Driver(connectionStub);
+
+      // We need to simulate an expected browser crash. Basic plan is to crash the page on the FIRST use of sendCommand.
+      // A little odd, but it works.
+      // @ts-expect-error
+      connectionStub.sendCommand = _ => {
+        driver._eventEmitter.emit('Inspector.targetCrashed');
+      };
+
+      const config = new Config(configJson);
+      const runP = Runner.run(defaultGatherFn, {url: 'https://example.com/', config, driverMock: driver});
+      await expect(runP).rejects.toThrow(/TARGET_CRASHED/);
     });
 
     it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {

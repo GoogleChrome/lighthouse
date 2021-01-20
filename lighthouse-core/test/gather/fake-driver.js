@@ -45,6 +45,7 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     dismissJavaScriptDialogs() {
       return Promise.resolve();
     },
+    on() {},
     assertNoSameOriginServiceWorkerClients() {
       return Promise.resolve();
     },
