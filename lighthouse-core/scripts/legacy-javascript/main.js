@@ -1,5 +1,5 @@
-// @ts-nocheck
 /* eslint-disable */
+// @ts-nocheck
 
 class MyTestClass {};
 async function reg(...args) {

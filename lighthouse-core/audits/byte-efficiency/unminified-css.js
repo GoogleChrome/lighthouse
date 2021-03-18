@@ -23,9 +23,6 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 const IGNORE_THRESHOLD_IN_PERCENT = 5;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
-/**
- * @fileOverview
- */
 class UnminifiedCSS extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}

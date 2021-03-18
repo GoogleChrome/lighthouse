@@ -10,7 +10,7 @@ const TraceOfTab = require('../trace-of-tab.js');
 const NetworkRecords = require('../network-records.js');
 
 /**
- * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the
+ * @fileoverview Encapsulates logic for choosing the correct metric computation method based on the
  * specified throttling settings, supporting simulated and observed metric types.
  *
  * To implement a fully supported metric:

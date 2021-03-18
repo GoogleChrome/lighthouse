@@ -23,7 +23,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 10;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
 /**
- * @fileOverview Estimates minification savings by determining the ratio of parseable JS tokens to the
+ * @fileoverview Estimates minification savings by determining the ratio of parseable JS tokens to the
  * length of the entire string. Though simple, this method is quite accurate at identifying whether
  * a script was already minified and offers a relatively conservative minification estimate (our two
  * primary goals).
