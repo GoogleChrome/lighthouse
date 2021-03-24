@@ -98,7 +98,7 @@ declare global {
       }
 
       /** String enum of possible types of values found within table items. */
-      type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'markdown' | 'thumbnail' | 'timespanMs' | 'url';
 
       /** Possible types of values found within table items. */
       type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | IcuMessage | TableSubItems;

@@ -21,32 +21,32 @@ const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Message shown when a CSP does not have a base-uri directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "base-uri", "'none'", and "'self'" do not need to be translated. */
-  missingBaseUri: 'Missing base-uri allows injected <base> tags to set the base URL for all ' +
+  missingBaseUri: 'Missing `base-uri` allows injected `<base>` tags to set the base URL for all ' +
     'relative URLs (e.g. scripts) to an attacker controlled domain. ' +
-    'Consider setting base-uri to \'none\' or \'self\'.',
+    'Consider setting `base-uri` to `none` or `self`.',
   /** Message shown when a CSP does not have a script-src directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "script-src" does not need to be translated. */
-  missingScriptSrc: 'script-src directive is missing. ' +
+  missingScriptSrc: '`script-src` directive is missing. ' +
     'This can allow the execution of unsafe scripts.',
   /** Message shown when a CSP does not have a script-src directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "object-src" and "'none'" do not need to be translated. */
-  missingObjectSrc: 'Elements controlled by object-src are considered legacy features. ' +
-    'Consider setting object-src to \'none\' to prevent the injection of ' +
+  missingObjectSrc: 'Elements controlled by `object-src` are considered legacy features. ' +
+    'Consider setting `object-src` to `none` to prevent the injection of ' +
     'plugins that execute unsafe scripts.',
   /** Message shown when a CSP uses a domain allowlist to filter out malicious scripts. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP", "'strict-dynamic'", "nonces", and "hashes" do not need to be translated. "allowlists" can be interpreted as "whitelist". */
   strictDynamic: 'Host allowlists can frequently be bypassed. Consider using ' +
-    '\'strict-dynamic\' in combination with CSP nonces or hashes.',
+    '`strict-dynamic` in combination with CSP nonces or hashes.',
   /** Message shown when a CSP allows inline scripts to be run in the page. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP", "'unsafe-inline'", "nonces", and "hashes" do not need to be translated. */
-  unsafeInline: '\'unsafe-inline\' allows the execution of unsafe in-page scripts ' +
+  unsafeInline: '`unsafe-inline` allows the execution of unsafe in-page scripts ' +
     'and event handlers. Consider using CSP nonces or hashes to allow scripts individually.',
   /** Message shown when a CSP is not backwards compatible with browsers that do not support CSP nonces/hashes. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "'unsafe-inline'", "nonces", and "hashes" do not need to be translated. */
-  unsafeInlineFallback: 'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
+  unsafeInlineFallback: 'Consider adding `unsafe-inline` (ignored by browsers supporting ' +
     'nonces/hashes) to be backward compatible with older browsers.',
   /** Message shown when a CSP is not backwards compatible with browsers that do not support the 'strict-dynamic' keyword. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "http:", "https:", and "'strict-dynamic'" do not need to be translated. */
   allowlistFallback: 'Consider adding https: and http: URL schemes (ignored by browsers ' +
-    'supporting \'strict-dynamic\') to be backward compatible with older browsers.',
+    'supporting `strict-dynamic`) to be backward compatible with older browsers.',
   /** Message shown when a CSP only provides a reporting destination through the report-to directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "report-to", "report-uri", and "Chromium" do not need to be translated. */
-  reportToOnly: 'The reporting destination is only configured via the report-to directive. ' +
+  reportToOnly: 'The reporting destination is only configured via the `report-to` directive. ' +
     'This directive is only supported in Chromium-based browsers so it is ' +
-    'recommended to also use a report-uri directive.',
+    'recommended to also use a `report-uri` directive.',
   /** Message shown when a CSP does not provide a reporting destination. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
   reportingDestinationMissing: 'No CSP configures a reporting destination. ' +
     'This makes it difficult to maintain the CSP over time and monitor for any breakages.',

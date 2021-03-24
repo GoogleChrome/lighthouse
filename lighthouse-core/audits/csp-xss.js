@@ -143,7 +143,7 @@ class CspXss extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: str_(i18n.UIStrings.columnDescription)},
+      {key: 'description', itemType: 'markdown', subItemsHeading: {key: 'description'}, text: str_(i18n.UIStrings.columnDescription)},
       {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: str_(UIStrings.columnDirective)},
       /* eslint-enable max-len */
     ];

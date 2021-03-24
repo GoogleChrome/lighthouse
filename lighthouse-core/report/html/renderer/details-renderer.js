@@ -179,6 +179,18 @@ class DetailsRenderer {
     return element;
   }
 
+
+  /**
+   * @param {string} md
+   * @return {HTMLDivElement}
+   */
+  _renderMarkdown(md) {
+    const element = this._dom.createElement('div', 'lh-text lh-text--md');
+    const span = this._dom.convertMarkdownCodeSnippets(md);
+    element.appendChild(span);
+    return element;
+  }
+
   /**
    * @param {{value: number, granularity?: number}} details
    * @return {Element}
@@ -286,6 +298,9 @@ class DetailsRenderer {
       case 'text': {
         const strValue = String(value);
         return this._renderText(strValue);
+      }
+      case 'markdown': {
+        return this._renderMarkdown(String(value));
       }
       case 'thumbnail': {
         const strValue = String(value);

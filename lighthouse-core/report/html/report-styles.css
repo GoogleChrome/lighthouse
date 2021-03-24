@@ -101,6 +101,7 @@
   --header-line-height: 24px;
   --highlighter-background-color: var(--report-text-color);
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
+  --inline-code-background: var(--table-higlight-background-color);
   --image-preview-size: 48px;
   --metric-toggle-lines-fill: #7F7F7F;
   --metrics-toggle-background-color: var(--color-gray-200);
@@ -987,10 +988,16 @@
   font-size: large;
 }
 
-.lh-code {
+.lh-code, .lh-text--md code {
   white-space: normal;
   margin-top: 0;
   font-size: var(--report-monospace-font-size);
+}
+
+.lh-text--md code {
+  /* needed to add some contrast against adjacent text */
+  background-color: var(--inline-code-background);
+  padding: 0 3px;
 }
 
 .lh-warnings {

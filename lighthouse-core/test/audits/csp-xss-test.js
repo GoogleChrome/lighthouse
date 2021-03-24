@@ -49,8 +49,8 @@ it('audit basic header', async () => {
       {
         description: {
           formattedDefault:
-          'Elements controlled by object-src are considered legacy features. ' +
-          'Consider setting object-src to \'none\' to prevent the injection of ' +
+          'Elements controlled by `object-src` are considered legacy features. ' +
+          'Consider setting `object-src` to `none` to prevent the injection of ' +
           'plugins that execute unsafe scripts.',
         },
         directive: 'object-src',
@@ -58,9 +58,9 @@ it('audit basic header', async () => {
       {
         description: {
           formattedDefault:
-            'Missing base-uri allows injected <base> tags to set the base URL for all ' +
+            'Missing `base-uri` allows injected `<base>` tags to set the base URL for all ' +
             'relative URLs (e.g. scripts) to an attacker controlled domain. ' +
-            'Consider setting base-uri to \'none\' or \'self\'.',
+            'Consider setting `base-uri` to `none` or `self`.',
         },
         directive: 'base-uri',
       },
@@ -75,7 +75,7 @@ it('audit basic header', async () => {
       {
         description: {
           formattedDefault:
-            'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
+            'Consider adding `unsafe-inline` (ignored by browsers supporting ' +
             'nonces/hashes) to be backward compatible with older browsers.',
         },
         directive: 'script-src',
