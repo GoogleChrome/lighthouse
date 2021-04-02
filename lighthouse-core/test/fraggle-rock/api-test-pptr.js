@@ -95,7 +95,7 @@ describe('Fraggle Rock API', () => {
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`72`);
+      expect(auditResults.length).toMatchInlineSnapshot(`71`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -121,7 +121,7 @@ describe('Fraggle Rock API', () => {
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`24`);
+      expect(auditResults.length).toMatchInlineSnapshot(`23`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
@@ -159,7 +159,7 @@ describe('Fraggle Rock API', () => {
       const {lhr} = result;
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`102`);
+      expect(auditResults.length).toMatchInlineSnapshot(`101`);
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);

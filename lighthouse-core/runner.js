@@ -427,7 +427,6 @@ class Runner {
       ...fs.readdirSync(path.join(__dirname, './audits/dobetterweb')).map(f => `dobetterweb/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/metrics')).map(f => `metrics/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/seo')).map(f => `seo/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/seo/manual')).map(f => `seo/manual/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/accessibility'))
           .map(f => `accessibility/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/accessibility/manual'))
