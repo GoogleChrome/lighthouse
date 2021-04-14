@@ -13,6 +13,7 @@
 /* eslint-disable no-console */
 
 const path = require('path');
+const {execFileSync} = require('child_process');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 
@@ -31,13 +32,21 @@ const runnerPaths = {
 };
 
 /**
+ * https://stackoverflow.com/a/6969486/2788187
+ * @param {string} str
+ */
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
  * Determine batches of smoketests to run, based on the `requestedIds`.
  * @param {Array<Smokehouse.TestDfn>} allTestDefns
  * @param {Array<string>} requestedIds
- * @param {{invertMatch: boolean}} options
+ * @param {{invertMatch: boolean, onlyUrls?: string[]}} options
  * @return {Array<Smokehouse.TestDfn>}
  */
-function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
+function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch, onlyUrls}) {
   let smokes = [];
   const usage = `    ${log.dim}yarn smoke ${allTestDefns.map(t => t.id).join(' ')}${log.reset}\n`;
 
@@ -56,6 +65,18 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
   if (unmatchedIds.length) {
     console.log(log.redify(`Smoketests not found for: ${unmatchedIds.join(' ')}`));
     console.log(usage);
+  }
+
+  if (onlyUrls) {
+    smokes = smokes.filter(smoke => {
+      smoke.expectations = smoke.expectations.filter(expectation => {
+        const url = expectation.lhr.requestedUrl;
+        const shouldRunUrl = onlyUrls.some(pattern => new RegExp(escapeRegExp(pattern)).test(url));
+        if (!shouldRunUrl) console.log(`skipping: ${url}`);
+        return shouldRunUrl;
+      });
+      return smoke.expectations.length;
+    });
   }
 
   if (!smokes.length) {
@@ -107,6 +128,11 @@ async function begin() {
         default: false,
         describe: 'Run all available tests except the ones provided',
       },
+      'only-urls': {
+        type: 'string',
+        array: true,
+        describe: 'Filter for urls to run. Patterns accepted',
+      },
     })
     .wrap(yargs.terminalWidth())
     .argv;
@@ -130,21 +156,37 @@ async function begin() {
   const requestedTestIds = argv._;
   const allTestDefns = require(testDefnPath);
   const invertMatch = argv.invertMatch;
-  const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
+  const onlyUrls = argv.onlyUrls;
+  const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch, onlyUrls});
 
   const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner};
 
-  let isPassing;
+  let testResults;
   try {
     server.listen(10200, 'localhost');
     serverForOffline.listen(10503, 'localhost');
-    isPassing = (await runSmokehouse(testDefns, options)).success;
+    testResults = await runSmokehouse(testDefns, options);
   } finally {
     await server.close();
     await serverForOffline.close();
   }
 
-  const exitCode = isPassing ? 0 : 1;
+  const failingUrls = testResults.testResults
+    .flatMap(result => result.expectationResults)
+    .filter(result => result.failed > 0)
+    .map(result => result.requestedUrl);
+
+  if (failingUrls.length) {
+    const rerunCommand = execFileSync('echo', [
+      'node',
+      path.relative(process.cwd(), __filename),
+      '--only-urls',
+      ...failingUrls,
+    ], {encoding: 'utf8'}).trim();
+    console.error(`To run just these failing smoke tests:\n   ${rerunCommand}`);
+  }
+
+  const exitCode = testResults.success ? 0 : 1;
   process.exit(exitCode);
 }
 
