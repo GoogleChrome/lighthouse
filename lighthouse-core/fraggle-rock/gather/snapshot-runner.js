@@ -19,40 +19,34 @@ async function snapshot(options) {
 
   const url = await options.page.url();
 
-  return Runner.run(
-    async () => {
-      const baseArtifacts = await getBaseArtifacts(config, driver);
-      baseArtifacts.URL.requestedUrl = url;
-      baseArtifacts.URL.finalUrl = url;
+  const baseArtifacts = await getBaseArtifacts(config, driver);
+  baseArtifacts.URL.requestedUrl = url;
+  baseArtifacts.URL.finalUrl = url;
 
-      /** @type {Partial<LH.GathererArtifacts>} */
-      const artifacts = {};
+  /** @type {Partial<LH.GathererArtifacts>} */
+  const gathererArtifacts = {};
 
-      for (const artifactDefn of config.artifacts || []) {
-        const {id, gatherer} = artifactDefn;
-        const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
-        const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
-        /** @type {LH.Gatherer.FRTransitionalContext} */
-        const context = {
-          gatherMode: 'snapshot',
-          url,
-          driver,
-          dependencies,
-        };
-        const artifact = await Promise.resolve()
-          .then(() => gatherer.instance.snapshot(context))
-          .catch(err => err);
-
-        artifacts[artifactName] = artifact;
-      }
-
-      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
-    },
-    {
+  for (const artifactDefn of config.artifacts || []) {
+    const {id, gatherer} = artifactDefn;
+    const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
+    const dependencies = await collectArtifactDependencies(artifactDefn, gathererArtifacts);
+    /** @type {LH.Gatherer.FRTransitionalContext} */
+    const context = {
+      gatherMode: 'snapshot',
       url,
-      config,
-    }
-  );
+      driver,
+      dependencies,
+    };
+    const artifact = await Promise.resolve()
+      .then(() => gatherer.instance.snapshot(context))
+      .catch(err => err);
+
+    gathererArtifacts[artifactName] = artifact;
+  }
+
+  const artifacts = /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts}); // Cast to drop Partial<>
+
+  return Runner.run(artifacts, {config});
 }
 
 module.exports = {

@@ -207,9 +207,9 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver};
 
-    const results = await GatherRunner.run(config.passes, options);
+    const results = await GatherRunner.run(config, options);
     expect(Number.isFinite(results.BenchmarkIndex)).toBeTruthy();
   });
 
@@ -217,9 +217,9 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver};
 
-    const results = await GatherRunner.run(config.passes, options);
+    const results = await GatherRunner.run(config, options);
     expect(results.HostUserAgent).toEqual(fakeDriver.protocolGetVersionResponse.userAgent);
     expect(results.HostUserAgent).toMatch(/Chrome\/\d+/);
   });
@@ -228,9 +228,9 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver};
 
-    const results = await GatherRunner.run(config.passes, options);
+    const results = await GatherRunner.run(config, options);
     expect(results.NetworkUserAgent).toContain('Mozilla');
   });
 
@@ -243,9 +243,9 @@ describe('GatherRunner', function() {
       },
     });
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver};
 
-    return GatherRunner.run(config.passes, options).then(artifacts => {
+    return GatherRunner.run(config, options).then(artifacts => {
       assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
         'did not find expected URL artifact');
     });
@@ -270,9 +270,9 @@ describe('GatherRunner', function() {
           passes: [],
           settings: {},
         });
-        const options = {requestedUrl, driver, settings: config.settings};
+        const options = {requestedUrl, driver};
 
-        const results = await GatherRunner.run(config.passes, options);
+        const results = await GatherRunner.run(config, options);
         expect(results.HostFormFactor).toBe(expectedValue);
       });
     }
@@ -511,10 +511,9 @@ describe('GatherRunner', function() {
     const options = {
       driver,
       requestedUrl,
-      settings: config.settings,
     };
 
-    const artifacts = await GatherRunner.run(config.passes, options);
+    const artifacts = await GatherRunner.run(config, options);
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toBeInstanceOf(Error);
     expect(artifacts.PageLoadError).toMatchObject({code: 'ERRORED_DOCUMENT_REQUEST'});
@@ -545,10 +544,9 @@ describe('GatherRunner', function() {
     const options = {
       driver,
       requestedUrl,
-      settings: config.settings,
     };
 
-    const artifacts = await GatherRunner.run(config.passes, options);
+    const artifacts = await GatherRunner.run(config, options);
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toBeInstanceOf(Error);
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_FCP'});
@@ -585,10 +583,9 @@ describe('GatherRunner', function() {
     const options = {
       driver,
       requestedUrl,
-      settings: config.settings,
     };
 
-    const artifacts = await GatherRunner.run(config.passes, options);
+    const artifacts = await GatherRunner.run(config, options);
     expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     expect(artifacts.PageLoadError).toEqual(null);
     // @ts-expect-error: Test-only gatherer.
@@ -851,10 +848,9 @@ describe('GatherRunner', function() {
       }],
     });
 
-    return GatherRunner.run(config.passes, {
+    return GatherRunner.run(config, {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
-      settings: config.settings,
     }).then(_ => {
       assert.ok(t1.called);
       assert.ok(t2.called);
@@ -876,10 +872,9 @@ describe('GatherRunner', function() {
     const options = {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
-      settings: config.settings,
     };
 
-    return GatherRunner.run(config.passes, options)
+    return GatherRunner.run(config, options)
       .then(artifacts => {
         assert.ok(artifacts.traces.firstPass);
         assert.ok(artifacts.devtoolsLogs.firstPass);
@@ -904,8 +899,8 @@ describe('GatherRunner', function() {
         gatherers: [{instance: new TestGatherer()}],
       }],
     });
-    const options = {driver, requestedUrl, settings: config.settings};
-    const artifacts = await GatherRunner.run(config.passes, options);
+    const options = {driver, requestedUrl};
+    const artifacts = await GatherRunner.run(config, options);
 
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_DOCUMENT_REQUEST'});
     // @ts-expect-error: Test-only gatherer.
@@ -951,8 +946,8 @@ describe('GatherRunner', function() {
       },
       online: true,
     });
-    const options = {driver, requestedUrl, settings: config.settings};
-    const artifacts = await GatherRunner.run(config.passes, options);
+    const options = {driver, requestedUrl};
+    const artifacts = await GatherRunner.run(config, options);
 
     // t1.pass() and t2.pass() called; t3.pass(), after the error, was not.
     expect(t1.called).toBe(true);
@@ -1440,10 +1435,9 @@ describe('GatherRunner', function() {
       });
 
       /** @type {any} Using Test-only gatherers. */
-      const artifacts = await GatherRunner.run(config.passes, {
+      const artifacts = await GatherRunner.run(config, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
-        settings: config.settings,
       });
 
       // Ensure artifacts returned and not errors.
@@ -1496,10 +1490,9 @@ describe('GatherRunner', function() {
         }],
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
-        settings: config.settings,
       }).then(artifacts => {
         gathererNames.forEach(gathererName => {
           assert.strictEqual(artifacts[gathererName], gathererName);
@@ -1574,10 +1567,9 @@ describe('GatherRunner', function() {
           gatherers: [{instance: new WarningGatherer()}],
         }],
       });
-      const artifacts = await GatherRunner.run(config.passes, {
+      const artifacts = await GatherRunner.run(config, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
-        settings: config.settings,
       });
       assert.deepStrictEqual(artifacts.LighthouseRunWarnings, runWarnings);
     });
@@ -1629,10 +1621,9 @@ describe('GatherRunner', function() {
         }],
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
-        settings: config.settings,
       }).then(artifacts => {
         gathererNames.forEach(gathererName => {
           const errorArtifact = artifacts[gathererName];
@@ -1653,10 +1644,9 @@ describe('GatherRunner', function() {
         }],
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
-        settings: config.settings,
       }).then(_ => assert.ok(false), _ => assert.ok(true));
     });
 
@@ -1681,10 +1671,9 @@ describe('GatherRunner', function() {
         },
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: unresolvedDriver,
         requestedUrl,
-        settings: config.settings,
       }).then(artifacts => {
         assert.equal(artifacts.LighthouseRunWarnings.length, 1);
         expect(artifacts.LighthouseRunWarnings[0])
@@ -1709,10 +1698,9 @@ describe('GatherRunner', function() {
         },
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: timedoutDriver,
         requestedUrl,
-        settings: config.settings,
       }).then(artifacts => {
         assert.equal(artifacts.LighthouseRunWarnings.length, 1);
         expect(artifacts.LighthouseRunWarnings[0])
@@ -1741,10 +1729,9 @@ describe('GatherRunner', function() {
         },
       });
 
-      return GatherRunner.run(config.passes, {
+      return GatherRunner.run(config, {
         driver: unresolvedDriver,
         requestedUrl,
-        settings: config.settings,
       })
         .then(_ => {
           assert.ok(true);

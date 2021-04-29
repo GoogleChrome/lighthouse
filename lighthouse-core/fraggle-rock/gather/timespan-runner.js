@@ -42,42 +42,37 @@ async function startTimespan(options) {
   return {
     async endTimespan() {
       const finalUrl = await options.page.url();
-      return Runner.run(
-        async () => {
-          const baseArtifacts = await getBaseArtifacts(config, driver);
-          baseArtifacts.URL.requestedUrl = requestedUrl;
-          baseArtifacts.URL.finalUrl = finalUrl;
 
-          /** @type {Partial<LH.GathererArtifacts>} */
-          const artifacts = {};
+      const baseArtifacts = await getBaseArtifacts(config, driver);
+      baseArtifacts.URL.requestedUrl = requestedUrl;
+      baseArtifacts.URL.finalUrl = finalUrl;
 
-          for (const artifactDefn of config.artifacts || []) {
-            const {id, gatherer} = artifactDefn;
-            const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
-            const dependencies = await collectArtifactDependencies(artifactDefn, artifacts);
-            /** @type {LH.Gatherer.FRTransitionalContext} */
-            const context = {
-              gatherMode: 'timespan',
-              url: finalUrl,
-              driver,
-              dependencies,
-            };
-            const artifact = await artifactErrors[id]
-              .then(() =>
-                gatherer.instance.afterTimespan(context)
-              )
-              .catch(err => err);
+      /** @type {Partial<LH.GathererArtifacts>} */
+      const gathererArtifacts = {};
 
-            artifacts[artifactName] = artifact;
-          }
-
-          return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
-        },
-        {
+      for (const artifactDefn of config.artifacts || []) {
+        const {id, gatherer} = artifactDefn;
+        const artifactName = /** @type {keyof LH.GathererArtifacts} */ (id);
+        const dependencies = await collectArtifactDependencies(artifactDefn, gathererArtifacts);
+        /** @type {LH.Gatherer.FRTransitionalContext} */
+        const context = {
+          gatherMode: 'timespan',
           url: finalUrl,
-          config,
-        }
-      );
+          driver,
+          dependencies,
+        };
+        const artifact = await artifactErrors[id]
+          .then(() =>
+            gatherer.instance.afterTimespan(context)
+          )
+          .catch(err => err);
+
+        gathererArtifacts[artifactName] = artifact;
+      }
+
+      const artifacts = /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts}); // Cast to drop Partial<>
+
+      return Runner.run(artifacts, {config});
     },
   };
 }

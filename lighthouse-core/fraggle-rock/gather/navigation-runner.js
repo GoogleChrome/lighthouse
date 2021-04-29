@@ -222,20 +222,14 @@ async function navigation(options) {
   const {url: requestedUrl, page} = options;
   const {config} = initializeConfig(options.config, {gatherMode: 'navigation'});
 
-  return Runner.run(
-    async () => {
-      const driver = new Driver(page);
-      const {baseArtifacts} = await _setup({driver, config, requestedUrl});
-      const {artifacts} = await _navigations({driver, config, requestedUrl});
-      await _cleanup({driver});
+  const driver = new Driver(page);
+  const {baseArtifacts} = await _setup({driver, config, requestedUrl});
+  const {artifacts: gathererArtifacts} = await _navigations({driver, config, requestedUrl});
+  await _cleanup({driver});
 
-      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
-    },
-    {
-      url: requestedUrl,
-      config,
-    }
-  );
+  const artifacts = /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts}); // Cast to drop Partial<>
+
+  return Runner.run(artifacts, {config});
 }
 
 module.exports = {

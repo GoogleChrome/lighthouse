@@ -86,7 +86,7 @@ describe('Timespan Runner', () => {
     mockPage.url.mockResolvedValue('https://end.example.com/');
 
     await timespan.endTimespan();
-    const artifacts = await mockRunnerRun.mock.calls[0][0]();
+    const artifacts = await mockRunnerRun.mock.calls[0][0];
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
       URL: {
@@ -99,7 +99,7 @@ describe('Timespan Runner', () => {
   it('should collect timespan artifacts', async () => {
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
-    const artifacts = await mockRunnerRun.mock.calls[0][0]();
+    const artifacts = await mockRunnerRun.mock.calls[0][0];
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererA.afterTimespan).toHaveBeenCalled();
     expect(gathererB.afterTimespan).toHaveBeenCalled();
@@ -111,7 +111,7 @@ describe('Timespan Runner', () => {
 
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
-    const artifacts = await mockRunnerRun.mock.calls[0][0]();
+    const artifacts = await mockRunnerRun.mock.calls[0][0];
     expect(artifacts).toMatchObject({A: artifactError, B: 'Artifact B'});
     expect(gathererA.afterTimespan).not.toHaveBeenCalled();
     expect(gathererB.afterTimespan).toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('Timespan Runner', () => {
 
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
-    const artifacts = await mockRunnerRun.mock.calls[0][0]();
+    const artifacts = await mockRunnerRun.mock.calls[0][0];
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
     expect(gathererB.afterTimespan).not.toHaveBeenCalled();
@@ -136,7 +136,7 @@ describe('Timespan Runner', () => {
 
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
-    const artifacts = await mockRunnerRun.mock.calls[0][0]();
+    const artifacts = await mockRunnerRun.mock.calls[0][0];
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererB.afterTimespan.mock.calls[0][0]).toMatchObject({
       dependencies: {

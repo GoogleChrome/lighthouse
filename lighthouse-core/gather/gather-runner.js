@@ -20,6 +20,8 @@ const WebAppManifest = require('./gatherers/web-app-manifest.js');
 const InstallabilityErrors = require('./gatherers/installability-errors.js');
 const NetworkUserAgent = require('./gatherers/network-user-agent.js');
 const Stacks = require('./gatherers/stacks.js');
+const ChromeProtocol = require('./connections/cri.js');
+const Driver = require('./driver.js');
 
 const UIStrings = {
   /**
@@ -53,7 +55,7 @@ const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/** @typedef {import('../gather/driver.js')} Driver */
+/** @typedef {import('./connections/connection.js')} Connection */
 
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
@@ -706,12 +708,19 @@ class GatherRunner {
   }
 
   /**
-   * @param {Array<LH.Config.Pass>} passConfigs
-   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {LH.Config.Config} config
+   * @param {{requestedUrl: string, userConnection?: Connection, flags: LH.Flags}} options
    * @return {Promise<LH.Artifacts>}
    */
-  static async run(passConfigs, options) {
-    const driver = options.driver;
+  static async run(config, options) {
+    if (!config.passes) {
+      throw new Error('No browser artifacts are either provided or requested.');
+    }
+
+    const {userConnection, flags, requestedUrl} = options;
+    const connection = userConnection || new ChromeProtocol(flags.port, flags.hostname);
+    const driver = '' || new Driver(connection); // TODO(bkenny): runnerOpts.driverMock
+    const runOptions = {driver, requestedUrl, settings: config.settings};
 
     /** @type {Partial<LH.GathererArtifacts>} */
     const artifacts = {};
@@ -722,19 +731,19 @@ class GatherRunner {
       // So we first navigate to about:blank, then apply our emulation & setup
       await GatherRunner.loadBlank(driver);
 
-      const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
+      const baseArtifacts = await GatherRunner.initializeBaseArtifacts(runOptions);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
-      await GatherRunner.setupDriver(driver, options, baseArtifacts.LighthouseRunWarnings);
+      await GatherRunner.setupDriver(driver, runOptions, baseArtifacts.LighthouseRunWarnings);
 
       let isFirstPass = true;
-      for (const passConfig of passConfigs) {
+      for (const passConfig of config.passes) {
         /** @type {LH.Gatherer.PassContext} */
         const passContext = {
           gatherMode: 'navigation',
           driver,
           url: options.requestedUrl,
-          settings: options.settings,
+          settings: config.settings,
           passConfig,
           baseArtifacts,
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
@@ -760,12 +769,12 @@ class GatherRunner {
         await driver.fetcher.disable();
       }
 
-      await GatherRunner.disposeDriver(driver, options);
+      await GatherRunner.disposeDriver(driver, runOptions);
       GatherRunner.finalizeBaseArtifacts(baseArtifacts);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
-      GatherRunner.disposeDriver(driver, options);
+      GatherRunner.disposeDriver(driver, runOptions);
 
       throw err;
     }

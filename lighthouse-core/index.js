@@ -5,24 +5,33 @@
  */
 'use strict';
 
+const path = require('path');
 const Runner = require('./runner.js');
 const log = require('lighthouse-logger');
-const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config.js');
+const Sentry = require('./lib/sentry.js');
+const assetSaver = require('./lib/asset-saver.js');
+const LHError = require('./lib/lh-error.js');
+const GatherRunner = require('./gather/gather-runner.js');
+const URL = require('./lib/url-shim.js');
+const i18n = require('./lib/i18n/i18n.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
 
 /*
  * The relationship between these root modules:
  *
- *   index.js  - the require('lighthouse') hook for Node modules (including the CLI)
+ *   index.js - the `require('lighthouse')` hook for Node modules (including the CLI, DT, and LR)
+ *              marshalls the actions that must be taken (Gather / Audit)
+ *              config file is used to determine which of these actions are needed
  *
- *   runner.js - marshalls the actions that must be taken (Gather / Audit)
- *               config file is used to determine which of these actions are needed
+ *   gather-runner.js - gathers artifacts from the brower
  *
- *         lighthouse-cli \
- *                         -- core/index.js ----> runner.js ----> [Gather / Audit]
- *                clients /
+ *   runner.js - runs audits and generates the LHR and report(s)
+ *
+ *         lighthouse-cli \                   / gather-runner.js [Gather]
+ *                         -- core/index.js --
+ *                clients /                   \ runner.js [Audit]
  */
 
 /**
@@ -40,16 +49,96 @@ async function lighthouse(url, flags = {}, configJSON, userConnection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = generateConfig(configJSON, flags);
-  const options = {url, config};
-  const connection = userConnection || new ChromeProtocol(flags.port, flags.hostname);
+  let settings;
+  try {
+    const indexStatus = {msg: 'lighthouse setup', id: 'lh:lighthouse'};
+    log.time(indexStatus, 'verbose');
 
-  // kick off a lighthouse run
-  /** @param {{requestedUrl: string}} runnerData */
-  const gatherFn = ({requestedUrl}) => {
-    return Runner._gatherArtifactsFromBrowser(requestedUrl, options, connection);
-  };
-  return Runner.run(gatherFn, options);
+    const sentryContext = Sentry.getContext();
+    Sentry.captureBreadcrumb({
+      message: 'Run started',
+      category: 'lifecycle',
+      data: sentryContext && sentryContext.extra,
+    });
+
+    const config = generateConfig(configJSON, flags);
+    settings = config.settings;
+
+    // Gather phase.
+    let artifacts;
+    if (settings.auditMode && !settings.gatherMode) {
+      // -A solo mode. No browser required.
+      artifacts = gatherArtifactsFromDisk(settings);
+    } else {
+      // -G, -GA, or neither.
+      // Verify the url is valid and that protocol is allowed.
+      let requestedUrl;
+      if (url && URL.isValid(url) && URL.isProtocolAllowed(url)) {
+        // Use canonicalized URL (with trailing slashes and such)
+        requestedUrl = new URL(url).href;
+      } else {
+        throw new LHError(LHError.errors.INVALID_URL);
+      }
+      const gatherOpts = {requestedUrl, flags, userConnection};
+      artifacts = await GatherRunner.run(config, gatherOpts);
+
+      // -G means save these to ./latest-run, etc.
+      if (settings.gatherMode) {
+        const path = getDataSavePath(settings);
+        await assetSaver.saveArtifacts(artifacts, path);
+      }
+    }
+
+    // Potentially quit early.
+    if (settings.gatherMode && !settings.auditMode) return;
+
+    log.timeEnd(indexStatus);
+
+    const runnerResult = await Runner.run(artifacts, {config});
+
+    // If -GA is used, save lhr to ./latest-run, etc.
+    if (settings.gatherMode && settings.auditMode) {
+      const path = getDataSavePath(settings);
+      assetSaver.saveLhr(runnerResult.lhr, path);
+    }
+
+    return runnerResult;
+  } catch (err) {
+    // i18n LighthouseError strings.
+    if (err.friendlyMessage) {
+      const locale = settings ? settings.locale : i18n.DEFAULT_LOCALE;
+      err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, locale);
+    }
+    await Sentry.captureException(err, {level: 'fatal'});
+    throw err;
+  }
+}
+
+/**
+ * Load saved artifacts from disk.
+ * @param {LH.Config.Settings} settings
+ * @return LH.Artifacts}
+ */
+function gatherArtifactsFromDisk(settings) {
+  const path = getDataSavePath(settings);
+  const artifacts = assetSaver.loadArtifacts(path);
+
+  return artifacts;
+}
+
+/**
+ * Get path to use for -G and -A modes. Defaults to $CWD/latest-run
+ * @param {LH.Config.Settings} settings
+ * @return {string}
+ */
+function getDataSavePath(settings) {
+  const {auditMode, gatherMode} = settings;
+
+  // This enables usage like: -GA=./custom-folder
+  if (typeof auditMode === 'string') return path.resolve(process.cwd(), auditMode);
+  if (typeof gatherMode === 'string') return path.resolve(process.cwd(), gatherMode);
+
+  return path.join(process.cwd(), 'latest-run');
 }
 
 /**

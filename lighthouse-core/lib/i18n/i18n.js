@@ -11,6 +11,7 @@ const lookupClosestLocale = require('lookup-closest-locale');
 const LOCALES = require('./locales.js');
 const {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} = require('../type-verifiers.js');
 
+/** @type {'en'} */
 const DEFAULT_LOCALE = 'en';
 
 /** @typedef {import('intl-messageformat-parser').Element} MessageElement */
@@ -538,6 +539,7 @@ module.exports = {
   collectAllCustomElementsFromICU,
   registerLocaleData,
   isStringOrIcuMessage,
+  DEFAULT_LOCALE,
   // TODO: exported for backwards compatibility. Consider removing on future breaking change.
   createMessageInstanceIdFn: createIcuMessageFn,
 };
