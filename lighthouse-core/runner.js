@@ -231,6 +231,19 @@ class Runner {
       requestedUrl,
       settings: runnerOpts.config.settings,
     };
+
+    const internalSkipPageLoadForDevToolsA11y = Boolean(
+      global.isDevtools &&
+      runnerOpts.config.settings.onlyCategories &&
+      runnerOpts.config.settings.onlyCategories.length === 1 &&
+      runnerOpts.config.settings.onlyCategories[0] === 'accessibility'
+    );
+    if (internalSkipPageLoadForDevToolsA11y) {
+      const artifacts = await GatherRunner._runWithoutPageLoadForDevtoolsA11y(
+        runnerOpts.config.passes, gatherOpts);
+      return artifacts;
+    }
+
     const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
     return artifacts;
   }
