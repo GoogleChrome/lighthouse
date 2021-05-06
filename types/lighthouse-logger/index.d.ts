@@ -16,6 +16,7 @@ declare module 'lighthouse-logger' {
   export function warn(title: string, ...args: any[]): void;
   export function error(title: string, ...args: any[]): void;
   export function verbose(title: string, ...args: any[]): void;
+  export function debug(title: string, ...args: any[]): void;
   export function time(status: Status, level?: string): void;
   export function timeEnd(status: Status, level?: string): void;
   export function reset(): string;

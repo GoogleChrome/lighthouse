@@ -150,7 +150,7 @@ class Driver {
     }
 
     // log event listeners being bound
-    log.formatProtocol('listen for event =>', {method: eventName}, 'verbose');
+    log.formatProtocol('listen for event =>', {method: eventName}, 'debug');
     this._eventEmitter.on(eventName, cb);
   }
 
@@ -166,7 +166,7 @@ class Driver {
       throw new Error('connect() must be called before attempting to listen to events.');
     }
     // log event listeners being bound
-    log.formatProtocol('listen once for event =>', {method: eventName}, 'verbose');
+    log.formatProtocol('listen once for event =>', {method: eventName}, 'debug');
     this._eventEmitter.once(eventName, cb);
   }
 
@@ -221,7 +221,7 @@ class Driver {
 
     // Switching to enabled or disabled, respectively.
     if ((enable && newCount === 1) || (!enable && newCount === 0)) {
-      log.verbose('Driver', `${domain}.${enable ? 'enable' : 'disable'}`);
+      log.debug('Driver', `${domain}.${enable ? 'enable' : 'disable'}`);
       return true;
     } else {
       if (newCount < 0) {

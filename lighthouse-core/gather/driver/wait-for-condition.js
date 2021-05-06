@@ -166,7 +166,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       // Wait until it calms down a bit to be a little less spammy.
       if (inflightRecords.length < 20) {
         for (const record of inflightRecords) {
-          log.verbose('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
+          log.debug('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
         }
       }
     };

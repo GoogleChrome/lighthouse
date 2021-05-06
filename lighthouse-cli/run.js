@@ -76,7 +76,7 @@ function getDebuggableChrome(flags) {
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
-    logLevel: flags.logLevel,
+    logLevel: flags.logLevel === 'debug' ? 'verbose' : flags.logLevel,
   });
 }
 

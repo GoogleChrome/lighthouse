@@ -85,13 +85,16 @@ class Log {
         debug.enable('-*');
         break;
       case 'verbose':
+        debug.enable('*, -*:debug');
+        break;
+      case 'debug':
         debug.enable('*');
         break;
       case 'error':
         debug.enable('-*, *:error');
         break;
       default:
-        debug.enable('*, -*:verbose');
+        debug.enable('*, -*:verbose, -*:debug');
     }
   }
 
@@ -123,7 +126,7 @@ class Log {
     Log[level]('status', msg, ...args);
   }
 
-  static timeEnd({msg, id, args = []}, level = 'verbose') {
+  static timeEnd({msg, id, args = []}, level = 'debug') {
     Log[level]('statusEnd', msg, ...args);
     marky.stop(id);
   }
@@ -145,6 +148,11 @@ class Log {
   static verbose(title, ...args) {
     Log.events.issueStatus(title, args);
     return Log._logToStdErr(`${title}:verbose`, args);
+  }
+
+  static debug(title, ...args) {
+    Log.events.issueStatus(title, args);
+    return Log._logToStdErr(`${title}:debug`, args);
   }
 
   /**
