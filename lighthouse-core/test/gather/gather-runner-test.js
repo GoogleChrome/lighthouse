@@ -1024,6 +1024,15 @@ describe('GatherRunner', function() {
       expect(GatherRunner.getNonHtmlError(mainRecord)).toBeUndefined();
     });
 
+    it('passes when the page is of MIME type application/xhtml+xml', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      const mimeType = 'application/xhtml+xml';
+      mainRecord.url = url;
+      mainRecord.mimeType = mimeType;
+      expect(GatherRunner.getNonHtmlError(mainRecord)).toBeUndefined();
+    });
+
     it('fails when the page is not of MIME type text/html', () => {
       const url = 'http://the-page.com';
       const mimeType = 'application/xml';
@@ -1161,6 +1170,24 @@ describe('GatherRunner', function() {
 
       const error = getAndExpectError(passContext, loadData, navigationError);
       expect(error.message).toEqual('NOT_HTML');
+    });
+
+    it('warns with XHTML type', () => {
+      const passContext = {
+        url: 'http://the-page.com',
+        passConfig: {loadFailureMode: LoadFailureMode.fatal},
+        baseArtifacts: {LighthouseRunWarnings: []}
+      };
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.mimeType = 'application/xhtml+xml';
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+      const warnings = JSON.stringify(passContext.baseArtifacts.LighthouseRunWarnings);
+      expect(warnings.includes('warningXhtml')).toBe(true);
     });
 
     it('fails with nav error last', () => {

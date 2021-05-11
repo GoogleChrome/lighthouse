@@ -44,6 +44,11 @@ const UIStrings = {
   warningSlowHostCpu: 'The tested device appears to have a slower CPU than  ' +
   'Lighthouse expects. This can negatively affect your performance score. Learn more about ' +
   '[calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling).',
+
+  /**
+   * @description Warning that the page is using the xhtml mime type
+   */
+  warningXhtml: 'The page is using an XHTML mime type.',
 };
 
 /**
@@ -52,6 +57,10 @@ const UIStrings = {
  * @see https://github.com/GoogleChrome/lighthouse/blob/ccbc8002fd058770d14e372a8301cc4f7d256414/docs/throttling.md#calibrating-multipliers
  */
 const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
+
+// MIME types are case-insenstive but Chrome normalizes MIME types to be lowercase.
+const HTML_MIME_TYPE = 'text/html';
+const XHTML_MIME_TYPE = 'application/xhtml+xml';
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
@@ -292,16 +301,15 @@ class GatherRunner {
    * @return {LH.LighthouseError|undefined}
    */
   static getNonHtmlError(finalRecord) {
-    // MIME types are case-insenstive but Chrome normalizes MIME types to be lowercase.
-    const HTML_MIME_TYPE = 'text/html';
-
     // If we never requested a document, there's no doctype error, let other cases handle it.
     if (!finalRecord) return undefined;
 
     // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
     // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
-    if (HTML_MIME_TYPE !== finalRecord.mimeType) {
-      return new LHError(LHError.errors.NOT_HTML, {mimeType: finalRecord.mimeType});
+    if (finalRecord.mimeType !== HTML_MIME_TYPE && finalRecord.mimeType !== XHTML_MIME_TYPE) {
+      return new LHError(LHError.errors.NOT_HTML, {
+        mimeType: finalRecord.mimeType,
+      });
     }
     return undefined;
   }
@@ -344,9 +352,14 @@ class GatherRunner {
     // Example: `DNS_FAILURE` is better than `NO_FCP`.
     if (networkError) return networkError;
 
-    // Error if page is not HTML.
-    if (nonHtmlError) return nonHtmlError;
-
+    if (finalRecord?.mimeType === XHTML_MIME_TYPE) {
+      // If page uses XHTML, show a warning
+      passContext?.baseArtifacts.LighthouseRunWarnings.push(str_(UIStrings.warningXhtml));
+    } else {
+      // Error if page is not HTML.
+      if (nonHtmlError) return nonHtmlError;
+    }
+    
     // Navigation errors are rather generic and express some failure of the page to render properly.
     // Use `navigationError` as the last resort.
     // Example: `NO_FCP`, the page never painted content for some unknown reason.
