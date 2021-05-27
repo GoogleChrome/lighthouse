@@ -293,7 +293,7 @@ describe('ReportRenderer', () => {
       global.Element = undefined;
     });
 
-    it('renders without axe violations', (done) => {
+    it('renders without axe violations', () => {
       const container = renderer._dom._document.createElement('main');
       const output = renderer.renderReport(sampleResults, container);
       renderer._dom._document.body.appendChild(container);
@@ -311,15 +311,18 @@ describe('ReportRenderer', () => {
           'link-in-text-block': {enabled: false},
           // Report has empty links prior to i18n-ing.
           'link-name': {enabled: false},
+          // May not be a real issue. https://github.com/dequelabs/axe-core/issues/2958
+          'nested-interactive': {enabled: false},
         },
       };
 
-      axe.run(output, config, (error, {violations}) => {
-        assert.ifError(error);
-        assert.ok(violations.length === 0, JSON.stringify(violations, null, 1));
-        done();
+      return new Promise(resolve => {
+        axe.run(output, config, (error, {violations}) => {
+          expect(error).toBeNull();
+          expect(violations).toEqual([]);
+          resolve();
+        });
       });
-
     // Set timeout to 10s to give axe-core enough time to complete
     // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
     }, /* timeout= */ 10 * 1000);

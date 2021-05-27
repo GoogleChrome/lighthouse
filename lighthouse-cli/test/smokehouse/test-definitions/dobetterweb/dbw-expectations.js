@@ -12,10 +12,10 @@
 const expectations = [
   {
     networkRequests: {
-      // 50 requests made for normal page testing.
+      // 53 requests made for normal page testing.
       // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
       // 3 extra requests made to /dobetterweb/clock.appcache
-      length: 59,
+      length: 62,
     },
     artifacts: {
       HostFormFactor: 'desktop',
@@ -381,11 +381,11 @@ const expectations = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 149,
+          numericValue: 154,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: 149},
-              {statistic: 'Maximum DOM Depth', value: 4},
+              {statistic: 'Total DOM Elements', value: 154},
+              {statistic: 'Maximum DOM Depth', value: 5},
               {
                 statistic: 'Maximum Child Elements',
                 value: 100,
@@ -415,7 +415,7 @@ const expectations = [
             screenshot: {
               width: 360,
               // Allow for differences in platforms.
-              height: '1350±20',
+              height: '1520±20',
               data: /^data:image\/jpeg;.{500,}/,
             },
             nodes: {

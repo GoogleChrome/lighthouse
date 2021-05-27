@@ -271,7 +271,9 @@ Auditing: Definition list items are wrapped in `<dl>` elements
 Auditing: Document has a `<title>` element
 Auditing: `[id]` attributes on active, focusable elements are unique
 Auditing: ARIA IDs are unique
+Auditing: `table` headers have visible text
 Auditing: No form fields have multiple labels
+Auditing: `<iframe>` elements with focusable content do not have a negative `tabindex`
 Auditing: `<frame>` or `<iframe>` elements have a title
 Auditing: Heading elements appear in a sequentially-descending order
 Auditing: `<html>` element has a `[lang]` attribute
@@ -445,6 +447,7 @@ duplicate-id-aria: notApplicable
 duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
+empty-table-header: notApplicable
 errors-in-console: pass
 external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
@@ -456,6 +459,7 @@ focusable-controls: manual
 font-display: pass
 font-size: fail
 form-field-multiple-labels: notApplicable
+frame-focusable-content: notApplicable
 frame-title: notApplicable
 full-page-screenshot: informative
 geolocation-on-start: pass
@@ -565,7 +569,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 157
+# of .lh-audit divs: 159
 
 .lh-audit divs:
 accesskeys
@@ -622,6 +626,7 @@ duplicate-id-aria
 duplicate-tags
 duplicated-javascript
 efficient-animated-content
+empty-table-header
 errors-in-console
 external-anchors-use-rel-noopener
 first-ad-render
@@ -630,6 +635,7 @@ focusable-controls
 font-display
 font-size
 form-field-multiple-labels
+frame-focusable-content
 frame-title
 geolocation-on-start
 gpt-bids-parallel

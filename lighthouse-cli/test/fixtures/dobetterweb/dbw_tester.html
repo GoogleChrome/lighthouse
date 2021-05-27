@@ -225,6 +225,15 @@
 <button class="small-button">Do something</button>
 <button class="small-button">Do something else</button>
 
+<!-- FAIL - frame-focusable-content -->
+<iframe tabindex="-1" src="focusable-iframe.html"></iframe>
+<!-- FAIL - empty-table-header -->
+<table>
+  <tr>
+    <th></th>
+  </tr>
+</table>
+
 <!-- Some websites overwrite the original Error object. The captureJSCallUsage function
   relies on the native Error object and prepareStackTrace from V8. When overwriting the stack
   property the e.stack inside the gatherer won't be in the correct format

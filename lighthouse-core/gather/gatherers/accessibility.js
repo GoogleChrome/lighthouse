@@ -57,6 +57,9 @@ async function runA11yChecks() {
       'svg-img-alt': {enabled: false},
       'audio-caption': {enabled: false},
       'aria-treeitem-name': {enabled: true},
+      'empty-table-header': {enabled: true},
+      // https://github.com/dequelabs/axe-core/issues/2958
+      'nested-interactive': {enabled: false},
     },
   });
 

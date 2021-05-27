@@ -2848,12 +2848,70 @@
         "items": []
       }
     },
+    "empty-table-header": {
+      "id": "empty-table-header",
+      "title": "`table` headers have visible text",
+      "description": "`table` headers should have visible text so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "lhId": "6-44-TH",
+              "path": "3,HTML,1,BODY,34,TABLE,0,TBODY,0,TR,0,TH",
+              "selector": "table > tbody > tr > th",
+              "boundingRect": {
+                "top": 1328,
+                "bottom": 1330,
+                "left": 10,
+                "right": 12,
+                "width": 2,
+                "height": 2
+              },
+              "snippet": "<th>",
+              "nodeLabel": "th",
+              "explanation": "Fix any of the following:\n  Unable to determine if element has children"
+            }
+          }
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "impact": "minor",
+          "tags": [
+            "wcag131",
+            "cat.aria"
+          ]
+        }
+      }
+    },
     "form-field-multiple-labels": {
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
       "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "frame-focusable-content": {
+      "id": "frame-focusable-content",
+      "title": "`<iframe>` elements with focusable content do not have a negative `tabindex`",
+      "description": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "frame-title": {
       "id": "frame-title",
@@ -5409,9 +5467,19 @@
           "group": "a11y-aria"
         },
         {
+          "id": "empty-table-header",
+          "weight": 0,
+          "group": "a11y-tables-lists"
+        },
+        {
           "id": "form-field-multiple-labels",
           "weight": 0,
           "group": "a11y-names-labels"
+        },
+        {
+          "id": "frame-focusable-content",
+          "weight": 3,
+          "group": "a11y-navigation"
         },
         {
           "id": "frame-title",
@@ -6632,7 +6700,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:empty-table-header",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:form-field-multiple-labels",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:frame-focusable-content",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7802,6 +7882,7 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
         "audits[unsized-images].details.headings[2].text",
+        "audits[empty-table-header].details.headings[0].text",
         "audits[html-has-lang].details.headings[0].text",
         "audits[image-alt].details.headings[0].text",
         "audits.label.details.headings[0].text",
@@ -8007,11 +8088,23 @@
       "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": [
         "audits[duplicate-id-aria].description"
       ],
+      "lighthouse-core/audits/accessibility/empty-table-header.js | title": [
+        "audits[empty-table-header].title"
+      ],
+      "lighthouse-core/audits/accessibility/empty-table-header.js | description": [
+        "audits[empty-table-header].description"
+      ],
       "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": [
         "audits[form-field-multiple-labels].title"
       ],
       "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": [
         "audits[form-field-multiple-labels].description"
+      ],
+      "lighthouse-core/audits/accessibility/frame-focusable-content.js | title": [
+        "audits[frame-focusable-content].title"
+      ],
+      "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": [
+        "audits[frame-focusable-content].description"
       ],
       "lighthouse-core/audits/accessibility/frame-title.js | title": [
         "audits[frame-title].title"

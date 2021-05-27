@@ -1615,6 +1615,41 @@
   "Accessibility": {
     "violations": [
       {
+        "id": "frame-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag241",
+          "wcag412",
+          "section508",
+          "section508.22.i"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "iframe"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has no title attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
+            "node": {
+              "lhId": "6-40-IFRAME",
+              "devtoolsNodePath": "3,HTML,1,BODY,30,IFRAME",
+              "selector": "body > iframe",
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1320,
+                "left": 8,
+                "right": 312,
+                "width": 304,
+                "height": 154
+              },
+              "snippet": "<iframe tabindex=\"-1\" src=\"focusable-iframe.html\">",
+              "nodeLabel": "iframe"
+            }
+          }
+        ]
+      },
+      {
         "id": "html-has-lang",
         "impact": "serious",
         "tags": [
@@ -2070,6 +2105,37 @@
               },
               "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
               "nodeLabel": "external link that uses rel noopener"
+            }
+          }
+        ]
+      },
+      {
+        "id": "empty-table-header",
+        "impact": "minor",
+        "tags": [
+          "wcag131",
+          "cat.aria"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "th"
+            ],
+            "failureSummary": "Fix any of the following:\n  Unable to determine if element has children",
+            "node": {
+              "lhId": "6-44-TH",
+              "devtoolsNodePath": "3,HTML,1,BODY,34,TABLE,0,TBODY,0,TR,0,TH",
+              "selector": "table > tbody > tr > th",
+              "boundingRect": {
+                "top": 1328,
+                "bottom": 1330,
+                "left": 10,
+                "right": 12,
+                "width": 2,
+                "height": 2
+              },
+              "snippet": "<th>",
+              "nodeLabel": "th"
             }
           }
         ]
