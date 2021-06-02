@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const NetworkRecords = require('../computed/network-records.js');
 const {getPageLoadError} = require('../lib/navigation-error.js');
@@ -452,7 +453,17 @@ class GatherRunner {
    */
   static finalizeBaseArtifacts(baseArtifacts) {
     // Take only unique LighthouseRunWarnings.
-    baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
+
+    /** @type {(string | LH.IcuMessage)[]} */
+    const lighthouseRunWarnings = [];
+    for (const warning of baseArtifacts.LighthouseRunWarnings) {
+      // each entry in baseArtifacts.LighthouseRunWarnings can be a string or a LH.IcuMessage.
+      if (!lighthouseRunWarnings.some(existing => isDeepEqual(warning, existing))) {
+        lighthouseRunWarnings.push(warning);
+      }
+    }
+
+    baseArtifacts.LighthouseRunWarnings = lighthouseRunWarnings;
 
     // Take the timing entries we've gathered so far.
     baseArtifacts.Timing = log.getTimeEntries();
