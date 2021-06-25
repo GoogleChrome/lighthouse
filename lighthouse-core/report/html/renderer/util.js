@@ -66,6 +66,8 @@ class Util {
     if (!clone.configSettings.locale) {
       clone.configSettings.locale = 'en';
     }
+    // If LHR is older than v7, it uses emulatedFormFactor instead of formFactor.
+    // https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md#changes-made-in-v7
     if (!clone.configSettings.formFactor) {
       // @ts-expect-error fallback handling for emulatedFormFactor
       clone.configSettings.formFactor = clone.configSettings.emulatedFormFactor;
@@ -399,7 +401,7 @@ class Util {
     return [
       {
         name: Util.i18n.strings.runtimeSettingsDevice,
-        description: emulationDesc.deviceEmulation,
+        description: emulationDesc.device,
       },
       {
         name: Util.i18n.strings.runtimeSettingsNetworkThrottling,
@@ -414,7 +416,7 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
+   * @return {{device: string, networkThrottling: string, cpuThrottling: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
@@ -447,14 +449,28 @@ class Util {
         networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    // TODO(paulirish): revise Runtime Settings strings: https://github.com/GoogleChrome/lighthouse/pull/11796
-    const deviceEmulation = {
+    // The fallback to runtimeNoEmulation only exists for v6-era emulatedFormFactor=none
+    let device = settings.screenEmulation ? {
       mobile: Util.i18n.strings.runtimeMobileEmulation,
       desktop: Util.i18n.strings.runtimeDesktopEmulation,
-    }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
+    }[settings.formFactor] : Util.i18n.strings.runtimeNoEmulation;
+
+    // A client (eg Calibre/WPT) can provide these to convey more specific emulation details.
+    if (settings.displayStrings) {
+      const ds = settings.displayStrings;
+      if (ds.deviceSetting) {
+        device = ds.deviceSetting;
+      }
+      if (ds.networkThrottlingSetting) {
+        networkThrottling = ds.networkThrottlingSetting;
+      }
+      if (ds.cpuThrottlingSetting) {
+        cpuThrottling = ds.cpuThrottlingSetting;
+      }
+    }
 
     return {
-      deviceEmulation,
+      device,
       cpuThrottling,
       networkThrottling,
     };
@@ -629,8 +645,8 @@ Util.UIStrings = {
 
   /** Descriptive explanation for emulation setting when no device emulation is set. */
   runtimeNoEmulation: 'No emulation',
-  /** Descriptive explanation for emulation setting when emulating a Moto G4 mobile device. */
-  runtimeMobileEmulation: 'Emulated Moto G4',
+  /** Descriptive explanation for emulation setting when emulating a mobile device. */
+  runtimeMobileEmulation: 'Emulated Mobile',
   /** Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor. */
   runtimeDesktopEmulation: 'Emulated Desktop',
   /** Descriptive explanation for a runtime setting that is set to an unknown value. */

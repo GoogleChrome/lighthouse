@@ -216,7 +216,7 @@ describe('ReportRenderer', () => {
       assert.ok(descriptions.length >= 3);
 
       const descriptionsTxt = descriptions.map(el => el.textContent).join('\n');
-      expect(descriptionsTxt).toContain('Moto G4');
+      expect(descriptionsTxt).toContain('Emulated Mobile');
       expect(descriptionsTxt).toContain('RTT');
       expect(descriptionsTxt).toMatch(/\dx/);
       expect(descriptionsTxt).toContain(sampleResults.userAgent);

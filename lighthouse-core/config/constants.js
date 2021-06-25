@@ -103,6 +103,8 @@ const defaultSettings = {
   screenEmulation: screenEmulationMetrics.mobile,
   emulatedUserAgent: userAgents.mobile,
 
+  displayStrings: {},
+
   auditMode: false,
   gatherMode: false,
   disableStorageReset: false,
