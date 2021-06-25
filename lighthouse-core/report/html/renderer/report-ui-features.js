@@ -25,6 +25,34 @@
 
 /* globals getFilenamePrefix Util TextEncoding ElementScreenshotRenderer */
 
+/**
+ * @typedef FeatureSet
+ * @property {boolean} dropDownMenu
+ * @property {boolean | {containerEl: Element}} elementScreenshotOverlay
+ * @property {boolean} fireworks
+ * @property {boolean} i18n
+ * @property {boolean} mediaQueryListeners
+ * @property {boolean} printing
+ * @property {boolean} showMetricDescriptionsOnError
+ * @property {boolean} stickyHeader
+ * @property {boolean} thirdPartyFilter
+ * @property {boolean} toggleDarkMode
+ */
+
+/** @type {FeatureSet} */
+const DEFAULT_FEATURE_SET = {
+  dropDownMenu: true,
+  elementScreenshotOverlay: true,
+  fireworks: true,
+  i18n: true,
+  mediaQueryListeners: true,
+  printing: true,
+  showMetricDescriptionsOnError: true,
+  stickyHeader: true,
+  thirdPartyFilter: true,
+  toggleDarkMode: true,
+};
+
 /** @typedef {import('./dom')} DOM */
 
 /**
@@ -47,10 +75,13 @@ function getAppsOrigin() {
 class ReportUIFeatures {
   /**
    * @param {DOM} dom
+   * @param {Partial<FeatureSet>} featureSet
    */
-  constructor(dom) {
+  constructor(dom, featureSet = {}) {
     /** @type {LH.Result} */
     this.json; // eslint-disable-line no-unused-expressions
+    /** @type {FeatureSet} */
+    this.featureSet = {...DEFAULT_FEATURE_SET, ...featureSet};
     /** @type {DOM} */
     this._dom = dom;
     /** @type {Document} */
@@ -88,35 +119,61 @@ class ReportUIFeatures {
   initFeatures(report) {
     this.json = report;
 
-    this._setupMediaQueryListeners();
-    this._dropDown.setup(this.onDropDownMenuClick);
-    this._setupThirdPartyFilter();
-    this._setupElementScreenshotOverlay(this._dom.find('.lh-container', this._document));
-    this._setUpCollapseDetailsAfterPrinting();
-    this._resetUIState();
-    this._document.addEventListener('keyup', this.onKeyUp);
-    this._document.addEventListener('copy', this.onCopy);
+    if (this.featureSet.mediaQueryListeners) {
+      this._setupMediaQueryListeners();
+    }
 
-    const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
-    topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
+    if (this.featureSet.dropDownMenu) {
+      this._dropDown.setup(this.onDropDownMenuClick);
+      this._document.addEventListener('copy', this.onCopy);
+    }
+
+    if (this.featureSet.thirdPartyFilter) {
+      this._setupThirdPartyFilter();
+    }
+
+    if (this.featureSet.elementScreenshotOverlay) {
+      let overlayContainerEl;
+      if (this.featureSet.elementScreenshotOverlay === true) {
+        overlayContainerEl = this._dom.find('.lh-container', this._document);
+      } else {
+        overlayContainerEl = this.featureSet.elementScreenshotOverlay.containerEl;
+      }
+      this._setupElementScreenshotOverlay(overlayContainerEl);
+    }
+
+    if (this.featureSet.printing) {
+      this._setUpCollapseDetailsAfterPrinting();
+      this._document.addEventListener('keyup', this.onKeyUp);
+    }
+
+    this._resetUIState();
 
     let turnOffTheLights = false;
-    // Do not query the system preferences for DevTools - DevTools should only apply dark theme
-    // if dark is selected in the settings panel.
-    if (!this._dom.isDevTools() && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      turnOffTheLights = true;
+    if (this.featureSet.toggleDarkMode) {
+      const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
+      topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
+
+      // Do not query the system preferences for DevTools - DevTools should only apply dark theme
+      // if dark is selected in the settings panel.
+      if (!this._dom.isDevTools() && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        turnOffTheLights = true;
+      }
     }
 
     // Fireworks!
-    // To get fireworks you need 100 scores in all core categories, except PWA (because going the PWA route is discretionary).
-    const fireworksRequiredCategoryIds = ['performance', 'accessibility', 'best-practices', 'seo'];
-    const scoresAll100 = fireworksRequiredCategoryIds.every(id => {
-      const cat = report.categories[id];
-      return cat && cat.score === 1;
-    });
-    if (scoresAll100) {
-      turnOffTheLights = true;
-      this._enableFireworks();
+    if (this.featureSet.fireworks) {
+      // To get fireworks you need 100 scores in all core categories, except PWA (because going the PWA route is discretionary).
+      const fireworksRequiredCategoryIds =
+        ['performance', 'accessibility', 'best-practices', 'seo'];
+      const scoresAll100 = fireworksRequiredCategoryIds.every(id => {
+        const cat = report.categories[id];
+        return cat && cat.score === 1;
+      });
+      if (scoresAll100) {
+        turnOffTheLights = true;
+        this._enableFireworks();
+      }
     }
 
     if (turnOffTheLights) {
@@ -124,7 +181,7 @@ class ReportUIFeatures {
     }
 
     // There is only a sticky header when at least 2 categories are present.
-    if (Object.keys(this.json.categories).length >= 2) {
+    if (this.featureSet.stickyHeader && Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
       const containerEl = this._dom.find('.lh-container', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
@@ -144,11 +201,14 @@ class ReportUIFeatures {
     }
 
     // Show the metric descriptions by default when there is an error.
-    const hasMetricError = report.categories.performance && report.categories.performance.auditRefs
-      .some(audit => Boolean(audit.group === 'metrics' && report.audits[audit.id].errorMessage));
-    if (hasMetricError) {
-      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._document);
-      toggleInputEl.checked = true;
+    if (this.featureSet.showMetricDescriptionsOnError) {
+      const hasMetricError = report.categories.performance &&
+        report.categories.performance.auditRefs.some(
+          audit => Boolean(audit.group === 'metrics' && report.audits[audit.id].errorMessage));
+      if (hasMetricError) {
+        const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._document);
+        toggleInputEl.checked = true;
+      }
     }
 
     const showTreemapApp =
@@ -162,11 +222,14 @@ class ReportUIFeatures {
     }
 
     // Fill in all i18n data.
-    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
-      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
-      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
-      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
-      node.textContent = Util.i18n.strings[i18nAttr];
+    if (this.featureSet.i18n) {
+      for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+        // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
+        // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
+        const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (
+          node.getAttribute('data-i18n'));
+        node.textContent = Util.i18n.strings[i18nAttr];
+      }
     }
   }
 
