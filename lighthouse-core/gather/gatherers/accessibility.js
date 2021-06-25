@@ -63,10 +63,6 @@ async function runAxe(resultTypes, opts = {colorContrastEnabled: true}) {
       'color-contrast': {enabled: opts.colorContrastEnabled}, // See gatherer's test for explanation
       'aria-roledescription': {enabled: false},
       'scrollable-region-focusable': {enabled: false},
-      // TODO(paulirish): create audits and enable these 3.
-      'input-button-name': {enabled: false},
-      'role-img-alt': {enabled: false},
-      'select-name': {enabled: false},
     },
   });
 

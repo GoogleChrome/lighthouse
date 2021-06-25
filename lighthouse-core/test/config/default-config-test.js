@@ -56,4 +56,22 @@ describe('Default Config', () => {
       }
     }
   });
+
+  it('audit ids are all in groups', () => {
+    const audits = defaultConfig.audits;
+
+    const auditsInCategories = new Set();
+    for (const category of Object.values(defaultConfig.categories)) {
+      category.auditRefs.forEach(ref => auditsInCategories.add(ref.id));
+    }
+    const categoryAuditsArr = Array.from(auditsInCategories).sort();
+
+    // Remove path to get audit IDs
+    const auditsArr = audits.map(auditPath => auditPath.split('/').slice(-1)[0]).sort()
+        // As covered in config.js, full-page-screenshot is a special no-category audit
+        .filter(id => id !== 'full-page-screenshot');
+
+    expect(categoryAuditsArr).toMatchObject(auditsArr);
+    expect(auditsArr).toMatchObject(categoryAuditsArr);
+  });
 });
