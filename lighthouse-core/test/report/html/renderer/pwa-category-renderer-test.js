@@ -116,12 +116,12 @@ describe('PwaCategoryRenderer', () => {
       const clone = JSON.parse(JSON.stringify(sampleResults));
       const category = clone.categories.pwa;
 
-      // Set everything to passing, except redirects-http set to n/a (as it is on localhost)
+      // Set everything to passing, except for one. (themed-omnibox chosen randomly)
       for (const auditRef of category.auditRefs) {
         auditRef.result.score = 1;
         auditRef.result.scoreDisplayMode = 'binary';
       }
-      const audit = category.auditRefs.find(ref => ref.id === 'redirects-http');
+      const audit = category.auditRefs.find(ref => ref.id === 'themed-omnibox');
       audit.result.scoreDisplayMode = 'notApplicable';
       audit.result.score = null;
 

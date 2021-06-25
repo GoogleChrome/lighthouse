@@ -12,10 +12,10 @@
 const expectations = [
   {
     networkRequests: {
-      // 50 requests made for normal page testing.
-      // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
-      // 3 extra requests made to /dobetterweb/clock.appcache
-      length: 59,
+      // 46 requests made for normal page testing.
+      // 4 extra requests made because stylesheets are evicted from the cache by the time DT opens.
+      // 2 extra requests made to /dobetterweb/clock.appcache
+      length: 52,
     },
     artifacts: {
       HostFormFactor: 'desktop',

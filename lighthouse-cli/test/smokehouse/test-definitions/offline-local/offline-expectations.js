@@ -35,10 +35,6 @@ module.exports = [
         'password-inputs-can-be-pasted-into': {
           score: 1,
         },
-        'redirects-http': {
-          score: null,
-          scoreDisplayMode: 'notApplicable',
-        },
         'service-worker': {
           score: 0,
         },
@@ -117,10 +113,6 @@ module.exports = [
       audits: {
         'is-on-https': {
           score: 1,
-        },
-        'redirects-http': {
-          score: null,
-          scoreDisplayMode: 'notApplicable',
         },
         'service-worker': {
           score: 1,

@@ -394,6 +394,10 @@ describe('CategoryRenderer', () => {
       const passingRefs = categoryClone.auditRefs.filter(ref => ref.result.score === 1);
       passingRefs[0].result.warnings = ['Some warning'];
       passingRefs[1].result.warnings = ['Some warning'];
+      // Make one audit n/a
+      const audit = categoryClone.auditRefs.find(ref => ref.id === 'themed-omnibox');
+      audit.result.scoreDisplayMode = 'notApplicable';
+      audit.result.score = null;
 
       const elem = renderer.render(categoryClone, sampleResults.categoryGroups);
       const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit');
@@ -403,7 +407,7 @@ describe('CategoryRenderer', () => {
       const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 6);
+      assert.equal(failedAudits.length, 5);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
       assert.equal(naAudits.length, 1);

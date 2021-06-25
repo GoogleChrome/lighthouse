@@ -16,7 +16,6 @@ module.exports = {
     ],
     onlyAudits: [
       'is-on-https',
-      'redirects-http',
       'service-worker',
       'viewport',
       'user-timings',

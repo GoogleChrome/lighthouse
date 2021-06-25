@@ -892,7 +892,7 @@ describe('Config', () => {
       },
     };
     const config = new Config(extendedJson);
-    assert.equal(config.passes.length, 3, 'did not filter config');
+    assert.equal(config.passes.length, 2, 'did not filter config');
     assert.equal(Object.keys(config.categories).length, 1, 'did not filter config');
     assert.deepEqual(config.settings.onlyCategories, ['pwa']);
     const configAgain = new Config(config);
@@ -1236,7 +1236,7 @@ describe('Config', () => {
       const selectedCategory = origConfig.categories.pwa;
       // +1 for `full-page-screenshot`.
       const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
-      assert.equal(config.passes.length, 3, 'incorrect # of passes');
+      assert.equal(config.passes.length, 2, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
