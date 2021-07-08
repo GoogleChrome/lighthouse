@@ -11,11 +11,61 @@ const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
  * @fileoverview Tracks unused CSS rules.
  */
 class CSSUsage extends FRGatherer {
+  constructor() {
+    super();
+    /** @type {Array<LH.Crdp.CSS.StyleSheetAddedEvent>} */
+    this._stylesheets = [];
+    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
+    this._onStylesheetAdded = sheet => this._stylesheets.push(sheet);
+    /**
+     * Initialize as undefined so we can assert results are fetched.
+     * @type {LH.Crdp.CSS.RuleUsage[]|undefined}
+     */
+    this._ruleUsage = undefined;
+  }
+
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    // TODO(FR-COMPAT): Add support for timespan.
-    supportedModes: ['snapshot', 'navigation'],
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
   };
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startCSSUsageTracking(context) {
+    const session = context.driver.defaultSession;
+    session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
+
+    await session.sendCommand('DOM.enable');
+    await session.sendCommand('CSS.enable');
+    await session.sendCommand('CSS.startRuleUsageTracking');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startInstrumentation(context) {
+    if (context.gatherMode !== 'timespan') return;
+    await this.startCSSUsageTracking(context);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopCSSUsageTracking(context) {
+    const session = context.driver.defaultSession;
+    const coverageResponse = await session.sendCommand('CSS.stopRuleUsageTracking');
+    this._ruleUsage = coverageResponse.ruleUsage;
+    session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    if (context.gatherMode !== 'timespan') return;
+    await this.stopCSSUsageTracking(context);
+  }
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
@@ -25,24 +75,19 @@ class CSSUsage extends FRGatherer {
     const session = context.driver.defaultSession;
     const executionContext = context.driver.executionContext;
 
-    /** @type {Array<LH.Crdp.CSS.StyleSheetAddedEvent>} */
-    const stylesheets = [];
-    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
-    const onStylesheetAdded = sheet => stylesheets.push(sheet);
-    session.on('CSS.styleSheetAdded', onStylesheetAdded);
+    // TODO(FR-COMPAT): Do this only for snapshot once legacy runner is deprecated.
+    if (context.gatherMode !== 'timespan') {
+      await this.startCSSUsageTracking(context);
 
-    await session.sendCommand('DOM.enable');
-    await session.sendCommand('CSS.enable');
-    await session.sendCommand('CSS.startRuleUsageTracking');
+      // Force style to recompute.
+      // Doesn't appear to be necessary in newer versions of Chrome.
+      await executionContext.evaluateAsync('getComputedStyle(document.body)');
 
-    // Force style to recompute.
-    // Doesn't appear to be necessary in newer versions of Chrome.
-    await executionContext.evaluateAsync('getComputedStyle(document.body)');
-
-    session.off('CSS.styleSheetAdded', onStylesheetAdded);
+      await this.stopCSSUsageTracking(context);
+    }
 
     // Fetch style sheet content in parallel.
-    const promises = stylesheets.map(sheet => {
+    const promises = this._stylesheets.map(sheet => {
       const styleSheetId = sheet.header.styleSheetId;
       return session.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
         return {
@@ -53,15 +98,17 @@ class CSSUsage extends FRGatherer {
     });
     const styleSheetInfo = await Promise.all(promises);
 
-    const ruleUsageResponse = await session.sendCommand('CSS.stopRuleUsageTracking');
     await session.sendCommand('CSS.disable');
     await session.sendCommand('DOM.disable');
 
     const dedupedStylesheets = new Map(styleSheetInfo.map(sheet => {
       return [sheet.content, sheet];
     }));
+
+    if (!this._ruleUsage) throw new Error('Issue collecting rule usages');
+
     return {
-      rules: ruleUsageResponse.ruleUsage,
+      rules: this._ruleUsage,
       stylesheets: Array.from(dedupedStylesheets.values()),
     };
   }
