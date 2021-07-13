@@ -7,7 +7,8 @@
 
 /* global document window ga DOM ReportRenderer ReportUIFeatures Logger */
 
-(function __initLighthouseReport__() {
+// eslint-disable-next-line no-unused-vars
+function __initLighthouseReport__() {
   const dom = new DOM(document);
   const renderer = new ReportRenderer(dom);
   const container = dom.find('main', document);
@@ -20,33 +21,33 @@
   // is in the document.
   const features = new ReportUIFeatures(dom);
   features.initFeatures(lhr);
-})();
 
-document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
-  // @ts-expect-error
-  if (window.ga) ga(e.detail.cmd, e.detail.fields);
-});
+  document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
+    // @ts-expect-error
+    if (window.ga) ga(e.detail.cmd, e.detail.fields);
+  });
 
-document.addEventListener('lh-log', /** @param {Event} e */ e => {
-  const el = document.querySelector('#lh-log');
-  if (!el) return;
+  document.addEventListener('lh-log', /** @param {Event} e */ e => {
+    const el = document.querySelector('#lh-log');
+    if (!el) return;
 
-  const logger = new Logger(el);
-  // @ts-expect-error
-  const detail = e.detail;
+    const logger = new Logger(el);
+    // @ts-expect-error
+    const detail = e.detail;
 
-  switch (detail.cmd) {
-    case 'log':
-      logger.log(detail.msg);
-      break;
-    case 'warn':
-      logger.warn(detail.msg);
-      break;
-    case 'error':
-      logger.error(detail.msg);
-      break;
-    case 'hide':
-      logger.hide();
-      break;
-  }
-});
+    switch (detail.cmd) {
+      case 'log':
+        logger.log(detail.msg);
+        break;
+      case 'warn':
+        logger.warn(detail.msg);
+        break;
+      case 'error':
+        logger.error(detail.msg);
+        break;
+      case 'hide':
+        logger.hide();
+        break;
+    }
+  });
+}

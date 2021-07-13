@@ -16,7 +16,10 @@ const Metrics = require('./traces/pwmetrics-events.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
 const LHError = require('../lib/lh-error.js');
-const pipeline = promisify(stream.pipeline);
+// TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
+// don't need anything in this file except for `stringifyReplacer`, so a check for
+// truthiness before using is enough.
+const pipeline = promisify && promisify(stream.pipeline);
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';

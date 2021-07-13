@@ -20,6 +20,7 @@ const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
 const generateReport = require('../report/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
+const {version: lighthouseVersion} = require('../package.json');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
@@ -112,7 +113,6 @@ class Runner {
       }
 
       // Entering: conclusion of the lighthouse result object
-      const lighthouseVersion = require('../package.json').version;
 
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.

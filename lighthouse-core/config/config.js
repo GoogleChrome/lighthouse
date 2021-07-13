@@ -16,6 +16,7 @@ const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const {
   mergeConfigFragment,
+  requireWrapper,
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
@@ -354,7 +355,7 @@ class Config {
       const pluginPath = global.isDevtools || global.isLightrider ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
-      const rawPluginJson = require(pluginPath);
+      const rawPluginJson = requireWrapper(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
       configJSON = Config.extendConfigJSON(configJSON, pluginJson);

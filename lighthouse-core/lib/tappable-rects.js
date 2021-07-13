@@ -5,14 +5,7 @@
  */
 'use strict';
 
-const {
-  filterOutRectsContainedByOthers,
-  filterOutTinyRects,
-  rectsTouchOrOverlap,
-  rectContainsPoint,
-  getBoundingRect,
-  getRectCenterPoint,
-} = require('./rect-helpers.js');
+const RectHelpers = require('./rect-helpers.js');
 
 /**
  * Merge client rects together and remove small ones. This may result in a larger overall
@@ -23,8 +16,8 @@ const {
 function getTappableRectsFromClientRects(clientRects) {
   // 1x1px rect shouldn't be reason to treat the rect as something the user should tap on.
   // Often they're made invisble in some obscure way anyway, and only exist for e.g. accessibiliity.
-  clientRects = filterOutTinyRects(clientRects);
-  clientRects = filterOutRectsContainedByOthers(clientRects);
+  clientRects = RectHelpers.filterOutTinyRects(clientRects);
+  clientRects = RectHelpers.filterOutRectsContainedByOthers(clientRects);
   clientRects = mergeTouchingClientRects(clientRects);
   return clientRects;
 }
@@ -68,17 +61,17 @@ function mergeTouchingClientRects(clientRects) {
       const rectsLineUpVertically =
         almostEqual(crA.left, crB.left) || almostEqual(crA.right, crB.right);
       const canMerge =
-        rectsTouchOrOverlap(crA, crB) &&
+        RectHelpers.rectsTouchOrOverlap(crA, crB) &&
         (rectsLineUpHorizontally || rectsLineUpVertically);
 
       if (canMerge) {
-        const replacementClientRect = getBoundingRect([crA, crB]);
-        const mergedRectCenter = getRectCenterPoint(replacementClientRect);
+        const replacementClientRect = RectHelpers.getBoundingRect([crA, crB]);
+        const mergedRectCenter = RectHelpers.getRectCenterPoint(replacementClientRect);
 
         if (
           !(
-            rectContainsPoint(crA, mergedRectCenter) ||
-            rectContainsPoint(crB, mergedRectCenter)
+            RectHelpers.rectContainsPoint(crA, mergedRectCenter) ||
+            RectHelpers.rectContainsPoint(crB, mergedRectCenter)
           )
         ) {
           // Don't merge because the new shape is too different from the
