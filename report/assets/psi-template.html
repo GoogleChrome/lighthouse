@@ -1,0 +1,125 @@
+<!--
+ * Copyright 2021 The Lighthouse Authors. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>PageSpeed Faux Report</title>
+  <style>/*%%LIGHTHOUSE_CSS%%*/</style>
+
+  <style>
+    /* https://blogs.sitepointstatic.com/examples/tech/css3-target/tabs.html */
+article.tabs
+{
+	position: relative;
+	display: block;
+	width: 50em;
+	margin: 0 auto;
+}
+
+article.tabs > section
+{
+	position: absolute;
+	display: block;
+	top: 1.8em;
+	left: 0;
+	padding: 10px 20px;
+	background-color: #ddd;
+	border-radius: 5px;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.1);
+	z-index: 0;
+}
+
+article.tabs > section:first-child
+{
+	z-index: 1;
+}
+
+article.tabs > section > h2
+{
+	position: absolute;
+	font-size: 1em;
+	font-weight: normal;
+	width: 120px;
+	height: 1.8em;
+	top: -1.8em;
+	left: 10px;
+	padding: 0;
+	margin: 0;
+	color: #999;
+	background-color: #ddd;
+	border-radius: 5px 5px 0 0;
+}
+
+article.tabs > section:nth-child(2) > h2
+{
+	left: 132px;
+}
+
+article.tabs > section:nth-child(3) > h2
+{
+	left: 254px;
+}
+
+article.tabs > section > h2 a
+{
+	display: block;
+	width: 100%;
+	line-height: 1.8em;
+	text-align: center;
+	text-decoration: none;
+	color: inherit;
+	outline: 0 none;
+}
+
+article.tabs > section,
+article.tabs > section > h2
+{
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
+}
+
+article.tabs > section:target,
+article.tabs > section:target > h2
+{
+	color: #333;
+	background-color: #fff;
+	z-index: 2;
+}
+  </style>
+</head>
+<body class="lh-root lh-vars">
+  <noscript>PSI requires JavaScript. Please enable.</noscript>
+  <div hidden>%%LIGHTHOUSE_TEMPLATES%%</div>
+
+  <div class="element-screenshots-container"></div>
+
+  <!-- Basic boring tabs, but this could be much more accurate. -->
+  <article class="tabs">
+    <section id="tab1-mobile">
+      <h2><a href="#tab1-mobile">Mobile</a></h2>
+      <main></main>
+      <p>This content appears on tab 1.</p>
+    </section>
+
+    <section id="tab2-desktop">
+      <h2><a href="#tab2-desktop">Desktop</a></h2>
+      <p>This content appears on tab 2.</p>
+      <main></main>
+    </section>
+  </main>
+
+  <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
+  <script>%%LIGHTHOUSE_JAVASCRIPT%%
+  //# sourceURL=psi-reportrenderer.js
+  </script>
+  <script>console.log('window.__LIGHTHOUSE_JSON__', __LIGHTHOUSE_JSON__);</script>
+</body>
+</html>

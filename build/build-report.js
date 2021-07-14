@@ -36,6 +36,18 @@ async function buildStandaloneReport() {
   fs.writeFileSync(__dirname + '/../dist/report/standalone.js', REPORT_JAVASCRIPT);
 }
 
+async function buildPSIReport() {
+  const REPORT_JAVASCRIPT = [
+    concatRendererCode(),
+    fs.readFileSync(__dirname + '/../report/renderer/psi.js', 'utf8'),
+    fs.readFileSync(__dirname + '/../report/clients/faux-psi.js', 'utf8'),
+  ].join(';\n');
+  fs.mkdirSync(__dirname + '/../dist/report', {recursive: true});
+  fs.writeFileSync(__dirname + '/../dist/report/psi-report.js', REPORT_JAVASCRIPT);
+}
+
+
+
 if (require.main === module) {
   buildStandaloneReport();
 }
@@ -43,4 +55,5 @@ if (require.main === module) {
 module.exports = {
   buildStandaloneReport,
   concatRendererCode,
+  buildPSIReport,
 };
