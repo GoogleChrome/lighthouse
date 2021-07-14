@@ -66,10 +66,10 @@ class ReportRenderer {
 
   /**
    * @param {LH.ReportResult} report
-   * @return {DocumentFragment}
+   * @return {HTMLElement}
    */
   _renderReportTopbar(report) {
-    const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
+    const el = this._dom.getComponent('topbar');
     const metadataUrl = this._dom.find('a.lh-topbar__url', el);
     metadataUrl.href = metadataUrl.textContent = report.finalUrl;
     metadataUrl.title = report.finalUrl;
@@ -237,7 +237,7 @@ class ReportRenderer {
     }
 
     if (scoreHeader) {
-      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      const scoreScale = this._dom.getComponent('scorescale');
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
@@ -260,9 +260,9 @@ class ReportRenderer {
     }
 
     const reportFragment = this._dom.createFragment();
-    const topbarDocumentFragment = this._renderReportTopbar(report);
+    const topBarEl = this._renderReportTopbar(report);
 
-    reportFragment.appendChild(topbarDocumentFragment);
+    reportFragment.appendChild(topBarEl);
     reportFragment.appendChild(reportContainer);
     reportContainer.appendChild(headerContainer);
     reportContainer.appendChild(reportSection);

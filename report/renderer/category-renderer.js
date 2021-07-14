@@ -57,19 +57,18 @@ class CategoryRenderer {
    * @return {Element}
    */
   renderAudit(audit) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
-    return this.populateAuditValues(audit, tmpl);
+    const auditEl = this.dom.getComponent('audit');
+    return this.populateAuditValues(audit, auditEl);
   }
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {DocumentFragment} tmpl
+   * @param {HTMLElement} auditEl
    * @return {!Element}
    */
-  populateAuditValues(audit, tmpl) {
+  populateAuditValues(audit, auditEl) {
     const strings = Util.i18n.strings;
-    const auditEl = this.dom.find('.lh-audit', tmpl);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
 

@@ -10,6 +10,7 @@ const fs = require('fs');
 function concatRendererCode() {
   return [
     fs.readFileSync(__dirname + '/../report/renderer/util.js', 'utf8'),
+    fs.readFileSync(__dirname + '/../report/renderer/template-components.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/dom.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/details-renderer.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/crc-details-renderer.js', 'utf8'),

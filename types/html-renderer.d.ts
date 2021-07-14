@@ -5,6 +5,7 @@
  */
 
 import _CategoryRenderer = require('../report/renderer/category-renderer.js');
+import _TemplateComponents = require('../report/renderer/template-components.js');
 import _CriticalRequestChainRenderer = require('../report/renderer/crc-details-renderer.js');
 import _SnippetRenderer = require('../report/renderer/snippet-renderer.js');
 import _ElementScreenshotRenderer = require('../report/renderer/element-screenshot-renderer.js');
@@ -34,6 +35,7 @@ declare global {
   var ReportRenderer: typeof _ReportRenderer;
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Util: typeof _Util;
+  var TemplateComponents: typeof _TemplateComponents;
   var TextEncoding: typeof _TextEncoding;
   var prepareLabData: typeof _prepareLabData;
   var CompressionStream: {
@@ -58,6 +60,7 @@ declare global {
     ReportRenderer: typeof _ReportRenderer;
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
+    TemplateComponents: typeof _TemplateComponents;
     prepareLabData: typeof _prepareLabData;
   }
 
@@ -86,6 +89,10 @@ declare global {
         /** The stack-specific description for this audit. */
         description: string;
       }
+    }
+    export module Renderer {
+      /** String enum of possible component ids to clone */
+      export type componentIds = 'scorescale' | 'topbar' | 'audit' | 'opportunity';
     }
   }
 }

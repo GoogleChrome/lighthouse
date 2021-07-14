@@ -57,8 +57,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
-    const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
-    const element = this.populateAuditValues(audit, oppTmpl);
+    const auditEl = this.dom.getComponent('opportunity');
+    const element = this.populateAuditValues(audit, auditEl);
     element.id = audit.result.id;
 
     if (!audit.result.details || audit.result.scoreDisplayMode === 'error') {

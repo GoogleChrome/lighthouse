@@ -11,6 +11,11 @@
 const fs = require('fs');
 const path = require('path');
 const swapLocale = require('../lib/i18n/swap-locale.js');
+
+const buildReport = require('../../build/build-report.js');
+// Needs to be build _before_ report-generator is required.
+buildReport.buildStandaloneReport();
+
 const ReportGenerator = require('../../report/report-generator.js');
 const {defaultSettings} = require('../config/constants.js');
 const lighthouse = require('../index.js');

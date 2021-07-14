@@ -121,8 +121,7 @@ class ElementScreenshotRenderer {
       `${right},${top} 1,${top}       1,${bottom}       ${right},${bottom}`,
     ];
     for (const points of polygonsPoints) {
-      clipPathEl.append(dom.createElementNS(
-        'http://www.w3.org/2000/svg', 'polygon', undefined, {points}));
+      clipPathEl.append(dom.createElementSVG('polygon', {points}));
     }
   }
 

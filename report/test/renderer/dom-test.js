@@ -50,7 +50,7 @@ describe('DOM', () => {
 
   describe('cloneTemplate', () => {
     it('should clone a template', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-audit', dom.document());
+      const clone = dom.cloneTemplate('#tmpl-lh-metric', dom.document());
       assert.ok(clone.querySelector('.lh-audit'));
     });
 
@@ -65,7 +65,7 @@ describe('DOM', () => {
     });
 
     it('fails when a template context isn\'t provided', () => {
-      assert.throws(() => dom.cloneTemplate('#tmpl-lh-audit'));
+      assert.throws(() => dom.cloneTemplate('#tmpl-lh-metric'));
     });
 
     it('does not inject duplicate styles', () => {

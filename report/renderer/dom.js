@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self Util */
+/* globals self Util, TemplateComponents */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
@@ -30,6 +30,8 @@ class DOM {
     this._document = document;
     /** @type {string} */
     this._lighthouseChannel = 'unknown';
+    /** @type {Map<string, HTMLElement>} */
+    this.componentCache = new Map();
   }
 
   /**
@@ -56,19 +58,15 @@ class DOM {
   }
 
   /**
-   * @param {string} namespaceURI
    * @param {string} name
-   * @param {string=} className
    * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
    *     Note: if an attribute key has an undefined value, this method does not
    *     set the attribute on the node.
    * @return {Element}
    */
-  createElementNS(namespaceURI, name, className, attrs = {}) {
+  createElementSVG(name, attrs = {}) {
+    const namespaceURI = 'http://www.w3.org/2000/svg';
     const element = this._document.createElementNS(namespaceURI, name);
-    if (className) {
-      element.className = className;
-    }
     Object.keys(attrs).forEach(key => {
       const value = attrs[key];
       if (typeof value !== 'undefined') {
@@ -102,6 +100,7 @@ class DOM {
   }
 
   /**
+   * @deprecated Please migrate to a template component instead.
    * @param {string} selector
    * @param {ParentNode} context
    * @return {!DocumentFragment} A clone of the template content.
@@ -115,14 +114,29 @@ class DOM {
 
     const clone = this._document.importNode(template.content, true);
 
-    // Prevent duplicate styles in the DOM. After a template has been stamped
-    // for the first time, remove the clone's styles so they're not re-added.
-    if (template.hasAttribute('data-stamped')) {
-      this.findAll('style', clone).forEach(style => style.remove());
+    const style = this.findAll('style', clone);
+    if (style.length) {
+      throw new Error('CSS should be added to style.css instead');
     }
-    template.setAttribute('data-stamped', 'true');
 
     return clone;
+  }
+
+  /**
+   * @param {LH.Renderer.componentIds} id
+   * @returns {HTMLElement}
+   * @throws {Error}
+   */
+  getComponent(id) {
+    if (!this.componentCache.has(id)) {
+      if (!TemplateComponents || typeof TemplateComponents[id] !== 'function') {
+        throw new Error(`DOM template component for ${id} not found`);
+      }
+      const elem = TemplateComponents[id](this);
+      this.componentCache.set(id, elem);
+    }
+    const goldenEl = /** @type {HTMLElement} */ (this.componentCache.get(id));
+    return /** @type {HTMLElement} */ (goldenEl.cloneNode(true));
   }
 
   /**
