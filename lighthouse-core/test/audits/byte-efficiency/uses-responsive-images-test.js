@@ -238,4 +238,28 @@ describe('Page uses responsive images', () => {
     assert.equal(auditResult.items.length, 1);
     assert.equal(auditResult.items[0].wastedPercent, 75, 'correctly computes wastedPercent');
   });
+
+  it('handles cached images', () => {
+    const networkRecord = {
+      mimeType: 'image/png',
+      resourceSize: 1024 * 100,
+      transferSize: 0,
+      url: 'https://google.com/logo.png',
+    };
+    const auditResult = UsesResponsiveImagesAudit.audit_({
+      ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
+      ImageElements: [
+        generateImage(
+          generateSize(500, 500),
+          {width: 1000, height: 1000},
+          'https://google.com/logo.png'
+        ),
+      ],
+    },
+      [networkRecord]
+    );
+
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].wastedBytes / 1024, 75, 'correctly computes wastedBytes');
+  });
 });

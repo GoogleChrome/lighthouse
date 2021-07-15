@@ -185,7 +185,26 @@ describe('Optimized images', () => {
           url: 'http://google.com/image.bmp?x-ms',
           mimeType: 'image/x-ms-bmp',
           resourceSize: 12000,
-          transferSize: 20000,
+          transferSize: 0,
+          resourceType: 'Image',
+          finished: true,
+        },
+      ],
+    };
+
+    const artifact = await optimizedImages.afterPass(context, traceData);
+    expect(artifact).toHaveLength(1);
+  });
+
+  it('handles cached images', async () => {
+    const traceData = {
+      networkRecords: [
+        {
+          requestId: '1',
+          url: 'http://google.com/image.jpg',
+          mimeType: 'image/jpeg',
+          resourceSize: 10000000,
+          transferSize: 0,
           resourceType: 'Image',
           finished: true,
         },

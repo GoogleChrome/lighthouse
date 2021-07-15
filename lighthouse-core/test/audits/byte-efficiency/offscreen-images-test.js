@@ -567,4 +567,35 @@ describe('OffscreenImages audit', () => {
     }
     assert.ok(false);
   });
+
+  it('handles cached images', async () => {
+    const wastedSize = 100 * 1024;
+    const networkRecord = {
+      resourceSize: wastedSize,
+      transferSize: 0,
+      requestId: 'a',
+      startTime: 1,
+      priority: 'High',
+      timing: {receiveHeadersEnd: 1.25},
+    };
+
+    const artifacts = {
+      ViewportDimensions: DEFAULT_DIMENSIONS,
+      ImageElements: [
+        generateImage({
+          size: generateSize(0, 0),
+          x: 0,
+          y: 0,
+          networkRecord,
+        }),
+      ],
+      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
+      devtoolsLogs: {},
+    };
+
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
+      assert.equal(auditResult.items.length, 1);
+      assert.equal(auditResult.items[0].wastedBytes, wastedSize, 'correctly computes wastedBytes');
+    });
+  });
 });
