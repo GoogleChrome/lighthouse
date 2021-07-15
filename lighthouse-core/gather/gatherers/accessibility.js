@@ -12,13 +12,12 @@ const axeLibSource = require('../../lib/axe.js').source;
 const pageFunctions = require('../../lib/page-functions.js');
 
 /**
- * This is run in the page, not Lighthouse itself.
- * axe.run returns a promise which fulfills with a results object
- * containing any violations.
- * @return {Promise<LH.Artifacts.Accessibility>}
+ * @param {Array<import('axe-core/axe').resultGroups>} resultTypes
+ * @param {{colorContrastEnabled: boolean}} opts
+ * @return {Promise<import('axe-core/axe').AxeResults>}
  */
 /* c8 ignore start */
-async function runA11yChecks() {
+async function runAxe(resultTypes, opts = {colorContrastEnabled: true}) {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
@@ -38,8 +37,9 @@ async function runA11yChecks() {
         'wcag2aa',
       ],
     },
-    resultTypes: ['violations', 'inapplicable'],
+    resultTypes,
     rules: {
+      // Consider http://go/prcpg for expert review of the aXe rules.
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
       'heading-order': {enabled: true},
@@ -60,8 +60,26 @@ async function runA11yChecks() {
       // https://github.com/dequelabs/axe-core/issues/2958
       'nested-interactive': {enabled: false},
       'frame-focusable-content': {enabled: false},
+      'color-contrast': {enabled: opts.colorContrastEnabled}, // See gatherer's test for explanation
+      'aria-roledescription': {enabled: false},
+      'scrollable-region-focusable': {enabled: false},
+      // TODO(paulirish): create audits and enable these 3.
+      'input-button-name': {enabled: false},
+      'role-img-alt': {enabled: false},
+      'select-name': {enabled: false},
     },
   });
+
+
+  return axeResults;
+}
+
+/**
+ * Run aXe and adjust results for Lighthouse consumption
+ * @return {Promise<LH.Artifacts.Accessibility>}
+ */
+async function runA11yChecks() {
+  const axeResults = await runAxe(['violations', 'inapplicable']);
 
   // axe just scrolled the page, scroll back to the top of the page so that element positions
   // are relative to the top of the page
@@ -137,9 +155,17 @@ class Accessibility extends FRGatherer {
         axeLibSource,
         pageFunctions.getNodeDetailsString,
         createAxeRuleResultArtifact,
+        runAxe,
       ],
     });
+  }
+
+  // @ts-expect-error just sending 'em right through…
+  static runAxeForTest(...args) {
+    // @ts-expect-error
+    return runAxe(...args);
   }
 }
 
 module.exports = Accessibility;
+
