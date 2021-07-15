@@ -78,6 +78,7 @@ For full list see [our config settings typedef](https://github.com/GoogleChrome/
 | onlyCategories | `string[]` | Includes only the specified categories in the final report. Additive with `onlyAudits` and reduces the time to audit a page. |
 | onlyAudits | `string[]` | Includes only the specified audits in the final report. Additive with `onlyCategories` and reduces the time to audit a page. |
 | skipAudits | `string[]` | Excludes the specified audits from the final report. Takes priority over `onlyCategories`, not usable in conjuction with `onlyAudits`, and reduces the time to audit a page. |
+| plugins | `string[]` | Includes the specified plugins and corresponding audits in the report, this is additive with all above options. Refer to [plugin documentation](https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md) for detailed plugin information.|
 
 ### `passes: Object[]`
 
