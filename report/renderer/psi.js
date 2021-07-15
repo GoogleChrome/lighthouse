@@ -48,6 +48,7 @@ function prepareLabData(LHResult, document) {
     ...reportLHR.i18n.rendererFormattedStrings,
   });
   Util.i18n = i18n;
+  Util.reportJson = reportLHR;
 
   const perfCategory = reportLHR.categories.performance;
   if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
