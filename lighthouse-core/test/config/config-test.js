@@ -1242,7 +1242,7 @@ describe('Config', () => {
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
 
-    it('should keep uncategorized audits even if onlyCategories is set', () => {
+    it('should keep full-page-screenshot even if onlyCategories is set', () => {
       assert.ok(origConfig.audits.includes('full-page-screenshot'));
       // full-page-screenshot does not belong to a category.
       const matchCategories = Object.values(origConfig.categories).filter(cat =>
@@ -1257,6 +1257,17 @@ describe('Config', () => {
       };
       const config = new Config(extended);
 
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
+    });
+
+    it('should keep full-page-screenshot even if skipAudits is set', () => {
+      const extended = {
+        extends: 'lighthouse:default',
+        settings: {
+          skipAudits: ['font-size'],
+        },
+      };
+      const config = new Config(extended);
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
   });
