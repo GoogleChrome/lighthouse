@@ -116,6 +116,7 @@ const defaultSettings = {
   additionalTraceCategories: null,
   extraHeaders: null,
   precomputedLanternData: null,
+  useFixedLanternRtt: true,
   onlyAudits: null,
   onlyCategories: null,
   skipAudits: null,
@@ -158,6 +159,12 @@ const nonSimulatedPassConfigOverrides = {
   cpuQuietThresholdMs: 5250,
 };
 
+// TODO: calibrate
+const fixedLanternRtt = {
+  globalRtt: 500,
+  globalServerResponse: 1000,
+};
+
 module.exports = {
   throttling,
   screenEmulationMetrics,
@@ -166,4 +173,5 @@ module.exports = {
   defaultPassConfig,
   defaultNavigationConfig,
   nonSimulatedPassConfigOverrides,
+  fixedLanternRtt,
 };

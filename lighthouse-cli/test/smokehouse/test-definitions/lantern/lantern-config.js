@@ -12,13 +12,6 @@ module.exports = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: ['performance'],
-    precomputedLanternData: {
-      additionalRttByOrigin: {
-        'http://localhost:10200': 500,
-      },
-      serverResponseTimeByOrigin: {
-        'http://localhost:10200': 1000,
-      },
-    },
+    useFixedLanternRtt: true,
   },
 };

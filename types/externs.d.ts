@@ -208,6 +208,8 @@ declare global {
       channel?: string
       /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
+      /** If true, lantern will use fixed values for RTT and server response time instead of observed network values. */
+      useFixedLanternRtt: boolean;
       /** The budget.json object for LightWallet. */
       budgets?: Array<Budget> | null;
     }

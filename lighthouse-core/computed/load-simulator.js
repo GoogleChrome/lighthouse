@@ -17,7 +17,8 @@ class LoadSimulator {
    * @return {Promise<Simulator>}
    */
   static async compute_(data, context) {
-    const {throttlingMethod, throttling, precomputedLanternData} = data.settings;
+    const {throttlingMethod, throttling, precomputedLanternData, useFixedLanternRtt} = 
+        data.settings;
     const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
 
     /** @type {LH.Gatherer.Simulation.Options} */
@@ -26,13 +27,27 @@ class LoadSimulator {
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
     };
 
-    // If we have precomputed lantern data, overwrite our observed estimates and use precomputed instead
-    // for increased stability.
+    // The fixedRTT and precomputedLanternData options trade ground truth for metric stability
+
+    // Don't use our observed estimates from the network and used fixed values
+    if (useFixedLanternRtt) {
+      const fixedValues = constants.fixedLanternRtt;
+
+      for (const origin of networkAnalysis.additionalRttByOrigin.keys()) {
+        networkAnalysis.additionalRttByOrigin.set(origin, fixedValues.globalRtt);
+      }
+      for (const origin of networkAnalysis.serverResponseTimeByOrigin.keys()) {
+        networkAnalysis.serverResponseTimeByOrigin.set(origin, fixedValues.globalServerResponse);
+      }
+    }
+
+    // And if there's any have precomputed lantern data, overwrite any observed estimates (or fixedRTT values)
     if (precomputedLanternData) {
-      options.additionalRttByOrigin = new Map(Object.entries(
-        precomputedLanternData.additionalRttByOrigin));
-      options.serverResponseTimeByOrigin = new Map(Object.entries(
-        precomputedLanternData.serverResponseTimeByOrigin));
+      // apply any specific overrides on top.
+      Object.entries(precomputedLanternData.additionalRttByOrigin)
+          .forEach(([key, rtt]) => networkAnalysis.additionalRttByOrigin.set(key, rtt));
+          Object.entries(precomputedLanternData.serverResponseTimeByOrigin)
+          .forEach(([key, srt]) => networkAnalysis.serverResponseTimeByOrigin.set(key, srt));
     }
 
     switch (throttlingMethod) {
