@@ -9,12 +9,12 @@
  * and total number of elements used on the page.
  */
 
-/* global getNodeDetails document */
+/* global document */
 
 'use strict';
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
+const {getNodeDetails} = require('../../../lib/page-functions.js');
 
 /**
  * Calculates the maximum tree depth of the DOM.
@@ -24,11 +24,13 @@ const pageFunctions = require('../../../lib/page-functions.js');
  */
 /* c8 ignore start */
 function getDOMStats(element = document.body, deep = true) {
-  let deepestElement = null;
+  /** @type {Element|ShadowRoot} */
+  let deepestElement = element;
   let maxDepth = -1;
   let maxWidth = -1;
   let numElements = 0;
-  let parentWithMostChildren = null;
+  /** @type {Element|ShadowRoot} */
+  let parentWithMostChildren = element;
 
   /**
    * @param {Element|ShadowRoot} element
@@ -63,12 +65,10 @@ function getDOMStats(element = document.body, deep = true) {
   return {
     depth: {
       max: result.maxDepth,
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(deepestElement),
     },
     width: {
       max: result.maxWidth,
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       ...getNodeDetails(parentWithMostChildren),
     },
     totalBodyElements: result.numElements,
@@ -93,7 +93,7 @@ class DOMStats extends FRGatherer {
     const results = await driver.executionContext.evaluate(getDOMStats, {
       args: [],
       useIsolation: true,
-      deps: [pageFunctions.getNodeDetailsString],
+      deps: [getNodeDetails],
     });
     await driver.defaultSession.sendCommand('DOM.disable');
     return results;

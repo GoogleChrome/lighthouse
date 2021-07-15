@@ -5,24 +5,14 @@
  */
 'use strict';
 
-/* globals getElementsInDocument getNodeDetails */
-
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
+const {getElementsInDocument, getNodeDetails} = require('../../../lib/page-functions.js');
 
 /**
  * @return {LH.Artifacts.EmbeddedContentInfo[]}
  */
 function getEmbeddedContent() {
-  const functions = /** @type {typeof pageFunctions} */ ({
-    // @ts-expect-error - getElementsInDocument put into scope via stringification
-    getElementsInDocument,
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    getNodeDetails,
-  });
-
-  const selector = 'object, embed, applet';
-  const elements = functions.getElementsInDocument(selector);
+  const elements = getElementsInDocument('object, embed, applet');
   return elements
     .map(node => ({
       tagName: node.tagName,
@@ -36,7 +26,7 @@ function getEmbeddedContent() {
           name: el.getAttribute('name') || '',
           value: el.getAttribute('value') || '',
         })),
-      node: functions.getNodeDetails(node),
+      node: getNodeDetails(node),
     }));
 }
 
@@ -54,8 +44,8 @@ class EmbeddedContent extends FRGatherer {
     return passContext.driver.executionContext.evaluate(getEmbeddedContent, {
       args: [],
       deps: [
-        pageFunctions.getElementsInDocument,
-        pageFunctions.getNodeDetailsString,
+        getElementsInDocument,
+        getNodeDetails,
       ],
     });
   }

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
+/* global document, window, getComputedStyle, Node, HTMLElement, HTMLAnchorElement */
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
-const RectHelpers = require('../../../lib/rect-helpers.js');
+const {getNodeDetails, getElementsInDocument} = require('../../../lib/page-functions.js');
+const {getRectCenterPoint} = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',
@@ -32,12 +32,15 @@ const TARGET_SELECTORS = [
 const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
- * @param {HTMLElement} element
+ * @param {Element} element
  * @return {boolean}
  */
 /* c8 ignore start */
 function elementIsVisible(element) {
-  return !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
+  const hasOffsetSize = element instanceof HTMLElement ?
+      !!(element.offsetWidth || element.offsetHeight) : false;
+
+  return hasOffsetSize || !!element.getClientRects().length;
 }
 /* c8 ignore stop */
 
@@ -199,8 +202,7 @@ function gatherTapTargets(tapTargetsSelector, className) {
   // Capture element positions relative to the top of the page
   window.scrollTo(0, 0);
 
-  /** @type {HTMLElement[]} */
-  // @ts-expect-error - getElementsInDocument put into scope via stringification
+  /** @type {Element[]} */
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 
   /** @type {{
@@ -256,7 +258,6 @@ function gatherTapTargets(tapTargetsSelector, className) {
     visibleClientRects = visibleClientRects.filter(rect => {
       // Just checking the center can cause false failures for large partially hidden tap targets,
       // but that should be a rare edge case
-      // @ts-expect-error - put into scope via stringification
       const rectCenterPoint = getRectCenterPoint(rect);
       return elementCenterIsAtZAxisTop(tapTargetElement, rectCenterPoint);
     });
@@ -270,10 +271,10 @@ function gatherTapTargets(tapTargetsSelector, className) {
   });
 
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
+    const href = tapTargetElement instanceof HTMLAnchorElement ? tapTargetElement.href : '';
     targets.push({
       clientRects: visibleClientRects,
-      href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
-      // @ts-expect-error - getNodeDetails put into scope via stringification
+      href,
       node: getNodeDetails(tapTargetElement),
     });
   }
@@ -342,8 +343,8 @@ class TapTargets extends FRGatherer {
       args: [tapTargetsSelector, className],
       useIsolation: true,
       deps: [
-        pageFunctions.getNodeDetailsString,
-        pageFunctions.getElementsInDocument,
+        getNodeDetails,
+        getElementsInDocument,
         disableFixedAndStickyElementPointerEvents,
         elementIsVisible,
         elementHasAncestorTapTarget,
@@ -351,10 +352,7 @@ class TapTargets extends FRGatherer {
         getClientRects,
         hasTextNodeSiblingsFormingTextBlock,
         elementIsInTextBlock,
-        RectHelpers.getRectCenterPoint,
-        pageFunctions.getNodePath,
-        pageFunctions.getNodeSelector,
-        pageFunctions.getNodeLabel,
+        getRectCenterPoint,
       ],
     });
 

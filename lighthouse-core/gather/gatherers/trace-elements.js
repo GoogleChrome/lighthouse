@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global getNodeDetails */
+/* global document */
 
 /**
  * @fileoverview
@@ -15,7 +15,7 @@
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const {resolveNodeIdToObjectId} = require('../driver/dom.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getNodeDetails} = require('../../lib/page-functions.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 const Sentry = require('../../lib/sentry.js');
 const Trace = require('./trace.js');
@@ -26,14 +26,13 @@ const LighthouseError = require('../../lib/lh-error.js');
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
 /**
- * @this {HTMLElement}
+ * @this {Element}
  */
 /* c8 ignore start */
 function getNodeDetailsData() {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
   let traceElement;
   if (elem) {
-    // @ts-expect-error - getNodeDetails put into scope via stringification
     traceElement = {node: getNodeDetails(elem)};
   }
   return traceElement;
@@ -294,7 +293,7 @@ class TraceElements extends FRGatherer {
             objectId,
             functionDeclaration: `function () {
               ${getNodeDetailsData.toString()};
-              ${pageFunctions.getNodeDetailsString};
+              ${getNodeDetails.toString()};
               return getNodeDetailsData.call(this);
             }`,
             returnByValue: true,

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-/* globals window document getBoundingClientRect */
+/* globals window document */
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const emulation = require('../../lib/emulation.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getBoundingClientRect, getMaxTextureSize} = require('../../lib/page-functions.js');
 
 // JPEG quality setting
 // Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
@@ -34,7 +34,7 @@ class FullPageScreenshot extends FRGatherer {
    * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
    */
   async getMaxScreenshotHeight(context) {
-    return await context.driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
+    return await context.driver.executionContext.evaluate(getMaxTextureSize, {
       args: [],
       useIsolation: true,
       deps: [],
@@ -104,7 +104,6 @@ class FullPageScreenshot extends FRGatherer {
 
       const lhIdToElements = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway;
       for (const [node, id] of lhIdToElements.entries()) {
-        // @ts-expect-error - getBoundingClientRect put into scope via stringification
         const rect = getBoundingClientRect(node);
         nodes[id] = rect;
       }
@@ -119,7 +118,7 @@ class FullPageScreenshot extends FRGatherer {
       return context.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
-        deps: [pageFunctions.getBoundingClientRectString],
+        deps: [getBoundingClientRect],
       });
     }
 

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-/* global window, document, getNodeDetails */
+/* global window, document */
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const axeLibSource = require('../../lib/axe.js').source;
-const pageFunctions = require('../../lib/page-functions.js');
+const {getNodeDetails} = require('../../lib/page-functions.js');
 
 /**
  * This is run in the page, not Lighthouse itself.
@@ -84,7 +84,6 @@ function createAxeRuleResultArtifact(result) {
   const nodes = result.nodes.map(node => {
     const {target, failureSummary, element} = node;
     // TODO: with `elementRef: true`, `element` _should_ always be defined, but need to verify.
-    // @ts-expect-error - getNodeDetails put into scope via stringification
     const nodeDetails = getNodeDetails(/** @type {HTMLElement} */ (element));
 
     return {
@@ -135,7 +134,7 @@ class Accessibility extends FRGatherer {
       useIsolation: true,
       deps: [
         axeLibSource,
-        pageFunctions.getNodeDetailsString,
+        getNodeDetails,
         createAxeRuleResultArtifact,
       ],
     });

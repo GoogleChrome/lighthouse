@@ -5,21 +5,37 @@
  */
 'use strict';
 
-/* global getNodeDetails */
-
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {getElementsInDocument, getNodeDetails} = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
+
+/* c8 ignore start */
+/**
+ * @param {HTMLFormElement} formElement
+ * @return {LH.Artifacts.Form}
+ */
+function createFormElementArtifact(formElement) {
+  return {
+    attributes: {
+      id: formElement.id,
+      name: formElement.name,
+      autocomplete: formElement.autocomplete,
+    },
+    node: getNodeDetails(formElement),
+    inputs: [],
+    labels: [],
+  };
+}
+/* c8 ignore stop */
 
 /**
  * @return {LH.Artifacts['FormElements']}
  */
 /* c8 ignore start */
 function collectFormElements() {
-  // @ts-expect-error - put into scope via stringification
-  const formChildren = getElementsInDocument('textarea, input, label, select'); // eslint-disable-line no-undef
-  /** @type {Map<HTMLFormElement|string, LH.Artifacts.Form>} */
+  const formChildren = getElementsInDocument('textarea, input, label, select');
+  /** @type {Map<HTMLFormElement, LH.Artifacts.Form>} */
   const forms = new Map();
   /** @type {LH.Artifacts.Form} */
   const formlessObj = {
@@ -32,23 +48,14 @@ function collectFormElements() {
       (child.type === 'submit' || child.type === 'button');
     if (isButton) continue;
 
+    let formObj = formlessObj;
+
     const parentFormElement = child.form;
-    const hasForm = !!parentFormElement;
-    if (hasForm && !forms.has(parentFormElement)) {
-      const newFormObj = {
-        attributes: {
-          id: parentFormElement.id,
-          name: parentFormElement.name,
-          autocomplete: parentFormElement.autocomplete,
-        },
-        // @ts-expect-error - getNodeDetails put into scope via stringification
-        node: getNodeDetails(parentFormElement),
-        inputs: [],
-        labels: [],
-      };
-      forms.set(parentFormElement, newFormObj);
+    if (parentFormElement) {
+      formObj = forms.get(parentFormElement) || createFormElementArtifact(parentFormElement);
+      forms.set(parentFormElement, formObj);
     }
-    const formObj = forms.get(parentFormElement) || formlessObj;
+
     if (child instanceof HTMLInputElement || child instanceof HTMLTextAreaElement
       || child instanceof HTMLSelectElement) {
       formObj.inputs.push({
@@ -61,27 +68,22 @@ function collectFormElements() {
           attribute: child.getAttribute('autocomplete'),
           prediction: child.getAttribute('autofill-prediction'),
         },
-        // @ts-expect-error - getNodeDetails put into scope via stringification
         node: getNodeDetails(child),
       });
     }
     if (child instanceof HTMLLabelElement) {
       formObj.labels.push({
         for: child.htmlFor,
-        // @ts-expect-error - getNodeDetails put into scope via stringification
         node: getNodeDetails(child),
       });
     }
   }
 
+  const formElements = [...forms.values()];
   if (formlessObj.inputs.length > 0 || formlessObj.labels.length > 0) {
-    forms.set('formless', {
-      node: formlessObj.node,
-      inputs: formlessObj.inputs,
-      labels: formlessObj.labels,
-    });
+    formElements.push(formlessObj);
   }
-  return [...forms.values()];
+  return formElements;
 }
 /* c8 ignore stop */
 
@@ -102,8 +104,9 @@ class FormElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getNodeDetailsString,
+        createFormElementArtifact,
+        getElementsInDocument,
+        getNodeDetails,
       ],
     });
     return formElements;

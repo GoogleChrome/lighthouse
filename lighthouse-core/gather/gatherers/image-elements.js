@@ -11,11 +11,15 @@
 
 const log = require('lighthouse-logger');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
 const URL = require('../../lib/url-shim.js');
 const FontSize = require('./seo/font-size.js');
+const {
+  getElementsInDocument,
+  getBoundingClientRect,
+  getNodeDetails,
+} = require('../../lib/page-functions.js');
 
-/* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
+/* global window, Image, ShadowRoot */
 
 /** @param {Element} element */
 /* c8 ignore start */
@@ -84,7 +88,6 @@ function getHTMLImages(allElements) {
       isPicture,
       loading: element.loading,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(element),
     };
   });
@@ -107,10 +110,8 @@ function getCSSImages(allElements) {
   for (const element of allElements) {
     const style = window.getComputedStyle(element);
     // If the element didn't have a CSS background image, we're not interested.
-    if (!style.backgroundImage || !CSS_URL_REGEX.test(style.backgroundImage)) continue;
-
     const imageMatch = style.backgroundImage.match(CSS_URL_REGEX);
-    // @ts-expect-error test() above ensures that there is a match.
+    if (!style.backgroundImage || !imageMatch) continue;
     const url = imageMatch[1];
 
     images.push({
@@ -131,7 +132,6 @@ function getCSSImages(allElements) {
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(element),
     });
   }
@@ -143,9 +143,7 @@ function getCSSImages(allElements) {
 /** @return {Array<LH.Artifacts.ImageElement>} */
 /* c8 ignore start */
 function collectImageElementInfo() {
-  /** @type {Array<Element>} */
-  // @ts-expect-error - added by getElementsInDocumentFnString
-  const allElements = getElementsInDocument();
+  const allElements = getElementsInDocument('*');
   return getHTMLImages(allElements).concat(getCSSImages(allElements));
 }
 /* c8 ignore stop */
@@ -344,9 +342,9 @@ class ImageElements extends FRGatherer {
     const elements = await executionContext.evaluate(collectImageElementInfo, {
       args: [],
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getBoundingClientRectString,
-        pageFunctions.getNodeDetailsString,
+        getElementsInDocument,
+        getBoundingClientRect,
+        getNodeDetails,
         getClientRect,
         getPosition,
         getHTMLImages,

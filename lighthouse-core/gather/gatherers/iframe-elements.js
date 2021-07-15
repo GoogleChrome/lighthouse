@@ -5,10 +5,12 @@
  */
 'use strict';
 
-/* global getNodeDetails */
-
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+const {
+  getElementsInDocument,
+  isPositionFixed,
+  getNodeDetails,
+} = require('../../lib/page-functions.js');
 
 /* eslint-env browser, node */
 
@@ -17,18 +19,15 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* c8 ignore start */
 function collectIFrameElements() {
-  // @ts-expect-error - put into scope via stringification
-  const iFrameElements = getElementsInDocument('iframe'); // eslint-disable-line no-undef
-  return iFrameElements.map(/** @param {HTMLIFrameElement} node */ (node) => {
+  const iFrameElements = getElementsInDocument('iframe');
+  return iFrameElements.map(node => {
     const clientRect = node.getBoundingClientRect();
     const {top, bottom, left, right, width, height} = clientRect;
     return {
       id: node.id,
       src: node.src,
       clientRect: {top, bottom, left, right, width, height},
-      // @ts-expect-error - put into scope via stringification
-      isPositionFixed: isPositionFixed(node), // eslint-disable-line no-undef
-      // @ts-expect-error - getNodeDetails put into scope via stringification
+      isPositionFixed: isPositionFixed(node),
       node: getNodeDetails(node),
     };
   });
@@ -53,9 +52,9 @@ class IFrameElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.isPositionFixedString,
-        pageFunctions.getNodeDetailsString,
+        getElementsInDocument,
+        isPositionFixed,
+        getNodeDetails,
       ],
     });
     return iframeElements;

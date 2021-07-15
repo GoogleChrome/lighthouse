@@ -13,10 +13,11 @@
  * the c8 code coverage tool. See c8.sh
  *
  * Important: this module should only be imported like this:
- *     const pageFunctions = require('...');
- * Never like this:
  *     const {justWhatINeed} = require('...');
- * Otherwise, minification will mangle the variable names and break usage.
+ * Never like this:
+ *     const pageFunctions = require('...');
+ * Otherwise, `function justWhatINeed() {...}` won't be callable by the
+ * invocation `pageFunctions.justWhatINeed`.
  */
 
 /**
@@ -48,9 +49,11 @@ function wrapRuntimeEvalErrorInBrowser(err) {
 }
 
 /**
+ * Get all elements in the document matching `selector`, whether in the regular
+ * or a shadow DOM.
  * @template {string} T
- * @param {T} selector Optional simple CSS selector to filter nodes on.
- *     Combinators are not supported.
+ * @param {T} selector Simple CSS selector to filter nodes on.
+ *     Combinators are not supported since they won't match across shadow boundaries.
  * @return {Array<ParseSelector<T>>}
  */
 function getElementsInDocument(selector) {
@@ -515,34 +518,31 @@ function getNodeDetails(element) {
   return details;
 }
 
-const getNodeDetailsString = `function getNodeDetails(element) {
-  ${getNodePath.toString()};
-  ${getNodeSelector.toString()};
-  ${getBoundingClientRect.toString()};
-  ${getOuterHTMLSnippet.toString()};
-  ${getNodeLabel.toString()};
-  return (${getNodeDetails.toString()})(element);
-}`;
+// HACK: `getNodeDetails` is a function used in many places with multiple deps
+// that would need to be listed in the `evaluate()` call every time it's used.
+// The deps could be inlined, but they need to be available externally for
+// testing. So, override `getNodeDetails.toString()` to include all the deps.
+/** @type {string} */
+const originalgetNodeDetailsToString = getNodeDetails.toString();
+getNodeDetails.toString = () => `
+  ${getNodePath.toString()}
+  ${getNodeSelector.toString()}
+  ${getBoundingClientRect.toString()}
+  ${getOuterHTMLSnippet.toString()}
+  ${getNodeLabel.toString()}
+  ${originalgetNodeDetailsToString}`;
 
 module.exports = {
-  wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   wrapRuntimeEvalErrorInBrowser,
   getElementsInDocument,
-  getElementsInDocumentString: getElementsInDocument.toString(),
-  getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
-  getOuterHTMLSnippet: getOuterHTMLSnippet,
-  computeBenchmarkIndex: computeBenchmarkIndex,
-  computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
+  getOuterHTMLSnippet,
+  computeBenchmarkIndex,
   getMaxTextureSize,
-  getNodeDetailsString,
   getNodeDetails,
-  getNodePathString: getNodePath.toString(),
-  getNodeSelectorString: getNodeSelector.toString(),
   getNodePath,
-  getNodeSelector: getNodeSelector,
-  getNodeLabel: getNodeLabel,
-  getNodeLabelString: getNodeLabel.toString(),
-  isPositionFixedString: isPositionFixed.toString(),
+  getNodeSelector,
+  getNodeLabel,
+  isPositionFixed,
   wrapRequestIdleCallback,
-  getBoundingClientRectString: getBoundingClientRect.toString(),
+  getBoundingClientRect,
 };

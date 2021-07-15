@@ -5,10 +5,10 @@
  */
 'use strict';
 
-/* global document ClipboardEvent getNodeDetails */
+/* global document ClipboardEvent */
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
+const {getNodeDetails} = require('../../../lib/page-functions.js');
 
 /**
  * @return {LH.Artifacts['PasswordInputsWithPreventedPaste']}
@@ -22,7 +22,6 @@ function findPasswordInputsWithPreventedPaste() {
       )
     )
     .map(passwordInput => ({
-      // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(passwordInput),
     }));
 }
@@ -41,7 +40,7 @@ class PasswordInputsWithPreventedPaste extends FRGatherer {
   getArtifact(passContext) {
     return passContext.driver.executionContext.evaluate(findPasswordInputsWithPreventedPaste, {
       args: [],
-      deps: [pageFunctions.getNodeDetailsString],
+      deps: [getNodeDetails],
     });
   }
 }

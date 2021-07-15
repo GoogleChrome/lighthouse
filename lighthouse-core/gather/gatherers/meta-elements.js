@@ -6,20 +6,11 @@
 'use strict';
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
-
-/* globals getElementsInDocument getNodeDetails */
+const {getElementsInDocument, getNodeDetails} = require('../../lib/page-functions.js');
 
 /* c8 ignore start */
 function collectMetaElements() {
-  const functions = /** @type {typeof pageFunctions} */({
-    // @ts-expect-error - getElementsInDocument put into scope via stringification
-    getElementsInDocument,
-    // @ts-expect-error - getNodeDetails put into scope via stringification
-    getNodeDetails,
-  });
-
-  const metas = functions.getElementsInDocument('head meta');
+  const metas = getElementsInDocument('head meta');
   return metas.map(meta => {
     /** @param {string} name */
     const getAttribute = name => {
@@ -33,7 +24,7 @@ function collectMetaElements() {
       property: getAttribute('property'),
       httpEquiv: meta.httpEquiv ? meta.httpEquiv.toLowerCase() : undefined,
       charset: getAttribute('charset'),
-      node: functions.getNodeDetails(meta),
+      node: getNodeDetails(meta),
     };
   });
 }
@@ -58,8 +49,8 @@ class MetaElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocument,
-        pageFunctions.getNodeDetailsString,
+        getElementsInDocument,
+        getNodeDetails,
       ],
     });
   }
