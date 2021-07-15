@@ -104,6 +104,7 @@ declare global {
       MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string, node: LH.Artifacts.NodeDetails}>;
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
+      ScriptElementsSnapshot: Array<Artifacts.ScriptElement>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
