@@ -12,18 +12,16 @@
 module.exports = [
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/oopif.html',
-      finalUrl: 'http://localhost:10200/oopif.html',
+      requestedUrl: 'http://localhost:10200/oopif/oopif-outer.html',
+      finalUrl: 'http://localhost:10200/oopif/oopif-outer.html',
       audits: {
         'network-requests': {
           details: {
-            items: {
-            // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
-            // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
-            // - paulirish.com ~40-60 requests
-            // - paulirish.com + all descendant iframes ~80-90 requests
-              length: '>70',
-            },
+            items: [
+              {'url': 'http://localhost:10200/oopif/oopif-outer.html'},
+              {'url': 'http://oopifdomain:10503/oopif/oopif-inner.html'},
+              {'url': 'http://localhost:10200/favicon.ico'},
+            ],
           },
         },
       },
@@ -32,21 +30,12 @@ module.exports = [
       IFrameElements: [
         {
           id: 'oopif',
-          src: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/',
+          src: /^http:\/\/oopifdomain:10503\/oopif\/oopif-inner\.html/,
           clientRect: {
             width: '>0',
             height: '>0',
           },
           isPositionFixed: false,
-        },
-        {
-          id: 'outer-iframe',
-          src: 'http://localhost:10200/online-only.html',
-          clientRect: {
-            width: '>0',
-            height: '>0',
-          },
-          isPositionFixed: true,
         },
       ],
     },

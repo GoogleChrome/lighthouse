@@ -1,0 +1,19 @@
+<!doctype html>
+<title>I'm iframed</title>
+
+<aside hidden>
+  <h2 style="color:red">this iframe isn't an oopif.</h2>
+  <h3>we saw that <code>navigator.deviceMemory</code> is the _same_ indicating they share a process</h3>
+  <h4>please ensure chrome was run with this:</h4>
+  <code>--host-rules="MAP oopifdomain 127.0.0.1" --isolate-origins="http://oopifdomain:10503"</code>
+</aside>
+
+<h3>Hello there, I'm a page in an out of process iframe.</h3>
+
+<script>
+  // See comment in oopif-outer.html
+  const isOopif = location.hash !== `#${navigator.deviceMemory}GB`;
+  if (!isOopif) {
+    document.querySelector('aside').hidden = false;
+  }
+</script>

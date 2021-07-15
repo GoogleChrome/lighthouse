@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<h1>Hello oopif</h1>
+<script>
+  // We construct the iframe in JS only to synchronously set the location hash
+  const iframe = document.createElement('iframe');
+  iframe.id='oopif';
+  // Experimental hack to detect we're OOPIF clientside.
+  // The deviceMemory API seems to not work for OOPIF, so we match values between outer/inner frames
+  // See script in oopif-inner.html
+  iframe.src=`http://oopifdomain:10503/oopif/oopif-inner.html#${navigator.deviceMemory}GB`;
+  iframe.style='width: 90vw; height: 40vh';
+  document.body.append(iframe);
+</script>
+
+<br>
+<small>If the above iframe doesn't load, run chrome with <code>--host-rules="MAP oopifdomain 127.0.0.1" --isolate-origins="http://oopifdomain:10503"</code></small>

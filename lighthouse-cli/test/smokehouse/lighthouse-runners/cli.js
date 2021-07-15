@@ -58,6 +58,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
     `${url}`,
     `--output-path=${outputPath}`,
     '--output=json',
+    `--chrome-flags='--host-rules="MAP oopifdomain 127.0.0.1" --isolate-origins="http://oopifdomain:10503"'`,
     `-G=${artifactsDirectory}`,
     `-A=${artifactsDirectory}`,
     '--quiet',
