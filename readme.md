@@ -38,7 +38,7 @@ Lighthouse is integrated directly into the Chrome DevTools, under the "Lighthous
 
 **Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Generate report".
 
-<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/4dbab6bf5466e7220980bccd2f5883f4ad661725/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px">
+<p align= "center"><img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/4dbab6bf5466e7220980bccd2f5883f4ad661725/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px"></p>
 
 ## Using the Chrome extension
 
@@ -214,7 +214,7 @@ Lighthouse can produce a report as JSON or HTML.
 
 HTML report:
 
-<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/443ff2c8a297dfd2297dfaca86c4966a87c8574a/assets/example_audit.png" alt="Lighthouse example audit" width="500px">
+<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/443ff2c8a297dfd2297dfaca86c4966a87c8574a/assets/example_audit.png" alt="Lighthouse example audit" width="600px">
 
 ### Online Viewer
 
