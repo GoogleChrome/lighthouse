@@ -35,7 +35,7 @@ export function convertChildAnchors(element: HTMLElement, index: number) {
 
 export const Report: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
 ({currentLhr}) => {
-  const {dom, reportRenderer} = useReportRenderer();
+  const {dom, reportRenderer, topbarFeatures} = useReportRenderer();
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -43,8 +43,13 @@ export const Report: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
       dom.clearComponentCache();
       reportRenderer.renderReport(currentLhr.value, ref.current);
       convertChildAnchors(ref.current, currentLhr.index);
-      const topbar = ref.current.querySelector('.lh-topbar');
-      if (topbar) topbar.remove();
+      const topbar = ref.current.querySelector('.lh-topbar') as HTMLElement;
+      const flowTopbar = document.querySelector('.Topbar') as HTMLElement;
+      topbarFeatures._setupStickyHeaderElements();
+      if (topbar && flowTopbar) {
+        topbar.remove();
+        topbarFeatures.topbarEl = flowTopbar;
+      }
     }
 
     return () => {

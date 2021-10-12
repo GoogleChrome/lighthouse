@@ -7,7 +7,7 @@
 import {FunctionComponent} from 'preact';
 import {useEffect, useRef, useState} from 'preact/hooks';
 
-import {ReportRendererProvider} from './wrappers/report-renderer';
+import {ReportRendererProvider, useReportRenderer} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
 import {classNames, FlowResultContext, useCurrentLhr, useHashParam} from './util';
@@ -20,6 +20,18 @@ const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
   const anchor = useHashParam('anchor');
   const ref = useRef<HTMLDivElement>(null);
+  const {topbarFeatures} = useReportRenderer();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.addEventListener('scroll', topbarFeatures._updateStickyHeaderOnScroll);
+    }
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('scroll', topbarFeatures._updateStickyHeaderOnScroll);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (anchor) {
