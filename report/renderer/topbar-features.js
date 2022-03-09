@@ -32,8 +32,6 @@ export class TopbarFeatures {
     this.categoriesEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement?} */
     this.stickyHeaderEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.highlightEl; // eslint-disable-line no-unused-expressions
     this.onDropDownMenuClick = this.onDropDownMenuClick.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onCopy = this.onCopy.bind(this);
@@ -270,9 +268,6 @@ export class TopbarFeatures {
         return;
       }
 
-      // Highlighter will be absolutely positioned at first gauge, then transformed on scroll.
-      this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
-
       // Update sticky header visibility and highlight when page scrolls/resizes.
       const scrollParent = this._getScrollParent(
         this._dom.find('.lh-container', this._dom.rootEl));
@@ -306,13 +301,14 @@ export class TopbarFeatures {
       categoriesAboveTheMiddle.length > 0 ? categoriesAboveTheMiddle.length - 1 : 0;
 
     // Category order matches gauge order in sticky header.
-    const gaugeWrapperEls = this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper');
+    const gaugeWrapperEls =
+      this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper, .lh-fraction__wrapper');
     const gaugeToHighlight = gaugeWrapperEls[highlightIndex];
-    const origin = gaugeWrapperEls[0].getBoundingClientRect().left;
-    const offset = gaugeToHighlight.getBoundingClientRect().left - origin;
+    for (const gauge of gaugeWrapperEls) {
+      gauge.classList.remove('lh-gauge--highlight');
+    }
+    gaugeToHighlight.classList.add('lh-gauge--highlight');
 
-    // Mutate at end to avoid layout thrashing.
-    this.highlightEl.style.transform = `translate(${offset}px)`;
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
   }
 }

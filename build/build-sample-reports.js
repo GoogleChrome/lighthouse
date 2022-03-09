@@ -23,6 +23,11 @@ const flowResult = readJson(
   `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
+/** @type {LH.Result} */
+const snapshotLhr = readJson(
+  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-snapshot-lhr.json`
+);
+
 const DIST = path.join(LH_ROOT, 'dist');
 
 (async function() {
@@ -36,6 +41,7 @@ const DIST = path.join(LH_ROOT, 'dist');
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
     'single-category': tweakLhrForPsi(lhr),
+    'snapshot': snapshotLhr,
   };
 
   // Generate and write reports
