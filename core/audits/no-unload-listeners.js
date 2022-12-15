@@ -71,7 +71,7 @@ class NoUnloadListeners extends Audit {
 
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
       return {
-        source: Audit.makeSourceLocation(script.url, lineNumber, columnNumber, bundle),
+        source: Audit.makeSourceLocationFromScript(script, lineNumber, columnNumber, bundle),
       };
     });
 

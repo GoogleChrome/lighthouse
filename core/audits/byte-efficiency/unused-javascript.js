@@ -90,6 +90,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const script = artifacts.Scripts.find(s => s.scriptId === scriptId);
       if (!script) continue; // This should never happen.
 
+      // Ignore dynamic scripts.
+      if (!script.url) continue;
+
       const networkRecord = getRequestForScript(networkRecords, script);
       if (!networkRecord) continue;
 

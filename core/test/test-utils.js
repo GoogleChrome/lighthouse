@@ -239,10 +239,11 @@ const fnAny = () => {
 
 /**
  * @param {Partial<LH.Artifacts.Script>} script
- * @return {LH.Artifacts.Script} script
+ * @return {LH.Artifacts.Script & {url: NonNullable<LH.Artifacts.Script['url']>}} script
  */
 function createScript(script) {
   if (!script.scriptId) throw new Error('Must include a scriptId');
+  if (!script.url) throw new Error('Must include a url');
 
   // @ts-expect-error For testing purposes we assume the test set all valid properties.
   return {
