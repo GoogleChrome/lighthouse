@@ -31,8 +31,8 @@ class NetworkRequests extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const earliestStartTime = records.reduce(
-      (min, record) => Math.min(min, record.startTime),
+    const earliestRendererStartTime = records.reduce(
+      (min, record) => Math.min(min, record.rendererStartTime),
       Infinity
     );
 
@@ -47,8 +47,8 @@ class NetworkRequests extends Audit {
     }
 
     /** @param {number} time */
-    const normalizeTime = time => time < earliestStartTime || !Number.isFinite(time) ?
-      undefined : (time - earliestStartTime);
+    const normalizeTime = time => time < earliestRendererStartTime || !Number.isFinite(time) ?
+      undefined : time - earliestRendererStartTime;
 
     const results = records.map(record => {
       const endTimeDeltaMs = record.lrStatistics?.endTimeDeltaMs;
@@ -64,8 +64,11 @@ class NetworkRequests extends Audit {
       return {
         url: UrlUtils.elideDataURI(record.url),
         protocol: record.protocol,
-        startTime: normalizeTime(record.startTime),
-        endTime: normalizeTime(record.endTime),
+        rendererStartTime: normalizeTime(record.rendererStartTime),
+        networkRequestTime: normalizeTime(record.networkRequestTime),
+        responseHeadersEndTime: normalizeTime(record.responseHeadersEndTime),
+        networkEndTime: normalizeTime(record.networkEndTime),
+        rendererEndTime: normalizeTime(record.rendererEndTime),
         finished: record.finished,
         transferSize: record.transferSize,
         resourceSize: record.resourceSize,
@@ -87,8 +90,12 @@ class NetworkRequests extends Audit {
     const headings = [
       {key: 'url', valueType: 'url', label: 'URL'},
       {key: 'protocol', valueType: 'text', label: 'Protocol'},
-      {key: 'startTime', valueType: 'ms', granularity: 1, label: 'Start Time'},
-      {key: 'endTime', valueType: 'ms', granularity: 1, label: 'End Time'},
+      {key: 'rendererStartTime', valueType: 'ms', granularity: 1, label: 'Renderer Start Time'},
+      {key: 'networkRequestTime', valueType: 'ms', granularity: 1, label: 'Network Request Time'},
+      // eslint-disable-next-line max-len
+      {key: 'responseHeadersEndTime', valueType: 'ms', granularity: 1, label: 'Response Headers End Time'},
+      {key: 'networkEndTime', valueType: 'ms', granularity: 1, label: 'Network End Time'},
+      {key: 'rendererEndTime', valueType: 'ms', granularity: 1, label: 'Renderer End Time'},
       {
         key: 'transferSize',
         valueType: 'bytes',
@@ -111,8 +118,8 @@ class NetworkRequests extends Audit {
     const tableDetails = Audit.makeTableDetails(headings, results);
 
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
-    const networkStartTimeTs = Number.isFinite(earliestStartTime) ?
-        earliestStartTime * 1000 : undefined;
+    const networkStartTimeTs = Number.isFinite(earliestRendererStartTime) ?
+        earliestRendererStartTime * 1000 : undefined;
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,
