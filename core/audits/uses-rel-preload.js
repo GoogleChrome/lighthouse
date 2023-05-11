@@ -143,9 +143,9 @@ class UsesRelPreloadAudit extends Audit {
       return {wastedMs: 0, results: []};
     }
 
-    // Preload changes the ordering of requests, simulate the original graph with flexible ordering
+    // Preload changes the ordering of requests, simulate the original graph
     // to have a reasonable baseline for comparison.
-    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
+    const simulationBeforeChanges = simulator.simulate(graph);
     const modifiedGraph = graph.cloneWithRelationships();
 
     /** @type {Array<LH.Gatherer.Simulation.GraphNetworkNode>} */
@@ -174,8 +174,8 @@ class UsesRelPreloadAudit extends Audit {
       node.addDependency(mainDocumentNode);
     }
 
-    // Once we've modified the dependencies, simulate the new graph with flexible ordering.
-    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
+    // Once we've modified the dependencies, simulate the new graph.
+    const simulationAfterChanges = simulator.simulate(modifiedGraph);
     const originalNodesByRecord = Array.from(simulationBeforeChanges.nodeTimings.keys())
         // @ts-expect-error we don't care if all nodes without a record collect on `undefined`
         .reduce((map, node) => map.set(node.record, node), new Map());

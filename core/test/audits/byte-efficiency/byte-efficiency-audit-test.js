@@ -255,13 +255,13 @@ describe('Byte efficiency base audit', () => {
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
     expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`730`);
+    expect(result.numericValue).toMatchInlineSnapshot(`1430`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
     expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`21500`);
+    expect(result.numericValue).toMatchInlineSnapshot(`22410`);
   });
 
   it('should compute TTI savings differently from load savings', async () => {
@@ -294,8 +294,8 @@ describe('Byte efficiency base audit', () => {
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
     const resultTti = await MockTtiAudit.audit(artifacts, {settings, computedCache});
     expect(resultTti.numericValue).toBeLessThan(result.numericValue);
-    expect(result.numericValue).toMatchInlineSnapshot(`2280`);
-    expect(resultTti.numericValue).toMatchInlineSnapshot(`110`);
+    expect(result.numericValue).toMatchInlineSnapshot(`2120`);
+    expect(resultTti.numericValue).toMatchInlineSnapshot(`150`);
   });
 
   it('should allow overriding of computeWasteWithTTIGraph', async () => {

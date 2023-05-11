@@ -143,8 +143,8 @@ describe('Render blocking resources audit', () => {
       documentNode.addDependent(styleNode);
 
       const result = estimate(simulator, documentNode, deferredIds, wastedBytesMap, Stacks);
-      // Saving 1000 + 1000 + 100ms for TCP handshake + 1 RT savings + server response time
-      assert.equal(result, 2100);
+      // Saving 1000 + 100ms for 1 RT savings + server response time
+      assert.equal(result, 1100);
     });
 
     it('does not report savings from AMP-stack when document already exceeds 2.1s', () => {

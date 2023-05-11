@@ -111,11 +111,10 @@ class LanternMetric {
     const optimisticGraph = this.getOptimisticGraph(graph, processedNavigation);
     const pessimisticGraph = this.getPessimisticGraph(graph, processedNavigation);
 
-    /** @type {{flexibleOrdering?: boolean, label?: string}} */
     let simulateOptions = {label: `optimistic${metricName}`};
     const optimisticSimulation = simulator.simulate(optimisticGraph, simulateOptions);
 
-    simulateOptions = {label: `optimisticFlex${metricName}`, flexibleOrdering: true};
+    simulateOptions = {label: `optimisticFlex${metricName}`};
     const optimisticFlexSimulation = simulator.simulate(optimisticGraph, simulateOptions);
 
     simulateOptions = {label: `pessimistic${metricName}`};

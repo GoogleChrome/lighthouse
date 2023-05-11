@@ -100,12 +100,12 @@ describe('DependencyGraph/Simulator', () => {
 
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(nodeA);
-      // should be 950ms for A, 800ms each for B, C, D
-      assert.equal(result.timeInMs, 3350);
+      // should be 950ms for A, 650ms each for B, C, D (no DNS and one-way connection)
+      assert.equal(result.timeInMs, 2900);
       assertNodeTiming(result, nodeA, {startTime: 0, endTime: 950});
-      assertNodeTiming(result, nodeB, {startTime: 950, endTime: 1750});
-      assertNodeTiming(result, nodeC, {startTime: 1750, endTime: 2550});
-      assertNodeTiming(result, nodeD, {startTime: 2550, endTime: 3350});
+      assertNodeTiming(result, nodeB, {startTime: 950, endTime: 1600});
+      assertNodeTiming(result, nodeC, {startTime: 1600, endTime: 2250});
+      assertNodeTiming(result, nodeD, {startTime: 2250, endTime: 2900});
     });
 
     it('should simulate cached network graphs', () => {
@@ -175,17 +175,17 @@ describe('DependencyGraph/Simulator', () => {
 
       nodeA.addDependent(nodeB);
       nodeB.addDependent(nodeC);
-      nodeB.addDependent(nodeE); // finishes 200 ms after C
+      nodeB.addDependent(nodeE); // finishes 350 ms after C
       nodeC.addDependent(nodeD);
-      nodeC.addDependent(nodeF); // finishes 400 ms after D
+      nodeC.addDependent(nodeF); // finishes 700 ms after D
 
       const simulator = new Simulator({
         serverResponseTimeByOrigin,
         cpuSlowdownMultiplier: 5,
       });
       const result = simulator.simulate(nodeA);
-      // should be 950ms for A, 800ms each for B, C, D, with F finishing 400 ms after D
-      assert.equal(result.timeInMs, 3750);
+      // should be 950ms for A, 650ms each for B, C, D, with F finishing 700 ms after D
+      assert.equal(result.timeInMs, 3600);
     });
 
     it('should simulate basic parallel requests', () => {
@@ -204,7 +204,7 @@ describe('DependencyGraph/Simulator', () => {
       assert.equal(result.timeInMs, 950 + 950);
     });
 
-    it('should not reuse connections', () => {
+    it('should make connections in parallel', () => {
       const nodeA = new NetworkNode(request({networkRequestTime: 0, networkEndTime: 1}));
       const nodeB = new NetworkNode(request({networkRequestTime: 2, networkEndTime: 3}));
       const nodeC = new NetworkNode(request({networkRequestTime: 2, networkEndTime: 5}));
@@ -216,8 +216,12 @@ describe('DependencyGraph/Simulator', () => {
 
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(nodeA);
-      // should be 950ms for A and 650ms for the next 3
-      assert.equal(result.timeInMs, 950 + 650 * 3);
+      // should be 950ms for A, 650ms for B reusing connection, 800ms for C and D in parallel.
+      assert.equal(result.timeInMs, 950 + 800);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, nodeB, {startTime: 950, endTime: 1600});
+      assertNodeTiming(result, nodeC, {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, nodeD, {startTime: 950, endTime: 1750});
     });
 
     it('should adjust throughput based on number of requests', () => {
@@ -264,13 +268,13 @@ describe('DependencyGraph/Simulator', () => {
       const result = simulator.simulate(rootNode);
 
       // should be 3 RTs + SRT for rootNode (950ms)
-      // should be 2 RTs + SRT for image nodes in observed order (800ms)
+      // should be 1 RT  + SRT for image nodes in observed order (650ms)
       assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
-      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
-      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
-      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
-      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
-      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1600});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1600, endTime: 2250});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2250, endTime: 2900});
+      assertNodeTiming(result, imageNodes[1], {startTime: 2900, endTime: 3550});
+      assertNodeTiming(result, imageNodes[0], {startTime: 3550, endTime: 4200});
     });
 
     it('should start network requests in priority order to break networkRequestTime ties', () => {
@@ -294,13 +298,13 @@ describe('DependencyGraph/Simulator', () => {
       const result = simulator.simulate(rootNode);
 
       // should be 3 RTs + SRT for rootNode (950ms)
-      // should be 2 RTs + SRT for image nodes in priority order (800ms)
+      // should be 1 RT  + SRT for image nodes in priority order (650ms)
       assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
-      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
-      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
-      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
-      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
-      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1600});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1600, endTime: 2250});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2250, endTime: 2900});
+      assertNodeTiming(result, imageNodes[1], {startTime: 2900, endTime: 3550});
+      assertNodeTiming(result, imageNodes[0], {startTime: 3550, endTime: 4200});
     });
 
     it('should simulate two graphs in a row', () => {
@@ -352,9 +356,9 @@ describe('DependencyGraph/Simulator', () => {
       //  - The second with C & D in series.
       // Under HTTP/2 simulation these should be equivalent, but definitely parallel
       // shouldn't be slower.
-      const resultA = simulator.simulate(nodeA, {flexibleOrdering: true});
+      const resultA = simulator.simulate(nodeA);
       nodeC.addDependent(nodeD);
-      const resultB = simulator.simulate(nodeA, {flexibleOrdering: true});
+      const resultB = simulator.simulate(nodeA);
       expect(resultA.timeInMs).toBeLessThanOrEqual(resultB.timeInMs);
     });
 

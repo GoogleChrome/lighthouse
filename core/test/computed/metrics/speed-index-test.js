@@ -32,7 +32,7 @@ describe('Metrics: Speed Index', () => {
       Object {
         "optimistic": 605,
         "pessimistic": 1661,
-        "timing": 1676,
+        "timing": 1511,
       }
     `);
   });
@@ -68,7 +68,7 @@ describe('Metrics: Speed Index', () => {
       Object {
         "optimistic": 575,
         "pessimistic": 633,
-        "timing": 635,
+        "timing": 642,
       }
     `);
   });

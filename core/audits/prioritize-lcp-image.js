@@ -194,8 +194,8 @@ class PrioritizeLcpImage extends Audit {
     modifiedLCPNode.removeAllDependencies();
     modifiedLCPNode.addDependency(mainDocumentNode);
 
-    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
-    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
+    const simulationBeforeChanges = simulator.simulate(graph);
+    const simulationAfterChanges = simulator.simulate(modifiedGraph);
     const lcpTimingsBefore = simulationBeforeChanges.nodeTimings.get(lcpNode);
     if (!lcpTimingsBefore) throw new Error('Impossible - node timings should never be undefined');
     const lcpTimingsAfter = simulationAfterChanges.nodeTimings.get(modifiedLCPNode);

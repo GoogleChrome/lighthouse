@@ -79,10 +79,9 @@ class UsesHTTP2Audit extends Audit {
   static computeWasteWithTTIGraph(results, graph, simulator) {
     const beforeLabel = `uses-http2-before`;
     const afterLabel = `uses-http2-after`;
-    const flexibleOrdering = true;
 
     const urlsToChange = new Set(results.map(result => result.url));
-    const simulationBefore = simulator.simulate(graph, {label: beforeLabel, flexibleOrdering});
+    const simulationBefore = simulator.simulate(graph, {label: beforeLabel});
 
     // Update all the protocols to reflect implementing our recommendations
     /** @type {Map<string, string>} */
@@ -95,7 +94,7 @@ class UsesHTTP2Audit extends Audit {
       node.record.protocol = 'h2';
     });
 
-    const simulationAfter = simulator.simulate(graph, {label: afterLabel, flexibleOrdering});
+    const simulationAfter = simulator.simulate(graph, {label: afterLabel});
 
     // Restore the original protocol after we've done our simulation
     graph.traverse(node => {

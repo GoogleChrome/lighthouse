@@ -19,12 +19,11 @@ class LanternSpeedIndex extends LanternMetric {
    */
   static get COEFFICIENTS() {
     return {
-      // Negative intercept is OK because estimate is Math.max(FCP, Speed Index) and
-      // the optimistic estimate is based on the real observed speed index rather than a real
-      // lantern graph.
-      intercept: -250,
+      // Note that the optimistic estimate is based on the real observed speed index rather than a
+      // real lantern graph (and the final estimate will be Math.max(FCP, Speed Index)).
+      intercept: 0,
       optimistic: 1.4,
-      pessimistic: 0.65,
+      pessimistic: 0.4,
     };
   }
 

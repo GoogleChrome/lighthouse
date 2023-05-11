@@ -85,23 +85,12 @@ export class ConnectionPool {
 
   /**
    * @param {Array<TcpConnection>} connections
-   * @param {{ignoreConnectionReused?: boolean, observedConnectionWasReused: boolean}} options
    */
-  _findAvailableConnectionWithLargestCongestionWindow(connections, options) {
-    const {ignoreConnectionReused, observedConnectionWasReused} = options;
-
+  _findAvailableConnectionWithLargestCongestionWindow(connections) {
     /** @type {TcpConnection|null} */
     let maxConnection = null;
     for (let i = 0; i < connections.length; i++) {
       const connection = connections[i];
-
-      // Normally, we want to make sure the connection warmth matches the state of the record
-      // we're acquiring for. Do this check first since it's the common case and cheaper than our
-      // "in use" check below.
-      // Use the _warmed property instead of the getter because this is a surprisingly hot code path.
-      if (!ignoreConnectionReused && connection._warmed !== observedConnectionWasReused) {
-        continue;
-      }
 
       // Connections that are in use are never available.
       if (this._connectionsInUse.has(connection)) {
@@ -121,23 +110,15 @@ export class ConnectionPool {
    * if no connection was available. If returned, connection will not be available for other network
    * records until release is called.
    *
-   * If ignoreConnectionReused is true, acquire will consider all connections not in use as available.
-   * Otherwise, only connections that have matching "warmth" are considered available.
-   *
    * @param {LH.Artifacts.NetworkRequest} record
-   * @param {{ignoreConnectionReused?: boolean}} options
    * @return {?TcpConnection}
    */
-  acquire(record, options = {}) {
+  acquire(record) {
     if (this._connectionsByRecord.has(record)) throw new Error('Record already has a connection');
 
     const origin = record.parsedURL.securityOrigin;
-    const observedConnectionWasReused = !!this._connectionReusedByRequestId.get(record.requestId);
     const connections = this._connectionsByOrigin.get(origin) || [];
-    const connectionToUse = this._findAvailableConnectionWithLargestCongestionWindow(connections, {
-      ignoreConnectionReused: options.ignoreConnectionReused,
-      observedConnectionWasReused,
-    });
+    const connectionToUse = this._findAvailableConnectionWithLargestCongestionWindow(connections);
 
     if (!connectionToUse) return null;
 

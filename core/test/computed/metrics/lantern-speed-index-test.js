@@ -31,7 +31,7 @@ describe('Metrics: Lantern Speed Index', () => {
       Object {
         "optimistic": 605,
         "pessimistic": 1661,
-        "timing": 1676,
+        "timing": 1511,
       }
     `);
   });
@@ -51,7 +51,7 @@ describe('Metrics: Lantern Speed Index', () => {
       Object {
         "optimistic": 605,
         "pessimistic": 2439,
-        "timing": 3007,
+        "timing": 2198,
       }
     `);
   });
@@ -63,16 +63,16 @@ describe('Metrics: Lantern Speed Index', () => {
 
   it('should scale coefficients back', async () => {
     const result = LanternSpeedIndex.getScaledCoefficients(5);
-    expect(result).toEqual({intercept: -0, pessimistic: 0.5, optimistic: 0.5});
+    expect(result).toEqual({intercept: 0, pessimistic: 0.5, optimistic: 0.5});
   });
 
   it('should scale coefficients forward', async () => {
     const result = LanternSpeedIndex.getScaledCoefficients(300);
     expect(result).toMatchInlineSnapshot(`
       Object {
-        "intercept": -562.5,
+        "intercept": 0,
         "optimistic": 2.525,
-        "pessimistic": 0.8375,
+        "pessimistic": 0.275,
       }
     `);
   });

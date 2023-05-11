@@ -121,7 +121,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       assert.ok(connections[6], 'did not find connection for 7th record');
     });
 
-    it('should respect observed connection reuse', () => {
+    it('should be oblivious to connection reuse', () => {
       const coldRecord = record();
       const warmRecord = record();
       const pool = new ConnectionPool([coldRecord, warmRecord],
@@ -129,45 +129,15 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       pool._connectionReusedByRequestId.set(warmRecord.requestId, true);
 
       assert.ok(pool.acquire(coldRecord), 'should have acquired connection');
-      assert.ok(!pool.acquire(warmRecord), 'should not have acquired connection');
-      pool.release(coldRecord);
-
-      const connections = Array.from(pool._connectionsByOrigin.get('http://example.com'));
-      connections.forEach((connection, i) => {
-        connection.setWarmed(i % 2 === 0);
-      });
-
-      assert.equal(pool.acquire(coldRecord), connections[1], 'should have cold connection');
-      assert.equal(pool.acquire(warmRecord), connections[0], 'should have warm connection');
-      pool.release(coldRecord);
-      pool.release(warmRecord);
-
-      connections.forEach(connection => {
-        connection.setWarmed(true);
-      });
-
-      assert.ok(!pool.acquire(coldRecord), 'should not have acquired connection');
       assert.ok(pool.acquire(warmRecord), 'should have acquired connection');
-    });
-
-    it('should ignore observed connection reuse when flag is present', () => {
-      const coldRecord = record();
-      const warmRecord = record();
-      const pool = new ConnectionPool([coldRecord, warmRecord],
-          simulationOptions({rtt, throughput}));
-      pool._connectionReusedByRequestId.set(warmRecord.requestId, true);
-
-      const opts = {ignoreConnectionReused: true};
-      assert.ok(pool.acquire(coldRecord, opts), 'should have acquired connection');
-      assert.ok(pool.acquire(warmRecord, opts), 'should have acquired connection');
       pool.release(coldRecord);
 
       for (const connection of pool._connectionsByOrigin.get('http://example.com')) {
         connection.setWarmed(true);
       }
 
-      assert.ok(pool.acquire(coldRecord, opts), 'should have acquired connection');
-      assert.ok(pool.acquireActiveConnectionFromRecord(warmRecord, opts),
+      assert.ok(pool.acquire(coldRecord), 'should have acquired connection');
+      assert.ok(pool.acquireActiveConnectionFromRecord(warmRecord),
         'should have acquired connection');
     });
 

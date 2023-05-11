@@ -77,7 +77,6 @@ class Simulator {
     this._cachedNodeListByStartPosition = [];
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
-    this._flexibleOrdering = false;
     this._nodeTimings = new SimulatorTimingMap();
     /** @type {Map<string, number>} */
     this._numberInProgressByType = new Map();
@@ -194,9 +193,7 @@ class Simulator {
    * @return {?TcpConnection}
    */
   _acquireConnection(record) {
-    return this._connectionPool.acquire(record, {
-      ignoreConnectionReused: this._flexibleOrdering,
-    });
+    return this._connectionPool.acquire(record);
   }
 
   /**
@@ -422,13 +419,13 @@ class Simulator {
    * Estimates the time taken to process all of the graph's nodes, returns the overall time along with
    * each node annotated by start/end times.
    *
-   * If flexibleOrdering is set, simulator/connection pool are allowed to deviate from what was
+   * Simulator/connection pool are allowed to deviate from what was
    * observed in the trace/devtoolsLog and start requests as soon as they are queued (i.e. do not
    * wait around for a warm connection to be available if the original record was fetched on a warm
    * connection).
    *
    * @param {Node} graph
-   * @param {{flexibleOrdering?: boolean, label?: string}=} options
+   * @param {{label?: string}=} options
    * @return {LH.Gatherer.Simulation.Result}
    */
   simulate(graph, options) {
@@ -438,11 +435,9 @@ class Simulator {
 
     options = Object.assign({
       label: undefined,
-      flexibleOrdering: false,
     }, options);
 
     // initialize the necessary data containers
-    this._flexibleOrdering = !!options.flexibleOrdering;
     this._dns = new DNSCache({rtt: this._rtt});
     this._initializeConnectionPool(graph);
     this._initializeAuxiliaryData();
@@ -467,11 +462,9 @@ class Simulator {
       }
 
       if (!nodesInProgress.size) {
-        // interplay between fromDiskCache and connectionReused can be incorrect
-        // proceed with flexibleOrdering if we can, otherwise give up
-        if (this._flexibleOrdering) throw new Error('Failed to start a node');
-        this._flexibleOrdering = true;
-        continue;
+        // Interplay between fromDiskCache and connectionReused can be incorrect,
+        // have to give up.
+        throw new Error('Failed to start a node');
       }
 
       // set the available throughput for all connections based on # inflight
