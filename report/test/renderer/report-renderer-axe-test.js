@@ -70,6 +70,7 @@ describe('ReportRendererAxe', () => {
           {html: '<div class="lh-audit lh-audit--binary lh-audit--pass" id="viewport">'},
           {html: '<div class="lh-audit lh-audit--binary lh-audit--fail" id="image-alt">'},
           {html: '<div class="lh-audit lh-audit--binary lh-audit--pass" id="document-title">'},
+          {html: '<div class="lh-audit lh-audit--notapplicable lh-audit--pass" id="redirects-http">'}, // eslint-disable-line max-len
         ],
       });
 

@@ -253,6 +253,7 @@ describe('ReportRenderer', () => {
       // The performance-budget audit is omitted from the DOM when it is not applicable
       if (audit.scoreDisplayMode === 'notApplicable' && audit.id !== 'performance-budget') {
         notApplicableCount++;
+        // Switch to old-style `not_applicable` to test fallback behavior.
         audit.scoreDisplayMode = 'not_applicable';
       }
     });
@@ -261,8 +262,11 @@ describe('ReportRenderer', () => {
 
     const container = renderer._dom.document().body;
     const reportElement = renderer.renderReport(sampleResults, container);
-    const notApplicableElementCount = reportElement
-      .querySelectorAll('.lh-audit--notapplicable').length;
+    const notApplicableElements = [...reportElement.querySelectorAll('.lh-audit--notapplicable')];
+    // Audits can be included multiple times in the report, so dedupe by id.
+    const uniqueNotApplicableElements = new Set(notApplicableElements.map(el => el.id));
+    const notApplicableElementCount = uniqueNotApplicableElements.size;
+
     assert.strictEqual(notApplicableCount, notApplicableElementCount);
   });
 });

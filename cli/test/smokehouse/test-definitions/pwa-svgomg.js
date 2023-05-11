@@ -22,15 +22,20 @@ const config = {
  */
 const expectations = {
   lhr: {
-    runWarnings: {
+    runWarnings: [
       // In DevTools the IndexedDB storage from the initial load will persist into the Lighthouse run, emitting a warning.
-      // For non-DevTools runners, this will revert to the default expectation of 0 run warnings.
-      _runner: 'devtools',
-      length: 1,
-    },
-    requestedUrl: 'https://jakearchibald.github.io/svgomg/',
+      Object.assign(/IndexedDB/, {_runner: 'devtools'}),
+      // DevTools can't simply test a redirect, because the browser will have already navigated before the Lighthouse panel can begin.
+      Object.assign(/redirected/, {_excludeRunner: 'devtools'}),
+    ],
+    // Intentionally start out on http to test the redirect.
+    requestedUrl: 'http://jakearchibald.github.io/svgomg/',
     finalDisplayedUrl: 'https://jakearchibald.github.io/svgomg/',
     audits: {
+      'redirects-http': {
+        _excludeRunner: 'devtools',
+        score: 1,
+      },
       'service-worker': {
         score: 1,
       },

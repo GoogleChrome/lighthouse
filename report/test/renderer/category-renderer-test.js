@@ -429,7 +429,7 @@ describe('CategoryRenderer', () => {
       assert.equal(failedAudits.length, 4);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
-      assert.equal(naAudits.length, 1);
+      assert.equal(naAudits.length, 2);
 
       const allAudits = elem.querySelectorAll('.lh-audit');
       // No unaccounted audits

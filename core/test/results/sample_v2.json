@@ -46,6 +46,13 @@
         ]
       }
     },
+    "redirects-http": {
+      "id": "redirects-http",
+      "title": "Redirects HTTP traffic to HTTPS",
+      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "service-worker": {
       "id": "service-worker",
       "title": "Does not register a service worker that controls page and `start_url`",
@@ -6089,6 +6096,11 @@
           "group": "best-practices-trust-safety"
         },
         {
+          "id": "redirects-http",
+          "weight": 0,
+          "group": "best-practices-trust-safety"
+        },
+        {
           "id": "geolocation-on-start",
           "weight": 1,
           "group": "best-practices-trust-safety"
@@ -6270,6 +6282,11 @@
         {
           "id": "service-worker",
           "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "redirects-http",
+          "weight": 0,
           "group": "pwa-optimized"
         },
         {
@@ -7463,6 +7480,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:NetworkRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:redirects-http",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8787,6 +8810,12 @@
       ],
       "core/audits/is-on-https.js | allowed": [
         "audits[is-on-https].details.items[0].resolution"
+      ],
+      "core/audits/redirects-http.js | title": [
+        "audits[redirects-http].title"
+      ],
+      "core/audits/redirects-http.js | description": [
+        "audits[redirects-http].description"
       ],
       "core/audits/service-worker.js | failureTitle": [
         "audits[service-worker].title"

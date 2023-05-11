@@ -13,6 +13,7 @@ const config = {
     ],
     onlyAudits: [
       'is-on-https',
+      'redirects-http',
       'service-worker',
       'viewport',
       'user-timings',
@@ -43,6 +44,11 @@ const expectations = {
     audits: {
       'is-on-https': {
         score: 1,
+      },
+      'redirects-http': {
+        // localhost, so redirect check is n/a.
+        score: null,
+        scoreDisplayMode: 'notApplicable',
       },
       'geolocation-on-start': {
         score: 1,
