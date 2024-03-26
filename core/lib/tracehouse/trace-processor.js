@@ -816,6 +816,9 @@ class TraceProcessor {
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
 
+    const navigationId = timeOriginEvt.args.data?.navigationId;
+    if (!navigationId) throw new Error('No navigation ID');
+
     return {
       timings: {
         timeOrigin: timings.timeOrigin,
@@ -851,6 +854,7 @@ class TraceProcessor {
       domContentLoadedEvt: frameTimings.domContentLoadedEvt,
       fmpFellBack: frameTimings.fmpFellBack,
       lcpInvalidated: frameTimings.lcpInvalidated,
+      navigationId,
     };
   }
 

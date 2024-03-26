@@ -163,10 +163,10 @@ class CumulativeLayoutShift {
       await processor.parse(/** @type {import('@paulirish/trace_engine').Types.TraceEvents.TraceEventData[]} */ (
         events
       ));
-      if (!processor.data) {
+      if (!processor.traceParsedData) {
         throw new Error('null trace engine result');
       }
-      return processor.data.LayoutShifts.sessionMaxScore;
+      return processor.traceParsedData.LayoutShifts.sessionMaxScore;
     };
     const cumulativeLayoutShift = await run(allFrameShiftEvents.map(e => e.event));
     const cumulativeLayoutShiftMainFrame = await run(mainFrameShiftEvents.map(e => e.event));

@@ -16,6 +16,7 @@ import speedline from 'speedline-core';
 import * as CDTSourceMap from '../core/lib/cdt/generated/SourceMap.js';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
 import type { TaskNode as _TaskNode } from '../core/lib/tracehouse/main-thread-tasks.js';
+import type {EnabledHandlers} from '../core/computed/trace-engine-result.js';
 import AuditDetails from './lhr/audit-details.js'
 import Config from './config.js';
 import Gatherer from './gatherer.js';
@@ -568,7 +569,10 @@ declare module Artifacts {
     type?: string;
   }
 
-  type TraceEngineResult = TraceEngine.Handlers.Types.TraceParseData;
+  interface TraceEngineResult {
+    data: TraceEngine.Handlers.Types.EnabledHandlerDataWithMeta<EnabledHandlers>;
+    insights: TraceEngine.Insights.Types.TraceInsightData<EnabledHandlers>;
+  }
 
   interface TraceEngineRootCauses {
     layoutShifts: Record<number, LayoutShiftRootCausesData>;
@@ -747,6 +751,8 @@ declare module Artifacts {
     fmpFellBack: boolean;
     /** Whether LCP was invalidated without a new candidate. */
     lcpInvalidated: boolean;
+    /** ID of the navigation */
+    navigationId: string;
   }
 
   /** Information on a tech stack (e.g. a JS library) used by the page. */

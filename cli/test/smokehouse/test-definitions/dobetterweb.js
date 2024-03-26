@@ -156,57 +156,6 @@ const expectations = {
         property: 'og:description',
       },
     ],
-    TagsBlockingFirstPaint: [
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-        },
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-        },
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-        },
-
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-          mediaChanges: [
-            {
-              href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-              media: 'not-matching',
-              matches: false,
-            },
-            {
-              href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-              media: 'screen',
-              matches: true,
-            },
-          ],
-        },
-      },
-      {
-        tag: {
-          tagName: 'SCRIPT',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
-        },
-      },
-      {
-        tag: {
-          tagName: 'SCRIPT',
-          url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
-        },
-      },
-    ],
     GlobalListeners: [{
       type: 'unload',
       scriptId: /^\d+$/,
