@@ -18,6 +18,16 @@ const UIStrings = {
   columnFailingLink: 'Uncrawlable Link',
 };
 
+const hrefAssociatedAttributes = [
+  'target',
+  'download',
+  'ping',
+  'rel',
+  'hreflang',
+  'type',
+  'referrerpolicy',
+];
+
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class CrawlableAnchors extends Audit {
@@ -45,6 +55,7 @@ class CrawlableAnchors extends Audit {
       role = '',
       id,
       href,
+      attributeNames = [],
     }) => {
       rawHref = rawHref.replace( /\s/g, '');
       name = name.trim();
@@ -61,6 +72,14 @@ class CrawlableAnchors extends Audit {
 
       if (rawHref.startsWith('file:')) return true;
       if (name.length > 0) return;
+
+      // https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
+      // If the a element has no href attribute, then the element represents a placeholder for where a link might otherwise have been placed, if it had been relevant, consisting of just the element's contents.
+      // The target, download, ping, rel, hreflang, type, and referrerpolicy attributes must be omitted if the href attribute is not present.
+      if (
+        !attributeNames.includes('href') &&
+        !hrefAssociatedAttributes.some(attribute => attributeNames.includes(attribute))
+      ) return;
 
       if (href === '') return true;
       if (javaScriptVoidRegExp.test(rawHref)) return true;
