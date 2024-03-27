@@ -364,6 +364,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Lighthouse Metrics China](http://lighthousemetricschina.com)** - The first Lighthouse metrics tool specifically designed for China. Experience unparalleled website monitoring capabilities with Lighthouse. Gain insights into the fluctuations of your scores and metrics within the realm of the [Great Firewall of China](https://www.chinafirewalltest.co), enabling a comprehensive understanding of the factors influencing each change. Lighthouse Metrics China offers both free and paid plans.
 
+* **[DeploymentHawk](https://deploymenthawk.com)** - DeploymentHawk is an automated site auditing tool powered by Lighthouse. Effortlessly catch performance, accessibility, and SEO issues before they impact your users. DeploymentHawk is a paid product with a free 7-day trial.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
