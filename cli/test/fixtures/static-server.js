@@ -109,6 +109,12 @@ class Server {
         'Origin-Agent-Cluster': '?1',
       };
 
+      // This enables an important test in Smokerider - to check if the universal fetcher
+      // used for robots.txt (and other resources) is able to get around CORS.
+      if (filePath === '/robots.txt') {
+        delete headers['Access-Control-Allow-Origin'];
+      }
+
       const contentType = mime.lookup(filePath);
       const charset = mime.lookup(contentType);
       // `mime.contentType` appends the correct charset too.
