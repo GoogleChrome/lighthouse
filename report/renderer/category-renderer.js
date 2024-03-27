@@ -73,6 +73,7 @@ export class CategoryRenderer {
         });
         const packElm = this.dom.createElement('div', 'lh-audit__stackpack');
         packElm.append(packElmImg, snippets);
+        packElm.title = `Recommendation specific to ${pack.title} detected on the page`;
 
         this.dom.find('.lh-audit__stackpacks', auditEl)
           .append(packElm);
