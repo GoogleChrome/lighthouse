@@ -7,7 +7,7 @@ There are three primary options for gathering Lighthouse data at scale.
 
 ## Option 1: Using the PSI API
 
-The default quota of the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) is 25,000 requests per day. Of course, you can't test localhost or firewalled URLs using the PSI API, unless you use a security-concerning solution like [ngrok](https://ngrok.com/) to web-expose them.
+The default quota of the [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started) is 25,000 requests per day. Of course, you can't test localhost or firewalled URLs using the PSI API, unless you use a solution like [Tunnelmole](https://github.com/robbie-cahill/tunnelmole-client), an open-source tunnelling tool, or [ngrok](https://ngrok.com/), a popular closed-source tunnelling tool, to web-expose them.
 
 A huge benefit of using the PSI API is that you don't need to create and maintain [a stable testing environment](./variability.md#run-on-adequate-hardware) for Lighthouse to run.  The PSI API has Lighthouse running on Google infrastructure which offers good reproducibility.
 
@@ -16,6 +16,35 @@ A huge benefit of using the PSI API is that you don't need to create and maintai
 * CON: The URLs must be web-accessible.
 
 Approx eng effort: ~5 minutes for the first result. ~30 minutes for a script that evaluates and saves the results for hundreds of URLs.
+
+Before starting, you will need to install and configure your choice of tunnelling tools as shown below:
+
+### Tunnelmole
+
+First, install Tunnelmole with the following command:
+
+```bash 
+curl -O https://install.tunnelmole.com/U487K/install && sudo bash install
+```
+
+Then, to start using Tunnelmole, execute the tmole command with your desired port. 
+
+```bash 
+tmole <port>
+```
+
+Replace `<port>` with the port number you are listening on if it is different. In the output, you'll see two URLs, one http and a https URL. It is better to use the https URL for privacy and security.
+
+### ngrok 
+
+For ngrok, use the ngrok command with your port of choice.
+
+```bash 
+ngrok http <port>
+```
+
+Replace `<port>` with the port number you are listening on.
+
 
 ## Option 2: Using the Lighthouse CLI on cloud hardware
 
