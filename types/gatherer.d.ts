@@ -48,6 +48,8 @@ declare module Gatherer {
       off(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
     };
     networkMonitor: NetworkMonitor;
+    listenForCrashes: (() => void);
+    fatalRejection: {promise: Promise<any>, rej: (reason: Error) => void}
   }
 
   interface Context<TDependencies extends DependencyKey = DefaultDependenciesKey> {

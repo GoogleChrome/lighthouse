@@ -24,12 +24,12 @@ async function snapshotGather(page, options = {}) {
   const {resolvedConfig} = await initializeConfig('snapshot', config, flags);
   const driver = new Driver(page);
   await driver.connect();
+  const url = await driver.url();
+  const fatalGatherPromise = driver.fatalRejection.promise;
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
-  const url = await driver.url();
-
-  const runnerOptions = {resolvedConfig, computedCache};
+  const runnerOptions = {resolvedConfig, computedCache, fatalGatherPromise};
 
   const gatherFn = async () => {
     const baseArtifacts =

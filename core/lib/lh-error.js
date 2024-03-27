@@ -91,6 +91,9 @@ const UIStrings = {
    * @example {Largest Contentful Paint} featureName
    * */
   oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
+
+  /** Error message explaining that the browser tab that Lighthouse is inspecting has crashed. */
+  targetCrashed: 'Browser tab has unexpectedly crashed.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -421,6 +424,13 @@ const ERRORS = {
   ERRORED_REQUIRED_ARTIFACT: {
     code: 'ERRORED_REQUIRED_ARTIFACT',
     message: UIStrings.erroredRequiredArtifact,
+  },
+
+  /** The page has crashed and will no longer respond to 99% of CDP commmands. */
+  TARGET_CRASHED: {
+    code: 'TARGET_CRASHED',
+    message: UIStrings.targetCrashed,
+    lhrRuntimeError: true,
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.

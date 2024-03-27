@@ -34,6 +34,7 @@ async function startTimespanGather(page, options = {}) {
 
   const {resolvedConfig} = await initializeConfig('timespan', config, flags);
   const driver = new Driver(page);
+  const fatalGatherPromise = driver.fatalRejection.promise;
   await driver.connect();
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
@@ -71,7 +72,7 @@ async function startTimespanGather(page, options = {}) {
     async endTimespanGather() {
       const finalDisplayedUrl = await driver.url();
 
-      const runnerOptions = {resolvedConfig, computedCache};
+      const runnerOptions = {resolvedConfig, computedCache, fatalGatherPromise};
       const gatherFn = async () => {
         baseArtifacts.URL = {finalDisplayedUrl};
 

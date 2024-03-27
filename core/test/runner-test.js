@@ -114,6 +114,7 @@ describe('Runner', () => {
   };
 
   const runGatherAndAudit = async (gatherFn, opts) => {
+    // TODO: will need to pop a fatalGatherPromise in these opts
     const artifacts = await Runner.gather(gatherFn, opts);
     return Runner.audit(artifacts, opts);
   };
