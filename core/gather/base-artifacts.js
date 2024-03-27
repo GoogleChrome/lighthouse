@@ -18,8 +18,10 @@ import {
  * @return {Promise<LH.BaseArtifacts>}
  */
 async function getBaseArtifacts(resolvedConfig, driver, context) {
-  const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
-  const {userAgent, product} = await getBrowserVersion(driver.defaultSession);
+  const [BenchmarkIndex, {userAgent, product}] = await Promise.all([
+    getBenchmarkIndex(driver.executionContext),
+    getBrowserVersion(driver.defaultSession),
+  ]);
 
   return {
     // Meta artifacts.

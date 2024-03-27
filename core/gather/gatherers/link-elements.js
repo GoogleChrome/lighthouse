@@ -177,8 +177,10 @@ class LinkElements extends BaseGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const fromDOM = await LinkElements.getLinkElementsInDOM(context);
-    const fromHeaders = await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
+    const [fromDOM, fromHeaders] = await Promise.all([
+      LinkElements.getLinkElementsInDOM(context),
+      LinkElements.getLinkElementsInHeaders(context, devtoolsLog),
+    ]);
     const linkElements = fromDOM.concat(fromHeaders);
 
     for (const link of linkElements) {

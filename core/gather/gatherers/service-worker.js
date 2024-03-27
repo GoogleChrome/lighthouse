@@ -19,8 +19,10 @@ class ServiceWorker extends BaseGatherer {
    */
   async getArtifact(context) {
     const session = context.driver.defaultSession;
-    const {versions} = await serviceWorkers.getServiceWorkerVersions(session);
-    const {registrations} = await serviceWorkers.getServiceWorkerRegistrations(session);
+    const [{versions}, {registrations}] = await Promise.all([
+      serviceWorkers.getServiceWorkerVersions(session),
+      serviceWorkers.getServiceWorkerRegistrations(session),
+    ]);
 
     return {
       versions,
