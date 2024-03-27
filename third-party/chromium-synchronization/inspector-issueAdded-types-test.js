@@ -9,9 +9,9 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import { LH_ROOT } from '../../shared/root.js';
 
-const inspectorIssuesGathererPath = LH_ROOT +
-  '/core/gather/gatherers/inspector-issues.js';
-const inspectorIssuesGathererSource = fs.readFileSync(inspectorIssuesGathererPath, 'utf-8');
+const artifactsDefinitionPath = LH_ROOT +
+  '/types/artifacts.d.ts';
+const artifactsDefinitionSource = fs.readFileSync(artifactsDefinitionPath, 'utf-8');
 
 describe('issueAdded types', () => {
   /** @type {Array<LH.Crdp.Audits.InspectorIssueDetails>} */
@@ -56,11 +56,9 @@ Array [
 `);
   });
 
-  // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147
-  it.skip('are each handled explicitly in the gatherer', () => {
-    // Regex relies on the typecasts
-    const sourceTypeMatches = inspectorIssuesGathererSource.matchAll(
-      /LH\.Crdp\.Audits\.(.*?Details)>/g
+  it('are each handled explicitly in the gatherer', () => {
+    const sourceTypeMatches = artifactsDefinitionSource.matchAll(
+      /Crdp\.Audits\.(.*?Details)/g
     );
 
     const sourceTypeMatchIds = [...sourceTypeMatches]
