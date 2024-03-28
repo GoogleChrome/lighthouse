@@ -321,6 +321,9 @@ describe('Lighthouse Viewer', () => {
       'lhr-5.0.0.json',
       'lhr-6.0.0.json',
       'lhr-8.5.0.json',
+      'lhr-9.6.8.json',
+      'lhr-10.4.0.json',
+      'lhr-11.7.0.json',
     ].forEach((testFilename) => {
       it(`[${testFilename}] should load with no errors`, async () => {
         await verifyLhrLoadsWithNoErrors(`${LH_ROOT}/report/test-assets/${testFilename}`);

@@ -93,16 +93,6 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
-   * Returns true if the audit is a general performance insight (i.e. not a metric or hidden audit).
-   *
-   * @param {LH.ReportResult.AuditRef} audit
-   * @return {boolean}
-   */
-  _isPerformanceInsight(audit) {
-    return !audit.group;
-  }
-
-  /**
    * Returns overallImpact and linearImpact for an audit.
    * The overallImpact is determined by the audit saving's effect on the overall performance score.
    * We use linearImpact to compare audits where their overallImpact is rounded down to 0.
@@ -212,7 +202,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     const allInsights = category.auditRefs
-      .filter(audit => this._isPerformanceInsight(audit))
+      .filter(audit => audit.group === 'diagnostics')
       .map(auditRef => {
         const {overallImpact, overallLinearImpact} = this.overallImpact(auditRef, metricAudits);
         const guidanceLevel = auditRef.result.guidanceLevel || 1;

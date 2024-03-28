@@ -153,6 +153,23 @@ describe('backward compatibility', () => {
     assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
   });
 
+  it('corrects performance category without consolidated diagnostics group', () => {
+    const clonedSampleResult = cloneLhr(sampleResult);
+
+    clonedSampleResult.lighthouseVersion = '11.0.0';
+    for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
+      if (auditRef.group === 'diagnostics') {
+        delete auditRef.group;
+      }
+    }
+    assert.notDeepStrictEqual(clonedSampleResult.categories, sampleResult.categories);
+
+    // Original audit results should be restored.
+    const clonedPreparedResult = upgradeLhr(clonedSampleResult);
+    const preparedResult = upgradeLhr(sampleResult);
+    assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
+  });
+
   it('converts old opportunity table column headings to consolidated table headings', () => {
     const clonedSampleResult = cloneLhr(sampleResult);
 
