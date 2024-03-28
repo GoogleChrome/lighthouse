@@ -52,7 +52,6 @@ async function runA11yChecks() {
       'aria-text': {enabled: true},
       'audio-caption': {enabled: false},
       'blink': {enabled: false},
-      'duplicate-id-active': {enabled: true},
       'duplicate-id': {enabled: false},
       'empty-heading': {enabled: true},
       'frame-focusable-content': {enabled: false},
