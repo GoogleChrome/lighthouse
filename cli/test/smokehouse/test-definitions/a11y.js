@@ -452,68 +452,6 @@ const expectations = {
 
         },
       },
-      'duplicate-id-active': {
-        score: 0,
-        details: {
-          items: [
-            {
-              node: {
-                'type': 'node',
-                'selector': 'body > section > textarea#duplicate-id-active',
-                'path': '2,HTML,1,BODY,47,SECTION,0,TEXTAREA',
-                'snippet': '<textarea id="duplicate-id-active" aria-label="text1">',
-                'explanation': 'Fix any of the following:\n  Document has active elements with the same id attribute: duplicate-id-active',
-                'nodeLabel': 'text1',
-              },
-              subItems: {
-                type: 'subitems',
-                items: [
-                  {
-                    relatedNode: {
-                      'type': 'node',
-                      'path': '2,HTML,1,BODY,47,SECTION,1,TEXTAREA',
-                      'selector': 'body > section > textarea#duplicate-id-active',
-                      'snippet': '<textarea id="duplicate-id-active" aria-label="text2">',
-                      'nodeLabel': 'text2',
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      'duplicate-id-aria': {
-        score: 1,
-        details: {
-          items: [
-            {
-              node: {
-                'type': 'node',
-                'selector': 'body > section > div#duplicate-id-aria',
-                'path': '2,HTML,1,BODY,49,SECTION,0,DIV',
-                'snippet': '<div id="duplicate-id-aria" class="duplicate-id-aria">',
-                'explanation': 'Fix any of the following:\n  Document has multiple elements referenced with ARIA with the same id attribute: duplicate-id-aria',
-                'nodeLabel': 'body > section > div#duplicate-id-aria',
-              },
-              subItems: {
-                type: 'subitems',
-                items: [
-                  {
-                    relatedNode: {
-                      'type': 'node',
-                      'path': '2,HTML,1,BODY,49,SECTION,0,DIV,0,DIV',
-                      'selector': 'body > section > div#duplicate-id-aria > div#duplicate-id-aria',
-                      'snippet': '<div id="duplicate-id-aria">',
-                      'nodeLabel': 'body > section > div#duplicate-id-aria > div#duplicate-id-aria',
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
       'empty-heading': {
         score: 1,
         details: {
