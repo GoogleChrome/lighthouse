@@ -1,27 +1,30 @@
 /**
  * @license
- * Copyright 2018 Google LLC
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as constants from '../../../config/constants.js';
-import {LanternSpeedIndex} from '../../../computed/metrics/lantern-speed-index.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+import * as constants from '../../../../config/constants.js';
+import {LanternSpeedIndex} from '../../../../computed/metrics/lantern-speed-index.js';
+import {readJson} from '../../../test-utils.js';
+import {SpeedIndex} from '../../../../lib/lantern/metrics/speed-index.js';
+import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
+import {getComputationDataFromFixture} from './metric-test-utils.js';
+import {Speedline} from '../../../../computed/speedline.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
-const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: Lantern Speed Index', () => {
-  const gatherContext = {gatherMode: 'navigation'};
   it('should compute predicted value', async () => {
-    const settings = {throttlingMethod: 'simulate', throttling: defaultThrottling};
-    const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    const context = {computedCache: new Map()};
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const result = await SpeedIndex.compute(data, {
+      fcpResult: await FirstContentfulPaint.compute(data),
+      speedline: await Speedline.request(trace, context),
+    });
 
     expect({
       timing: Math.round(result.timing),
@@ -38,10 +41,12 @@ describe('Metrics: Lantern Speed Index', () => {
 
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
-    const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    const context = {computedCache: new Map()};
+    const data = await getComputationDataFromFixture({trace, devtoolsLog, settings});
+    const result = await SpeedIndex.compute(data, {
+      fcpResult: await FirstContentfulPaint.compute(data),
+      speedline: await Speedline.request(trace, context),
+    });
 
     expect({
       timing: Math.round(result.timing),

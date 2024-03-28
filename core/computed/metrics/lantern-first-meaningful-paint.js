@@ -5,60 +5,21 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import {LanternMetric} from './lantern-metric.js';
-import {LighthouseError} from '../../lib/lh-error.js';
+import {getComputationDataParams} from './lantern-metric.js';
+import {FirstMeaningfulPaint} from '../../lib/lantern/metrics/first-meaningful-paint.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
-/** @typedef {import('../../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
+/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
 
-class LanternFirstMeaningfulPaint extends LanternMetric {
+class LanternFirstMeaningfulPaint extends FirstMeaningfulPaint {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @param {LH.Artifacts.MetricComputationDataInput} data
+   * @param {LH.Artifacts.ComputedContext} context
+   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  static get COEFFICIENTS() {
-    return {
-      intercept: 0,
-      optimistic: 0.5,
-      pessimistic: 0.5,
-    };
-  }
-
-  /**
-   * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
-   * @return {Node}
-   */
-  static getOptimisticGraph(dependencyGraph, processedNavigation) {
-    const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
-    if (!fmp) {
-      throw new LighthouseError(LighthouseError.errors.NO_FMP);
-    }
-    return LanternFirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
-      cutoffTimestamp: fmp,
-      // See LanternFirstContentfulPaint's getOptimisticGraph implementation for a longer description
-      // of why we exclude script initiated resources here.
-      treatNodeAsRenderBlocking: node =>
-        node.hasRenderBlockingPriority() && node.initiatorType !== 'script',
-    });
-  }
-
-  /**
-   * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
-   * @return {Node}
-   */
-  static getPessimisticGraph(dependencyGraph, processedNavigation) {
-    const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
-    if (!fmp) {
-      throw new LighthouseError(LighthouseError.errors.NO_FMP);
-    }
-
-    return LanternFirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
-      cutoffTimestamp: fmp,
-      treatNodeAsRenderBlocking: node => node.hasRenderBlockingPriority(),
-      // For pessimistic FMP we'll include *all* layout nodes
-      additionalCpuNodesToTreatAsRenderBlocking: node => node.didPerformLayout(),
-    });
+  static async computeMetricWithGraphs(data, context, extras) {
+    return this.compute(await getComputationDataParams(data, context), extras);
   }
 
   /**

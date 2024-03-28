@@ -1,27 +1,25 @@
 /**
  * @license
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
-import {LanternLargestContentfulPaint} from '../../../computed/metrics/lantern-largest-contentful-paint.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+import {LargestContentfulPaint} from '../../../../lib/lantern/metrics/largest-contentful-paint.js';
+import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
+import {getComputationDataFromFixture} from './metric-test-utils.js';
+import {readJson} from '../../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
-const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
-    const gatherContext = {gatherMode: 'navigation'};
-    const settings = {};
-    const computedCache = new Map();
-    const result = await LanternLargestContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
-      {computedCache}
-    );
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const result = await LargestContentfulPaint.compute(data, {
+      fcpResult: await FirstContentfulPaint.compute(data),
+    });
 
     expect({
       timing: Math.round(result.timing),

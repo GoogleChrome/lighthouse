@@ -1,24 +1,22 @@
 /**
  * @license
- * Copyright 2017 Google LLC
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
-import {LanternFirstMeaningfulPaint} from '../../../computed/metrics/lantern-first-meaningful-paint.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+import {readJson} from '../../../test-utils.js';
+import {FirstMeaningfulPaint} from '../../../../lib/lantern/metrics/first-meaningful-paint.js';
+import {getComputationDataFromFixture} from './metric-test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
-const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
-    const gatherContext = {gatherMode: 'navigation'};
-    const computedCache = new Map();
-    const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings: {}, URL}, {computedCache});
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const result = await FirstMeaningfulPaint.compute(data);
 
     expect({
       timing: Math.round(result.timing),

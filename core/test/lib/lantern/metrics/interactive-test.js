@@ -1,28 +1,27 @@
 /**
  * @license
- * Copyright 2017 Google LLC
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
-import {LanternInteractive} from '../../../computed/metrics/lantern-interactive.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+import {Interactive} from '../../../../lib/lantern/metrics/interactive.js';
+import {FirstMeaningfulPaint} from '../../../../lib/lantern/metrics/first-meaningful-paint.js';
+import {getComputationDataFromFixture} from './metric-test-utils.js';
+import {readJson} from '../../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
-const iframeTrace = readJson('../../fixtures/traces/iframe-m79.trace.json', import.meta);
-const iframeDevtoolsLog = readJson('../../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);
+const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const iframeTrace = readJson('../../../fixtures/traces/iframe-m79.trace.json', import.meta);
+const iframeDevtoolsLog = readJson('../../../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern TTI', () => {
-  const gatherContext = {gatherMode: 'navigation'};
-
   it('should compute predicted value', async () => {
-    const settings = {};
-    const context = {settings, computedCache: new Map()};
-    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
-      settings, URL}, context);
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const result = await Interactive.compute(data, {
+      fmpResult: await FirstMeaningfulPaint.compute(data),
+    });
 
     expect({
       timing: Math.round(result.timing),
@@ -36,16 +35,13 @@ describe('Metrics: Lantern TTI', () => {
   });
 
   it('should compute predicted value on iframes with substantial layout', async () => {
-    const settings = {};
-    const context = {settings, computedCache: new Map()};
-    const URL = getURLArtifactFromDevtoolsLog(iframeDevtoolsLog);
-    const result = await LanternInteractive.request({
+    const data = await getComputationDataFromFixture({
       trace: iframeTrace,
       devtoolsLog: iframeDevtoolsLog,
-      gatherContext,
-      settings,
-      URL,
-    }, context);
+    });
+    const result = await Interactive.compute(data, {
+      fmpResult: await FirstMeaningfulPaint.compute(data),
+    });
 
     expect({
       timing: Math.round(result.timing),

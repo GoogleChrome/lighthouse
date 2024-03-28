@@ -1,28 +1,24 @@
 /**
  * @license
- * Copyright 2017 Google LLC
+ * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
-import {LanternFirstContentfulPaint} from '../../../computed/metrics/lantern-first-contentful-paint.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
-import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
-import {createTestTrace} from '../../create-test-trace.js';
+import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
+import {readJson} from '../../../test-utils.js';
+import {networkRecordsToDevtoolsLog} from '../../../network-records-to-devtools-log.js';
+import {createTestTrace} from '../../../create-test-trace.js';
+import {getComputationDataFromFixture} from './metric-test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: Lantern FCP', () => {
-  const gatherContext = {gatherMode: 'navigation'};
-
   it('should compute predicted value', async () => {
-    const settings = {};
-    const context = {settings, computedCache: new Map()};
-    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings, URL}, context);
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const result = await FirstContentfulPaint.compute(data);
 
     expect({
       timing: Math.round(result.timing),
@@ -36,8 +32,6 @@ describe('Metrics: Lantern FCP', () => {
   });
 
   it('should handle negative request networkEndTime', async () => {
-    const settings = {};
-    const context = {settings, computedCache: new Map()};
     const devtoolsLog = networkRecordsToDevtoolsLog([
       {
         transferSize: 2000,
@@ -64,14 +58,8 @@ describe('Metrics: Lantern FCP', () => {
       mainDocumentUrl: 'https://example.com/',
       finalDisplayedUrl: 'https://example.com/',
     };
-    const artifacts = {
-      trace,
-      devtoolsLog,
-      gatherContext,
-      settings,
-      URL,
-    };
-    const result = await LanternFirstContentfulPaint.request(artifacts, context);
+    const data = await getComputationDataFromFixture({trace, devtoolsLog, URL});
+    const result = await FirstContentfulPaint.compute(data);
 
     const optimisticNodes = [];
     result.optimisticGraph.traverse(node => optimisticNodes.push(node));
