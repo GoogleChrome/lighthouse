@@ -63,7 +63,7 @@ describe('backward compatibility', () => {
         delete audit.details.type;
       }
     }
-    assert.ok(undefinedCount > 4); // Make sure something's being tested.
+    assert.ok(undefinedCount > 3); // Make sure something's being tested.
     assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
     // Original audit results should be restored.
@@ -82,7 +82,7 @@ describe('backward compatibility', () => {
         audit.details.type = 'diagnostic';
       }
     }
-    assert.ok(diagnosticCount > 4); // Make sure something's being tested.
+    assert.ok(diagnosticCount > 3); // Make sure something's being tested.
     assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
     // Original audit results should be restored.

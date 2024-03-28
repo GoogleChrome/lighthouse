@@ -859,56 +859,6 @@
       },
       "guidanceLevel": 2
     },
-    "installable-manifest": {
-      "id": "installable-manifest",
-      "title": "Web app manifest or service worker do not meet the installability requirements",
-      "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://developer.chrome.com/docs/lighthouse/pwa/installable-manifest/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "numericValue": 1,
-      "numericUnit": "element",
-      "displayValue": "1 reason",
-      "warnings": [],
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "reason",
-            "valueType": "text",
-            "label": "Failure reason"
-          }
-        ],
-        "items": [
-          {
-            "reason": "Page has no manifest <link> URL"
-          }
-        ],
-        "debugData": {
-          "type": "debugdata",
-          "manifestUrl": null
-        }
-      }
-    },
-    "splash-screen": {
-      "id": "splash-screen",
-      "title": "Is not configured for a custom splash screen",
-      "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more about splash screens](https://developer.chrome.com/docs/lighthouse/pwa/splash-screen/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "explanation": "Failures: No manifest was fetched.",
-      "details": {
-        "type": "debugdata",
-        "items": [
-          {
-            "failures": [
-              "No manifest was fetched"
-            ],
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched"
-          }
-        ]
-      }
-    },
     "themed-omnibox": {
       "id": "themed-omnibox",
       "title": "Does not set a theme color for the address bar.",
@@ -930,21 +880,6 @@
           }
         ]
       }
-    },
-    "maskable-icon": {
-      "id": "maskable-icon",
-      "title": "Manifest doesn't have a maskable icon",
-      "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn about maskable manifest icons](https://developer.chrome.com/docs/lighthouse/pwa/maskable-icon-audit/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "explanation": "No manifest was fetched"
-    },
-    "content-width": {
-      "id": "content-width",
-      "title": "Content is sized correctly for the viewport",
-      "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn how to size content for the viewport](https://developer.chrome.com/docs/lighthouse/pwa/content-width/).",
-      "score": 1,
-      "scoreDisplayMode": "binary"
     },
     "image-aspect-ratio": {
       "id": "image-aspect-ratio",
@@ -3066,27 +3001,6 @@
           }
         ]
       }
-    },
-    "pwa-cross-browser": {
-      "id": "pwa-cross-browser",
-      "title": "Site works cross-browser",
-      "description": "To reach the most number of users, sites should work across every major browser. [Learn about cross-browser compatibility](https://developer.chrome.com/docs/lighthouse/pwa/pwa-cross-browser/).",
-      "score": null,
-      "scoreDisplayMode": "manual"
-    },
-    "pwa-page-transitions": {
-      "id": "pwa-page-transitions",
-      "title": "Page transitions don't feel like they block on the network",
-      "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more about page transitions](https://developer.chrome.com/docs/lighthouse/pwa/pwa-page-transitions/).",
-      "score": null,
-      "scoreDisplayMode": "manual"
-    },
-    "pwa-each-page-has-url": {
-      "id": "pwa-each-page-has-url",
-      "title": "Each page has a URL",
-      "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more about providing deep links](https://developer.chrome.com/docs/lighthouse/pwa/pwa-each-page-has-url/).",
-      "score": null,
-      "scoreDisplayMode": "manual"
     },
     "accesskeys": {
       "id": "accesskeys",
@@ -6159,10 +6073,6 @@
           "weight": 0
         },
         {
-          "id": "viewport",
-          "weight": 0
-        },
-        {
           "id": "bf-cache",
           "weight": 0
         },
@@ -6675,10 +6585,15 @@
           "id": "inspector-issues",
           "weight": 1,
           "group": "best-practices-general"
+        },
+        {
+          "id": "themed-omnibox",
+          "weight": 1,
+          "group": "best-practices-general"
         }
       ],
       "id": "best-practices",
-      "score": 0.35
+      "score": 0.33
     },
     "seo": {
       "title": "SEO",
@@ -6766,60 +6681,6 @@
       ],
       "id": "seo",
       "score": 0.67
-    },
-    "pwa": {
-      "title": "PWA",
-      "description": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/articles/pwa-checklist).",
-      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://web.dev/articles/pwa-checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-      "supportedModes": [
-        "navigation"
-      ],
-      "auditRefs": [
-        {
-          "id": "installable-manifest",
-          "weight": 2,
-          "group": "pwa-installable"
-        },
-        {
-          "id": "splash-screen",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "themed-omnibox",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "content-width",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "viewport",
-          "weight": 2,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "maskable-icon",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "pwa-cross-browser",
-          "weight": 0
-        },
-        {
-          "id": "pwa-page-transitions",
-          "weight": 0
-        },
-        {
-          "id": "pwa-each-page-has-url",
-          "weight": 0
-        }
-      ],
-      "id": "pwa",
-      "score": 0.38
     }
   },
   "categoryGroups": {
@@ -8204,37 +8065,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:installable-manifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:splash-screen",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ManifestValues",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:themed-omnibox",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:audit:maskable-icon",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:content-width",
+        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8589,24 +8426,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:pwa-cross-browser",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:pwa-page-transitions",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:pwa-each-page-has-url",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9637,49 +9456,11 @@
       "core/audits/redirects.js | description": [
         "audits.redirects.description"
       ],
-      "core/audits/installable-manifest.js | failureTitle": [
-        "audits[installable-manifest].title"
-      ],
-      "core/audits/installable-manifest.js | description": [
-        "audits[installable-manifest].description"
-      ],
-      "core/audits/installable-manifest.js | displayValue": [
-        {
-          "values": {
-            "itemCount": 1
-          },
-          "path": "audits[installable-manifest].displayValue"
-        }
-      ],
-      "core/audits/installable-manifest.js | columnValue": [
-        "audits[installable-manifest].details.headings[0].label"
-      ],
-      "core/audits/installable-manifest.js | no-manifest": [
-        "audits[installable-manifest].details.items[0].reason"
-      ],
-      "core/audits/splash-screen.js | failureTitle": [
-        "audits[splash-screen].title"
-      ],
-      "core/audits/splash-screen.js | description": [
-        "audits[splash-screen].description"
-      ],
       "core/audits/themed-omnibox.js | failureTitle": [
         "audits[themed-omnibox].title"
       ],
       "core/audits/themed-omnibox.js | description": [
         "audits[themed-omnibox].description"
-      ],
-      "core/audits/maskable-icon.js | failureTitle": [
-        "audits[maskable-icon].title"
-      ],
-      "core/audits/maskable-icon.js | description": [
-        "audits[maskable-icon].description"
-      ],
-      "core/audits/content-width.js | title": [
-        "audits[content-width].title"
-      ],
-      "core/audits/content-width.js | description": [
-        "audits[content-width].description"
       ],
       "core/audits/image-aspect-ratio.js | failureTitle": [
         "audits[image-aspect-ratio].title"
@@ -10070,24 +9851,6 @@
       ],
       "core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
-      ],
-      "core/audits/manual/pwa-cross-browser.js | title": [
-        "audits[pwa-cross-browser].title"
-      ],
-      "core/audits/manual/pwa-cross-browser.js | description": [
-        "audits[pwa-cross-browser].description"
-      ],
-      "core/audits/manual/pwa-page-transitions.js | title": [
-        "audits[pwa-page-transitions].title"
-      ],
-      "core/audits/manual/pwa-page-transitions.js | description": [
-        "audits[pwa-page-transitions].description"
-      ],
-      "core/audits/manual/pwa-each-page-has-url.js | title": [
-        "audits[pwa-each-page-has-url].title"
-      ],
-      "core/audits/manual/pwa-each-page-has-url.js | description": [
-        "audits[pwa-each-page-has-url].description"
       ],
       "core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
@@ -10873,15 +10636,6 @@
       ],
       "core/config/default-config.js | seoCategoryManualDescription": [
         "categories.seo.manualDescription"
-      ],
-      "core/config/default-config.js | pwaCategoryTitle": [
-        "categories.pwa.title"
-      ],
-      "core/config/default-config.js | pwaCategoryDescription": [
-        "categories.pwa.description"
-      ],
-      "core/config/default-config.js | pwaCategoryManualDescription": [
-        "categories.pwa.manualDescription"
       ],
       "core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"

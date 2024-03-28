@@ -17,8 +17,6 @@ const config = {
       'user-timings',
       'critical-request-chains',
       'render-blocking-resources',
-      'installable-manifest',
-      'splash-screen',
       'themed-omnibox',
       'aria-valid-attr',
       'aria-allowed-attr',
@@ -26,7 +24,6 @@ const config = {
       'image-alt',
       'label',
       'tabindex',
-      'content-width',
     ],
   },
 };
@@ -82,24 +79,6 @@ const expectations = {
       'critical-request-chains': {
         scoreDisplayMode: 'notApplicable',
       },
-      'installable-manifest': {
-        score: 0,
-        details: {items: [
-          // Icon errors were consolidated in M118
-          // https://bugs.chromium.org/p/chromium/issues/detail?id=1476999
-          {
-            _minChromiumVersion: '118',
-            reason: 'No supplied icon is at least 144\xa0px square in PNG, SVG or WebP format, with the purpose attribute unset or set to "any"',
-          },
-          {
-            _maxChromiumVersion: '117',
-            reason: 'Downloaded icon was empty or corrupted',
-          },
-        ]},
-      },
-      'splash-screen': {
-        score: 0,
-      },
       'themed-omnibox': {
         score: 0,
       },
@@ -120,9 +99,6 @@ const expectations = {
       },
       'tabindex': {
         scoreDisplayMode: 'notApplicable',
-      },
-      'content-width': {
-        score: 1,
       },
     },
   },

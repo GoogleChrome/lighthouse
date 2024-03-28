@@ -90,7 +90,7 @@ describe('ReportUIFeatures', () => {
   describe('initFeatures', () => {
     it('should init a report', () => {
       const container = render(sampleResults);
-      assert.equal(dom.findAll('.lh-category', container).length, 5);
+      assert.equal(dom.findAll('.lh-category', container).length, 4);
     });
 
     it('should init a report with a single category', () => {
@@ -702,7 +702,15 @@ describe('ReportUIFeatures', () => {
       Object.values(lhr.categories).forEach(element => {
         element.score = 1;
       });
-      lhr.categories.pwa.score = 0;
+
+      lhr.categories = {
+        ...lhr.categories,
+        pwa: {
+          id: 'pwa',
+          score: 0,
+          auditRefs: [],
+        },
+      };
 
       const container = render(lhr);
       assert.ok(container.querySelector('.lh-score100'), 'has fireworks treatment');

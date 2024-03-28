@@ -17,8 +17,6 @@ const config = {
       'user-timings',
       'critical-request-chains',
       'render-blocking-resources',
-      'installable-manifest',
-      'splash-screen',
       'themed-omnibox',
       'aria-valid-attr',
       'aria-allowed-attr',
@@ -26,7 +24,6 @@ const config = {
       'image-alt',
       'label',
       'tabindex',
-      'content-width',
     ],
   },
 };
@@ -61,13 +58,6 @@ const expectations = {
       'critical-request-chains': {
         scoreDisplayMode: 'notApplicable',
       },
-      'installable-manifest': {
-        score: 0,
-        details: {items: [{reason: 'Page has no manifest <link> URL'}]},
-      },
-      'splash-screen': {
-        score: 0,
-      },
       'themed-omnibox': {
         score: 0,
       },
@@ -88,9 +78,6 @@ const expectations = {
       },
       'tabindex': {
         scoreDisplayMode: 'notApplicable',
-      },
-      'content-width': {
-        score: 1,
       },
     },
   },

@@ -17,8 +17,6 @@ const config = {
       'user-timings',
       'critical-request-chains',
       'render-blocking-resources',
-      'installable-manifest',
-      'splash-screen',
       'themed-omnibox',
       'aria-valid-attr',
       'aria-allowed-attr',
@@ -26,7 +24,6 @@ const config = {
       'image-alt',
       'label',
       'tabindex',
-      'content-width',
     ],
   },
 };
@@ -40,15 +37,7 @@ const expectations = {
     requestedUrl: 'http://localhost:10503/offline-ready.html?broken',
     // This page's SW has a `fetch` handler that doesn't provide a 200 response.
     finalDisplayedUrl: 'http://localhost:10503/offline-ready.html?broken',
-    audits: {
-      'installable-manifest': {
-        score: 0,
-        details: {items: {length: 1}},
-        // TODO: 'warn-not-offline-capable' was disabled in m91. Turn back on once
-        // issues are addressed and check is re-enabled: https://crbug.com/1187668#c22
-        // warnings: {length: 1},
-      },
-    },
+    audits: {},
   },
   artifacts: {
     InstallabilityErrors: {

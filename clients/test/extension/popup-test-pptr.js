@@ -17,7 +17,6 @@ const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 const mockStorage = {
   [STORAGE_KEYS.Categories]: {
     'performance': true,
-    'pwa': true,
     'seo': true,
     'accessibility': false,
     'best-practices': false,

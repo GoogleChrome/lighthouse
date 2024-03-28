@@ -87,7 +87,7 @@ describe('ReportRenderer', () => {
       assert.ok(header.querySelector('.lh-scores-container'), 'contains score container');
     });
 
-    it('renders score gauges in this order: default, pwa, plugins', () => {
+    it('renders score gauges in this order: default, plugins', () => {
       const sampleResultsCopy = JSON.parse(JSON.stringify(sampleResults));
       sampleResultsCopy.categories['lighthouse-plugin-someplugin'] = {
         id: 'lighthouse-plugin-someplugin',
@@ -98,23 +98,20 @@ describe('ReportRenderer', () => {
       const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
-      function isPWAGauge(el) {
-        return el.querySelector('.lh-gauge__label').textContent === 'PWA';
+      const defaults = ['Performance', 'Accessibility', 'Best Practices', 'SEO'];
+
+      function isDefaultGauge(el) {
+        return defaults.includes(el.querySelector('.lh-gauge__label').textContent);
       }
       function isPluginGauge(el) {
         return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';
       }
 
-      const indexOfPwaGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
-
       const indexOfPluginGauge = Array.from(output
         .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
-      assert.equal(scoresHeaderElem.children.length - 2, indexOfPwaGauge);
       assert.equal(scoresHeaderElem.children.length - 1, indexOfPluginGauge);
-      assert(indexOfPluginGauge > indexOfPwaGauge);
 
       for (let i = 0; i < scoresHeaderElem.children.length; i++) {
         const gauge = scoresHeaderElem.children[i];
@@ -122,8 +119,8 @@ describe('ReportRenderer', () => {
         assert.ok(gauge.classList.contains('lh-gauge__wrapper'));
         if (i >= indexOfPluginGauge) {
           assert.ok(isPluginGauge(gauge));
-        } else if (i >= indexOfPwaGauge) {
-          assert.ok(isPWAGauge(gauge));
+        } else {
+          assert.ok(isDefaultGauge(gauge));
         }
       }
     });
@@ -148,12 +145,10 @@ describe('ReportRenderer', () => {
         '#index=0&anchor=accessibility',
         '#index=0&anchor=best-practices',
         '#index=0&anchor=seo',
-        '#index=0&anchor=pwa',
         '#index=0&anchor=performance',
         '#index=0&anchor=accessibility',
         '#index=0&anchor=best-practices',
         '#index=0&anchor=seo',
-        '#index=0&anchor=pwa',
       ]);
     });
 
@@ -172,8 +167,8 @@ describe('ReportRenderer', () => {
       const pluginGaugeCount =
         scoresHeaderElem.querySelectorAll('.lh-gauge__wrapper--plugin').length;
 
-      // 5 core categories + the 1 plugin.
-      assert.equal(6, gaugeCount);
+      // 4 core categories + the 1 plugin.
+      assert.equal(5, gaugeCount);
       assert.equal(1, pluginGaugeCount);
     });
 
@@ -288,7 +283,7 @@ describe('ReportRenderer', () => {
       .filter(url => DOCS_ORIGINS.includes(url.origin))
       .map(url => url.searchParams.get('utm_medium'));
 
-    assert.ok(utmChannels.length > 100);
+    assert.ok(utmChannels.length >= 99);
     for (const utmChannel of utmChannels) {
       assert.strictEqual(utmChannel, lhrChannel);
     }

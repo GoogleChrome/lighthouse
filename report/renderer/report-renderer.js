@@ -14,7 +14,6 @@ import {DetailsRenderer} from './details-renderer.js';
 import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 import {I18nFormatter} from './i18n-formatter.js';
 import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
-import {PwaCategoryRenderer} from './pwa-category-renderer.js';
 import {ReportUtils} from './report-utils.js';
 import {Globals} from './report-globals.js';
 
@@ -206,7 +205,6 @@ export class ReportRenderer {
   _renderScoreGauges(report, categoryRenderer, specificCategoryRenderers) {
     // Group gauges in this order: default, pwa, plugins.
     const defaultGauges = [];
-    const customGauges = []; // PWA.
     const pluginGauges = [];
 
     for (const category of Object.values(report.categories)) {
@@ -240,19 +238,12 @@ export class ReportRenderer {
 
       if (ReportUtils.isPluginCategory(category.id)) {
         pluginGauges.push(categoryGauge);
-      } else if (renderer.renderCategoryScore === categoryRenderer.renderCategoryScore) {
-        // The renderer for default categories is just the default CategoryRenderer.
-        // If the functions are equal, then renderer is an instance of CategoryRenderer.
-        // For example, the PWA category uses PwaCategoryRenderer, which overrides
-        // CategoryRenderer.renderCategoryScore, so it would fail this check and be placed
-        // in the customGauges bucket.
-        defaultGauges.push(categoryGauge);
       } else {
-        customGauges.push(categoryGauge);
+        defaultGauges.push(categoryGauge);
       }
     }
 
-    return [...defaultGauges, ...customGauges, ...pluginGauges];
+    return [...defaultGauges, ...pluginGauges];
   }
 
   /**
@@ -276,7 +267,6 @@ export class ReportRenderer {
     /** @type {Record<string, CategoryRenderer>} */
     const specificCategoryRenderers = {
       performance: new PerformanceCategoryRenderer(this._dom, detailsRenderer),
-      pwa: new PwaCategoryRenderer(this._dom, detailsRenderer),
     };
 
     const headerContainer = this._dom.createElement('div');

@@ -419,7 +419,6 @@ describe('Lighthouse Viewer', () => {
           'accessibility',
           'seo',
           'best-practices',
-          'pwa',
         ],
         strategy: 'mobile',
         // These values aren't set by default.
@@ -449,7 +448,7 @@ describe('Lighthouse Viewer', () => {
     it('should call out to PSI with specified categories', async () => {
       psiResponse = goodPsiResponse;
 
-      const url = `${viewerUrl}?psiurl=https://www.example.com&category=seo&category=pwa&utm_source=utm&locale=es`;
+      const url = `${viewerUrl}?psiurl=https://www.example.com&category=seo&category=accessibility&utm_source=utm&locale=es`;
       await viewerPage.goto(url);
 
       // Wait for report to render.call out to PSI with specified categories
@@ -469,7 +468,7 @@ describe('Lighthouse Viewer', () => {
         url: 'https://www.example.com',
         category: [
           'seo',
-          'pwa',
+          'accessibility',
         ],
         locale: 'es',
         utm_source: 'utm',
