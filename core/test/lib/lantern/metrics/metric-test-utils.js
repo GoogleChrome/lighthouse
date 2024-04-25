@@ -11,8 +11,69 @@ import {ProcessedTrace} from '../../../../computed/processed-trace.js';
 import {TraceEngineResult} from '../../../../computed/trace-engine-result.js';
 import {PageDependencyGraph} from '../../../../lib/lantern/page-dependency-graph.js';
 import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
+import {RESOURCE_TYPES} from '../../../../lib/network-request.js';
+
+/** @typedef {Lantern.NetworkRequest<import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest>} NetworkRequest */
 
 // TODO(15841): remove usage of Lighthouse code to create test data
+
+/**
+ * @param {NetworkRequest} record The record to find the initiator of
+ * @param {Map<string, NetworkRequest[]>} recordsByURL
+ * @return {NetworkRequest|null}
+ */
+function chooseInitiatorRequest(record, recordsByURL) {
+  if (record.redirectSource) {
+    return record.redirectSource;
+  }
+
+  const initiatorURL = PageDependencyGraph.getNetworkInitiators(record)[0];
+  let candidates = recordsByURL.get(initiatorURL) || [];
+  // The (valid) initiator must come before the initiated request.
+  candidates = candidates.filter(c => {
+    return c.responseHeadersEndTime <= record.rendererStartTime &&
+        c.finished && !c.failed;
+  });
+  if (candidates.length > 1) {
+    // Disambiguate based on prefetch. Prefetch requests have type 'Other' and cannot
+    // initiate requests, so we drop them here.
+    const nonPrefetchCandidates = candidates.filter(
+        cand => cand.resourceType !== RESOURCE_TYPES.Other);
+    if (nonPrefetchCandidates.length) {
+      candidates = nonPrefetchCandidates;
+    }
+  }
+  if (candidates.length > 1) {
+    // Disambiguate based on frame. It's likely that the initiator comes from the same frame.
+    const sameFrameCandidates = candidates.filter(cand => cand.frameId === record.frameId);
+    if (sameFrameCandidates.length) {
+      candidates = sameFrameCandidates;
+    }
+  }
+  if (candidates.length > 1 && record.initiator.type === 'parser') {
+    // Filter to just Documents when initiator type is parser.
+    const documentCandidates = candidates.filter(cand =>
+      cand.resourceType === RESOURCE_TYPES.Document);
+    if (documentCandidates.length) {
+      candidates = documentCandidates;
+    }
+  }
+  if (candidates.length > 1) {
+    // If all real loads came from successful preloads (url preloaded and
+    // loads came from the cache), filter to link rel=preload request(s).
+    const linkPreloadCandidates = candidates.filter(c => c.isLinkPreload);
+    if (linkPreloadCandidates.length) {
+      const nonPreloadCandidates = candidates.filter(c => !c.isLinkPreload);
+      const allPreloaded = nonPreloadCandidates.every(c => c.fromDiskCache || c.fromMemoryCache);
+      if (nonPreloadCandidates.length && allPreloaded) {
+        candidates = linkPreloadCandidates;
+      }
+    }
+  }
+
+  // Only return an initiator if the result is unambiguous.
+  return candidates.length === 1 ? candidates[0] : null;
+}
 
 /**
  * @param {LH.TraceEvent[]} mainThreadEvents
@@ -20,7 +81,7 @@ import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
  * @param {LH.Artifacts.URL} theURL
  */
 function createGraph(mainThreadEvents, traceEngineResult, theURL) {
-  /** @type {Lantern.NetworkRequest<import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest>[]} */
+  /** @type {NetworkRequest[]} */
   const lanternRequests = [];
 
   for (const request of traceEngineResult.data.NetworkRequests.byTime) {
@@ -73,6 +134,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       resourceSize: request.args.data.decodedBodyLength,
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
+      isLinkPreload: request.args.data.isLinkPreload,
       // @ts-expect-error TODO upstream
       finished: request.args.data.finished,
       // @ts-expect-error TODO upstream
@@ -92,11 +154,6 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       fromWorker,
       record: request,
     });
-  }
-
-  for (const request of lanternRequests) {
-    // TODO _chooseInitiatorRequest
-    request.initiatorRequest = undefined;
   }
 
   // TraceEngine consolidates all redirects into a single request object, but lantern needs
@@ -121,7 +178,13 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       redirectedRequest.redirectDestination = i === redirects.length - 1 ?
         request :
         redirectsAsLanternRequests[i + 1];
+      if (i > 0) {
+        redirectsAsLanternRequests[i - 1].redirectSource = redirectedRequest;
+      } else {
+        redirectedRequest.redirectSource = request;
+      }
     }
+    request.redirectDestination = redirectsAsLanternRequests[0];
 
     // Apply the `:redirect` requestId convention: only redirects[0].requestId is the actual
     // requestId, all the rest have n occurences of `:redirect` as a suffix.
@@ -130,6 +193,21 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
     }
     const lastRedirect = redirectsAsLanternRequests[redirectsAsLanternRequests.length - 1];
     request.requestId = `${lastRedirect.requestId}:redirect`;
+  }
+
+  /** @type {Map<string, NetworkRequest[]>} */
+  const requestsByURL = new Map();
+  for (const request of lanternRequests) {
+    const requests = requestsByURL.get(request.url) || [];
+    requests.push(request);
+    requestsByURL.set(request.url, requests);
+  }
+
+  for (const request of lanternRequests) {
+    const initiatorRequest = chooseInitiatorRequest(request, requestsByURL);
+    if (initiatorRequest) {
+      request.initiatorRequest = initiatorRequest;
+    }
   }
 
   return PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, theURL);

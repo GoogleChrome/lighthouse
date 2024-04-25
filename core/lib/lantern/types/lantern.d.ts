@@ -67,9 +67,12 @@ export class NetworkRequest<T = any> {
     resourceSize: number;
     fromDiskCache: boolean;
     fromMemoryCache: boolean;
+    isLinkPreload: boolean;
     finished: boolean;
     failed: boolean;
     statusCode: number;
+    /** The network request that redirected to this one */
+    redirectSource: NetworkRequest<T> | undefined;
     /** The network request that this one redirected to */
     redirectDestination: NetworkRequest<T> | undefined;
     initiator: LH.Crdp.Network.Initiator;
