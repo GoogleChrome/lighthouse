@@ -76,7 +76,7 @@ export class NetworkRequest<T = any> {
     initiatorRequest: NetworkRequest<T> | undefined;
     /** The chain of network requests that redirected to this one */
     redirects: NetworkRequest[] | undefined;
-    timing: Omit<LH.Crdp.Network.ResourceTiming, 'workerFetchStart'|'workerRespondWithSettled'> | undefined;
+    timing: LH.Crdp.Network.ResourceTiming | undefined;
     /**
      * Optional value for how long the server took to respond to this request.
      * When not provided, the server response time is derived from the timing object.

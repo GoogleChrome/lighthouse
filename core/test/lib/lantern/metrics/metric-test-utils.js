@@ -30,6 +30,11 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       throw new Error('Trace is too old');
     }
 
+    // TODO: is this possible?
+    if (request.args.data.timing === undefined) {
+      continue;
+    }
+
     let url;
     try {
       url = new URL(request.args.data.url);
@@ -73,10 +78,12 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       // @ts-expect-error TODO upstream
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
-      // redirectDestination: undefined,
       initiator: request.args.data.initiator,
-      // redirects: undefined,
-      timing: request.args.data.timing,
+      timing: {
+        ...request.args.data.timing,
+        workerFetchStart: -1,
+        workerRespondWithSettled: -1,
+      },
       resourceType: request.args.data.resourceType,
       mimeType: request.args.data.mimeType,
       // @ts-expect-error TODO types are wrong in TE
