@@ -90,13 +90,37 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
     request.initiatorRequest = undefined;
   }
 
+  // TraceEngine consolidates all redirects into a single request object, but lantern needs
+  // an entry for each redirected request.
   for (const request of [...lanternRequests]) {
     if (!request.record) continue;
 
     const redirects = request.record.args.data.redirects;
     if (!redirects.length) continue;
 
-    //
+    const redirectsAsLanternRequests = [];
+    for (const redirect of redirects) {
+      const redirectedRequest = structuredClone(request);
+      redirectsAsLanternRequests.push(structuredClone(request));
+      redirectedRequest.networkEndTime = redirect.ts * 1000;
+      lanternRequests.push(redirectedRequest);
+    }
+    request.redirects = redirectsAsLanternRequests;
+
+    for (let i = 0; i < redirects.length; i++) {
+      const redirectedRequest = redirectsAsLanternRequests[i];
+      redirectedRequest.redirectDestination = i === redirects.length - 1 ?
+        request :
+        redirectsAsLanternRequests[i + 1];
+    }
+
+    // Apply the `:redirect` requestId convention: only redirects[0].requestId is the actual
+    // requestId, all the rest have n occurences of `:redirect` as a suffix.
+    for (let i = 1; i < redirects.length; i++) {
+      redirectsAsLanternRequests[i].requestId = `${redirectsAsLanternRequests[i - 1]}:redirect`;
+    }
+    const lastRedirect = redirectsAsLanternRequests[redirectsAsLanternRequests.length - 1];
+    request.requestId = `${lastRedirect.requestId}:redirect`;
   }
 
   return PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, theURL);
