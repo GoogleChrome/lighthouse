@@ -58,10 +58,12 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       protocol: request.args.data.protocol,
       parsedURL,
       documentURL: request.args.data.requestingFrameUrl,
-      // rendererStartTime: 0,
-      // networkRequestTime: 0,
-      // responseHeadersEndTime: 0,
-      // networkEndTime: 0,
+      // TODO i haven't confirmed these, just guessing
+      rendererStartTime: request.args.data.syntheticData.requestSent,
+      networkRequestTime: request.args.data.syntheticData.sendStartTime,
+      responseHeadersEndTime: request.args.data.syntheticData.downloadStart,
+      networkEndTime: request.args.data.syntheticData.finishTime,
+      // TODO ----
       transferSize: request.args.data.encodedDataLength,
       resourceSize: request.args.data.decodedBodyLength,
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
