@@ -64,7 +64,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       parsedURL,
       documentURL: request.args.data.requestingFrameUrl,
       // TODO i haven't confirmed these, just guessing
-      rendererStartTime: request.args.data.syntheticData.requestSent,
+      rendererStartTime: request.ts,
       networkRequestTime: request.args.data.syntheticData.sendStartTime,
       responseHeadersEndTime: request.args.data.syntheticData.downloadStart,
       networkEndTime: request.args.data.syntheticData.finishTime,
