@@ -112,7 +112,7 @@ const RESOURCE_TYPES = {
 class NetworkRequest {
   constructor() {
     this.requestId = '';
-    this.connectionId = '0';
+    this.connectionId = 0;
     this.connectionReused = false;
 
     this.url = '';
@@ -344,7 +344,7 @@ class NetworkRequest {
   _onResponse(response, timestamp, resourceType) {
     this.url = response.url;
 
-    this.connectionId = String(response.connectionId);
+    this.connectionId = response.connectionId;
     this.connectionReused = response.connectionReused;
 
     if (response.protocol) this.protocol = response.protocol;
