@@ -41,13 +41,13 @@ class Interactive extends Metric {
       }
 
       // Include all scripts and high priority requests, exclude all images
-      const isImage = node.record.resourceType === NetworkRequestTypes.Image;
-      const isScript = node.record.resourceType === NetworkRequestTypes.Script;
+      const isImage = node.request.resourceType === NetworkRequestTypes.Image;
+      const isScript = node.request.resourceType === NetworkRequestTypes.Script;
       return (
         !isImage &&
         (isScript ||
-          node.record.priority === 'High' ||
-          node.record.priority === 'VeryHigh')
+          node.request.priority === 'High' ||
+          node.request.priority === 'VeryHigh')
       );
     });
   }

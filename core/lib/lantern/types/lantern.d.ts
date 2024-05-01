@@ -84,7 +84,7 @@ export class NetworkRequest<T = any> {
      * Optional value for how long the server took to respond to this request.
      * When not provided, the server response time is derived from the timing object.
      */
-    serverResponseTime: number | undefined;
+    serverResponseTime?: number;
     resourceType: LH.Crdp.Network.ResourceType | undefined;
     mimeType: string;
     priority: LH.Crdp.Network.ResourcePriority;

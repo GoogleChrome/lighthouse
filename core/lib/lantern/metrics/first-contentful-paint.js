@@ -153,7 +153,7 @@ class FirstContentfulPaint extends Metric {
         const endedAfterPaint = node.endTime > cutoffTimestamp || node.startTime > cutoffTimestamp;
         if (endedAfterPaint && !node.isMainDocument()) return false;
 
-        const url = node.record.url;
+        const url = node.request.url;
         // If the URL definitely wasn't render-blocking then we filter it out.
         if (definitelyNotRenderBlockingScriptUrls.has(url)) {
           return false;

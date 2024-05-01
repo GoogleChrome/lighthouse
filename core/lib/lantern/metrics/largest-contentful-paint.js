@@ -32,8 +32,8 @@ class LargestContentfulPaint extends Metric {
    */
   static isNotLowPriorityImageNode(node) {
     if (node.type !== 'network') return true;
-    const isImage = node.record.resourceType === 'Image';
-    const isLowPriority = node.record.priority === 'Low' || node.record.priority === 'VeryLow';
+    const isImage = node.request.resourceType === 'Image';
+    const isLowPriority = node.request.priority === 'Low' || node.request.priority === 'VeryLow';
     return !isImage || !isLowPriority;
   }
 

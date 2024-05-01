@@ -63,10 +63,10 @@ describe('Metrics: Lantern FCP', () => {
 
     const optimisticNodes = [];
     result.optimisticGraph.traverse(node => optimisticNodes.push(node));
-    expect(optimisticNodes.map(node => node.record.url)).toEqual(['https://example.com/']);
+    expect(optimisticNodes.map(node => node.request.url)).toEqual(['https://example.com/']);
 
     const pessimisticNodes = [];
     result.pessimisticGraph.traverse(node => pessimisticNodes.push(node));
-    expect(pessimisticNodes.map(node => node.record.url)).toEqual(['https://example.com/']);
+    expect(pessimisticNodes.map(node => node.request.url)).toEqual(['https://example.com/']);
   });
 });

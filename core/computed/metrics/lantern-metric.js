@@ -132,7 +132,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
 
     lanternRequests.push({
       requestId: request.args.data.requestId,
-      connectionId: request.args.data.connectionId,
+      connectionId: String(request.args.data.connectionId),
       connectionReused: request.args.data.connectionReused,
       url: request.args.data.url,
       protocol: request.args.data.protocol,
@@ -149,12 +149,10 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
       isLinkPreload: request.args.data.isLinkPreload,
-      // @ts-expect-error TODO upstream
       finished: request.args.data.finished,
-      // @ts-expect-error TODO upstream
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
-      initiator: request.args.data.initiator,
+      initiator: request.args.data.initiator ?? {type: 'other'},
       timing: {
         ...request.args.data.timing,
         workerFetchStart: -1,
@@ -162,11 +160,15 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       },
       resourceType: request.args.data.resourceType,
       mimeType: request.args.data.mimeType,
-      // @ts-expect-error TODO types are wrong in TE
       priority: request.args.data.priority,
       frameId: request.args.data.frame,
       fromWorker,
       record: request,
+      // Set below.
+      redirects: undefined,
+      redirectSource: undefined,
+      redirectDestination: undefined,
+      initiatorRequest: undefined,
     });
   }
 
