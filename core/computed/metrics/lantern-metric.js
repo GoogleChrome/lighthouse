@@ -90,6 +90,85 @@ function chooseInitiatorRequest(record, recordsByURL) {
   return candidates.length === 1 ? candidates[0] : null;
 }
 
+// TODO ! remove me
+/**
+ * @param {Lantern.NetworkRequest[]} lanternRequests
+ * @returns 
+ */
+function testingNormalizeRequests(lanternRequests) {
+  for (const r of lanternRequests) {
+    delete r.record;
+    if (r.initiatorRequest) {
+      r.initiatorRequest = {id: r.initiatorRequest.requestId};
+    }
+    if (r.redirectDestination) {
+      r.redirectDestination = {id: r.redirectDestination.requestId};
+    }
+    if (r.redirectSource) {
+      r.redirectSource = {id: r.redirectSource.requestId};
+    }
+    if (r.redirects) {
+      r.redirects = r.redirects.map(r2 => r2.requestId);
+    }
+  }
+  return lanternRequests.map(r => ({
+    requestId: r.requestId,
+    connectionId: r.connectionId,
+    connectionReused: r.connectionReused,
+    url: r.url,
+    protocol: r.protocol,
+    parsedURL: r.parsedURL,
+    documentURL: r.documentURL,
+    rendererStartTime: r.rendererStartTime,
+    networkRequestTime: r.networkRequestTime,
+    responseHeadersEndTime: r.responseHeadersEndTime,
+    networkEndTime: r.networkEndTime,
+    transferSize: r.transferSize,
+    // responseHeadersTransferSize: r.responseHeadersTransferSize,
+    resourceSize: r.resourceSize,
+    fromDiskCache: r.fromDiskCache,
+    fromMemoryCache: r.fromMemoryCache,
+    finished: r.finished,
+    statusCode: r.statusCode,
+    redirectSource: r.redirectSource,
+    redirectDestination: r.redirectDestination,
+    redirects: r.redirects,
+    failed: r.failed,
+    initiator: r.initiator,
+    timing: r.timing ? {
+      requestTime: r.timing.requestTime,
+      proxyStart: r.timing.proxyStart,
+      proxyEnd: r.timing.proxyEnd,
+      dnsStart: r.timing.dnsStart,
+      dnsEnd: r.timing.dnsEnd,
+      connectStart: r.timing.connectStart,
+      connectEnd: r.timing.connectEnd,
+      sslStart: r.timing.sslStart,
+      sslEnd: r.timing.sslEnd,
+      workerStart: r.timing.workerStart,
+      workerReady: r.timing.workerReady,
+      workerFetchStart: r.timing.workerFetchStart,
+      workerRespondWithSettled: r.timing.workerRespondWithSettled,
+      sendStart: r.timing.sendStart,
+      sendEnd: r.timing.sendEnd,
+      pushStart: r.timing.pushStart,
+      pushEnd: r.timing.pushEnd,
+      receiveHeadersStart: r.timing.receiveHeadersStart,
+      receiveHeadersEnd: r.timing.receiveHeadersEnd,
+    } : r.timing,
+    resourceType: r.resourceType,
+    mimeType: r.mimeType,
+    priority: r.priority,
+    initiatorRequest: r.initiatorRequest,
+    // fetchedViaServiceWorker: r.fetchedViaServiceWorker,
+    frameId: r.frameId,
+    // sessionTargetType: r.sessionTargetType,
+    fromWorker: r.fromWorker,
+    isLinkPreload: r.isLinkPreload,
+    serverResponseTime: r.serverResponseTime,
+  }));
+}
+
 /**
  * @param {LH.TraceEvent[]} mainThreadEvents
  * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
@@ -247,6 +326,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
     }
   }
 
+  const debug = testingNormalizeRequests(lanternRequests);
   return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, theURL);
 }
 
@@ -290,4 +370,5 @@ export {
   // getComputationDataParams,
   getComputationDataParamsFromTrace as getComputationDataParams,
   lanternErrorAdapter,
+  testingNormalizeRequests,
 };
