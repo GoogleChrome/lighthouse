@@ -257,7 +257,7 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should start network requests in startTime order', () => {
       const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05,
-        connectionId: '1'}));
+        connectionId: 1}));
       const imageNodes = [
         new NetworkNode(request({startTime: 5})),
         new NetworkNode(request({startTime: 4})),
@@ -268,7 +268,7 @@ describe('DependencyGraph/Simulator', () => {
 
       for (const imageNode of imageNodes) {
         imageNode.record.connectionReused = true;
-        imageNode.record.connectionId = '1';
+        imageNode.record.connectionId = 1;
         rootNode.addDependent(imageNode);
       }
 
@@ -287,7 +287,7 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should start network requests in priority order to break startTime ties', () => {
       const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05,
-        connectionId: '1'}));
+        connectionId: 1}));
       const imageNodes = [
         new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
         new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
@@ -298,7 +298,7 @@ describe('DependencyGraph/Simulator', () => {
 
       for (const imageNode of imageNodes) {
         imageNode.record.connectionReused = true;
-        imageNode.record.connectionId = '1';
+        imageNode.record.connectionId = 1;
         rootNode.addDependent(imageNode);
       }
 
@@ -345,7 +345,7 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should maximize throughput with H2', () => {
       const simulator = new Simulator({serverResponseTimeByOrigin});
-      const connectionDefaults = {protocol: 'h2', connectionId: '1'};
+      const connectionDefaults = {protocol: 'h2', connectionId: 1};
       const nodeA = new NetworkNode(request({startTime: 0, endTime: 1,
         ...connectionDefaults}));
       const nodeB = new NetworkNode(request({startTime: 1, endTime: 2,

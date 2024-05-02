@@ -46,7 +46,7 @@ export class NetworkRequest<T = any> {
     record?: T;
 
     requestId: string;
-    connectionId: string;
+    connectionId: number;
     connectionReused: boolean;
     url: string;
     protocol: string;

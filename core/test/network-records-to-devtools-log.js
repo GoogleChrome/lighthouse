@@ -285,7 +285,7 @@ function getResponseReceivedEvent(networkRecord, index, normalizedTiming) {
         headers,
         mimeType: typeof networkRecord.mimeType === 'string' ? networkRecord.mimeType : 'text/html',
         connectionReused: networkRecord.connectionReused || false,
-        connectionId: networkRecord.connectionId || 140,
+        connectionId: networkRecord.connectionId ?? 140,
         fromDiskCache: networkRecord.fromDiskCache || false,
         fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
         encodedDataLength: networkRecord.responseHeadersTransferSize || 0,
