@@ -93,7 +93,6 @@ function chooseInitiatorRequest(record, recordsByURL) {
 // TODO ! remove me
 /**
  * @param {Lantern.NetworkRequest[]} lanternRequests
- * @returns 
  */
 function testingNormalizeRequests(lanternRequests) {
   for (const r of lanternRequests) {
@@ -231,8 +230,8 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
     }
 
     let resourceType = request.args.data.resourceType;
-    // TODO ! types
-    if (initiator.fetchType === 'xmlhttprequest') {
+    if (request.args.data.initiator?.fetchType === 'xmlhttprequest') {
+      // @ts-expect-error yes XHR is a valid ResourceType. TypeScript const enums are so unhelpful.
       resourceType = 'XHR';
     }
 
