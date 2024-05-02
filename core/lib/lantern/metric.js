@@ -33,9 +33,9 @@ class Metric {
 
     dependencyGraph.traverse(node => {
       if (node.type !== BaseNode.TYPES.NETWORK) return;
-      if (node.record.resourceType !== RESOURCE_TYPES.Script) return;
+      if (node.request.resourceType !== RESOURCE_TYPES.Script) return;
       if (treatNodeAsRenderBlocking?.(node)) {
-        scriptUrls.add(node.record.url);
+        scriptUrls.add(node.request.url);
       }
     });
 

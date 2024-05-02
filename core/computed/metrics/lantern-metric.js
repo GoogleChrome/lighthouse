@@ -230,6 +230,12 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       initiator.stack = {callFrames};
     }
 
+    let resourceType = request.args.data.resourceType;
+    // TODO ! types
+    if (initiator.fetchType === 'xmlhttprequest') {
+      resourceType = 'XHR';
+    }
+
     lanternRequests.push({
       requestId: request.args.data.requestId,
       connectionId: String(request.args.data.connectionId),
@@ -258,7 +264,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
         workerFetchStart: -1,
         workerRespondWithSettled: -1,
       },
-      resourceType: request.args.data.resourceType,
+      resourceType,
       mimeType: request.args.data.mimeType,
       priority: request.args.data.priority,
       frameId: request.args.data.frame,
