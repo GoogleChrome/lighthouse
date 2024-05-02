@@ -130,6 +130,27 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       fromWorker = true;
     }
 
+    // `initiator` in the trace does not contain the stack trace for JS-initiated
+    // requests. Instead, that is stored in the `stackTrace` property of the SyntheticNetworkRequest.
+    // There are some minor differences in the fields, accounted for here.
+    // Most importantly, there seems to be fewer frames in the trace than the equivalent
+    // events over the CDP. This results in less accuracy in determining the initiator request,
+    // which means less edges in the graph, which mean worse results. Should fix.
+    /** @type {Lantern.NetworkRequest['initiator']} */
+    const initiator = request.args.data.initiator ?? {type: 'other'};
+    if (request.args.data.stackTrace) {
+      const callFrames = request.args.data.stackTrace.map(f => {
+        return {
+          scriptId: String(f.scriptId),
+          url: f.url,
+          lineNumber: f.lineNumber - 1,
+          columnNumber: f.columnNumber - 1,
+          functionName: f.functionName,
+        };
+      });
+      initiator.stack = {callFrames};
+    }
+
     lanternRequests.push({
       requestId: request.args.data.requestId,
       connectionId: String(request.args.data.connectionId),
@@ -152,7 +173,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       finished: request.args.data.finished,
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
-      initiator: request.args.data.initiator ?? {type: 'other'},
+      initiator,
       timing: {
         ...request.args.data.timing,
         workerFetchStart: -1,

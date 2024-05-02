@@ -352,7 +352,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
           failed: false,
           statusCode: 200,
           url: 'https://google.com/logo.png',
-          parsedURL: {isValid: true, scheme: 'https'},
+          parsedURL: {scheme: 'https'},
         },
         extras
       );
