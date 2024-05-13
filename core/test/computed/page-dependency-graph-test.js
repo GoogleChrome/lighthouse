@@ -10,24 +10,22 @@ import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
 import {BaseNode} from '../../lib/lantern/base-node.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const sampleTrace = readJson('../fixtures/traces/iframe-m79.trace.json', import.meta);
-const sampleDevtoolsLog = readJson('../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);
+const sampleTrace = readJson('../fixtures/artifacts/iframe/trace.json', import.meta);
+const sampleDevtoolsLog = readJson('../fixtures/artifacts/iframe/devtoolslog.json', import.meta);
 
 describe('PageDependencyGraph computed artifact', () => {
   describe('#compute_', () => {
-    it('should compute the dependency graph', () => {
+    it('should compute the dependency graph', async () => {
       const context = {computedCache: new Map()};
-      return PageDependencyGraph.request({
+      const output = await PageDependencyGraph.request({
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
-      }, context).then(output => {
-        assert.ok(output instanceof BaseNode, 'did not return a graph');
-
-        const dependents = output.getDependents();
-        const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
-        assert.ok(nodeWithNestedDependents, 'did not link initiators');
-      });
+      }, context);
+      assert.ok(output instanceof BaseNode, 'did not return a graph');
+      const dependents = output.getDependents();
+      const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
+      assert.ok(nodeWithNestedDependents, 'did not link initiators');
     });
   });
 });

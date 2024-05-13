@@ -13,8 +13,8 @@ import {readJson} from '../../../test-utils.js';
 
 const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
-const iframeTrace = readJson('../../../fixtures/traces/iframe-m79.trace.json', import.meta);
-const iframeDevtoolsLog = readJson('../../../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);
+const iframeTrace = readJson('../../../fixtures/artifacts/iframe/trace.json', import.meta);
+const iframeDevtoolsLog = readJson('../../../fixtures/artifacts/iframe/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
