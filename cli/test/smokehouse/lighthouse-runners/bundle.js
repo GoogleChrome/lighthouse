@@ -97,7 +97,7 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
     };
   } finally {
     // Clean up and return results.
-    await launchedChrome.kill();
+    launchedChrome.kill();
   }
 }
 
