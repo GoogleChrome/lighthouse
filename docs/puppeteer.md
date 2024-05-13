@@ -73,5 +73,5 @@ const {lhr}  = await lighthouse(url, undefined, undefined, page);
 console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score).join(', ')}`);
 
 await browser.disconnect();
-await chrome.kill();
+chrome.kill();
 ```
