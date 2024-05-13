@@ -80,6 +80,7 @@ class InspectorIssues extends BaseGatherer {
       quirksModeIssue: [],
       cookieIssue: [],
       sharedArrayBufferIssue: [],
+      sharedDictionaryIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
     };
