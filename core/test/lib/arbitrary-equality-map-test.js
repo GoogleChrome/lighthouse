@@ -9,7 +9,7 @@ import assert from 'assert/strict';
 import {ArbitraryEqualityMap} from '../../lib/arbitrary-equality-map.js';
 import {readJson} from '../test-utils.js';
 
-const trace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const trace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 describe('ArbitraryEqualityMap', () => {
   it('creates a map', () => {

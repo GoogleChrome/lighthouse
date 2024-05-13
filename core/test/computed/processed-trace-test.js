@@ -7,7 +7,7 @@
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {

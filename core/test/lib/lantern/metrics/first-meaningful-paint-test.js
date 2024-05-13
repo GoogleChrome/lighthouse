@@ -10,8 +10,8 @@ import {readJson} from '../../../test-utils.js';
 import {FirstMeaningfulPaint} from '../../../../lib/lantern/metrics/first-meaningful-paint.js';
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 
-const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
@@ -22,9 +22,9 @@ describe('Metrics: Lantern FMP', () => {
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
+      pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 6);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 9);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

@@ -14,8 +14,8 @@ import {PageDependencyGraph} from '../../../../computed/page-dependency-graph.js
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 
-const pwaTrace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
-const pwaDevtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const pwaTrace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const pwaDevtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 let nextRequestId = 1;
 let nextTid = 1;

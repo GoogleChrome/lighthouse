@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import assert from 'assert/strict';
-
 import {SpeedIndex} from '../../../computed/metrics/speed-index.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const trace1msLayout = readJson('../../fixtures/traces/speedindex-1ms-layout-m84.trace.json', import.meta);
 const devtoolsLog1msLayout = readJson('../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json', import.meta); // eslint-disable-line max-len
 
@@ -27,14 +25,14 @@ describe('Metrics: Speed Index', () => {
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
-      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
-    }).toMatchInlineSnapshot(`
-      Object {
-        "optimistic": 605,
-        "pessimistic": 1661,
-        "timing": 1511,
-      }
-    `);
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
+toMatchInlineSnapshot(`
+Object {
+  "optimistic": 307,
+  "pessimistic": 1076,
+  "timing": 1033,
+}
+`);
   });
 
   it('should compute a simulated value on a trace on desktop with 1ms durations', async () => {
@@ -80,8 +78,12 @@ describe('Metrics: Speed Index', () => {
     const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
-    assert.equal(result.timing, 605);
-    assert.equal(result.timestamp, 225414777015);
+    await expect(result).toMatchInlineSnapshot(`
+Object {
+  "timestamp": 350560462528,
+  "timing": 307,
+}
+`);
   });
 
   it('should compute an observed value (mobile)', async () => {
@@ -91,7 +93,11 @@ describe('Metrics: Speed Index', () => {
     const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
-    assert.equal(result.timing, 605);
-    assert.equal(result.timestamp, 225414777015);
+    await expect(result).toMatchInlineSnapshot(`
+Object {
+  "timestamp": 350560462528,
+  "timing": 307,
+}
+`);
   });
 });

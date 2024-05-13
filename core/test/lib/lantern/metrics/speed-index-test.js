@@ -12,8 +12,8 @@ import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-conten
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {Speedline} from '../../../../computed/speedline.js';
 
-const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 
@@ -29,14 +29,14 @@ describe('Metrics: Lantern Speed Index', () => {
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
-      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
-    }).toMatchInlineSnapshot(`
-      Object {
-        "optimistic": 605,
-        "pessimistic": 1661,
-        "timing": 1511,
-      }
-    `);
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
+toMatchInlineSnapshot(`
+Object {
+  "optimistic": 307,
+  "pessimistic": 1076,
+  "timing": 1033,
+}
+`);
   });
 
   it('should compute predicted value for different settings', async () => {
@@ -54,9 +54,9 @@ describe('Metrics: Lantern Speed Index', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 605,
-  "pessimistic": 2440,
-  "timing": 2198,
+  "optimistic": 307,
+  "pessimistic": 1976,
+  "timing": 1933,
 }
 `);
   });

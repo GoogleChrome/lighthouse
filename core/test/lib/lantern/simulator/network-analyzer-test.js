@@ -11,7 +11,7 @@ import {NetworkRecords} from '../../../../computed/network-records.js';
 import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 
-const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const devtoolsLogWithRedirect = readJson('../../../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {

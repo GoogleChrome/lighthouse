@@ -7,7 +7,7 @@
 import FinalScreenshotAudit from '../../audits/final-screenshot.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 

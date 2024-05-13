@@ -7,7 +7,7 @@
 import {MainThreadTasks} from '../../computed/main-thread-tasks.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 describe('MainThreadTasksComputed', () => {
   it('computes the artifact', async () => {

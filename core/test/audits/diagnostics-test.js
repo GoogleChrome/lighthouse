@@ -7,8 +7,8 @@
 import Diagnostics from '../../audits/diagnostics.js';
 import {readJson} from '../test-utils.js';
 
-const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const acceptableTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const acceptableDevToolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 describe('Diagnostics audit', () => {
   it('should work', async () => {

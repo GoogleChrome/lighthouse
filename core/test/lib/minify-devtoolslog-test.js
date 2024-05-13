@@ -8,8 +8,8 @@ import {minifyDevtoolsLog} from '../../lib/minify-devtoolslog.js';
 import MetricsAudit from '../../audits/metrics.js';
 import {readJson} from '../test-utils.js';
 
-const trace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 describe('minify-devtoolslog', () => {
   it('has identical metrics to unminified', async () => {
