@@ -45,21 +45,20 @@ class ProtocolSession extends CrdpEventEmitter {
     // @ts-expect-error Puppeteer expects the handler params to be type `unknown`
     this._cdpSession.on('*', this._handleProtocolEvent);
 
-    // Poor man's Promise.withResolvers()
-    /** @param {Error} _ */
-    let rej = _ => {};
-    const promise = /** @type {Promise<never>} */ (new Promise((_, theRej) => rej = theRej));
-    this._targetCrashedResolver = {promise, rej};
-
     // If the target crashes, we can't continue gathering.
     // FWIW, if the target unexpectedly detaches (eg the user closed the tab), pptr will
     // catch that and reject in this._cdpSession.send, which is caught by us.
+    /** @param {Error} _ */
+    let rej = _ => {}; // Poor man's Promise.withResolvers()
+    this._targetCrashedPromise = /** @type {Promise<never>} */ (
+      new Promise((_, theRej) => rej = theRej));
     this.on('Inspector.targetCrashed', async () => {
       log.error('TargetManager', 'Inspector.targetCrashed');
       // Manually detach so no more CDP traffic is attempted.
-      // Don't await, else our rejection will be a 'Target closed' protocol error on cross-talk CDP calls.
+      // Don't await, else our rejection will be a 'Target closed' protocol error on cross-talk
+      // CDP calls.
       void this.dispose();
-      this._targetCrashedResolver.rej(new LighthouseError(LighthouseError.errors.TARGET_CRASHED));
+      rej(new LighthouseError(LighthouseError.errors.TARGET_CRASHED));
     });
   }
 
@@ -132,7 +131,7 @@ class ProtocolSession extends CrdpEventEmitter {
       throw LighthouseError.fromProtocolMessage(method, error);
     });
     const resultWithTimeoutPromise =
-      Promise.race([resultPromise, timeoutPromise, this._targetCrashedResolver.promise]);
+      Promise.race([resultPromise, timeoutPromise, this._targetCrashedPromise]);
 
     return resultWithTimeoutPromise.finally(() => {
       if (timeout) clearTimeout(timeout);
@@ -162,7 +161,7 @@ class ProtocolSession extends CrdpEventEmitter {
   }
 
   onCrashPromise() {
-    return this._targetCrashedResolver.promise;
+    return this._targetCrashedPromise;
   }
 }
 
