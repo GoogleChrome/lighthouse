@@ -34,9 +34,7 @@ const ProtocolEventEmitter = /** @type {ProtocolEventMessageEmitter} */ (EventEm
  * appear and allows listeners to the flattened protocol events from all targets.
  */
 class TargetManager extends ProtocolEventEmitter {
-  /**
-   * @param {LH.Puppeteer.CDPSession} cdpSession
-   */
+  /** @param {LH.Puppeteer.CDPSession} cdpSession */
   constructor(cdpSession) {
     super();
 
