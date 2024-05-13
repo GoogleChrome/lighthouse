@@ -51,6 +51,7 @@ Array [
   "propertyRuleIssueDetails",
   "quirksModeIssueDetails",
   "sharedArrayBufferIssueDetails",
+  "sharedDictionaryIssueDetails",
   "stylesheetLoadingIssueDetails",
 ]
 `);
