@@ -545,6 +545,7 @@ declare module Artifacts {
     quirksModeIssue: Crdp.Audits.QuirksModeIssueDetails[];
     cookieIssue: Crdp.Audits.CookieIssueDetails[];
     sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
+    sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
     stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
     federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
   }
