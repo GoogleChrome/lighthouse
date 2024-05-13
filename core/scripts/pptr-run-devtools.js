@@ -213,7 +213,7 @@ async function runLighthouse() {
   // In CI clicking the start button just once is flaky and can cause a timeout.
   // Therefore, keep clicking the button until we detect that the run started.
   const intervalHandle = setInterval(() => {
-    const button = panel.contentElement.querySelector('devtools-button,button')
+    const button = panel.contentElement.querySelector('devtools-button,button');
     button.click();
   }, 100);
 
