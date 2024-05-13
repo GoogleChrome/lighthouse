@@ -11,7 +11,7 @@ import {createMockContext, createMockDriver, createMockSession} from
   '../mock-driver.js';
 import {fnAny, readJson, timers} from '../../test-utils.js';
 
-const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 /**
  * @param {Partial<LH.Artifacts.ImageElement>=} partial

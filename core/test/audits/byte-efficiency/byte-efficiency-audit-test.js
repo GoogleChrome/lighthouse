@@ -14,8 +14,8 @@ import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log
 import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {defaultSettings} from '../../../config/constants.js';
 
-const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
   let simulator;

@@ -11,8 +11,8 @@ import {readJson} from '../../test-utils.js';
 
 const traceAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const devtoolsLogAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
-const traceMainFrame = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLogMainFrame = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const traceMainFrame = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
+const devtoolsLogMainFrame = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
@@ -54,9 +54,11 @@ describe('Metrics: LCP from all frames', () => {
       {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings},
       context
     );
-    await expect(result).toEqual({
-      timestamp: 713038144775,
-      timing: 1121.711,
-    });
+    await expect(result).toMatchInlineSnapshot(`
+Object {
+  "timestamp": 343577475882,
+  "timing": 291.834,
+}
+`);
   });
 });

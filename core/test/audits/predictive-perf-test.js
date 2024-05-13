@@ -7,8 +7,8 @@
 import PredictivePerf from '../../audits/predictive-perf.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const acceptableTrace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
-const acceptableDevToolsLog = readJson('../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const acceptableTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
+const acceptableDevToolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Performance: predictive performance audit', () => {
   it('should compute the predicted values', async () => {

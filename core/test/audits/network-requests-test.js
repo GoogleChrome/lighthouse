@@ -99,7 +99,7 @@ describe('Network requests audit', () => {
 
   it('should report if records are from the main frame', async () => {
     const records = [
-      {url: 'https://example.com/'},
+      {url: 'https://example.com/', frameId: 'main'},
       {url: 'https://iframed.local/', frameId: '71D866EC199B90A2E0B2D9CF88DCBC4E'},
     ];
 
@@ -123,7 +123,7 @@ describe('Network requests audit', () => {
 
   it('should not include main frame information outside of navigations', async () => {
     const records = [
-      {url: 'https://example.com/'},
+      {url: 'https://example.com/', frameId: 'main'},
       {url: 'https://iframed.local/', frameId: '71D866EC199B90A2E0B2D9CF88DCBC4E'},
     ];
 

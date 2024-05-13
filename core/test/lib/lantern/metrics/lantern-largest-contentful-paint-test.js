@@ -11,8 +11,8 @@ import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-conten
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {readJson} from '../../../test-utils.js';
 
-const trace = readJson('../../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
@@ -24,16 +24,18 @@ describe('Metrics: Lantern LCP', () => {
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
-      pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
+      pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 2294,
-  "pessimistic": 3233,
-  "timing": 2764,
+  "optimistic": 1445,
+  "optimisticNodeTimings": 8,
+  "pessimistic": 1603,
+  "pessimisticNodeTimings": 9,
+  "timing": 1524,
 }
 `);
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 12);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 19);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
