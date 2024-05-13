@@ -28,30 +28,6 @@ const moduleDir = getModuleDirectory(import.meta);
 
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
-class GathererImpl {
-  /**
-   * @param {import('./gather/driver.js').Driver} driver
-   * @param {(runnerData: {resolvedConfig: LH.Config.ResolvedConfig}) => Promise<LH.Artifacts>} gatherFn
-   */
-  constructor(driver, gatherFn) {
-    this._driver = driver;
-    this._gatherFn = gatherFn;
-  }
-
-  /**
-   * @param {{resolvedConfig: LH.Config.ResolvedConfig}} runnerData
-   */
-  run(runnerData) {
-    return this._gatherFn(runnerData);
-    // return this._gatherFn(runnerData).catch(err => {
-    //   if (/** @type {LH.LighthouseError} */ (err).code === 'PROTOCOL_TIMEOUT' && this._driver.fatalRejection) {
-    //     return Promise.race([this._driver.fatalRejection, Promise.reject(err)]);
-    //   }
-    //   throw err;
-    // });
-  }
-}
-
 class Runner {
   /**
    * @param {LH.Artifacts} artifacts
@@ -206,11 +182,11 @@ class Runner {
    * -G and -A will run partial lighthouse pipelines,
    * and -GA will run everything plus save artifacts and lhr to disk.
    *
-   * @param {GathererImpl|null} gathererImpl
+   * @param {(runnerData: {resolvedConfig: LH.Config.ResolvedConfig}) => Promise<LH.Artifacts>} gatherFn
    * @param {{resolvedConfig: LH.Config.ResolvedConfig, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.Artifacts>}
    */
-  static async gather(gathererImpl, options) {
+  static async gather(gatherFn, options) {
     const settings = options.resolvedConfig.settings;
 
     // Either load saved artifacts from disk or from the browser.
@@ -228,15 +204,10 @@ class Runner {
         return assetSaver.loadArtifacts(path);
       }
 
-      // Should never happen.
-      if (!gathererImpl) {
-        throw new Error('Missing gathererImpl');
-      }
-
       const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
       log.time(runnerStatus, 'verbose');
 
-      const artifacts = await gathererImpl.run({resolvedConfig: options.resolvedConfig});
+      const artifacts = await gatherFn({resolvedConfig: options.resolvedConfig});
       log.timeEnd(runnerStatus);
 
       // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.
@@ -565,4 +536,4 @@ vs
   }
 }
 
-export {GathererImpl, Runner};
+export {Runner};

@@ -7,7 +7,7 @@
 import log from 'lighthouse-logger';
 
 import {Driver} from './driver.js';
-import {GathererImpl, Runner} from '../runner.js';
+import {Runner} from '../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
 import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
@@ -58,7 +58,7 @@ async function snapshotGather(page, options = {}) {
     return finalizeArtifacts(baseArtifacts, artifacts);
   };
 
-  const artifacts = await Runner.gather(new GathererImpl(driver, gatherFn), runnerOptions);
+  const artifacts = await Runner.gather(gatherFn, runnerOptions);
   return {artifacts, runnerOptions};
 }
 

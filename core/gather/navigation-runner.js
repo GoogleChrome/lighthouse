@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer-core';
 import log from 'lighthouse-logger';
 
 import {Driver} from './driver.js';
-import {GathererImpl, Runner} from '../runner.js';
+import {Runner} from '../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
 import * as prepare from './driver/prepare.js';
 import {gotoURL} from './driver/navigation.js';
@@ -263,47 +263,47 @@ async function navigationGather(page, requestor, options = {}) {
 
   const {resolvedConfig} = await initializeConfig('navigation', config, flags);
   const computedCache = new Map();
-  const runnerOptions = {resolvedConfig, computedCache};
-
-  // For navigation mode, we shouldn't connect to a browser in audit mode,
-  // therefore we provide a null GathererImpl.
-  if (resolvedConfig.settings.auditMode && !resolvedConfig.settings.gatherMode) {
-    const artifacts = await Runner.gather(null, runnerOptions);
-    return {artifacts, runnerOptions};
-  }
 
   const isCallback = typeof requestor === 'function';
 
-  /** @type {LH.Puppeteer.Browser|undefined} */
-  let lhBrowser = undefined;
-  /** @type {LH.Puppeteer.Page|undefined} */
-  let lhPage = undefined;
-
-  if (!page) {
-    const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
-    lhBrowser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`, defaultViewport: null});
-    lhPage = await lhBrowser.newPage();
-    page = lhPage;
-  }
-  const driver = new Driver(page);
-  const normalizedRequestor = isCallback ? requestor : UrlUtils.normalizeUrl(requestor);
-  const context = {
-    driver,
-    lhBrowser,
-    lhPage,
-    page,
-    resolvedConfig,
-    requestor: normalizedRequestor,
-    computedCache,
-  };
+  const runnerOptions = {resolvedConfig, computedCache};
 
   const gatherFn = async () => {
+    const normalizedRequestor = isCallback ? requestor : UrlUtils.normalizeUrl(requestor);
+
+    /** @type {LH.Puppeteer.Browser|undefined} */
+    let lhBrowser = undefined;
+    /** @type {LH.Puppeteer.Page|undefined} */
+    let lhPage = undefined;
+
+    // For navigation mode, we shouldn't connect to a browser in audit mode,
+    // therefore we connect to the browser in the gatherFn callback.
+    if (!page) {
+      const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
+      lhBrowser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`, defaultViewport: null});
+      lhPage = await lhBrowser.newPage();
+      page = lhPage;
+    }
+
+    const driver = new Driver(page);
+    const context = {
+      driver,
+      lhBrowser,
+      lhPage,
+      page,
+      resolvedConfig,
+      requestor: normalizedRequestor,
+      computedCache,
+    };
     const {baseArtifacts} = await _setup(context);
+
     const artifacts = await _navigation({...context, baseArtifacts});
+
     await _cleanup(context);
+
     return finalizeArtifacts(baseArtifacts, artifacts);
   };
-  const artifacts = await Runner.gather(new GathererImpl(driver, gatherFn), runnerOptions);
+  const artifacts = await Runner.gather(gatherFn, runnerOptions);
   return {artifacts, runnerOptions};
 }
 
