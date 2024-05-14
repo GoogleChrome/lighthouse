@@ -27,9 +27,9 @@ describe('Metrics: Speed Index', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).toMatchInlineSnapshot(`
 Object {
-  "optimistic": 307,
-  "pessimistic": 1076,
-  "timing": 1033,
+  "optimistic": 379,
+  "pessimistic": 1122,
+  "timing": 1107,
 }
 `);
   });
@@ -79,8 +79,8 @@ Object {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560462528,
-  "timing": 307,
+  "timestamp": 376406360564,
+  "timing": 379,
 }
 `);
   });
@@ -94,8 +94,8 @@ Object {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560462528,
-  "timing": 307,
+  "timestamp": 376406360564,
+  "timing": 379,
 }
 `);
   });

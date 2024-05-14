@@ -11,7 +11,7 @@ import {NetworkRecords} from '../../../../computed/network-records.js';
 import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 
-const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 const devtoolsLogWithRedirect = readJson('../../../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
@@ -134,8 +134,8 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
         const distinctConnections = Array.from(result.values()).filter(item => !item).length;
-        assert.equal(result.size, 25);
-        assert.equal(distinctConnections, 6);
+        assert.equal(result.size, 66);
+        assert.equal(distinctConnections, 3);
       });
     });
   });
@@ -247,8 +247,9 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records);
-        assertCloseEnough(result.get('https://squoosh.app').min, 27);
-        assertCloseEnough(result.get('https://www.google-analytics.com').min, 0);
+        assertCloseEnough(result.get('https://pwa.rocks').min, 3);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
+        assertCloseEnough(result.get('https://www.google-analytics.com').min, 4);
       });
     });
 
@@ -311,8 +312,9 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
-        assertCloseEnough(result.get('https://squoosh.app').avg, 5);
-        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 13);
+        assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);
+        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 161);
       });
     });
 
@@ -439,14 +441,14 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://squoosh.app/');
-      assert.equal(mainDocument.url, 'https://squoosh.app/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
+      assert.equal(mainDocument.url, 'https://pwa.rocks/');
     });
 
     it('should find the main document if the URL includes a fragment', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://squoosh.app/#info');
-      assert.equal(mainDocument.url, 'https://squoosh.app/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/#info');
+      assert.equal(mainDocument.url, 'https://pwa.rocks/');
     });
   });
 
@@ -454,10 +456,10 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should resolve to the same document when no redirect', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
 
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://squoosh.app/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.equal(mainDocument.url, finalDocument.url);
-      assert.equal(finalDocument.url, 'https://squoosh.app/');
+      assert.equal(finalDocument.url, 'https://pwa.rocks/');
     });
 
     it('should resolve to the final document with redirects', async () => {
