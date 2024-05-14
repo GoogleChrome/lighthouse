@@ -591,14 +591,14 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(lcpTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         expect({
-  'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
-  'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
-  'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
-  'timeOriginEvt.ts': trace.timeOriginEvt.ts,
-  'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
-  'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
-  'timings.firstContentfulPaint': navigation.timings.firstContentfulPaint,
-  'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint }).
+          'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
+          'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
+          'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
+          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
+          'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
+          'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
+          'timings.firstContentfulPaint': navigation.timings.firstContentfulPaint,
+          'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint}).
 toMatchInlineSnapshot(`
 Object {
   "firstContentfulPaintEvt.ts": 343577475882,
