@@ -21,6 +21,7 @@ const ENABLED_HANDLERS = {
   Samples: TraceEngine.TraceHandlers.Samples,
   Screenshots: TraceEngine.TraceHandlers.Screenshots,
   PageLoadMetrics: TraceEngine.TraceHandlers.PageLoadMetrics,
+  Workers: TraceEngine.TraceHandlers.Workers,
 };
 
 /**

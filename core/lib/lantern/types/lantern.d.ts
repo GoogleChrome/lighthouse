@@ -68,15 +68,15 @@ export class NetworkRequest<T = any> {
     fromDiskCache: boolean;
     fromMemoryCache: boolean;
     finished: boolean;
+    failed: boolean;
     statusCode: number;
     /** The network request that this one redirected to */
     redirectDestination: NetworkRequest<T> | undefined;
-    failed: boolean;
     initiator: LH.Crdp.Network.Initiator;
     initiatorRequest: NetworkRequest<T> | undefined;
     /** The chain of network requests that redirected to this one */
     redirects: NetworkRequest[] | undefined;
-    timing: LH.Crdp.Network.ResourceTiming | undefined;
+    timing: Omit<LH.Crdp.Network.ResourceTiming, 'workerFetchStart'|'workerRespondWithSettled'> | undefined;
     /**
      * Optional value for how long the server took to respond to this request.
      * When not provided, the server response time is derived from the timing object.
@@ -86,7 +86,7 @@ export class NetworkRequest<T = any> {
     mimeType: string;
     priority: LH.Crdp.Network.ResourcePriority;
     frameId: string | undefined;
-    sessionTargetType: LH.Protocol.TargetType | undefined;
+    fromWorker: boolean;
 }
 
 export namespace Simulation {

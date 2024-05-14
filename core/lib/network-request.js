@@ -180,6 +180,7 @@ class NetworkRequest {
     this.sessionId = undefined;
     /** @type {LH.Protocol.TargetType|undefined} */
     this.sessionTargetType = undefined;
+    this.fromWorker = false;
     this.isLinkPreload = false;
   }
 
@@ -599,6 +600,8 @@ class NetworkRequest {
         serverResponseTime = record.lrStatistics.requestMs;
       }
     }
+
+    record.fromWorker = record.sessionTargetType === 'worker';
 
     return {
       ...record,

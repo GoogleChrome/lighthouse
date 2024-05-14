@@ -75,7 +75,7 @@ class PageDependencyGraph {
 
     networkRecords.forEach(record => {
       if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
-      if (record.sessionTargetType === 'worker') return;
+      if (record.fromWorker) return;
 
       // Network record requestIds can be duplicated for an unknown reason
       // Suffix all subsequent records with `:duplicate` until it's unique
