@@ -17,8 +17,8 @@ import {readJson} from '../test-utils.js';
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
 const dbwTrace = readJson('../results/artifacts/defaultPass.trace.json', import.meta);
 const dbwResults = readJson('../results/sample_v2.json', import.meta);
-const fullTraceObj = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const devtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const fullTraceObj = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const moduleDir = getModuleDirectory(import.meta);
 
@@ -452,12 +452,14 @@ describe('asset-saver helper', () => {
 
       expect(results).toEqual({
         additionalRttByOrigin: {
-          'https://squoosh.app': expect.any(Number),
+          'https://pwa.rocks': expect.any(Number),
           'https://www.google-analytics.com': expect.any(Number),
+          'https://www.googletagmanager.com': expect.any(Number),
         },
         serverResponseTimeByOrigin: {
-          'https://squoosh.app': expect.any(Number),
+          'https://pwa.rocks': expect.any(Number),
           'https://www.google-analytics.com': expect.any(Number),
+          'https://www.googletagmanager.com': expect.any(Number),
         },
       });
     });
