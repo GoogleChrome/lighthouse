@@ -9,7 +9,7 @@ import assert from 'assert/strict';
 import {Interactive} from '../../../computed/metrics/interactive.js';
 import {getURLArtifactFromDevtoolsLog, loadTraceFixture} from '../../test-utils.js';
 
-const {trace, devtoolsLog} = loadTraceFixture('progressive-app-m60');
+const {trace, devtoolsLog} = loadTraceFixture('progressive-app');
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /**
@@ -59,9 +59,9 @@ describe('Metrics: TTI', () => {
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
+      pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 20);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
@@ -74,8 +74,8 @@ describe('Metrics: TTI', () => {
     const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
-    assert.equal(Math.round(result.timing), 1582);
-    assert.equal(result.timestamp, 225415754204);
+    assert.equal(Math.round(result.timing), 224);
+    assert.equal(result.timestamp, 376406205074);
   });
 
   it('should compute an observed value (mobile)', async () => {
@@ -86,8 +86,8 @@ describe('Metrics: TTI', () => {
     const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
-    assert.equal(Math.round(result.timing), 1582);
-    assert.equal(result.timestamp, 225415754204);
+    assert.equal(Math.round(result.timing), 224);
+    assert.equal(result.timestamp, 376406205074);
   });
 
   describe('#findOverlappingQuietPeriods', () => {

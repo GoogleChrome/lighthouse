@@ -36,7 +36,7 @@ describe('Metrics: Max Potential FID', () => {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timing": 18.22,
+  "timing": 16,
 }
 `);
   });

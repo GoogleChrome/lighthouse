@@ -43,8 +43,8 @@ describe('Metrics: FCP', () => {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560322851,
-  "timing": 167.323,
+  "timestamp": 376406173872,
+  "timing": 192.308,
 }
 `);
   });
@@ -57,8 +57,8 @@ Object {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560322851,
-  "timing": 167.323,
+  "timestamp": 376406173872,
+  "timing": 192.308,
 }
 `);
   });

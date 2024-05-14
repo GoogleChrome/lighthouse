@@ -111,10 +111,10 @@ function loadSourceMapAndUsageFixture(name) {
  * @return {{devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}}
  */
 function loadTraceFixture(name) {
-  const dir = `${LH_ROOT}/core/test/fixtures/traces`;
+  const dir = `${LH_ROOT}/core/test/fixtures/artifacts/${name}`;
   return {
-    devtoolsLog: JSON.parse(fs.readFileSync(`${dir}/${name}.devtools.log.json`, 'utf-8')),
-    trace: JSON.parse(fs.readFileSync(`${dir}/${name}.json`, 'utf-8')),
+    devtoolsLog: JSON.parse(fs.readFileSync(`${dir}/devtoolslog.json`, 'utf-8')),
+    trace: JSON.parse(fs.readFileSync(`${dir}/trace.json`, 'utf-8')),
   };
 }
 

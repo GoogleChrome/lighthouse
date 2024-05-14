@@ -66,8 +66,8 @@ describe('Metrics: FMP', () => {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560359679,
-  "timing": 204.151,
+  "timestamp": 376406210378,
+  "timing": 228.814,
 }
 `);
   });
@@ -80,8 +80,8 @@ Object {
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
-  "timestamp": 350560359679,
-  "timing": 204.151,
+  "timestamp": 376406210378,
+  "timing": 228.814,
 }
 `);
   });
