@@ -14,8 +14,8 @@ import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log
 import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {defaultSettings} from '../../../config/constants.js';
 
-const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
   let simulator;
@@ -228,7 +228,7 @@ describe('Byte efficiency base audit', () => {
       {computedCache: new Map()}
     );
 
-    assert.equal(result.numericValue, 160);
+    assert.equal(result.numericValue, 0);
   });
 
   it('should create load simulator with the specified settings', async () => {
@@ -255,13 +255,13 @@ describe('Byte efficiency base audit', () => {
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
     expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`1220`);
+    expect(result.numericValue).toMatchInlineSnapshot(`440`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
     expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`13580`);
+    expect(result.numericValue).toMatchInlineSnapshot(`5790`);
   });
 
   it('should compute savings with throughput in timespan mode', async () => {
@@ -285,7 +285,7 @@ describe('Byte efficiency base audit', () => {
     const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
     const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toEqual(1400);
+    expect(result.details.overallSavingsMs).toEqual(2120);
   });
 
   it('should return n/a if no network records in timespan mode', async () => {
@@ -342,7 +342,7 @@ describe('Byte efficiency base audit', () => {
     };
     const settings = {throttlingMethod: 'devtools', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toEqual(40);
+    expect(result.details.overallSavingsMs).toEqual(30);
   });
 
   describe('#scoreForWastedMs', () => {

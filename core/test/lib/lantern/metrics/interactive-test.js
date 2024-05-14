@@ -11,8 +11,8 @@ import {FirstMeaningfulPaint} from '../../../../lib/lantern/metrics/first-meanin
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {readJson} from '../../../test-utils.js';
 
-const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const iframeTrace = readJson('../../../fixtures/artifacts/iframe/trace.json', import.meta);
 const iframeDevtoolsLog = readJson('../../../fixtures/artifacts/iframe/devtoolslog.json', import.meta);
 
@@ -28,8 +28,8 @@ describe('Metrics: Lantern TTI', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 20);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 14);
+    assert.equal(result.pessimisticEstimate.nodeTimings.size, 31);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

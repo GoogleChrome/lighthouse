@@ -14,8 +14,8 @@ describe('ProcessedTrace', () => {
     const context = {computedCache: new Map()};
     const processedTrace = await ProcessedTrace.request(pwaTrace, context);
 
-    expect(processedTrace.processEvents.length).toEqual(12865);
-    expect(processedTrace.mainThreadEvents.length).toEqual(7629);
+    expect(processedTrace.processEvents.length).toEqual(30050);
+    expect(processedTrace.mainThreadEvents.length).toEqual(14970);
 
     delete processedTrace.processEvents;
     delete processedTrace.mainThreadEvents;
@@ -25,29 +25,32 @@ describe('ProcessedTrace', () => {
 
     expect(processedTrace).toMatchObject({
       mainFrameInfo: {
-        frameId: '0x25a638821e30',
-        startingPid: 44277,
+        frameId: 'B252105E12E98AFD5BC5DCC4D6F4813F',
+        startingPid: 13956,
       },
       timeOriginEvt: {
         args: {
-          frame: '0x25a638821e30',
+          frame: 'B252105E12E98AFD5BC5DCC4D6F4813F',
         },
         cat: 'blink.user_timing',
         name: 'navigationStart',
         ph: 'R',
-        pid: 44277,
-        tid: 775,
-        ts: 225414172015,
-        tts: 455539,
+        pid: 13958,
+        tid: 259,
+        ts: 350560155528,
+        tts: 34613,
       },
-      frames: [],
+      frames: [{
+        id: 'B252105E12E98AFD5BC5DCC4D6F4813F',
+        url: 'https://squoosh.app/',
+      }],
       timestamps: {
-        timeOrigin: 225414172015,
-        traceEnd: 225426711887,
+        timeOrigin: 350560155528,
+        traceEnd: 350562869197,
       },
       timings: {
         timeOrigin: 0,
-        traceEnd: 12539.872,
+        traceEnd: 2713.669,
       },
     });
   });

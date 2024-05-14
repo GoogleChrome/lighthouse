@@ -11,7 +11,7 @@ import {NetworkNode} from '../../lib/lantern/network-node.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {readJson} from '../test-utils.js';
 
-const devtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 function createNetworkNode() {
   const record = {

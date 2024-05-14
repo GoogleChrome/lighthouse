@@ -7,7 +7,7 @@
 import NetworkRTT from '../../audits/network-rtt.js';
 import {readJson} from '../test-utils.js';
 
-const acceptableDevToolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Network RTT audit', () => {
   it('should work', async () => {

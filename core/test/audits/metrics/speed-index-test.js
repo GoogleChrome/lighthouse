@@ -10,8 +10,8 @@ import Audit from '../../../audits/metrics/speed-index.js';
 import * as constants from '../../../config/constants.js';
 import {readJson} from '../../test-utils.js';
 
-const pwaTrace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const pwaDevtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const options = Audit.defaultOptions;
 
@@ -43,7 +43,7 @@ describe('Performance: speed-index audit', () => {
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     return Audit.audit(artifacts, context).then(result => {
       assert.equal(result.score, 1);
-      assert.equal(result.numericValue, 307);
+      assert.equal(result.numericValue, 605);
     });
   }, 10000);
 });

@@ -7,7 +7,7 @@
 import MainThreadTasks from '../../audits/main-thread-tasks.js';
 import {readJson} from '../test-utils.js';
 
-const acceptableTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 
 describe('Main thread tasks audit', () => {
   it('should work', async () => {

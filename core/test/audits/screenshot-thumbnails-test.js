@@ -12,8 +12,8 @@ import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const pwaDevtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 

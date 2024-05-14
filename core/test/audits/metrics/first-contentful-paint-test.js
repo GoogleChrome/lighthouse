@@ -10,8 +10,8 @@ import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
 import * as constants from '../../../config/constants.js';
 import {readJson} from '../../test-utils.js';
 
-const pwaTrace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const pwaDevtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 const frameTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
 const frameDevtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
 
@@ -49,7 +49,7 @@ describe('Performance: first-contentful-paint audit', () => {
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     const result = await FcpAudit.audit(artifacts, context);
     assert.equal(result.score, 1);
-    assert.equal(result.numericValue, 167.323);
+    assert.equal(result.numericValue, 498.87);
   });
 
   it('evaluates a modern trace correctly', async () => {

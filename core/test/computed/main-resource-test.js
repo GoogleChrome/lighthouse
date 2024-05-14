@@ -30,7 +30,7 @@ describe('MainResource computed artifact', () => {
     });
   });
 
-  it('thows when main resource can\'t be found', () => {
+  it('throws when main resource can\'t be found', () => {
     const networkRecords = [
       {url: 'https://example.com', resourceType: 'Script'},
     ];

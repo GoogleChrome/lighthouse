@@ -452,14 +452,12 @@ describe('asset-saver helper', () => {
 
       expect(results).toEqual({
         additionalRttByOrigin: {
-          'https://pwa.rocks': expect.any(Number),
+          'https://squoosh.app': expect.any(Number),
           'https://www.google-analytics.com': expect.any(Number),
-          'https://www.googletagmanager.com': expect.any(Number),
         },
         serverResponseTimeByOrigin: {
-          'https://pwa.rocks': expect.any(Number),
+          'https://squoosh.app': expect.any(Number),
           'https://www.google-analytics.com': expect.any(Number),
-          'https://www.googletagmanager.com': expect.any(Number),
         },
       });
     });
