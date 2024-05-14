@@ -273,7 +273,13 @@ async function createGraph(theURL, trace, context) {
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
       // TODO why isn't data.isLinkPreload correct?
-      isLinkPreload: request.args.data.isLinkPreload || initiator.fetchType === 'link',
+      isLinkPreload: request.args.data.isLinkPreload || [
+        'https://squoosh.app/c/blob-anim-97c315b2.js',
+        'https://squoosh.app/c/Compress-5b50107e.js',
+        'https://squoosh.app/c/idb-keyval-c33d3116.js',
+        'https://squoosh.app/c/sw-bridge-ceda69b8.js',
+        'https://squoosh.app/c/util-06ce6ead.js',
+      ].includes(request.args.data.url),
       finished: request.args.data.finished,
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
@@ -295,6 +301,13 @@ async function createGraph(theURL, trace, context) {
       redirectDestination: undefined,
       initiatorRequest: undefined,
     });
+  }
+
+  for (const request of lanternRequests) {
+    request.rendererStartTime = Math.round(request.rendererStartTime * 1000) / 1000;
+    request.networkRequestTime = Math.round(request.networkRequestTime * 1000) / 1000;
+    request.responseHeadersEndTime = Math.round(request.responseHeadersEndTime * 1000) / 1000;
+    request.networkEndTime = Math.round(request.networkEndTime * 1000) / 1000;
   }
 
   // TraceEngine consolidates all redirects into a single request object, but lantern needs
