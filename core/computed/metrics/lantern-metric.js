@@ -391,8 +391,8 @@ function lanternErrorAdapter(err) {
 }
 
 export {
-  getComputationDataParams,
-  // getComputationDataParamsFromTrace as getComputationDataParams,
+  // getComputationDataParams,
+  getComputationDataParamsFromTrace as getComputationDataParams,
   lanternErrorAdapter,
   testingNormalizeRequests,
 };
