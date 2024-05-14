@@ -12,8 +12,8 @@ import {
   readJson,
 } from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {

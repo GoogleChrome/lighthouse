@@ -12,8 +12,8 @@ import {createTestTrace, rootFrame} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {MainThreadTasks} from '../../computed/main-thread-tasks.js';
 
-const trace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
-const devtoolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
+const trace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('TBTImpactTasks', () => {
   const mainDocumentUrl = 'https://example.com';

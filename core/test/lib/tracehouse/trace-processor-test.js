@@ -591,24 +591,24 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(lcpTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         expect({
-          'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
-          'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
-          'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
-          'timeOriginEvt.ts': trace.timeOriginEvt.ts,
-          'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
-          'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
-          'timings.firstContentfulPaint': navigation.timings.firstContentfulPaint,
-          'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint,
-        }).toMatchInlineSnapshot(`
+  'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
+  'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
+  'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
+  'timeOriginEvt.ts': trace.timeOriginEvt.ts,
+  'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
+  'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
+  'timings.firstContentfulPaint': navigation.timings.firstContentfulPaint,
+  'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint }).
+toMatchInlineSnapshot(`
 Object {
-  "firstContentfulPaintEvt.ts": 713038144775,
-  "largestContentfulPaintEvt.ts": 713038144775,
-  "mainFrameInfo.frameId": "70B6647836A0A07265E532B094184D2A",
-  "timeOriginEvt.ts": 713037023064,
-  "timestamps.firstContentfulPaint": 713038144775,
-  "timestamps.largestContentfulPaint": 713038144775,
-  "timings.firstContentfulPaint": 1121.711,
-  "timings.largestContentfulPaint": 1121.711,
+  "firstContentfulPaintEvt.ts": 343577475882,
+  "largestContentfulPaintEvt.ts": 343577475882,
+  "mainFrameInfo.frameId": "C0BCFDE8809D44AE98B51BD8568EB184",
+  "timeOriginEvt.ts": 343577184048,
+  "timestamps.firstContentfulPaint": 343577475882,
+  "timestamps.largestContentfulPaint": 343577475882,
+  "timings.firstContentfulPaint": 291.834,
+  "timings.largestContentfulPaint": 291.834,
 }
 `);
         assert.ok(!navigation.lcpInvalidated);
