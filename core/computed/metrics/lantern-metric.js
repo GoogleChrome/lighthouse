@@ -198,17 +198,22 @@ async function createGraph(theURL, trace, context) {
       throw new Error('Trace is too old');
     }
 
-    // TODO: is this possible?
-    if (request.args.data.timing === undefined) {
-      continue;
-    }
-
     let url;
     try {
       url = new URL(request.args.data.url);
     } catch (e) {
       continue;
     }
+
+    const timing = request.args.data.timing ? {
+      ...request.args.data.timing,
+      workerFetchStart: -1,
+      workerRespondWithSettled: -1,
+    } : undefined;
+
+    const networkRequestTime = timing ?
+      request.args.data.timing.requestTime * 1000 :
+      request.args.data.syntheticData.downloadStart / 1000;
 
     const parsedURL = {
       scheme: url.protocol.split(':')[0],
@@ -264,7 +269,7 @@ async function createGraph(theURL, trace, context) {
       documentURL: request.args.data.requestingFrameUrl,
       // TODO i haven't confirmed these, just guessing
       rendererStartTime: request.ts / 1000,
-      networkRequestTime: request.args.data.timing.requestTime * 1000,
+      networkRequestTime,
       responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
       networkEndTime: request.args.data.syntheticData.finishTime / 1000,
       // TODO ----
@@ -284,11 +289,7 @@ async function createGraph(theURL, trace, context) {
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
       initiator,
-      timing: {
-        ...request.args.data.timing,
-        workerFetchStart: -1,
-        workerRespondWithSettled: -1,
-      },
+      timing,
       resourceType,
       mimeType: request.args.data.mimeType,
       priority: request.args.data.priority,
