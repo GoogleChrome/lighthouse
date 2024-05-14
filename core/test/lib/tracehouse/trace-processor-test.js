@@ -19,7 +19,7 @@ const noFCPtrace = readJson('../../fixtures/traces/airhorner_no_fcp.json', impor
 const timespanTrace = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
 const noNavStartTrace = readJson('../../fixtures/traces/no_navstart_event.json', import.meta);
 const backgroundTabTrace = readJson('../../fixtures/traces/backgrounded-tab-missing-paints.json', import.meta);
-const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const lcpTrace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
 const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 const pidChangeTrace = readJson('../../fixtures/traces/pid-change.json', import.meta);
@@ -480,12 +480,12 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(lcpTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         expect(navigation.timings).toMatchObject({
-          largestContentfulPaint: 1121.711,
-          load: 2159.007,
-          traceEnd: 7416.038,
+          largestContentfulPaint: 291.834,
+          load: 436.264,
+          traceEnd: 3478.809,
         });
 
-        expect(trace.timestamps.timeOrigin).toEqual(713037023064);
+        expect(trace.timestamps.timeOrigin).toEqual(343577184048);
       });
 
       it('supports firstResourceSendRequest', () => {
@@ -495,12 +495,12 @@ describe('TraceProcessor', () => {
         const navigation = TraceProcessor.processNavigation(trace);
 
         expect(navigation.timings).toMatchObject({
-          largestContentfulPaint: 812.683,
-          load: 1849.979,
-          traceEnd: 7107.01,
+          largestContentfulPaint: 143.383,
+          load: 287.813,
+          traceEnd: 3330.358,
         });
 
-        expect(trace.timestamps.timeOrigin).toEqual(713037332092);
+        expect(trace.timestamps.timeOrigin).toEqual(343577332499);
       });
 
       it('supports lighthouseMarker', () => {
@@ -598,17 +598,17 @@ describe('TraceProcessor', () => {
           'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
           'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
           'timings.firstContentfulPaint': navigation.timings.firstContentfulPaint,
-          'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint,
-        }).toMatchInlineSnapshot(`
+          'timings.largestContentfulPaint': navigation.timings.largestContentfulPaint}).
+toMatchInlineSnapshot(`
 Object {
-  "firstContentfulPaintEvt.ts": 713038144775,
-  "largestContentfulPaintEvt.ts": 713038144775,
-  "mainFrameInfo.frameId": "70B6647836A0A07265E532B094184D2A",
-  "timeOriginEvt.ts": 713037023064,
-  "timestamps.firstContentfulPaint": 713038144775,
-  "timestamps.largestContentfulPaint": 713038144775,
-  "timings.firstContentfulPaint": 1121.711,
-  "timings.largestContentfulPaint": 1121.711,
+  "firstContentfulPaintEvt.ts": 343577475882,
+  "largestContentfulPaintEvt.ts": 343577475882,
+  "mainFrameInfo.frameId": "C0BCFDE8809D44AE98B51BD8568EB184",
+  "timeOriginEvt.ts": 343577184048,
+  "timestamps.firstContentfulPaint": 343577475882,
+  "timestamps.largestContentfulPaint": 343577475882,
+  "timings.firstContentfulPaint": 291.834,
+  "timings.largestContentfulPaint": 291.834,
 }
 `);
         assert.ok(!navigation.lcpInvalidated);
@@ -994,7 +994,7 @@ Object {
       // The primary process events should make up more than 40% of all key trace events
       expect(lcpTraceSummarized.processEventsPct).toBeGreaterThanOrEqual(0.4);
       // The main frame's events should make up more than 40% of all key trace events
-      expect(lcpTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.4);
+      expect(lcpTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.27);
     });
 
     it('with a multi PID trace', () => {

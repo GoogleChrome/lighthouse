@@ -6,6 +6,8 @@
 
 // https://docs.google.com/spreadsheets/d/1AaYzpzWnpXQ4JB5IZzOkTO9Zf5Sm0I8dsp7MhBgthMg/edit?usp=sharing
 
+import fs from 'fs';
+
 import * as puppeteer from 'puppeteer';
 import {getChromePath} from 'chrome-launcher';
 
@@ -34,7 +36,9 @@ export async function updateTestFixture(collectMeta) {
   });
   const server = new Server(0);
   const dir = `${LH_ROOT}/core/test/fixtures/artifacts/${collectMeta.name}`;
-  server.baseDir = `${dir}/page`;
+  if (fs.existsSync(`${dir}/page`)) {
+    server.baseDir = `${dir}/page`;
+  }
   await server.listen(0, 'localhost');
   const port = server.getPort();
 

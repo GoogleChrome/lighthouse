@@ -35,6 +35,7 @@ declare module Gatherer {
     sendCommand<TMethod extends keyof CrdpCommands>(method: TMethod, ...params: CrdpCommands[TMethod]['paramsType']): Promise<CrdpCommands[TMethod]['returnType']>;
     sendCommandAndIgnore<TMethod extends keyof CrdpCommands>(method: TMethod, ...params: CrdpCommands[TMethod]['paramsType']): Promise<void>;
     dispose(): Promise<void>;
+    onCrashPromise(): Promise<never>;
   }
 
   interface Driver {
@@ -49,8 +50,6 @@ declare module Gatherer {
       off(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
     };
     networkMonitor: NetworkMonitor;
-    listenForCrashes: (() => void);
-    fatalRejection: {promise: Promise<never>, rej: (reason: Error) => void}
   }
 
   interface Context<TDependencies extends DependencyKey = DefaultDependenciesKey> {

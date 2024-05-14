@@ -7,8 +7,8 @@
 import PredictivePerf from '../../audits/predictive-perf.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const acceptableTrace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
-const acceptableDevToolsLog = readJson('../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const acceptableTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
+const acceptableDevToolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Performance: predictive performance audit', () => {
   it('should compute the predicted values', async () => {
@@ -25,7 +25,7 @@ describe('Performance: predictive performance audit', () => {
     const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
     const output = await PredictivePerf.audit(artifacts, context);
-    expect(output.displayValue).toBeDisplayString('4,610 ms');
+    expect(output.displayValue).toBeDisplayString('3,150 ms');
     const metrics = output.details.items[0];
     for (const [key, value] of Object.entries(metrics)) {
       metrics[key] = value === undefined ? value : Math.round(value);

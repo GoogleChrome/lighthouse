@@ -123,7 +123,7 @@ async function gotoURL(driver, requestor, options) {
   }
 
   const waitConditions = await Promise.race([
-    driver.fatalRejection.promise,
+    session.onCrashPromise(),
     Promise.all(waitConditionPromises),
   ]);
   const timedOut = waitConditions.some(condition => condition.timedOut);

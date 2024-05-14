@@ -8,7 +8,6 @@ import log from 'lighthouse-logger';
 
 import {ExecutionContext} from './driver/execution-context.js';
 import {TargetManager} from './driver/target-manager.js';
-import {LighthouseError} from '../lib/lh-error.js';
 import {Fetcher} from './fetcher.js';
 import {NetworkMonitor} from './driver/network-monitor.js';
 
@@ -29,6 +28,7 @@ const throwingSession = {
   sendCommand: throwNotConnectedFn,
   sendCommandAndIgnore: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
+  onCrashPromise: throwNotConnectedFn,
 };
 
 /** @implements {LH.Gatherer.Driver} */
@@ -48,12 +48,6 @@ class Driver {
     this._fetcher = undefined;
 
     this.defaultSession = throwingSession;
-
-    // Poor man's Promise.withResolvers()
-    /** @param {Error} _ */
-    let rej = _ => {};
-    const promise = /** @type {Promise<never>} */ (new Promise((_, theRej) => rej = theRej));
-    this.fatalRejection = {promise, rej};
   }
 
   /** @return {LH.Gatherer.Driver['executionContext']} */
@@ -93,29 +87,10 @@ class Driver {
     this._networkMonitor = new NetworkMonitor(this._targetManager);
     await this._networkMonitor.enable();
     this.defaultSession = this._targetManager.rootSession();
-    this.listenForCrashes();
     this._executionContext = new ExecutionContext(this.defaultSession);
     this._fetcher = new Fetcher(this.defaultSession);
     log.timeEnd(status);
   }
-
-  /**
-   * If the target crashes, we can't continue gathering.
-   *
-   * FWIW, if the target unexpectedly detaches (eg the user closed the tab), pptr will
-   * catch that and reject into our this._cdpSession.send, which we'll alrady handle appropriately
-   * @return {void}
-   */
-  listenForCrashes() {
-    this.defaultSession.on('Inspector.targetCrashed', async _ => {
-      log.error('Driver', 'Inspector.targetCrashed');
-      // Manually detach so no more CDP traffic is attempted.
-      // Don't await, else our rejection will be a 'Target closed' protocol error on cross-talk CDP calls.
-      void this.defaultSession.dispose();
-      this.fatalRejection.rej(new LighthouseError(LighthouseError.errors.TARGET_CRASHED));
-    });
-  }
-
 
   /** @return {Promise<void>} */
   async disconnect() {

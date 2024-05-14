@@ -8,7 +8,7 @@ import {NetworkRecorder} from '../../core/lib/network-recorder.js';
 import {networkRecordsToDevtoolsLog} from './network-records-to-devtools-log.js';
 import {readJson} from './test-utils.js';
 
-const lcpDevtoolsLog = readJson('./fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const lcpDevtoolsLog = readJson('./fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('networkRecordsToDevtoolsLog', () => {
   it('should generate the four messages per request', () => {
