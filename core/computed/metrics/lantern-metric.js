@@ -273,7 +273,7 @@ async function createGraph(theURL, trace, context) {
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
       // TODO why isn't data.isLinkPreload correct?
-      isLinkPreload: request.args.data.isLinkPreload || (initiator.type === 'link' || initiator.type === 'preload'),
+      isLinkPreload: request.args.data.isLinkPreload || initiator.fetchType === 'link',
       finished: request.args.data.finished,
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
