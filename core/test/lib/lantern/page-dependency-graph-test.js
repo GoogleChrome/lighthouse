@@ -15,7 +15,7 @@ function createRequest(
   rendererStartTime = 0,
   initiator = null,
   resourceType = NetworkRequestTypes.Document,
-  sessionTargetType = 'page'
+  fromWorker = false
 ) {
   const networkEndTime = rendererStartTime + 50;
   return {
@@ -25,7 +25,7 @@ function createRequest(
     networkEndTime,
     initiator,
     resourceType,
-    sessionTargetType,
+    fromWorker,
   };
 }
 
@@ -79,7 +79,7 @@ describe('PageDependencyGraph computed artifact:', () => {
     });
 
     it('should ignore worker requests', () => {
-      const workerRequest = createRequest(4, 'https://example.com/worker.js', 0, null, 'Script', 'worker');
+      const workerRequest = createRequest(4, 'https://example.com/worker.js', 0, null, 'Script', true);
       const recordsWithWorker = [
         ...networkRecords,
         workerRequest,
