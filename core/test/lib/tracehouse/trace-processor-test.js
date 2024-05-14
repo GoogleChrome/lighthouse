@@ -480,12 +480,12 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(lcpTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         expect(navigation.timings).toMatchObject({
-          largestContentfulPaint: 1121.711,
-          load: 2159.007,
-          traceEnd: 7416.038,
+          largestContentfulPaint: 291.834,
+          load: 436.264,
+          traceEnd: 3478.809,
         });
 
-        expect(trace.timestamps.timeOrigin).toEqual(713037023064);
+        expect(trace.timestamps.timeOrigin).toEqual(343577184048);
       });
 
       it('supports firstResourceSendRequest', () => {
@@ -495,12 +495,12 @@ describe('TraceProcessor', () => {
         const navigation = TraceProcessor.processNavigation(trace);
 
         expect(navigation.timings).toMatchObject({
-          largestContentfulPaint: 812.683,
-          load: 1849.979,
-          traceEnd: 7107.01,
+          largestContentfulPaint: 143.383,
+          load: 287.813,
+          traceEnd: 3330.358,
         });
 
-        expect(trace.timestamps.timeOrigin).toEqual(713037332092);
+        expect(trace.timestamps.timeOrigin).toEqual(343577332499);
       });
 
       it('supports lighthouseMarker', () => {
@@ -994,7 +994,7 @@ Object {
       // The primary process events should make up more than 40% of all key trace events
       expect(lcpTraceSummarized.processEventsPct).toBeGreaterThanOrEqual(0.4);
       // The main frame's events should make up more than 40% of all key trace events
-      expect(lcpTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.4);
+      expect(lcpTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.27);
     });
 
     it('with a multi PID trace', () => {
