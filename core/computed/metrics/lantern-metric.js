@@ -162,15 +162,33 @@ function testingNormalizeRequests(lanternRequests) {
     fromWorker: r.fromWorker,
     isLinkPreload: r.isLinkPreload,
     serverResponseTime: r.serverResponseTime,
-  }));
+  })).filter(r => !r.fromWorker);
 }
 
 /**
- * @param {LH.TraceEvent[]} mainThreadEvents
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
  * @param {LH.Artifacts.URL} theURL
+ * @param {LH.Trace} trace
+ * @param {LH.Artifacts.ComputedContext} context
  */
-function createGraph(mainThreadEvents, traceEngineResult, theURL) {
+async function createGraph(theURL, trace, context) {
+  const processedTrace = await ProcessedTrace.request(trace, context);
+  const traceEngineResult = await TraceEngineResult.request({trace}, context);
+
+  // TODO: trace engine should handle this.
+  const serviceWorkerThreads = new Map();
+  for (const event of trace.traceEvents) {
+    if (!(event.name === 'thread_name' && event.args.name === 'ServiceWorker thread')) {
+      continue;
+    }
+
+    const tids = serviceWorkerThreads.get(event.pid);
+    if (tids) {
+      tids.push(event.tid);
+    } else {
+      serviceWorkerThreads.set(event.pid, [event.tid]);
+    }
+  }
+
   /** @type {Lantern.NetworkRequest[]} */
   const lanternRequests = [];
 
@@ -202,6 +220,10 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
     let fromWorker = false;
     // TODO: should also check pid
     if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
+      fromWorker = true;
+    }
+    const tids = serviceWorkerThreads.get(request.pid);
+    if (tids?.includes(request.tid)) {
       fromWorker = true;
     }
 
@@ -242,7 +264,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       documentURL: request.args.data.requestingFrameUrl,
       // TODO i haven't confirmed these, just guessing
       rendererStartTime: request.ts / 1000,
-      networkRequestTime: request.args.data.syntheticData.sendStartTime / 1000,
+      networkRequestTime: request.args.data.timing.requestTime * 1000,
       responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
       networkEndTime: request.args.data.syntheticData.finishTime / 1000,
       // TODO ----
@@ -250,7 +272,8 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
       resourceSize: request.args.data.decodedBodyLength,
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
-      isLinkPreload: request.args.data.isLinkPreload,
+      // TODO why isn't data.isLinkPreload correct?
+      isLinkPreload: request.args.data.isLinkPreload || (initiator.type === 'link' || initiator.type === 'preload'),
       finished: request.args.data.finished,
       failed: request.args.data.failed,
       statusCode: request.args.data.statusCode,
@@ -329,6 +352,7 @@ function createGraph(mainThreadEvents, traceEngineResult, theURL) {
   }
 
   const debug = testingNormalizeRequests(lanternRequests);
+  const {mainThreadEvents} = processedTrace;
   return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, theURL);
 }
 
@@ -342,9 +366,7 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const {trace, URL} = data;
-  const processedTrace = await ProcessedTrace.request(trace, context);
-  const traceEngineResult = await TraceEngineResult.request({trace}, context);
-  const graph = createGraph(processedTrace.mainThreadEvents, traceEngineResult, URL);
+  const graph = await createGraph(URL, trace, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
