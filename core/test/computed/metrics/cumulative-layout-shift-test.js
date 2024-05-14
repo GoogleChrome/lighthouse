@@ -11,7 +11,7 @@ import {readJson} from '../../test-utils.js';
 const jumpyClsTrace = readJson('../../fixtures/traces/jumpy-cls-m90.json', import.meta);
 const oldMetricsTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const allFramesMetricsTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
-const preClsTrace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const preClsTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 

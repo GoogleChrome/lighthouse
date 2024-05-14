@@ -25,8 +25,7 @@ describe('Metrics: Speed Index', () => {
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
-      pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).
-toMatchInlineSnapshot(`
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs)}).toMatchInlineSnapshot(`
 Object {
   "optimistic": 307,
   "pessimistic": 1076,
