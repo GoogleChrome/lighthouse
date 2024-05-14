@@ -10,8 +10,8 @@ import BootupTime from '../../audits/bootup-time.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {defaultSettings} from '../../config/constants.js';
 
-const acceptableTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const acceptableDevtoolsLogs = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const acceptableDevtoolsLogs = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 const errorTrace = readJson('../fixtures/traces/no_fmp_event.json', import.meta);
 
 describe('Performance: bootup-time audit', () => {

@@ -8,7 +8,7 @@ import {ProcessedNavigation} from '../../computed/processed-navigation.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const noFCPtrace = readJson('../fixtures/traces/airhorner_no_fcp.json', import.meta);
 const noNavStartTrace = readJson('../fixtures/traces/no_navstart_event.json', import.meta);
 
