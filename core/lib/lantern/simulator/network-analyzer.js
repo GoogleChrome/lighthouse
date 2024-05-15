@@ -431,16 +431,16 @@ class NetworkAnalyzer {
    * Excludes data URI, failed or otherwise incomplete, and cached requests.
    * Returns Infinity if there were no analyzable network records.
    *
-   * @param {Array<Lantern.NetworkRequest>} networkRecords
+   * @param {Lantern.NetworkRequest[]} records
    * @return {number}
    */
-  static estimateThroughput(networkRecords) {
+  static estimateThroughput(records) {
     let totalBytes = 0;
 
     // We will measure throughput by summing the total bytes downloaded by the total time spent
     // downloading those bytes. We slice up all the network records into start/end boundaries, so
     // it's easier to deal with the gaps in downloading.
-    const timeBoundaries = networkRecords.reduce((boundaries, record) => {
+    const timeBoundaries = records.reduce((boundaries, record) => {
       const scheme = record.parsedURL?.scheme;
       // Requests whose bodies didn't come over the network or didn't completely finish will mess
       // with the computation, just skip over them.
@@ -484,7 +484,7 @@ class NetworkAnalyzer {
   }
 
   /**
-   * @param {Array<Lantern.NetworkRequest>} records
+   * @param {Lantern.NetworkRequest[]} records
    */
   static computeRTTAndServerResponseTime(records) {
     // First pass compute the estimated observed RTT to each origin's servers.
@@ -521,7 +521,8 @@ class NetworkAnalyzer {
   }
 
   /**
-   * @param {Array<Lantern.NetworkRequest>} records
+   * @param {Lantern.NetworkRequest[]} records
+   * @return {Lantern.Simulation.Settings['networkAnalysis']}
    */
   static analyze(records) {
     const throughput = NetworkAnalyzer.estimateThroughput(records);

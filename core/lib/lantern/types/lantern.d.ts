@@ -5,7 +5,6 @@
  */
 
 import * as LH from '../../../../types/lh.js';
-import {NetworkAnalyzer} from '../simulator/network-analyzer.js';
 
 type ParsedURL = {
     /**
@@ -126,7 +125,12 @@ export namespace Simulation {
     }
 
     interface Settings {
-        networkAnalysis: ReturnType<typeof NetworkAnalyzer['analyze']>;
+        networkAnalysis: {
+            rtt: number;
+            additionalRttByOrigin: Map<string, number>;
+            serverResponseTimeByOrigin: Map<string, number>;
+            throughput: number;
+        };
         /** The method used to throttle the network. */
         throttlingMethod: 'devtools'|'simulate'|'provided';
         /** The throttling config settings. */
