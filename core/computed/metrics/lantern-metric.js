@@ -51,7 +51,7 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const {trace, URL} = data;
-  const graph = await createGraph(URL, trace, context);
+  const {graph} = await createGraph(URL, trace, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 

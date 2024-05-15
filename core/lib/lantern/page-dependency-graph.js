@@ -781,7 +781,8 @@ class PageDependencyGraph {
       }
     }
 
-    return PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+    const graph = PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+    return {graph, records: lanternRequests};
   }
 
   /**

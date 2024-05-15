@@ -53,7 +53,7 @@ class Simulator {
   /**
    * @param {Lantern.Simulation.Settings} settings
    */
-  static async createSimulator(settings) {
+  static createSimulator(settings) {
     const {throttlingMethod, throttling, precomputedLanternData, networkAnalysis} = settings;
 
     /** @type {Lantern.Simulation.Options} */
