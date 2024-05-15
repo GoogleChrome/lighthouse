@@ -8,8 +8,6 @@ import assert from 'assert/strict';
 
 import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
 import {readJson} from '../../../test-utils.js';
-import {networkRecordsToDevtoolsLog} from '../../../network-records-to-devtools-log.js';
-import {createTestTrace} from '../../../create-test-trace.js';
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
@@ -32,41 +30,24 @@ describe('Metrics: Lantern FCP', () => {
   });
 
   it('should handle negative request networkEndTime', async () => {
-    const devtoolsLog = networkRecordsToDevtoolsLog([
-      {
-        transferSize: 2000,
-        url: 'https://example.com/', // Main document (always included).
-        resourceType: 'Document',
-        priority: 'High',
-        networkRequestTime: 0,
-        networkEndTime: 1000,
-        timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
-      },
-      {
-        transferSize: 2000,
-        url: 'https://example.com/script.js',
-        resourceType: 'Script',
-        priority: 'High',
-        networkRequestTime: 1000, // After FCP.
-        networkEndTime: -1,
-        timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
-      },
-    ]);
-    const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-    const URL = {
-      requestedUrl: 'https://example.com/',
-      mainDocumentUrl: 'https://example.com/',
-      finalDisplayedUrl: 'https://example.com/',
-    };
-    const data = await getComputationDataFromFixture({trace, devtoolsLog, URL});
+    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    data.graph.request.networkEndTime = -1;
     const result = await FirstContentfulPaint.compute(data);
 
     const optimisticNodes = [];
-    result.optimisticGraph.traverse(node => optimisticNodes.push(node));
-    expect(optimisticNodes.map(node => node.request.url)).toEqual(['https://example.com/']);
+    result.optimisticGraph.traverse(node => {
+      if (node.type === 'network') {
+        optimisticNodes.push(node);
+      }
+    });
+    expect(optimisticNodes.map(node => node.request.url)).toEqual(['https://squoosh.app/']);
 
     const pessimisticNodes = [];
-    result.pessimisticGraph.traverse(node => pessimisticNodes.push(node));
-    expect(pessimisticNodes.map(node => node.request.url)).toEqual(['https://example.com/']);
+    result.pessimisticGraph.traverse(node => {
+      if (node.type === 'network') {
+        pessimisticNodes.push(node);
+      }
+    });
+    expect(pessimisticNodes.map(node => node.request.url)).toEqual(['https://squoosh.app/']);
   });
 });

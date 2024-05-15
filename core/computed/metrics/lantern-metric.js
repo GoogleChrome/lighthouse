@@ -212,7 +212,7 @@ async function createGraph(theURL, trace, context) {
     } : undefined;
 
     const networkRequestTime = timing ?
-      request.args.data.timing.requestTime * 1000 :
+      timing.requestTime * 1000 :
       request.args.data.syntheticData.downloadStart / 1000;
 
     const parsedURL = {
