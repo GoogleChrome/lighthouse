@@ -128,9 +128,4 @@ export type ScreenEmulationSettings = {
 export interface ConfigSettings extends Required<SharedFlagsSettings> {
   throttling: Required<ThrottlingSettings>;
   screenEmulation: ScreenEmulationSettings;
-  /**
-   * If true, uses the trace instead of the devtools log to create the network model for Lantern.
-   * Defaults to false.
-   */
-  useTraceForLantern: boolean;
 }

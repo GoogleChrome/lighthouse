@@ -28,7 +28,7 @@ const settings = JSON.parse(JSON.stringify(defaultSettings));
 
 describe('Performance: metrics', () => {
   before(() => {
-    
+
   });
 
   it('evaluates valid input correctly', async () => {

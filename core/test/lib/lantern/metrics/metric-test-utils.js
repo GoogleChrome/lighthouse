@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {getComputationDataParams} from '../../../../computed/metrics/lantern-metric.js';
+import {getComputationDataParamsFromTrace} from '../../../../computed/metrics/lantern-metric.js';
 import * as Lantern from '../../../../lib/lantern/types/lantern.js';
 import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
 
@@ -18,13 +18,12 @@ import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
 function getComputationDataFromFixture({trace, devtoolsLog, settings, URL}) {
   // @ts-expect-error don't need all settings
   settings = settings ?? {};
-  // @ts-expect-error it's not undefined ...
-  settings.useTraceForLantern = true;
   URL = URL || getURLArtifactFromDevtoolsLog(devtoolsLog);
   const gatherContext = {gatherMode: 'navigation'};
   const context = {settings, computedCache: new Map()};
-  // @ts-ignore
-  return getComputationDataParams({trace, devtoolsLog, gatherContext, settings, URL}, context);
+  return getComputationDataParamsFromTrace({
+    // @ts-ignore
+    trace, devtoolsLog, gatherContext, settings, URL}, context);
 }
 
 export {getComputationDataFromFixture};

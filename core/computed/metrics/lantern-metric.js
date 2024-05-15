@@ -98,15 +98,19 @@ function testingNormalizeRequests(lanternRequests) {
   for (const r of lanternRequests) {
     delete r.record;
     if (r.initiatorRequest) {
+      // @ts-expect-error
       r.initiatorRequest = {id: r.initiatorRequest.requestId};
     }
     if (r.redirectDestination) {
+      // @ts-expect-error
       r.redirectDestination = {id: r.redirectDestination.requestId};
     }
     if (r.redirectSource) {
+      // @ts-expect-error
       r.redirectSource = {id: r.redirectSource.requestId};
     }
     if (r.redirects) {
+      // @ts-expect-error
       r.redirects = r.redirects.map(r2 => r2.requestId);
     }
   }
@@ -404,22 +408,10 @@ function lanternErrorAdapter(err) {
   throw err;
 }
 
-/**
- * @param {LH.Artifacts.MetricComputationDataInput} data
- * @param {LH.Artifacts.ComputedContext} context
- */
-function getComputationDataParams(data, context) {
-  if (data.settings.useTraceForLantern) {
-    return getComputationDataParamsFromTrace(data, context);
-  } else {
-    return getComputationDataParamsFromDevtoolsLog(data, context);
-  }
-}
-
 export {
   getComputationDataParamsFromTrace,
   getComputationDataParamsFromDevtoolsLog,
-  getComputationDataParams,
+  getComputationDataParamsFromDevtoolsLog as getComputationDataParams,
   lanternErrorAdapter,
   testingNormalizeRequests,
 };
