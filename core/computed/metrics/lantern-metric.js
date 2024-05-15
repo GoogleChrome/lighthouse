@@ -15,6 +15,7 @@ import {TraceEngineResult} from '../trace-engine-result.js';
 import {RESOURCE_TYPES} from '../../lib/network-request.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
 
+// TODO: we need to update all test traces (that use lantern) before this can be removed
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data
  * @param {LH.Artifacts.ComputedContext} context
