@@ -5,7 +5,7 @@
  */
 
 import * as LH from '../../../../types/lh.js';
-import type {NetworkAnalyzer} from '../simulator/network-analyzer.js';
+import {NetworkAnalyzer} from '../simulator/network-analyzer.js';
 
 type ParsedURL = {
     /**
