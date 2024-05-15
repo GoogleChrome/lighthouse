@@ -484,6 +484,54 @@ class NetworkAnalyzer {
   }
 
   /**
+   * @param {Array<Lantern.NetworkRequest>} records
+   */
+  static computeRTTAndServerResponseTime(records) {
+    // First pass compute the estimated observed RTT to each origin's servers.
+    /** @type {Map<string, number>} */
+    const rttByOrigin = new Map();
+    for (const [origin, summary] of NetworkAnalyzer.estimateRTTByOrigin(records).entries()) {
+      rttByOrigin.set(origin, summary.min);
+    }
+
+    // We'll use the minimum RTT as the assumed connection latency since we care about how much addt'l
+    // latency each origin introduces as Lantern will be simulating with its own connection latency.
+    const minimumRtt = Math.min(...Array.from(rttByOrigin.values()));
+    // We'll use the observed RTT information to help estimate the server response time
+    const responseTimeSummaries = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
+      rttByOrigin,
+    });
+
+    /** @type {Map<string, number>} */
+    const additionalRttByOrigin = new Map();
+    /** @type {Map<string, number>} */
+    const serverResponseTimeByOrigin = new Map();
+    for (const [origin, summary] of responseTimeSummaries.entries()) {
+      // Not all origins have usable timing data, we'll default to using no additional latency.
+      const rttForOrigin = rttByOrigin.get(origin) || minimumRtt;
+      additionalRttByOrigin.set(origin, rttForOrigin - minimumRtt);
+      serverResponseTimeByOrigin.set(origin, summary.median);
+    }
+
+    return {
+      rtt: minimumRtt,
+      additionalRttByOrigin,
+      serverResponseTimeByOrigin,
+    };
+  }
+
+  /**
+   * @param {Array<Lantern.NetworkRequest>} records
+   */
+  static analyze(records) {
+    const throughput = NetworkAnalyzer.estimateThroughput(records);
+    return {
+      throughput,
+      ...NetworkAnalyzer.computeRTTAndServerResponseTime(records),
+    };
+  }
+
+  /**
    * @template {Lantern.NetworkRequest} T
    * @param {Array<T>} records
    * @param {string} resourceUrl
