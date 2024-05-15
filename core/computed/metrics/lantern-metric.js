@@ -19,7 +19,7 @@ import {PageDependencyGraph} from '../page-dependency-graph.js';
  * @param {LH.Artifacts.MetricComputationDataInput} data
  * @param {LH.Artifacts.ComputedContext} context
  */
-async function getComputationDataParams(data, context) {
+async function getComputationDataParamsFromDevtoolsLog(data, context) {
   if (data.gatherContext.gatherMode !== 'navigation') {
     throw new Error(`Lantern metrics can only be computed on navigations`);
   }
@@ -404,9 +404,22 @@ function lanternErrorAdapter(err) {
   throw err;
 }
 
+/**
+ * @param {LH.Artifacts.MetricComputationDataInput} data
+ * @param {LH.Artifacts.ComputedContext} context
+ */
+function getComputationDataParams(data, context) {
+  if (data.settings.useTraceForLantern) {
+    return getComputationDataParamsFromTrace(data, context);
+  } else {
+    return getComputationDataParamsFromDevtoolsLog(data, context);
+  }
+}
+
 export {
-  // getComputationDataParams,
-  getComputationDataParamsFromTrace as getComputationDataParams,
+  getComputationDataParamsFromTrace,
+  getComputationDataParamsFromDevtoolsLog,
+  getComputationDataParams,
   lanternErrorAdapter,
   testingNormalizeRequests,
 };

@@ -27,6 +27,10 @@ const jumpyClsDevtoolsLog = readJson('../fixtures/traces/jumpy-cls-m90.devtoolsl
 const settings = JSON.parse(JSON.stringify(defaultSettings));
 
 describe('Performance: metrics', () => {
+  before(() => {
+    
+  });
+
   it('evaluates valid input correctly', async () => {
     const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);
     const artifacts = {
