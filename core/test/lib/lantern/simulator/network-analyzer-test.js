@@ -11,6 +11,7 @@ import {NetworkRecords} from '../../../../computed/network-records.js';
 import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 
+// TODO(15841): use new traces
 const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 const devtoolsLogWithRedirect = readJson('../../../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 
@@ -435,6 +436,23 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
         createThroughputRecord(3, 4, {parsedURL: {scheme: 'data'}}),
       ]);
       assert.equal(result, 500 * 8);
+    });
+  });
+
+  describe('#computeRTTAndServerResponseTime', () => {
+    it('should work', async () => {
+      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
+      const result = await NetworkAnalyzer.computeRTTAndServerResponseTime(records);
+
+      expect(Math.round(result.rtt)).toEqual(3);
+      expect(result.additionalRttByOrigin).toMatchInlineSnapshot(`
+Map {
+  "https://pwa.rocks" => 0.3960000176447025,
+  "https://www.googletagmanager.com" => 0,
+  "https://www.google-analytics.com" => 1.0450000117997007,
+  "__SUMMARY__" => 0,
+}
+`);
     });
   });
 

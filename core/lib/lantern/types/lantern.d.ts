@@ -104,6 +104,44 @@ export namespace Simulation {
         pessimistic: number;
     }
 
+    /** Simulation settings that control the amount of network & cpu throttling in the run. */
+    interface ThrottlingSettings {
+        /** The round trip time in milliseconds. */
+        rttMs?: number;
+        /** The network throughput in kilobits per second. */
+        throughputKbps?: number;
+        // devtools settings
+        /** The network request latency in milliseconds. */
+        requestLatencyMs?: number;
+        /** The network download throughput in kilobits per second. */
+        downloadThroughputKbps?: number;
+        /** The network upload throughput in kilobits per second. */
+        uploadThroughputKbps?: number;
+        // used by both
+        /** The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>). */
+        cpuSlowdownMultiplier?: number
+    }
+
+    interface PrecomputedLanternData {
+        additionalRttByOrigin: {[origin: string]: number};
+        serverResponseTimeByOrigin: {[origin: string]: number};
+    }
+
+    interface Settings {
+        networkAnalysis: {
+            rtt: number;
+            additionalRttByOrigin: Map<string, number>;
+            serverResponseTimeByOrigin: Map<string, number>;
+            throughput: number;
+        };
+        /** The method used to throttle the network. */
+        throttlingMethod: 'devtools'|'simulate'|'provided';
+        /** The throttling config settings. */
+        throttling: Required<ThrottlingSettings>;
+        /** Precomputed lantern estimates to use instead of observed analysis. */
+        precomputedLanternData?: PrecomputedLanternData | null;
+    }
+
     interface Options {
         rtt?: number;
         throughput?: number;
