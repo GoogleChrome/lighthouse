@@ -9,7 +9,6 @@ import {PageDependencyGraph as LanternPageDependencyGraph} from '../lib/lantern/
 import {NetworkRequest} from '../lib/network-request.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
-import {testingNormalizeRequests} from './metrics/lantern-metric.js';
 
 /** @typedef {import('../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
@@ -34,7 +33,6 @@ class PageDependencyGraph {
     }
     const mainThreadEvents = processedTrace.mainThreadEvents;
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
-    const debug = testingNormalizeRequests(lanternRequests);
     return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }
