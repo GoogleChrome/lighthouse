@@ -408,8 +408,16 @@ class PageDependencyGraph {
   // TODO ! remove me
   /**
    * @param {Lantern.NetworkRequest[]} lanternRequests
+   * @return {never}
    */
   static debugNormalizeRequests(lanternRequests) {
+    for (const request of lanternRequests) {
+      request.rendererStartTime = Math.round(request.rendererStartTime * 1000) / 1000;
+      request.networkRequestTime = Math.round(request.networkRequestTime * 1000) / 1000;
+      request.responseHeadersEndTime = Math.round(request.responseHeadersEndTime * 1000) / 1000;
+      request.networkEndTime = Math.round(request.networkEndTime * 1000) / 1000;
+    }
+
     for (const r of lanternRequests) {
       delete r.record;
       if (r.initiatorRequest) {
@@ -718,13 +726,6 @@ class PageDependencyGraph {
         redirectDestination: undefined,
         initiatorRequest: undefined,
       });
-    }
-
-    for (const request of lanternRequests) {
-      request.rendererStartTime = Math.round(request.rendererStartTime * 1000) / 1000;
-      request.networkRequestTime = Math.round(request.networkRequestTime * 1000) / 1000;
-      request.responseHeadersEndTime = Math.round(request.responseHeadersEndTime * 1000) / 1000;
-      request.networkEndTime = Math.round(request.networkEndTime * 1000) / 1000;
     }
 
     // TraceEngine consolidates all redirects into a single request object, but lantern needs

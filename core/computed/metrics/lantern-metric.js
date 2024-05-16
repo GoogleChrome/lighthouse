@@ -38,7 +38,8 @@ async function getComputationDataParamsFromDevtoolsLog(data, context) {
 async function createGraph(theURL, trace, context) {
   const {mainThreadEvents} = await ProcessedTrace.request(trace, context);
   const traceEngineResult = await TraceEngineResult.request({trace}, context);
-  return LanternPageDependencyGraph.createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, theURL);
+  return LanternPageDependencyGraph.createGraphFromTrace(
+    mainThreadEvents, trace, traceEngineResult, theURL);
 }
 
 /**
