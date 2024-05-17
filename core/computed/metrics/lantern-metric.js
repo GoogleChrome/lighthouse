@@ -35,7 +35,7 @@ async function getComputationDataParamsFromDevtoolsLog(data, context) {
  * @param {LH.Trace} trace
  * @param {LH.Artifacts.ComputedContext} context
  */
-async function createGraph(theURL, trace, context) {
+async function createGraphFromTrace(theURL, trace, context) {
   const {mainThreadEvents} = await ProcessedTrace.request(trace, context);
   const traceEngineResult = await TraceEngineResult.request({trace}, context);
   return LanternPageDependencyGraph.createGraphFromTrace(
@@ -52,7 +52,7 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const {trace, URL} = data;
-  const {graph} = await createGraph(URL, trace, context);
+  const {graph} = await createGraphFromTrace(URL, trace, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
