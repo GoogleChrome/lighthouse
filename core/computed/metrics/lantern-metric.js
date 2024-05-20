@@ -76,10 +76,21 @@ function lanternErrorAdapter(err) {
   throw err;
 }
 
+/**
+ * @param {LH.Artifacts.MetricComputationDataInput} data
+ * @param {LH.Artifacts.ComputedContext} context
+ */
+function getComputationDataParams(data, context) {
+  if (data.settings.internalUseTraceForLantern) {
+    return getComputationDataParamsFromTrace(data, context);
+  } else {
+    return getComputationDataParamsFromDevtoolsLog(data, context);
+  }
+}
+
 export {
   getComputationDataParamsFromTrace,
   getComputationDataParamsFromDevtoolsLog,
-  // getComputationDataParamsFromDevtoolsLog as getComputationDataParams,
-  getComputationDataParamsFromTrace as getComputationDataParams,
+  getComputationDataParams,
   lanternErrorAdapter,
 };

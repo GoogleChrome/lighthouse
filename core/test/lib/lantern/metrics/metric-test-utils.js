@@ -33,11 +33,12 @@ async function createGraph(theURL, trace, context) {
  * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings?: LH.Config.Settings, URL?: LH.Artifacts.URL}} opts
  */
 async function getComputationDataFromFixture({trace, devtoolsLog, settings, URL}) {
-  // @ts-expect-error don't need all settings
-  settings = settings ?? {};
-  URL = URL || getURLArtifactFromDevtoolsLog(devtoolsLog);
-  const context = {settings, computedCache: new Map()};
+  settings = settings ?? /** @type {LH.Config.Settings} */({});
+  settings.internalUseTraceForLantern = true;
+  if (!settings.throttlingMethod) settings.throttlingMethod = 'simulate';
+  if (!URL) URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
+  const context = {settings, computedCache: new Map()};
   const {graph, records} = await createGraph(URL, trace, context);
   const processedNavigation = await ProcessedNavigation.request(trace, context);
   const networkAnalysis = NetworkAnalyzer.analyze(records);
