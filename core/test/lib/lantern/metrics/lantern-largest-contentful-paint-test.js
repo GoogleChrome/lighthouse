@@ -29,11 +29,11 @@ describe('Metrics: Lantern LCP', () => {
       pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size}).
 toMatchInlineSnapshot(`
 Object {
-  "optimistic": 1445,
+  "optimistic": 1457,
   "optimisticNodeTimings": 8,
-  "pessimistic": 1603,
+  "pessimistic": 1616,
   "pessimisticNodeTimings": 9,
-  "timing": 1524,
+  "timing": 1536,
 }
 `);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
