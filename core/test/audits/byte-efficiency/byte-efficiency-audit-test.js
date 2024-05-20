@@ -29,7 +29,7 @@ describe('Byte efficiency base audit', () => {
 
   beforeEach(() => {
     const mainDocumentUrl = 'http://example.com/';
-    const devtoolsLog = networkRecordsToDevtoolsLog([
+    const networkRecords = [
       {
         requestId: '1',
         url: mainDocumentUrl,
@@ -60,13 +60,15 @@ describe('Byte efficiency base audit', () => {
         frameId: rootFrame,
         timing: {sendEnd: 0},
       },
-    ]);
+    ];
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const trace = createTestTrace({
       frameUrl: mainDocumentUrl,
       // add a CPU node to force improvement to TTI
       topLevelTasks: [{ts: 0, duration: 100_000}],
       largestContentfulPaint: 3000,
+      networkRecords,
     });
 
     metricComputationInput = {

@@ -941,6 +941,7 @@ export interface TraceEvent {
       name?: string;
       duration?: number;
       blockingDuration?: number;
+      candidateIndex?: number;
     };
     frame?: string;
     name?: string;

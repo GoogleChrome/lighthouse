@@ -598,6 +598,12 @@ class PageDependencyGraph {
    * @param {LH.Artifacts.URL} URL
    */
   static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
+    if (trace._testSmuggledNetworkRecords) {
+      const lanternRequests = trace._testSmuggledNetworkRecords;
+      const graph = PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+      return {graph, records: lanternRequests};
+    }
+
     // TODO: trace engine should handle this.
     const serviceWorkerThreads = new Map();
     for (const event of trace.traceEvents) {

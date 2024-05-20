@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/types/lantern.js';
+import {NetworkRequest} from '../lib/network-request.js';
+
 const pid = 1111;
 const tid = 222;
 const browserPid = 13725;
@@ -25,6 +28,7 @@ const lcpImageUrl = 'http://www.example.com/image.png';
  * @property {number} [traceEnd]
  * @property {Array<TopLevelTaskDef>} [topLevelTasks]
  * @property {Array<ChildFrame>} [childFrames] Add a child frame with a known `frame` id for easy insertion of child frame events.
+ * @property {Array<NetworkRequest>=} networkRecords
  */
 
 /**
@@ -71,7 +75,7 @@ function getChildTask({ts, duration, url, eventName}) {
  * generation, e.g a trace that will result in particular long-task quiet
  * periods. Input times should be in milliseconds.
  * @param {TraceOptions} options
- * @return {{traceEvents: LH.TraceEvent[]}}
+ * @return {{traceEvents: LH.TraceEvent[], _testSmuggledNetworkRecords?: Lantern.NetworkRequest[]}}
  */
 function createTestTrace(options) {
   const frameUrl = options.frameUrl ?? defaultUrl;
@@ -201,6 +205,7 @@ function createTestTrace(options) {
           size: 50,
           type: 'image',
           navigationId,
+          candidateIndex: 1,
         },
       },
     });
@@ -219,6 +224,7 @@ function createTestTrace(options) {
           DOMNodeId: lcpNodeId,
           size: 50,
           imageUrl: lcpImageUrl,
+          candidateIndex: 1,
         },
       },
     });
@@ -240,7 +246,27 @@ function createTestTrace(options) {
     traceEvents.push(getTopLevelTask({ts: options.traceEnd - 1, duration: 1}));
   }
 
-  return {traceEvents};
+  if (options.networkRecords) {
+    for (const record of options.networkRecords) {
+      if (!record.parsedURL) {
+        const url = new URL(record.url);
+        record.parsedURL = {
+          scheme: url.protocol.split(':')[0],
+          // Intentional, DevTools uses different terminology
+          host: url.hostname,
+          securityOrigin: url.origin,
+        };
+      }
+    }
+  }
+
+  return {
+    traceEvents,
+    // TODO(15841): emit events for mock network records instead.
+    _testSmuggledNetworkRecords: options.networkRecords ?
+      options.networkRecords.map(NetworkRequest.asLanternNetworkRequest) :
+      undefined,
+  };
 }
 
 export {

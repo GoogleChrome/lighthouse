@@ -79,6 +79,7 @@ function lanternErrorAdapter(err) {
 export {
   getComputationDataParamsFromTrace,
   getComputationDataParamsFromDevtoolsLog,
-  getComputationDataParamsFromDevtoolsLog as getComputationDataParams,
+  // getComputationDataParamsFromDevtoolsLog as getComputationDataParams,
+  getComputationDataParamsFromTrace as getComputationDataParams,
   lanternErrorAdapter,
 };

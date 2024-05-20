@@ -11,8 +11,8 @@ import {Interactive} from '../../computed/metrics/interactive.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {defaultSettings} from '../../config/constants.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 const lcpTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
 const lcpDevtoolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 const lcpImageTrace = readJson('../fixtures/traces/amp-m86.trace.json', import.meta);
