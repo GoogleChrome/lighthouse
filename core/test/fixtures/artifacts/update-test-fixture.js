@@ -47,7 +47,8 @@ export async function updateTestFixture(collectMeta) {
     const page = await browser.newPage();
     const flow = await collectMeta.runUserFlow(page, port);
     const {artifacts} = flow.createArtifactsJson().gatherSteps[0];
-    collectMeta.verify(artifacts);
+    const result = await flow.createFlowResult();
+    collectMeta.verify(artifacts, result);
     if (collectMeta.saveArtifacts) {
       await saveArtifacts(artifacts, dir, {gzip: true});
     } else {

@@ -8,8 +8,8 @@ import {TotalBlockingTime} from '../../../computed/metrics/total-blocking-time.j
 import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/artifacts/intercom-widget/trace.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/artifacts/intercom-widget/devtoolslog.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/blocking-time/trace.json.gz', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/blocking-time/devtoolslog.json.gz', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
@@ -30,9 +30,9 @@ describe('Metrics: TotalBlockingTime', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
       Object {
-        "optimistic": 202,
-        "pessimistic": 375,
-        "timing": 288,
+        "optimistic": 6765,
+        "pessimistic": 6775,
+        "timing": 6770,
       }
     `);
   });
