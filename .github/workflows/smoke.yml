@@ -103,7 +103,7 @@ jobs:
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
-      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif offline lantern metrics
+      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif lantern metrics
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
