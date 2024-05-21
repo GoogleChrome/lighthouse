@@ -388,9 +388,9 @@ describe('NetworkMonitor', () => {
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
       expect(periods).toEqual([
-        {start: 1000, end: 2000},
-        {start: 3000, end: 4000},
-        {start: 5000, end: Infinity},
+        {start: 1, end: 2},
+        {start: 3, end: 4},
+        {start: 5, end: Infinity},
       ]);
     });
 
@@ -404,7 +404,7 @@ describe('NetworkMonitor', () => {
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
-      expect(periods).toEqual([{start: 1500, end: Infinity}]);
+      expect(periods).toEqual([{start: 1.5, end: Infinity}]);
     });
 
     it('should handle unfinished requests', () => {
@@ -421,9 +421,9 @@ describe('NetworkMonitor', () => {
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
       expect(periods).toEqual([
-        {start: 1500, end: 2000},
-        {start: 3000, end: 4000},
-        {start: 5000, end: 5500},
+        {start: 1.5, end: 2},
+        {start: 3, end: 4},
+        {start: 5, end: 5.5},
       ]);
     });
 
@@ -435,7 +435,7 @@ describe('NetworkMonitor', () => {
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
-      expect(periods).toEqual([{start: 1000, end: Infinity}]);
+      expect(periods).toEqual([{start: 1, end: Infinity}]);
     });
 
     it('should handle iframe requests', () => {

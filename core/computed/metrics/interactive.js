@@ -187,6 +187,6 @@ export {InteractiveComputed as Interactive};
 
 /**
  * @typedef TimePeriod
- * @property {number} start
- * @property {number} end
+ * @property {number} start In ms.
+ * @property {number} end In ms.
  */
