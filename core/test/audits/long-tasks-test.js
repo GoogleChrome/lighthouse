@@ -295,16 +295,16 @@ describe('Long tasks audit', () => {
       details: {
         items: [{
           url: expect.stringContaining('https://'),
-          startTime: expect.toBeApproximately(2150.4, 1),
-          duration: expect.toBeApproximately(247.6, 1),
+          startTime: expect.toBeApproximately(2686.9, 1),
+          duration: expect.toBeApproximately(89.2, 1),
         }, {
           url: expect.stringContaining('https://'),
-          startTime: expect.toBeApproximately(1957.1, 1),
-          duration: expect.toBeApproximately(104.6, 1),
+          startTime: expect.toBeApproximately(2236.7, 1),
+          duration: expect.toBeApproximately(71.1, 1),
         }],
       },
     });
-    expect(result.metricSavings.TBT).toBeApproximately(171.95);
+    expect(result.metricSavings.TBT).toBeApproximately(60.29);
 
     const debugData = result.details.debugData;
     expect(debugData).toStrictEqual({
@@ -315,24 +315,24 @@ describe('Long tasks audit', () => {
       ],
       tasks: [{
         urlIndex: 0,
-        startTime: 2150.4,
-        duration: 247.6,
-        garbageCollection: 2.7,
-        other: 13.7,
-        paintCompositeRender: 0.6,
-        parseHTML: 0.5,
-        scriptEvaluation: 212.9,
-        scriptParseCompile: 4,
-        styleLayout: 13.2,
+        startTime: 2686.9,
+        duration: 89.2,
+        garbageCollection: 6.7,
+        other: 0.2,
+        parseHTML: 0.1,
+        scriptEvaluation: 81.3,
+        scriptParseCompile: 0.3,
+        styleLayout: 0.5,
       }, {
         urlIndex: 1,
-        startTime: 1957.1,
-        duration: 104.6,
-        other: 0.6,
-        parseHTML: 0.2,
-        scriptEvaluation: 96.8,
-        scriptParseCompile: 5.7,
-        styleLayout: 1.2,
+        startTime: 2236.7,
+        duration: 71.1,
+        garbageCollection: 1.4,
+        other: 1.1,
+        parseHTML: 0.1,
+        scriptEvaluation: 62.7,
+        scriptParseCompile: 5.1,
+        styleLayout: 0.8,
       }],
     });
   });

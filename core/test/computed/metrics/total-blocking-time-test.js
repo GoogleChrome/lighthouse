@@ -8,8 +8,8 @@ import {TotalBlockingTime} from '../../../computed/metrics/total-blocking-time.j
 import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
@@ -30,9 +30,9 @@ describe('Metrics: TotalBlockingTime', () => {
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
       Object {
-        "optimistic": 777,
-        "pessimistic": 777,
-        "timing": 777,
+        "optimistic": 2538,
+        "pessimistic": 2820,
+        "timing": 2679,
       }
     `);
   });
@@ -44,7 +44,7 @@ describe('Metrics: TotalBlockingTime', () => {
       {trace, devtoolsLog, gatherContext, settings, URL},
       context
     );
-    expect(result.timing).toBeCloseTo(48.3, 1);
+    expect(result.timing).toBeCloseTo(400, 1);
   });
 
   describe('#calculateSumOfBlockingTime', () => {

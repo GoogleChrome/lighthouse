@@ -318,6 +318,15 @@ describe('asset-saver helper', () => {
       expect(roundTripArtifacts).toStrictEqual(originalArtifacts);
     });
 
+    it('round trips saved artifacts (compressed)', async () => {
+      const artifactsPath = moduleDir + '/../results/artifacts/';
+      const originalArtifacts = await assetSaver.loadArtifacts(artifactsPath);
+
+      await assetSaver.saveArtifacts(originalArtifacts, outputPath, {gzip: true});
+      const roundTripArtifacts = await assetSaver.loadArtifacts(outputPath);
+      expect(roundTripArtifacts).toStrictEqual(originalArtifacts);
+    });
+
     it('round trips saved flow artifacts', async () => {
       const flowArtifactsPath = moduleDir + '/../fixtures/user-flows/artifacts/';
       const originalArtifacts = await assetSaver.loadFlowArtifacts(flowArtifactsPath);

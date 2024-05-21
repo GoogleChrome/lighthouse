@@ -33,8 +33,8 @@ describe('Render blocking resources audit', () => {
     const computedCache = new Map();
     const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
     assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 304);
-    assert.deepStrictEqual(result.metricSavings, {FCP: 304, LCP: 0});
+    assert.equal(result.numericValue, 300);
+    assert.deepStrictEqual(result.metricSavings, {FCP: 300, LCP: 0});
   });
 
   it('evaluates correct wastedMs when LCP is text', async () => {
@@ -59,7 +59,7 @@ describe('Render blocking resources audit', () => {
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
     const computedCache = new Map();
     const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
-    assert.deepStrictEqual(result.metricSavings, {FCP: 304, LCP: 304});
+    assert.deepStrictEqual(result.metricSavings, {FCP: 300, LCP: 300});
   });
 
   it('evaluates amp page correctly', async () => {
@@ -86,14 +86,14 @@ describe('Render blocking resources audit', () => {
     expect(result.details.items).toEqual([
       {
         totalBytes: 389629,
-        url: 'http://localhost:57822/style.css',
+        url: 'http://localhost:50049/style.css',
         // This value would be higher if we didn't have a special case for AMP stylesheets
-        wastedMs: 1489,
+        wastedMs: 1496,
       },
       {
         totalBytes: 291,
-        url: 'http://localhost:57822/script.js',
-        wastedMs: 311,
+        url: 'http://localhost:50049/script.js',
+        wastedMs: 304,
       },
     ]);
     expect(result.metricSavings).toEqual({FCP: 0, LCP: 0});

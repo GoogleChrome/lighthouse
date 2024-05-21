@@ -11,8 +11,8 @@ import {Audit} from '../../../audits/audit.js';
 import * as constants from '../../../config/constants.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLogs = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLogs = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 /**
  * @param {{
@@ -41,8 +41,8 @@ describe('Performance: first-meaningful-paint audit', () => {
     const fmpResult = await FMPAudit.audit(artifacts, context);
 
     assert.equal(fmpResult.score, 1);
-    assert.equal(fmpResult.numericValue, 783.328);
-    expect(fmpResult.displayValue).toBeDisplayString('0.8\xa0s');
+    assert.equal(fmpResult.numericValue, 228.814);
+    expect(fmpResult.displayValue).toBeDisplayString('0.2\xa0s');
   });
 
   it('computes FMP correctly for simulated', async () => {
