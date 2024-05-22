@@ -392,6 +392,13 @@ describe('NetworkMonitor', () => {
         {start: 3000, end: 4000},
         {start: 5000, end: Infinity},
       ]);
+      // Same thing but verifying these numbers round trip without a problem.
+      expect(periods).toEqual([
+        // The time between the first two, and so on…
+        {start: records[0].networkEndTime, end: records[1].networkRequestTime},
+        {start: records[1].networkEndTime, end: records[2].networkRequestTime},
+        {start: records[2].networkEndTime, end: Infinity},
+      ]);
     });
 
     it('should find the 2-quiet periods', () => {

@@ -205,7 +205,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * The time periods returned are in ms.
    * @param {Array<LH.Artifacts.NetworkRequest>} requests
    * @param {number} allowedConcurrentRequests
-   * @param {number=} endTime
+   * @param {number=} endTime In ms
    * @return {Array<{start: number, end: number}>}
    */
   static findNetworkQuietPeriods(requests, allowedConcurrentRequests, endTime = Infinity) {
