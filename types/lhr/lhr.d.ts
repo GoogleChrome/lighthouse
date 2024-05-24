@@ -103,6 +103,8 @@ declare module Result {
     score: number|null;
     /** An array of references to all the audit members of this category. */
     auditRefs: AuditRef[];
+    /** An array of all the modes supported by the category. */
+    supportedModes?:  Result.GatherMode[];
   }
 
   interface AuditRef {
