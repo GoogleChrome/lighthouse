@@ -163,8 +163,17 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
 
     // Run Lighthouse.
     try {
+      // Each individual runner has internal timeouts, but we've had bugs where
+      // that didn't cover some edge case. So to be safe give a (long) timeout here.
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(reject, 1000 * 120);
+      });
+      const timedResult = await Promise.race([
+        lighthouseRunner(requestedUrl, config, testRunnerOptions),
+        timeoutPromise,
+      ]);
       result = {
-        ...await lighthouseRunner(requestedUrl, config, testRunnerOptions),
+        ...timedResult,
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
 
