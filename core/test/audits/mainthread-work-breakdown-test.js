@@ -71,6 +71,11 @@ describe('Performance: page execution timings audit', () => {
   });
 
   it('should compute the correct values when simulated', async () => {
+    // TODO(15841): update trace
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const artifacts = {
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevtoolsLog},

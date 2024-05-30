@@ -13,6 +13,11 @@ const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools
 const noThirdPartyTrace = readJson('../fixtures/traces/no-tracingstarted-m74.json', import.meta);
 
 describe('Third party summary', () => {
+  // TODO(15841): traces needs updating.
+  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+    return;
+  }
+
   it('surface the discovered third parties', async () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},

@@ -33,6 +33,11 @@ function youtubeResourceUrl(id) {
   return `https://i.ytimg.com/${id}/maxresdefault.jpg`;
 }
 describe('Third party facades audit', () => {
+  // TODO(15841): traces needs updating.
+  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+    return;
+  }
+
   it('correctly identifies a third party product with facade alternative', async () => {
     const artifacts = {
       devtoolsLogs: {
