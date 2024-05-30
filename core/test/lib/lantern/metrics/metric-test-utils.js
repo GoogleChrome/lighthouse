@@ -34,7 +34,6 @@ async function createGraph(theURL, trace, context) {
  */
 async function getComputationDataFromFixture({trace, devtoolsLog, settings, URL}) {
   settings = settings ?? /** @type {LH.Config.Settings} */({});
-  settings.internalUseTraceForLantern = true;
   if (!settings.throttlingMethod) settings.throttlingMethod = 'simulate';
   if (!URL) URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 

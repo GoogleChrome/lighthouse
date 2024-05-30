@@ -55,6 +55,14 @@ jobs:
         yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
+    # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
+    - name: Run smoke tests (lantern + trace)
+      if: matrix.smoke-test-shard == 1
+      run: |
+        yarn smoke --debug -j=2 --retries=2 lantern
+      env:
+        INTERNAL_LANTERN_USE_TRACE: 1
+
     - name: Upload test coverage to Codecov
       if: matrix.chrome-channel == 'ToT'
       uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d

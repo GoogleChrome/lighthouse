@@ -81,9 +81,11 @@ function lanternErrorAdapter(err) {
  * @param {LH.Artifacts.ComputedContext} context
  */
 function getComputationDataParams(data, context) {
-  if (data.settings.internalUseTraceForLantern) {
+  // TODO(15841): remove when all tests use the trace, and we want to remove CDT graph impl.
+  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
     return getComputationDataParamsFromTrace(data, context);
   } else {
+    // This is the default behavior.
     return getComputationDataParamsFromDevtoolsLog(data, context);
   }
 }
