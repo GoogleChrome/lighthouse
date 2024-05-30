@@ -25,12 +25,6 @@ class PageDependencyGraph {
       NetworkRecords.request(devtoolsLog, context),
     ]);
 
-    for (const request of networkRecords) {
-      request.rendererStartTime = Math.round(request.rendererStartTime * 1000) / 1000;
-      request.networkRequestTime = Math.round(request.networkRequestTime * 1000) / 1000;
-      request.responseHeadersEndTime = Math.round(request.responseHeadersEndTime * 1000) / 1000;
-      request.networkEndTime = Math.round(request.networkEndTime * 1000) / 1000;
-    }
     const mainThreadEvents = processedTrace.mainThreadEvents;
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
     return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
