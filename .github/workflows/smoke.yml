@@ -57,7 +57,7 @@ jobs:
 
     # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
     - name: Run smoke tests (lantern + trace)
-      if: matrix.smoke-test-shard == 1
+      if: matrix.smoke-test-shard == 1 && matrix.chrome-channel == 'ToT'
       run: |
         yarn smoke --debug -j=2 --retries=2 lantern
       env:
