@@ -490,6 +490,7 @@ class PageDependencyGraph {
       isLinkPreload: r.isLinkPreload,
       serverResponseTime: r.serverResponseTime,
     })).filter(r => !r.fromWorker);
+    // eslint-disable-next-line no-unused-vars
     const debug = requests;
     // Set breakpoint here.
     // Copy `debug` and compare with https://www.diffchecker.com/text-compare/
@@ -630,6 +631,8 @@ class PageDependencyGraph {
 
       let url;
       try {
+        // globalThis does exist.
+        // eslint-disable-next-line no-undef
         url = new globalThis.URL(request.args.data.url);
       } catch (e) {
         continue;
