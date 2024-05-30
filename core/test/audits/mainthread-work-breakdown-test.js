@@ -108,19 +108,19 @@ describe('Performance: page execution timings audit', () => {
     const output = await PageExecutionTimings.audit(artifacts, context);
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
-  "garbageCollection": 14,
-  "other": 188,
-  "paintCompositeRender": 11,
-  "parseHTML": 52,
-  "scriptEvaluation": 577,
-  "scriptParseCompile": 67,
-  "styleLayout": 70,
+  "garbageCollection": 11,
+  "other": 146,
+  "paintCompositeRender": 7,
+  "parseHTML": 19,
+  "scriptEvaluation": 269,
+  "scriptParseCompile": 75,
+  "styleLayout": 71,
 }
 `);
-    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`979`);
+    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`597`);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 1);
-    expect(output.metricSavings.TBT).toBeCloseTo(171.95, 0.1);
+    expect(output.metricSavings.TBT).toBeCloseTo(60.29, 0.1);
   });
 
   it('should compute the correct values for the load trace (legacy)', async () => {

@@ -191,6 +191,7 @@ declare module Artifacts {
     boundingRect: Rect,
     snippet: string,
     nodeLabel: string,
+    explanation?: string,
   }
 
   interface RuleExecutionError {

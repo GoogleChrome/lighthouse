@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import stream from 'stream';
 import url from 'url';
+import {createGzip, gunzipSync} from 'zlib';
 
 import log from 'lighthouse-logger';
 
@@ -33,6 +34,46 @@ const stepDirectoryRegex = /^step(\d+)$/;
  * @property {LH.DevtoolsLog} [devtoolsLog]
  */
 
+/**
+ * @param {import('stream').PipelineSource<any>} contents
+ * @param {string} path
+ * @param {boolean} gzip
+ */
+async function writeJson(contents, path, gzip) {
+  const writeStream = fs.createWriteStream(gzip ? path + '.gz' : path);
+  if (gzip) {
+    await stream.promises.pipeline(contents, createGzip(), writeStream);
+  } else {
+    await stream.promises.pipeline(contents, writeStream);
+  }
+}
+
+/**
+ * Prefers reading a gzipped file (.gz) if present.
+ * @param {string} filename
+ * @param {(this: any, key: string, value: any) => any=} reviver
+ */
+function readJson(filename, reviver) {
+  if (fs.existsSync(filename + '.gz')) {
+    filename = filename + '.gz';
+  }
+
+  if (!filename.endsWith('.json.gz')) {
+    return JSON.parse(fs.readFileSync(filename, 'utf8'), reviver);
+  }
+
+  const buffer = gunzipSync(fs.readFileSync(filename));
+  return JSON.parse(buffer.toString('utf8'), reviver);
+}
+
+/**
+ * @param {string} filename
+ * @param {string} suffix
+ * @returns
+ */
+function endsWithSuffix(filename, suffix) {
+  return filename.endsWith(suffix) || filename.endsWith(suffix + '.gz');
+}
 
 /**
  * Load artifacts object from files located within basePath
@@ -48,16 +89,15 @@ function loadArtifacts(basePath) {
   }
 
   // load artifacts.json using a reviver to deserialize any LighthouseErrors in artifacts.
-  const artifactsStr = fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8');
   /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(artifactsStr, LighthouseError.parseReviver);
+  const artifacts = readJson(path.join(basePath, artifactsFilename), LighthouseError.parseReviver);
 
   const filenames = fs.readdirSync(basePath);
 
-  filenames.filter(f => f.endsWith(devtoolsLogSuffix)).forEach(filename => {
+  filenames.filter(f => endsWithSuffix(f, devtoolsLogSuffix)).forEach(filename => {
     if (!artifacts.devtoolsLogs) artifacts.devtoolsLogs = {};
-    const prefix = filename.replace(devtoolsLogSuffix, '');
-    const devtoolsLog = JSON.parse(fs.readFileSync(path.join(basePath, filename), 'utf8'));
+    const prefix = filename.replace(devtoolsLogSuffix + '.gz', '').replace(devtoolsLogSuffix, '');
+    const devtoolsLog = readJson(path.join(basePath, filename));
     artifacts.devtoolsLogs[prefix] = devtoolsLog;
     if (prefix === defaultPrefix) {
       artifacts.DevtoolsLog = devtoolsLog;
@@ -67,11 +107,10 @@ function loadArtifacts(basePath) {
     }
   });
 
-  filenames.filter(f => f.endsWith(traceSuffix)).forEach(filename => {
+  filenames.filter(f => endsWithSuffix(f, traceSuffix)).forEach(filename => {
     if (!artifacts.traces) artifacts.traces = {};
-    const file = fs.readFileSync(path.join(basePath, filename), {encoding: 'utf-8'});
-    const trace = JSON.parse(file);
-    const prefix = filename.replace(traceSuffix, '');
+    const trace = readJson(path.join(basePath, filename));
+    const prefix = filename.replace(traceSuffix + '.gz', '').replace(traceSuffix, '');
     artifacts.traces[prefix] = Array.isArray(trace) ? {traceEvents: trace} : trace;
     if (prefix === defaultPrefix) {
       artifacts.Trace = artifacts.traces[prefix];
@@ -200,12 +239,13 @@ async function saveFlowArtifacts(flowArtifacts, basePath) {
 
 /**
  * Save artifacts object mostly to single file located at basePath/artifacts.json.
- * Also save the traces & devtoolsLogs to their own files
+ * Also save the traces & devtoolsLogs to their own files, with optional compression.
  * @param {LH.Artifacts} artifacts
  * @param {string} basePath
+ * @param {{gzip?: boolean}} options
  * @return {Promise<void>}
  */
-async function saveArtifacts(artifacts, basePath) {
+async function saveArtifacts(artifacts, basePath, options = {}) {
   const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
   log.time(status);
   fs.mkdirSync(basePath, {recursive: true});
@@ -213,8 +253,11 @@ async function saveArtifacts(artifacts, basePath) {
   // Delete any previous artifacts in this directory.
   const filenames = fs.readdirSync(basePath);
   for (const filename of filenames) {
-    if (filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
-        filename === artifactsFilename) {
+    const isPreviousFile =
+      filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
+      filename.endsWith(traceSuffix + '.gz') || filename.endsWith(devtoolsLogSuffix + '.gz') ||
+      filename === artifactsFilename || filename === artifactsFilename + '.gz';
+    if (isPreviousFile) {
       fs.unlinkSync(`${basePath}/${filename}`);
     }
   }
@@ -234,24 +277,30 @@ async function saveArtifacts(artifacts, basePath) {
   } = artifacts;
 
   if (Trace) {
-    await saveTrace(Trace, `${basePath}/${defaultPrefix}${traceSuffix}`);
+    await saveTrace(Trace, `${basePath}/${defaultPrefix}${traceSuffix}`, options);
   }
 
   if (TraceError) {
-    await saveTrace(TraceError, `${basePath}/${errorPrefix}${traceSuffix}`);
+    await saveTrace(TraceError, `${basePath}/${errorPrefix}${traceSuffix}`, options);
   }
 
   if (DevtoolsLog) {
-    await saveDevtoolsLog(DevtoolsLog, `${basePath}/${defaultPrefix}${devtoolsLogSuffix}`);
+    await saveDevtoolsLog(
+      DevtoolsLog, `${basePath}/${defaultPrefix}${devtoolsLogSuffix}`, options);
   }
 
   if (DevtoolsLogError) {
-    await saveDevtoolsLog(DevtoolsLogError, `${basePath}/${errorPrefix}${devtoolsLogSuffix}`);
+    await saveDevtoolsLog(
+      DevtoolsLogError, `${basePath}/${errorPrefix}${devtoolsLogSuffix}`, options);
   }
 
   // save everything else, using a replacer to serialize LighthouseErrors in the artifacts.
-  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2) + '\n';
-  fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
+  await writeJson(function* () {
+    yield restArtifactsString;
+    yield '\n';
+  }, `${basePath}/${artifactsFilename}`, !!options.gzip);
+
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);
 }
@@ -371,28 +420,26 @@ function* traceJsonGenerator(traceData) {
  * Save a trace as JSON by streaming to disk at traceFilename.
  * @param {LH.Trace} traceData
  * @param {string} traceFilename
+ * @param {{gzip?: boolean}=} options
  * @return {Promise<void>}
  */
-async function saveTrace(traceData, traceFilename) {
+function saveTrace(traceData, traceFilename, options = {}) {
   const traceIter = traceJsonGenerator(traceData);
-  const writeStream = fs.createWriteStream(traceFilename);
-
-  return stream.promises.pipeline(traceIter, writeStream);
+  return writeJson(traceIter, traceFilename, !!options.gzip);
 }
 
 /**
  * Save a devtoolsLog as JSON by streaming to disk at devtoolLogFilename.
  * @param {LH.DevtoolsLog} devtoolsLog
  * @param {string} devtoolLogFilename
+ * @param {{gzip?: boolean}=} options
  * @return {Promise<void>}
  */
-function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
-  const writeStream = fs.createWriteStream(devtoolLogFilename);
-
-  return stream.promises.pipeline(function* () {
+function saveDevtoolsLog(devtoolsLog, devtoolLogFilename, options = {}) {
+  return writeJson(function* () {
     yield* arrayOfObjectsJsonGenerator(devtoolsLog);
     yield '\n';
-  }, writeStream);
+  }, devtoolLogFilename, !!options.gzip);
 }
 
 /**

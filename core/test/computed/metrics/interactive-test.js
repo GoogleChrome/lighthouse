@@ -37,8 +37,8 @@ function generateNetworkRecords(partialRecords, timeOrigin) {
       statusCode: item.statusCode || 200,
       requestMethod: item.requestMethod || 'GET',
       finished: typeof item.finished === 'undefined' ? true : item.finished,
-      networkRequestTime: (item.start + timeOriginInMs) / 1000,
-      networkEndTime: item.end === -1 ? -1 : (item.end + timeOriginInMs) / 1000,
+      networkRequestTime: item.start + timeOriginInMs,
+      networkEndTime: item.end === -1 ? -1 : item.end + timeOriginInMs,
     };
     return /** @type {LH.Artifacts.NetworkRequest} */ (record);
   });

@@ -202,9 +202,10 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
+   * The time periods returned are in ms.
    * @param {Array<LH.Artifacts.NetworkRequest>} requests
    * @param {number} allowedConcurrentRequests
-   * @param {number=} endTime
+   * @param {number=} endTime In ms
    * @return {Array<{start: number, end: number}>}
    */
   static findNetworkQuietPeriods(requests, allowedConcurrentRequests, endTime = Infinity) {
@@ -215,10 +216,9 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
       if (UrlUtils.isNonNetworkProtocol(request.protocol)) return;
       if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
-      // convert the network timestamp to ms
-      timeBoundaries.push({time: request.networkRequestTime * 1000, isStart: true});
+      timeBoundaries.push({time: request.networkRequestTime, isStart: true});
       if (request.finished) {
-        timeBoundaries.push({time: request.networkEndTime * 1000, isStart: false});
+        timeBoundaries.push({time: request.networkEndTime, isStart: false});
       }
     });
 

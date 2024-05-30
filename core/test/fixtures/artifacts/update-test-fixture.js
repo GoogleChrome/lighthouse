@@ -13,7 +13,7 @@ import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../../../shared/root.js';
 import {Server} from '../../../../cli/test/fixtures/static-server.js';
-import {saveTrace, saveDevtoolsLog} from '../../../lib/asset-saver.js';
+import {saveTrace, saveDevtoolsLog, saveArtifacts} from '../../../lib/asset-saver.js';
 
 /**
  * @typedef CollectMeta
@@ -23,6 +23,7 @@ import {saveTrace, saveDevtoolsLog} from '../../../lib/asset-saver.js';
  * @property {(artifacts: LH.Artifacts) => void} verify
  * @property {boolean} saveTrace
  * @property {boolean} saveDevtoolsLog
+ * @property {boolean} saveArtifacts
  */
 
 /**
@@ -46,12 +47,17 @@ export async function updateTestFixture(collectMeta) {
     const page = await browser.newPage();
     const flow = await collectMeta.runUserFlow(page, port);
     const {artifacts} = flow.createArtifactsJson().gatherSteps[0];
-    collectMeta.verify(artifacts);
-    if (collectMeta.saveTrace) {
-      await saveTrace(artifacts.Trace, `${dir}/trace.json`);
-    }
-    if (collectMeta.saveDevtoolsLog) {
-      await saveDevtoolsLog(artifacts.DevtoolsLog, `${dir}/devtoolslog.json`);
+    const result = await flow.createFlowResult();
+    collectMeta.verify(artifacts, result);
+    if (collectMeta.saveArtifacts) {
+      await saveArtifacts(artifacts, dir, {gzip: true});
+    } else {
+      if (collectMeta.saveTrace) {
+        await saveTrace(artifacts.Trace, `${dir}/trace.json`, {gzip: true});
+      }
+      if (collectMeta.saveDevtoolsLog) {
+        await saveDevtoolsLog(artifacts.DevtoolsLog, `${dir}/devtoolslog.json`, {gzip: true});
+      }
     }
   } finally {
     await browser.close();
