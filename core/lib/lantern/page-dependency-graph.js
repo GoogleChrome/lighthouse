@@ -405,8 +405,9 @@ class PageDependencyGraph {
     }
   }
 
-  // TODO ! remove me
   /**
+   * TODO(15841): remove when CDT backend is gone. until then, this is a useful debugging tool
+   * to find delta between using CDP or the trace to create the network requests.
    * @param {Lantern.NetworkRequest[]} lanternRequests
    * @return {never}
    */
