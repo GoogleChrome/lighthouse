@@ -700,24 +700,15 @@ class PageDependencyGraph {
         protocol: request.args.data.protocol,
         parsedURL,
         documentURL: request.args.data.requestingFrameUrl,
-        // TODO i haven't confirmed these, just guessing
         rendererStartTime: request.ts / 1000,
         networkRequestTime,
         responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
         networkEndTime: request.args.data.syntheticData.finishTime / 1000,
-        // TODO ----
         transferSize: request.args.data.encodedDataLength,
         resourceSize: request.args.data.decodedBodyLength,
         fromDiskCache: request.args.data.syntheticData.isDiskCached,
         fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
-        // TODO why isn't data.isLinkPreload correct?
-        isLinkPreload: request.args.data.isLinkPreload || [
-          'https://squoosh.app/c/blob-anim-97c315b2.js',
-          'https://squoosh.app/c/Compress-5b50107e.js',
-          'https://squoosh.app/c/idb-keyval-c33d3116.js',
-          'https://squoosh.app/c/sw-bridge-ceda69b8.js',
-          'https://squoosh.app/c/util-06ce6ead.js',
-        ].includes(request.args.data.url),
+        isLinkPreload: request.args.data.isLinkPreload,
         finished: request.args.data.finished,
         failed: request.args.data.failed,
         statusCode: request.args.data.statusCode,
