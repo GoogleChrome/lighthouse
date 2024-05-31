@@ -955,6 +955,9 @@ export interface TraceEvent {
       connectionReused?: boolean;
       encodedDataLength?: number;
       decodedBodyLength?: number;
+      initiator?: LH.Crdp.Network.Initiator;
+      protocol?: string;
+      finishTime?: number;
     };
     frame?: string;
     name?: string;

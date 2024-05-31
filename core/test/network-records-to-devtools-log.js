@@ -284,13 +284,13 @@ function getResponseReceivedEvent(networkRecord, index, normalizedTiming) {
         status: networkRecord.statusCode || 200,
         headers,
         mimeType: typeof networkRecord.mimeType === 'string' ? networkRecord.mimeType : 'text/html',
-        connectionReused: networkRecord.connectionReused || false,
+        connectionReused: networkRecord.connectionReused ?? false,
         connectionId: networkRecord.connectionId ?? 140,
-        fromDiskCache: networkRecord.fromDiskCache || false,
-        fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
-        encodedDataLength: networkRecord.responseHeadersTransferSize || 0,
+        fromDiskCache: networkRecord.fromDiskCache ?? false,
+        fromServiceWorker: networkRecord.fetchedViaServiceWorker ?? false,
+        encodedDataLength: networkRecord.responseHeadersTransferSize ?? 0,
         timing: {...normalizedTiming.timing},
-        protocol: networkRecord.protocol || 'http/1.1',
+        protocol: networkRecord.protocol ?? 'http/1.1',
       },
       frameId: networkRecord.frameId,
     },
@@ -479,4 +479,7 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
   return devtoolsLog;
 }
 
-export {networkRecordsToDevtoolsLog};
+export {
+  networkRecordsToDevtoolsLog,
+  getNormalizedRequestTiming,
+};

@@ -625,6 +625,21 @@ class PageDependencyGraph {
   }
 
   /**
+   * @param {URL|string} url
+   */
+  static _createParsedUrl(url) {
+    if (typeof url === 'string') {
+      url = new URL(url);
+    }
+    return {
+      scheme: url.protocol.split(':')[0],
+      // Intentional, DevTools uses different terminology
+      host: url.hostname,
+      securityOrigin: url.origin,
+    };
+  }
+
+  /**
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
    * @param {Map<number, number[]>} serviceWorkerThreads
    * @param {import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest} request
@@ -642,13 +657,6 @@ class PageDependencyGraph {
     } catch (e) {
       return;
     }
-
-    const parsedURL = {
-      scheme: url.protocol.split(':')[0],
-      // Intentional, DevTools uses different terminology
-      host: url.hostname,
-      securityOrigin: url.origin,
-    };
 
     const timing = request.args.data.timing ? {
       ...request.args.data.timing,
@@ -704,7 +712,7 @@ class PageDependencyGraph {
       connectionReused: request.args.data.connectionReused,
       url: request.args.data.url,
       protocol: request.args.data.protocol,
-      parsedURL,
+      parsedURL: this._createParsedUrl(url),
       documentURL: request.args.data.requestingFrameUrl,
       rendererStartTime: request.ts / 1000,
       networkRequestTime,
@@ -726,7 +734,7 @@ class PageDependencyGraph {
       frameId: request.args.data.frame,
       fromWorker,
       record: request,
-      // Set below.
+      // Set later.
       redirects: undefined,
       redirectSource: undefined,
       redirectDestination: undefined,
@@ -782,16 +790,30 @@ class PageDependencyGraph {
       const redirects = request.record.args.data.redirects;
       if (!redirects.length) continue;
 
-      const requestChain = [request];
-
+      const requestChain = [];
       for (const redirect of redirects) {
         const redirectedRequest = structuredClone(request);
-        redirectedRequest.rendererStartTime = redirect.ts / 1000;
-        redirectedRequest.networkEndTime = (redirect.ts + redirect.dur) / 1000;
+        if (redirectedRequest.timing) {
+          // TODO: These are surely wrong for when there is more than one redirect. Would be
+          // simpler if each redirect remembered it's `timing` object in this `redirects` array.
+          redirectedRequest.timing.requestTime = redirect.ts / 1000 / 1000;
+          redirectedRequest.timing.receiveHeadersStart -= redirect.dur / 1000 / 1000;
+          redirectedRequest.timing.receiveHeadersEnd -= redirect.dur / 1000 / 1000;
+          redirectedRequest.rendererStartTime = redirect.ts / 1000;
+          redirectedRequest.networkRequestTime = redirect.ts / 1000;
+          redirectedRequest.networkEndTime = (redirect.ts + redirect.dur) / 1000;
+          redirectedRequest.responseHeadersEndTime =
+            redirectedRequest.timing.requestTime * 1000 +
+            redirectedRequest.timing.receiveHeadersEnd;
+        }
         redirectedRequest.url = redirect.url;
+        redirectedRequest.parsedURL = this._createParsedUrl(redirect.url);
+        // TODO: TraceEngine is not retaining the actual status code.
+        redirectedRequest.statusCode = 302;
         requestChain.push(redirectedRequest);
         lanternRequests.push(redirectedRequest);
       }
+      requestChain.push(request);
 
       for (let i = 0; i < requestChain.length; i++) {
         const request = requestChain[i];
@@ -806,7 +828,6 @@ class PageDependencyGraph {
 
       // Apply the `:redirect` requestId convention: only redirects[0].requestId is the actual
       // requestId, all the rest have n occurences of `:redirect` as a suffix.
-      requestChain.reverse();
       for (let i = 1; i < requestChain.length; i++) {
         requestChain[i].requestId = `${requestChain[i - 1].requestId}:redirect`;
       }

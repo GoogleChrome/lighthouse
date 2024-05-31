@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {getNormalizedRequestTiming} from './network-records-to-devtools-log.js';
+
 const pid = 1111;
 const tid = 222;
 const browserPid = 13725;
@@ -264,8 +266,15 @@ function createTestTrace(options) {
       willBeRedirected = networkRecords.some(r => r.requestId === redirectedRequestId);
     }
 
-    const willSendTime = (record.rendererStartTime ?? record.networkRequestTime ?? 0) * 10000;
-    const sendTime = (record.networkRequestTime ?? 0) * 10000;
+    const times = getNormalizedRequestTiming(record);
+    const willSendTime = times.rendererStartTime * 1000;
+    const sendTime = times.networkRequestTime * 1000;
+    const recieveResponseTime = times.responseHeadersEndTime * 1000;
+    const endTime = times.networkEndTime * 1000;
+
+    if (times.timing.receiveHeadersStart === undefined) {
+      times.timing.receiveHeadersStart = times.timing.receiveHeadersEnd;
+    }
 
     if (!willBeRedirected) {
       traceEvents.push({
@@ -279,6 +288,8 @@ function createTestTrace(options) {
         args: {
           data: {
             requestId,
+            frame: record.frameId,
+            initiator: record.initiator ?? {type: 'other'},
           },
         },
       });
@@ -310,7 +321,7 @@ function createTestTrace(options) {
 
     traceEvents.push({
       name: 'ResourceReceiveResponse',
-      ts: sendTime,
+      ts: recieveResponseTime,
       pid,
       tid,
       ph: 'I',
@@ -322,11 +333,29 @@ function createTestTrace(options) {
           frame: record.frameId,
           fromCache: record.fromDiskCache || record.fromMemoryCache,
           fromServiceWorker: record.fromWorker,
-          mimeType: record.mimeType,
-          statusCode: record.statusCode,
-          timing: record.timing ?? {},
-          connectionId: record.connectionId ?? 0,
+          mimeType: record.mimeType ?? 'text/html',
+          statusCode: record.statusCode ?? 200,
+          timing: times.timing,
+          connectionId: record.connectionId ?? 140,
           connectionReused: record.connectionReused ?? false,
+          protocol: record.protocol ?? 'http/1.1',
+        },
+      },
+    });
+
+    traceEvents.push({
+      name: 'ResourceFinish',
+      ts: endTime,
+      pid,
+      tid,
+      ph: 'I',
+      cat: 'devtools.timeline',
+      dur: 0,
+      args: {
+        data: {
+          requestId,
+          frame: record.frameId,
+          finishTime: endTime / 1000 / 1000,
           encodedDataLength: record.transferSize,
           decodedBodyLength: record.resourceSize,
         },
