@@ -953,6 +953,8 @@ export interface TraceEvent {
       timing?: any;
       connectionId?: number;
       connectionReused?: boolean;
+      encodedDataLength?: number;
+      decodedBodyLength?: number;
     };
     frame?: string;
     name?: string;

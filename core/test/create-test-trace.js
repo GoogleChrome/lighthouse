@@ -327,6 +327,8 @@ function createTestTrace(options) {
           timing: record.timing ?? {},
           connectionId: record.connectionId ?? 0,
           connectionReused: record.connectionReused ?? false,
+          encodedDataLength: record.transferSize,
+          decodedBodyLength: record.resourceSize,
         },
       },
     });
