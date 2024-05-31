@@ -734,10 +734,11 @@ class PageDependencyGraph {
 
       for (const redirect of redirects) {
         const redirectedRequest = structuredClone(request);
-        redirectedRequest.networkEndTime = redirect.ts * 1000;
+        redirectedRequest.rendererStartTime = redirect.ts / 1000;
+        redirectedRequest.networkEndTime = (redirect.ts + redirect.dur) / 1000;
         redirectedRequest.url = redirect.url;
-        lanternRequests.push(redirectedRequest);
         requestChain.push(redirectedRequest);
+        lanternRequests.push(redirectedRequest);
       }
 
       for (let i = 0; i < requestChain.length; i++) {
@@ -753,6 +754,7 @@ class PageDependencyGraph {
 
       // Apply the `:redirect` requestId convention: only redirects[0].requestId is the actual
       // requestId, all the rest have n occurences of `:redirect` as a suffix.
+      requestChain.reverse();
       for (let i = 1; i < requestChain.length; i++) {
         requestChain[i].requestId = `${requestChain[i - 1].requestId}:redirect`;
       }
@@ -772,6 +774,10 @@ class PageDependencyGraph {
         request.initiatorRequest = initiatorRequest;
       }
     }
+
+    // This would already be sorted by rendererStartTime, if not for the redirect unwrapping done
+    // above.
+    lanternRequests.sort((a, b) => a.rendererStartTime - b.rendererStartTime);
 
     const graph = PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
     return {graph, records: lanternRequests};

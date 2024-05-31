@@ -250,10 +250,16 @@ function createTestTrace(options) {
         r.requestId === record.requestId + ':redirect');
     const requestId = record.requestId.replaceAll(':redirect', '');
 
+    const willSendTime = (record.rendererStartTime ?? record.networkRequestTime) * 10000;
+    const sendTime = record.networkRequestTime * 10000;
+    if (Number.isNaN(willSendTime) || Number.isNaN(sendTime)) {
+      throw new Error('bad times given');
+    }
+
     if (!willBeRedirected) {
       traceEvents.push({
         name: 'ResourceWillSendRequest',
-        ts: record.rendererStartTime * 1000,
+        ts: willSendTime,
         pid,
         tid,
         ph: 'I',
@@ -269,7 +275,7 @@ function createTestTrace(options) {
 
     traceEvents.push({
       name: 'ResourceSendRequest',
-      ts: record.networkRequestTime * 1000,
+      ts: sendTime,
       pid,
       tid,
       ph: 'I',
@@ -281,7 +287,7 @@ function createTestTrace(options) {
           frame: record.frameId,
           priority: record.priority,
           requestMethod: record.requestMethod,
-          resourceType: record.resourceType,
+          resourceType: record.resourceType ?? 'Document',
           url: record.url,
         },
       },
@@ -293,7 +299,7 @@ function createTestTrace(options) {
 
     traceEvents.push({
       name: 'ResourceReceiveResponse',
-      ts: record.networkEndTime * 1000,
+      ts: sendTime,
       pid,
       tid,
       ph: 'I',
