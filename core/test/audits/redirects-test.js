@@ -125,7 +125,7 @@ const FAILING_SELF_REDIRECT = [{
 }];
 
 describe('Performance: Redirects audit', () => {
-  // TODO(15841): "rootRequest not found" - fix mocks
+  // TODO(15841): fix createTestTrace, cycles
   if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
     return;
   }

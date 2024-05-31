@@ -21,7 +21,7 @@ const TASK_URL = 'https://pwa.rocks';
  * @param {Number} duration
  * @param {Boolean} withChildTasks
  */
-function generateTraceWithLongTasks({count, duration = 200, withChildTasks = false}) {
+function generateTraceWithLongTasks({count, duration = 200, withChildTasks = false, networkRecords}) {
   const traceTasks = [{ts: BASE_TS, duration: 0}];
   for (let i = 1; i <= count; i++) {
     /* Generates a top-level task w/ the following breakdown:
@@ -54,6 +54,7 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
     topLevelTasks: traceTasks,
     timeOrigin: BASE_TS,
     traceEnd: BASE_TS + 20_000,
+    networkRecords,
   });
 }
 
@@ -145,19 +146,16 @@ describe('Long tasks audit', () => {
   });
 
   it('should not filter out tasks with duration >= 50 ms only after throttling', async () => {
-    // TODO(15841): "rootRequest not found" - fix mocks
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
+    const networkRecords = [{
+      url: TASK_URL,
+      priority: 'High',
+      timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40},
+    }];
 
     const artifacts = {
       URL,
-      traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25})},
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([{
-        url: TASK_URL,
-        priority: 'High',
-        timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40},
-      }])},
+      traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25, networkRecords})},
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
       GatherContext: {gatherMode: 'navigation'},
     };
     const context = {

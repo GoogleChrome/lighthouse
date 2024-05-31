@@ -253,9 +253,16 @@ function createTestTrace(options) {
 
   const networkRecords = options.networkRecords || [];
   for (const record of networkRecords) {
-    const willBeRedirected = networkRecords.some(r =>
-        r.requestId === record.requestId + ':redirect');
-    const requestId = record.requestId.replaceAll(':redirect', '');
+    // `requestId` is optional in the input test records.
+    const requestId = record.requestId ?
+      record.requestId.replaceAll(':redirect', '') :
+      String(networkRecords.indexOf(record));
+
+    let willBeRedirected = false;
+    if (record.requestId) {
+      const redirectedRequestId = record.requestId + ':redirect';
+      willBeRedirected = networkRecords.some(r => r.requestId === redirectedRequestId);
+    }
 
     const willSendTime = (record.rendererStartTime ?? record.networkRequestTime ?? 0) * 10000;
     const sendTime = (record.networkRequestTime ?? 0) * 10000;
@@ -317,7 +324,7 @@ function createTestTrace(options) {
           fromServiceWorker: record.fromWorker,
           mimeType: record.mimeType,
           statusCode: record.statusCode,
-          timing: record.timing,
+          timing: record.timing ?? {},
           connectionId: record.connectionId ?? 0,
           connectionReused: record.connectionReused ?? false,
         },
