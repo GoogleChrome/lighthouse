@@ -21,7 +21,8 @@ const TASK_URL = 'https://pwa.rocks';
  * @param {Number} duration
  * @param {Boolean} withChildTasks
  */
-function generateTraceWithLongTasks({count, duration = 200, withChildTasks = false, networkRecords}) {
+function generateTraceWithLongTasks(args) {
+  const {count, duration = 200, withChildTasks = false, networkRecords} = args;
   const traceTasks = [{ts: BASE_TS, duration: 0}];
   for (let i = 1; i <= count; i++) {
     /* Generates a top-level task w/ the following breakdown:
