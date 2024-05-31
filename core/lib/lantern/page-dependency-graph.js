@@ -408,10 +408,17 @@ class PageDependencyGraph {
   /**
    * TODO(15841): remove when CDT backend is gone. until then, this is a useful debugging tool
    * to find delta between using CDP or the trace to create the network requests.
+   * 
+   * When a test fails using the trace backend, I enabled this debug method and copied the network
+   * requests when CDP was used, then when trace is used, and diff'd them. This method helped
+   * remove non-logical differences from the comparison (order of properties, slight rounding
+   * discrepancies, removing object cycles, etc).
+   * 
+   * When using for a unit test, make sure to do `.only` so you are getting what you expect.
    * @param {Lantern.NetworkRequest[]} lanternRequests
    * @return {never}
    */
-  static debugNormalizeRequests(lanternRequests) {
+  static _debugNormalizeRequests(lanternRequests) {
     for (const request of lanternRequests) {
       request.rendererStartTime = Math.round(request.rendererStartTime * 1000) / 1000;
       request.networkRequestTime = Math.round(request.networkRequestTime * 1000) / 1000;
@@ -506,7 +513,7 @@ class PageDependencyGraph {
    */
   static createGraph(mainThreadEvents, networkRecords, URL) {
     // This is for debugging trace/devtoolslog network records.
-    // const debug = PageDependencyGraph.debugNormalizeRequests(networkRecords);
+    // const debug = PageDependencyGraph._debugNormalizeRequests(networkRecords);
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
     const cpuNodes = PageDependencyGraph.getCPUNodes(mainThreadEvents);
     const {requestedUrl, mainDocumentUrl} = URL;
