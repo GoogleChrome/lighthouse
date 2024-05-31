@@ -445,6 +445,7 @@ class PageDependencyGraph {
         r.redirects = r.redirects.map(r2 => r2.requestId);
       }
     }
+    /** @type {Lantern.NetworkRequest[]} */
     const requests = lanternRequests.map(r => ({
       requestId: r.requestId,
       connectionId: r.connectionId,
