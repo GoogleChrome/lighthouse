@@ -593,14 +593,13 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.TraceEvent[]} mainThreadEvents
    * @param {LH.Trace} trace
-   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
-   * @param {LH.Artifacts.URL} URL
+   * @return {Map<number, number[]>}
    */
-  static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
-    // TODO: trace engine should handle this.
+  static _findServiceWorkerThreads(trace) {
+    // TODO: trace engine should provide a map of service workers, like it does for workers.
     const serviceWorkerThreads = new Map();
+
     for (const event of trace.traceEvents) {
       if (!(event.name === 'thread_name' && event.args.name === 'ServiceWorker thread')) {
         continue;
@@ -614,112 +613,157 @@ class PageDependencyGraph {
       }
     }
 
+    return serviceWorkerThreads;
+  }
+
+  /**
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {Map<number, number[]>} serviceWorkerThreads
+   * @param {import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest} request
+   * @return {Lantern.NetworkRequest=}
+   */
+  static _createLanternRequest(traceEngineResult, serviceWorkerThreads, request) {
+    if (request.args.data.connectionId === undefined ||
+        request.args.data.connectionReused === undefined) {
+      throw new Error('Trace is too old');
+    }
+
+    let url;
+    try {
+      url = new URL(request.args.data.url);
+    } catch (e) {
+      return;
+    }
+
+    const parsedURL = {
+      scheme: url.protocol.split(':')[0],
+      // Intentional, DevTools uses different terminology
+      host: url.hostname,
+      securityOrigin: url.origin,
+    };
+
+    const timing = request.args.data.timing ? {
+      ...request.args.data.timing,
+      // These two timings are not included in the trace.
+      workerFetchStart: -1,
+      workerRespondWithSettled: -1,
+    } : undefined;
+
+    const networkRequestTime = timing ?
+      timing.requestTime * 1000 :
+      request.args.data.syntheticData.downloadStart / 1000;
+
+    let fromWorker = false;
+    // TODO: should also check pid
+    if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
+      fromWorker = true;
+    }
+    const tids = serviceWorkerThreads.get(request.pid);
+    if (tids?.includes(request.tid)) {
+      fromWorker = true;
+    }
+
+    // `initiator` in the trace does not contain the stack trace for JS-initiated
+    // requests. Instead, that is stored in the `stackTrace` property of the SyntheticNetworkRequest.
+    // There are some minor differences in the fields, accounted for here.
+    // Most importantly, there seems to be fewer frames in the trace than the equivalent
+    // events over the CDP. This results in less accuracy in determining the initiator request,
+    // which means less edges in the graph, which mean worse results. Should fix.
+    /** @type {Lantern.NetworkRequest['initiator']} */
+    const initiator = request.args.data.initiator ?? {type: 'other'};
+    if (request.args.data.stackTrace) {
+      const callFrames = request.args.data.stackTrace.map(f => {
+        return {
+          scriptId: String(f.scriptId),
+          url: f.url,
+          lineNumber: f.lineNumber - 1,
+          columnNumber: f.columnNumber - 1,
+          functionName: f.functionName,
+        };
+      });
+      initiator.stack = {callFrames};
+    }
+
+    let resourceType = request.args.data.resourceType;
+    if (request.args.data.initiator?.fetchType === 'xmlhttprequest') {
+      // @ts-expect-error yes XHR is a valid ResourceType. TypeScript const enums are so unhelpful.
+      resourceType = 'XHR';
+    }
+
+    return {
+      requestId: request.args.data.requestId,
+      connectionId: request.args.data.connectionId,
+      connectionReused: request.args.data.connectionReused,
+      url: request.args.data.url,
+      protocol: request.args.data.protocol,
+      parsedURL,
+      documentURL: request.args.data.requestingFrameUrl,
+      rendererStartTime: request.ts / 1000,
+      networkRequestTime,
+      responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
+      networkEndTime: request.args.data.syntheticData.finishTime / 1000,
+      transferSize: request.args.data.encodedDataLength,
+      resourceSize: request.args.data.decodedBodyLength,
+      fromDiskCache: request.args.data.syntheticData.isDiskCached,
+      fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
+      isLinkPreload: request.args.data.isLinkPreload,
+      finished: request.args.data.finished,
+      failed: request.args.data.failed,
+      statusCode: request.args.data.statusCode,
+      initiator,
+      timing,
+      resourceType,
+      mimeType: request.args.data.mimeType,
+      priority: request.args.data.priority,
+      frameId: request.args.data.frame,
+      fromWorker,
+      record: request,
+      // Set below.
+      redirects: undefined,
+      redirectSource: undefined,
+      redirectDestination: undefined,
+      initiatorRequest: undefined,
+    };
+  }
+
+  /**
+   *
+   * @param {Lantern.NetworkRequest[]} lanternRequests
+   */
+  static _linkInitiators(lanternRequests) {
+    /** @type {Map<string, Lantern.NetworkRequest[]>} */
+    const requestsByURL = new Map();
+    for (const request of lanternRequests) {
+      const requests = requestsByURL.get(request.url) || [];
+      requests.push(request);
+      requestsByURL.set(request.url, requests);
+    }
+
+    for (const request of lanternRequests) {
+      const initiatorRequest = PageDependencyGraph.chooseInitiatorRequest(request, requestsByURL);
+      if (initiatorRequest) {
+        request.initiatorRequest = initiatorRequest;
+      }
+    }
+  }
+
+  /**
+   * @param {LH.TraceEvent[]} mainThreadEvents
+   * @param {LH.Trace} trace
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {LH.Artifacts.URL} URL
+   */
+  static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
+    const serviceWorkerThreads = this._findServiceWorkerThreads(trace);
+
     /** @type {Lantern.NetworkRequest[]} */
     const lanternRequests = [];
-
     for (const request of traceEngineResult.data.NetworkRequests.byTime) {
-      if (request.args.data.connectionId === undefined ||
-          request.args.data.connectionReused === undefined) {
-        throw new Error('Trace is too old');
+      const lanternRequest =
+        this._createLanternRequest(traceEngineResult, serviceWorkerThreads, request);
+      if (lanternRequest) {
+        lanternRequests.push(lanternRequest);
       }
-
-      let url;
-      try {
-        // globalThis does exist.
-        // eslint-disable-next-line no-undef
-        url = new globalThis.URL(request.args.data.url);
-      } catch (e) {
-        continue;
-      }
-
-      const timing = request.args.data.timing ? {
-        ...request.args.data.timing,
-        workerFetchStart: -1,
-        workerRespondWithSettled: -1,
-      } : undefined;
-
-      const networkRequestTime = timing ?
-        timing.requestTime * 1000 :
-        request.args.data.syntheticData.downloadStart / 1000;
-
-      const parsedURL = {
-        scheme: url.protocol.split(':')[0],
-        // Intentional, DevTools uses different terminology
-        host: url.hostname,
-        securityOrigin: url.origin,
-      };
-
-      let fromWorker = false;
-      // TODO: should also check pid
-      if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
-        fromWorker = true;
-      }
-      const tids = serviceWorkerThreads.get(request.pid);
-      if (tids?.includes(request.tid)) {
-        fromWorker = true;
-      }
-
-      // `initiator` in the trace does not contain the stack trace for JS-initiated
-      // requests. Instead, that is stored in the `stackTrace` property of the SyntheticNetworkRequest.
-      // There are some minor differences in the fields, accounted for here.
-      // Most importantly, there seems to be fewer frames in the trace than the equivalent
-      // events over the CDP. This results in less accuracy in determining the initiator request,
-      // which means less edges in the graph, which mean worse results. Should fix.
-      /** @type {Lantern.NetworkRequest['initiator']} */
-      const initiator = request.args.data.initiator ?? {type: 'other'};
-      if (request.args.data.stackTrace) {
-        const callFrames = request.args.data.stackTrace.map(f => {
-          return {
-            scriptId: String(f.scriptId),
-            url: f.url,
-            lineNumber: f.lineNumber - 1,
-            columnNumber: f.columnNumber - 1,
-            functionName: f.functionName,
-          };
-        });
-        initiator.stack = {callFrames};
-      }
-
-      let resourceType = request.args.data.resourceType;
-      if (request.args.data.initiator?.fetchType === 'xmlhttprequest') {
-        // @ts-expect-error yes XHR is a valid ResourceType. TypeScript const enums are so unhelpful.
-        resourceType = 'XHR';
-      }
-
-      lanternRequests.push({
-        requestId: request.args.data.requestId,
-        connectionId: request.args.data.connectionId,
-        connectionReused: request.args.data.connectionReused,
-        url: request.args.data.url,
-        protocol: request.args.data.protocol,
-        parsedURL,
-        documentURL: request.args.data.requestingFrameUrl,
-        rendererStartTime: request.ts / 1000,
-        networkRequestTime,
-        responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
-        networkEndTime: request.args.data.syntheticData.finishTime / 1000,
-        transferSize: request.args.data.encodedDataLength,
-        resourceSize: request.args.data.decodedBodyLength,
-        fromDiskCache: request.args.data.syntheticData.isDiskCached,
-        fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
-        isLinkPreload: request.args.data.isLinkPreload,
-        finished: request.args.data.finished,
-        failed: request.args.data.failed,
-        statusCode: request.args.data.statusCode,
-        initiator,
-        timing,
-        resourceType,
-        mimeType: request.args.data.mimeType,
-        priority: request.args.data.priority,
-        frameId: request.args.data.frame,
-        fromWorker,
-        record: request,
-        // Set below.
-        redirects: undefined,
-        redirectSource: undefined,
-        redirectDestination: undefined,
-        initiatorRequest: undefined,
-      });
     }
 
     // TraceEngine consolidates all redirects into a single request object, but lantern needs
@@ -760,20 +804,7 @@ class PageDependencyGraph {
       }
     }
 
-    /** @type {Map<string, Lantern.NetworkRequest[]>} */
-    const requestsByURL = new Map();
-    for (const request of lanternRequests) {
-      const requests = requestsByURL.get(request.url) || [];
-      requests.push(request);
-      requestsByURL.set(request.url, requests);
-    }
-
-    for (const request of lanternRequests) {
-      const initiatorRequest = PageDependencyGraph.chooseInitiatorRequest(request, requestsByURL);
-      if (initiatorRequest) {
-        request.initiatorRequest = initiatorRequest;
-      }
-    }
+    this._linkInitiators(lanternRequests);
 
     // This would already be sorted by rendererStartTime, if not for the redirect unwrapping done
     // above.
