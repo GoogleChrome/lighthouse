@@ -408,12 +408,12 @@ class PageDependencyGraph {
   /**
    * TODO(15841): remove when CDT backend is gone. until then, this is a useful debugging tool
    * to find delta between using CDP or the trace to create the network requests.
-   * 
+   *
    * When a test fails using the trace backend, I enabled this debug method and copied the network
    * requests when CDP was used, then when trace is used, and diff'd them. This method helped
    * remove non-logical differences from the comparison (order of properties, slight rounding
    * discrepancies, removing object cycles, etc).
-   * 
+   *
    * When using for a unit test, make sure to do `.only` so you are getting what you expect.
    * @param {Lantern.NetworkRequest[]} lanternRequests
    * @return {never}
