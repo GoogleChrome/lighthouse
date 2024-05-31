@@ -125,11 +125,6 @@ const FAILING_SELF_REDIRECT = [{
 }];
 
 describe('Performance: Redirects audit', () => {
-  // TODO(15841): fix createTestTrace, cycles
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;

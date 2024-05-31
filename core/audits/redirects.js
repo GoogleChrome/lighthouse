@@ -98,7 +98,7 @@ class Redirects extends Audit {
     const nodeTimingsById = new Map();
     for (const [node, timing] of metricResult.pessimisticEstimate.nodeTimings.entries()) {
       if (node.type === 'network') {
-        nodeTimingsById.set(node.record.requestId, timing);
+        nodeTimingsById.set(node.request.requestId, timing);
       }
     }
 

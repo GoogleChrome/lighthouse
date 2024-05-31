@@ -89,7 +89,7 @@ class UsesHTTP2Audit extends Audit {
       if (node.type !== 'network') return;
       if (!urlsToChange.has(node.record.url)) return;
 
-      originalProtocols.set(node.record.requestId, node.record.protocol);
+      originalProtocols.set(node.request.requestId, node.record.protocol);
       node.request.protocol = 'h2';
     });
 
@@ -98,7 +98,7 @@ class UsesHTTP2Audit extends Audit {
     // Restore the original protocol after we've done our simulation
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const originalProtocol = originalProtocols.get(node.record.requestId);
+      const originalProtocol = originalProtocols.get(node.request.requestId);
       if (originalProtocol === undefined) return;
       node.request.protocol = originalProtocol;
     });

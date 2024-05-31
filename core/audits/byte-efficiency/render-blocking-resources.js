@@ -53,7 +53,7 @@ function getNodesAndTimingByRequestId(nodeTimings) {
   for (const [node, nodeTiming] of nodeTimings) {
     if (node.type !== 'network') continue;
 
-    requestIdToNode.set(node.record.requestId, {node, nodeTiming});
+    requestIdToNode.set(node.request.requestId, {node, nodeTiming});
   }
 
   return requestIdToNode;
