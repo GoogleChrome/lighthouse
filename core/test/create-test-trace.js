@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../lib/lantern/types/lantern.js';
-import {NetworkRequest} from '../lib/network-request.js';
-
 const pid = 1111;
 const tid = 222;
 const browserPid = 13725;
@@ -16,6 +13,7 @@ const defaultUrl = 'https://example.com/';
 const lcpNodeId = 16;
 const lcpImageUrl = 'http://www.example.com/image.png';
 
+/** @typedef {import('../lib/network-request.js').NetworkRequest} NetworkRequest */
 /** @typedef {{ts: number, duration: number, children?: Array<ChildTaskDef>}} TopLevelTaskDef */
 /** @typedef {{ts: number, duration: number, url: string | undefined, eventName?: string}} ChildTaskDef */
 /** @typedef {{frame: string}} ChildFrame */
@@ -75,7 +73,7 @@ function getChildTask({ts, duration, url, eventName}) {
  * generation, e.g a trace that will result in particular long-task quiet
  * periods. Input times should be in milliseconds.
  * @param {TraceOptions} options
- * @return {{traceEvents: LH.TraceEvent[], _testSmuggledNetworkRecords?: Lantern.NetworkRequest[]}}
+ * @return {{traceEvents: LH.TraceEvent[]}}
  */
 function createTestTrace(options) {
   const frameUrl = options.frameUrl ?? defaultUrl;
@@ -246,26 +244,79 @@ function createTestTrace(options) {
     traceEvents.push(getTopLevelTask({ts: options.traceEnd - 1, duration: 1}));
   }
 
-  if (options.networkRecords) {
-    for (const record of options.networkRecords) {
-      if (!record.parsedURL) {
-        const url = new URL(record.url);
-        record.parsedURL = {
-          scheme: url.protocol.split(':')[0],
-          // Intentional, DevTools uses different terminology
-          host: url.hostname,
-          securityOrigin: url.origin,
-        };
-      }
+  const networkRecords = options.networkRecords || [];
+  for (const record of networkRecords) {
+    const willBeRedirected = networkRecords.some(r =>
+        r.requestId === record.requestId + ':redirect');
+    const requestId = record.requestId.replaceAll(':redirect', '');
+
+    if (!willBeRedirected) {
+      traceEvents.push({
+        name: 'ResourceWillSendRequest',
+        ts: record.rendererStartTime * 1000,
+        pid,
+        tid,
+        ph: 'I',
+        cat: 'devtools.timeline',
+        dur: 0,
+        args: {
+          data: {
+            requestId,
+          },
+        },
+      });
     }
+
+    traceEvents.push({
+      name: 'ResourceSendRequest',
+      ts: record.networkRequestTime * 1000,
+      pid,
+      tid,
+      ph: 'I',
+      cat: 'devtools.timeline',
+      dur: 0,
+      args: {
+        data: {
+          requestId,
+          frame: record.frameId,
+          priority: record.priority,
+          requestMethod: record.requestMethod,
+          resourceType: record.resourceType,
+          url: record.url,
+        },
+      },
+    });
+
+    if (willBeRedirected) {
+      continue;
+    }
+
+    traceEvents.push({
+      name: 'ResourceReceiveResponse',
+      ts: record.networkEndTime * 1000,
+      pid,
+      tid,
+      ph: 'I',
+      cat: 'devtools.timeline',
+      dur: 0,
+      args: {
+        data: {
+          requestId,
+          frame: record.frameId,
+          fromCache: record.fromDiskCache || record.fromMemoryCache,
+          fromServiceWorker: record.fromWorker,
+          mimeType: record.mimeType,
+          statusCode: record.statusCode,
+          timing: record.timing,
+          connectionId: record.connectionId ?? 0,
+          connectionReused: record.connectionReused ?? false,
+        },
+      },
+    });
   }
 
   return {
     traceEvents,
-    // TODO(15841): emit events for mock network records instead.
-    _testSmuggledNetworkRecords: options.networkRecords ?
-      options.networkRecords.map(NetworkRequest.asLanternNetworkRequest) :
-      undefined,
   };
 }
 

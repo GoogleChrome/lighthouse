@@ -943,6 +943,16 @@ export interface TraceEvent {
       duration?: number;
       blockingDuration?: number;
       candidateIndex?: number;
+      priority?: string;
+      requestMethod?: string;
+      resourceType?: string;
+      fromCache?: boolean;
+      fromServiceWorker?: boolean;
+      mimeType?: string;
+      statusCode?: number;
+      timing?: any;
+      connectionId?: number;
+      connectionReused?: boolean;
     };
     frame?: string;
     name?: string;

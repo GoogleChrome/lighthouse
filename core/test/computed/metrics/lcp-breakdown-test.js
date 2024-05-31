@@ -27,6 +27,7 @@ function mockData(networkRecords) {
     trace: createTestTrace({
       traceEnd: 6000,
       largestContentfulPaint: 4500,
+      networkRecords,
     }),
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {
@@ -129,7 +130,7 @@ describe('LCPBreakdown', () => {
   });
 
   it('returns breakdown for image LCP', async () => {
-    // TODO(15841): errors "rootRequest not found", fix mock data
+    // TODO(15841): investigate test failure
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
       return;
     }

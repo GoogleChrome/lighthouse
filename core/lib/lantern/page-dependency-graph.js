@@ -517,7 +517,6 @@ class PageDependencyGraph {
     if (!rootRequest) throw new Error('rootRequest not found');
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
     if (!rootNode) throw new Error('rootNode not found');
-
     const mainDocumentRequest =
       NetworkAnalyzer.findLastDocumentForUrl(networkRecords, mainDocumentUrl);
     if (!mainDocumentRequest) throw new Error('mainDocumentRequest not found');
@@ -600,12 +599,6 @@ class PageDependencyGraph {
    * @param {LH.Artifacts.URL} URL
    */
   static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
-    if (trace._testSmuggledNetworkRecords) {
-      const lanternRequests = trace._testSmuggledNetworkRecords;
-      const graph = PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
-      return {graph, records: lanternRequests};
-    }
-
     // TODO: trace engine should handle this.
     const serviceWorkerThreads = new Map();
     for (const event of trace.traceEvents) {
@@ -737,35 +730,32 @@ class PageDependencyGraph {
       const redirects = request.record.args.data.redirects;
       if (!redirects.length) continue;
 
-      const redirectsAsLanternRequests = [];
+      const requestChain = [request];
+
       for (const redirect of redirects) {
         const redirectedRequest = structuredClone(request);
-        redirectsAsLanternRequests.push(structuredClone(request));
         redirectedRequest.networkEndTime = redirect.ts * 1000;
+        redirectedRequest.url = redirect.url;
         lanternRequests.push(redirectedRequest);
+        requestChain.push(redirectedRequest);
       }
-      request.redirects = redirectsAsLanternRequests;
 
-      for (let i = 0; i < redirects.length; i++) {
-        const redirectedRequest = redirectsAsLanternRequests[i];
-        redirectedRequest.redirectDestination = i === redirects.length - 1 ?
-          request :
-          redirectsAsLanternRequests[i + 1];
+      for (let i = 0; i < requestChain.length; i++) {
+        const request = requestChain[i];
         if (i > 0) {
-          redirectsAsLanternRequests[i - 1].redirectSource = redirectedRequest;
-        } else {
-          redirectedRequest.redirectSource = request;
+          request.redirectSource = requestChain[i - 1];
+          request.redirects = requestChain.slice(0, i);
+        }
+        if (i !== requestChain.length - 1) {
+          request.redirectDestination = requestChain[i + 1];
         }
       }
-      request.redirectDestination = redirectsAsLanternRequests[0];
 
       // Apply the `:redirect` requestId convention: only redirects[0].requestId is the actual
       // requestId, all the rest have n occurences of `:redirect` as a suffix.
-      for (let i = 1; i < redirects.length; i++) {
-        redirectsAsLanternRequests[i].requestId = `${redirectsAsLanternRequests[i - 1]}:redirect`;
+      for (let i = 1; i < requestChain.length; i++) {
+        requestChain[i].requestId = `${requestChain[i - 1].requestId}:redirect`;
       }
-      const lastRedirect = redirectsAsLanternRequests[redirectsAsLanternRequests.length - 1];
-      request.requestId = `${lastRedirect.requestId}:redirect`;
     }
 
     /** @type {Map<string, Lantern.NetworkRequest[]>} */
