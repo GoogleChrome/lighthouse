@@ -1,4 +1,5 @@
 # Running Lighthouse on Authenticated Pages with Puppeteer
+# Testing my code for get clone
 
 If you just want to view the code for using Lighthouse with Puppeteer, see [example-lh-auth.js](./example-lh-auth.js).
 
