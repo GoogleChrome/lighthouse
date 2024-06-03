@@ -608,9 +608,13 @@ class PageDependencyGraph {
   static _findWorkerThreads(trace) {
     // TODO: WorkersHandler in TraceEngine needs to be updated to also include `pid` (only had `tid`).
     const workerThreads = new Map();
+    const workerCreationEvents = ['ServiceWorker thread', 'DedicatedWorker thread'];
 
     for (const event of trace.traceEvents) {
-      if (!(event.name === 'thread_name' && event.args.name?.endsWith(' thread'))) {
+      if (event.name !== 'thread_name' || !event.args.name) {
+        continue;
+      }
+      if (!workerCreationEvents.includes(event.args.name)) {
         continue;
       }
 
