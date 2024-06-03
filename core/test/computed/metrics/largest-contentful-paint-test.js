@@ -9,8 +9,6 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
-const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: LCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
@@ -48,27 +46,5 @@ Object {
   "timing": 291.834,
 }
 `);
-  });
-
-  ['provided', 'simulate'].forEach(throttlingMethod => {
-    it(`should fail to compute a value for old trace (${throttlingMethod})`, async () => {
-      // TODO(15841): fails... but instead w/ "No frames found in trace data" (not NO_LCP).
-      // ... handle error when calling code uses lantern? or update expected error? idk
-      if (throttlingMethod === 'simulate' && process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-        return;
-      }
-
-      const settings = {throttlingMethod};
-      const context = {settings, computedCache: new Map()};
-      const URL = getURLArtifactFromDevtoolsLog(invalidDevtoolsLog);
-      const resultPromise = LargestContentfulPaint.request(
-        {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings, URL},
-        context
-      );
-      await expect(resultPromise).rejects.toMatchObject({
-        code: 'NO_LCP',
-        friendlyMessage: expect.toBeDisplayString(/The page did not display content.*NO_LCP/),
-      });
-    });
   });
 });

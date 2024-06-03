@@ -62,6 +62,9 @@ jobs:
     - name: yarn unit
       if: ${{ matrix.node != env.LATEST_NODE }}
       run: yarn unit:ci
+    - name: yarn unit-lantern-trace
+      if: ${{ matrix.node != env.LATEST_NODE }}
+      run: yarn unit-lantern-trace:ci
 
     # Only gather coverage on latest node, where c8 is the most accurate.
     - name: yarn unit:cicoverage

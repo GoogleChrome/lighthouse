@@ -664,10 +664,10 @@ class PageDependencyGraph {
     }
 
     const timing = request.args.data.timing ? {
-      ...request.args.data.timing,
       // These two timings are not included in the trace.
       workerFetchStart: -1,
       workerRespondWithSettled: -1,
+      ...request.args.data.timing,
     } : undefined;
 
     const networkRequestTime = timing ?
@@ -691,7 +691,8 @@ class PageDependencyGraph {
     // There are some minor differences in the fields, accounted for here.
     // Most importantly, there seems to be fewer frames in the trace than the equivalent
     // events over the CDP. This results in less accuracy in determining the initiator request,
-    // which means less edges in the graph, which mean worse results. Should fix.
+    // which means less edges in the graph, which mean worse results.
+    // TODO: Should fix in Chromium.
     /** @type {Lantern.NetworkRequest['initiator']} */
     const initiator = request.args.data.initiator ?? {type: 'other'};
     if (request.args.data.stackTrace) {
