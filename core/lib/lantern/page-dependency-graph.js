@@ -601,27 +601,28 @@ class PageDependencyGraph {
   }
 
   /**
+   * Returns a map of `pid` -> `tid[]`.
    * @param {LH.Trace} trace
    * @return {Map<number, number[]>}
    */
-  static _findServiceWorkerThreads(trace) {
-    // TODO: trace engine should provide a map of service workers, like it does for workers.
-    const serviceWorkerThreads = new Map();
+  static _findWorkerThreads(trace) {
+    // TODO: WorkersHandler in TraceEngine needs to be updated to also include `pid` (only had `tid`).
+    const workerThreads = new Map();
 
     for (const event of trace.traceEvents) {
-      if (!(event.name === 'thread_name' && event.args.name === 'ServiceWorker thread')) {
+      if (!(event.name === 'thread_name' && event.args.name?.endsWith(' thread'))) {
         continue;
       }
 
-      const tids = serviceWorkerThreads.get(event.pid);
+      const tids = workerThreads.get(event.pid);
       if (tids) {
         tids.push(event.tid);
       } else {
-        serviceWorkerThreads.set(event.pid, [event.tid]);
+        workerThreads.set(event.pid, [event.tid]);
       }
     }
 
-    return serviceWorkerThreads;
+    return workerThreads;
   }
 
   /**
@@ -641,11 +642,11 @@ class PageDependencyGraph {
 
   /**
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
-   * @param {Map<number, number[]>} serviceWorkerThreads
+   * @param {Map<number, number[]>} workerThreads
    * @param {import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest} request
    * @return {Lantern.NetworkRequest=}
    */
-  static _createLanternRequest(traceEngineResult, serviceWorkerThreads, request) {
+  static _createLanternRequest(traceEngineResult, workerThreads, request) {
     if (request.args.data.connectionId === undefined ||
         request.args.data.connectionReused === undefined) {
       throw new Error('Trace is too old');
@@ -670,12 +671,14 @@ class PageDependencyGraph {
       request.args.data.syntheticData.downloadStart / 1000;
 
     let fromWorker = false;
-    // TODO: should also check pid
-    if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
+    const tids = workerThreads.get(request.pid);
+    if (tids?.includes(request.tid)) {
       fromWorker = true;
     }
-    const tids = serviceWorkerThreads.get(request.pid);
-    if (tids?.includes(request.tid)) {
+
+    // TraceEngine collects worker thread ids in a different manner than `workerThreads` does.
+    // AFAIK these should be equivalent, but in case they are not let's also check this for now.
+    if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
       fromWorker = true;
     }
 
@@ -770,13 +773,12 @@ class PageDependencyGraph {
    * @param {LH.Artifacts.URL} URL
    */
   static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
-    const serviceWorkerThreads = this._findServiceWorkerThreads(trace);
+    const workerThreads = this._findWorkerThreads(trace);
 
     /** @type {Lantern.NetworkRequest[]} */
     const lanternRequests = [];
     for (const request of traceEngineResult.data.NetworkRequests.byTime) {
-      const lanternRequest =
-        this._createLanternRequest(traceEngineResult, serviceWorkerThreads, request);
+      const lanternRequest = this._createLanternRequest(traceEngineResult, workerThreads, request);
       if (lanternRequest) {
         lanternRequests.push(lanternRequest);
       }
