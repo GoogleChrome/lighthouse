@@ -380,7 +380,7 @@ const UIStrings = {
   /**
    * @description Description text for not restored reason NotMainFrame.
    */
-  contentWebAuthenticationAPI: 'Pages that use WebAuthetication API are not eligible for back/forward cache.',
+  contentWebAuthenticationAPI: 'Pages that use WebAuthentication API are not eligible for back/forward cache.',
   /**
    * @description Description text for not restored reason NotMainFrame.
    */
