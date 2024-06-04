@@ -321,9 +321,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       .mockResponse('Runtime.callFunctionOn', {result: {value: compositedNodeData}});
 
     const gatherer = new TraceElementsGatherer();
-    gatherer.animationIdToName.set('2', 'alpha');
-    gatherer.animationIdToName.set('3', 'beta');
-    gatherer.animationIdToName.set('4', 'gamma');
+    gatherer.animationIdToName.set('3', 'alpha');
+    gatherer.animationIdToName.set('4', 'beta');
+    gatherer.animationIdToName.set('2', 'gamma');
 
     const result = await gatherer.getArtifact({
       driver,
@@ -335,11 +335,11 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     expect(animationTraceElements).toHaveLength(2);
     expect(animationTraceElements[0].animations).toEqual([
       {failureReasonsMask: 8224, unsupportedProperties: ['width']},
-      {name: 'beta', failureReasonsMask: 8224, unsupportedProperties: ['height']},
-      {name: 'gamma', failureReasonsMask: 8224, unsupportedProperties: ['font-size']},
+      {name: 'alpha', failureReasonsMask: 8224, unsupportedProperties: ['height']},
+      {name: 'beta', failureReasonsMask: 8224, unsupportedProperties: ['font-size']},
     ]);
     expect(animationTraceElements[1].animations).toEqual([
-      {name: 'alpha', failureReasonsMask: 0, unsupportedProperties: undefined},
+      {name: 'gamma', failureReasonsMask: 0, unsupportedProperties: undefined},
     ]);
   });
 
