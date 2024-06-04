@@ -718,7 +718,7 @@ class PageDependencyGraph {
     }
 
     // TODO: set decodedBodyLength for data urls in Trace Engine.
-    let resourceSize = request.args.data.decodedBodyLength;
+    let resourceSize = request.args.data.decodedBodyLength ?? 0;
     if (url.protocol === 'data:' && resourceSize === 0) {
       const needle = 'base64,';
       const index = url.pathname.indexOf(needle);
@@ -830,6 +830,9 @@ class PageDependencyGraph {
         redirectedRequest.parsedURL = this._createParsedUrl(redirect.url);
         // TODO: TraceEngine is not retaining the actual status code.
         redirectedRequest.statusCode = 302;
+        redirectedRequest.resourceType = undefined;
+        // TODO: TraceEngine is not retaining transfer size of redirected request.
+        redirectedRequest.transferSize = 400;
         requestChain.push(redirectedRequest);
         lanternRequests.push(redirectedRequest);
       }
