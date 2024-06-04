@@ -183,7 +183,7 @@ Object {
 `);
     expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`1399`);
     assert.equal(output.details.items.length, 6);
-    assert.equal(output.score, 1);
+    assert.equal(output.score, 0.97);
   });
 
   it('should get no data when no events are present', () => {
