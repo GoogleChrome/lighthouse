@@ -130,11 +130,6 @@ describe('LCPBreakdown', () => {
   });
 
   it('returns breakdown for image LCP', async () => {
-    // TODO(15841): fix createTestTrace, cycles
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const networkRecords = mockNetworkRecords();
     const data = mockData(networkRecords);
 
