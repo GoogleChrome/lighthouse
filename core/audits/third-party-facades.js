@@ -225,7 +225,7 @@ class ThirdPartyFacades extends Audit {
         itemCount: results.length,
       }),
       details: Audit.makeTableDetails(headings, results),
-      metricSavings: {TBT: tbtImpact},
+      metricSavings: {TBT: Math.round(tbtImpact)},
     };
   }
 }

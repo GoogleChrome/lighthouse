@@ -223,7 +223,7 @@ class ThirdPartySummary extends Audit {
       }),
       details,
       metricSavings: {
-        TBT: overallSummary.tbtImpact,
+        TBT: Math.round(overallSummary.tbtImpact),
       },
     };
   }

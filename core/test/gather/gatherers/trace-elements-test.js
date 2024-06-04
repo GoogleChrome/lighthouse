@@ -9,7 +9,7 @@ import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {flushAllTimersAndMicrotasks, readJson, timers} from '../../test-utils.js';
 import {createMockDriver} from '../mock-driver.js';
 
-const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json', import.meta);
+const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json.gz', import.meta);
 
 const RootCauses = {layoutShifts: {}};
 
@@ -335,11 +335,11 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     expect(animationTraceElements).toHaveLength(2);
     expect(animationTraceElements[0].animations).toEqual([
       {failureReasonsMask: 8224, unsupportedProperties: ['width']},
-      {name: 'alpha', failureReasonsMask: 8224, unsupportedProperties: ['height']},
-      {name: 'beta', failureReasonsMask: 8224, unsupportedProperties: ['font-size']},
+      {name: 'beta', failureReasonsMask: 8224, unsupportedProperties: ['height']},
+      {name: 'gamma', failureReasonsMask: 8224, unsupportedProperties: ['font-size']},
     ]);
     expect(animationTraceElements[1].animations).toEqual([
-      {name: 'gamma', failureReasonsMask: 0, unsupportedProperties: undefined},
+      {name: 'alpha', failureReasonsMask: 0, unsupportedProperties: undefined},
     ]);
   });
 
