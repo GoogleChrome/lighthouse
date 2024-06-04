@@ -34,7 +34,7 @@ const NodeState = {
   Complete: 3,
 };
 
-/** @type {Record<NetworkNode['record']['priority'], number>} */
+/** @type {Record<NetworkNode['request']['priority'], number>} */
 const PriorityStartTimePenalty = {
   VeryHigh: 0,
   High: 0.25,

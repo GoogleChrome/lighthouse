@@ -222,7 +222,7 @@ class PrioritizeLcpImage extends Audit {
       wastedMs,
       results: [{
         node: Audit.makeNodeItem(lcpElement.node),
-        url: lcpNode.record.url,
+        url: lcpNode.request.url,
         wastedMs,
       }],
     };

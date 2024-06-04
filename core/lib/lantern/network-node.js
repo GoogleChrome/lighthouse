@@ -18,7 +18,6 @@ const NON_NETWORK_SCHEMES = [
 ];
 
 /**
- * Use `NetworkRequest.isNonNetworkRequest(req)` if working with a request.
  * Note: the `protocol` field from CDP can be 'h2', 'http', (not 'https'!) or it'll be url's scheme.
  *   https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/protocol/network_handler.cc;l=598-611;drc=56d4a9a9deb30be73adcee8737c73bcb2a5ab64f
  * However, a `new URL(href).protocol` has a colon suffix.

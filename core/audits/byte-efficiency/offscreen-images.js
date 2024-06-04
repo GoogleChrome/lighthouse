@@ -128,7 +128,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       if (node.type === 'cpu' && timing.duration >= 50) {
         lastLongTaskStartTime = Math.max(lastLongTaskStartTime, timing.startTime);
       } else if (node.type === 'network') {
-        startTimesByURL.set(node.record.url, timing.startTime);
+        startTimesByURL.set(node.request.url, timing.startTime);
       }
     }
 

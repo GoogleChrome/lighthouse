@@ -87,9 +87,9 @@ class UsesHTTP2Audit extends Audit {
     const originalProtocols = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      if (!urlsToChange.has(node.record.url)) return;
+      if (!urlsToChange.has(node.request.url)) return;
 
-      originalProtocols.set(node.request.requestId, node.record.protocol);
+      originalProtocols.set(node.request.requestId, node.request.protocol);
       node.request.protocol = 'h2';
     });
 

@@ -247,7 +247,7 @@ class RenderBlockingResources extends Audit {
     ));
 
     // Add the inlined bytes to the HTML response
-    const originalTransferSize = minimalFCPGraph.record.transferSize;
+    const originalTransferSize = minimalFCPGraph.request.transferSize;
     const safeTransferSize = originalTransferSize || 0;
     minimalFCPGraph.request.transferSize = safeTransferSize + totalChildNetworkBytes;
     const estimateAfterInline = simulator.simulate(minimalFCPGraph).timeInMs;
