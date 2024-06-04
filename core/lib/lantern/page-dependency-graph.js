@@ -813,19 +813,35 @@ class PageDependencyGraph {
       const requestChain = [];
       for (const redirect of redirects) {
         const redirectedRequest = structuredClone(request);
-        if (redirectedRequest.timing) {
-          // TODO: These are surely wrong for when there is more than one redirect. Would be
-          // simpler if each redirect remembered it's `timing` object in this `redirects` array.
-          redirectedRequest.timing.requestTime = redirect.ts / 1000 / 1000;
-          redirectedRequest.timing.receiveHeadersStart -= redirect.dur / 1000 / 1000;
-          redirectedRequest.timing.receiveHeadersEnd -= redirect.dur / 1000 / 1000;
-          redirectedRequest.rendererStartTime = redirect.ts / 1000;
-          redirectedRequest.networkRequestTime = redirect.ts / 1000;
-          redirectedRequest.networkEndTime = (redirect.ts + redirect.dur) / 1000;
-          redirectedRequest.responseHeadersEndTime =
-            redirectedRequest.timing.requestTime * 1000 +
-            redirectedRequest.timing.receiveHeadersEnd;
-        }
+
+        redirectedRequest.networkRequestTime = redirect.ts / 1000;
+        redirectedRequest.rendererStartTime = redirectedRequest.networkRequestTime;
+
+        redirectedRequest.networkEndTime = (redirect.ts + redirect.dur) / 1000;
+        redirectedRequest.responseHeadersEndTime = redirectedRequest.networkEndTime;
+
+        redirectedRequest.timing = {
+          requestTime: redirectedRequest.networkRequestTime / 1000,
+          receiveHeadersStart: redirectedRequest.responseHeadersEndTime,
+          receiveHeadersEnd: redirectedRequest.responseHeadersEndTime,
+          proxyStart: -1,
+          proxyEnd: -1,
+          dnsStart: -1,
+          dnsEnd: -1,
+          connectStart: -1,
+          connectEnd: -1,
+          sslStart: -1,
+          sslEnd: -1,
+          sendStart: -1,
+          sendEnd: -1,
+          workerStart: -1,
+          workerReady: -1,
+          workerFetchStart: -1,
+          workerRespondWithSettled: -1,
+          pushStart: -1,
+          pushEnd: -1,
+        };
+
         redirectedRequest.url = redirect.url;
         redirectedRequest.parsedURL = this._createParsedUrl(redirect.url);
         // TODO: TraceEngine is not retaining the actual status code.
