@@ -18,11 +18,6 @@ const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
-  // TODO(15841): investigate failures
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   let simulator;
   let metricComputationInput;
 
@@ -122,6 +117,11 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should estimate the FCP & LCP impact', async () => {
+    // TODO(15841): investigate failures
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [

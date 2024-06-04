@@ -712,6 +712,19 @@ class PageDependencyGraph {
     if (request.args.data.initiator?.fetchType === 'xmlhttprequest') {
       // @ts-expect-error yes XHR is a valid ResourceType. TypeScript const enums are so unhelpful.
       resourceType = 'XHR';
+    } else if (request.args.data.initiator?.fetchType === 'fetch') {
+      // @ts-expect-error yes Fetch is a valid ResourceType. TypeScript const enums are so unhelpful.
+      resourceType = 'Fetch';
+    }
+
+    // TODO: set decodedBodyLength for data urls in Trace Engine.
+    let resourceSize = request.args.data.decodedBodyLength;
+    if (url.protocol === 'data:' && resourceSize === 0) {
+      const needle = 'base64,';
+      const index = url.pathname.indexOf(needle);
+      if (index !== -1) {
+        resourceSize = atob(url.pathname.substring(index + needle.length)).length;
+      }
     }
 
     return {
@@ -727,7 +740,7 @@ class PageDependencyGraph {
       responseHeadersEndTime: request.args.data.syntheticData.downloadStart / 1000,
       networkEndTime: request.args.data.syntheticData.finishTime / 1000,
       transferSize: request.args.data.encodedDataLength,
-      resourceSize: request.args.data.decodedBodyLength,
+      resourceSize,
       fromDiskCache: request.args.data.syntheticData.isDiskCached,
       fromMemoryCache: request.args.data.syntheticData.isMemoryCached,
       isLinkPreload: request.args.data.isLinkPreload,

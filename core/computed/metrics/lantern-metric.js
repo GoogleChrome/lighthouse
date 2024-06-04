@@ -52,6 +52,7 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const {trace, URL} = data;
+  // TODO(15841): use computed artifact.
   const {graph} = await createGraphFromTrace(URL, trace, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));

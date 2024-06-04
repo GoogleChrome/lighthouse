@@ -120,7 +120,7 @@ class ByteEfficiencyAudit extends Audit {
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const wastedBytes = wastedBytesByUrl.get(node.record.url);
+      const wastedBytes = wastedBytesByUrl.get(node.request.url);
       if (!wastedBytes) return;
 
       const original = node.request.transferSize;
