@@ -18,19 +18,17 @@ describe('DOMSize audit', () => {
 
   beforeEach(() => {
     const mainDocumentUrl = 'https://example.com/';
-
+    const networkRecords = [{url: mainDocumentUrl, priority: 'High'}];
     const trace = createTestTrace({
       topLevelTasks: [
         {ts: 1000, duration: 1000, children: [
           {ts: 1100, duration: 200, eventName: 'ScheduleStyleRecalculation'},
         ]},
       ],
+      networkRecords,
     });
 
-    const devtoolsLog = networkRecordsToDevtoolsLog([{
-      url: mainDocumentUrl,
-      priority: 'High',
-    }]);
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     artifacts = {
       DOMStats: {
@@ -55,11 +53,6 @@ describe('DOMSize audit', () => {
   });
 
   it('calculates score hitting mid distribution', async () => {
-    // TODO(15841): investigate failures
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const auditResult = await DOMSize.audit(artifacts, context);
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.numericValue, 1500);
