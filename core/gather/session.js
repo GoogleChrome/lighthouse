@@ -128,7 +128,7 @@ class ProtocolSession extends CrdpEventEmitter {
       timeout: timeoutMs + PPTR_BUFFER,
     }).catch((error) => {
       log.formatProtocol('method <= browser ERR', {method}, 'error');
-      throw LighthouseError.fromProtocolMessage(method, error);
+      return Promise.reject(LighthouseError.fromProtocolMessage(method, error));
     });
     const resultWithTimeoutPromise =
       Promise.race([resultPromise, timeoutPromise, this._targetCrashedPromise]);
