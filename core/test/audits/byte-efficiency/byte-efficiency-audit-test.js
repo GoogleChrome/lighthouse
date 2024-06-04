@@ -117,11 +117,6 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should estimate the FCP & LCP impact', async () => {
-    // TODO(15841): investigate failures
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [
@@ -131,7 +126,7 @@ describe('Byte efficiency base audit', () => {
     }, simulator, metricComputationInput, {computedCache: new Map()});
 
     assert.equal(result.metricSavings.FCP, 900);
-    assert.equal(result.metricSavings.LCP, 1350);
+    assert.equal(result.metricSavings.LCP, 900);
   });
 
   it('should use LCP request savings if larger than LCP graph savings', async () => {

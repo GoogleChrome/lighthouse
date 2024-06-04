@@ -246,13 +246,6 @@ function createTestTrace(options) {
     traceEvents.push(getTopLevelTask({ts: options.traceEnd - 1, duration: 1}));
   }
 
-  // TODO(15841): why does "should estimate the FCP & LCP impact" in byte-efficiency-audit-test.js
-  // fail even when not creating records from trace? For now... just don't emit these events for
-  // when using CDP.
-  if (!process.env.INTERNAL_LANTERN_USE_TRACE) {
-    options.networkRecords = undefined;
-  }
-
   const networkRecords = options.networkRecords || [];
   for (const record of networkRecords) {
     // `requestId` is optional in the input test records.
