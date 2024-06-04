@@ -58,7 +58,7 @@ class DNSCache {
   }
 
   /**
-   * Forcefully sets the DNS resolution time for a record.
+   * Forcefully sets the DNS resolution time for a request.
    * Useful for testing and alternate execution simulations.
    *
    * @param {string} domain

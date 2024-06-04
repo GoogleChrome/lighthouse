@@ -88,30 +88,30 @@ class NetworkAnalyzer {
     return summaryByKey;
   }
 
-  /** @typedef {{record: Lantern.NetworkRequest, timing: LH.Crdp.Network.ResourceTiming, connectionReused?: boolean}} RequestInfo */
+  /** @typedef {{request: Lantern.NetworkRequest, timing: LH.Crdp.Network.ResourceTiming, connectionReused?: boolean}} RequestInfo */
 
   /**
-   * @param {Lantern.NetworkRequest[]} records
+   * @param {Lantern.NetworkRequest[]} requests
    * @param {(e: RequestInfo) => number | number[] | undefined} iteratee
    * @return {Map<string, number[]>}
    */
-  static _estimateValueByOrigin(records, iteratee) {
-    const connectionWasReused = NetworkAnalyzer.estimateIfConnectionWasReused(records);
-    const groupedByOrigin = NetworkAnalyzer.groupByOrigin(records);
+  static _estimateValueByOrigin(requests, iteratee) {
+    const connectionWasReused = NetworkAnalyzer.estimateIfConnectionWasReused(requests);
+    const groupedByOrigin = NetworkAnalyzer.groupByOrigin(requests);
 
     const estimates = new Map();
-    for (const [origin, originRecords] of groupedByOrigin.entries()) {
+    for (const [origin, originRequests] of groupedByOrigin.entries()) {
       /** @type {number[]} */
       let originEstimates = [];
 
-      for (const record of originRecords) {
-        const timing = record.timing;
+      for (const request of originRequests) {
+        const timing = request.timing;
         if (!timing) continue;
 
         const value = iteratee({
-          record,
+          request,
           timing,
-          connectionReused: connectionWasReused.get(record.requestId),
+          connectionReused: connectionWasReused.get(request.requestId),
         });
         if (typeof value !== 'undefined') {
           originEstimates = originEstimates.concat(value);
@@ -137,11 +137,11 @@ class NetworkAnalyzer {
    * @return {number[]|number|undefined}
    */
   static _estimateRTTViaConnectionTiming(info) {
-    const {timing, connectionReused, record} = info;
+    const {timing, connectionReused, request} = info;
     if (connectionReused) return;
 
     const {connectStart, sslStart, sslEnd, connectEnd} = timing;
-    if (connectEnd >= 0 && connectStart >= 0 && record.protocol.startsWith('h3')) {
+    if (connectEnd >= 0 && connectStart >= 0 && request.protocol.startsWith('h3')) {
       // These values are equal to sslStart and sslEnd for h3.
       return connectEnd - connectStart;
     } else if (sslStart >= 0 && sslEnd >= 0 && sslStart !== connectStart) {
@@ -161,17 +161,17 @@ class NetworkAnalyzer {
    * @return {number|undefined}
    */
   static _estimateRTTViaDownloadTiming(info) {
-    const {timing, connectionReused, record} = info;
+    const {timing, connectionReused, request} = info;
     if (connectionReused) return;
 
     // Only look at downloads that went past the initial congestion window
-    if (record.transferSize <= INITIAL_CWD) return;
+    if (request.transferSize <= INITIAL_CWD) return;
     if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
 
     // Compute the amount of time downloading everything after the first congestion window took
-    const totalTime = record.networkEndTime - record.networkRequestTime;
+    const totalTime = request.networkEndTime - request.networkRequestTime;
     const downloadTimeAfterFirstByte = totalTime - timing.receiveHeadersEnd;
-    const numberOfRoundTrips = Math.log2(record.transferSize / INITIAL_CWD);
+    const numberOfRoundTrips = Math.log2(request.transferSize / INITIAL_CWD);
 
     // Ignore requests that required a high number of round trips since bandwidth starts to play
     // a larger role than latency
@@ -190,7 +190,7 @@ class NetworkAnalyzer {
    * @return {number|undefined}
    */
   static _estimateRTTViaSendStartTiming(info) {
-    const {timing, connectionReused, record} = info;
+    const {timing, connectionReused, request} = info;
     if (connectionReused) return;
 
     if (!Number.isFinite(timing.sendStart) || timing.sendStart < 0) return;
@@ -198,8 +198,8 @@ class NetworkAnalyzer {
     // Assume everything before sendStart was just DNS + (SSL)? + TCP handshake
     // 1 RT for DNS, 1 RT (maybe) for SSL, 1 RT for TCP
     let roundTrips = 1;
-    if (!record.protocol.startsWith('h3')) roundTrips += 1; // TCP
-    if (record.parsedURL.scheme === 'https') roundTrips += 1;
+    if (!request.protocol.startsWith('h3')) roundTrips += 1; // TCP
+    if (request.parsedURL.scheme === 'https') roundTrips += 1;
     return timing.sendStart / roundTrips;
   }
 
@@ -213,12 +213,12 @@ class NetworkAnalyzer {
    * @return {number|undefined}
    */
   static _estimateRTTViaHeadersEndTiming(info) {
-    const {timing, connectionReused, record} = info;
+    const {timing, connectionReused, request} = info;
     if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
-    if (!record.resourceType) return;
+    if (!request.resourceType) return;
 
     const serverResponseTimePercentage =
-      SERVER_RESPONSE_PERCENTAGE_OF_TTFB[record.resourceType] ||
+      SERVER_RESPONSE_PERCENTAGE_OF_TTFB[request.resourceType] ||
       DEFAULT_SERVER_RESPONSE_PERCENTAGE;
     const estimatedServerResponseTime = timing.receiveHeadersEnd * serverResponseTimePercentage;
 
@@ -230,8 +230,8 @@ class NetworkAnalyzer {
     // TTFB = DNS + (SSL)? + TCP handshake + 1 RT for request + server response time
     if (!connectionReused) {
       roundTrips += 1; // DNS
-      if (!record.protocol.startsWith('h3')) roundTrips += 1; // TCP
-      if (record.parsedURL.scheme === 'https') roundTrips += 1; // SSL
+      if (!request.protocol.startsWith('h3')) roundTrips += 1; // TCP
+      if (request.parsedURL.scheme === 'https') roundTrips += 1; // SSL
     }
 
     // subtract out our estimated server response time
@@ -246,28 +246,28 @@ class NetworkAnalyzer {
    * @return {Map<string, number[]>}
    */
   static _estimateResponseTimeByOrigin(records, rttByOrigin) {
-    return NetworkAnalyzer._estimateValueByOrigin(records, ({record, timing}) => {
-      if (record.serverResponseTime !== undefined) return record.serverResponseTime;
+    return NetworkAnalyzer._estimateValueByOrigin(records, ({request, timing}) => {
+      if (request.serverResponseTime !== undefined) return request.serverResponseTime;
 
       if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
       if (!Number.isFinite(timing.sendEnd) || timing.sendEnd < 0) return;
 
       const ttfb = timing.receiveHeadersEnd - timing.sendEnd;
-      const origin = record.parsedURL.securityOrigin;
+      const origin = request.parsedURL.securityOrigin;
       const rtt = rttByOrigin.get(origin) || rttByOrigin.get(NetworkAnalyzer.SUMMARY) || 0;
       return Math.max(ttfb - rtt, 0);
     });
   }
 
   /**
-   * @param {Lantern.NetworkRequest[]} records
+   * @param {Lantern.NetworkRequest[]} requests
    * @return {boolean}
    */
-  static canTrustConnectionInformation(records) {
+  static canTrustConnectionInformation(requests) {
     const connectionIdWasStarted = new Map();
-    for (const record of records) {
-      const started = connectionIdWasStarted.get(record.connectionId) || !record.connectionReused;
-      connectionIdWasStarted.set(record.connectionId, started);
+    for (const request of requests) {
+      const started = connectionIdWasStarted.get(request.connectionId) || !request.connectionReused;
+      connectionIdWasStarted.set(request.connectionId, started);
     }
 
     // We probably can't trust the network information if all the connection IDs were the same
@@ -289,10 +289,10 @@ class NetworkAnalyzer {
 
     // Check if we can trust the connection information coming from the protocol
     if (!forceCoarseEstimates && NetworkAnalyzer.canTrustConnectionInformation(records)) {
-      return new Map(records.map(record => [record.requestId, !!record.connectionReused]));
+      return new Map(records.map(request => [request.requestId, !!request.connectionReused]));
     }
 
-    // Otherwise we're on our own, a record may not have needed a fresh connection if...
+    // Otherwise we're on our own, a request may not have needed a fresh connection if...
     //   - It was not the first request to the domain
     //   - It was H2
     //   - It was after the first request to the domain ended
@@ -300,13 +300,13 @@ class NetworkAnalyzer {
     const groupedByOrigin = NetworkAnalyzer.groupByOrigin(records);
     for (const [_, originRecords] of groupedByOrigin.entries()) {
       const earliestReusePossible = originRecords
-        .map(record => record.networkEndTime)
+        .map(request => request.networkEndTime)
         .reduce((a, b) => Math.min(a, b), Infinity);
 
-      for (const record of originRecords) {
+      for (const request of originRecords) {
         connectionWasReused.set(
-          record.requestId,
-          record.networkRequestTime >= earliestReusePossible || record.protocol === 'h2'
+          request.requestId,
+          request.networkRequestTime >= earliestReusePossible || request.protocol === 'h2'
         );
       }
 
@@ -343,7 +343,7 @@ class NetworkAnalyzer {
     const groupedByOrigin = NetworkAnalyzer.groupByOrigin(records);
 
     const estimatesByOrigin = new Map();
-    for (const [origin, originRecords] of groupedByOrigin.entries()) {
+    for (const [origin, originRequests] of groupedByOrigin.entries()) {
       /** @type {number[]} */
       const originEstimates = [];
 
@@ -352,14 +352,14 @@ class NetworkAnalyzer {
        */
       // eslint-disable-next-line no-inner-declarations
       function collectEstimates(estimator, multiplier = 1) {
-        for (const record of originRecords) {
-          const timing = record.timing;
+        for (const request of originRequests) {
+          const timing = request.timing;
           if (!timing) continue;
 
           const estimates = estimator({
-            record,
+            request,
             timing,
-            connectionReused: connectionWasReused.get(record.requestId),
+            connectionReused: connectionWasReused.get(request.requestId),
           });
           if (estimates === undefined) continue;
 
@@ -427,9 +427,9 @@ class NetworkAnalyzer {
 
 
   /**
-   * Computes the average throughput for the given records in bits/second.
+   * Computes the average throughput for the given requests in bits/second.
    * Excludes data URI, failed or otherwise incomplete, and cached requests.
-   * Returns Infinity if there were no analyzable network records.
+   * Returns Infinity if there were no analyzable network requests.
    *
    * @param {Lantern.NetworkRequest[]} records
    * @return {number}
@@ -438,21 +438,21 @@ class NetworkAnalyzer {
     let totalBytes = 0;
 
     // We will measure throughput by summing the total bytes downloaded by the total time spent
-    // downloading those bytes. We slice up all the network records into start/end boundaries, so
+    // downloading those bytes. We slice up all the network requests into start/end boundaries, so
     // it's easier to deal with the gaps in downloading.
-    const timeBoundaries = records.reduce((boundaries, record) => {
-      const scheme = record.parsedURL?.scheme;
+    const timeBoundaries = records.reduce((boundaries, request) => {
+      const scheme = request.parsedURL?.scheme;
       // Requests whose bodies didn't come over the network or didn't completely finish will mess
       // with the computation, just skip over them.
-      if (scheme === 'data' || record.failed || !record.finished ||
-          record.statusCode > 300 || !record.transferSize) {
+      if (scheme === 'data' || request.failed || !request.finished ||
+          request.statusCode > 300 || !request.transferSize) {
         return boundaries;
       }
 
       // If we've made it this far, all the times we need should be valid (i.e. not undefined/-1).
-      totalBytes += record.transferSize;
-      boundaries.push({time: record.responseHeadersEndTime / 1000, isStart: true});
-      boundaries.push({time: record.networkEndTime / 1000, isStart: false});
+      totalBytes += request.transferSize;
+      boundaries.push({time: request.responseHeadersEndTime / 1000, isStart: true});
+      boundaries.push({time: request.networkEndTime / 1000, isStart: false});
       return boundaries;
     }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);
 

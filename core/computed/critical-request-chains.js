@@ -105,19 +105,19 @@ class CriticalRequestChains {
     graph.traverse((node, traversalPath) => {
       seenNodes.add(node);
       if (node.type !== 'network') return;
-      if (!CriticalRequestChains.isCritical(node.record, mainResource)) return;
+      if (!CriticalRequestChains.isCritical(node.rawRequest, mainResource)) return;
 
       const networkPath = traversalPath
         .filter(/** @return {n is LH.Gatherer.Simulation.GraphNetworkNode} */
           n => n.type === 'network')
         .reverse()
-        .map(node => node.record);
+        .map(node => node.rawRequest);
 
       // Ignore if some ancestor is not a critical request.
       if (networkPath.some(r => !CriticalRequestChains.isCritical(r, mainResource))) return;
 
       // Ignore non-network things (like data urls).
-      if (NetworkRequest.isNonNetworkRequest(node.record)) return;
+      if (NetworkRequest.isNonNetworkRequest(node.rawRequest)) return;
 
       addChain(networkPath);
     }, getNextNodes);

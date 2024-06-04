@@ -61,7 +61,7 @@ describe('DependencyGraph/Simulator/DNSCache', () => {
   });
 
   describe('.setResolvedAt', () => {
-    it('should set the DNS resolution time for a record', () => {
+    it('should set the DNS resolution time for a request', () => {
       dns.setResolvedAt(request.parsedURL.host, 123);
       const resolutionTime = dns.getTimeUntilResolution(request);
       expect(resolutionTime).toEqual(123);

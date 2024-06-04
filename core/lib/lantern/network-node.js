@@ -68,8 +68,8 @@ class NetworkNode extends BaseNode {
   /**
    * @return {Readonly<T>}
    */
-  get record() {
-    return /** @type {Required<T>} */ (this._request.record);
+  get rawRequest() {
+    return /** @type {Required<T>} */ (this._request.rawRequest);
   }
 
   /**
@@ -104,7 +104,7 @@ class NetworkNode extends BaseNode {
   }
 
   /**
-   * Returns whether this network record can be downloaded without a TCP connection.
+   * Returns whether this network request can be downloaded without a TCP connection.
    * During simulation we treat data coming in over a network connection separately from on-device data.
    * @return {boolean}
    */

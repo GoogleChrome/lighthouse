@@ -61,8 +61,8 @@ class UsesRelPreloadAudit extends Audit {
       if (node.type !== 'network') return;
       // Don't include the node itself or any CPU nodes in the initiatorPath
       const path = traversalPath.slice(1).filter(initiator => initiator.type === 'network');
-      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.record, mainResource, path)) return;
-      urls.add(node.record.url);
+      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.rawRequest, mainResource, path)) return;
+      urls.add(node.rawRequest.url);
     });
 
     return urls;
@@ -77,7 +77,7 @@ class UsesRelPreloadAudit extends Audit {
   static getURLsFailedToPreload(graph) {
     /** @type {Array<LH.Artifacts.NetworkRequest>} */
     const requests = [];
-    graph.traverse(node => node.type === 'network' && requests.push(node.record));
+    graph.traverse(node => node.type === 'network' && requests.push(node.rawRequest));
 
     const preloadRequests = requests.filter(req => req.isLinkPreload);
     const preloadURLsByFrame = new Map();
@@ -157,7 +157,7 @@ class UsesRelPreloadAudit extends Audit {
 
       if (node.isMainDocument()) {
         mainDocumentNode = node;
-      } else if (node.record && urls.has(node.record.url)) {
+      } else if (node.rawRequest && urls.has(node.rawRequest.url)) {
         nodesToPreload.push(node);
       }
     });
@@ -176,20 +176,20 @@ class UsesRelPreloadAudit extends Audit {
 
     // Once we've modified the dependencies, simulate the new graph.
     const simulationAfterChanges = simulator.simulate(modifiedGraph);
-    const originalNodesByRecord = Array.from(simulationBeforeChanges.nodeTimings.keys())
-        // @ts-expect-error we don't care if all nodes without a record collect on `undefined`
-        .reduce((map, node) => map.set(node.record, node), new Map());
+    const originalNodesByRequest = Array.from(simulationBeforeChanges.nodeTimings.keys())
+        // @ts-expect-error we don't care if all nodes without a request collect on `undefined`
+        .reduce((map, node) => map.set(node.request, node), new Map());
 
     const results = [];
     for (const node of nodesToPreload) {
-      const originalNode = originalNodesByRecord.get(node.record);
+      const originalNode = originalNodesByRequest.get(node.request);
       const timingAfter = simulationAfterChanges.nodeTimings.get(node);
       const timingBefore = simulationBeforeChanges.nodeTimings.get(originalNode);
       if (!timingBefore || !timingAfter) throw new Error('Missing preload node');
 
       const wastedMs = Math.round(timingBefore.endTime - timingAfter.endTime);
       if (wastedMs < THRESHOLD_IN_MS) continue;
-      results.push({url: node.record.url, wastedMs});
+      results.push({url: node.rawRequest.url, wastedMs});
     }
 
     if (!results.length) {

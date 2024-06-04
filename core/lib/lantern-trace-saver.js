@@ -33,7 +33,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       traceEvents.push(...createFakeTaskEvents(node, timing));
     } else {
       /** @type {LH.Artifacts.NetworkRequest} */
-      const record = node.record;
+      const record = node.rawRequest;
       // Ignore data URIs as they don't really add much value
       if (/^data/.test(record.url)) continue;
       traceEvents.push(...createFakeNetworkEvents(requestId, record, timing));

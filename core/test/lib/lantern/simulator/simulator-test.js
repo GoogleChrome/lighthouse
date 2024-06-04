@@ -28,7 +28,7 @@ function request(opts) {
   delete opts.startTime;
   delete opts.endTime;
 
-  const record = Object.assign({
+  const request = Object.assign({
     requestId: opts.requestId || nextRequestId++,
     url,
     transferSize: opts.transferSize || 1000,
@@ -38,7 +38,7 @@ function request(opts) {
     rendererStartTime,
     networkEndTime,
   }, opts);
-  return NetworkRequest.asLanternNetworkRequest(record);
+  return NetworkRequest.asLanternNetworkRequest(request);
 }
 
 function cpuTask({tid, ts, duration}) {
@@ -267,8 +267,8 @@ describe('DependencyGraph/Simulator', () => {
       ];
 
       for (const imageNode of imageNodes) {
-        imageNode.record.connectionReused = true;
-        imageNode.record.connectionId = 1;
+        imageNode.request.connectionReused = true;
+        imageNode.request.connectionId = 1;
         rootNode.addDependent(imageNode);
       }
 
@@ -297,8 +297,8 @@ describe('DependencyGraph/Simulator', () => {
       ];
 
       for (const imageNode of imageNodes) {
-        imageNode.record.connectionReused = true;
-        imageNode.record.connectionId = 1;
+        imageNode.request.connectionReused = true;
+        imageNode.request.connectionId = 1;
         rootNode.addDependent(imageNode);
       }
 

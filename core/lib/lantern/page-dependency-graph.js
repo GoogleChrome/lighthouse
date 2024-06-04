@@ -32,19 +32,19 @@ const IGNORED_MIME_TYPES_REGEX = /^video/;
 
 class PageDependencyGraph {
   /**
-   * @param {Lantern.NetworkRequest} record
+   * @param {Lantern.NetworkRequest} request
    * @return {Array<string>}
    */
-  static getNetworkInitiators(record) {
-    if (!record.initiator) return [];
-    if (record.initiator.url) return [record.initiator.url];
-    if (record.initiator.type === 'script') {
+  static getNetworkInitiators(request) {
+    if (!request.initiator) return [];
+    if (request.initiator.url) return [request.initiator.url];
+    if (request.initiator.type === 'script') {
       // Script initiators have the stack of callFrames from all functions that led to this request.
       // If async stacks are enabled, then the stack will also have the parent functions that asynchronously
       // led to this request chained in the `parent` property.
       /** @type {Set<string>} */
       const scriptURLs = new Set();
-      let stack = record.initiator.stack;
+      let stack = request.initiator.stack;
       while (stack) {
         const callFrames = stack.callFrames || [];
         for (const frame of callFrames) {
@@ -61,10 +61,10 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {Array<Lantern.NetworkRequest>} networkRecords
+   * @param {Array<Lantern.NetworkRequest>} networkRequests
    * @return {NetworkNodeOutput}
    */
-  static getNetworkNodeOutput(networkRecords) {
+  static getNetworkNodeOutput(networkRequests) {
     /** @type {Array<NetworkNode>} */
     const nodes = [];
     /** @type {Map<string, NetworkNode>} */
@@ -74,35 +74,35 @@ class PageDependencyGraph {
     /** @type {Map<string, NetworkNode|null>} */
     const frameIdToNodeMap = new Map();
 
-    networkRecords.forEach(record => {
-      if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
-      if (record.fromWorker) return;
+    networkRequests.forEach(request => {
+      if (IGNORED_MIME_TYPES_REGEX.test(request.mimeType)) return;
+      if (request.fromWorker) return;
 
-      // Network record requestIds can be duplicated for an unknown reason
-      // Suffix all subsequent records with `:duplicate` until it's unique
+      // Network requestIds can be duplicated for an unknown reason
+      // Suffix all subsequent requests with `:duplicate` until it's unique
       // NOTE: This should never happen with modern NetworkRequest library, but old fixtures
       // might still have this issue.
-      while (idToNodeMap.has(record.requestId)) {
-        record.requestId += ':duplicate';
+      while (idToNodeMap.has(request.requestId)) {
+        request.requestId += ':duplicate';
       }
 
-      const node = new NetworkNode(record);
+      const node = new NetworkNode(request);
       nodes.push(node);
 
-      const urlList = urlToNodeMap.get(record.url) || [];
+      const urlList = urlToNodeMap.get(request.url) || [];
       urlList.push(node);
 
-      idToNodeMap.set(record.requestId, node);
-      urlToNodeMap.set(record.url, urlList);
+      idToNodeMap.set(request.requestId, node);
+      urlToNodeMap.set(request.url, urlList);
 
       // If the request was for the root document of an iframe, save an entry in our
       // map so we can link up the task `args.data.frame` dependencies later in graph creation.
-      if (record.frameId &&
-          record.resourceType === NetworkRequestTypes.Document &&
-          record.documentURL === record.url) {
+      if (request.frameId &&
+          request.resourceType === NetworkRequestTypes.Document &&
+          request.documentURL === request.url) {
         // If there's ever any ambiguity, permanently set the value to `false` to avoid loops in the graph.
-        const value = frameIdToNodeMap.has(record.frameId) ? null : node;
-        frameIdToNodeMap.set(record.frameId, value);
+        const value = frameIdToNodeMap.has(request.frameId) ? null : node;
+        frameIdToNodeMap.set(request.frameId, value);
       }
     });
 
@@ -427,7 +427,7 @@ class PageDependencyGraph {
     }
 
     for (const r of lanternRequests) {
-      delete r.record;
+      delete r.rawRequest;
       if (r.initiatorRequest) {
         // @ts-expect-error
         r.initiatorRequest = {id: r.initiatorRequest.requestId};
@@ -508,25 +508,25 @@ class PageDependencyGraph {
 
   /**
    * @param {LH.TraceEvent[]} mainThreadEvents
-   * @param {Array<Lantern.NetworkRequest>} networkRecords
+   * @param {Lantern.NetworkRequest[]} networkRequests
    * @param {URLArtifact} URL
    * @return {Node}
    */
-  static createGraph(mainThreadEvents, networkRecords, URL) {
+  static createGraph(mainThreadEvents, networkRequests, URL) {
     // This is for debugging trace/devtoolslog network records.
-    // const debug = PageDependencyGraph._debugNormalizeRequests(networkRecords);
-    const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
+    // const debug = PageDependencyGraph._debugNormalizeRequests(networkRequests);
+    const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRequests);
     const cpuNodes = PageDependencyGraph.getCPUNodes(mainThreadEvents);
     const {requestedUrl, mainDocumentUrl} = URL;
     if (!requestedUrl) throw new Error('requestedUrl is required to get the root request');
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl is required to get the main resource');
 
-    const rootRequest = NetworkAnalyzer.findResourceForUrl(networkRecords, requestedUrl);
+    const rootRequest = NetworkAnalyzer.findResourceForUrl(networkRequests, requestedUrl);
     if (!rootRequest) throw new Error('rootRequest not found');
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
     if (!rootNode) throw new Error('rootNode not found');
     const mainDocumentRequest =
-      NetworkAnalyzer.findLastDocumentForUrl(networkRecords, mainDocumentUrl);
+      NetworkAnalyzer.findLastDocumentForUrl(networkRequests, mainDocumentUrl);
     if (!mainDocumentRequest) throw new Error('mainDocumentRequest not found');
     const mainDocumentNode = networkNodeOutput.idToNodeMap.get(mainDocumentRequest.requestId);
     if (!mainDocumentNode) throw new Error('mainDocumentNode not found');
@@ -543,20 +543,20 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {Lantern.NetworkRequest} record The record to find the initiator of
-   * @param {Map<string, Lantern.NetworkRequest[]>} recordsByURL
+   * @param {Lantern.NetworkRequest} request The request to find the initiator of
+   * @param {Map<string, Lantern.NetworkRequest[]>} requestsByURL
    * @return {Lantern.NetworkRequest|null}
    */
-  static chooseInitiatorRequest(record, recordsByURL) {
-    if (record.redirectSource) {
-      return record.redirectSource;
+  static chooseInitiatorRequest(request, requestsByURL) {
+    if (request.redirectSource) {
+      return request.redirectSource;
     }
 
-    const initiatorURL = PageDependencyGraph.getNetworkInitiators(record)[0];
-    let candidates = recordsByURL.get(initiatorURL) || [];
+    const initiatorURL = PageDependencyGraph.getNetworkInitiators(request)[0];
+    let candidates = requestsByURL.get(initiatorURL) || [];
     // The (valid) initiator must come before the initiated request.
     candidates = candidates.filter(c => {
-      return c.responseHeadersEndTime <= record.rendererStartTime &&
+      return c.responseHeadersEndTime <= request.rendererStartTime &&
           c.finished && !c.failed;
     });
     if (candidates.length > 1) {
@@ -570,12 +570,12 @@ class PageDependencyGraph {
     }
     if (candidates.length > 1) {
       // Disambiguate based on frame. It's likely that the initiator comes from the same frame.
-      const sameFrameCandidates = candidates.filter(cand => cand.frameId === record.frameId);
+      const sameFrameCandidates = candidates.filter(cand => cand.frameId === request.frameId);
       if (sameFrameCandidates.length) {
         candidates = sameFrameCandidates;
       }
     }
-    if (candidates.length > 1 && record.initiator.type === 'parser') {
+    if (candidates.length > 1 && request.initiator.type === 'parser') {
       // Filter to just Documents when initiator type is parser.
       const documentCandidates = candidates.filter(cand =>
         cand.resourceType === RESOURCE_TYPES.Document);
@@ -728,6 +728,7 @@ class PageDependencyGraph {
     }
 
     return {
+      rawRequest: request,
       requestId: request.args.data.requestId,
       connectionId: request.args.data.connectionId,
       connectionReused: request.args.data.connectionReused,
@@ -754,7 +755,6 @@ class PageDependencyGraph {
       priority: request.args.data.priority,
       frameId: request.args.data.frame,
       fromWorker,
-      record: request,
       // Set later.
       redirects: undefined,
       redirectSource: undefined,
@@ -805,9 +805,9 @@ class PageDependencyGraph {
     // TraceEngine consolidates all redirects into a single request object, but lantern needs
     // an entry for each redirected request.
     for (const request of [...lanternRequests]) {
-      if (!request.record) continue;
+      if (!request.rawRequest) continue;
 
-      const redirects = request.record.args.data.redirects;
+      const redirects = request.rawRequest.args.data.redirects;
       if (!redirects.length) continue;
 
       const requestChain = [];

@@ -14,7 +14,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
   const throughput = 10000 * 1024;
   let requestId;
 
-  function record(data = {}) {
+  function request(data = {}) {
     const url = data.url || 'http://example.com';
     const origin = new URL(url).origin;
     const scheme = url.split(':')[0];
@@ -45,7 +45,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
 
   describe('#constructor', () => {
     it('should create the pool', () => {
-      const pool = new ConnectionPool([record()], simulationOptions({rtt, throughput}));
+      const pool = new ConnectionPool([request()], simulationOptions({rtt, throughput}));
       // Make sure 6 connections are created for each origin
       assert.equal(pool._connectionsByOrigin.get('http://example.com').length, 6);
       // Make sure it populates connectionWasReused
@@ -58,14 +58,14 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
     });
 
     it('should set TLS properly', () => {
-      const recordA = record({url: 'https://example.com'});
+      const recordA = request({url: 'https://example.com'});
       const pool = new ConnectionPool([recordA], simulationOptions({rtt, throughput}));
       const connection = pool._connectionsByOrigin.get('https://example.com')[0];
       assert.ok(connection._ssl, 'should have set connection TLS');
     });
 
     it('should set H2 properly', () => {
-      const recordA = record({protocol: 'h2'});
+      const recordA = request({protocol: 'h2'});
       const pool = new ConnectionPool([recordA], simulationOptions({rtt, throughput}));
       const connection = pool._connectionsByOrigin.get('http://example.com')[0];
       assert.ok(connection.isH2(), 'should have set HTTP/2');
@@ -74,7 +74,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
 
     it('should set origin-specific RTT properly', () => {
       const additionalRttByOrigin = new Map([['http://example.com', 63]]);
-      const pool = new ConnectionPool([record()],
+      const pool = new ConnectionPool([request()],
           simulationOptions({rtt, throughput, additionalRttByOrigin}));
       const connection = pool._connectionsByOrigin.get('http://example.com')[0];
       assert.ok(connection._rtt, rtt + 63);
@@ -82,7 +82,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
 
     it('should set origin-specific server latency properly', () => {
       const serverResponseTimeByOrigin = new Map([['http://example.com', 63]]);
-      const pool = new ConnectionPool([record()],
+      const pool = new ConnectionPool([request()],
           simulationOptions({rtt, throughput, serverResponseTimeByOrigin}));
       const connection = pool._connectionsByOrigin.get('http://example.com')[0];
       assert.ok(connection._serverLatency, 63);
@@ -90,40 +90,40 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
   });
 
   describe('.acquire', () => {
-    it('should remember the connection associated with each record', () => {
-      const recordA = record();
-      const recordB = record();
-      const pool = new ConnectionPool([recordA, recordB], simulationOptions({rtt, throughput}));
+    it('should remember the connection associated with each request', () => {
+      const requestA = request();
+      const requestB = request();
+      const pool = new ConnectionPool([requestA, requestB], simulationOptions({rtt, throughput}));
 
-      const connectionForA = pool.acquire(recordA);
-      const connectionForB = pool.acquire(recordB);
+      const connectionForA = pool.acquire(requestA);
+      const connectionForB = pool.acquire(requestB);
       for (let i = 0; i < 10; i++) {
-        assert.equal(pool.acquireActiveConnectionFromRecord(recordA), connectionForA);
-        assert.equal(pool.acquireActiveConnectionFromRecord(recordB), connectionForB);
+        assert.equal(pool.acquireActiveConnectionFromRequest(requestA), connectionForA);
+        assert.equal(pool.acquireActiveConnectionFromRequest(requestB), connectionForB);
       }
 
       assert.deepStrictEqual(pool.connectionsInUse(), [connectionForA, connectionForB]);
     });
 
     it('should allocate at least 6 connections', () => {
-      const pool = new ConnectionPool([record()], simulationOptions({rtt, throughput}));
+      const pool = new ConnectionPool([request()], simulationOptions({rtt, throughput}));
       for (let i = 0; i < 6; i++) {
-        assert.ok(pool.acquire(record()), `did not find connection for ${i}th record`);
+        assert.ok(pool.acquire(request()), `did not find connection for ${i}th request`);
       }
     });
 
     it('should allocate all connections', () => {
-      const records = new Array(7).fill(undefined, 0, 7).map(() => record());
+      const records = new Array(7).fill(undefined, 0, 7).map(() => request());
       const pool = new ConnectionPool(records, simulationOptions({rtt, throughput}));
-      const connections = records.map(record => pool.acquire(record));
-      assert.ok(connections[0], 'did not find connection for 1st record');
-      assert.ok(connections[5], 'did not find connection for 6th record');
-      assert.ok(connections[6], 'did not find connection for 7th record');
+      const connections = records.map(request => pool.acquire(request));
+      assert.ok(connections[0], 'did not find connection for 1st request');
+      assert.ok(connections[5], 'did not find connection for 6th request');
+      assert.ok(connections[6], 'did not find connection for 7th request');
     });
 
     it('should be oblivious to connection reuse', () => {
-      const coldRecord = record();
-      const warmRecord = record();
+      const coldRecord = request();
+      const warmRecord = request();
       const pool = new ConnectionPool([coldRecord, warmRecord],
           simulationOptions({rtt, throughput}));
       pool._connectionReusedByRequestId.set(warmRecord.requestId, true);
@@ -137,14 +137,14 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       }
 
       assert.ok(pool.acquire(coldRecord), 'should have acquired connection');
-      assert.ok(pool.acquireActiveConnectionFromRecord(warmRecord),
+      assert.ok(pool.acquireActiveConnectionFromRequest(warmRecord),
         'should have acquired connection');
     });
 
     it('should acquire in order of warmness', () => {
-      const recordA = record();
-      const recordB = record();
-      const recordC = record();
+      const recordA = request();
+      const recordB = request();
+      const recordC = request();
       const pool = new ConnectionPool([recordA, recordB, recordC],
           simulationOptions({rtt, throughput}));
       pool._connectionReusedByRequestId.set(recordA.requestId, true);
@@ -167,27 +167,27 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
   });
 
   describe('.release', () => {
-    it('noop for record without connection', () => {
-      const recordA = record();
-      const pool = new ConnectionPool([recordA], simulationOptions({rtt, throughput}));
-      assert.equal(pool.release(recordA), undefined);
+    it('noop for request without connection', () => {
+      const requestA = request();
+      const pool = new ConnectionPool([requestA], simulationOptions({rtt, throughput}));
+      assert.equal(pool.release(requestA), undefined);
     });
 
     it('frees the connection for reissue', () => {
-      const records = new Array(6).fill(undefined, 0, 7).map(() => record());
-      const pool = new ConnectionPool(records, simulationOptions({rtt, throughput}));
-      records.push(record());
+      const requests = new Array(6).fill(undefined, 0, 7).map(() => request());
+      const pool = new ConnectionPool(requests, simulationOptions({rtt, throughput}));
+      requests.push(request());
 
-      records.forEach(record => pool.acquire(record));
+      requests.forEach(request => pool.acquire(request));
 
       assert.equal(pool.connectionsInUse().length, 6);
-      assert.ok(!pool.acquire(records[6]), 'had connection that is in use');
+      assert.ok(!pool.acquire(requests[6]), 'had connection that is in use');
 
-      pool.release(records[0]);
+      pool.release(requests[0]);
       assert.equal(pool.connectionsInUse().length, 5);
 
-      assert.ok(pool.acquire(records[6]), 'could not reissue released connection');
-      assert.ok(!pool.acquire(records[0]), 'had connection that is in use');
+      assert.ok(pool.acquire(requests[6]), 'could not reissue released connection');
+      assert.ok(!pool.acquire(requests[0]), 'had connection that is in use');
     });
   });
 });

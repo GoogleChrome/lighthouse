@@ -248,11 +248,11 @@ class Simulator {
   }
 
   /**
-   * @param {Lantern.NetworkRequest} record
+   * @param {Lantern.NetworkRequest} request
    * @return {?TcpConnection}
    */
-  _acquireConnection(record) {
-    return this._connectionPool.acquire(record);
+  _acquireConnection(request) {
+    return this._connectionPool.acquire(request);
   }
 
   /**
@@ -342,7 +342,7 @@ class Simulator {
    * @return {number}
    */
   _estimateNetworkTimeRemaining(networkNode) {
-    const record = networkNode.request;
+    const request = networkNode.request;
     const timingData = this._nodeTimings.getNetworkStarted(networkNode);
 
     let timeElapsed = 0;
@@ -350,23 +350,23 @@ class Simulator {
       // Rough access time for seeking to location on disk and reading sequentially.
       // 8ms per seek + 20ms/MB
       // @see http://norvig.com/21-days.html#answers
-      const sizeInMb = (record.resourceSize || 0) / 1024 / 1024;
+      const sizeInMb = (request.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
     } else if (networkNode.isNonNetworkProtocol) {
       // Estimates for the overhead of a data URL in Chromium and the decoding time for base64-encoded data.
       // 2ms per request + 10ms/MB
       // @see traces on https://dopiaza.org/tools/datauri/examples/index.php
-      const sizeInMb = (record.resourceSize || 0) / 1024 / 1024;
+      const sizeInMb = (request.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 2 + 10 * sizeInMb - timingData.timeElapsed;
     } else {
-      const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
-      const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
+      const connection = this._connectionPool.acquireActiveConnectionFromRequest(request);
+      const dnsResolutionTime = this._dns.getTimeUntilResolution(request, {
         requestedAt: timingData.startTime,
         shouldUpdateCache: true,
       });
       const timeAlreadyElapsed = timingData.timeElapsed;
       const calculation = connection.simulateDownloadUntil(
-        record.transferSize - timingData.bytesDownloaded,
+        request.transferSize - timingData.bytesDownloaded,
         {timeAlreadyElapsed, dnsResolutionTime, maximumTimeToElapse: Infinity}
       );
 
@@ -410,14 +410,14 @@ class Simulator {
     if (node.type !== BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
     if (!('bytesDownloaded' in timingData)) throw new Error('Invalid timing data');
 
-    const record = node.request;
-    const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
-    const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
+    const request = node.request;
+    const connection = this._connectionPool.acquireActiveConnectionFromRequest(request);
+    const dnsResolutionTime = this._dns.getTimeUntilResolution(request, {
       requestedAt: timingData.startTime,
       shouldUpdateCache: true,
     });
     const calculation = connection.simulateDownloadUntil(
-      record.transferSize - timingData.bytesDownloaded,
+      request.transferSize - timingData.bytesDownloaded,
       {
         dnsResolutionTime,
         timeAlreadyElapsed: timingData.timeElapsed,
@@ -430,7 +430,7 @@ class Simulator {
 
     if (isFinished) {
       connection.setWarmed(true);
-      this._connectionPool.release(record);
+      this._connectionPool.release(request);
       this._markNodeAsComplete(node, totalElapsedTime, calculation.connectionTiming);
     } else {
       timingData.timeElapsed += calculation.timeElapsed;
@@ -480,7 +480,7 @@ class Simulator {
    *
    * Simulator/connection pool are allowed to deviate from what was
    * observed in the trace/devtoolsLog and start requests as soon as they are queued (i.e. do not
-   * wait around for a warm connection to be available if the original record was fetched on a warm
+   * wait around for a warm connection to be available if the original request was fetched on a warm
    * connection).
    *
    * @param {Node} graph
@@ -580,7 +580,7 @@ class Simulator {
   }
 
   /**
-   * We attempt to start nodes by their observed start time using the record priority as a tie breaker.
+   * We attempt to start nodes by their observed start time using the request priority as a tie breaker.
    * When simulating, just because a low priority image started 5ms before a high priority image doesn't mean
    * it would have happened like that when the network was slower.
    * @param {Node} node

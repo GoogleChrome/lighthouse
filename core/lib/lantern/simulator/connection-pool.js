@@ -27,7 +27,7 @@ export class ConnectionPool {
     /** @type {Map<string, TcpConnection[]>} */
     this._connectionsByOrigin = new Map();
     /** @type {Map<Lantern.NetworkRequest, TcpConnection>} */
-    this._connectionsByRecord = new Map();
+    this._connectionsByRequest = new Map();
     this._connectionsInUse = new Set();
     this._connectionReusedByRequestId = NetworkAnalyzer.estimateIfConnectionWasReused(records, {
       forceCoarseEstimates: true,
@@ -49,16 +49,16 @@ export class ConnectionPool {
     const serverResponseTimeByOrigin = this._options.serverResponseTimeByOrigin;
 
     const recordsByOrigin = NetworkAnalyzer.groupByOrigin(this._records);
-    for (const [origin, records] of recordsByOrigin.entries()) {
+    for (const [origin, requests] of recordsByOrigin.entries()) {
       const connections = [];
       const additionalRtt = additionalRttByOrigin.get(origin) || 0;
       const responseTime = serverResponseTimeByOrigin.get(origin) || DEFAULT_SERVER_RESPONSE_TIME;
 
-      for (const record of records) {
-        if (connectionReused.get(record.requestId)) continue;
+      for (const request of requests) {
+        if (connectionReused.get(request.requestId)) continue;
 
-        const isTLS = TLS_SCHEMES.includes(record.parsedURL.scheme);
-        const isH2 = record.protocol === 'h2';
+        const isTLS = TLS_SCHEMES.includes(request.parsedURL.scheme);
+        const isH2 = request.protocol === 'h2';
         const connection = new TcpConnection(
           this._options.rtt + additionalRtt,
           this._options.throughput,
@@ -106,47 +106,47 @@ export class ConnectionPool {
   }
 
   /**
-   * This method finds an available connection to the origin specified by the network record or null
+   * This method finds an available connection to the origin specified by the network request or null
    * if no connection was available. If returned, connection will not be available for other network
    * records until release is called.
    *
-   * @param {Lantern.NetworkRequest} record
+   * @param {Lantern.NetworkRequest} request
    * @return {?TcpConnection}
    */
-  acquire(record) {
-    if (this._connectionsByRecord.has(record)) throw new Error('Record already has a connection');
+  acquire(request) {
+    if (this._connectionsByRequest.has(request)) throw new Error('Record already has a connection');
 
-    const origin = record.parsedURL.securityOrigin;
+    const origin = request.parsedURL.securityOrigin;
     const connections = this._connectionsByOrigin.get(origin) || [];
     const connectionToUse = this._findAvailableConnectionWithLargestCongestionWindow(connections);
 
     if (!connectionToUse) return null;
 
     this._connectionsInUse.add(connectionToUse);
-    this._connectionsByRecord.set(record, connectionToUse);
+    this._connectionsByRequest.set(request, connectionToUse);
     return connectionToUse;
   }
 
   /**
-   * Return the connection currently being used to fetch a record. If no connection
-   * currently being used for this record, an error will be thrown.
+   * Return the connection currently being used to fetch a request. If no connection
+   * currently being used for this request, an error will be thrown.
    *
-   * @param {Lantern.NetworkRequest} record
+   * @param {Lantern.NetworkRequest} request
    * @return {TcpConnection}
    */
-  acquireActiveConnectionFromRecord(record) {
-    const activeConnection = this._connectionsByRecord.get(record);
-    if (!activeConnection) throw new Error('Could not find an active connection for record');
+  acquireActiveConnectionFromRequest(request) {
+    const activeConnection = this._connectionsByRequest.get(request);
+    if (!activeConnection) throw new Error('Could not find an active connection for request');
 
     return activeConnection;
   }
 
   /**
-   * @param {Lantern.NetworkRequest} record
+   * @param {Lantern.NetworkRequest} request
    */
-  release(record) {
-    const connection = this._connectionsByRecord.get(record);
-    this._connectionsByRecord.delete(record);
+  release(request) {
+    const connection = this._connectionsByRequest.get(request);
+    this._connectionsByRequest.delete(request);
     this._connectionsInUse.delete(connection);
   }
 }

@@ -604,10 +604,10 @@ class NetworkRequest {
     record.fromWorker = record.sessionTargetType === 'worker';
 
     return {
+      rawRequest: record,
       ...record,
       timing,
       serverResponseTime,
-      record,
     };
   }
 
