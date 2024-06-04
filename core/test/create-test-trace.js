@@ -349,8 +349,8 @@ function createTestTrace(options) {
           requestId,
           frame: record.frameId,
           finishTime: endTime / 1000 / 1000,
-          encodedDataLength: record.transferSize,
-          decodedBodyLength: record.resourceSize,
+          encodedDataLength: record.transferSize ?? 0,
+          decodedBodyLength: record.resourceSize ?? 0,
         },
       },
     });

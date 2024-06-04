@@ -8,7 +8,6 @@ import UsesHTTP2Audit from '../../../audits/dobetterweb/uses-http2.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {createTestTrace} from '../../create-test-trace.js';
 
-
 function buildArtifacts(networkRecords) {
   const frameUrl = networkRecords[0].url;
   const trace = createTestTrace({
@@ -24,9 +23,9 @@ function buildArtifacts(networkRecords) {
   return {
     LinkElements: [],
     URL: {
-      requestedUrl: networkRecords[0].url,
-      mainDocumentUrl: networkRecords[0].url,
-      finalDisplayedUrl: networkRecords[0].url,
+      requestedUrl: frameUrl,
+      mainDocumentUrl: frameUrl,
+      finalDisplayedUrl: frameUrl,
     },
     devtoolsLogs: {defaultPass: devtoolsLog},
     traces: {defaultPass: trace},
@@ -35,11 +34,6 @@ function buildArtifacts(networkRecords) {
 }
 
 describe('Resources are fetched over http/2', () => {
-  // TODO(15841): investigate test differences (prob. fix createTestTrace)
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   let context = {};
 
   beforeEach(() => {
@@ -135,8 +129,6 @@ describe('Resources are fetched over http/2', () => {
       },
     ];
     const artifacts = buildArtifacts(networkRecords);
-    artifacts.devtoolsLogs.defaultPass =
-       networkRecordsToDevtoolsLog(networkRecords);
 
     const result = await UsesHTTP2Audit.audit(artifacts, context);
     const hosts = new Set(result.details.items.map(item => new URL(item.url).host));
@@ -197,7 +189,6 @@ describe('Resources are fetched over http/2', () => {
       },
     ];
     const artifacts = buildArtifacts(networkRecords);
-    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(networkRecords);
 
     const result = await UsesHTTP2Audit.audit(artifacts, context);
     const urls = new Set(result.details.items.map(item => item.url));
@@ -311,7 +302,6 @@ describe('Resources are fetched over http/2', () => {
       },
     ];
     const artifacts = buildArtifacts(networkRecords);
-    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(networkRecords);
 
     const result = await UsesHTTP2Audit.audit(artifacts, context);
     const urls = new Set(result.details.items.map(item => item.url));
