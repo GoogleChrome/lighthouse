@@ -20,11 +20,6 @@ const devtoolsLog = readJson('../../fixtures/artifacts/render-blocking/devtoolsl
 const mobileSlow4G = constants.throttling.mobileSlow4G;
 
 describe('Render blocking resources audit', () => {
-  // TODO(15841): investigate failures
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   it('evaluates render blocking input correctly', async () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),

@@ -94,7 +94,7 @@ function computeStackSpecificTiming(node, nodeTiming, Stacks) {
     // https://github.com/ampproject/amphtml/blob/8e03ac2f315774070651584a7e046ff24212c9b1/src/font-stylesheet-timeout.js#L54-L59
     // Any potential savings must only include time spent on AMP stylesheet nodes before 2.1 seconds.
     if (node.type === BaseNode.TYPES.NETWORK &&
-        node.record.resourceType === NetworkRequest.TYPES.Stylesheet &&
+        node.request.resourceType === NetworkRequest.TYPES.Stylesheet &&
         nodeTiming.endTime > 2100) {
       stackSpecificTiming.endTime = Math.max(nodeTiming.startTime, 2100);
       stackSpecificTiming.duration = stackSpecificTiming.endTime - stackSpecificTiming.startTime;
@@ -228,11 +228,11 @@ class RenderBlockingResources extends Audit {
       if (node.type !== BaseNode.TYPES.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
-        node.record.resourceType === NetworkRequest.TYPES.Stylesheet;
+        node.request.resourceType === NetworkRequest.TYPES.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
-        const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;
-        totalChildNetworkBytes += (node.record.transferSize || 0) - wastedBytes;
+        const wastedBytes = wastedCssBytesByUrl.get(node.request.url) || 0;
+        totalChildNetworkBytes += (node.request.transferSize || 0) - wastedBytes;
       }
       return !canDeferRequest;
     });

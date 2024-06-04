@@ -146,14 +146,14 @@ class UsesRelPreconnectAudit extends Audit {
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {
-      if (node.type === 'network') lcpGraphURLs.add(node.record.url);
+      if (node.type === 'network') lcpGraphURLs.add(node.request.url);
     });
 
     const fcpGraph =
       await LanternFirstContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
     const fcpGraphURLs = new Set();
     fcpGraph.traverse(node => {
-      if (node.type === 'network') fcpGraphURLs.add(node.record.url);
+      if (node.type === 'network') fcpGraphURLs.add(node.request.url);
     });
 
     /** @type {Map<string, LH.Artifacts.NetworkRequest[]>}  */
