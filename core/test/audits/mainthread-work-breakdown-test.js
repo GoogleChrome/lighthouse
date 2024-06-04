@@ -12,24 +12,24 @@ import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js
 import {defaultSettings} from '../../config/constants.js';
 import {createTestTrace} from '../create-test-trace.js';
 
-const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const acceptableDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const acceptableTrace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
+const acceptableDevtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
 const siteWithRedirectTrace = readJson('../fixtures/artifacts/redirect/trace.json', import.meta);
 const siteWithRedirectDevtoolsLog = readJson('../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 const loadTraceOld = readJson('../fixtures/traces/load.json', import.meta);
-const loadTrace = readJson('../fixtures/artifacts/animation/trace.json', import.meta);
-const loadDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json', import.meta);
+const loadTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
+const loadDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 
 const options = PageExecutionTimings.defaultOptions;
 
 const acceptableTraceExpectations = {
-  parseHTML: 14,
-  styleLayout: 308,
-  paintCompositeRender: 87,
-  scriptEvaluation: 215,
-  scriptParseCompile: 25,
-  garbageCollection: 48,
-  other: 663,
+  garbageCollection: 64,
+  other: 875,
+  paintCompositeRender: 27,
+  parseHTML: 84,
+  scriptEvaluation: 3703,
+  scriptParseCompile: 210,
+  styleLayout: 90,
 };
 
 describe('Performance: page execution timings audit', () => {
@@ -64,18 +64,13 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, context);
     assert.deepStrictEqual(keyOutput(output), acceptableTraceExpectations);
-    assert.equal(Math.round(output.numericValue), 1360);
+    assert.equal(Math.round(output.numericValue), 5052);
     assert.equal(output.details.items.length, 7);
-    assert.equal(output.score, 0.98);
-    expect(output.metricSavings.TBT).toBeCloseTo(48.3, 0.1);
+    assert.equal(output.score, 0.33);
+    expect(output.metricSavings.TBT).toBeCloseTo(400, 0.1);
   });
 
   it('should compute the correct values when simulated', async () => {
-    // TODO(15841): update trace
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const artifacts = {
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevtoolsLog},
@@ -94,10 +89,15 @@ describe('Performance: page execution timings audit', () => {
       assert.ok(Math.abs(actual - expected) <= 2, `expected ${expected} got ${actual}`);
     }
 
-    assert.equal(Math.round(output.numericValue), 4081);
+    assert.equal(Math.round(output.numericValue), 15157);
     assert.equal(output.details.items.length, 7);
-    assert.equal(output.score, 0.48);
-    expect(output.metricSavings.TBT).toBeCloseTo(478, 0.1);
+    assert.equal(output.score, 0);
+    // TODO(15841): investigate difference
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      expect(output.metricSavings.TBT).toBeCloseTo(1714.5, 0.1);
+    } else {
+      expect(output.metricSavings.TBT).toBeCloseTo(1710.5, 0.1);
+    }
   });
 
   it('should compute the correct values for the redirect trace', async () => {
@@ -173,17 +173,17 @@ Object {
     const output = await PageExecutionTimings.audit(artifacts, context);
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
-  "other": 319,
-  "paintCompositeRender": 152,
-  "parseHTML": 2,
-  "scriptEvaluation": 14,
-  "scriptParseCompile": 2,
-  "styleLayout": 470,
+  "other": 405,
+  "paintCompositeRender": 254,
+  "parseHTML": 3,
+  "scriptEvaluation": 29,
+  "scriptParseCompile": 1,
+  "styleLayout": 707,
 }
 `);
-    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`958`);
+    expect(Math.round(output.numericValue)).toMatchInlineSnapshot(`1399`);
     assert.equal(output.details.items.length, 6);
-    assert.equal(output.score, 1);
+    assert.equal(output.score, 0.97);
   });
 
   it('should get no data when no events are present', () => {

@@ -9,7 +9,7 @@ import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {flushAllTimersAndMicrotasks, readJson, timers} from '../../test-utils.js';
 import {createMockDriver} from '../mock-driver.js';
 
-const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json', import.meta);
+const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json.gz', import.meta);
 
 const RootCauses = {layoutShifts: {}};
 
@@ -321,9 +321,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       .mockResponse('Runtime.callFunctionOn', {result: {value: compositedNodeData}});
 
     const gatherer = new TraceElementsGatherer();
-    gatherer.animationIdToName.set('2', 'alpha');
-    gatherer.animationIdToName.set('3', 'beta');
-    gatherer.animationIdToName.set('4', 'gamma');
+    gatherer.animationIdToName.set('3', 'alpha');
+    gatherer.animationIdToName.set('4', 'beta');
+    gatherer.animationIdToName.set('2', 'gamma');
 
     const result = await gatherer.getArtifact({
       driver,

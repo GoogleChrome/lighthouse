@@ -12,8 +12,8 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const textLcpTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
 const textLcpDevtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
-const imageLcpTrace = readJson('../../fixtures/traces/amp-m86.trace.json', import.meta);
-const imageLcpDevtoolsLog = readJson('../../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
+const imageLcpTrace = readJson('../../fixtures/artifacts/amp/trace.json.gz', import.meta);
+const imageLcpDevtoolsLog = readJson('../../fixtures/artifacts/amp/devtoolslog.json.gz', import.meta);
 
 const requestedUrl = 'http://example.com:3000';
 const mainDocumentUrl = 'http://www.example.com:3000';
@@ -93,11 +93,6 @@ function mockNetworkRecords() {
 
 describe('LCPBreakdown', () => {
   it('returns breakdown for a real trace with image LCP', async () => {
-    // TODO(15841): trace needs updating.
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const data = {
       settings: JSON.parse(JSON.stringify(defaultSettings)),
       trace: imageLcpTrace,
@@ -108,9 +103,9 @@ describe('LCPBreakdown', () => {
 
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
-    expect(result.ttfb).toBeCloseTo(2393.7, 0.1);
-    expect(result.loadStart).toBeCloseTo(5396.6, 0.1);
-    expect(result.loadEnd).toBeCloseTo(5518.5, 0.1);
+    expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
+    expect(result.loadStart).toBeCloseTo(3523.3, 0.1);
+    expect(result.loadEnd).toBeCloseTo(3917.6, 0.1);
   });
 
   it('returns breakdown for a real trace with text LCP', async () => {
