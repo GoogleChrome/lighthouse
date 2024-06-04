@@ -60,11 +60,6 @@ function generateImage({
 }
 
 describe('OffscreenImages audit', () => {
-  // TODO(15841): investigate test failures
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   let context;
   const DEFAULT_DIMENSIONS = {innerWidth: 1920, innerHeight: 1080};
 
