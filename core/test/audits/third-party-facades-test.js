@@ -33,21 +33,17 @@ function youtubeResourceUrl(id) {
   return `https://i.ytimg.com/${id}/maxresdefault.jpg`;
 }
 describe('Third party facades audit', () => {
-  // TODO(15841): traces needs updating.
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   it('correctly identifies a third party product with facade alternative', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+    ];
     const artifacts = {
       devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-        ]),
+        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -91,17 +87,18 @@ describe('Third party facades audit', () => {
   });
 
   it('handles multiple products with facades', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+      {transferSize: 3000, url: youtubeProductUrl('2')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+      {transferSize: 7000, url: youtubeResourceUrl('b')},
+    ];
     const artifacts = {
       devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-          {transferSize: 3000, url: youtubeProductUrl('2')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-          {transferSize: 7000, url: youtubeResourceUrl('b')},
-        ]),
+        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -167,16 +164,17 @@ describe('Third party facades audit', () => {
   });
 
   it('handle multiple requests to same product resource', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 2000, url: intercomProductUrl('1')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+      {transferSize: 2000, url: intercomProductUrl('1')},
+    ];
     const artifacts = {
       devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 2000, url: intercomProductUrl('1')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-          {transferSize: 2000, url: intercomProductUrl('1')},
-        ]),
+        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -219,14 +217,15 @@ describe('Third party facades audit', () => {
   });
 
   it('does not report first party resources', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://intercomcdn.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+    ];
     const artifacts = {
       devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://intercomcdn.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-        ]),
+        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
       URL: {
         requestedUrl: 'https://intercomcdn.com',
         mainDocumentUrl: 'https://intercomcdn.com',
@@ -246,6 +245,11 @@ describe('Third party facades audit', () => {
   });
 
   it('only reports resources which have facade alternatives', async () => {
+    // TODO(15841): traces needs updating.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const artifacts = {
       // This devtools log has third party requests but none have facades
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
@@ -265,11 +269,17 @@ describe('Third party facades audit', () => {
   });
 
   it('not applicable when no third party resources are present', async () => {
+    // TODO(15841): traces needs updating.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+    ];
     const artifacts = {
       devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-        ]),
+        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
       traces: {defaultPass: noThirdPartyTrace},
       URL: {
@@ -291,6 +301,11 @@ describe('Third party facades audit', () => {
   });
 
   it('handles real trace', async () => {
+    // TODO(15841): traces needs updating.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const artifacts = {
       devtoolsLogs: {defaultPass: videoEmbedsDevtolsLog},
       traces: {defaultPass: videoEmbedsTrace},
@@ -439,6 +454,11 @@ Array [
   });
 
   it('handles real trace that blocks the main thread', async () => {
+    // TODO(15841): traces needs updating.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const artifacts = {
       devtoolsLogs: {defaultPass: blockingWidgetDevtoolsLog},
       traces: {defaultPass: blockingWidgetTrace},
