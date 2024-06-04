@@ -289,7 +289,6 @@ function createTestTrace(options) {
           data: {
             requestId,
             frame: record.frameId,
-            initiator: record.initiator ?? {type: 'other'},
           },
         },
       });
@@ -307,6 +306,7 @@ function createTestTrace(options) {
         data: {
           requestId,
           frame: record.frameId,
+          initiator: record.initiator ?? {type: 'other'},
           priority: record.priority,
           requestMethod: record.requestMethod,
           resourceType: record.resourceType ?? 'Document',
