@@ -11,8 +11,7 @@ import {NetworkRecords} from '../../../../computed/network-records.js';
 import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 
-// TODO(15841): use new traces
-const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const devtoolsLog = readJson('../../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 const devtoolsLogWithRedirect = readJson('../../../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
@@ -135,8 +134,8 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
         const distinctConnections = Array.from(result.values()).filter(item => !item).length;
-        assert.equal(result.size, 66);
-        assert.equal(distinctConnections, 3);
+        assert.equal(result.size, 27);
+        assert.equal(distinctConnections, 9);
       });
     });
   });
@@ -248,9 +247,9 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records);
-        assertCloseEnough(result.get('https://pwa.rocks').min, 3);
-        assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
-        assertCloseEnough(result.get('https://www.google-analytics.com').min, 4);
+        assertCloseEnough(result.get('https://www.paulirish.com').min, 10);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').min, 17);
+        assertCloseEnough(result.get('https://www.google-analytics.com').min, 10);
       });
     });
 
@@ -313,9 +312,9 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
-        assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
-        assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);
-        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 161);
+        assertCloseEnough(result.get('https://www.paulirish.com').avg, 35);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 8);
+        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 8);
       });
     });
 
@@ -442,14 +441,19 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#computeRTTAndServerResponseTime', () => {
     it('should work', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = await NetworkAnalyzer.computeRTTAndServerResponseTime(records);
+      const result = NetworkAnalyzer.computeRTTAndServerResponseTime(records);
 
-      expect(Math.round(result.rtt)).toEqual(3);
+      expect(Math.round(result.rtt)).toEqual(2);
       expect(result.additionalRttByOrigin).toMatchInlineSnapshot(`
 Map {
-  "https://pwa.rocks" => 0.3960000176447025,
-  "https://www.googletagmanager.com" => 0,
-  "https://www.google-analytics.com" => 1.0450000117997007,
+  "https://www.paulirish.com" => 8.099999999999994,
+  "https://www.googletagmanager.com" => 15.530999999999992,
+  "https://fonts.googleapis.com" => 15.127000000000002,
+  "https://fonts.gstatic.com" => 0,
+  "https://www.google-analytics.com" => 8.235999999999997,
+  "https://paulirish.disqus.com" => 7.3119999999999985,
+  "https://firebaseinstallations.googleapis.com" => 6.473,
+  "https://firebaseremoteconfig.googleapis.com" => 4.121000000000003,
   "__SUMMARY__" => 0,
 }
 `);
@@ -459,14 +463,14 @@ Map {
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
-      assert.equal(mainDocument.url, 'https://pwa.rocks/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/');
+      assert.equal(mainDocument.url, 'https://www.paulirish.com/');
     });
 
     it('should find the main document if the URL includes a fragment', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/#info');
-      assert.equal(mainDocument.url, 'https://pwa.rocks/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/#info');
+      assert.equal(mainDocument.url, 'https://www.paulirish.com/');
     });
   });
 
@@ -474,10 +478,10 @@ Map {
     it('should resolve to the same document when no redirect', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
 
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.equal(mainDocument.url, finalDocument.url);
-      assert.equal(finalDocument.url, 'https://pwa.rocks/');
+      assert.equal(finalDocument.url, 'https://www.paulirish.com/');
     });
 
     it('should resolve to the final document with redirects', async () => {
