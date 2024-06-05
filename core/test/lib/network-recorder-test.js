@@ -587,7 +587,7 @@ describe('network recorder', function() {
         localizedFailDescription: 'net::ERR_ABORTED',
         rendererStartTime: 500,
         networkRequestTime: 500,
-        responseHeadersEndTime: -1,
+        responseHeadersEndTime: 500,
         networkEndTime: 501,
         transferSize: 0,
         resourceSize: 0,
