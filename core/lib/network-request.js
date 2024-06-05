@@ -129,7 +129,11 @@ class NetworkRequest {
      * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
      */
     this.networkRequestTime = -1;
-    /** When the last byte of the response headers is received, in milliseconds. */
+    /**
+     * When the last byte of the response headers is received, in milliseconds.
+     * Equal to networkRequestTime if no data is recieved over the
+     * network (ex: cached requests or data urls).
+     */
     this.responseHeadersEndTime = -1;
     /** When the last byte of the response body is received, in milliseconds. */
     this.networkEndTime = -1;

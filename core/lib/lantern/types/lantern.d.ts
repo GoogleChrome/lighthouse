@@ -60,7 +60,11 @@ export class NetworkRequest<T = any> {
      * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
      */
     networkRequestTime: number;
-    /** When the last byte of the response headers is received, in milliseconds. */
+    /**
+     * When the last byte of the response headers is received, in milliseconds.
+     * Equal to networkRequestTime if no data is recieved over the
+     * network (ex: cached requests or data urls).
+     */
     responseHeadersEndTime: number;
     /** When the last byte of the response body is received, in milliseconds. */
     networkEndTime: number;
