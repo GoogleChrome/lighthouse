@@ -152,6 +152,7 @@ const defaultConfig = {
     'viewport',
     'metrics/first-contentful-paint',
     'metrics/largest-contentful-paint',
+    'metrics/first-meaningful-paint',
     'metrics/speed-index',
     'screenshot-thumbnails',
     'final-screenshot',
@@ -387,6 +388,7 @@ const defaultConfig = {
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'interactive', weight: 0, group: 'hidden', acronym: 'TTI'},
         {id: 'max-potential-fid', weight: 0, group: 'hidden'},
+        {id: 'first-meaningful-paint', weight: 0, acronym: 'FMP', group: 'hidden'},
 
         {id: 'render-blocking-resources', weight: 0, group: 'diagnostics'},
         {id: 'uses-responsive-images', weight: 0, group: 'diagnostics'},
