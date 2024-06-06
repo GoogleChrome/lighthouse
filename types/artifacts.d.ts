@@ -613,7 +613,6 @@ declare module Artifacts {
     firstPaint?: number;
     firstContentfulPaint: number;
     firstContentfulPaintAllFrames: number;
-    firstMeaningfulPaint?: number;
     largestContentfulPaint?: number;
     largestContentfulPaintAllFrames?: number;
     traceEnd: number;
@@ -657,8 +656,6 @@ declare module Artifacts {
     firstContentfulPaintEvt: TraceEvent;
     /** The trace event marking firstContentfulPaint from all frames, if it was found. */
     firstContentfulPaintAllFramesEvt: TraceEvent;
-    /** The trace event marking firstMeaningfulPaint, if it was found. */
-    firstMeaningfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint, if it was found. */
     largestContentfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint from all frames, if it was found. */
@@ -667,11 +664,6 @@ declare module Artifacts {
     loadEvt?: TraceEvent;
     /** The trace event marking domContentLoadedEventEnd, if it was found. */
     domContentLoadedEvt?: TraceEvent;
-    /**
-     * Whether the firstMeaningfulPaintEvt was the definitive event or a fallback to
-     * firstMeaningfulPaintCandidate events had to be attempted.
-     */
-    fmpFellBack: boolean;
     /** Whether LCP was invalidated without a new candidate. */
     lcpInvalidated: boolean;
   }
@@ -695,8 +687,6 @@ declare module Artifacts {
     firstContentfulPaintTs: number | undefined;
     firstContentfulPaintAllFrames: number | undefined;
     firstContentfulPaintAllFramesTs: number | undefined;
-    firstMeaningfulPaint: number | undefined;
-    firstMeaningfulPaintTs: number | undefined;
     largestContentfulPaint: number | undefined;
     largestContentfulPaintTs: number | undefined;
     largestContentfulPaintAllFrames: number | undefined;
@@ -725,8 +715,6 @@ declare module Artifacts {
     observedFirstContentfulPaintTs: number | undefined;
     observedFirstContentfulPaintAllFrames: number | undefined;
     observedFirstContentfulPaintAllFramesTs: number | undefined;
-    observedFirstMeaningfulPaint: number | undefined;
-    observedFirstMeaningfulPaintTs: number | undefined;
     observedLargestContentfulPaint: number | undefined;
     observedLargestContentfulPaintTs: number | undefined;
     observedLargestContentfulPaintAllFrames: number | undefined;

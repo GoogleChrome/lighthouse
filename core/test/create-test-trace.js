@@ -154,15 +154,6 @@ function createTestTrace(options) {
     cat: 'loading,rail,devtools.timeline',
     dur: 0,
     args: {frame: rootFrame, data: {navigationId}},
-  }, {
-    name: 'firstMeaningfulPaint',
-    ts: timeOrigin + 15,
-    pid,
-    tid,
-    ph: 'R',
-    cat: 'loading,rail,devtools.timeline',
-    dur: 0,
-    args: {frame: rootFrame},
   }];
 
   if (options.childFrames) {

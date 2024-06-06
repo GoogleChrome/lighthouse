@@ -12,7 +12,6 @@
 /**
  * @typedef Wpt3gUnthrottled
  * @property {number|undefined} firstContentfulPaint
- * @property {number|undefined} firstMeaningfulPaint
  * @property {number|undefined} timeToConsistentlyInteractive
  * @property {number|undefined} speedIndex
  * @property {number|undefined} largestContentfulPaint

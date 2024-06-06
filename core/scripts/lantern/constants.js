@@ -43,7 +43,6 @@ import {LH_ROOT} from '../../../shared/root.js';
 /**
  * @typedef TargetMetrics
  * @property {number} [firstContentfulPaint]
- * @property {number} [firstMeaningfulPaint]
  * @property {number} [timeToFirstInteractive]
  * @property {number} [timeToConsistentlyInteractive]
  * @property {number} [speedIndex]
@@ -198,7 +197,6 @@ export default {
 
     return {
       roughEstimateOfFCP: evaluate('firstContentfulPaint', 'roughEstimateOfFCP'),
-      roughEstimateOfFMP: evaluate('firstMeaningfulPaint', 'roughEstimateOfFMP'),
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),

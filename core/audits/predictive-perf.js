@@ -7,7 +7,6 @@
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {LanternFirstContentfulPaint} from '../computed/metrics/lantern-first-contentful-paint.js';
-import {LanternFirstMeaningfulPaint} from '../computed/metrics/lantern-first-meaningful-paint.js';
 import {LanternInteractive} from '../computed/metrics/lantern-interactive.js';
 import {LanternSpeedIndex} from '../computed/metrics/lantern-speed-index.js';
 import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest-contentful-paint.js';
@@ -52,7 +51,6 @@ class PredictivePerf extends Audit {
     const settings = JSON.parse(JSON.stringify(defaultSettings)); // Use default settings.
     const computationData = {trace, devtoolsLog, gatherContext, settings, URL};
     const fcp = await LanternFirstContentfulPaint.request(computationData, context);
-    const fmp = await LanternFirstMeaningfulPaint.request(computationData, context);
     const tti = await LanternInteractive.request(computationData, context);
     const si = await LanternSpeedIndex.request(computationData, context);
     const lcp = await LanternLargestContentfulPaint.request(computationData, context);
@@ -63,10 +61,6 @@ class PredictivePerf extends Audit {
       roughEstimateOfFCP: fcp.timing,
       optimisticFCP: fcp.optimisticEstimate.timeInMs,
       pessimisticFCP: fcp.pessimisticEstimate.timeInMs,
-
-      roughEstimateOfFMP: fmp.timing,
-      optimisticFMP: fmp.optimisticEstimate.timeInMs,
-      pessimisticFMP: fmp.pessimisticEstimate.timeInMs,
 
       roughEstimateOfTTI: tti.timing,
       optimisticTTI: tti.optimisticEstimate.timeInMs,
