@@ -50,7 +50,7 @@ describe('asset-saver helper', () => {
       const traceEventsWithoutExtrasOnDisk = traceEventsOnDisk.slice(0, traceEvents.length);
       const traceEventsFake = traceEventsOnDisk.slice(traceEvents.length);
       assertTraceEventsEqual(traceEventsWithoutExtrasOnDisk, traceEvents);
-      assert.equal(traceEventsFake.length, 18);
+      assert.equal(traceEventsFake.length, 16);
       fs.unlinkSync(traceFilename);
     });
 
