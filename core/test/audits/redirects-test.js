@@ -129,7 +129,12 @@ describe('Performance: Redirects audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;
 
-    const trace = createTestTrace({frameUrl, traceEnd: 5000, networkRecords});
+    const trace = createTestTrace({
+      frameUrl,
+      largestContentfulPaint: 15,
+      traceEnd: 5000,
+      networkRecords,
+    });
     const navStart = trace.traceEvents.find(e => e.name === 'navigationStart');
     navStart.args.data.navigationId = '1';
 

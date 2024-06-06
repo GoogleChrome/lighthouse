@@ -44,7 +44,12 @@ describe('Third party facades audit', () => {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      })},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -99,7 +104,12 @@ describe('Third party facades audit', () => {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      })},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -175,7 +185,12 @@ describe('Third party facades audit', () => {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      })},
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
@@ -226,7 +241,12 @@ describe('Third party facades audit', () => {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog(networkRecords),
       },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      })},
       URL: {
         requestedUrl: 'https://intercomcdn.com',
         mainDocumentUrl: 'https://intercomcdn.com',

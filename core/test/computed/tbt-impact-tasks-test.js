@@ -34,6 +34,7 @@ describe('TBTImpactTasks', () => {
     beforeEach(() => {
       metricComputationData = {
         trace: createTestTrace({
+          largestContentfulPaint: 15,
           traceEnd: 10_000,
           frameUrl: mainDocumentUrl,
           topLevelTasks: [

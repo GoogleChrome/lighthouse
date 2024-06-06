@@ -52,6 +52,7 @@ function generateTraceWithLongTasks(args) {
     traceTasks.push(task);
   }
   return createTestTrace({
+    largestContentfulPaint: BASE_TS + 15,
     topLevelTasks: traceTasks,
     timeOrigin: BASE_TS,
     traceEnd: BASE_TS + 20_000,

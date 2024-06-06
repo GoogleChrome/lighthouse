@@ -20,6 +20,7 @@ describe('DOMSize audit', () => {
     const mainDocumentUrl = 'https://example.com/';
     const networkRecords = [{url: mainDocumentUrl, priority: 'High'}];
     const trace = createTestTrace({
+      largestContentfulPaint: 15,
       topLevelTasks: [
         {ts: 1000, duration: 1000, children: [
           {ts: 1100, duration: 200, eventName: 'ScheduleStyleRecalculation'},

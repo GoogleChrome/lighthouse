@@ -458,7 +458,11 @@ describe('OffscreenImages audit', () => {
           src: recordB.url,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        largestContentfulPaint: 15,
+        topLevelTasks,
+        networkRecords,
+      })},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
         requestedUrl: recordA.url,
@@ -523,7 +527,11 @@ describe('OffscreenImages audit', () => {
           src: recordB.url,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks, networkRecords})},
+      traces: {defaultPass: createTestTrace({
+        largestContentfulPaint: 15,
+        topLevelTasks,
+        networkRecords,
+      })},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
         requestedUrl: recordA.url,
