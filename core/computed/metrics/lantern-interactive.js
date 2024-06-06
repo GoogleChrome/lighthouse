@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import {LanternFirstMeaningfulPaint} from './lantern-first-meaningful-paint.js';
+import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
 import {Interactive} from '../../lib/lantern/metrics/interactive.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
@@ -29,8 +29,8 @@ class LanternInteractive extends Interactive {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {
-    const fmpResult = await LanternFirstMeaningfulPaint.request(data, context);
-    return this.computeMetricWithGraphs(data, context, {fmpResult});
+    const lcpResult = await LanternLargestContentfulPaint.request(data, context);
+    return this.computeMetricWithGraphs(data, context, {lcpResult});
   }
 }
 

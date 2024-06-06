@@ -16,7 +16,7 @@ import {RESOURCE_TYPES} from '../../lib/network-request.js';
  * @typedef Extras
  * @property {boolean} optimistic
  * @property {LH.Artifacts.LanternMetric=} fcpResult
- * @property {LH.Artifacts.LanternMetric=} fmpResult
+ * @property {LH.Artifacts.LanternMetric=} lcpResult
  * @property {LH.Artifacts.LanternMetric=} interactiveResult
  * @property {{speedIndex: number}=} speedline
  */

@@ -7,7 +7,8 @@
 import assert from 'assert/strict';
 
 import {Interactive} from '../../../../lib/lantern/metrics/interactive.js';
-import {FirstMeaningfulPaint} from '../../../../lib/lantern/metrics/first-meaningful-paint.js';
+import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
+import {LargestContentfulPaint} from '../../../../lib/lantern/metrics/largest-contentful-paint.js';
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {readJson} from '../../../test-utils.js';
 
@@ -20,7 +21,9 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
     const data = await getComputationDataFromFixture({trace, devtoolsLog});
     const result = await Interactive.compute(data, {
-      fmpResult: await FirstMeaningfulPaint.compute(data),
+      lcpResult: await LargestContentfulPaint.compute(data, {
+        fcpResult: await FirstContentfulPaint.compute(data),
+      }),
     });
 
     expect({
@@ -40,7 +43,9 @@ describe('Metrics: Lantern TTI', () => {
       devtoolsLog: iframeDevtoolsLog,
     });
     const result = await Interactive.compute(data, {
-      fmpResult: await FirstMeaningfulPaint.compute(data),
+      lcpResult: await LargestContentfulPaint.compute(data, {
+        fcpResult: await FirstContentfulPaint.compute(data),
+      }),
     });
 
     expect({

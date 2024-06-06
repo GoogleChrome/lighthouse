@@ -66,12 +66,12 @@ class Interactive extends Metric {
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) {
-    if (!extras.fmpResult) throw new Error('missing fmpResult');
+    if (!extras.lcpResult) throw new Error('missing lcpResult');
 
     const lastTaskAt = Interactive.getLastLongTaskEndTime(simulationResult.nodeTimings);
     const minimumTime = extras.optimistic
-      ? extras.fmpResult.optimisticEstimate.timeInMs
-      : extras.fmpResult.pessimisticEstimate.timeInMs;
+      ? extras.lcpResult.optimisticEstimate.timeInMs
+      : extras.lcpResult.pessimisticEstimate.timeInMs;
     return {
       timeInMs: Math.max(minimumTime, lastTaskAt),
       nodeTimings: simulationResult.nodeTimings,
@@ -84,13 +84,13 @@ class Interactive extends Metric {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute(data, extras) {
-    const fmpResult = extras?.fmpResult;
-    if (!fmpResult) {
-      throw new Error('FMP is required to calculate the Interactive metric');
+    const lcpResult = extras?.lcpResult;
+    if (!lcpResult) {
+      throw new Error('LCP is required to calculate the Interactive metric');
     }
 
     const metricResult = await super.compute(data, extras);
-    metricResult.timing = Math.max(metricResult.timing, fmpResult.timing);
+    metricResult.timing = Math.max(metricResult.timing, lcpResult.timing);
     return metricResult;
   }
 
