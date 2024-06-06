@@ -18,7 +18,7 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This audit identifies the time the page is "consistently interactive".
- * Looks for the first period of at least 5 seconds after FMP where both CPU and network were quiet,
+ * Looks for the first period of at least 5 seconds after FCP where both CPU and network were quiet,
  * and returns the timestamp of the beginning of the CPU quiet period.
  * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
  */

@@ -105,7 +105,7 @@ describe('Metrics: TTI', () => {
       assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
 
-    it('should throw when trace ended too soon after FMP', () => {
+    it('should throw when trace ended too soon after FCP', () => {
       const timeOrigin = 220023532;
       const firstContentfulPaint = 2500 * 1000 + timeOrigin;
       const traceEnd = 5000 * 1000 + timeOrigin;
