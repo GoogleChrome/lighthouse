@@ -39,7 +39,8 @@ function createProcessedNavigation(traceEngineResult) {
   const Meta = traceEngineResult.data.Meta;
   const frameId = Meta.mainFrameId;
   const navigationId = Meta.mainFrameNavigations[0].args.data?.navigationId || '';
-  const scores = traceEngineResult.data.PageLoadMetrics.metricScoresByFrameId.get(frameId)?.get(navigationId);
+  const scores =
+    traceEngineResult.data.PageLoadMetrics.metricScoresByFrameId.get(frameId)?.get(navigationId);
   /** @param {MetricName} metric */
   const getTimestampOrUndefined = metric => {
     const metricScore = scores?.get(metric);

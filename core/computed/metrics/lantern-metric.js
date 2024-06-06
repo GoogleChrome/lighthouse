@@ -9,8 +9,8 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {LoadSimulator} from '../load-simulator.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
-import {TraceEngineResult} from '../trace-engine-result.js';
-import {createProcessedNavigation} from '../../lib/lantern/lantern.js';
+// import {TraceEngineResult} from '../trace-engine-result.js';
+// import {createProcessedNavigation} from '../../lib/lantern/lantern.js';
 
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data
