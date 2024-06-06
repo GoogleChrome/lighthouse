@@ -190,7 +190,7 @@ describe('Metrics: TTI', () => {
       );
 
       const cpu = [
-        // quiet period before FMP
+        // quiet period before FCP
         {start: 9000, end: 9900},
         {start: 11000, end: 13000},
         // quiet period during network activity
