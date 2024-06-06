@@ -65,7 +65,6 @@ import {LH_ROOT} from '../../../shared/root.js';
  * @property {number} pessimisticTTI
  * @property {number} pessimisticLCP
  * @property {number} roughEstimateOfFCP
- * @property {number} roughEstimateOfFMP
  * @property {number} roughEstimateOfSI
  * @property {number} roughEstimateOfTTI
  * @property {number} roughEstimateOfLCP
