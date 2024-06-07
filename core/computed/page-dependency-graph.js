@@ -29,7 +29,7 @@ class PageDependencyGraph {
     if (data.fromTrace) {
       const traceEngineResult = await TraceEngineResult.request({trace}, context);
       const {graph} = await LanternPageDependencyGraph.createGraphFromTrace(
-        mainThreadEvents, trace, traceEngineResult, URL);
+        trace, traceEngineResult, URL);
       return graph;
     }
 

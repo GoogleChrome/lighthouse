@@ -785,12 +785,102 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.TraceEvent[]} mainThreadEvents
+   * Sorts and filters trace events by timestamp and respecting the nesting structure inherent to
+   * parent/child event relationships.
+   *
+   * @param {LH.TraceEvent[]} traceEvents
+   * @param {(e: LH.TraceEvent) => boolean} filter
+   */
+  static _filteredTraceSort(traceEvents, filter) {
+    // create an array of the indices that we want to keep
+    const indices = [];
+    for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
+      if (filter(traceEvents[srcIndex])) {
+        indices.push(srcIndex);
+      }
+    }
+
+    // Sort by ascending timestamp first.
+    indices.sort((indexA, indexB) => traceEvents[indexA].ts - traceEvents[indexB].ts);
+
+    // Now we find groups with equal timestamps and order them by their nesting structure.
+    for (let i = 0; i < indices.length - 1; i++) {
+      const ts = traceEvents[indices[i]].ts;
+      const tsGroupIndices = [i];
+      for (let j = i + 1; j < indices.length; j++) {
+        if (traceEvents[indices[j]].ts !== ts) break;
+        tsGroupIndices.push(j);
+      }
+
+      // We didn't find any other events with the same timestamp, just keep going.
+      if (tsGroupIndices.length === 1) continue;
+
+      // Sort the group by other criteria and replace our index array with it.
+      const finalIndexOrder = TraceProcessor._sortTimestampEventGroup(
+        tsGroupIndices,
+        indices,
+        i,
+        traceEvents
+      );
+      indices.splice(i, finalIndexOrder.length, ...finalIndexOrder);
+      // We just sorted this set of identical timestamps, so skip over the rest of the group.
+      // -1 because we already have i++.
+      i += tsGroupIndices.length - 1;
+    }
+
+    // create a new array using the target indices from previous sort step
+    const sorted = [];
+    for (let i = 0; i < indices.length; i++) {
+      sorted.push(traceEvents[indices[i]]);
+    }
+
+    return sorted;
+  }
+
+  /**
+   * @param {LH.Trace} trace
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @return {LH.TraceEvent[]}
+   */
+  static _collectMainThreadEvents(trace, traceEngineResult) {
+    const Meta = traceEngineResult.data.Meta;
+    const rendererPidToTid = new Map();
+
+    for (const pid of Meta.topLevelRendererIds) {
+      const threads = Meta.threadsInProcess.get(pid) ?? [];
+
+      let found = false;
+      for (const [tid, thread] of threads) {
+        if (thread.args.name === 'CrRendererMain') {
+          rendererPidToTid.set(pid, tid);
+          found = true;
+          break;
+        }
+      }
+
+      if (found) continue;
+
+      // `CrRendererMain` can be missing if chrome is launched with the `--single-process` flag.
+      // In this case, page tasks will be run in the browser thread.
+      for (const [tid, thread] of threads) {
+        if (thread.args.name === 'CrBrowserMain') {
+          rendererPidToTid.set(pid, tid);
+          found = true;
+          break;
+        }
+      }
+    }
+
+    return this._filteredTraceSort(trace.traceEvents, e => rendererPidToTid.get(e.pid) === e.tid);
+  }
+
+  /**
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
    * @param {LH.Artifacts.URL} URL
    */
-  static async createGraphFromTrace(mainThreadEvents, trace, traceEngineResult, URL) {
+  static async createGraphFromTrace(trace, traceEngineResult, URL) {
+    const mainThreadEvents = this._collectMainThreadEvents(trace, traceEngineResult);
     const workerThreads = this._findWorkerThreads(trace);
 
     /** @type {Lantern.NetworkRequest[]} */
