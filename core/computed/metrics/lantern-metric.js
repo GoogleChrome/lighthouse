@@ -9,8 +9,8 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {LoadSimulator} from '../load-simulator.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
-// import {TraceEngineResult} from '../trace-engine-result.js';
-// import {createProcessedNavigation} from '../../lib/lantern/lantern.js';
+import {TraceEngineResult} from '../trace-engine-result.js';
+import {createProcessedNavigation} from '../../lib/lantern/lantern.js';
 
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data
@@ -38,10 +38,8 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
-  const processedNavigation = await ProcessedNavigation.request(data.trace, context);
-  // TODO(15841): investigate failures
-  // const processedNavigation = createProcessedNavigation(
-  //   await TraceEngineResult.request(data, context));
+  const traceEngineResult = await TraceEngineResult.request(data, context);
+  const processedNavigation = createProcessedNavigation(traceEngineResult);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};

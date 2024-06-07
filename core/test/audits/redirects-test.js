@@ -137,6 +137,10 @@ describe('Performance: Redirects audit', () => {
     });
     const navStart = trace.traceEvents.find(e => e.name === 'navigationStart');
     navStart.args.data.navigationId = '1';
+    const fcp = trace.traceEvents.find(e => e.name === 'firstContentfulPaint');
+    fcp.args.data.navigationId = '1';
+    const lcp = trace.traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
+    lcp.args.data.navigationId = '1';
 
     return {
       GatherContext: {gatherMode: 'navigation'},
