@@ -11,11 +11,10 @@ import {readJson} from '../../../test-utils.js';
 import {getComputationDataFromFixture} from './metric-test-utils.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern FCP', () => {
   it('should compute predicted value', async () => {
-    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const data = await getComputationDataFromFixture({trace});
     const result = await FirstContentfulPaint.compute(data);
 
     expect({
@@ -30,7 +29,7 @@ describe('Metrics: Lantern FCP', () => {
   });
 
   it('should handle negative request networkEndTime', async () => {
-    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const data = await getComputationDataFromFixture({trace});
     data.graph.request.networkEndTime = -1;
     const result = await FirstContentfulPaint.compute(data);
 

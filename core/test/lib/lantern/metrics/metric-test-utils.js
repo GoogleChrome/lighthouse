@@ -10,26 +10,24 @@ import {PageDependencyGraph} from '../../../../lib/lantern/page-dependency-graph
 import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/network-analyzer.js';
 import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
 import * as Lantern from '../../../../lib/lantern/types/lantern.js';
-import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
 
 /** @typedef {Lantern.NetworkRequest<import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest>} NetworkRequest */
 
 // TODO(15841): remove usage of Lighthouse code to create test data
 
 /**
- * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings?: LH.Config.Settings, URL?: LH.Artifacts.URL}} opts
+ * @param {{trace: LH.Trace, settings?: LH.Config.Settings, URL?: LH.Artifacts.URL}} opts
  */
-async function getComputationDataFromFixture({trace, devtoolsLog, settings, URL}) {
+async function getComputationDataFromFixture({trace, settings, URL}) {
   settings = settings ?? /** @type {LH.Config.Settings} */({});
   if (!settings.throttlingMethod) settings.throttlingMethod = 'simulate';
-  if (!URL) URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
   const context = {settings, computedCache: new Map()};
   const traceEngineResult = await TraceEngineResult.request({trace}, context);
-  const {graph, records} =
+  const {graph, requests} =
     await PageDependencyGraph.createGraphFromTrace(trace, traceEngineResult, URL);
   const processedNavigation = createProcessedNavigation(traceEngineResult);
-  const networkAnalysis = NetworkAnalyzer.analyze(records);
+  const networkAnalysis = NetworkAnalyzer.analyze(requests);
   const simulator = Simulator.createSimulator({...settings, networkAnalysis});
 
   return {simulator, graph, processedNavigation};

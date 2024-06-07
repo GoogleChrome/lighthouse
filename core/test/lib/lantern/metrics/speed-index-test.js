@@ -13,14 +13,13 @@ import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {Speedline} from '../../../../computed/speedline.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
     const context = {computedCache: new Map()};
-    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const data = await getComputationDataFromFixture({trace});
     const result = await SpeedIndex.compute(data, {
       fcpResult: await FirstContentfulPaint.compute(data),
       speedline: await Speedline.request(trace, context),
@@ -42,7 +41,7 @@ Object {
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
     const context = {computedCache: new Map()};
-    const data = await getComputationDataFromFixture({trace, devtoolsLog, settings});
+    const data = await getComputationDataFromFixture({trace, settings});
     const result = await SpeedIndex.compute(data, {
       fcpResult: await FirstContentfulPaint.compute(data),
       speedline: await Speedline.request(trace, context),

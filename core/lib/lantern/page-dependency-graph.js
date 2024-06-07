@@ -827,7 +827,7 @@ class PageDependencyGraph {
   /**
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
-   * @param {LH.Artifacts.URL} URL
+   * @param {LH.Artifacts.URL=} URL
    */
   static async createGraphFromTrace(trace, traceEngineResult, URL) {
     const mainThreadEvents = this._collectMainThreadEvents(trace, traceEngineResult);
@@ -918,8 +918,24 @@ class PageDependencyGraph {
     // above.
     lanternRequests.sort((a, b) => a.rendererStartTime - b.rendererStartTime);
 
+    // URL defines the initial request that the Lantern graph starts at (the root node) and the
+    // main document request. These are equal if there are no redirects.
+    if (!URL) {
+      URL = {
+        requestedUrl: lanternRequests[0].url,
+        mainDocumentUrl: '',
+        finalDisplayedUrl: '',
+      };
+
+      let request = lanternRequests[0];
+      while (request.redirectDestination) {
+        request = request.redirectDestination;
+      }
+      URL.mainDocumentUrl = request.url;
+    }
+
     const graph = PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
-    return {graph, records: lanternRequests};
+    return {graph, requests: lanternRequests};
   }
 
   /**

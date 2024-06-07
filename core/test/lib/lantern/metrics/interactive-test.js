@@ -13,13 +13,11 @@ import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {readJson} from '../../../test-utils.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const iframeTrace = readJson('../../../fixtures/artifacts/iframe/trace.json', import.meta);
-const iframeDevtoolsLog = readJson('../../../fixtures/artifacts/iframe/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
-    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const data = await getComputationDataFromFixture({trace});
     const result = await Interactive.compute(data, {
       lcpResult: await LargestContentfulPaint.compute(data, {
         fcpResult: await FirstContentfulPaint.compute(data),
@@ -40,7 +38,6 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value on iframes with substantial layout', async () => {
     const data = await getComputationDataFromFixture({
       trace: iframeTrace,
-      devtoolsLog: iframeDevtoolsLog,
     });
     const result = await Interactive.compute(data, {
       lcpResult: await LargestContentfulPaint.compute(data, {

@@ -12,11 +12,10 @@ import {getComputationDataFromFixture} from './metric-test-utils.js';
 import {readJson} from '../../../test-utils.js';
 
 const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
-const devtoolsLog = readJson('../../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
-    const data = await getComputationDataFromFixture({trace, devtoolsLog});
+    const data = await getComputationDataFromFixture({trace});
     const result = await LargestContentfulPaint.compute(data, {
       fcpResult: await FirstContentfulPaint.compute(data),
     });
