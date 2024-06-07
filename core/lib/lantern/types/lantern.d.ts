@@ -173,7 +173,6 @@ export namespace Simulation {
         timestamps: {
             firstContentfulPaint: number;
             largestContentfulPaint?: number;
-            firstMeaningfulPaint?: number;
         };
     }
 
