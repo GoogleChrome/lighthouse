@@ -43,21 +43,21 @@ function createProcessedNavigation(traceEngineResult) {
     throw new Error('missing metric scores for main frame');
   }
 
-  const lastNavigationId = Meta.mainFrameNavigations.at(-1)?.args.data?.navigationId ?? '';
-  const scores = scoresByNav.get(lastNavigationId);
+  const lastNavigationId = Meta.mainFrameNavigations.at(-1)?.args.data?.navigationId;
+  const scores = lastNavigationId && scoresByNav.get(lastNavigationId);
   if (!scores) {
     throw new Error('missing metric scores for specified navigation');
   }
 
   /** @param {MetricName} metric */
   const getTimestampOrUndefined = metric => {
-    const metricScore = scores?.get(metric);
+    const metricScore = scores.get(metric);
     if (!metricScore?.event) return;
     return metricScore.event.ts;
   };
   /** @param {MetricName} metric */
   const getTimestamp = metric => {
-    const metricScore = scores?.get(metric);
+    const metricScore = scores.get(metric);
     if (!metricScore?.event) throw new Error(`missing metric: ${metric}`);
     return metricScore.event.ts;
   };
