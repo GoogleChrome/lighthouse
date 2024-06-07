@@ -874,7 +874,7 @@ class PageDependencyGraph {
       }
     }
 
-    return trace.traceEvents.filter(e => rendererPidToTid.get(e.pid) === e.tid);
+    return this._filteredTraceSort(trace.traceEvents, e => rendererPidToTid.get(e.pid) === e.tid);
   }
 
   /**
