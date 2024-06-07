@@ -44,6 +44,7 @@ function createProcessedNavigation(traceEngineResult) {
   }
 
   // Grab the latest navigation with scores.
+  /** @type {Map<MetricName, MetricScore>=} */
   let scores;
   for (const navigation of Meta.mainFrameNavigations.reverse()) {
     const navigationId = navigation.args.data?.navigationId;
