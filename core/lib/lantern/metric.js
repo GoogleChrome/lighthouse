@@ -64,7 +64,7 @@ class Metric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
+   * @param {Lantern.Simulation.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
   static getOptimisticGraph(dependencyGraph, processedNavigation) { // eslint-disable-line no-unused-vars
@@ -73,7 +73,7 @@ class Metric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
+   * @param {Lantern.Simulation.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
   static getPessimisticGraph(dependencyGraph, processedNavigation) { // eslint-disable-line no-unused-vars

@@ -39,7 +39,7 @@ class LargestContentfulPaint extends Metric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
+   * @param {Lantern.Simulation.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
   static getOptimisticGraph(dependencyGraph, processedNavigation) {
@@ -56,7 +56,7 @@ class LargestContentfulPaint extends Metric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
+   * @param {Lantern.Simulation.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
   static getPessimisticGraph(dependencyGraph, processedNavigation) {
