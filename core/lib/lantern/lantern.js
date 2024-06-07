@@ -43,18 +43,10 @@ function createProcessedNavigation(traceEngineResult) {
     throw new Error('missing metric scores for main frame');
   }
 
-  // Grab the latest navigation with scores.
-  /** @type {Map<MetricName, MetricScore>=} */
-  let scores;
-  for (const navigation of Meta.mainFrameNavigations.reverse()) {
-    const navigationId = navigation.args.data?.navigationId;
-    if (!navigationId) continue;
-
-    scores = scoresByNav.get(navigationId);
-    if (scores) break;
-  }
+  const lastNavigationId = Meta.mainFrameNavigations.at(-1)?.args.data?.navigationId ?? '';
+  const scores = scoresByNav.get(lastNavigationId);
   if (!scores) {
-    throw new Error('no metric scores found for main frame navigation');
+    throw new Error('missing metric scores for specified navigation');
   }
 
   /** @param {MetricName} metric */
