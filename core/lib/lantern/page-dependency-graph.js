@@ -844,9 +844,12 @@ class PageDependencyGraph {
    */
   static _collectMainThreadEvents(trace, traceEngineResult) {
     const Meta = traceEngineResult.data.Meta;
-    const rendererPidToTid = new Map();
+    const mainFramePids = Meta.mainFrameNavigations.length
+      ? new Set(Meta.mainFrameNavigations.map(nav => nav.pid))
+      : Meta.topLevelRendererIds;
 
-    for (const pid of Meta.topLevelRendererIds) {
+    const rendererPidToTid = new Map();
+    for (const pid of mainFramePids) {
       const threads = Meta.threadsInProcess.get(pid) ?? [];
 
       let found = false;
@@ -871,7 +874,7 @@ class PageDependencyGraph {
       }
     }
 
-    return this._filteredTraceSort(trace.traceEvents, e => rendererPidToTid.get(e.pid) === e.tid);
+    return trace.traceEvents.filter(e => rendererPidToTid.get(e.pid) === e.tid);
   }
 
   /**
