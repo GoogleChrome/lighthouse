@@ -202,7 +202,6 @@ Array [
   "CLS=0",
   "SI=8471",
   "TTI=8126",
-  "FMP=6815",
 ]
 `);
     });
@@ -223,7 +222,6 @@ Array [
   "CLS=0.1",
   "SI=8471",
   "TTI=8126",
-  "FMP=6815",
   "device=mobile",
   "version=6.0.0",
 ]

@@ -58,7 +58,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
     if (tti) metrics.push(tti);
     if (fci) metrics.push(fci);
-    if (fmp) metrics.push(fmp);
+    if (fmp && typeof fmp.result.score === 'number') metrics.push(fmp);
 
     /**
      * Clamp figure to 2 decimal places
