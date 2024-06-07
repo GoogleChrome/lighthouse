@@ -5,10 +5,9 @@
  */
 
 import {TraceEngineResult} from '../../../../computed/trace-engine-result.js';
-import {createProcessedNavigation} from '../../../../lib/lantern/lantern.js';
-import {PageDependencyGraph} from '../../../../lib/lantern/page-dependency-graph.js';
 import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/network-analyzer.js';
 import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
+import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
 import * as Lantern from '../../../../lib/lantern/types/lantern.js';
 
 /** @typedef {Lantern.NetworkRequest<import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest>} NetworkRequest */
@@ -24,13 +23,14 @@ async function getComputationDataFromFixture({trace, settings, URL}) {
 
   const context = {settings, computedCache: new Map()};
   const traceEngineResult = await TraceEngineResult.request({trace}, context);
-  const {graph, requests} =
-    await PageDependencyGraph.createGraphFromTrace(trace, traceEngineResult, URL);
-  const processedNavigation = createProcessedNavigation(traceEngineResult);
+  const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineResult);
   const networkAnalysis = NetworkAnalyzer.analyze(requests);
-  const simulator = Simulator.createSimulator({...settings, networkAnalysis});
 
-  return {simulator, graph, processedNavigation};
+  return {
+    simulator: Simulator.createSimulator({...settings, networkAnalysis}),
+    graph: TraceEngineComputationData.createGraph(requests, trace, traceEngineResult, URL),
+    processedNavigation: TraceEngineComputationData.createProcessedNavigation(traceEngineResult),
+  };
 }
 
 export {getComputationDataFromFixture};

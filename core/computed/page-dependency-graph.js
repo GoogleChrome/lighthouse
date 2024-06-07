@@ -10,6 +10,7 @@ import {NetworkRequest} from '../lib/network-request.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
 import {TraceEngineResult} from './trace-engine-result.js';
+import * as TraceEngineComputationData from '../lib/lantern/trace-engine-computation-data.js';
 
 /** @typedef {import('../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
@@ -28,8 +29,9 @@ class PageDependencyGraph {
 
     if (data.fromTrace) {
       const traceEngineResult = await TraceEngineResult.request({trace}, context);
-      const {graph} = await LanternPageDependencyGraph.createGraphFromTrace(
-        trace, traceEngineResult, URL);
+      const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineResult);
+      const graph =
+        TraceEngineComputationData.createGraph(requests, trace, traceEngineResult, URL);
       return graph;
     }
 
