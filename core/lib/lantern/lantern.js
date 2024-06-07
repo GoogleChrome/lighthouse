@@ -38,9 +38,24 @@ const NetworkRequestTypes = {
 function createProcessedNavigation(traceEngineResult) {
   const Meta = traceEngineResult.data.Meta;
   const frameId = Meta.mainFrameId;
-  const navigationId = Meta.mainFrameNavigations[0].args.data?.navigationId || '';
-  const scores =
-    traceEngineResult.data.PageLoadMetrics.metricScoresByFrameId.get(frameId)?.get(navigationId);
+  const scoresByNav = traceEngineResult.data.PageLoadMetrics.metricScoresByFrameId.get(frameId);
+  if (!scoresByNav) {
+    throw new Error('missing metric scores for main frame');
+  }
+
+  // Grab the latest navigation with scores.
+  let scores;
+  for (const navigation of Meta.mainFrameNavigations.reverse()) {
+    const navigationId = navigation.args.data?.navigationId;
+    if (!navigationId) continue;
+
+    scores = scoresByNav.get(navigationId);
+    if (scores) break;
+  }
+  if (!scores) {
+    throw new Error('no metric scores found for main frame navigation');
+  }
+
   /** @param {MetricName} metric */
   const getTimestampOrUndefined = metric => {
     const metricScore = scores?.get(metric);
