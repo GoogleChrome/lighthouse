@@ -785,59 +785,6 @@ class PageDependencyGraph {
   }
 
   /**
-   * Sorts and filters trace events by timestamp and respecting the nesting structure inherent to
-   * parent/child event relationships.
-   *
-   * @param {LH.TraceEvent[]} traceEvents
-   * @param {(e: LH.TraceEvent) => boolean} filter
-   */
-  static _filteredTraceSort(traceEvents, filter) {
-    // create an array of the indices that we want to keep
-    const indices = [];
-    for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
-      if (filter(traceEvents[srcIndex])) {
-        indices.push(srcIndex);
-      }
-    }
-
-    // Sort by ascending timestamp first.
-    indices.sort((indexA, indexB) => traceEvents[indexA].ts - traceEvents[indexB].ts);
-
-    // Now we find groups with equal timestamps and order them by their nesting structure.
-    for (let i = 0; i < indices.length - 1; i++) {
-      const ts = traceEvents[indices[i]].ts;
-      const tsGroupIndices = [i];
-      for (let j = i + 1; j < indices.length; j++) {
-        if (traceEvents[indices[j]].ts !== ts) break;
-        tsGroupIndices.push(j);
-      }
-
-      // We didn't find any other events with the same timestamp, just keep going.
-      if (tsGroupIndices.length === 1) continue;
-
-      // Sort the group by other criteria and replace our index array with it.
-      const finalIndexOrder = TraceProcessor._sortTimestampEventGroup(
-        tsGroupIndices,
-        indices,
-        i,
-        traceEvents
-      );
-      indices.splice(i, finalIndexOrder.length, ...finalIndexOrder);
-      // We just sorted this set of identical timestamps, so skip over the rest of the group.
-      // -1 because we already have i++.
-      i += tsGroupIndices.length - 1;
-    }
-
-    // create a new array using the target indices from previous sort step
-    const sorted = [];
-    for (let i = 0; i < indices.length; i++) {
-      sorted.push(traceEvents[indices[i]]);
-    }
-
-    return sorted;
-  }
-
-  /**
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
    * @return {LH.TraceEvent[]}
@@ -874,7 +821,7 @@ class PageDependencyGraph {
       }
     }
 
-    return this._filteredTraceSort(trace.traceEvents, e => rendererPidToTid.get(e.pid) === e.tid);
+    return trace.traceEvents.filter(e => rendererPidToTid.get(e.pid) === e.tid);
   }
 
   /**
