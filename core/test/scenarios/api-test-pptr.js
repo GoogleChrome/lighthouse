@@ -163,7 +163,7 @@ describe('Individual modes API', function() {
     });
 
     // eslint-disable-next-line max-len
-    it.only('should know target type of network requests from frames created before timespan', async () => {
+    it('should know target type of network requests from frames created before timespan', async () => {
       const spy = jestMock.spyOn(TargetManager.prototype, '_onExecutionContextCreated');
       state.server.baseDir = `${LH_ROOT}/cli/test/fixtures`;
       const {page, serverBaseUrl} = state;
