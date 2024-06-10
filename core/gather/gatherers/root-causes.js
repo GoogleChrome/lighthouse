@@ -114,7 +114,6 @@ class RootCauses extends BaseGatherer {
     const rootCausesEngine = new TraceEngine.RootCauses(protocolInterface);
     const layoutShiftEvents = traceParsedData.LayoutShifts.clusters.flatMap(c => c.events);
     for (const event of layoutShiftEvents) {
-      // @ts-expect-error The data we do get in the trace processor is still enough here
       const r = await rootCausesEngine.layoutShifts.rootCausesForEvent(traceParsedData, event);
       if (!r) continue;
 
