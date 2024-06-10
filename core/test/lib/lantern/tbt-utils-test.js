@@ -17,7 +17,7 @@ describe('TotalBlockingTime utils', () => {
     const interactiveTimeMs = 4000;
 
     expect(
-        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+      calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
     ).toBe(0);
   });
 
@@ -33,7 +33,7 @@ describe('TotalBlockingTime utils', () => {
     const interactiveTimeMs = 2500;
 
     expect(
-        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+      calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
     ).toBe(150);
   });
 
@@ -52,7 +52,7 @@ describe('TotalBlockingTime utils', () => {
     ];
 
     expect(
-        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+      calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
     ).toBe(10); // 0ms + 10ms.
   });
 
@@ -64,25 +64,25 @@ describe('TotalBlockingTime utils', () => {
     const interactiveTimeMs = 2000;
 
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 1951, end: 2100, duration: 149}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(0); // Duration after clipping is 49, which is < 50.
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 1950, end: 2100, duration: 150}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 1949, end: 2100, duration: 151}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
   });
 
@@ -91,25 +91,25 @@ describe('TotalBlockingTime utils', () => {
     const interactiveTimeMs = 2000;
 
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 900, end: 1049, duration: 149}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(0); // Duration after clipping is 49, which is < 50.
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 900, end: 1050, duration: 150}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
     expect(
-        calculateSumOfBlockingTime(
+      calculateSumOfBlockingTime(
         [{start: 900, end: 1051, duration: 151}],
         fcpTimeMs,
         interactiveTimeMs
-        )
+      )
     ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
   });
 
@@ -122,7 +122,7 @@ describe('TotalBlockingTime utils', () => {
     const events = [{start: 500, end: 3000, duration: 2500}];
 
     expect(
-        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+      calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
     ).toBe(0);
   });
 });
