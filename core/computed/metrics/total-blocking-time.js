@@ -9,7 +9,7 @@ import ComputedMetric from './metric.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import {LanternTotalBlockingTime} from './lantern-total-blocking-time.js';
 import {Interactive} from './interactive.js';
-import {calculateSumOfBlockingTime} from './tbt-utils.js';
+import {calculateSumOfBlockingTime} from '../../lib/lantern/tbt-utils.js';
 
 /**
  * @fileoverview This audit determines Total Blocking Time.

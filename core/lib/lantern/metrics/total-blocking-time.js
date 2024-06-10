@@ -7,7 +7,7 @@
 import * as Lantern from '../types/lantern.js';
 import {Metric} from '../metric.js';
 import {BaseNode} from '../base-node.js';
-import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
+import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from '../tbt-utils.js';
 
 /** @typedef {import('../base-node.js').Node} Node */
 
