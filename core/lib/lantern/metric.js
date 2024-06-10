@@ -18,7 +18,7 @@ import {RESOURCE_TYPES} from '../../lib/network-request.js';
  * @property {LH.Artifacts.LanternMetric=} fcpResult
  * @property {LH.Artifacts.LanternMetric=} lcpResult
  * @property {LH.Artifacts.LanternMetric=} interactiveResult
- * @property {{speedIndex: number}=} speedline
+ * @property {number=} observedSpeedIndex
  */
 
 class Metric {
