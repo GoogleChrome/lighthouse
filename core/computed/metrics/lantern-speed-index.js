@@ -34,7 +34,7 @@ class LanternSpeedIndex extends SpeedIndex {
     const speedline = await Speedline.request(data.trace, context);
     const fcpResult = await LanternFirstContentfulPaint.request(data, context);
     return this.computeMetricWithGraphs(data, context, {
-      speedline,
+      observedSpeedIndex: speedline.speedIndex,
       fcpResult,
     });
   }
