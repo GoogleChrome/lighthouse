@@ -16,7 +16,6 @@ import speedline from 'speedline-core';
 import * as CDTSourceMap from '../core/lib/cdt/generated/SourceMap.js';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
 import type { TaskNode as _TaskNode } from '../core/lib/tracehouse/main-thread-tasks.js';
-import type {EnabledHandlers} from '../core/computed/trace-engine-result.js';
 import AuditDetails from './lhr/audit-details.js'
 import Config from './config.js';
 import Gatherer from './gatherer.js';
@@ -511,8 +510,8 @@ declare module Artifacts {
   }
 
   interface TraceEngineResult {
-    data: TraceEngine.Handlers.Types.EnabledHandlerDataWithMeta<EnabledHandlers>;
-    insights: TraceEngine.Insights.Types.TraceInsightData<EnabledHandlers>;
+    data: TraceEngine.Handlers.Types.TraceParseData;
+    insights: TraceEngine.Insights.Types.TraceInsightData<typeof TraceEngine.Handlers.ModelHandlers>;
   }
 
   interface TraceEngineRootCauses {

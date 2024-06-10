@@ -10,20 +10,6 @@ import {CumulativeLayoutShift} from './metrics/cumulative-layout-shift.js';
 import {ProcessedTrace} from './processed-trace.js';
 import * as LH from '../../types/lh.js';
 
-/** @typedef {typeof ENABLED_HANDLERS} EnabledHandlers */
-
-const ENABLED_HANDLERS = {
-  AuctionWorklets: TraceEngine.TraceHandlers.AuctionWorklets,
-  Initiators: TraceEngine.TraceHandlers.Initiators,
-  LayoutShifts: TraceEngine.TraceHandlers.LayoutShifts,
-  NetworkRequests: TraceEngine.TraceHandlers.NetworkRequests,
-  Renderer: TraceEngine.TraceHandlers.Renderer,
-  Samples: TraceEngine.TraceHandlers.Samples,
-  Screenshots: TraceEngine.TraceHandlers.Screenshots,
-  PageLoadMetrics: TraceEngine.TraceHandlers.PageLoadMetrics,
-  Workers: TraceEngine.TraceHandlers.Workers,
-};
-
 /**
  * @fileoverview Processes trace with the shared trace engine.
  */
@@ -33,15 +19,14 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(traceEvents) {
-    const engine = new TraceEngine.TraceProcessor(ENABLED_HANDLERS);
+    const processor = TraceEngine.TraceProcessor.createWithAllHandlers();
     // eslint-disable-next-line max-len
-    await engine.parse(/** @type {import('@paulirish/trace_engine').Types.TraceEvents.TraceEventData[]} */ (
+    await processor.parse(/** @type {import('@paulirish/trace_engine').Types.TraceEvents.TraceEventData[]} */ (
       traceEvents
     ));
-    // TODO: use TraceEngine.TraceProcessor.createWithAllHandlers above.
-    if (!engine.traceParsedData) throw new Error('No data');
-    if (!engine.insights) throw new Error('No insights');
-    return {data: engine.traceParsedData, insights: engine.insights};
+    if (!processor.traceParsedData) throw new Error('No data');
+    if (!processor.insights) throw new Error('No insights');
+    return {data: processor.traceParsedData, insights: processor.insights};
   }
 
   /**

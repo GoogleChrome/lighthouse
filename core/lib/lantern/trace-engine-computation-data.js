@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as TraceEngine from '@paulirish/trace_engine';
+
 import * as Lantern from './types/lantern.js';
 import {PageDependencyGraph} from './page-dependency-graph.js';
 import {RESOURCE_TYPES} from '../network-request.js';
@@ -12,13 +14,13 @@ import {RESOURCE_TYPES} from '../network-request.js';
 /** @typedef {import('@paulirish/trace_engine/models/trace/handlers/PageLoadMetricsHandler.js').MetricScore} MetricScore */
 
 /**
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+ * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @return {Lantern.Simulation.ProcessedNavigation}
  */
-function createProcessedNavigation(traceEngineResult) {
-  const Meta = traceEngineResult.data.Meta;
+function createProcessedNavigation(traceEngineData) {
+  const Meta = traceEngineData.Meta;
   const frameId = Meta.mainFrameId;
-  const scoresByNav = traceEngineResult.data.PageLoadMetrics.metricScoresByFrameId.get(frameId);
+  const scoresByNav = traceEngineData.PageLoadMetrics.metricScoresByFrameId.get(frameId);
   if (!scoresByNav) {
     throw new Error('missing metric scores for main frame');
   }
@@ -97,12 +99,12 @@ function findWorkerThreads(trace) {
 }
 
 /**
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+ * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @param {Map<number, number[]>} workerThreads
  * @param {import('@paulirish/trace_engine/models/trace/types/TraceEvents.js').SyntheticNetworkRequest} request
  * @return {Lantern.NetworkRequest=}
  */
-function createLanternRequest(traceEngineResult, workerThreads, request) {
+function createLanternRequest(traceEngineData, workerThreads, request) {
   if (request.args.data.connectionId === undefined ||
         request.args.data.connectionReused === undefined) {
     throw new Error('Trace is too old');
@@ -134,7 +136,7 @@ function createLanternRequest(traceEngineResult, workerThreads, request) {
 
   // TraceEngine collects worker thread ids in a different manner than `workerThreads` does.
   // AFAIK these should be equivalent, but in case they are not let's also check this for now.
-  if (traceEngineResult.data.Workers.workerIdByThread.has(request.tid)) {
+  if (traceEngineData.Workers.workerIdByThread.has(request.tid)) {
     fromWorker = true;
   }
 
@@ -295,16 +297,16 @@ function linkInitiators(lanternRequests) {
 
 /**
  * @param {LH.Trace} trace
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+ * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @return {Lantern.NetworkRequest[]}
  */
-function createNetworkRequests(trace, traceEngineResult) {
+function createNetworkRequests(trace, traceEngineData) {
   const workerThreads = findWorkerThreads(trace);
 
   /** @type {Lantern.NetworkRequest[]} */
   const lanternRequests = [];
-  for (const request of traceEngineResult.data.NetworkRequests.byTime) {
-    const lanternRequest = createLanternRequest(traceEngineResult, workerThreads, request);
+  for (const request of traceEngineData.NetworkRequests.byTime) {
+    const lanternRequest = createLanternRequest(traceEngineData, workerThreads, request);
     if (lanternRequest) {
       lanternRequests.push(lanternRequest);
     }
@@ -389,11 +391,11 @@ function createNetworkRequests(trace, traceEngineResult) {
 
 /**
  * @param {LH.Trace} trace
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+ * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @return {LH.TraceEvent[]}
  */
-function collectMainThreadEvents(trace, traceEngineResult) {
-  const Meta = traceEngineResult.data.Meta;
+function collectMainThreadEvents(trace, traceEngineData) {
+  const Meta = traceEngineData.Meta;
   const mainFramePids = Meta.mainFrameNavigations.length
     ? new Set(Meta.mainFrameNavigations.map(nav => nav.pid))
     : Meta.topLevelRendererIds;
@@ -430,11 +432,11 @@ function collectMainThreadEvents(trace, traceEngineResult) {
 /**
  * @param {Lantern.NetworkRequest[]} requests
  * @param {LH.Trace} trace
- * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+ * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @param {LH.Artifacts.URL=} URL
  */
-function createGraph(requests, trace, traceEngineResult, URL) {
-  const mainThreadEvents = collectMainThreadEvents(trace, traceEngineResult);
+function createGraph(requests, trace, traceEngineData, URL) {
+  const mainThreadEvents = collectMainThreadEvents(trace, traceEngineData);
 
   // URL defines the initial request that the Lantern graph starts at (the root node) and the
   // main document request. These are equal if there are no redirects.

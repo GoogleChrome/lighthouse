@@ -29,9 +29,10 @@ class PageDependencyGraph {
 
     if (data.fromTrace) {
       const traceEngineResult = await TraceEngineResult.request({trace}, context);
-      const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineResult);
+      const traceEngineData = traceEngineResult.data;
+      const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
       const graph =
-        TraceEngineComputationData.createGraph(requests, trace, traceEngineResult, URL);
+        TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL);
       return graph;
     }
 

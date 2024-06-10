@@ -39,7 +39,7 @@ async function getComputationDataParamsFromTrace(data, context) {
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
   const traceEngineResult = await TraceEngineResult.request(data, context);
-  const processedNavigation = createProcessedNavigation(traceEngineResult);
+  const processedNavigation = createProcessedNavigation(traceEngineResult.data);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};
