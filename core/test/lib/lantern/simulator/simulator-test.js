@@ -12,7 +12,6 @@ import {CPUNode} from '../../../../lib/lantern/cpu-node.js';
 import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
 import {DNSCache} from '../../../../lib/lantern/simulator/dns-cache.js';
 import {readJson} from '../../../test-utils.js';
-import {NetworkRequest} from '../../../../lib/network-request.js';
 import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
 import {runTraceEngine} from '../metrics/metric-test-utils.js';
 
@@ -39,7 +38,7 @@ function request(opts) {
   delete opts.startTime;
   delete opts.endTime;
 
-  const request = Object.assign({
+  return Object.assign({
     requestId: opts.requestId || nextRequestId++,
     url,
     transferSize: opts.transferSize || 1000,
@@ -49,7 +48,6 @@ function request(opts) {
     rendererStartTime,
     networkEndTime,
   }, opts);
-  return NetworkRequest.asLanternNetworkRequest(request);
 }
 
 function cpuTask({tid, ts, duration}) {
