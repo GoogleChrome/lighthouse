@@ -11,25 +11,24 @@ import {NetworkNode} from '../../../../lib/lantern/network-node.js';
 import {CPUNode} from '../../../../lib/lantern/cpu-node.js';
 import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
 import {DNSCache} from '../../../../lib/lantern/simulator/dns-cache.js';
-import {getURLArtifactFromDevtoolsLog, readJson} from '../../../test-utils.js';
+import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
 import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
 import {runTraceEngine} from '../metrics/metric-test-utils.js';
 
 const pwaTrace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const pwaDevtoolsLog = readJson('../../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 let nextRequestId = 1;
 let nextTid = 1;
 
 /**
  * @param {Lantern.Trace} trace
- * @param {Lantern.Simulation.URL} URL
+ * @param {Lantern.Simulation.URL=} URL
  */
-async function createGraph(trace, URL) {
+async function createGraph(trace) {
   const traceEngineData = await runTraceEngine(trace.traceEvents);
   const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
-  return TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL);
+  return TraceEngineComputationData.createGraph(requests, trace, traceEngineData);
 }
 
 function request(opts) {
@@ -394,18 +393,16 @@ describe('DependencyGraph/Simulator', () => {
 
     describe('on a real trace', () => {
       const trace = pwaTrace;
-      const devtoolsLog = pwaDevtoolsLog;
-      const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
       it('should compute a timeInMs', async () => {
-        const graph = await createGraph(trace, URL);
+        const graph = await createGraph(trace);
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         expect(result.timeInMs).toBeGreaterThan(100);
       });
 
       it('should sort the task event times', async () => {
-        const graph = await createGraph(trace, URL);
+        const graph = await createGraph(trace);
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         const nodeTimings = Array.from(result.nodeTimings.entries());
