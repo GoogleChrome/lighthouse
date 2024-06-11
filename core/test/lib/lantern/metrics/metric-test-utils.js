@@ -44,6 +44,6 @@ async function getComputationDataFromFixture({trace, settings, URL}) {
 }
 
 export {
-  runTraceEngine,
   getComputationDataFromFixture,
+  runTraceEngine,
 };

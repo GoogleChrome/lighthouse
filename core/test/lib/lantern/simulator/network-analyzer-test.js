@@ -6,13 +6,25 @@
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../../../lib/lantern/types/lantern.js';
 import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/network-analyzer.js';
-import {NetworkRecords} from '../../../../computed/network-records.js';
+import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
 import {readJson} from '../../../test-utils.js';
 import {NetworkRequest} from '../../../../lib/network-request.js';
+import {runTraceEngine} from '../metrics/metric-test-utils.js';
 
-const devtoolsLog = readJson('../../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
-const devtoolsLogWithRedirect = readJson('../../../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
+const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
+const traceWithRedirect = readJson('../../../fixtures/artifacts/redirect/trace.json', import.meta);
+
+/**
+ * @param {Lantern.Trace} trace
+ */
+async function createRequests(trace) {
+  const traceEngineData = await runTraceEngine(
+    /** @type {TraceEngine.Types.TraceEvents.TraceEventData[]} */ (trace.traceEvents)
+  );
+  return TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
+}
 
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   afterEach(() => {
@@ -130,13 +142,12 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result, expected);
     });
 
-    it('should work on a real devtoolsLog', () => {
-      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
-        const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
-        const distinctConnections = Array.from(result.values()).filter(item => !item).length;
-        assert.equal(result.size, 27);
-        assert.equal(distinctConnections, 9);
-      });
+    it('should work on a real trace', async () => {
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.estimateIfConnectionWasReused(requests);
+      const distinctConnections = Array.from(result.values()).filter(item => !item).length;
+      assert.equal(result.size, 25);
+      assert.equal(distinctConnections, 9);
     });
   });
 
@@ -244,25 +255,23 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    it('should work on a real devtoolsLog', () => {
-      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
-        const result = NetworkAnalyzer.estimateRTTByOrigin(records);
-        assertCloseEnough(result.get('https://www.paulirish.com').min, 10);
-        assertCloseEnough(result.get('https://www.googletagmanager.com').min, 17);
-        assertCloseEnough(result.get('https://www.google-analytics.com').min, 10);
-      });
+    it('should work on a real trace', async () => {
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.estimateRTTByOrigin(requests);
+      assertCloseEnough(result.get('https://www.paulirish.com').min, 10);
+      assertCloseEnough(result.get('https://www.googletagmanager.com').min, 17);
+      assertCloseEnough(result.get('https://www.google-analytics.com').min, 10);
     });
 
-    it('should approximate well with either method', () => {
-      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
-        const result = NetworkAnalyzer.estimateRTTByOrigin(records).get(NetworkAnalyzer.SUMMARY);
-        const resultApprox = NetworkAnalyzer.estimateRTTByOrigin(records, {
-          forceCoarseEstimates: true,
-        }).get(NetworkAnalyzer.SUMMARY);
-        assertCloseEnough(result.min, resultApprox.min, 20);
-        assertCloseEnough(result.avg, resultApprox.avg, 30);
-        assertCloseEnough(result.median, resultApprox.median, 30);
-      });
+    it('should approximate well with either method', async () => {
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.estimateRTTByOrigin(requests).get(NetworkAnalyzer.SUMMARY);
+      const resultApprox = NetworkAnalyzer.estimateRTTByOrigin(requests, {
+        forceCoarseEstimates: true,
+      }).get(NetworkAnalyzer.SUMMARY);
+      assertCloseEnough(result.min, resultApprox.min, 20);
+      assertCloseEnough(result.avg, resultApprox.avg, 30);
+      assertCloseEnough(result.median, resultApprox.median, 30);
     });
 
     it('should use lrStatistics when needed', () => {
@@ -309,27 +318,25 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    it('should work on a real devtoolsLog', () => {
-      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
-        const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
-        assertCloseEnough(result.get('https://www.paulirish.com').avg, 35);
-        assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 8);
-        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 8);
-      });
+    it('should work on a real trace', async () => {
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(requests);
+      assertCloseEnough(result.get('https://www.paulirish.com').avg, 35);
+      assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 8);
+      assertCloseEnough(result.get('https://www.google-analytics.com').avg, 8);
     });
 
-    it('should approximate well with either method', () => {
-      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
-        const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records).get(
-          NetworkAnalyzer.SUMMARY
-        );
-        const resultApprox = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
-          forceCoarseEstimates: true,
-        }).get(NetworkAnalyzer.SUMMARY);
-        assertCloseEnough(result.min, resultApprox.min, 20);
-        assertCloseEnough(result.avg, resultApprox.avg, 30);
-        assertCloseEnough(result.median, resultApprox.median, 30);
-      });
+    it('should approximate well with either method', async () => {
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(requests).get(
+        NetworkAnalyzer.SUMMARY
+      );
+      const resultApprox = NetworkAnalyzer.estimateServerResponseTimeByOrigin(requests, {
+        forceCoarseEstimates: true,
+      }).get(NetworkAnalyzer.SUMMARY);
+      assertCloseEnough(result.min, resultApprox.min, 20);
+      assertCloseEnough(result.avg, resultApprox.avg, 30);
+      assertCloseEnough(result.median, resultApprox.median, 30);
     });
 
     it('should use lrStatistics when needed', () => {
@@ -440,20 +447,20 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   describe('#computeRTTAndServerResponseTime', () => {
     it('should work', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.computeRTTAndServerResponseTime(records);
+      const requests = await createRequests(trace);
+      const result = NetworkAnalyzer.computeRTTAndServerResponseTime(requests);
 
-      expect(Math.round(result.rtt)).toEqual(2);
+      expect(result.rtt).toBeCloseTo(0.082);
       expect(result.additionalRttByOrigin).toMatchInlineSnapshot(`
 Map {
-  "https://www.paulirish.com" => 8.099999999999994,
-  "https://www.googletagmanager.com" => 15.530999999999992,
-  "https://fonts.googleapis.com" => 15.127000000000002,
-  "https://fonts.gstatic.com" => 0,
-  "https://www.google-analytics.com" => 8.235999999999997,
-  "https://paulirish.disqus.com" => 7.3119999999999985,
-  "https://firebaseinstallations.googleapis.com" => 6.473,
-  "https://firebaseremoteconfig.googleapis.com" => 4.121000000000003,
+  "https://www.paulirish.com" => 9.788999999999994,
+  "https://www.googletagmanager.com" => 17.21999999999999,
+  "https://fonts.googleapis.com" => 16.816000000000003,
+  "https://fonts.gstatic.com" => 1.6889999999999998,
+  "https://www.google-analytics.com" => 9.924999999999997,
+  "https://paulirish.disqus.com" => 9.000999999999998,
+  "https://firebaseinstallations.googleapis.com" => 0,
+  "https://firebaseremoteconfig.googleapis.com" => 0.1823,
   "__SUMMARY__" => 0,
 }
 `);
@@ -462,34 +469,30 @@ Map {
 
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/');
+      const requests = await createRequests(trace);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(requests, 'https://www.paulirish.com/');
       assert.equal(mainDocument.url, 'https://www.paulirish.com/');
     });
 
     it('should find the main document if the URL includes a fragment', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/#info');
+      const requests = await createRequests(trace);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(requests, 'https://www.paulirish.com/#info');
       assert.equal(mainDocument.url, 'https://www.paulirish.com/');
     });
   });
 
   describe('#resolveRedirects', () => {
     it('should resolve to the same document when no redirect', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://www.paulirish.com/');
+      const requests = await createRequests(trace);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(requests, 'https://www.paulirish.com/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.equal(mainDocument.url, finalDocument.url);
       assert.equal(finalDocument.url, 'https://www.paulirish.com/');
     });
 
     it('should resolve to the final document with redirects', async () => {
-      const records = await NetworkRecords.request(devtoolsLogWithRedirect, {
-        computedCache: new Map(),
-      });
-
-      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'http://www.vkontakte.ru/');
+      const requests = await createRequests(traceWithRedirect);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(requests, 'http://www.vkontakte.ru/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.notEqual(mainDocument.url, finalDocument.url);
       assert.equal(finalDocument.url, 'https://m.vk.com/');

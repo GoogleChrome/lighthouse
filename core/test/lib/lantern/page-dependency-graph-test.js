@@ -30,7 +30,7 @@ function createRequest(
 }
 
 const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-describe('PageDependencyGraph computed artifact:', () => {
+describe('PageDependencyGraph', () => {
   let traceEvents;
   let URL;
 
