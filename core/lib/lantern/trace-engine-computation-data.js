@@ -5,6 +5,7 @@
  */
 
 import * as TraceEngine from '@paulirish/trace_engine';
+import * as Protocol from '@paulirish/trace_engine/generated/protocol.js';
 
 import * as Lantern from './types/lantern.js';
 import {PageDependencyGraph} from './page-dependency-graph.js';
@@ -71,7 +72,7 @@ function createParsedUrl(url) {
 
 /**
  * Returns a map of `pid` -> `tid[]`.
- * @param {LH.Trace} trace
+ * @param {Lantern.Trace} trace
  * @return {Map<number, number[]>}
  */
 function findWorkerThreads(trace) {
@@ -140,6 +141,9 @@ function createLanternRequest(traceEngineData, workerThreads, request) {
     fromWorker = true;
   }
 
+  // typescript const enums.... gotta stop using those ...
+  const Other = /** @type {Protocol.Network.InitiatorType.Other} */ ('other');
+
   // `initiator` in the trace does not contain the stack trace for JS-initiated
   // requests. Instead, that is stored in the `stackTrace` property of the SyntheticNetworkRequest.
   // There are some minor differences in the fields, accounted for here.
@@ -148,11 +152,11 @@ function createLanternRequest(traceEngineData, workerThreads, request) {
   // which means less edges in the graph, which mean worse results.
   // TODO: Should fix in Chromium.
   /** @type {Lantern.NetworkRequest['initiator']} */
-  const initiator = request.args.data.initiator ?? {type: 'other'};
+  const initiator = request.args.data.initiator ?? {type: Other};
   if (request.args.data.stackTrace) {
     const callFrames = request.args.data.stackTrace.map(f => {
       return {
-        scriptId: String(f.scriptId),
+        scriptId: /** @type {Protocol.Runtime.ScriptId} */(String(f.scriptId)),
         url: f.url,
         lineNumber: f.lineNumber - 1,
         columnNumber: f.columnNumber - 1,
@@ -160,6 +164,7 @@ function createLanternRequest(traceEngineData, workerThreads, request) {
       };
     });
     initiator.stack = {callFrames};
+    // Note: there is no `parent` to set ...
   }
 
   let resourceType = request.args.data.resourceType;
@@ -296,7 +301,7 @@ function linkInitiators(lanternRequests) {
 }
 
 /**
- * @param {LH.Trace} trace
+ * @param {Lantern.Trace} trace
  * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
  * @return {Lantern.NetworkRequest[]}
  */
@@ -390,9 +395,9 @@ function createNetworkRequests(trace, traceEngineData) {
 }
 
 /**
- * @param {LH.Trace} trace
+ * @param {Lantern.Trace} trace
  * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
- * @return {LH.TraceEvent[]}
+ * @return {Lantern.TraceEvent[]}
  */
 function collectMainThreadEvents(trace, traceEngineData) {
   const Meta = traceEngineData.Meta;
@@ -431,9 +436,9 @@ function collectMainThreadEvents(trace, traceEngineData) {
 
 /**
  * @param {Lantern.NetworkRequest[]} requests
- * @param {LH.Trace} trace
+ * @param {Lantern.Trace} trace
  * @param {TraceEngine.Handlers.Types.TraceParseData} traceEngineData
- * @param {LH.Artifacts.URL=} URL
+ * @param {Lantern.Simulation.URL=} URL
  */
 function createGraph(requests, trace, traceEngineData, URL) {
   const mainThreadEvents = collectMainThreadEvents(trace, traceEngineData);
@@ -444,7 +449,6 @@ function createGraph(requests, trace, traceEngineData, URL) {
     URL = {
       requestedUrl: requests[0].url,
       mainDocumentUrl: '',
-      finalDisplayedUrl: '',
     };
 
     let request = requests[0];

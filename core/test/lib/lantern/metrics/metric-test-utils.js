@@ -6,6 +6,7 @@
 
 import * as TraceEngine from '@paulirish/trace_engine';
 
+import * as Lantern from '../../../../lib/lantern/types/lantern.js';
 import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/network-analyzer.js';
 import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
 import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
@@ -21,7 +22,7 @@ async function runTraceEngine(traceEvents) {
 }
 
 /**
- * @param {{trace: LH.Trace, settings?: LH.Config.Settings, URL?: LH.Artifacts.URL}} opts
+ * @param {{trace: Lantern.Trace, settings?: LH.Config.Settings, URL?: Lantern.Simulation.URL}} opts
  */
 async function getComputationDataFromFixture({trace, settings, URL}) {
   settings = settings ?? /** @type {LH.Config.Settings} */({});

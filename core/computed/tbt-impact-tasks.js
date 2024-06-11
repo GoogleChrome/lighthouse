@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/types/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {MainThreadTasks} from './main-thread-tasks.js';
 import {FirstContentfulPaint} from './metrics/first-contentful-paint.js';
@@ -132,7 +133,7 @@ class TBTImpactTasks {
     /** @type {Map<LH.Artifacts.TaskNode, {start: number, end: number, duration: number}>} */
     const topLevelTaskToEvent = new Map();
 
-    /** @type {Map<LH.TraceEvent, LH.Artifacts.TaskNode>} */
+    /** @type {Map<Lantern.TraceEvent, LH.Artifacts.TaskNode>} */
     const traceEventToTask = new Map();
     for (const task of tasks) {
       traceEventToTask.set(task.event, task);

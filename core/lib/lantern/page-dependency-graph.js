@@ -8,11 +8,18 @@ import * as Lantern from './types/lantern.js';
 import {NetworkRequestTypes} from './lantern.js';
 import {NetworkNode} from './network-node.js';
 import {CPUNode} from './cpu-node.js';
-import {TraceProcessor} from '../tracehouse/trace-processor.js';
 import {NetworkAnalyzer} from './simulator/network-analyzer.js';
 
+// COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
+const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
+// m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
+const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';
+// In m66-68 refactored to this task title, https://crrev.com/c/883346
+const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
+// m65 and earlier
+const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+
 /** @typedef {import('./base-node.js').Node} Node */
-/** @typedef {Omit<LH.Artifacts['URL'], 'finalDisplayedUrl'>} URLArtifact */
 
 /**
  * @typedef {Object} NetworkNodeOutput
@@ -109,7 +116,31 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.TraceEvent[]} mainThreadEvents
+   * @param {Lantern.TraceEvent} evt
+   * @return {boolean}
+   */
+  static isScheduleableTask(evt) {
+    return evt.name === SCHEDULABLE_TASK_TITLE_LH ||
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
+      evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
+  }
+
+  /**
+   * There should *always* be at least one top level event, having 0 typically means something is
+   * drastically wrong with the trace and we should just give up early and loudly.
+   *
+   * @param {Lantern.TraceEvent[]} events
+   */
+  static assertHasToplevelEvents(events) {
+    const hasToplevelTask = events.some(this.isScheduleableTask);
+    if (!hasToplevelTask) {
+      throw new Error('Could not find any top level events');
+    }
+  }
+
+  /**
+   * @param {Lantern.TraceEvent[]} mainThreadEvents
    * @return {Array<CPUNode>}
    */
   static getCPUNodes(mainThreadEvents) {
@@ -117,14 +148,14 @@ class PageDependencyGraph {
     const nodes = [];
     let i = 0;
 
-    TraceProcessor.assertHasToplevelEvents(mainThreadEvents);
+    PageDependencyGraph.assertHasToplevelEvents(mainThreadEvents);
 
     while (i < mainThreadEvents.length) {
       const evt = mainThreadEvents[i];
       i++;
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
-      if (!TraceProcessor.isScheduleableTask(evt) || !evt.dur) {
+      if (!PageDependencyGraph.isScheduleableTask(evt) || !evt.dur) {
         continue;
       }
 
@@ -132,23 +163,25 @@ class PageDependencyGraph {
       let correctedEndTs = undefined;
 
       // Capture all events that occurred within the task
-      /** @type {Array<LH.TraceEvent>} */
+      /** @type {Array<Lantern.TraceEvent>} */
       const children = [];
       for (
         const endTime = evt.ts + evt.dur;
         i < mainThreadEvents.length && mainThreadEvents[i].ts < endTime;
         i++
       ) {
+        const event = mainThreadEvents[i];
+
         // Temporary fix for a Chrome bug where some RunTask events can be overlapping.
         // We correct that here be ensuring each RunTask ends at least 1 microsecond before the next
         // https://github.com/GoogleChrome/lighthouse/issues/15896
         // https://issues.chromium.org/issues/329678173
-        if (TraceProcessor.isScheduleableTask(mainThreadEvents[i]) && mainThreadEvents[i].dur) {
-          correctedEndTs = mainThreadEvents[i].ts - 1;
+        if (PageDependencyGraph.isScheduleableTask(event) && event.dur) {
+          correctedEndTs = event.ts - 1;
           break;
         }
 
-        children.push(mainThreadEvents[i]);
+        children.push(event);
       }
 
       nodes.push(new CPUNode(evt, children, correctedEndTs));
@@ -210,7 +243,7 @@ class PageDependencyGraph {
    * @param {Array<CPUNode>} cpuNodes
    */
   static linkCPUNodes(rootNode, networkNodeOutput, cpuNodes) {
-    /** @type {Set<LH.Crdp.Network.ResourceType|undefined>} */
+    /** @type {Set<Lantern.ResourceType|undefined>} */
     const linkableResourceTypes = new Set([
       NetworkRequestTypes.XHR, NetworkRequestTypes.Fetch, NetworkRequestTypes.Script,
     ]);
@@ -506,9 +539,9 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.TraceEvent[]} mainThreadEvents
+   * @param {Lantern.TraceEvent[]} mainThreadEvents
    * @param {Lantern.NetworkRequest[]} networkRequests
-   * @param {URLArtifact} URL
+   * @param {Lantern.Simulation.URL} URL
    * @return {Node}
    */
   static createGraph(mainThreadEvents, networkRequests, URL) {

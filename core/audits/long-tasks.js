@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/types/lantern.js';
 import {Audit} from './audit.js';
 import {NetworkRecords} from '../computed/network-records.js';
 import * as i18n from '../lib/i18n/i18n.js';
@@ -85,7 +86,7 @@ class LongTasks extends Audit {
    * most time will be attributed to 'other' (the category of the top-level
    * RunTask). See pruning in `PageDependencyGraph.linkCPUNodes`.
    * @param {LH.Artifacts.TaskNode} task
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @param {Map<TaskGroupIds, number>} [timeByTaskGroup]
    * @return {{startTime: number, duration: number, timeByTaskGroup: Map<TaskGroupIds, number>}}
    */
@@ -116,7 +117,7 @@ class LongTasks extends Audit {
   /**
    * @param {Array<LH.Artifacts.TaskNode>} longTasks
    * @param {Set<string>} jsUrls
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @return {LH.Audit.Details.DebugData}
    */
   static makeDebugData(longTasks, jsUrls, taskTimingsByEvent) {
@@ -154,7 +155,7 @@ class LongTasks extends Audit {
   /**
    * Get timing from task, overridden by taskTimingsByEvent if provided.
    * @param {LH.Artifacts.TaskNode} task
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @return {Timing}
    */
   static getTiming(task, taskTimingsByEvent) {
@@ -184,7 +185,7 @@ class LongTasks extends Audit {
     const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
     const tbtResult = await TotalBlockingTime.request(metricComputationData, context);
 
-    /** @type {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} */
+    /** @type {Map<Lantern.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} */
     let taskTimingsByEvent;
 
     if (settings.throttlingMethod === 'simulate') {

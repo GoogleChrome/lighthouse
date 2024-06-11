@@ -116,7 +116,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       const ts = eventTs + (event.ts - nestedBaseTs) * multiplier;
       const newEvent = {...event, ...{pid: baseEvent.pid, tid: baseEvent.tid}, ts};
       if (event.dur) newEvent.dur = event.dur * multiplier;
-      events.push(newEvent);
+      events.push(/** @type {LH.TraceEvent} */(newEvent));
     }
 
     return events;

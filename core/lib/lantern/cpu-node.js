@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as LH from '../../../types/lh.js';
+import * as Lantern from './types/lantern.js';
 import {BaseNode} from './base-node.js';
 
 /**
@@ -13,8 +13,8 @@ import {BaseNode} from './base-node.js';
  */
 class CPUNode extends BaseNode {
   /**
-   * @param {LH.TraceEvent} parentEvent
-   * @param {LH.TraceEvent[]=} childEvents
+   * @param {Lantern.TraceEvent} parentEvent
+   * @param {Lantern.TraceEvent[]=} childEvents
    * @param {number=} correctedEndTs
    */
   constructor(parentEvent, childEvents = [], correctedEndTs) {
@@ -53,14 +53,14 @@ class CPUNode extends BaseNode {
   }
 
   /**
-   * @return {LH.TraceEvent}
+   * @return {Lantern.TraceEvent}
    */
   get event() {
     return this._event;
   }
 
   /**
-   * @return {LH.TraceEvent[]}
+   * @return {Lantern.TraceEvent[]}
    */
   get childEvents() {
     return this._childEvents;
