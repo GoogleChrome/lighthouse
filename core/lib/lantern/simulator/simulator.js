@@ -10,9 +10,9 @@ import {TcpConnection} from './tcp-connection.js';
 import {ConnectionPool} from './connection-pool.js';
 import {DNSCache} from './dns-cache.js';
 import {SimulatorTimingMap} from './simulator-timing-map.js';
-import * as constants from '../../../config/constants.js';
+import {constants} from '../lantern.js';
 
-const mobileSlow4G = constants.throttling.mobileSlow4G;
+const defaultThrottling = constants.mobileSlow4G;
 
 /** @typedef {import('../base-node.js').Node} Node */
 /** @typedef {import('../network-node.js').NetworkNode} NetworkNode */
@@ -82,10 +82,10 @@ class Simulator {
       case 'devtools':
         if (throttling) {
           options.rtt =
-            throttling.requestLatencyMs / constants.throttling.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
+            throttling.requestLatencyMs / constants.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
           options.throughput =
             throttling.downloadThroughputKbps * 1024 /
-            constants.throttling.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
+            constants.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
         }
 
         options.cpuSlowdownMultiplier = 1;
@@ -113,10 +113,10 @@ class Simulator {
     /** @type {Required<Lantern.Simulation.Options>} */
     this._options = Object.assign(
       {
-        rtt: mobileSlow4G.rttMs,
-        throughput: mobileSlow4G.throughputKbps * 1024,
+        rtt: defaultThrottling.rttMs,
+        throughput: defaultThrottling.throughputKbps * 1024,
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
-        cpuSlowdownMultiplier: mobileSlow4G.cpuSlowdownMultiplier,
+        cpuSlowdownMultiplier: defaultThrottling.cpuSlowdownMultiplier,
         layoutTaskMultiplier: DEFAULT_LAYOUT_TASK_MULTIPLIER,
         additionalRttByOrigin: new Map(),
         serverResponseTimeByOrigin: new Map(),
