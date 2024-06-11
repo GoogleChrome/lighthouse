@@ -12,7 +12,7 @@ import {constants} from '../../../../lib/lantern/lantern.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
-const defaultThrottling = constants.mobileSlow4G;
+const defaultThrottling = constants.throttling.mobileSlow4G;
 
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {

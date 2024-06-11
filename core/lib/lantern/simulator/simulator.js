@@ -12,7 +12,7 @@ import {DNSCache} from './dns-cache.js';
 import {SimulatorTimingMap} from './simulator-timing-map.js';
 import {constants} from '../lantern.js';
 
-const defaultThrottling = constants.mobileSlow4G;
+const defaultThrottling = constants.throttling.mobileSlow4G;
 
 /** @typedef {import('../base-node.js').Node} Node */
 /** @typedef {import('../network-node.js').NetworkNode} NetworkNode */
@@ -82,10 +82,10 @@ class Simulator {
       case 'devtools':
         if (throttling) {
           options.rtt =
-            throttling.requestLatencyMs / constants.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
+            throttling.requestLatencyMs / constants.throttling.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
           options.throughput =
             throttling.downloadThroughputKbps * 1024 /
-            constants.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
+            constants.throttling.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
         }
 
         options.cpuSlowdownMultiplier = 1;
