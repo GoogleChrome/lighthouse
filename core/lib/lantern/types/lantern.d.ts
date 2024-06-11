@@ -38,6 +38,7 @@ type Trace = {traceEvents: TraceEvent[]};
 type ResourcePriority = ('VeryLow' | 'Low' | 'Medium' | 'High' | 'VeryHigh');
 type ResourceType = ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 type InitiatorType = ('parser' | 'script' | 'preload' | 'SignedExchange' | 'preflight' | 'other');
+type ResourceTiming = Protocol.Network.ResourceTiming;
 type CallStack = {
     callFrames: Array<{
         scriptId: string;
@@ -143,6 +144,15 @@ export class NetworkRequest<T = any> {
     priority: ResourcePriority;
     frameId: string | undefined;
     fromWorker: boolean;
+}
+
+interface Metric<T = any> {
+    timing: number;
+    timestamp?: never;
+    optimisticEstimate: Simulation.Result<T>;
+    pessimisticEstimate: Simulation.Result<T>;
+    optimisticGraph: Simulation.GraphNode<T>;
+    pessimisticGraph: Simulation.GraphNode<T>;
 }
 
 export namespace Simulation {

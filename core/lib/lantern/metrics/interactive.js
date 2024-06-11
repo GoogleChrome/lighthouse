@@ -16,7 +16,7 @@ const CRITICAL_LONG_TASK_THRESHOLD = 20;
 
 class Interactive extends Metric {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
     return {
@@ -61,9 +61,9 @@ class Interactive extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulationResult
+   * @param {Lantern.Simulation.Result} simulationResult
    * @param {import('../metric.js').Extras} extras
-   * @return {LH.Gatherer.Simulation.Result}
+   * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) {
     if (!extras.lcpResult) throw new Error('missing lcpResult');
@@ -81,7 +81,7 @@ class Interactive extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {
     const lcpResult = extras?.lcpResult;
@@ -95,7 +95,7 @@ class Interactive extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
+   * @param {Lantern.Simulation.Result['nodeTimings']} nodeTimings
    * @return {number}
    */
   static getLastLongTaskEndTime(nodeTimings, duration = 50) {

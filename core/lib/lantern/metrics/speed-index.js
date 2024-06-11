@@ -14,7 +14,7 @@ const mobileSlow4GRtt = 150;
 
 class SpeedIndex extends Metric {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
     return {
@@ -28,7 +28,7 @@ class SpeedIndex extends Metric {
 
   /**
    * @param {number} rttMs
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static getScaledCoefficients(rttMs) { // eslint-disable-line no-unused-vars
     // We want to scale our default coefficients based on the speed of the connection.
@@ -70,9 +70,9 @@ class SpeedIndex extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulationResult
+   * @param {Lantern.Simulation.Result} simulationResult
    * @param {import('../metric.js').Extras} extras
-   * @return {LH.Gatherer.Simulation.Result}
+   * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) {
     if (!extras.fcpResult) throw new Error('missing fcpResult');
@@ -91,7 +91,7 @@ class SpeedIndex extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -115,7 +115,7 @@ class SpeedIndex extends Metric {
    * different methods. Read more in the evaluation doc.
    *
    * @see https://docs.google.com/document/d/1qJWXwxoyVLVadezIp_Tgdk867G3tDNkkVRvUJSH3K1E/edit#
-   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
+   * @param {Lantern.Simulation.Result['nodeTimings']} nodeTimings
    * @param {number} fcpTimeInMs
    * @return {number}
    */

@@ -13,7 +13,7 @@ import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from '../tbt-utils.
 
 class TotalBlockingTime extends Metric {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
     return {
@@ -40,9 +40,9 @@ class TotalBlockingTime extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulation
+   * @param {Lantern.Simulation.Result} simulation
    * @param {import('../metric.js').Extras} extras
-   * @return {LH.Gatherer.Simulation.Result}
+   * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {
     if (!extras.fcpResult) throw new Error('missing fcpResult');
@@ -84,7 +84,7 @@ class TotalBlockingTime extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -101,7 +101,7 @@ class TotalBlockingTime extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
+   * @param {Lantern.Simulation.Result['nodeTimings']} nodeTimings
    * @param {number} minDurationMs
    */
   static getTopLevelEvents(nodeTimings, minDurationMs) {

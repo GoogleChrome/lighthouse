@@ -6,6 +6,7 @@
 
 import {Protocol as Crdp} from 'devtools-protocol/types/protocol.js';
 import * as TraceEngine from '@paulirish/trace_engine';
+import * as Lantern from '../core/lib/lantern/types/lantern.js';
 import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
@@ -591,14 +592,7 @@ declare module Artifacts {
     throughput: number;
   }
 
-  interface LanternMetric {
-    timing: number;
-    timestamp?: never;
-    optimisticEstimate: Gatherer.Simulation.Result
-    pessimisticEstimate: Gatherer.Simulation.Result;
-    optimisticGraph: Gatherer.Simulation.GraphNode;
-    pessimisticGraph: Gatherer.Simulation.GraphNode;
-  }
+  type LanternMetric = Lantern.Metric<Artifacts.NetworkRequest>;
 
   type Speedline = speedline.Output<'speedIndex'>;
 

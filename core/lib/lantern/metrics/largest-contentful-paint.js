@@ -13,7 +13,7 @@ import {LanternError} from '../lantern-error.js';
 
 class LargestContentfulPaint extends Metric {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
     return {
@@ -74,8 +74,8 @@ class LargestContentfulPaint extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulationResult
-   * @return {LH.Gatherer.Simulation.Result}
+   * @param {Lantern.Simulation.Result} simulationResult
+   * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult) {
     const nodeTimesNotOffscreenImages = Array.from(simulationResult.nodeTimings.entries())
@@ -91,7 +91,7 @@ class LargestContentfulPaint extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;

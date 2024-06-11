@@ -15,9 +15,9 @@ import {RESOURCE_TYPES} from '../../lib/network-request.js';
 /**
  * @typedef Extras
  * @property {boolean} optimistic
- * @property {LH.Artifacts.LanternMetric=} fcpResult
- * @property {LH.Artifacts.LanternMetric=} lcpResult
- * @property {LH.Artifacts.LanternMetric=} interactiveResult
+ * @property {Lantern.Metric=} fcpResult
+ * @property {Lantern.Metric=} lcpResult
+ * @property {Lantern.Metric=} interactiveResult
  * @property {number=} observedSpeedIndex
  */
 
@@ -92,7 +92,7 @@ class Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {
     const {simulator, graph, processedNavigation} = data;

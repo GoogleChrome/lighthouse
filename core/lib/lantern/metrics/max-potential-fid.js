@@ -12,7 +12,7 @@ import {BaseNode} from '../base-node.js';
 
 class MaxPotentialFID extends Metric {
   /**
-   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   * @return {Lantern.Simulation.MetricCoefficients}
    */
   static get COEFFICIENTS() {
     return {
@@ -39,9 +39,9 @@ class MaxPotentialFID extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulation
+   * @param {Lantern.Simulation.Result} simulation
    * @param {import('../metric.js').Extras} extras
-   * @return {LH.Gatherer.Simulation.Result}
+   * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {
     if (!extras.fcpResult) throw new Error('missing fcpResult');
@@ -66,7 +66,7 @@ class MaxPotentialFID extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<LH.Artifacts.LanternMetric>}
+   * @return {Promise<Lantern.Metric>}
    */
   static compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -78,7 +78,7 @@ class MaxPotentialFID extends Metric {
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
+   * @param {Lantern.Simulation.Result['nodeTimings']} nodeTimings
    * @param {number} fcpTimeInMs
    * @return {Array<{duration: number}>}
    */

@@ -15,7 +15,7 @@ const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
 /**
  * For certain resource types, server response time takes up a greater percentage of TTFB (dynamic
  * assets like HTML documents, XHR/API calls, etc)
- * @type {Partial<Record<LH.Crdp.Network.ResourceType, number>>}
+ * @type {Partial<Record<Lantern.ResourceType, number>>}
  */
 const SERVER_RESPONSE_PERCENTAGE_OF_TTFB = {
   Document: 0.9,
@@ -88,7 +88,7 @@ class NetworkAnalyzer {
     return summaryByKey;
   }
 
-  /** @typedef {{request: Lantern.NetworkRequest, timing: LH.Crdp.Network.ResourceTiming, connectionReused?: boolean}} RequestInfo */
+  /** @typedef {{request: Lantern.NetworkRequest, timing: Lantern.ResourceTiming, connectionReused?: boolean}} RequestInfo */
 
   /**
    * @param {Lantern.NetworkRequest[]} requests
