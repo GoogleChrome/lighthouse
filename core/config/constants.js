@@ -6,7 +6,7 @@
 
 import * as Lantern from '../lib/lantern/lantern.js';
 
-const throttling = Lantern.constants;
+const throttling = Lantern.constants.throttling;
 
 /**
  * @type {Required<LH.SharedFlagsSettings['screenEmulation']>}
