@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @type {LH.Util.SelfMap<LH.Crdp.Network.ResourceType>} */
+import * as Lantern from './types/lantern.js';
+
+/** @type {Lantern.Util.SelfMap<Lantern.ResourceType>} */
 const NetworkRequestTypes = {
   XHR: 'XHR',
   Fetch: 'Fetch',

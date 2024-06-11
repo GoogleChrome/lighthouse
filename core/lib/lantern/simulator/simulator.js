@@ -533,7 +533,7 @@ class Simulator {
       const minimumTime = this._findNextNodeCompletionTime();
       totalElapsedTime += minimumTime;
 
-      // While this is no longer strictly necessary, it's always better than LH hanging
+      // While this is no longer strictly necessary, it's always better than hanging
       if (!Number.isFinite(minimumTime) || iteration > 100000) {
         throw new Error('Simulation failed, depth exceeded');
       }

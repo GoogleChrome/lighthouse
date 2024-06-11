@@ -22,10 +22,10 @@ async function runTraceEngine(traceEvents) {
 }
 
 /**
- * @param {{trace: Lantern.Trace, settings?: LH.Config.Settings, URL?: Lantern.Simulation.URL}} opts
+ * @param {{trace: Lantern.Trace, settings?: Lantern.Simulation.Settings, URL?: Lantern.Simulation.URL}} opts
  */
 async function getComputationDataFromFixture({trace, settings, URL}) {
-  settings = settings ?? /** @type {LH.Config.Settings} */({});
+  settings = settings ?? /** @type {Lantern.Simulation.Settings} */({});
   if (!settings.throttlingMethod) settings.throttlingMethod = 'simulate';
   const traceEngineData = await runTraceEngine(
     /** @type {TraceEngine.Types.TraceEvents.TraceEventData[]} */ (trace.traceEvents)

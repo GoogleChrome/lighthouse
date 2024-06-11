@@ -6,6 +6,13 @@
 
 import * as Protocol from '@paulirish/trace_engine/generated/protocol.js';
 
+declare module Util {
+    /** An object with the keys in the union K mapped to themselves as values. */
+    type SelfMap<K extends string> = {
+        [P in K]: P;
+    };
+}
+
 type TraceEvent = {
     name: string;
     cat: string;
