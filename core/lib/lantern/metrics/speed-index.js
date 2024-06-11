@@ -76,11 +76,11 @@ class SpeedIndex extends Metric {
    */
   static getEstimateFromSimulation(simulationResult, extras) {
     if (!extras.fcpResult) throw new Error('missing fcpResult');
-    if (!extras.speedline) throw new Error('missing speedline');
+    if (extras.observedSpeedIndex === undefined) throw new Error('missing observedSpeedIndex');
 
     const fcpTimeInMs = extras.fcpResult.pessimisticEstimate.timeInMs;
     const estimate = extras.optimistic
-      ? extras.speedline.speedIndex
+      ? extras.observedSpeedIndex
       : SpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTimings, fcpTimeInMs);
     return {
       timeInMs: estimate,

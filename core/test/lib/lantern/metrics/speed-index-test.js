@@ -10,7 +10,6 @@ import {readJson} from '../../../test-utils.js';
 import {SpeedIndex} from '../../../../lib/lantern/metrics/speed-index.js';
 import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
 import {getComputationDataFromFixture} from './metric-test-utils.js';
-import {Speedline} from '../../../../computed/speedline.js';
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
@@ -18,11 +17,13 @@ const defaultThrottling = constants.throttling.mobileSlow4G;
 
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
-    const context = {computedCache: new Map()};
     const data = await getComputationDataFromFixture({trace});
+    // TODO: observedSpeedIndex is from the Speedline library, and is used for optimistic
+    // mode. At the moment callers must pass the result into Lantern.
+    const observedSpeedIndex = 379.04474997520487;
     const result = await SpeedIndex.compute(data, {
       fcpResult: await FirstContentfulPaint.compute(data),
-      speedline: await Speedline.request(trace, context),
+      observedSpeedIndex,
     });
 
     expect({
@@ -40,11 +41,11 @@ Object {
 
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
-    const context = {computedCache: new Map()};
     const data = await getComputationDataFromFixture({trace, settings});
+    const observedSpeedIndex = 379.04474997520487;
     const result = await SpeedIndex.compute(data, {
       fcpResult: await FirstContentfulPaint.compute(data),
-      speedline: await Speedline.request(trace, context),
+      observedSpeedIndex,
     });
 
     expect({
