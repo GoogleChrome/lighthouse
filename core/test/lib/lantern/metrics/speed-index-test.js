@@ -5,7 +5,6 @@
  */
 
 import * as constants from '../../../../config/constants.js';
-import {LanternSpeedIndex} from '../../../../computed/metrics/lantern-speed-index.js';
 import {readJson} from '../../../test-utils.js';
 import {SpeedIndex} from '../../../../lib/lantern/metrics/speed-index.js';
 import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
@@ -62,17 +61,17 @@ Object {
   });
 
   it('should not scale coefficients at default', async () => {
-    const result = LanternSpeedIndex.getScaledCoefficients(defaultThrottling.rttMs);
-    expect(result).toEqual(LanternSpeedIndex.COEFFICIENTS);
+    const result = SpeedIndex.getScaledCoefficients(defaultThrottling.rttMs);
+    expect(result).toEqual(SpeedIndex.COEFFICIENTS);
   });
 
   it('should scale coefficients back', async () => {
-    const result = LanternSpeedIndex.getScaledCoefficients(5);
+    const result = SpeedIndex.getScaledCoefficients(5);
     expect(result).toEqual({intercept: 0, pessimistic: 0.5, optimistic: 0.5});
   });
 
   it('should scale coefficients forward', async () => {
-    const result = LanternSpeedIndex.getScaledCoefficients(300);
+    const result = SpeedIndex.getScaledCoefficients(300);
     expect(result).toMatchInlineSnapshot(`
       Object {
         "intercept": 0,
