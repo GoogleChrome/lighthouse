@@ -171,7 +171,7 @@ const defaultTestMatches = [
   'cli/**/*-test.js',
   'core/**/*-test.js',
   'core/test/**/*-test-pptr.js',
-  'core/lib/lantern/*.test.js',
+  'core/lib/lantern/**/*.test.js',
   'report/**/*-test.js',
   'shared/**/*-test.js',
   'third-party/**/*-test.js',

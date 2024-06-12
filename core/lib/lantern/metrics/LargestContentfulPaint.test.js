@@ -12,7 +12,7 @@ import {readJson} from '../../../test/test-utils.js';
 
 const {FirstContentfulPaint, LargestContentfulPaint} = Lantern.Metrics;
 
-const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
+const trace = readJson('../../../test/fixtures/artifacts/paul/trace.json', import.meta);
 
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {

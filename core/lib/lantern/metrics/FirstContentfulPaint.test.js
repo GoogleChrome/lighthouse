@@ -12,7 +12,7 @@ import {getComputationDataFromFixture} from './MetricTestUtils.js';
 
 const {FirstContentfulPaint} = Lantern.Metrics;
 
-const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const trace = readJson('../../../test/fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 describe('Metrics: Lantern FCP', () => {
   it('should compute predicted value', async () => {

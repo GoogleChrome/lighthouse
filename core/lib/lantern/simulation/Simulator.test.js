@@ -8,12 +8,12 @@ import assert from 'assert/strict';
 
 import * as Lantern from '../lantern.js';
 import {readJson} from '../../../test/test-utils.js';
-import {runTraceEngine} from '../../../test/lib/lantern/metrics/MetricTestUtils.js';
+import {runTraceEngine} from '../metrics/MetricTestUtils.js';
 
 const {NetworkNode, CPUNode} = Lantern;
 const {Simulator, DNSCache} = Lantern.Simulation;
 
-const pwaTrace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const pwaTrace = readJson('../../../test/fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 let nextRequestId = 1;
 let nextTid = 1;

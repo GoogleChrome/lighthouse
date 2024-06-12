@@ -12,8 +12,8 @@ import {runTraceEngine} from '../metrics/MetricTestUtils.js';
 
 const {NetworkAnalyzer} = Lantern.Simulation;
 
-const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
-const traceWithRedirect = readJson('../../../fixtures/artifacts/redirect/trace.json', import.meta);
+const trace = readJson('../../../test/fixtures/artifacts/paul/trace.json', import.meta);
+const traceWithRedirect = readJson('../../../test/fixtures/artifacts/redirect/trace.json', import.meta);
 
 /**
  * @param {Lantern.Trace} trace

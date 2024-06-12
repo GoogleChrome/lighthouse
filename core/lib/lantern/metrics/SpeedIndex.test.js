@@ -10,7 +10,7 @@ import {getComputationDataFromFixture} from './MetricTestUtils.js';
 
 const {SpeedIndex, FirstContentfulPaint} = Lantern.Metrics;
 
-const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const trace = readJson('../../../test/fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 const defaultThrottling = Lantern.Simulation.Constants.throttling.mobileSlow4G;
 

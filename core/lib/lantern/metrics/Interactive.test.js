@@ -12,8 +12,8 @@ import {readJson} from '../../../test/test-utils.js';
 
 const {Interactive, FirstContentfulPaint, LargestContentfulPaint} = Lantern.Metrics;
 
-const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
-const iframeTrace = readJson('../../../fixtures/artifacts/iframe/trace.json', import.meta);
+const trace = readJson('../../../test/fixtures/artifacts/progressive-app/trace.json', import.meta);
+const iframeTrace = readJson('../../../test/fixtures/artifacts/iframe/trace.json', import.meta);
 
 describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
