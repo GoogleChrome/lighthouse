@@ -6,9 +6,11 @@
 
 import assert from 'assert/strict';
 
-import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/FirstContentfulPaint.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {readJson} from '../../../test-utils.js';
 import {getComputationDataFromFixture} from './MetricTestUtils.js';
+
+const {FirstContentfulPaint} = Lantern.Metrics;
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 

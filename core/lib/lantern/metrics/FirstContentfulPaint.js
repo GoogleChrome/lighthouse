@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {BaseNode} from '../BaseNode.js';
+import * as Lantern from '../lantern.js';
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 /** @template T @typedef {import('../NetworkNode.js').NetworkNode<T>} NetworkNode */
 /** @typedef {import('../CpuNode.js').CPUNode} CpuNode */
 
-class FirstContentfulPaint extends Metric {
+class FirstContentfulPaint extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -57,7 +55,7 @@ class FirstContentfulPaint extends Metric {
     /** @type {Array<CpuNode>} */
     const cpuNodes = [];
     graph.traverse(node => {
-      if (node.type === BaseNode.TYPES.CPU) {
+      if (node.type === Lantern.BaseNode.TYPES.CPU) {
         // A task is *possibly* render blocking if it *started* before cutoffTimestamp.
         // We use startTime here because the paint event can be *inside* the task that was render blocking.
         if (node.startTime <= cutoffTimestamp) cpuNodes.push(node);
@@ -75,7 +73,7 @@ class FirstContentfulPaint extends Metric {
     cpuNodes.sort((a, b) => a.startTime - b.startTime);
 
     // A script is *possibly* render blocking if it finished loading before cutoffTimestamp.
-    const possiblyRenderBlockingScriptUrls = Metric.getScriptUrls(graph, node => {
+    const possiblyRenderBlockingScriptUrls = Lantern.Metric.getScriptUrls(graph, node => {
       // The optimistic LCP treatNodeAsRenderBlocking fn wants to exclude some images in the graph,
       // but here it only receives scripts to evaluate. It's a no-op in this case, but it will
       // matter below in the getFirstPaintBasedGraph clone operation.
@@ -147,7 +145,7 @@ class FirstContentfulPaint extends Metric {
     const {definitelyNotRenderBlockingScriptUrls, renderBlockingCpuNodeIds} = rbData;
 
     return dependencyGraph.cloneWithRelationships(node => {
-      if (node.type === BaseNode.TYPES.NETWORK) {
+      if (node.type === Lantern.BaseNode.TYPES.NETWORK) {
         // Exclude all nodes that ended after cutoffTimestamp (except for the main document which we always consider necessary)
         // endTime is negative if request does not finish, make sure startTime isn't after cutoffTimestamp in this case.
         const endedAfterPaint = node.endTime > cutoffTimestamp || node.startTime > cutoffTimestamp;

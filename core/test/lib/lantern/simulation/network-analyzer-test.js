@@ -6,11 +6,11 @@
 
 import assert from 'assert/strict';
 
-import * as Lantern from '../../../../lib/lantern/types/lantern.js';
-import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/NetworkAnalyzer.js';
-import * as TraceEngineComputationData from '../../../../lib/lantern/TraceEngineComputationData.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {readJson} from '../../../test-utils.js';
 import {runTraceEngine} from '../metrics/MetricTestUtils.js';
+
+const {NetworkAnalyzer} = Lantern.Simulation;
 
 const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
 const traceWithRedirect = readJson('../../../fixtures/artifacts/redirect/trace.json', import.meta);
@@ -22,10 +22,10 @@ async function createRequests(trace) {
   const traceEngineData = await runTraceEngine(
     /** @type {TraceEngine.Types.TraceEvents.TraceEventData[]} */ (trace.traceEvents)
   );
-  return TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
+  return Lantern.TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
 }
 
-describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
+describe('NetworkAnalyzer', () => {
   afterEach(() => {
     global.isLightrider = undefined;
   });

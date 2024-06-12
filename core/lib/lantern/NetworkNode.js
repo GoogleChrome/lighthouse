@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from './types/lantern.js';
+import * as Lantern from './lantern.js';
 import {NetworkRequestTypes} from './lantern.js';
-import {BaseNode} from './BaseNode.js';
 
 const NON_NETWORK_SCHEMES = [
   'blob', // @see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
@@ -35,9 +34,9 @@ function isNonNetworkProtocol(protocol) {
 
 /**
  * @template [T=any]
- * @extends {BaseNode<T>}
+ * @extends {Lantern.BaseNode<T>}
  */
-class NetworkNode extends BaseNode {
+class NetworkNode extends Lantern.BaseNode {
   /**
    * @param {Lantern.NetworkRequest<T>} networkRequest
    */
@@ -48,7 +47,7 @@ class NetworkNode extends BaseNode {
   }
 
   get type() {
-    return BaseNode.TYPES.NETWORK;
+    return Lantern.BaseNode.TYPES.NETWORK;
   }
 
   /**

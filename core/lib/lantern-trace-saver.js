@@ -5,7 +5,7 @@
  */
 
 /** @typedef {import('./lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('./lantern/simulator/Simulator.js').CompleteNodeTiming} CompleteNodeTiming */
+/** @typedef {import('./lantern/simulation/Simulator.js').CompleteNodeTiming} CompleteNodeTiming */
 
 /**
  * @param {Map<Node, CompleteNodeTiming>} nodeTimings

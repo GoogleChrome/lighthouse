@@ -4,14 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../lib/lantern/types/lantern.js';
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {MainThreadTasks} from './main-thread-tasks.js';
 import {FirstContentfulPaint} from './metrics/first-contentful-paint.js';
 import {Interactive} from './metrics/interactive.js';
 import {TotalBlockingTime} from './metrics/total-blocking-time.js';
 import {ProcessedTrace} from './processed-trace.js';
-import {calculateTbtImpactForEvent} from '../lib/lantern/TBTUtils.js';
+
+const {calculateTbtImpactForEvent} = Lantern.TBTUtils;
 
 class TBTImpactTasks {
   /**

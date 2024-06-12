@@ -4,11 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {DNSCache} from '../../../../lib/lantern/simulator/DNSCache.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
+
+const {DNSCache} = Lantern.Simulation;
 
 const MULTIPLIER = DNSCache.RTT_MULTIPLIER;
 
-describe('DependencyGraph/Simulator/DNSCache', () => {
+describe('DNSCache', () => {
   let dns;
   let request;
 

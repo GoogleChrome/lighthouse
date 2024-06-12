@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {calculateSumOfBlockingTime} from '../../../lib/lantern/TBTUtils.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
+
+const {calculateSumOfBlockingTime} = Lantern.TBTUtils;
 
 describe('TotalBlockingTime utils', () => {
   it('reports 0 when no task is longer than 50ms', () => {

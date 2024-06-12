@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 import {Speedline} from '../speedline.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
-import {SpeedIndex} from '../../lib/lantern/metrics/SpeedIndex.js';
 
 /** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
-class LanternSpeedIndex extends SpeedIndex {
+class LanternSpeedIndex extends Lantern.Metrics.SpeedIndex {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context

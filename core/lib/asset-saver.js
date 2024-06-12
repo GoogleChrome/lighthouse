@@ -12,7 +12,7 @@ import {createGzip, gunzipSync} from 'zlib';
 
 import log from 'lighthouse-logger';
 
-import {Simulator} from './lantern/simulator/Simulator.js';
+import * as Lantern from './lantern/lantern.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
 import {MetricTraceEvents} from './traces/metric-trace-events.js';
 import {NetworkAnalysis} from '../computed/network-analysis.js';
@@ -449,7 +449,7 @@ function saveDevtoolsLog(devtoolsLog, devtoolLogFilename, options = {}) {
 async function saveLanternDebugTraces(pathWithBasename) {
   if (!process.env.LANTERN_DEBUG) return;
 
-  for (const [label, nodeTimings] of Simulator.ALL_NODE_TIMINGS) {
+  for (const [label, nodeTimings] of Lantern.Simulation.Simulator.ALL_NODE_TIMINGS) {
     if (lanternTraceSaver.simulationNamesToIgnore.includes(label)) continue;
 
     const traceFilename = `${pathWithBasename}-${label}${traceSuffix}`;

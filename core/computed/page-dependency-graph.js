@@ -4,13 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
-import {PageDependencyGraph as LanternPageDependencyGraph} from '../lib/lantern/PageDependencyGraph.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
 import {TraceEngineResult} from './trace-engine-result.js';
-import * as TraceEngineComputationData from '../lib/lantern/TraceEngineComputationData.js';
 
 /** @typedef {import('../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
@@ -30,14 +29,15 @@ class PageDependencyGraph {
     if (data.fromTrace) {
       const traceEngineResult = await TraceEngineResult.request({trace}, context);
       const traceEngineData = traceEngineResult.data;
-      const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
+      const requests =
+        Lantern.TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
       const graph =
-        TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL);
+        Lantern.TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL);
       return graph;
     }
 
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
-    return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+    return Lantern.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }
 

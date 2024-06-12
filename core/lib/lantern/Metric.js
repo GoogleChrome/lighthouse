@@ -4,20 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from './types/lantern.js';
-import {BaseNode} from './BaseNode.js';
-import {RESOURCE_TYPES} from '../network-request.js';
+import * as Lantern from './lantern.js';
 
 /** @typedef {import('./BaseNode.js').Node} Node */
 /** @typedef {import('./NetworkNode.js').NetworkNode} NetworkNode */
-/** @typedef {import('./simulator/Simulator.js').Simulator} Simulator */
+/** @typedef {import('./simulation/Simulator.js').Simulator} Simulator */
 
 /**
  * @typedef Extras
  * @property {boolean} optimistic
- * @property {Lantern.Metric=} fcpResult
- * @property {Lantern.Metric=} lcpResult
- * @property {Lantern.Metric=} interactiveResult
+ * @property {Lantern.Metrics.Result=} fcpResult
+ * @property {Lantern.Metrics.Result=} lcpResult
+ * @property {Lantern.Metrics.Result=} interactiveResult
  * @property {number=} observedSpeedIndex
  */
 
@@ -32,8 +30,8 @@ class Metric {
     const scriptUrls = new Set();
 
     dependencyGraph.traverse(node => {
-      if (node.type !== BaseNode.TYPES.NETWORK) return;
-      if (node.request.resourceType !== RESOURCE_TYPES.Script) return;
+      if (node.type !== Lantern.BaseNode.TYPES.NETWORK) return;
+      if (node.request.resourceType !== Lantern.NetworkRequestTypes.Script) return;
       if (treatNodeAsRenderBlocking?.(node)) {
         scriptUrls.add(node.request.url);
       }
@@ -92,7 +90,7 @@ class Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static async compute(data, extras) {
     const {simulator, graph, processedNavigation} = data;

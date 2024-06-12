@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 
 import PredictivePerf from '../../audits/predictive-perf.js';
-import {Simulator} from '../../lib/lantern/simulator/Simulator.js';
+import {Simulator} from '../../lib/lantern/simulation/Simulator.js';
 import traceSaver from '../../lib/lantern-trace-saver.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';

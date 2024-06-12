@@ -8,11 +8,12 @@ import assert from 'assert/strict';
 
 import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
 import * as constants from '../../../config/constants.js';
-import {NetworkNode} from '../../../lib/lantern/NetworkNode.js';
-import {CPUNode} from '../../../lib/lantern/CpuNode.js';
-import {Simulator} from '../../../lib/lantern/simulator/Simulator.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+
+const {NetworkNode, CPUNode} = Lantern;
+const {Simulator} = Lantern.Simulation;
 
 const trace = readJson('../../fixtures/artifacts/render-blocking/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/render-blocking/devtoolslog.json', import.meta);

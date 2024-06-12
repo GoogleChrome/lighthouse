@@ -14,7 +14,7 @@ import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
-/** @typedef {import('../../lib/lantern/simulator/Simulator.js').Simulator} Simulator */
+/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
 /** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
 // Parameters for log-normal distribution scoring. These values were determined by fitting the

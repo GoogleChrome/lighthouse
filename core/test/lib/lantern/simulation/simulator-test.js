@@ -6,14 +6,12 @@
 
 import assert from 'assert/strict';
 
-import * as Lantern from '../../../../lib/lantern/Metric.js';
-import {NetworkNode} from '../../../../lib/lantern/NetworkNode.js';
-import {CPUNode} from '../../../../lib/lantern/CpuNode.js';
-import {Simulator} from '../../../../lib/lantern/simulator/Simulator.js';
-import {DNSCache} from '../../../../lib/lantern/simulator/DNSCache.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {readJson} from '../../../test-utils.js';
-import * as TraceEngineComputationData from '../../../../lib/lantern/TraceEngineComputationData.js';
 import {runTraceEngine} from '../metrics/MetricTestUtils.js';
+
+const {NetworkNode, CPUNode} = Lantern;
+const {Simulator, DNSCache} = Lantern.Simulation;
 
 const pwaTrace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
@@ -22,12 +20,12 @@ let nextTid = 1;
 
 /**
  * @param {Lantern.Trace} trace
- * @param {Lantern.Simulation.URL=} URL
  */
 async function createGraph(trace) {
   const traceEngineData = await runTraceEngine(trace.traceEvents);
-  const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
-  return TraceEngineComputationData.createGraph(requests, trace, traceEngineData);
+  const requests =
+    Lantern.TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
+  return Lantern.TraceEngineComputationData.createGraph(requests, trace, traceEngineData);
 }
 
 function request(opts) {

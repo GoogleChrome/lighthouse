@@ -4,15 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {BaseNode} from '../BaseNode.js';
+import * as Lantern from '../lantern.js';
 import {TcpConnection} from './TcpConnection.js';
 import {ConnectionPool} from './ConnectionPool.js';
 import {DNSCache} from './DNSCache.js';
 import {SimulatorTimingMap} from './SimulationTimingMap.js';
-import {constants} from '../lantern.js';
 
-const defaultThrottling = constants.throttling.mobileSlow4G;
+const Constants = Lantern.Simulation.Constants;
+const defaultThrottling = Constants.throttling.mobileSlow4G;
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 /** @typedef {import('../NetworkNode.js').NetworkNode} NetworkNode */
@@ -82,10 +81,10 @@ class Simulator {
       case 'devtools':
         if (throttling) {
           options.rtt =
-            throttling.requestLatencyMs / constants.throttling.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
+            throttling.requestLatencyMs / Constants.throttling.DEVTOOLS_RTT_ADJUSTMENT_FACTOR;
           options.throughput =
             throttling.downloadThroughputKbps * 1024 /
-            constants.throttling.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
+            Constants.throttling.DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR;
         }
 
         options.cpuSlowdownMultiplier = 1;
@@ -162,7 +161,7 @@ class Simulator {
     /** @type {Lantern.NetworkRequest[]} */
     const records = [];
     graph.getRootNode().traverse(node => {
-      if (node.type === BaseNode.TYPES.NETWORK) {
+      if (node.type === Lantern.BaseNode.TYPES.NETWORK) {
         records.push(node.request);
       }
     });
@@ -268,7 +267,7 @@ class Simulator {
    * @param {number} totalElapsedTime
    */
   _startNodeIfPossible(node, totalElapsedTime) {
-    if (node.type === BaseNode.TYPES.CPU) {
+    if (node.type === Lantern.BaseNode.TYPES.CPU) {
       // Start a CPU task if there's no other CPU task in process
       if (this._numberInProgress(node.type) === 0) {
         this._markNodeAsInProgress(node, totalElapsedTime);
@@ -277,7 +276,7 @@ class Simulator {
       return;
     }
 
-    if (node.type !== BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
+    if (node.type !== Lantern.BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
 
     // If a network request is connectionless, we can always start it, so skip the connection checks
     if (!node.isConnectionless) {
@@ -296,7 +295,7 @@ class Simulator {
    * currently in flight.
    */
   _updateNetworkCapacity() {
-    const inFlight = this._numberInProgress(BaseNode.TYPES.NETWORK);
+    const inFlight = this._numberInProgress(Lantern.BaseNode.TYPES.NETWORK);
     if (inFlight === 0) return;
 
     for (const connection of this._connectionPool.connectionsInUse()) {
@@ -310,9 +309,9 @@ class Simulator {
    * @return {number}
    */
   _estimateTimeRemaining(node) {
-    if (node.type === BaseNode.TYPES.CPU) {
+    if (node.type === Lantern.BaseNode.TYPES.CPU) {
       return this._estimateCPUTimeRemaining(node);
-    } else if (node.type === BaseNode.TYPES.NETWORK) {
+    } else if (node.type === Lantern.BaseNode.TYPES.NETWORK) {
       return this._estimateNetworkTimeRemaining(node);
     } else {
       throw new Error('Unsupported');
@@ -401,13 +400,13 @@ class Simulator {
     const timingData = this._nodeTimings.getInProgress(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
-    if (node.type === BaseNode.TYPES.CPU || node.isConnectionless) {
+    if (node.type === Lantern.BaseNode.TYPES.CPU || node.isConnectionless) {
       return isFinished
         ? this._markNodeAsComplete(node, totalElapsedTime)
         : (timingData.timeElapsed += timePeriodLength);
     }
 
-    if (node.type !== BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
+    if (node.type !== Lantern.BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
     if (!('bytesDownloaded' in timingData)) throw new Error('Invalid timing data');
 
     const request = node.request;
@@ -488,7 +487,7 @@ class Simulator {
    * @return {Lantern.Simulation.Result<T>}
    */
   simulate(graph, options) {
-    if (BaseNode.hasCycle(graph)) {
+    if (Lantern.BaseNode.hasCycle(graph)) {
       throw new Error('Cannot simulate graph with cycle');
     }
 

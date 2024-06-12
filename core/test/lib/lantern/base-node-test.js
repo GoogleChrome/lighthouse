@@ -6,8 +6,9 @@
 
 import assert from 'assert/strict';
 
-import {BaseNode} from '../../../lib/lantern/BaseNode.js';
-import {NetworkNode} from '../../../lib/lantern/NetworkNode.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
+
+const {BaseNode, NetworkNode} = Lantern;
 
 function sortedById(nodeArray) {
   return nodeArray.sort((node1, node2) => node1.id.localeCompare(node2.id));

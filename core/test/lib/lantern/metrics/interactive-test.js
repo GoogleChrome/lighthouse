@@ -6,11 +6,11 @@
 
 import assert from 'assert/strict';
 
-import {Interactive} from '../../../../lib/lantern/metrics/Interactive.js';
-import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/FirstContentfulPaint.js';
-import {LargestContentfulPaint} from '../../../../lib/lantern/metrics/LargestContentfulPaint.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {getComputationDataFromFixture} from './MetricTestUtils.js';
 import {readJson} from '../../../test-utils.js';
+
+const {Interactive, FirstContentfulPaint, LargestContentfulPaint} = Lantern.Metrics;
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 const iframeTrace = readJson('../../../fixtures/artifacts/iframe/trace.json', import.meta);

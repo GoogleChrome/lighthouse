@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
-import {Interactive} from '../../lib/lantern/metrics/Interactive.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
 /** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
-class LanternInteractive extends Interactive {
+class LanternInteractive extends Lantern.Metrics.Interactive {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context

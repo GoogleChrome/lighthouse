@@ -7,9 +7,11 @@
 import assert from 'assert/strict';
 import {URL} from 'url';
 
-import {ConnectionPool} from '../../../../lib/lantern/simulator/ConnectionPool.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 
-describe('DependencyGraph/Simulator/ConnectionPool', () => {
+const {ConnectionPool} = Lantern.Simulation;
+
+describe('ConnectionPool', () => {
   const rtt = 100;
   const throughput = 10000 * 1024;
   let requestId;

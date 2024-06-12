@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
-import {NetworkAnalyzer} from '../lib/lantern/simulator/NetworkAnalyzer.js';
 import {NetworkRecords} from './network-records.js';
 
 class NetworkAnalysis {
@@ -16,7 +16,7 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    return NetworkAnalyzer.analyze(records);
+    return Lantern.Simulation.NetworkAnalyzer.analyze(records);
   }
 }
 

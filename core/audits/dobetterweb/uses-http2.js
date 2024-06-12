@@ -9,7 +9,7 @@
  * origin are over the http/2 protocol.
  */
 
-/** @typedef {import('../../lib/lantern/simulator/Simulator.js').Simulator} Simulator */
+/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
 /** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
 import {Audit} from '../audit.js';

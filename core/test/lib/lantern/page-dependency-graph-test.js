@@ -6,8 +6,9 @@
 
 import assert from 'assert/strict';
 
-import {PageDependencyGraph} from '../../../lib/lantern/PageDependencyGraph.js';
-import {NetworkRequestTypes} from '../../../lib/lantern/lantern.js';
+import * as Lantern from '../../../lib/lantern/lantern.js';
+
+const {PageDependencyGraph, NetworkRequestTypes} = Lantern;
 
 function createRequest(
   requestId,

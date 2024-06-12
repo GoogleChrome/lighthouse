@@ -7,9 +7,7 @@
 import * as TraceEngine from '@paulirish/trace_engine';
 import * as Protocol from '@paulirish/trace_engine/generated/protocol.js';
 
-import * as Lantern from './types/lantern.js';
-import {PageDependencyGraph} from './PageDependencyGraph.js';
-import {RESOURCE_TYPES} from '../network-request.js';
+import * as Lantern from './lantern.js';
 
 /** @typedef {import('@paulirish/trace_engine/models/trace/handlers/PageLoadMetricsHandler.js').MetricName} MetricName */
 /** @typedef {import('@paulirish/trace_engine/models/trace/handlers/PageLoadMetricsHandler.js').MetricScore} MetricScore */
@@ -232,7 +230,7 @@ function chooseInitiatorRequest(request, requestsByURL) {
     return request.redirectSource;
   }
 
-  const initiatorURL = PageDependencyGraph.getNetworkInitiators(request)[0];
+  const initiatorURL = Lantern.PageDependencyGraph.getNetworkInitiators(request)[0];
   let candidates = requestsByURL.get(initiatorURL) || [];
   // The (valid) initiator must come before the initiated request.
   candidates = candidates.filter(c => {
@@ -243,7 +241,7 @@ function chooseInitiatorRequest(request, requestsByURL) {
     // Disambiguate based on prefetch. Prefetch requests have type 'Other' and cannot
     // initiate requests, so we drop them here.
     const nonPrefetchCandidates = candidates.filter(
-      cand => cand.resourceType !== RESOURCE_TYPES.Other);
+      cand => cand.resourceType !== Lantern.NetworkRequestTypes.Other);
     if (nonPrefetchCandidates.length) {
       candidates = nonPrefetchCandidates;
     }
@@ -258,7 +256,7 @@ function chooseInitiatorRequest(request, requestsByURL) {
   if (candidates.length > 1 && request.initiator.type === 'parser') {
     // Filter to just Documents when initiator type is parser.
     const documentCandidates = candidates.filter(cand =>
-      cand.resourceType === RESOURCE_TYPES.Document);
+      cand.resourceType === Lantern.NetworkRequestTypes.Document);
     if (documentCandidates.length) {
       candidates = documentCandidates;
     }
@@ -458,7 +456,7 @@ function createGraph(requests, trace, traceEngineData, URL) {
     URL.mainDocumentUrl = request.url;
   }
 
-  return PageDependencyGraph.createGraph(mainThreadEvents, requests, URL);
+  return Lantern.PageDependencyGraph.createGraph(mainThreadEvents, requests, URL);
 }
 
 export {

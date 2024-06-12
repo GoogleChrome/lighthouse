@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from './types/lantern.js';
-import {BaseNode} from './BaseNode.js';
+import * as Lantern from './lantern.js';
 
 /**
  * @template [T=any]
- * @extends {BaseNode<T>}
+ * @extends {Lantern.BaseNode<T>}
  */
-class CPUNode extends BaseNode {
+class CPUNode extends Lantern.BaseNode {
   /**
    * @param {Lantern.TraceEvent} parentEvent
    * @param {Lantern.TraceEvent[]=} childEvents
@@ -27,7 +26,7 @@ class CPUNode extends BaseNode {
   }
 
   get type() {
-    return BaseNode.TYPES.CPU;
+    return Lantern.BaseNode.TYPES.CPU;
   }
 
   /**

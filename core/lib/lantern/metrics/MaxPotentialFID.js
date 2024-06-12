@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {BaseNode} from '../BaseNode.js';
+import * as Lantern from '../lantern.js';
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 
-class MaxPotentialFID extends Metric {
+class MaxPotentialFID extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -66,7 +64,7 @@ class MaxPotentialFID extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -84,7 +82,8 @@ class MaxPotentialFID extends Metric {
    */
   static getTimingsAfterFCP(nodeTimings, fcpTimeInMs) {
     return Array.from(nodeTimings.entries())
-      .filter(([node, timing]) => node.type === BaseNode.TYPES.CPU && timing.endTime > fcpTimeInMs)
+      .filter(([node, timing]) =>
+        node.type === Lantern.BaseNode.TYPES.CPU && timing.endTime > fcpTimeInMs)
       .map(([_, timing]) => timing);
   }
 }

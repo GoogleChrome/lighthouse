@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from './types/lantern.js';
-import {NetworkRequestTypes} from './lantern.js';
+import * as Lantern from './lantern.js';
 import {NetworkNode} from './NetworkNode.js';
 import {CPUNode} from './CpuNode.js';
-import {NetworkAnalyzer} from './simulator/NetworkAnalyzer.js';
 
 // COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
 const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
@@ -104,7 +102,7 @@ class PageDependencyGraph {
       // If the request was for the root document of an iframe, save an entry in our
       // map so we can link up the task `args.data.frame` dependencies later in graph creation.
       if (request.frameId &&
-          request.resourceType === NetworkRequestTypes.Document &&
+          request.resourceType === Lantern.NetworkRequestTypes.Document &&
           request.documentURL === request.url) {
         // If there's ever any ambiguity, permanently set the value to `false` to avoid loops in the graph.
         const value = frameIdToNodeMap.has(request.frameId) ? null : node;
@@ -245,7 +243,9 @@ class PageDependencyGraph {
   static linkCPUNodes(rootNode, networkNodeOutput, cpuNodes) {
     /** @type {Set<Lantern.ResourceType|undefined>} */
     const linkableResourceTypes = new Set([
-      NetworkRequestTypes.XHR, NetworkRequestTypes.Fetch, NetworkRequestTypes.Script,
+      Lantern.NetworkRequestTypes.XHR,
+      Lantern.NetworkRequestTypes.Fetch,
+      Lantern.NetworkRequestTypes.Script,
     ]);
 
     /** @param {CPUNode} cpuNode @param {string} reqId */
@@ -553,12 +553,13 @@ class PageDependencyGraph {
     if (!requestedUrl) throw new Error('requestedUrl is required to get the root request');
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl is required to get the main resource');
 
-    const rootRequest = NetworkAnalyzer.findResourceForUrl(networkRequests, requestedUrl);
+    const rootRequest =
+      Lantern.Simulation.NetworkAnalyzer.findResourceForUrl(networkRequests, requestedUrl);
     if (!rootRequest) throw new Error('rootRequest not found');
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
     if (!rootNode) throw new Error('rootNode not found');
     const mainDocumentRequest =
-      NetworkAnalyzer.findLastDocumentForUrl(networkRequests, mainDocumentUrl);
+      Lantern.Simulation.NetworkAnalyzer.findLastDocumentForUrl(networkRequests, mainDocumentUrl);
     if (!mainDocumentRequest) throw new Error('mainDocumentRequest not found');
     const mainDocumentNode = networkNodeOutput.idToNodeMap.get(mainDocumentRequest.requestId);
     if (!mainDocumentNode) throw new Error('mainDocumentNode not found');

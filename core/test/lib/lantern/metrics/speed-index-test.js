@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {readJson} from '../../../test-utils.js';
-import {SpeedIndex} from '../../../../lib/lantern/metrics/SpeedIndex.js';
-import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/FirstContentfulPaint.js';
 import {getComputationDataFromFixture} from './MetricTestUtils.js';
-import {constants} from '../../../../lib/lantern/lantern.js';
+
+const {SpeedIndex, FirstContentfulPaint} = Lantern.Metrics;
 
 const trace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
-const defaultThrottling = constants.throttling.mobileSlow4G;
+const defaultThrottling = Lantern.Simulation.Constants.throttling.mobileSlow4G;
 
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {BaseNode} from '../BaseNode.js';
+import * as Lantern from '../lantern.js';
 
 /**
  * @fileoverview
@@ -13,7 +13,6 @@ import {BaseNode} from '../BaseNode.js';
  * through the different simulation phases. Methods here ensure that the invariants of simulation hold
  * as nodes are queued, partially simulated, and completed.
  */
-
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 /** @typedef {import('../NetworkNode.js').NetworkNode} NetworkNode */
@@ -83,7 +82,7 @@ class SimulatorTimingMap {
 
     this._nodeTimings.set(
       node,
-      node.type === BaseNode.TYPES.NETWORK
+      node.type === Lantern.BaseNode.TYPES.NETWORK
         ? {...nodeTiming, timeElapsedOvershoot: 0, bytesDownloaded: 0}
         : nodeTiming
     );

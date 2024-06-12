@@ -6,10 +6,7 @@
 
 import * as TraceEngine from '@paulirish/trace_engine';
 
-import * as Lantern from '../../../../lib/lantern/types/lantern.js';
-import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/NetworkAnalyzer.js';
-import {Simulator} from '../../../../lib/lantern/simulator/Simulator.js';
-import * as TraceEngineComputationData from '../../../../lib/lantern/TraceEngineComputationData.js';
+import * as Lantern from '../../../../lib/lantern/lantern.js';
 import {polyfillDOMRect} from '../../../../lib/polyfill-dom-rect.js';
 
 polyfillDOMRect();
@@ -33,13 +30,15 @@ async function getComputationDataFromFixture({trace, settings, URL}) {
   const traceEngineData = await runTraceEngine(
     /** @type {TraceEngine.Types.TraceEvents.TraceEventData[]} */ (trace.traceEvents)
   );
-  const requests = TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
-  const networkAnalysis = NetworkAnalyzer.analyze(requests);
+  const requests =
+    Lantern.TraceEngineComputationData.createNetworkRequests(trace, traceEngineData);
+  const networkAnalysis = Lantern.Simulation.NetworkAnalyzer.analyze(requests);
 
   return {
-    simulator: Simulator.createSimulator({...settings, networkAnalysis}),
-    graph: TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL),
-    processedNavigation: TraceEngineComputationData.createProcessedNavigation(traceEngineData),
+    simulator: Lantern.Simulation.Simulator.createSimulator({...settings, networkAnalysis}),
+    graph: Lantern.TraceEngineComputationData.createGraph(requests, trace, traceEngineData, URL),
+    processedNavigation:
+      Lantern.TraceEngineComputationData.createProcessedNavigation(traceEngineData),
   };
 }
 

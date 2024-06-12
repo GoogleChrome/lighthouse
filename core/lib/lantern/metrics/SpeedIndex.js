@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {BaseNode} from '../BaseNode.js';
+import * as Lantern from '../lantern.js';
 
 const mobileSlow4GRtt = 150;
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 
-class SpeedIndex extends Metric {
+class SpeedIndex extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -91,7 +89,7 @@ class SpeedIndex extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -123,7 +121,7 @@ class SpeedIndex extends Metric {
     /** @type {Array<{time: number, weight: number}>} */
     const layoutWeights = [];
     for (const [node, timing] of nodeTimings.entries()) {
-      if (node.type !== BaseNode.TYPES.CPU) continue;
+      if (node.type !== Lantern.BaseNode.TYPES.CPU) continue;
 
       if (node.childEvents.some(x => x.name === 'Layout')) {
         const timingWeight = Math.max(Math.log2(timing.endTime - timing.startTime), 0);

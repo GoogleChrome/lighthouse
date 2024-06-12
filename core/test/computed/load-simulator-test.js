@@ -6,8 +6,8 @@
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {NetworkNode} from '../../lib/lantern/NetworkNode.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {readJson} from '../test-utils.js';
 
@@ -19,7 +19,7 @@ function createNetworkNode() {
     protocol: 'http',
     parsedURL: {scheme: 'http', securityOrigin: 'https://pwa.rocks'},
   };
-  return new NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
+  return new Lantern.NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
 }
 
 describe('Simulator artifact', () => {

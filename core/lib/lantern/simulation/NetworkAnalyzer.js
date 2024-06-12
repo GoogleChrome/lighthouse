@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
+import * as Lantern from '../lantern.js';
 import UrlUtils from '../../url-utils.js';
 
 const INITIAL_CWD = 14 * 1024;

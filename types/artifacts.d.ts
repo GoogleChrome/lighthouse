@@ -6,11 +6,10 @@
 
 import {Protocol as Crdp} from 'devtools-protocol/types/protocol.js';
 import * as TraceEngine from '@paulirish/trace_engine';
-import * as Lantern from '../core/lib/lantern/types/lantern.js';
+import * as Lantern from '../core/lib/lantern/lantern.js';
 import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
-import {Simulator} from '../core/lib/lantern/simulator/Simulator.js';
 import {LighthouseError} from '../core/lib/lh-error.js';
 import {NetworkRequest as _NetworkRequest} from '../core/lib/network-request.js';
 import speedline from 'speedline-core';
@@ -566,7 +565,7 @@ declare module Artifacts {
     trace: Trace;
     settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: InstanceType<typeof Simulator>;
+    simulator?: InstanceType<typeof Lantern.Simulation.Simulator>;
     URL: Artifacts['URL'];
   }
 
@@ -592,7 +591,7 @@ declare module Artifacts {
     throughput: number;
   }
 
-  type LanternMetric = Lantern.Metric<Artifacts.NetworkRequest>;
+  type LanternMetric = Lantern.Metrics.Result<Artifacts.NetworkRequest>;
 
   type Speedline = speedline.Output<'speedIndex'>;
 

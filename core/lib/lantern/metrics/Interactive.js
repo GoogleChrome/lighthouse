@@ -4,17 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {BaseNode} from '../BaseNode.js';
-import {NetworkRequestTypes} from '../lantern.js';
+import * as Lantern from '../lantern.js';
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 
 // Any CPU task of 20 ms or more will end up being a critical long task on mobile
 const CRITICAL_LONG_TASK_THRESHOLD = 20;
 
-class Interactive extends Metric {
+class Interactive extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -36,13 +33,13 @@ class Interactive extends Metric {
 
     return dependencyGraph.cloneWithRelationships(node => {
       // Include everything that might be a long task
-      if (node.type === BaseNode.TYPES.CPU) {
+      if (node.type === Lantern.BaseNode.TYPES.CPU) {
         return node.duration > minimumCpuTaskDuration;
       }
 
       // Include all scripts and high priority requests, exclude all images
-      const isImage = node.request.resourceType === NetworkRequestTypes.Image;
-      const isScript = node.request.resourceType === NetworkRequestTypes.Script;
+      const isImage = node.request.resourceType === Lantern.NetworkRequestTypes.Image;
+      const isScript = node.request.resourceType === Lantern.NetworkRequestTypes.Script;
       return (
         !isImage &&
         (isScript ||
@@ -81,7 +78,7 @@ class Interactive extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static async compute(data, extras) {
     const lcpResult = extras?.lcpResult;
@@ -101,7 +98,7 @@ class Interactive extends Metric {
   static getLastLongTaskEndTime(nodeTimings, duration = 50) {
     return Array.from(nodeTimings.entries())
       .filter(([node, timing]) => {
-        if (node.type !== BaseNode.TYPES.CPU) return false;
+        if (node.type !== Lantern.BaseNode.TYPES.CPU) return false;
         return timing.duration > duration;
       })
       .map(([_, timing]) => timing.endTime)

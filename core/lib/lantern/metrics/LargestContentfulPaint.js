@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {FirstContentfulPaint} from './FirstContentfulPaint.js';
-import {LanternError} from '../LanternError.js';
+import * as Lantern from '../lantern.js';
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 
-class LargestContentfulPaint extends Metric {
+class LargestContentfulPaint extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -45,10 +42,10 @@ class LargestContentfulPaint extends Metric {
   static getOptimisticGraph(dependencyGraph, processedNavigation) {
     const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
-      throw new LanternError('NO_LCP');
+      throw new Lantern.Error('NO_LCP');
     }
 
-    return FirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
+    return Lantern.Metrics.FirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
       cutoffTimestamp: lcp,
       treatNodeAsRenderBlocking: LargestContentfulPaint.isNotLowPriorityImageNode,
     });
@@ -62,10 +59,10 @@ class LargestContentfulPaint extends Metric {
   static getPessimisticGraph(dependencyGraph, processedNavigation) {
     const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
-      throw new LanternError('NO_LCP');
+      throw new Lantern.Error('NO_LCP');
     }
 
-    return FirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
+    return Lantern.Metrics.FirstContentfulPaint.getFirstPaintBasedGraph(dependencyGraph, {
       cutoffTimestamp: lcp,
       treatNodeAsRenderBlocking: _ => true,
       // For pessimistic LCP we'll include *all* layout nodes
@@ -91,7 +88,7 @@ class LargestContentfulPaint extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;

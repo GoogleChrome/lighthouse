@@ -11,7 +11,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {BaseNode} from '../../lib/lantern/BaseNode.js';
+import {BaseNode} from '../../lib/lantern/lantern.js';
 import {UnusedCSS} from '../../computed/unused-css.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
@@ -20,7 +20,7 @@ import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 import {NavigationInsights} from '../../computed/navigation-insights.js';
 
 
-/** @typedef {import('../../lib/lantern/simulator/Simulator.js').Simulator} Simulator */
+/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
 /** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
 /** @typedef {import('../../lib/lantern/NetworkNode.js').NetworkNode<LH.Artifacts.NetworkRequest>} NetworkNode */
 

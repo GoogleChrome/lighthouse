@@ -153,7 +153,7 @@ export class NetworkRequest<T = any> {
     fromWorker: boolean;
 }
 
-interface Metric<T = any> {
+interface MetricResult<T = any> {
     timing: number;
     timestamp?: never;
     optimisticEstimate: Simulation.Result<T>;
@@ -173,7 +173,7 @@ export namespace Simulation {
     type GraphNode<T> = import('../BaseNode.js').Node<T>;
     type GraphNetworkNode<T> = import('../NetworkNode.js').NetworkNode<T>;
     type GraphCPUNode = import('../CpuNode.js').CPUNode;
-    type Simulator<T> = import('../simulator/Simulator.js').Simulator<T>;
+    type Simulator<T> = import('../simulation/Simulator.js').Simulator<T>;
 
     interface MetricCoefficients {
         intercept: number;

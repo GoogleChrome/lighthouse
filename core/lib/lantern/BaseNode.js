@@ -28,6 +28,11 @@
  * @template [T=any]
  */
 class BaseNode {
+  static TYPES = /** @type {{NETWORK: 'network', CPU: 'cpu'}} */({
+    NETWORK: 'network',
+    CPU: 'cpu',
+  });
+
   /**
    * @param {string} id
    */
@@ -360,10 +365,5 @@ class BaseNode {
     return node.startTime <= this.startTime;
   }
 }
-
-BaseNode.TYPES = /** @type {{NETWORK: 'network', CPU: 'cpu'}} */({
-  NETWORK: 'network',
-  CPU: 'cpu',
-});
 
 export {BaseNode};

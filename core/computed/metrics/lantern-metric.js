@@ -4,13 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LanternError} from '../../lib/lantern/LanternError.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {LoadSimulator} from '../load-simulator.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
 import {TraceEngineResult} from '../trace-engine-result.js';
-import {createProcessedNavigation} from '../../lib/lantern/TraceEngineComputationData.js';
 
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data
@@ -39,7 +38,8 @@ async function getComputationDataParamsFromTrace(data, context) {
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
   const traceEngineResult = await TraceEngineResult.request(data, context);
-  const processedNavigation = createProcessedNavigation(traceEngineResult.data);
+  const processedNavigation =
+    Lantern.TraceEngineComputationData.createProcessedNavigation(traceEngineResult.data);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};
@@ -50,7 +50,7 @@ async function getComputationDataParamsFromTrace(data, context) {
  * @return {never}
  */
 function lanternErrorAdapter(err) {
-  if (!(err instanceof LanternError)) {
+  if (!(err instanceof Lantern.Error)) {
     throw err;
   }
 

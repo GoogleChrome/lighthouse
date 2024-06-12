@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {TotalBlockingTime} from '../../lib/lantern/metrics/TotalBlockingTime.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 import {LanternInteractive} from './lantern-interactive.js';
@@ -12,7 +12,7 @@ import {getComputationDataParams} from './lantern-metric.js';
 
 /** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
-class LanternTotalBlockingTime extends TotalBlockingTime {
+class LanternTotalBlockingTime extends Lantern.Metrics.TotalBlockingTime {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context

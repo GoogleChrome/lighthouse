@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../types/lantern.js';
-import {Metric} from '../Metric.js';
-import {BaseNode} from '../BaseNode.js';
-import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from '../TBTUtils.js';
+import * as Lantern from '../lantern.js';
 
 /** @typedef {import('../BaseNode.js').Node} Node */
 
-class TotalBlockingTime extends Metric {
+class TotalBlockingTime extends Lantern.Metric {
   /**
    * @return {Lantern.Simulation.MetricCoefficients}
    */
@@ -64,7 +61,7 @@ class TotalBlockingTime extends Metric {
       ? extras.interactiveResult.optimisticEstimate.timeInMs
       : extras.interactiveResult.pessimisticEstimate.timeInMs;
 
-    const minDurationMs = BLOCKING_TIME_THRESHOLD;
+    const minDurationMs = Lantern.TBTUtils.BLOCKING_TIME_THRESHOLD;
 
     const events = TotalBlockingTime.getTopLevelEvents(
       simulation.nodeTimings,
@@ -72,7 +69,7 @@ class TotalBlockingTime extends Metric {
     );
 
     return {
-      timeInMs: calculateSumOfBlockingTime(
+      timeInMs: Lantern.TBTUtils.calculateSumOfBlockingTime(
         events,
         fcpTimeInMs,
         interactiveTimeMs
@@ -84,7 +81,7 @@ class TotalBlockingTime extends Metric {
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
    * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
-   * @return {Promise<Lantern.Metric>}
+   * @return {Promise<Lantern.Metrics.Result>}
    */
   static async compute(data, extras) {
     const fcpResult = extras?.fcpResult;
@@ -110,7 +107,7 @@ class TotalBlockingTime extends Metric {
     const events = [];
 
     for (const [node, timing] of nodeTimings.entries()) {
-      if (node.type !== BaseNode.TYPES.CPU) continue;
+      if (node.type !== Lantern.BaseNode.TYPES.CPU) continue;
       // Filtering out events below minimum duration.
       if (timing.duration < minDurationMs) continue;
 

@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
-import {FirstContentfulPaint} from '../../lib/lantern/metrics/FirstContentfulPaint.js';
 
 /** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
-class LanternFirstContentfulPaint extends FirstContentfulPaint {
+class LanternFirstContentfulPaint extends Lantern.Metrics.FirstContentfulPaint {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
