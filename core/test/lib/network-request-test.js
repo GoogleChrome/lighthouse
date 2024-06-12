@@ -309,7 +309,7 @@ describe('NetworkRequest', () => {
       const request = NetworkRequest.asLanternNetworkRequest({
         protocol: 'h2',
         timing: {},
-        lrStatistics: {TCPMs: 100},
+        lrStatistics: {TCPMs: 100, requestMs: 1000},
       });
       expect(request.timing).toStrictEqual({
         connectStart: 0,
@@ -317,6 +317,7 @@ describe('NetworkRequest', () => {
         sslStart: 50,
         sslEnd: 100,
       });
+      expect(request.serverResponseTime).toStrictEqual(1000);
     });
 
     it('uses lrStatistics to make timings (h3)', () => {
