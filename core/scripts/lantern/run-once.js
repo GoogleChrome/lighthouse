@@ -8,8 +8,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import PredictivePerf from '../../audits/predictive-perf.js';
-import {Simulator} from '../../lib/lantern/simulation/Simulator.js';
 import traceSaver from '../../lib/lantern-trace-saver.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
@@ -42,7 +42,8 @@ async function run() {
   process.stdout.write(JSON.stringify(result.details.items[0], null, 2));
 
   // Dump the TTI graph with simulated timings to a trace if LANTERN_DEBUG is enabled
-  const pessimisticTTINodeTimings = Simulator.ALL_NODE_TIMINGS.get('pessimisticInteractive');
+  const pessimisticTTINodeTimings =
+    Lantern.Simulation.Simulator.ALL_NODE_TIMINGS.get('pessimisticInteractive');
   if (process.env.LANTERN_DEBUG && pessimisticTTINodeTimings) {
     const outputTraceFile = path.basename(tracePath).replace(/.trace.json$/, '.lantern.trace.json');
     const outputTracePath = path.join(LH_ROOT, '.tmp', outputTraceFile);
