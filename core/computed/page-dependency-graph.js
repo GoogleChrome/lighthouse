@@ -5,14 +5,14 @@
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import {PageDependencyGraph as LanternPageDependencyGraph} from '../lib/lantern/page-dependency-graph.js';
+import {PageDependencyGraph as LanternPageDependencyGraph} from '../lib/lantern/PageDependencyGraph.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
 import {TraceEngineResult} from './trace-engine-result.js';
-import * as TraceEngineComputationData from '../lib/lantern/trace-engine-computation-data.js';
+import * as TraceEngineComputationData from '../lib/lantern/TraceEngineComputationData.js';
 
-/** @typedef {import('../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
+/** @typedef {import('../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
 class PageDependencyGraph {
   /**

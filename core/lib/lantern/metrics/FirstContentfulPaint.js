@@ -5,12 +5,12 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {Metric} from '../metric.js';
-import {BaseNode} from '../base-node.js';
+import {Metric} from '../Metric.js';
+import {BaseNode} from '../BaseNode.js';
 
-/** @typedef {import('../base-node.js').Node} Node */
-/** @template T @typedef {import('../network-node.js').NetworkNode<T>} NetworkNode */
-/** @typedef {import('../cpu-node.js').CPUNode} CpuNode */
+/** @typedef {import('../BaseNode.js').Node} Node */
+/** @template T @typedef {import('../NetworkNode.js').NetworkNode<T>} NetworkNode */
+/** @typedef {import('../CpuNode.js').CPUNode} CpuNode */
 
 class FirstContentfulPaint extends Metric {
   /**

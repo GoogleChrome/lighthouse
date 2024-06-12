@@ -8,7 +8,7 @@ import * as TraceEngine from '@paulirish/trace_engine';
 import * as Protocol from '@paulirish/trace_engine/generated/protocol.js';
 
 import * as Lantern from './types/lantern.js';
-import {PageDependencyGraph} from './page-dependency-graph.js';
+import {PageDependencyGraph} from './PageDependencyGraph.js';
 import {RESOURCE_TYPES} from '../network-request.js';
 
 /** @typedef {import('@paulirish/trace_engine/models/trace/handlers/PageLoadMetricsHandler.js').MetricName} MetricName */

@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LanternError} from '../../lib/lantern/lantern-error.js';
+import {LanternError} from '../../lib/lantern/LanternError.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {LoadSimulator} from '../load-simulator.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
 import {TraceEngineResult} from '../trace-engine-result.js';
-import {createProcessedNavigation} from '../../lib/lantern/trace-engine-computation-data.js';
+import {createProcessedNavigation} from '../../lib/lantern/TraceEngineComputationData.js';
 
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data

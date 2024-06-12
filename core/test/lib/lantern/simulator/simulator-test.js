@@ -6,14 +6,14 @@
 
 import assert from 'assert/strict';
 
-import * as Lantern from '../../../../lib/lantern/metric.js';
-import {NetworkNode} from '../../../../lib/lantern/network-node.js';
-import {CPUNode} from '../../../../lib/lantern/cpu-node.js';
-import {Simulator} from '../../../../lib/lantern/simulator/simulator.js';
-import {DNSCache} from '../../../../lib/lantern/simulator/dns-cache.js';
+import * as Lantern from '../../../../lib/lantern/Metric.js';
+import {NetworkNode} from '../../../../lib/lantern/NetworkNode.js';
+import {CPUNode} from '../../../../lib/lantern/CpuNode.js';
+import {Simulator} from '../../../../lib/lantern/simulator/Simulator.js';
+import {DNSCache} from '../../../../lib/lantern/simulator/DNSCache.js';
 import {readJson} from '../../../test-utils.js';
-import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
-import {runTraceEngine} from '../metrics/metric-test-utils.js';
+import * as TraceEngineComputationData from '../../../../lib/lantern/TraceEngineComputationData.js';
+import {runTraceEngine} from '../metrics/MetricTestUtils.js';
 
 const pwaTrace = readJson('../../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 

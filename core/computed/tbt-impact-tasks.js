@@ -11,7 +11,7 @@ import {FirstContentfulPaint} from './metrics/first-contentful-paint.js';
 import {Interactive} from './metrics/interactive.js';
 import {TotalBlockingTime} from './metrics/total-blocking-time.js';
 import {ProcessedTrace} from './processed-trace.js';
-import {calculateTbtImpactForEvent} from '../lib/lantern/tbt-utils.js';
+import {calculateTbtImpactForEvent} from '../lib/lantern/TBTUtils.js';
 
 class TBTImpactTasks {
   /**

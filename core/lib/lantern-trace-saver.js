@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('./lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('./lantern/simulator/simulator.js').CompleteNodeTiming} CompleteNodeTiming */
+/** @typedef {import('./lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
+/** @typedef {import('./lantern/simulator/Simulator.js').CompleteNodeTiming} CompleteNodeTiming */
 
 /**
  * @param {Map<Node, CompleteNodeTiming>} nodeTimings

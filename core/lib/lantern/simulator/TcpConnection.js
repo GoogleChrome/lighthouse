@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('./simulator-timing-map.js').ConnectionTiming} ConnectionTiming */
+/** @typedef {import('./SimulationTimingMap.js').ConnectionTiming} ConnectionTiming */
 
 const INITIAL_CONGESTION_WINDOW = 10;
 const TCP_SEGMENT_SIZE = 1460;

@@ -5,10 +5,10 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {Metric} from '../metric.js';
-import {BaseNode} from '../base-node.js';
+import {Metric} from '../Metric.js';
+import {BaseNode} from '../BaseNode.js';
 
-/** @typedef {import('../base-node.js').Node} Node */
+/** @typedef {import('../BaseNode.js').Node} Node */
 
 class MaxPotentialFID extends Metric {
   /**
@@ -40,7 +40,7 @@ class MaxPotentialFID extends Metric {
 
   /**
    * @param {Lantern.Simulation.Result} simulation
-   * @param {import('../metric.js').Extras} extras
+   * @param {import('../Metric.js').Extras} extras
    * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulation, extras) {
@@ -65,7 +65,7 @@ class MaxPotentialFID extends Metric {
 
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
-   * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
+   * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
    * @return {Promise<Lantern.Metric>}
    */
   static compute(data, extras) {

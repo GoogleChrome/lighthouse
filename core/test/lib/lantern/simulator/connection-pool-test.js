@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 import {URL} from 'url';
 
-import {ConnectionPool} from '../../../../lib/lantern/simulator/connection-pool.js';
+import {ConnectionPool} from '../../../../lib/lantern/simulator/ConnectionPool.js';
 
 describe('DependencyGraph/Simulator/ConnectionPool', () => {
   const rtt = 100;

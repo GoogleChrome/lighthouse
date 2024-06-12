@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
-import {BaseNode} from '../../lib/lantern/base-node.js';
+import {BaseNode} from '../../lib/lantern/BaseNode.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const sampleTrace = readJson('../fixtures/artifacts/iframe/trace.json', import.meta);

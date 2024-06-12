@@ -6,9 +6,9 @@
 
 import * as Lantern from './types/lantern.js';
 import {NetworkRequestTypes} from './lantern.js';
-import {NetworkNode} from './network-node.js';
-import {CPUNode} from './cpu-node.js';
-import {NetworkAnalyzer} from './simulator/network-analyzer.js';
+import {NetworkNode} from './NetworkNode.js';
+import {CPUNode} from './CpuNode.js';
+import {NetworkAnalyzer} from './simulator/NetworkAnalyzer.js';
 
 // COMPAT: m71+ We added RunTask to `disabled-by-default-lighthouse`
 const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
@@ -19,7 +19,7 @@ const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
 // m65 and earlier
 const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
-/** @typedef {import('./base-node.js').Node} Node */
+/** @typedef {import('./BaseNode.js').Node} Node */
 
 /**
  * @typedef {Object} NetworkNodeOutput

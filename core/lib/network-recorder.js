@@ -10,7 +10,7 @@ import log from 'lighthouse-logger';
 
 import * as LH from '../../types/lh.js';
 import {NetworkRequest} from './network-request.js';
-import {PageDependencyGraph} from '../lib/lantern/page-dependency-graph.js';
+import {PageDependencyGraph} from './lantern/PageDependencyGraph.js';
 
 /**
  * @typedef {{

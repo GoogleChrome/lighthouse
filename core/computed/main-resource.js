@@ -6,7 +6,7 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
-import {NetworkAnalyzer} from '../lib/lantern/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from '../lib/lantern/simulator/NetworkAnalyzer.js';
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes

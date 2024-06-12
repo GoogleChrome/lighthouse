@@ -5,11 +5,11 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import {MaxPotentialFID} from '../../lib/lantern/metrics/max-potential-fid.js';
+import {MaxPotentialFID} from '../../lib/lantern/metrics/MaxPotentialFID.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
+/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
 class LanternMaxPotentialFID extends MaxPotentialFID {
   /**

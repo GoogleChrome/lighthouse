@@ -5,7 +5,7 @@
  */
 
 import * as Lantern from './types/lantern.js';
-import {BaseNode} from './base-node.js';
+import {BaseNode} from './BaseNode.js';
 
 /**
  * @template [T=any]

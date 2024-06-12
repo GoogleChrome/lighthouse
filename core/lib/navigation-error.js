@@ -5,7 +5,7 @@
  */
 
 import {LighthouseError} from './lh-error.js';
-import {NetworkAnalyzer} from './lantern/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from './lantern/simulator/NetworkAnalyzer.js';
 import {NetworkRequest} from './network-request.js';
 import * as i18n from '../lib/i18n/i18n.js';
 

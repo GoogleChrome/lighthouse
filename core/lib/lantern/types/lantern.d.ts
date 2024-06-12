@@ -170,10 +170,10 @@ export namespace Simulation {
         mainDocumentUrl?: string;
     };
 
-    type GraphNode<T> = import('../base-node.js').Node<T>;
-    type GraphNetworkNode<T> = import('../network-node.js').NetworkNode<T>;
-    type GraphCPUNode = import('../cpu-node.js').CPUNode;
-    type Simulator<T> = import('../simulator/simulator.js').Simulator<T>;
+    type GraphNode<T> = import('../BaseNode.js').Node<T>;
+    type GraphNetworkNode<T> = import('../NetworkNode.js').NetworkNode<T>;
+    type GraphCPUNode = import('../CpuNode.js').CPUNode;
+    type Simulator<T> = import('../simulator/Simulator.js').Simulator<T>;
 
     interface MetricCoefficients {
         intercept: number;

@@ -5,20 +5,20 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {BaseNode} from '../base-node.js';
-import {TcpConnection} from './tcp-connection.js';
-import {ConnectionPool} from './connection-pool.js';
-import {DNSCache} from './dns-cache.js';
-import {SimulatorTimingMap} from './simulator-timing-map.js';
+import {BaseNode} from '../BaseNode.js';
+import {TcpConnection} from './TcpConnection.js';
+import {ConnectionPool} from './ConnectionPool.js';
+import {DNSCache} from './DNSCache.js';
+import {SimulatorTimingMap} from './SimulationTimingMap.js';
 import {constants} from '../lantern.js';
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 
-/** @typedef {import('../base-node.js').Node} Node */
-/** @typedef {import('../network-node.js').NetworkNode} NetworkNode */
-/** @typedef {import('../cpu-node.js').CPUNode} CpuNode */
-/** @typedef {import('./simulator-timing-map.js').CpuNodeTimingComplete | import('./simulator-timing-map.js').NetworkNodeTimingComplete} CompleteNodeTiming */
-/** @typedef {import('./simulator-timing-map.js').ConnectionTiming} ConnectionTiming */
+/** @typedef {import('../BaseNode.js').Node} Node */
+/** @typedef {import('../NetworkNode.js').NetworkNode} NetworkNode */
+/** @typedef {import('../CpuNode.js').CPUNode} CpuNode */
+/** @typedef {import('./SimulationTimingMap.js').CpuNodeTimingComplete | import('./SimulationTimingMap.js').NetworkNodeTimingComplete} CompleteNodeTiming */
+/** @typedef {import('./SimulationTimingMap.js').ConnectionTiming} ConnectionTiming */
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
