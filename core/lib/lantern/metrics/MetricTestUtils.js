@@ -6,8 +6,8 @@
 
 import * as TraceEngine from '@paulirish/trace_engine';
 
-import * as Lantern from '../../../../lib/lantern/lantern.js';
-import {polyfillDOMRect} from '../../../../lib/polyfill-dom-rect.js';
+import * as Lantern from '../lantern.js';
+import {polyfillDOMRect} from '../../polyfill-dom-rect.js';
 
 polyfillDOMRect();
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import * as Lantern from '../../../lib/lantern/lantern.js';
+import * as Lantern from './lantern.js';
 
 const {calculateSumOfBlockingTime} = Lantern.TBTUtils;
 

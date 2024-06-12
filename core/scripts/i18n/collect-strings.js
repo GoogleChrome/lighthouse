@@ -50,6 +50,7 @@ const ignoredPathComponents = [
   '**/core/lib/stack-packs.js',
   '**/test/**',
   '**/*-test.js',
+  '**/*.test.js',
   '**/*-renderer.js',
   '**/util-commonjs.js',
   'treemap/app/src/main.js',

@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 import {URL} from 'url';
 
-import * as Lantern from '../../../../lib/lantern/lantern.js';
+import * as Lantern from '../lantern.js';
 
 const {ConnectionPool} = Lantern.Simulation;
 

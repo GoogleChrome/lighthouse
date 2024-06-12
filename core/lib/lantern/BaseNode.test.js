@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import * as Lantern from '../../../lib/lantern/lantern.js';
+import * as Lantern from './lantern.js';
 
 const {BaseNode, NetworkNode} = Lantern;
 

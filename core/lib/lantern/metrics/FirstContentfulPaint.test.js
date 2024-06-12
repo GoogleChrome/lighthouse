@@ -6,8 +6,8 @@
 
 import assert from 'assert/strict';
 
-import * as Lantern from '../../../../lib/lantern/lantern.js';
-import {readJson} from '../../../test-utils.js';
+import * as Lantern from '../lantern.js';
+import {readJson} from '../../../test/test-utils.js';
 import {getComputationDataFromFixture} from './MetricTestUtils.js';
 
 const {FirstContentfulPaint} = Lantern.Metrics;
