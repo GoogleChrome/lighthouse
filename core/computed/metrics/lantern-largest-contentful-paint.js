@@ -5,11 +5,11 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import {LargestContentfulPaint} from '../../lib/lantern/metrics/largest-contentful-paint.js';
+import {LargestContentfulPaint} from '../../lib/lantern/metrics/LargestContentfulPaint.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
+/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
 class LanternLargestContentfulPaint extends LargestContentfulPaint {
   /**

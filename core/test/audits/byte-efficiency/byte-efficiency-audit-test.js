@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import {ByteEfficiencyAudit as ByteEfficiencyAudit_} from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
-import {Simulator} from '../../../lib/lantern/simulator/simulator.js';
+import {Simulator} from '../../../lib/lantern/simulator/Simulator.js';
 import {LoadSimulator} from '../../../computed/load-simulator.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';

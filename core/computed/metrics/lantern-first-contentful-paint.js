@@ -6,9 +6,9 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
-import {FirstContentfulPaint} from '../../lib/lantern/metrics/first-contentful-paint.js';
+import {FirstContentfulPaint} from '../../lib/lantern/metrics/FirstContentfulPaint.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
+/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
 class LanternFirstContentfulPaint extends FirstContentfulPaint {
   /**

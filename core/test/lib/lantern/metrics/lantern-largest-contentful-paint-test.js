@@ -6,9 +6,9 @@
 
 import assert from 'assert/strict';
 
-import {LargestContentfulPaint} from '../../../../lib/lantern/metrics/largest-contentful-paint.js';
-import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/first-contentful-paint.js';
-import {getComputationDataFromFixture} from './metric-test-utils.js';
+import {LargestContentfulPaint} from '../../../../lib/lantern/metrics/LargestContentfulPaint.js';
+import {FirstContentfulPaint} from '../../../../lib/lantern/metrics/FirstContentfulPaint.js';
+import {getComputationDataFromFixture} from './MetricTestUtils.js';
 import {readJson} from '../../../test-utils.js';
 
 const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);

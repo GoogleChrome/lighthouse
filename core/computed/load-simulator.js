@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import {Simulator} from '../lib/lantern/simulator/simulator.js';
+import {Simulator} from '../lib/lantern/simulator/Simulator.js';
 import {NetworkAnalysis} from './network-analysis.js';
 
 class LoadSimulator {

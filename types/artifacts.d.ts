@@ -10,7 +10,7 @@ import * as Lantern from '../core/lib/lantern/types/lantern.js';
 import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
-import {Simulator} from '../core/lib/lantern/simulator/simulator.js';
+import {Simulator} from '../core/lib/lantern/simulator/Simulator.js';
 import {LighthouseError} from '../core/lib/lh-error.js';
 import {NetworkRequest as _NetworkRequest} from '../core/lib/network-request.js';
 import speedline from 'speedline-core';

@@ -8,7 +8,7 @@
  * A union of all types derived from BaseNode, allowing type check discrimination
  * based on `node.type`. If a new node type is created, it should be added here.
  * @template [T=any]
- * @typedef {import('./cpu-node.js').CPUNode<T> | import('./network-node.js').NetworkNode<T>} Node
+ * @typedef {import('./CpuNode.js').CPUNode<T> | import('./NetworkNode.js').NetworkNode<T>} Node
  */
 
 /**

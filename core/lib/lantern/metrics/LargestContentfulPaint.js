@@ -5,11 +5,11 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {Metric} from '../metric.js';
-import {FirstContentfulPaint} from './first-contentful-paint.js';
-import {LanternError} from '../lantern-error.js';
+import {Metric} from '../Metric.js';
+import {FirstContentfulPaint} from './FirstContentfulPaint.js';
+import {LanternError} from '../LanternError.js';
 
-/** @typedef {import('../base-node.js').Node} Node */
+/** @typedef {import('../BaseNode.js').Node} Node */
 
 class LargestContentfulPaint extends Metric {
   /**
@@ -90,7 +90,7 @@ class LargestContentfulPaint extends Metric {
 
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
-   * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
+   * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
    * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {

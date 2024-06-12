@@ -7,10 +7,10 @@
 import assert from 'assert/strict';
 
 import * as Lantern from '../../../../lib/lantern/types/lantern.js';
-import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/network-analyzer.js';
-import * as TraceEngineComputationData from '../../../../lib/lantern/trace-engine-computation-data.js';
+import {NetworkAnalyzer} from '../../../../lib/lantern/simulator/NetworkAnalyzer.js';
+import * as TraceEngineComputationData from '../../../../lib/lantern/TraceEngineComputationData.js';
 import {readJson} from '../../../test-utils.js';
-import {runTraceEngine} from '../metrics/metric-test-utils.js';
+import {runTraceEngine} from '../metrics/MetricTestUtils.js';
 
 const trace = readJson('../../../fixtures/artifacts/paul/trace.json', import.meta);
 const traceWithRedirect = readJson('../../../fixtures/artifacts/redirect/trace.json', import.meta);

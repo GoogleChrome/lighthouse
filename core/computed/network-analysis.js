@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import {NetworkAnalyzer} from '../lib/lantern/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from '../lib/lantern/simulator/NetworkAnalyzer.js';
 import {NetworkRecords} from './network-records.js';
 
 class NetworkAnalysis {

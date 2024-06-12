@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {BaseNode} from '../base-node.js';
+import {BaseNode} from '../BaseNode.js';
 
 /**
  * @fileoverview
@@ -15,9 +15,9 @@ import {BaseNode} from '../base-node.js';
  */
 
 
-/** @typedef {import('../base-node.js').Node} Node */
-/** @typedef {import('../network-node.js').NetworkNode} NetworkNode */
-/** @typedef {import('../cpu-node.js').CPUNode} CpuNode */
+/** @typedef {import('../BaseNode.js').Node} Node */
+/** @typedef {import('../NetworkNode.js').NetworkNode} NetworkNode */
+/** @typedef {import('../CpuNode.js').CPUNode} CpuNode */
 
 /**
  * @typedef NodeTimingComplete

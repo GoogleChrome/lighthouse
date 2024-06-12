@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import {TcpConnection} from '../../../../lib/lantern/simulator/tcp-connection.js';
+import {TcpConnection} from '../../../../lib/lantern/simulator/TcpConnection.js';
 
 describe('DependencyGraph/Simulator/TcpConnection', () => {
   describe('#constructor', () => {

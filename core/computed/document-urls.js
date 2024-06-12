@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NetworkAnalyzer} from '../lib/lantern/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from '../lib/lantern/simulator/NetworkAnalyzer.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
 import {ProcessedTrace} from './processed-trace.js';

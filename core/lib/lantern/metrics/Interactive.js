@@ -5,11 +5,11 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {Metric} from '../metric.js';
-import {BaseNode} from '../base-node.js';
+import {Metric} from '../Metric.js';
+import {BaseNode} from '../BaseNode.js';
 import {NetworkRequestTypes} from '../lantern.js';
 
-/** @typedef {import('../base-node.js').Node} Node */
+/** @typedef {import('../BaseNode.js').Node} Node */
 
 // Any CPU task of 20 ms or more will end up being a critical long task on mobile
 const CRITICAL_LONG_TASK_THRESHOLD = 20;
@@ -62,7 +62,7 @@ class Interactive extends Metric {
 
   /**
    * @param {Lantern.Simulation.Result} simulationResult
-   * @param {import('../metric.js').Extras} extras
+   * @param {import('../Metric.js').Extras} extras
    * @return {Lantern.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) {
@@ -80,7 +80,7 @@ class Interactive extends Metric {
 
   /**
    * @param {Lantern.Simulation.MetricComputationDataInput} data
-   * @param {Omit<import('../metric.js').Extras, 'optimistic'>=} extras
+   * @param {Omit<import('../Metric.js').Extras, 'optimistic'>=} extras
    * @return {Promise<Lantern.Metric>}
    */
   static async compute(data, extras) {

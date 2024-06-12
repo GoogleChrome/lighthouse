@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {NetworkNode} from '../../lib/lantern/network-node.js';
+import {NetworkNode} from '../../lib/lantern/NetworkNode.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {readJson} from '../test-utils.js';
 

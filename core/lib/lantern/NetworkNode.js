@@ -6,7 +6,7 @@
 
 import * as Lantern from './types/lantern.js';
 import {NetworkRequestTypes} from './lantern.js';
-import {BaseNode} from './base-node.js';
+import {BaseNode} from './BaseNode.js';
 
 const NON_NETWORK_SCHEMES = [
   'blob', // @see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL

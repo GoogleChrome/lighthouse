@@ -5,8 +5,8 @@
  */
 
 import * as Lantern from '../types/lantern.js';
-import {NetworkAnalyzer} from './network-analyzer.js';
-import {TcpConnection} from './tcp-connection.js';
+import {NetworkAnalyzer} from './NetworkAnalyzer.js';
+import {TcpConnection} from './TcpConnection.js';
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];

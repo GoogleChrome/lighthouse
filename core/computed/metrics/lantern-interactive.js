@@ -6,10 +6,10 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
-import {Interactive} from '../../lib/lantern/metrics/interactive.js';
+import {Interactive} from '../../lib/lantern/metrics/Interactive.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
+/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
 
 class LanternInteractive extends Interactive {
   /**

@@ -5,12 +5,12 @@
  */
 
 import * as Lantern from './types/lantern.js';
-import {BaseNode} from './base-node.js';
+import {BaseNode} from './BaseNode.js';
 import {RESOURCE_TYPES} from '../network-request.js';
 
-/** @typedef {import('./base-node.js').Node} Node */
-/** @typedef {import('./network-node.js').NetworkNode} NetworkNode */
-/** @typedef {import('./simulator/simulator.js').Simulator} Simulator */
+/** @typedef {import('./BaseNode.js').Node} Node */
+/** @typedef {import('./NetworkNode.js').NetworkNode} NetworkNode */
+/** @typedef {import('./simulator/Simulator.js').Simulator} Simulator */
 
 /**
  * @typedef Extras

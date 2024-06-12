@@ -12,7 +12,7 @@ import {createGzip, gunzipSync} from 'zlib';
 
 import log from 'lighthouse-logger';
 
-import {Simulator} from './lantern/simulator/simulator.js';
+import {Simulator} from './lantern/simulator/Simulator.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
 import {MetricTraceEvents} from './traces/metric-trace-events.js';
 import {NetworkAnalysis} from '../computed/network-analysis.js';
