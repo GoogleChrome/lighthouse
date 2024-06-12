@@ -47,12 +47,11 @@ class FirstContentfulPaint extends Metric {
    * @param {FirstPaintBasedGraphOpts<T>} opts
    * @return {{definitelyNotRenderBlockingScriptUrls: Set<string>, renderBlockingCpuNodeIds: Set<string>}}
    */
-  static getRenderBlockingNodeData(
-      graph,
-      {cutoffTimestamp, treatNodeAsRenderBlocking, additionalCpuNodesToTreatAsRenderBlocking}
-  ) {
+  static getRenderBlockingNodeData(graph, opts) {
     /** @type {Map<string, CpuNode>} A map of blocking script URLs to the earliest EvaluateScript task node that executed them. */
     const scriptUrlToNodeMap = new Map();
+    const {cutoffTimestamp, treatNodeAsRenderBlocking, additionalCpuNodesToTreatAsRenderBlocking} =
+      opts;
 
     /** @type {Array<CpuNode>} */
     const cpuNodes = [];
@@ -135,17 +134,10 @@ class FirstContentfulPaint extends Metric {
    * @param {FirstPaintBasedGraphOpts<T>} opts
    * @return {Node}
    */
-  static getFirstPaintBasedGraph(
-      dependencyGraph,
-      {cutoffTimestamp, treatNodeAsRenderBlocking, additionalCpuNodesToTreatAsRenderBlocking}
-  ) {
-    const rbData = this.getRenderBlockingNodeData(dependencyGraph, {
-      cutoffTimestamp,
-      treatNodeAsRenderBlocking,
-      additionalCpuNodesToTreatAsRenderBlocking,
-    });
+  static getFirstPaintBasedGraph(dependencyGraph, opts) {
+    const rbData = this.getRenderBlockingNodeData(dependencyGraph, opts);
     const {definitelyNotRenderBlockingScriptUrls, renderBlockingCpuNodeIds} = rbData;
-
+    const {cutoffTimestamp, treatNodeAsRenderBlocking} = opts;
     return dependencyGraph.cloneWithRelationships(node => {
       if (node.type === BaseNode.TYPES.NETWORK) {
         // Exclude all nodes that ended after cutoffTimestamp (except for the main document which we always consider necessary)
