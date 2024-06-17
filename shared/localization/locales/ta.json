@@ -18,13 +18,13 @@
     "message": "`[aria-*]` பண்புக்கூறுகள் அவற்றின் பங்களிப்புகளுடன் பொருந்துகின்றன"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "இணையப் பக்கத்தில் உள்ள ஒவ்வொரு உறுப்பின் பங்களிப்பையும் தெரிந்துகொள்ள உதவிகரமான தொழில்நுட்பங்களுக்கு ARIA `role`கள் உதவுகின்றன. `role` மதிப்புகளில் எழுத்துப் பிழை இருந்தாலோ, அவை ஏற்கெனவே இல்லாத `role` மதிப்புகளாக இருந்தாலோ, பங்களிப்புகள் தெளிவாக இல்லை என்றாலோ உதவிகரமான தொழில்நுட்பங்களைப் பயன்படுத்தும் பயனர்களை உறுப்பின் நோக்கம் சென்றடையாது. [ARIA பங்களிப்புகள் குறித்து மேலும் அறிக](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "`role=\"\"`க்கு ஒதுக்கப்பட்டுள்ள மதிப்புகள் சரியான ARIA பங்களிப்புகள் இல்லை."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "`role=\"\"`க்கு ஒதுக்கப்பட்டுள்ள மதிப்புகள் சரியான ARIA பங்களிப்புகளாக உள்ளன."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "ஓர் உறுப்புக்குத் தெளிவான பெயர் இல்லை எனில் ஸ்கிரீன் ரீடர்கள் பொதுவான பெயரைப் பயன்படுத்தி அதை அறிவிக்கும். ஸ்கிரீன் ரீடர்களைப் பயன்படுத்துபவர்களுக்கு இது உதவியாக இருக்காது. [கட்டளை உறுப்புகளை அதிகம் அணுகத்தக்கதாக மாற்றுவது எப்படி என அறிக](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`, `link`, `menuitem` ஆகிய உறுப்புகளுக்குத் தெளிவான பெயர்கள் உள்ளன"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "சில நிபந்தனைகளின் கீழ் உள்ள ஒரு உறுப்பில் மட்டுமே சில ARIA பண்புக்கூறுகள் அனுமதிக்கப்படும். [நிபந்தனை ARIA பண்புக்கூறுகள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "உறுப்பின் பங்களிப்பில் குறிப்பிட்டுள்ளபடி ARIA பண்புக்கூறுகள் பயன்படுத்தப்படவில்லை"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "உறுப்பின் பங்களிப்பில் குறிப்பிட்டுள்ளபடி ARIA பண்புக்கூறுகள் பயன்படுத்தப்பட்டுள்ளன"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "நிறுத்தப்பட்ட ARIA பங்களிப்புகளை உதவிகரமான தொழில்நுட்பம் சரியாகச் செயலாக்காமல் இருக்கக்கூடும். [நிறுத்தப்பட்ட ARIA பங்களிப்புகள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "நிறுத்தப்பட்ட ARIA பங்களிப்புகள் பயன்படுத்தப்பட்டுள்ளன"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "நிறுத்தப்பட்ட ARIA பங்களிப்புகள் பயன்படுத்தப்படவில்லை"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA உரையாடல் உறுப்புகளின் பெயர்கள் தெளிவாக இல்லை என்றால் ஸ்கிரீன் ரீடர் பயனர்கள் அவற்றின் நோக்கத்தைப் புரிந்துகொள்வது கடினம். [ARIA உரையாடல் உறுப்புகளை மேலும் தெளிவாக்குவது எப்படி என அறிக](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` உறுப்புகளுக்குத் தெளிவான பெயர்கள் உள்ளன"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "தடைசெய்யப்பட்ட பங்களிப்புகளில் ARIA பண்புக்கூறுகள் பயன்படுத்தப்பட்டிருந்தால் உதவிகரமான தொழில்நுட்பங்களைப் பயன்படுத்தும் பயனர்களுக்கு முக்கியமான தகவல்களைத் தெரியப்படுத்தவில்லை என்று அர்த்தம். [தடைசெய்யப்பட்ட ARIA பங்களிப்புகள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "தடைசெய்யப்பட்ட ARIA பண்புக்கூறுகளை உறுப்புகள் பயன்படுத்துகின்றன"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "அனுமதிக்கப்பட்ட ARIA பண்புக்கூறுகளை மட்டுமே உறுப்புகள் பயன்படுத்துகின்றன"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "சில ARIA பங்களிப்புகளில் ஸ்கிரீன் ரீடர்களுக்கு உறுப்பின் நிலையை விவரிக்கத் தேவையான பண்புக்கூறுகள் உள்ளன. [பங்களிப்புகளையும் தேவையான பண்புக்கூறுகளையும் பற்றி மேலும் அறிக](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "பெரிய பகுதியைக் காண்பிக்கும் படத்தை முன்கூட்டியே ஏற்றுதல்"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "உங்கள் பயனர்கள் அனைவருக்கும் பாதுகாப்பான இணைய அம்சங்களை இயக்க, எல்லா HTTP டிராஃபிக்கையும் HTTPSஸிற்குத் திசைதிருப்புவதை உறுதிசெய்துகொள்ளவும். [மேலும் அறிக](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP ட்ராஃபிக் HTTPSக்குத் திசைதிருப்பப்படவில்லை"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTPSக்கு HTTP ட்ராஃபிக்கைத் திசைதிருப்பும்"
   },
   "core/audits/redirects.js | description": {
     "message": "'திசைதிருப்புதல்கள்' பக்கம் ஏற்றப்படுவதற்கு முன்பு கூடுதல் தாமதங்களை ஏற்படுத்தும். [பக்கம் திசைதிரும்புவதைத் தவிர்ப்பது எப்படி என அறிக](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "ஒதுக்கப்பட்ட நேரத்தை ஆதார உள்ளடக்கத்தைப் பெறுவதற்கான நேரம் மீறிவிட்டது"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "எதிர்பாராத விதமாக உலாவிப் பக்கம் சிதைவடைந்தது."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "நீங்கள் அளித்துள்ள URL செல்லாததெனத் தோன்றுகிறது."

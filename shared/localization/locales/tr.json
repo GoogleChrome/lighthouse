@@ -18,13 +18,13 @@
     "message": "`[aria-*]` özellikleri rolleriyle eşleşiyor"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Yardımcı teknolojiler, ARIA `role` sayesinde web sayfasındaki her bir öğenin rolünü öğrenebilir. `role` değerleri yanlış yazılmışsa, mevcut ARIA `role` değerleri değilse veya soyut roller kullanılmışsa öğenin amacı, yardımcı teknolojilerin kullanıcılarına bildirilmez. [ARIA rolleri hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "`role=\"\"` öğesine atanan değerler geçerli ARIA rolleri değil."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "`role=\"\"` öğesine atanan değerler geçerli ARIA rolleri."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Bir öğenin erişilebilir özellikli adı olmadığında ekran okuyucular tarafından genel adla okunur ve öğe, ekran okuyuculardan yararlanan kullanıcılar için kullanılamaz hale gelir. [Komut öğelerini nasıl daha erişilebilir hale getireceğinizi öğrenin](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`, `link` ve `menuitem` öğelerinin erişilebilir özellikli adları var."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Bazı ARIA özelliklerine yalnızca bir öğede belirli koşullarda izin verilir. [Koşullu ARIA özellikleri hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA özellikleri, öğenin rolü için belirtilen şekilde kullanılmıyor"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA özellikleri, öğenin rolü için belirtilen şekilde kullanılıyor"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Yardımcı teknolojiler, desteği sonlandırılmış ARIA rollerini doğru bir şekilde işlemeyebilir. [Desteği sonlandırılan ARIA rolleri hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Desteği sonlandırılmış ARIA rolleri kullanıldı"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Desteği sonlandırılmış ARIA rolleri kullanılmadı"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Erişilebilir özellikli adları olmayan ARIA iletişim öğeleri, ekran okuyucu kullanıcılarının bu öğelerin amacını ayırt etmesini engelleyebilir. [ARIA iletişim öğelerinin nasıl daha erişilebilir hale getirileceğini öğrenin](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` öğelerinin erişilebilir özellikli adları var"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "ARIA özelliklerinin, yasaklanan rollerde kullanılması yardımcı teknolojilerin kullanıcılarına önemli bilgilerin iletilmemesine neden olabilir. [Yasaklanmış ARIA rolleri hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Öğeler, yasaklanmış ARIA özelliklerini kullanıyor"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Öğeler yalnızca izin verilen ARIA özelliklerini kullanıyor"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Bazı ARIA rolleri, öğenin durumunu ekran okuyuculara açıklayan gerekli özelliklere sahiptir. [Roller ve gerekli özellikler hakkında daha fazla bilgi edinin](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Largest Contentful Paint resmi önceden yükleme"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Kullanıcılarınıza güvenli web özellikleri sağlayabilmek için tüm HTTP trafiğini HTTPS'ye yönlendirdiğinizden emin olun. [Daha fazla bilgi](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP trafiğini HTTPS'ye yönlendirmiyor"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTP trafiğini HTTPS'ye yönlendiriyor"
+  },
   "core/audits/redirects.js | description": {
     "message": "Yönlendirmeler, sayfanın yüklenmesinden önce ek gecikmelere neden olur. [Sayfa yönlendirmelerden nasıl kaçınacağınızı öğrenin](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Serial API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthetication API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
+    "message": "WebAuthentication API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "WebBluetooth API kullanan sayfalar geri-ileri önbelleğe alınmaya uygun değildir."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Kaynak içeriğinin getirilmesi için ayrılan süre aşıldı"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Tarayıcı sekmesi beklenmedik şekilde çöktü."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Sağladığınız URL'nin geçersiz olduğu anlaşılıyor."

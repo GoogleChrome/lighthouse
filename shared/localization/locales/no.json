@@ -18,13 +18,13 @@
     "message": "`[aria-*]`-attributtene samsvarer med rollene sine"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA-`role`-elementer gjør at assisterende teknologi vet rollen til hvert element på nettsiden. Hvis `role`-verdier er feilstavet, ikke er eksisterende ARIA-`role`-verdier eller er abstrakte roller, blir ikke formålet med elementet formidlet til brukere av assisterende teknologi. [Finn ut mer om ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Verdier som er tilordnet `role=\"\"`, er ikke gyldige ARIA-roller."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Verdier som er tilordnet `role=\"\"`, er gyldige ARIA-roller."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Når elementer ikke har tilgjengelige navn, beskriver skjermlesere dem med generiske navn. Dermed er de ubrukelige for brukere som er avhengige av skjermlesere. [Finn ut hvordan du gjør kommandoelementer mer tilgjengelige](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`-, `link`- og `menuitem`-elementer har tilgjengelige navn"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Noen ARIA-attributter er bare tillatt på elementer under visse betingelser. [Finn ut mer om betingede ARIA-attributter](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA-attributter brukes ikke i tråd med spesifikasjonene for elementets rolle"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA-attributter brukes i tråd med spesifikasjonene for elementets rolle"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Assisterende teknologi kan kanskje ikke håndtere avviklede ARIA-roller på riktig måte. [Finn ut mer om avviklede ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Avviklede ARIA-roller ble brukt"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Avviklede ARIA-roller ble ikke brukt"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Når ARIA-dialogelementer ikke har tilgjengelige navn, kan det forhindre brukere av skjermlesere fra å forstå formålet med disse elementene. [Finn ut hvordan du gjør ARIA-dialogelementer mer tilgjengelige](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA-`progressbar`-elementer har tilgjengelige navn"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Hvis du bruker ARIA-attributter i roller der de er forbudt, kan det bety at viktig informasjon ikke formidles til brukere av assisterende teknologi. [Finn ut mer om forbudte ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementer bruker forbudte ARIA-attributter"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementer bruker bare tillatte ARIA-attributter"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Noen ARIA-roller har obligatoriske attributter som beskriver elementenes tilstand for skjermlesere. [Finn ut mer om roller og obligatoriske attributter](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Forhåndslast bildet med største innholdsrike opptegning"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Sørg for at du viderekobler all HTTP-trafikk til HTTPS, slik at alle brukerne dine får tilgang til sikker nettfunksjonalitet. [Finn ut mer](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Viderekobler ikke HTTP-trafikk til HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Viderekobler HTTP-trafikk til HTTPS"
   },
   "core/audits/redirects.js | description": {
     "message": "Viderekoblinger fører til flere forsinkelser før siden kan lastes inn. [Finn ut hvordan du kan unngå viderekoblinger fra sider](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Henting av ressursinnhold har overskredet den kvoterte tiden"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Nettleserfanen krasjet uventet."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Nettadressen du oppga, ser ut til å være ugyldig."

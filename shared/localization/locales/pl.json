@@ -18,13 +18,13 @@
     "message": "Atrybuty `[aria-*]` odpowiadają swoim rolom"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Dzięki atrybutom `role` ARIA technologie wspomagające osoby z niepełnosprawnością umożliwiają poznanie roli każdego elementu na stronie internetowej. Jeśli wartości `role` są błędnie zapisane, nie są istniejącymi wartościami ARIA `role` ani rolami abstrakcyjnymi, to użytkownicy technologii wspomagających nie otrzymają informacji o przeznaczeniu danego elementu. [Więcej informacji o rolach ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Wartości przypisane do atrybutu `role=\"\"` nie są prawidłowymi rolami ARIA."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Wartości przypisane do `role=\"\"` są prawidłowymi rolami ARIA."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Gdy element nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają go nazwą ogólną, przez co jest on bezużyteczny dla ich użytkowników. [Jak ułatwić dostęp do elementów poleceń](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementy `button`, `link` i `menuitem` mają nazwy na potrzeby ułatwień dostępu"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Niektóre atrybuty ARIA są dozwolone w elemencie tylko pod pewnymi warunkami. [Więcej informacji o warunkowych atrybutach ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atrybuty ARIA nie są używane zgodnie z określoną rolą elementu"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atrybuty ARIA są używane zgodnie z określoną rolą elementu"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Wycofane role ARIA mogą nie być prawidłowo przetwarzane przez technologię wspomagającą osoby z niepełnosprawnością. [Więcej informacji o wycofanych rolach ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Użyto wycofanych ról ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Nie użyto wycofanych ról ARIA"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Elementy okien ARIA, które nie zawierają nazw na potrzeby ułatwień dostępu, mogą uniemożliwiać użytkownikom czytników ekranu rozpoznanie zastosowania tych elementów. [Więcej informacji o ułatwieniach dostępu w elementach okien ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Elementy ARIA `progressbar` mają nazwy na potrzeby ułatwień dostępu"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Używanie atrybutów ARIA w rolach, w których jest to zabronione, może spowodować, że użytkownikom technologii wspomagających osoby z niepełnosprawnością nie będą przekazywane ważne informacje. [Więcej informacji o zabronionych rolach ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementy używają zabronionych atrybutów ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementy używają tylko dozwolonych atrybutów ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Niektóre role ARIA mają atrybuty wymagane, które opisują stan elementu na potrzeby czytników ekranu. [Więcej informacji o rolach i wymaganych atrybutach](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Wstępnie wczytuj największy wyrenderowany obraz"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Przekieruj cały ruch HTTP do HTTPS, aby wszyscy użytkownicy mogli korzystać z bezpiecznych funkcji internetowych. [Więcej informacji](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Nie przekierowuje ruchu HTTP do HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Przekierowuje ruch HTTP do HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Przekierowania wprowadzają dodatkowe opóźnienia przed załadowaniem strony. [Jak unikać przekierowań strony](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "Strony, które używają interfejsu Serial API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Strony, które używają interfejsu WebAuthetication API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+    "message": "Strony, które używają interfejsu WebAuthentication API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Strony, które używają interfejsu WebBluetooth API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Przekroczono czas przydzielony na pobranie zasobów"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "W karcie przeglądarki nieoczekiwanie wystąpił poważny błąd."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Podany URL jest nieprawidłowy."

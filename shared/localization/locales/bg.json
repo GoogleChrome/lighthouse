@@ -18,13 +18,13 @@
     "message": "Атрибутите `[aria-*]` съответстват на ролите си"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Ролите на ARIA, задавани чрез атрибута `role`, информират помощните технологии каква функция изпълнява всеки елемент в уеб страницата. Ако стойностите на `role` са изписани неправилно, не са сред съществуващите за `role` или са абстрактни роли, предназначението на елемента няма да се съобщава на потребителите на помощни технологии. [Научете повече за ролите на ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "На много от HTML елементите могат да бъдат присвоени само определени роли на ARIA. Използването на роли на ARIA на места, където не са разрешени, може да възпрепятства достъпността на уеб страницата. [Научете повече за ролите на ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Стойностите, зададени за `role=\"\"`, не са валидни роли на ARIA."
+    "message": "Използва роли на ARIA за несъвместими елементи"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Стойностите, зададени за `role=\"\"`, са валидни роли на ARIA."
+    "message": "Използва роли на ARIA само за съвместими елементи"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Когато даден елемент няма достъпно име, екранните четци ще произнасят за него общо име и той ще бъде неизползваем за потребителите, разчитащи на тази технология. [Научете как да направите по-достъпни елементите, свързани с команди](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Елементите `button`, `link` и `menuitem` имат достъпни имена"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Някои атрибути на ARIA са разрешени за елемент само при определени условия. [Научете повече за условните атрибути на ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Атрибутите на ARIA не се използват, както е посочено за ролята на елемента"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Атрибутите на ARIA се използват, както е посочено за ролята на елемента"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Оттеглените роли на ARIA може да не бъдат обработени правилно от помощната технология. [Научете повече за оттеглените роли на ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Използвани са оттеглени роли на ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Не са използвани оттеглени роли на ARIA"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Елементите ARIA в диалоговите прозорци без достъпни имена може да попречат на потребителите на екранни четци да разберат целта на тези елементи. [Научете как да направите по-достъпни елементите ARIA в диалоговите прозорци](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA елементите `progressbar` имат достъпни имена"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Използването на атрибути на ARIA в роли, където те са забранени, може да означава, че на потребителите на помощни технологии не се съобщава важна информация. [Научете повече за забранените роли на ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Елементите използват забранени атрибути на ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Елементите използват само разрешени атрибути на ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Някои роли на ARIA имат задължителни атрибути, от които екранните четци получават описание на състоянието на съответния елемент. [Научете повече за ролите и задължителните атрибути](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Предварително зареждане на изображението, рендерирано при изобразяване на най-голямото съдържание (LPC)"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Уверете се, че пренасочвате целия HTTP трафик към HTTPS, за да може функциите за сигурност в мрежата да са активирани за всичките ви потребители. [Научете повече](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP трафикът не се пренасочва към HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTP трафикът се пренасочва към HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Пренасочванията водят до допълнително забавяне на зареждането на страницата. [Научете как да ги избягвате](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Страниците, които използват Serial API, не отговарят на условията за кеша за назад/напред."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Страниците, които използват WebAuthetication API, не отговарят на условията за кеша за назад/напред."
+    "message": "Страниците, които използват WebAuthentication API, не отговарят на условията за кеша за назад/напред."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Страниците, които използват WebBluetooth API, не отговарят на условията за кеша за назад/напред."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Предвиденото време за извличане на съдържанието на ресурсите бе превишено"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Разделът на браузъра претърпя неочакван срив."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Предоставеният от вас URL адрес изглежда невалиден."

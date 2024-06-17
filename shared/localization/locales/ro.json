@@ -18,13 +18,13 @@
     "message": "Atributele `[aria-*]` se potrivesc cu rolurile"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Cu ajutorul rolurilor ARIA `role`, tehnologiile de asistare pot să afle rolul fiecărui element din pagina web. Dacă valorile pentru `role` sunt scrise greșit și rezultă valori inexistente pentru rolurile ARIA `role` sau roluri abstracte, scopul elementului nu va fi comunicat utilizatorilor tehnologiilor de asistare. [Află mai multe despre rolurile ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Valorile atribuite pentru `role=\"\"` nu sunt roluri ARIA valide."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Valorile atribuite pentru `role=\"\"` sunt roluri ARIA valide."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află cum să faci elementele de comandă mai accesibile](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementele `button`, `link` și `menuitem` au nume accesibile"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Unele atribute ARIA sunt permise pentru un element numai în anumite condiții. [Află mai multe despre atributele ARIA condiționale](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atributele ARIA nu sunt folosite așa cum se specifică pentru rolul elementului"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atributele ARIA sunt folosite așa cum se specifică pentru rolul elementului"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Este posibil ca rolurile ARIA învechite să nu fie procesate corect de tehnologia de asistare. [Află mai multe despre rolurile ARIA învechite](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Au fost folosite roluri ARIA învechite"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Rolurile ARIA învechite nu au fost folosite"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Elementele de dialog ARIA fără nume accesibile pot împiedica utilizatorii cititoarelor de ecran să distingă scopul acestor elemente. [Află cum să faci elementele de dialog ARIA mai accesibile](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Elementele ARIA `progressbar` au nume accesibile"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Folosirea atributelor ARIA în roluri în care sunt interzise poate însemna că informații importante nu le sunt comunicate utilizatorilor de tehnologii de asistare. [Află mai multe despre rolurile ARIA interzise](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementele folosesc atribute ARIA interzise"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementele folosesc doar atribute ARIA permise"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Unele roluri ARIA au atribute obligatorii care descriu starea elementului cititoarelor de ecrane. [Află mai multe despre rolurile și atributele obligatorii](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Preîncarcă imaginea Largest Contentful Paint"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Asigură-te că redirecționezi tot traficul HTTP către HTTPS pentru a activa funcțiile web securizate pentru toți utilizatorii. [Află mai multe](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Nu redirecționează traficul HTTP spre HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Redirecționează traficul HTTP spre HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Redirecționările introduc întârzieri suplimentare înainte ca pagina să se poată încărca. [Află cum să eviți redirecționările paginii](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Paginile care folosesc API-ul Serial nu sunt eligibile pentru memoria cache înainte/înapoi."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Paginile care folosesc API-ul WebAuthentication nu sunt eligibile pentru memoria cache înainte/înapoi."
+    "message": "Paginile care folosesc API-ul WebAuthentication nu sunt eligibile pentru memoria cache înainte-înapoi."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Paginile care folosesc API-ul WebBluetooth nu sunt eligibile pentru memoria cache înainte/înapoi."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Preluarea conținutului resursei a depășit timpul alocat"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Fila de browser s-a blocat în mod neașteptat."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Adresa URL furnizată pare să fie nevalidă."

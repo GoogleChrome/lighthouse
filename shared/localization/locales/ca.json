@@ -18,13 +18,13 @@
     "message": "Els atributs `[aria-*]` coincideixen amb les seves funcions"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Les funcions d'ARIA (`role`s) permeten que les tecnologies assistencials coneguin la funció de cada element a la pàgina web. Si els valors de `role` estan mal escrits, són valors de `role` d'ARIA inexistents o funcions abstractes, la finalitat de l'element no es comunicarà als usuaris de tecnologies assistencials. [Obtén més informació sobre les funcions d'ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Els valors assignats a `role=\"\"` no són funcions d'ARIA vàlides."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Els valors assignats a `role=\"\"` són funcions d'ARIA vàlides."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Si un element no té un nom accessible, els lectors de pantalla l'enuncien amb un nom genèric, de manera que queda inservible per als usuaris que depenen d'aquesta tecnologia. [Obtén informació sobre com pots fer que els elements de les ordres siguin més accessibles](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Els elements `button`, `link` i `menuitem` tenen noms accessibles"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Alguns atributs ARIA només es permeten en un element en determinades condicions. [Obtén més informació sobre els atributs ARIA condicionals](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Els atributs ARIA no s'utilitzen tal com s'especifica per a la funció de l'element"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Els atributs ARIA s'utilitzen tal com s'especifica per a la funció de l'element"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "És possible que la tecnologia assistencial no pugui processar correctament funcions d'ARIA obsoletes. [Obtén més informació sobre les funcions d'ARIA obsoletes](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "S'han utilitzat funcions d'ARIA obsoletes"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "No s'han utilitzat funcions d'ARIA obsoletes"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Els elements del quadre de diàleg d'ARIA que no tenen noms accessibles poden impedir que els usuaris de lectors de pantalla puguin discernir la finalitat d'aquests elements. [Obtén informació sobre com pots fer que els elements del quadre de diàleg d'ARIA siguin més accessibles](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Els elements `progressbar` d'ARIA tenen noms accessibles"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "L'ús d'atributs ARIA en funcions en què estan prohibits pot fer que no es comuniqui informació important als usuaris de tecnologies assistencials. [Obtén més informació sobre les funcions d'ARIA prohibides](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Els elements utilitzen atributs ARIA prohibits"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Els elements només utilitzen atributs ARIA permesos"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Algunes funcions d'ARIA tenen atributs obligatoris que descriuen l'estat de l'element als lectors de pantalla. [Obtén més informació sobre les funcions i els atributs obligatoris](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Precarrega la imatge de renderització de l'element més gran amb contingut"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Assegura't de redirigir tot el trànsit HTTP cap a HTTPS per activar funcions web segures per a tots els usuaris. [Obtén més informació](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "No redirigeix el trànsit HTTP cap a HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Redirigeix el trànsit HTTP cap a HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "La mètrica Redireccions introdueix retards addicionals abans de poder carregar la pàgina. [Obtén informació sobre com pots evitar les redireccions de pàgina](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1833,7 +1869,7 @@
     "message": "La navegació s'ha cancel·lat abans que la pàgina es pogués restaurar de la memòria cau endavant/enrere."
   },
   "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió a la xarxa activa ha rebut massa dades. Chrome limita la quantitat de dades que pot rebre una pàgina mentre està desada a la memòria cau."
+    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa activa ha rebut massa dades. Chrome limita la quantitat de dades que pot rebre una pàgina mentre està desada a la memòria cau."
   },
   "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
     "message": "Actualment, les pàgines que tenen un fetch() o un XHR en trànsit no són aptes per a la memòria cau endavant/enrere."
@@ -1842,7 +1878,7 @@
     "message": "La pàgina s'ha tret de la memòria cau endavant/enrere perquè una sol·licitud a la xarxa activa incloïa una redirecció."
   },
   "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió a la xarxa ha estat oberta durant massa temps. Chrome limita la quantitat de temps durant el qual una pàgina pot rebre dades mentre està desada a la memòria cau."
+    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa ha estat oberta durant massa temps. Chrome limita la quantitat de temps durant el qual una pàgina pot rebre dades mentre està desada a la memòria cau."
   },
   "core/lib/bf-cache-strings.js | noResponseHead": {
     "message": "Les pàgines que no tenen una capçalera de resposta vàlida no poden accedir a la memòria cau endavant/enrere."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "S'ha superat el temps assignat per obtenir el contingut dels recursos"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "La pestanya del navegador ha fallat de manera inesperada."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Sembla que l'URL que has proporcionat no és vàlid."

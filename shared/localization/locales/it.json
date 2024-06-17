@@ -18,13 +18,13 @@
     "message": "Gli attributi `[aria-*]` corrispondono ai rispettivi ruoli"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Gli attributi `role` ARIA consentono alle tecnologie per la disabilità di conoscere il ruolo di ogni elemento della pagina web. Se i valori `role` non vengono digitati correttamente, non sono presenti valori `role` ARIA o ruoli astratti, lo scopo dell'elemento non verrà comunicato agli utenti delle tecnologie per la disabilità. [Scopri di più sui ruoli ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "I valori assegnati a `role=\"\"` non sono ruoli ARIA validi."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "I valori assegnati a `role=\"\"` sono ruoli ARIA validi."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Quando un elemento non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Scopri come rendere più accessibili gli elementi di comando](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Gli elementi `button`, `link` e `menuitem` hanno nomi accessibili"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Alcuni attributi ARIA sono consentiti su un elemento solo in determinate condizioni. [Scopri di più sugli attributi ARIA condizionali](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Gli attributi ARIA non vengono utilizzati come specificato per il ruolo dell'elemento"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Gli attributi ARIA vengono utilizzati come specificato per il ruolo dell'elemento"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "I ruoli ARIA deprecati potrebbero non essere elaborati correttamente dalle tecnologie per la disabilità. [Scopri di più sui ruoli ARIA deprecati](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Sono stati utilizzati ruoli ARIA deprecati"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "I ruoli ARIA deprecati non sono stati utilizzati"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Gli elementi delle finestre di dialogo ARIA senza nomi accessibili potrebbero impedire agli utenti di screen reader di comprendere lo scopo di questi elementi. [Scopri come rendere più accessibili gli elementi delle finestre di dialogo ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Gli elementi ARIA `progressbar` hanno nomi accessibili"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "L'utilizzo di attributi ARIA in ruoli in cui sono vietati può impedire la comunicazione di informazioni importanti agli utenti di tecnologie per la disabilità. [Scopri di più sui ruoli ARIA vietati](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Gli elementi utilizzano attributi ARIA vietati"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Gli elementi utilizzano solo attributi ARIA consentiti"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Alcuni ruoli ARIA hanno attributi obbligatori che descrivono lo stato dell'elemento agli screen reader. [Scopri di più sui ruoli e sugli attributi richiesti](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Precarica l'immagine Largest Contentful Paint"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Assicurati di reindirizzare tutto il traffico HTTP a HTTPS per attivare funzionalità web sicure per tutti gli utenti. [Scopri di più](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Non reindirizza il traffico HTTP a HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Reindirizza il traffico HTTP a HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "I reindirizzamenti comportano ulteriori ritardi prima del caricamento della pagina. [Scopri come evitare i reindirizzamenti delle pagine](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Le pagine che utilizzano l'API Serial non possono essere memorizzate nella cache back-forward."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Le pagine che utilizzano l'API WebAuthetication non possono essere memorizzate nella cache back-forward."
+    "message": "Le pagine che utilizzano l'API WebAuthentication non possono essere memorizzate nella cache back-forward."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Le pagine che utilizzano l'API WebBluetooth non possono essere memorizzate nella cache back-forward."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Il tempo allocato per il recupero dei contenuti della risorsa è scaduto"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "La scheda del browser ha avuto un arresto anomalo."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "L'URL fornito non è valido."

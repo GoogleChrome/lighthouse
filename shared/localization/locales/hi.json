@@ -18,13 +18,13 @@
     "message": "`[aria-*]` विशेषताएं और उनकी भूमिकाएं एक-दूसरे से मेल खाती हैं"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA `role`, वेब पेज पर हर एलिमेंट का रोल जानने के लिए सहायक टेक्नोलॉजी चालू करता है. अगर `role` वैल्यू की स्पेलिंग गलत है, लेकिन मौजूदा ARIA `role` वैल्यू या ऐब्सट्रैक्ट रोल वैल्यू की स्पेलिंग सही है, तब भी सहायक टेक्नोलॉजी इस्तेमाल करने वालों को एलिमेंट के मकसद के बारे में जानकारी नहीं मिल पाएगी. [ARIA रोल के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "`role=\"\"` को असाइन की गई वैल्यू, ARIA के मान्य रोल नहीं हैं."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "`role=\"\"` को असाइन की गई वैल्यू, ARIA के मान्य रोल हैं."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "अगर किसी एलिमेंट का ऐक्सेस किया जा सकने वाला नाम नहीं है, तो स्क्रीन रीडर उस एलिमेंट को किसी सामान्य नाम से बुलाते हैं. इस वजह से, वह एलिमेंट उन उपयोगकर्ताओं के लिए किसी काम का नहीं रहता जो स्क्रीन रीडर की मदद से ही टेक्स्ट पढ़ या समझ सकते हैं. [कमांड एलिमेंट को ज़्यादा से ज़्यादा लोगों तक पहुंचाने का तरीका जानें](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`, `link`, और `menuitem` एलिमेंट के नाम ऐक्सेस किए जा सकते हैं"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "कुछ ARIA एट्रिब्यूट को एलिमेंट में सिर्फ़ कुछ शर्तों के तहत अनुमति दी जाती है. [शर्तों के तहत इस्तेमाल किए जाने वाले ARIA एट्रिब्यूट के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA एट्रिब्यूट, एलिमेंट के रोल के लिए बताए गए तरीके के हिसाब से इस्तेमाल नहीं किए गए हैं"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA एट्रिब्यूट, एलिमेंट के रोल के लिए बताए गए तरीके से इस्तेमाल किए गए हैं"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "ऐसा हो सकता है कि सहायक टेक्नोलॉजी, उन ARIA रोल को सही तरीके प्रोसेस न कर पाए जो अब काम नहीं करते. [ऐसे ARIA रोल के बारे में ज़्यादा जानें जो अब काम नहीं करते](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "ऐसे ARIA रोल इस्तेमाल किए गए हैं जो अब काम नहीं करते"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "ऐसे ARIA रोल इस्तेमाल नहीं किए गए जो अब काम नहीं करते"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "स्क्रीन रीडर का इस्तेमाल करने वाले लोगों को ऐसे ARIA डायलॉग एलिमेंट से परेशानी होती है जिन पर ऐक्सेस किए जा सकने वाले नाम नहीं होते हैं. इससे वे एलिमेंट के इस्तेमाल का मकसद नहीं समझ पाते. [ARIA डायलॉग एलिमेंट को ज़्यादा से ज़्यादा ऐक्सेस करने लायक बनाने का तरीका जानें](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` एलिमेंट के नाम ऐक्सेस किए जा सकते हैं"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "अगर ARIA एट्रिब्यूट का इस्तेमाल उन रोल में किया जाता है जिन पर पाबंदी लगी है, तो इसका यह मतलब हो सकता है कि सहायक टेक्नोलॉजी के उपयोगकर्ताओं को ज़रूरी जानकारी न दी गई है. [पाबंदी वाले ARIA रोल के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "एलिमेंट में ऐसे ARIA एट्रिब्यूट इस्तेमाल किए गए हैं जिन पर पाबंदी लगी है"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "एलिमेंट में सिर्फ़ उन ARIA एट्रिब्यूट का इस्तेमाल किया गया है जिन्हें अनुमति दी गई है"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "ARIA की कुछ भूमिकाओं में ऐसे एट्रिब्यूट की ज़रूरत होती है जो स्क्रीन रीडर को एलिमेंट की स्थिति के बारे में बताते हैं. [ज़रूरी एट्रिब्यूट और भूमिकाओं के बारे में ज़्यादा जानें](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "सबसे बड़े कॉन्टेंटफ़ुल पेंट वाली इमेज को पहले से लोड करें"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "पक्का करें कि आपने पूरे एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट किया हो. इससे आपके सभी उपयोगकर्ताओं के लिए, सुरक्षित वेब सुविधाएं चालू की जा सकेंगी. [ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "वेब पेज, एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट नहीं करता है"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "वेब पेज, एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट करता है"
+  },
   "core/audits/redirects.js | description": {
     "message": "रीडायरेक्ट की वजह से, पेज के लोड होने में लगने वाला समय और बढ़ जाता है. [पेज रीडायरेक्ट करने से बचने का तरीका जानें](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Serial API का इस्तेमाल करने वाले पेज, बैक-फ़ॉरवर्ड कैश मेमोरी की सुविधा का इस्तेमाल नहीं कर सकते."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthetication API का इस्तेमाल करने वाले पेज, बैक-फ़ॉरवर्ड कैश मेमोरी की सुविधा का इस्तेमाल नहीं कर सकते."
+    "message": "WebAuthentication API का इस्तेमाल करने वाले पेज, बैक-फ़ॉरवर्ड कैश मेमोरी की सुविधा का इस्तेमाल नहीं कर सकते."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "WebBluetooth API का इस्तेमाल करने वाले पेज, बैक-फ़ॉरवर्ड कैश मेमोरी की सुविधा का इस्तेमाल नहीं कर सकते."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "संसाधन की सामग्री लाने में दिए गए समय से ज़्यादा समय लगा"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "ब्राउज़र टैब अचानक से क्रैश हो गया है."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "आपका दिया हुआ यूआरएल गलत लगता है."

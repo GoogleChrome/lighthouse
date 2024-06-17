@@ -18,13 +18,13 @@
     "message": "Los atributos `[aria-*]` coinciden con sus funciones"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Los `role`s de ARIA permiten que las tecnologías asistenciales sepan qué función realiza cada elemento de la página web. Si los valores de los `role`s están mal escritos, no hay valores de `role`s de ARIA o los roles son abstractos, no se comunicará a los usuarios de tecnologías asistenciales qué funciones realizan dichos elementos. [Más información sobre los roles de ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Los valores asignados a `role=\"\"` no son roles de ARIA válidos."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Los valores asignados a `role=\"\"` son roles de ARIA válidos."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Si un elemento no tiene un nombre accesible, los lectores de pantalla lo leen diciendo un nombre genérico, lo que hace que el elemento no resulte útil a los usuarios que necesitan lectores de pantalla. [Consulta cómo hacer que los elementos de comando sean más accesibles](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Los elementos `button`, `link` y `menuitem` tienen nombres accesibles"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Algunos atributos de ARIA solo se permiten en un elemento si se cumplen ciertas condiciones. [Más información sobre los atributos ARIA condicionales](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Los atributos de ARIA no se usan como se especifica para la función del elemento"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Los atributos ARIA se usan como se especifica para la función del elemento"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Es posible que la tecnología asistencial no procese correctamente los roles de ARIA obsoletos. [Más información sobre los roles de ARIA obsoletos](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Se han usado roles de ARIA obsoletos"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "No se han usado roles de ARIA obsoletos"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Los elementos del cuadro de diálogo de ARIA sin nombres accesibles pueden impedir que los usuarios de lectores de pantalla distingan la finalidad de esos elementos. [Consulta cómo hacer que los elementos del cuadro de diálogo de ARIA sean más accesibles](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Los elementos `progressbar` de ARIA tienen nombres accesibles"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "El uso de atributos ARIA en funciones donde están prohibidos puede impedir que se comunique información importante a los usuarios de tecnologías asistenciales. [Más información sobre los roles de ARIA prohibidos](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Los elementos usan atributos ARIA prohibidos"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Los elementos solo usan atributos ARIA permitidos"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Algunas funciones de ARIA incluyen atributos obligatorios que describen el estado del elemento a los lectores de pantalla. [Más información sobre las funciones y los atributos obligatorios](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Precargar la imagen de renderizado del mayor elemento con contenido"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Asegúrate de redirigir todo el tráfico HTTP a HTTPS para habilitar funciones web seguras para todos los usuarios. [Más información](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "No redirige el tráfico HTTP a HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Redirige el tráfico HTTP a HTTPS"
   },
   "core/audits/redirects.js | description": {
     "message": "Las redirecciones provocan retrasos adicionales antes de que la página se pueda cargar. [Consulta cómo evitar las redirecciones de página](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Se ha superado el tiempo asignado para obtener el contenido de los recursos"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "La pestaña del navegador ha fallado inesperadamente."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "La URL que has proporcionado no es válida."

@@ -18,13 +18,13 @@
     "message": "سمات `[aria-*]` هي مطابقة لأدوارها"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "يتيح `role` ARIA للتكنولوجيا المساعِدة معرفة دور كل عنصر على صفحة الويب. إذا كانت قيَم `role` مكتوبة بشكل خاطئ أو كانت قيَم `role` ARIA غير موجودة أو كانت الأدوار مجرّدة، لن يعرف مستخدمو التكنولوجيا المساعِدة الغرض من العنصر. [مزيد من المعلومات حول أدوار ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "القيَم التي تم تخصيصها للدور `role=\"\"` ليست أدوار ARIA صالحة"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "تمثِّل القيَم التي تم تخصيصها للدور `role=\"\"` أدوار ARIA صالحة"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "عند عدم ظهور اسم أحد العناصر على واجهة المستخدم، تشير برامج قراءة الشاشة إلى هذا العنصر باستخدام اسم عام، ما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. تعرَّف على [كيفية تسهيل استخدام عناصر الأوامر](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "تتوفّر لعناصر `button` و`link` و`menuitem` أسماء يمكن الوصول إليها"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "لا يُسمح باستخدام بعض سمات ARIA مع أحد العناصر إلا في حال استيفاء شروط معيّنة. [مزيد من المعلومات حول سمات ARIA الشرطية](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "لا يتم استخدام سمات ARIA على النحو المحدَّد لدور العنصر"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "يتم استخدام سمات ARIA على النحو المحدَّد لدور العنصر"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "قد لا تتم معالجة أدوار ARIA المتوقّفة نهائيًا بشكلٍ صحيح من خلال التكنولوجيا المساعِدة. [مزيد من المعلومات حول أدوار ARIA المتوقّفة نهائيًا](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "تم استخدام أدوار ARIA المتوقّفة نهائيًا"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "لم يتم استخدام أدوار ARIA المتوقّفة نهائيًا"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "عند استخدام عناصر مربّع الحوار ARIA (dialog‏ ARIA) بدون أسماء ظاهرة على واجهة المستخدم، لن يتمكّن مستخدمو برامج قراءة الشاشة من التعرّف على الغرض من هذه العناصر. [التعرّف على كيفية إظهار عناصر مربّع الحوار ARIA (dialog‏ ARIA) على واجهة المستخدم بشكل أوضح](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "تتوفّر لعناصر ARIA `progressbar` أسماء يمكن الوصول إليها"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "قد يؤدي استخدام سمات ARIA في الأدوار التي يُحظر فيها استخدامها إلى عدم نقل معلومات مُهمّة إلى مستخدمي التكنولوجيات المساعِدة. [مزيد من المعلومات حول أدوار ARIA المحظورة](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "تستخدِم العناصر سمات ARIA المحظورة"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "تستخدِم العناصر سمات ARIA المسموح بها فقط"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "تتطلّب بعض أدوار ARIA تزويد برامج قراءة الشاشة بسمات تصف حالة العنصر. [مزيد من المعلومات حول الأدوار والسمات المطلوبة](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "التحميل المُسبَق لصورة المقياس \"سرعة عرض أكبر جزء من المحتوى على الصفحة\""
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "تأكَّد من إعادة توجيه جميع الزيارات على HTTP إلى HTTPS لتفعيل ميزات الويب الآمنة لجميع المستخدمين. [مزيد من المعلومات](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "عدم إعادة توجيه زيارات HTTP إلى HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "إعادة توجيه زيارات HTTP إلى HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "تؤدي عمليات إعادة التوجيه إلى حدوث تأخيرات إضافية قبل أن يتم تحميل الصفحة. تعرَّف على [كيفية تجنُّب عمليات إعادة توجيه الصفحة](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم Serial API."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebAuthentication API."
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" في الصفحات التي تستخدم واجهة برمجة التطبيقات WebAuthentication API."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebBluetooth API."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "تجاوز جلب محتوى المورد الوقت المخصّص"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "تعطّلت علامة تبويب المتصفّح بشكل غير متوقّع."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "يبدو أن عنوان URL الذي قدمته غير صحيح."

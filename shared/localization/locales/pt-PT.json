@@ -18,13 +18,13 @@
     "message": "Os atributos `[aria-*]` correspondem às respetivas funções"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "As funções ARIA `role`s permitem às tecnologias de assistência conhecer a função de cada elemento na página Web. Se os valores `role` não estiverem escritos corretamente, não existirem valores ARIA `role` ou existirem funções abstratas, a finalidade do elemento não é comunicada aos utilizadores de tecnologias de assistência. [Saiba mais sobre as funções ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Os valores atribuídos a `role=\"\"` não são funções ARIA válidas."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Os valores atribuídos a `role=\"\"` são funções ARIA válidas."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Quando um elemento não tem um nome acessível, os leitores de ecrã anunciam-no com um nome genérico, tornando-o inutilizável para os utilizadores que dependem de leitores de ecrã. [Saiba como tornar os elementos de comandos mais acessíveis](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Os elementos `button`, `link` e `menuitem` têm nomes acessíveis"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Alguns atributos ARIA só são permitidos num elemento em determinadas condições. [Saiba mais acerca dos atributos ARIA condicionais](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Os atributos ARIA não são usados conforme especificado para a função do elemento"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Os atributos ARIA são usados conforme especificado para a função do elemento"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "As funções ARIA descontinuadas podem não ser processadas corretamente pela tecnologia de assistência. [Saiba mais acerca das funções ARIA descontinuadas](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Foram usadas funções ARIA descontinuadas"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "As funções ARIA descontinuadas não foram usadas"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Os elementos da caixa de diálogo ARIA sem nomes acessíveis podem impedir os utilizadores de leitores de ecrã de perceberem a finalidade destes elementos. [Saiba como tornar os elementos da caixa de diálogo ARIA mais acessíveis](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Os elementos `progressbar` ARIA têm nomes acessíveis"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "A utilização de atributos ARIA em funções onde são proibidos pode significar que informações importantes não são comunicadas aos utilizadores de tecnologias de assistência. [Saiba mais sobre as funções ARIA proibidas](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Os elementos usam atributos ARIA proibidos"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Os elementos usam apenas atributos ARIA permitidos"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Algumas funções ARIA têm atributos obrigatórios que descrevem o estado do elemento para os leitores de ecrã. [Saiba mais acerca das funções e dos atributos obrigatórios](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Pré-carregue a imagem de Maior preenchimento com conteúdo"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Certifique-se de que redireciona todo o tráfego HTTP para HTTPS de modo a ativar as funcionalidades Web seguras para todos os seus utilizadores. [Saiba mais](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Não redireciona o tráfego HTTP para HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Redireciona o tráfego HTTP para HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Os redirecionamentos introduzem atrasos adicionais antes do carregamento da página. [Saiba como evitar redirecionamentos de páginas](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "As páginas que usam a API Serial não são elegíveis para a cache para a frente/para trás."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "As páginas que usam a API WebAuthetication não são elegíveis para a cache para a frente/para trás."
+    "message": "As páginas que usam a API WebAuthentication não são elegíveis para a cache para a frente/para trás."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "As páginas que usam a API WebBluetooth não são elegíveis para a cache para a frente/para trás."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "A obtenção de conteúdo de recursos excedeu o tempo atribuído."
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "O separador do navegador falhou inesperadamente."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "O URL que forneceu parece ser inválido."

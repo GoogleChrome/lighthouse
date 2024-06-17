@@ -18,13 +18,13 @@
     "message": "Atribut `[aria-*]` cocok dengan perannya"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "`role` ARIA memungkinkan teknologi pendukung mengetahui peran setiap elemen di halaman web. Jika nilai `role` salah eja, bukan nilai `role` ARIA yang sudah ada, atau peran abstrak, maka tujuan elemen tersebut tidak akan disampaikan kepada pengguna teknologi pendukung. [Pelajari lebih lanjut peran ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Nilai yang ditetapkan untuk `role=\"\"` bukan peran ARIA yang valid."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Nilai yang ditetapkan untuk `role=\"\"` adalah peran ARIA yang valid."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Jika elemen tidak memiliki label aksesibilitas, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari cara membuat elemen perintah agar lebih mudah diakses](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elemen `button`, `link`, dan `menuitem` memiliki nama yang dapat diakses"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Beberapa atribut ARIA hanya diizinkan pada elemen dalam kondisi tertentu. [Pelajari lebih lanjut atribut ARIA bersyarat](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atribut ARIA tidak digunakan sebagaimana yang ditentukan untuk peran elemen"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atribut ARIA digunakan sebagaimana yang ditentukan untuk peran elemen"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Peran ARIA yang sudah tidak digunakan lagi mungkin tidak akan diproses dengan benar oleh teknologi pendukung. [Pelajari lebih lanjut peran ARIA yang tidak digunakan lagi](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Menggunakan peran ARIA yang tidak digunakan lagi"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Tidak menggunakan peran ARIA yang tidak digunakan lagi"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Elemen \"dialog\" ARIA tanpa label aksesibilitas dapat membuat pengguna pembaca layar tidak memahami fungsi elemen ini. [Pelajari cara membuat elemen \"dialog\" ARIA yang lebih mudah diakses](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Elemen `progressbar` ARIA memiliki nama yang dapat diakses"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Menggunakan atribut ARIA dalam peran yang dilarang dapat menyebabkan informasi yang penting tidak akan disampaikan kepada pengguna teknologi pendukung. [Pelajari lebih lanjut peran ARIA yang dilarang](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elemen menggunakan atribut ARIA yang dilarang"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elemen hanya menggunakan atribut ARIA yang diizinkan"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Beberapa peran ARIA memiliki atribut wajib yang menjelaskan status elemen ke pembaca layar. [Pelajari lebih lanjut peran dan atribut yang diperlukan](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Pramuat gambar Largest Contentful Paint (LCP)"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Pastikan Anda mengalihkan semua traffic HTTP ke HTTPS untuk mengaktifkan fitur web yang aman bagi semua pengguna. [Pelajari lebih lanjut](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Tidak mengalihkan traffic HTTP ke HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Mengalihkan traffic HTTP ke HTTPS"
   },
   "core/audits/redirects.js | description": {
     "message": "Pengalihan mencakup penundaan tambahan sebelum halaman dapat dimuat. [Pelajari cara menghindari pengalihan halaman](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Pengambilan konten resource telah melampaui waktu yang dialokasikan"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Tab browser mengalami error."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "URL yang Anda berikan tampaknya tidak valid."

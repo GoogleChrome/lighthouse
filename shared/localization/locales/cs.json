@@ -18,13 +18,13 @@
     "message": "Atributy `[aria-*]` odpovídají příslušným rolím"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Atributy `role` odpovídající specifikaci ARIA poskytují asistenčním technologiím informace o roli jednotlivých prvků na webové stránce. Pokud jsou v hodnotách `role` překlepy, neodpovídají hodnotám `role` podle specifikace ARIA nebo se jedná o abstraktní role, uživatelé asistenčních technologií se nedozvědí účel prvku. [Další informace o rolích ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Hodnoty atributů `role=\"\"` nejsou platné role ARIA."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Hodnoty atributů `role=\"\"` jsou platné role ARIA."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Když prvek nemá přístupný název, čtečky obrazovek oznamují obecný název a pro jejich uživatele je pak tento prvek v podstatě nepoužitelný. [Jak zajistit, aby příkazové prvky byly přístupnější](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Prvky `button`, `link` a `menuitem` mají přístupné názvy"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Některé atributy ARIA jsou u prvků povoleny pouze za určitých podmínek. [Další informace o podmíněných atributech ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atributy ARIA nejsou použity tak, jak je uvedeno pro roli prvku"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atributy ARIA jsou použity tak, jak je uvedeno pro roli prvku"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Zastaralé role ARIA nemusí asistenční technologie zpracovat správně. [Další informace o zastaralých rolích ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Byly použity zastaralé role ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Zastaralé role ARIA nebyly použity"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Dialogové prvky ARIA bez přístupových názvů mohou uživatelům čteček obrazovky znemožňovat rozeznat účel těchto prvků. [Přečtěte si, jak dialogové prvky ARIA zpřístupnit](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Prvky ARIA `progressbar` mají přístupné názvy"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Pokud jsou atributy ARIA použity v rolích, ve kterých jsou zakázány, nemusejí se uživatelé asistenčních technologií dozvědět některé důležité informace. [Další informace o zakázaných rolích ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Prvky používají zakázané atributy ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Prvky používají pouze povolené atributy ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Některé role ARIA mají povinné atributy, které čtečkám obrazovek popisují stav prvku. [Další informace o rolích a povinných atributech](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Předběžné načtení obrázku s vykreslením největšího obsahu"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Veškerý provoz HTTP přesměrujte přes HTTPS, aby všichni vaši uživatelé měli k dispozici funkce zabezpečeného webu. [Další informace](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Nepřesměrovává provoz přes protokol HTTP na HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Přesměrovává provoz přes protokol HTTP na HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Přesměrování způsobují další prodlevy před načtením stránky. [Jak se vyhnout přesměrování stránek](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "Stránky, které používají rozhraní Serial API, nemohou využívat mezipaměť pro přechod zpět nebo vpřed."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Stránky, které používají rozhraní WebAuthetication API, nemohou využívat mezipaměť pro přechod zpět nebo vpřed."
+    "message": "Stránky, které používají rozhraní WebAuthentication API, nemohou využívat mezipaměť pro přechod zpět nebo vpřed."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Stránky, které používají rozhraní WebBluetooth API, nemohou využívat mezipaměť pro přechod zpět nebo vpřed."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Při načítání obsahu zdroje byla překročena přidělená doba"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Karta prohlížeče neočekávaně selhala."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Adresa URL, kterou jste poskytli, se zdá být neplatná."

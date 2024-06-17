@@ -18,13 +18,13 @@
     "message": "Atribúty `[aria-*]` zodpovedajú svojim rolám"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Roly ARIA `role` umožňujú asistenčným technológiám poznať rolu jednotlivých prvkov na webovej stránke. Ak sú hodnoty rol `role` napísané nesprávne, hodnoty rol ARIA `role` neexistujú alebo sú roly abstraktné, účel prvku nebude používateľom asistenčných technológií komunikovaný. [Ďalšie informácie o rolách ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Hodnoty priradené prvku `role=\"\"` nie sú platné roly ARIA."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Hodnoty priradené prvku `role=\"\"` sú platné roly ARIA."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Keď prvok nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nepoužiteľný. [Ako zlepšiť dostupnosť prvkov príkazov](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Prvky `button`, `link` a `menuitem` majú dostupné názvy"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Niektoré atribúty ARIA sú v prvku povolené iba za určitých podmienok. [Ďalšie informácie o podmienených atribútoch ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atribúty ARIA sa nepoužívajú tak, ako je to špecifikované pre rolu prvku"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atribúty ARIA sa používajú tak, ako je to špecifikované pre rolu prvku"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Asistenčná technológia nemusí správne spracovať roly ARIA s ukončenou podporou. [Ďalšie informácie o rolách ARIA s ukončenou podporou](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Boli použité roly ARIA s ukončenou podporou"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Roly ARIA s ukončenou podporou neboli použité"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Prvky ARIA dialógových okien bez dostupných názvov môžu brániť používateľom čítačiek obrazovky rozpoznať ich účel. [Ako zlepšiť dostupnosť prvkov ARIA dialógových okien](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Prvky `progressbar` ARIA majú dostupné názvy"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Používanie atribútov ARIA v rolách, kde sú zakázané, môže znamenať, že používateľom asistenčných technológií nebudú poskytované dôležité informácie. [Ďalšie informácie o zakázaných rolách ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Prvky používajú zakázané atribúty ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Prvky používajú iba povolené atribúty ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Niektoré roly ARIA majú povinné atribúty, ktoré čítačkám obrazovky opisujú stav prvku. [Ďalšie informácie o rolách a povinných atribútoch](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Prednačítajte obrázok vykreslenia najväčšieho obsahu"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Zaistite presmerovanie všetkej návštevnosti cez HTTP na HTTPS a poskytnite tak funkcie zabezpečeného webu všetkým používateľom. [Ďalšie informácie](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Nepresmerúva návštevnosť cez HTTP na HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Presmerúva návštevnosť cez HTTP na HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Presmerovania spôsobujú ďalšie oneskorenia pri načítavaní stránky. [Ako sa vyhnúť presmerovaniam stránky](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "Stránky s rozhraním Serial API nemôžu používať spätnú vyrovnávaciu pamäť."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Stránky s rozhraním WebAuthetication API nemôžu používať spätnú vyrovnávaciu pamäť."
+    "message": "Stránky s rozhraním WebAuthentication API nemôžu používať spätnú vyrovnávaciu pamäť."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Stránky s rozhraním WebBluetooth API nemôžu používať spätnú vyrovnávaciu pamäť."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Pri načítaní obsahu zdroja bol prekročený pridelený čas"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Karta prehliadača neočakávane spadla."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Poskytnutá webová adresa je zrejme neplatná."

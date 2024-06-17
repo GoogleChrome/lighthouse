@@ -18,13 +18,13 @@
     "message": "`[aria-*]` 属性は役割と一致しています"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA `role` を指定すると、支援技術でウェブページ上の各要素の役割を把握するのに役立ちます。`role` の値にスペルミスがある場合、既存の ARIA `role` の値でない場合、または抽象ロールの場合、支援技術のユーザーに要素の目的が伝わりません。[ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "`role=\"\"` に割り当てられた値は有効な ARIA ロールではありません。"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "`role=\"\"` に割り当てられた値は有効な ARIA ロールです。"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[コマンド要素にアクセスしやすくする方法の詳細](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`、`link`、`menuitem` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "一部の ARIA 属性は、特定の条件下に限り要素で使用できます。[条件付き ARIA 属性の詳細](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA 属性が要素のロールで指定されたとおりに使用されていません"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA 属性は要素のロールで指定されたとおりに使用されています"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "非推奨の ARIA ロールは、支援技術によって正しく処理されない可能性があります。[非推奨の ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "非推奨の ARIA ロールが使用されています"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "非推奨の ARIA ロールは使用されていませんでした"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA ダイアログ要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーのユーザーはこれらの要素の用途を識別できません。[ARIA ダイアログ要素をアクセスしやすくする方法の詳細](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "禁止されているロールで ARIA 属性を使用すると、支援技術のユーザーに重要な情報が伝わらない可能性があります。[禁止されている ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "禁止されている ARIA 属性が要素で使用されています"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "許可された ARIA 属性のみが要素で使用されています"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "一部の ARIA ロールには、スクリーン リーダーに要素の状態を伝える必須の属性があります。[ロールと必須属性の詳細](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Largest Contentful Paint の画像のプリロード"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "すべてのユーザーに安全なウェブ機能を提供できるように、すべての HTTP トラフィックが HTTPS にリダイレクトされることを確認してください。[詳細](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP トラフィックは HTTPS にリダイレクトされません"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTP トラフィックは HTTPS にリダイレクトされます"
   },
   "core/audits/redirects.js | description": {
     "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[ページ リダイレクトの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "リソース コンテンツの取得時間が、割り当てられた時間を超えました"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "ブラウザタブが予期せずクラッシュしました。"
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "指定した URL は無効の可能性があります。"

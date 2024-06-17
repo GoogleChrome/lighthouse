@@ -18,13 +18,13 @@
     "message": "Atributi `[aria-*]` podudaraju se sa svojim ulogama"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "`role` ARIA omogućuje asistivnim tehnologijama da znaju ulogu svakog elementa na web-stranici. Ako su vrijednosti `role` pogrešno napisane, ako se radi o nepostojećim vrijednostima `role` ARIA ili o apstraktnim ulogama, svrha elementa neće se prenijeti korisnicima asistivnih tehnologija. [Saznajte više o ulogama ARIA-e](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Vrijednosti dodijeljene polju `role=\"\"` nisu važeće uloge ARIA-e."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Vrijednosti dodijeljene polju `role=\"\"` važeće su uloge ARIA-e."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Kad element nema pristupačni naziv, čitači zaslona najavljuju ga generičkim nazivom, što ga čini neupotrebljivim za korisnike koji se oslanjaju na čitače zaslona. [Saznajte kako naredbene elemente učiniti pristupačnijima](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementi `button`, `link` i `menuitem` imaju pristupačne nazive"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Neki ARIA atributi dopušteni su u elementu samo pod određenim uvjetima. [Saznajte više o uvjetnim ARIA atributima](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA atributi ne upotrebljavaju se kako je navedeno za ulogu elementa"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA atributi upotrebljavaju se kako je navedeno za ulogu elementa"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Obustavljene uloge ARIA-e možda se ne mogu ispravno obraditi pomoću asistivne tehnologije. [Saznajte više o obustavljenim ulogama ARIA-e](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Korištene su obustavljene uloge ARIA-e"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Obustavljene uloge ARIA-e nisu korištene"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA dijaloški elementi bez pristupačnih naziva mogu spriječiti korisnike čitača zaslona da prepoznaju svrhu tih elemenata. [Saznajte kako poboljšati pristupačnost ARIA dijaloških elemenata](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA elementi `progressbar` imaju pristupačne nazive"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Upotreba ARIA atributa u ulogama u kojima su zabranjeni može značiti da se važne informacije ne prenose korisnicima asistivnih tehnologija. [Saznajte više o zabranjenim ulogama ARIA-e](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementi upotrebljavaju zabranjene ARIA atribute"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementi upotrebljavaju samo dopuštene ARIA atribute"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Neke uloge ARIA-e zahtijevaju atribute koji opisuju stanje elementa čitačima zaslona. [Saznajte više o ulogama i obveznim atributima](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Predučitavanje slike Najveće renderiranje sadržaja"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Provjerite preusmjeravate li sav HTTP promet na HTTPS kako biste omogućili sigurne web-značajke za sve korisnike [Saznajte više](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Ne preusmjerava HTTP promet na HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Preusmjerava HTTP promet na HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Preusmjeravanja uvode dodatna kašnjenja prije nego što se stranica može učitati. [Saznajte kako izbjeći preusmjeravanja stranica](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Stranice koje koriste Serial API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Stranice koje koriste WebAuthetication API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+    "message": "Stranice koje koriste WebAuthentication API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Stranice koje koriste WebBluetooth API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Dohvaćanje sadržaja resursa premašilo je dodijeljeno vrijeme"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Kartica preglednika neočekivano se srušila."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Čini se da URL koji ste naveli nije važeći."

@@ -18,13 +18,13 @@
     "message": "`[aria-*]`-attributterne stemmer overens med deres roller"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA `role`r gør det muligt for hjælpeteknologier at forstå hvert elements rolle på websiden. Hvis `role`værdierne er stavet forkert, ikke er eksisterende ARIA-`role`værdier eller abstrakte roller, kommunikeres elementets formål ikke til brugere med hjælpeteknologier. [Få flere oplysninger om ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "De værdier, der er tildelt `role=\"\"`, er ikke gyldige ARIA-roller."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "De værdier, der er tildelt `role=\"\"`, er gyldige ARIA-roller."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Hvis et element ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger om, hvordan du gør kommandoelementer mere tilgængelige](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementerne `button`, `link` og `menuitem` har tilgængelige navne"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Visse ARIA-attributter tillades kun for et element under visse betingelser. [Få flere oplysninger om betingede ARIA-attributter](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA-attributter anvendes ikke som angivet for elementets rolle"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA-attributter anvendes som angivet for elementets rolle"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Udfasede ARIA-roller kan muligvis ikke behandles korrekt af hjælpeteknologi. [Få flere oplysninger om udfasede ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Udfasede ARIA-roller blev anvendt"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Udfasede ARIA-roller blev ikke anvendt"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA-dialogbokselementer uden tilgængelighedsnavne kan forhindre brugere med skærmlæser i at forstå formålet med disse elementer. [Se, hvordan du gør ARIA-dialogboksselementer mere brugervenlige](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "\"ARIA `progressbar`\"-elementerne har tilgængelige navne"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Anvendelse af ARIA-attributter i roller, hvor de er forbudt, kan medføre, at vigtige oplysninger ikke kommunikeres til brugere af hjælpeteknologier. [Få flere oplysninger om forbudte ARIA-roller](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementer anvender forbudte ARIA-attributter"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementer anvender kun tilladte ARIA-attributter"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Nogle ARIA-roller har opnået attributter, der beskriver elementets tilstand for skærmlæsere. [Få flere oplysninger om roller og obligatoriske attributter](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Forudindlæs billedet Largest Contentful Paint"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Sørg for at omdirigere al HTTP-trafik til HTTPS, så alle dine brugere får sikre webfunktioner. [Få flere oplysninger](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Omdirigerer ikke HTTP-trafik til HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Omdirigerer HTTP-trafik til HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Omdirigeringer medfører yderligere forsinkelser, inden siden kan indlæses. [Få oplysninger om, hvordan du undgår sideomdirigeringer](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Sider, der anvender Serial API, er ikke kvalificeret til back/forward-cachen."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Sider, der anvender WebAuthentication API, er ikke kvalificeret til back/forward-cachen."
+    "message": "Sider, der anvender WebAuthentication API, er ikke kvalificeret til back/forward-cachen i øjeblikket."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Sider, der anvender WebBluetooth API, er ikke kvalificeret til back/forward-cachen."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Hentning af ressourceindhold har taget længere tid end tilladt"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Browserfanen er uventet gået ned."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Den angivne webadresse lader til at være ugyldig."

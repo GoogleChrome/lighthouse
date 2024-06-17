@@ -18,13 +18,13 @@
     "message": "`[aria-*]`-kenmerken komen overeen met hun rollen"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Met ARIA `role`len krijgen ondersteunende technologieën inzicht in de rol van elk element op de webpagina. Als de `role`-waarden verkeerd zijn gespeld, geen bestaande ARIA-`role`-waarden of abstracte rollen zijn, wordt het doel van het element niet gecommuniceerd aan gebruikers van de ondersteunende technologieën. [Meer informatie over ARIA-rollen](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Aan veel HTML-elementen kunnen alleen bepaalde ARIA-rollen worden toegewezen. Als je ARIA-rollen gebruikt waar ze niet zijn toegestaan, kan dit de toegankelijkheid van de webpagina beïnvloeden. [Meer informatie over ARIA-rollen](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "De waarden die aan `role=\"\"` zijn toegewezen, zijn geen geldige ARIA-rollen."
+    "message": "Gebruikt ARIA-rollen voor incompatibele elementen"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "De waarden die aan `role=\"\"` zijn toegewezen, zijn geldige ARIA-rollen."
+    "message": "Gebruikt ARIA-rollen alleen voor compatibele elementen"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie over hoe je opdrachtelementen toegankelijker maakt](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`- `link`- en `menuitem`-elementen hebben toegankelijke namen"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Bepaalde ARIA-kenmerken zijn alleen onder bepaalde omstandigheden toegestaan voor een element. [Meer informatie over voorwaardelijke ARIA-kenmerken](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA-kenmerken worden niet gebruikt zoals aangegeven voor de rol van het element"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA-kenmerken worden gebruikt zoals aangegeven voor de rol van het element"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Beëindigde ARIA-rollen worden misschien niet goed verwerkt door ondersteunende technologie. [Meer informatie over beëindigde ARIA-rollen](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Er worden beëindigde ARIA-rollen gebruikt"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Er worden geen beëindigde ARIA-rollen gebruikt"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA-dialoogvensterelementen zonder toegankelijke namen kunnen voorkomen dat gebruikers van schermlezers het doel van deze elementen kunnen herkennen. [Meer informatie over hoe je ARIA-dialoogelementen toegankelijker maakt](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar`-elementen hebben toegankelijke namen"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Als ARIA-kenmerken worden gebruikt in rollen waarin ze niet zijn toegestaan, kan dit betekenen dat belangrijke informatie niet wordt gecommuniceerd aan gebruikers van ondersteunende technologieën. [Meer informatie over niet-toegestane ARIA-rollen](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementen gebruiken niet-toegestane ARIA-kenmerken"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementen gebruiken alleen toegestane ARIA-kenmerken"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Sommige ARIA-rollen hebben vereiste kenmerken die de status van het element beschrijven voor schermlezers. [Meer informatie over rollen en vereiste kenmerken](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -783,7 +810,7 @@
     "message": "Vermijdt beëindigde API's"
   },
   "core/audits/dobetterweb/charset.js | description": {
-    "message": "Een declaratie voor tekencodering is vereist. Dit kan worden gedaan met een `<meta>`-tag in de eerste 1024 bytes van de html of in de HTTP-reactiekop voor het contenttype. [Meer informatie over het definiëren van de tekencodering](https://developer.chrome.com/docs/lighthouse/best-practices/charset/)"
+    "message": "Een verklaring tekencodering is vereist. Dit kan worden gedaan met een `<meta>`-tag in de eerste 1024 bytes van de html of in de HTTP-reactiekop voor het contenttype. [Meer informatie over het definiëren van de tekencodering](https://developer.chrome.com/docs/lighthouse/best-practices/charset/)"
   },
   "core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Tekensetdeclaratie ontbreekt of komt te laat in de HTML"
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Afbeelding voor Grootste weergave met content (LCP) vooraf laden"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Zorg dat je al het HTTP-verkeer omleidt naar HTTPS om beveiligde webfuncties aan te zetten voor al je gebruikers. [Meer informatie](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Hiermee wordt HTTP-verkeer niet omgeleid naar HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Hiermee wordt HTTP-verkeer omgeleid naar HTTPS"
   },
   "core/audits/redirects.js | description": {
     "message": "Omleidingen zorgen voor extra vertraging voordat de pagina kan worden geladen. [Meer informatie over hoe je pagina-omleidingen vermijdt](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
@@ -1713,7 +1749,7 @@
     "message": "Pagina's die de Serial API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Pagina's die de WebAuthetication API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+    "message": "Pagina's die de WebAuthentication API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Pagina's die de WebBluetooth API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Voor het ophalen van broncontent is de toegewezen tijd overschreden"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Browsertabblad is onverwacht gecrasht."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Het lijkt erop dat je een ongeldige URL hebt opgegeven."

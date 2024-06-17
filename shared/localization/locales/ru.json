@@ -18,13 +18,13 @@
     "message": "Атрибуты `[aria-*]` соответствуют своим ролям"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Благодаря параметрам ARIA (`role`) технологии специальных возможностей определяют роль каждого элемента на веб-странице. Если значения `role` написаны с ошибкой, содержат несуществующие роли ARIA (`role`) или абстрактные роли, то назначение элемента не будет сообщено пользователям технологий специальных возможностей. Подробнее [о ролях ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)…"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Значения, указанные для атрибута `role=\"\"`, не входят в список допустимых ролей ARIA"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Значения, указанные для атрибута `role=\"\"`, входят в список допустимых ролей ARIA"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Если у элемента нет названия, доступного программам чтения с экрана, пользователи услышат его общее название и не поймут, для чего он нужен. Подробнее о том, [как сделать элементы команд более доступными](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)…"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "У элементов `button`, `link` и `menuitem` есть названия, доступные программам чтения с экрана"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Использовать некоторые атрибуты ARIA в элементе можно только при определенных условиях. Подробнее [об условных атрибутах ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)…"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Атрибуты ARIA используются не так, как указано для роли элемента"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Атрибуты ARIA используются так, как указано для роли элемента"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Функции специальных возможностей могут некорректно обрабатывать устаревшие роли ARIA. Подробнее [об устаревших ролях ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)…"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Использовались устаревшие роли ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Устаревшие роли ARIA не использовались"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Если у элементов диалогового окна ARIA нет доступных имен, пользователи программ чтения с экрана могут не понимать назначение этих элементов. Подробнее о том, [как сделать элементы диалогового окна ARIA более доступными](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)…"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "У элементов `progressbar` ARIA есть названия, доступные программам чтения с экрана"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Если атрибуты ARIA используются в ролях, для которых они запрещены, пользователи специальных возможностей могут не получать важную информацию. Подробнее [о запрещенных ролях ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)…"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "В элементах используются запрещенные атрибуты ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "В элементах используются только разрешенные атрибуты ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "К некоторым ролям ARIA необходимо добавлять атрибуты, описывающие состояние элемента для программ чтения с экрана. Подробнее [о ролях и необходимых атрибутах](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)…"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Предзагрузите изображение для элемента \"Отрисовка самого крупного контента\""
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Убедитесь, что весь трафик перенаправляется с HTTP на HTTPS, чтобы обеспечить безопасность для всех своих пользователей. [Подробнее…](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Не перенаправляет трафик с HTTP на HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Перенаправляет трафик с HTTP на HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Переадресации могут стать причиной дополнительных задержек при загрузке страницы. Подробнее о том, [как избежать переадресаций страниц](https://developer.chrome.com/docs/lighthouse/performance/redirects/)…"
   },
@@ -1713,7 +1749,7 @@
     "message": "Страницы, которые используют Serial API, нельзя добавить в возвратный кеш."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Страницы, которые используют WebAuthetication API, нельзя добавить в возвратный кеш."
+    "message": "Страницы, которые используют WebAuthentication API, нельзя добавить в возвратный кеш."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Страницы, которые используют WebBluetooth API, нельзя добавить в возвратный кеш."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Контент загружался слишком долго. Время ожидания истекло."
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "На вкладке произошел непредвиденный сбой."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Недействительный URL."

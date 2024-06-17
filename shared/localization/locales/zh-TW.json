@@ -18,13 +18,13 @@
     "message": "`[aria-*]` 屬性與其角色相符"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "「ARIA `role`」可協助輔助技術瞭解網頁中每個元素的角色。如果「`role`」值有錯字、不是現有的「ARIA `role`」值，或者是抽象角色，系統就不會將元素的目的傳達給輔助技術的使用者。[進一步瞭解 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)。"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "指派給 `role=\"\"` 的值不是有效的 ARIA 角色。"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "指派給 `role=\"\"` 的值是有效的 ARIA 角色。"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "如果元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個元素的用途。[瞭解如何讓指令元素更容易使用](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)。"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`、`link` 和 `menuitem` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "元素的某些 ARIA 屬性只能在特定條件下使用。[進一步瞭解條件式 ARIA 屬性](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)。"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "未按照指定方式在元素角色中使用 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "已按照指定方式在元素角色中使用 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "輔助技術可能無法正確處理已淘汰的 ARIA 角色。[進一步瞭解已淘汰的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)。"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "使用已淘汰的 ARIA 角色"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "未使用已淘汰的 ARIA 角色"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "如果 ARIA 對話方塊元素缺少無障礙元素名稱，螢幕閱讀器使用者就可能無法分辨這些元素的用途。[瞭解如何讓 ARIA 對話方塊元素更易於存取](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)。"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "如果在禁止使用 ARIA 屬性的角色中使用這些屬性，可能會導致輔助技術使用者無法取得重要資訊。[進一步瞭解禁止使用的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)。"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "多項元素使用禁用的 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "元素僅使用允許的 ARIA 屬性"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器的使用者說明元素狀態。[進一步瞭解角色和必要屬性](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)。"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "預先載入最大內容繪製圖片"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "請確認所有 HTTP 流量都已重新導向到 HTTPS，讓所有使用者可以安全存取網路功能。[瞭解詳情](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)。"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "未將 HTTP 流量重新導向至 HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "將 HTTP 流量重新導向至 HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "重新導向會導致網頁進一步延遲載入。[瞭解如何避免網頁重新導向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
   },
@@ -1713,7 +1749,7 @@
     "message": "使用 Serial API 的網頁不適用往返快取。"
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "使用 WebAuthetication API 的網頁不適用往返快取。"
+    "message": "使用 WebAuthentication API 的網頁不適用往返快取。"
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "使用 WebBluetooth API 的網頁不適用往返快取。"
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "擷取資源內容的時間超出系統分配上限。"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "瀏覽器分頁意外停止運作。"
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "你所提供的網址無效。"

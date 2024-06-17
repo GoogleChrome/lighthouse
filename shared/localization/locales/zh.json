@@ -18,13 +18,13 @@
     "message": "`[aria-*]` 属性与其角色匹配"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA `role` 让辅助技术能够了解网页上每个元素的角色。如果 `role` 值拼写有误、不是现有的 ARIA `role` 值或是抽象角色，系统便不会将相应元素的用途传达给使用辅助技术的用户。[详细了解 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)。"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "向 `role=\"\"` 分配的值不是有效的 ARIA 角色。"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "向 `role=\"\"` 分配的值是有效的 ARIA 角色。"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "如果某个元素没有无障碍名称，屏幕阅读器会将它读为通用名称，这会导致依赖屏幕阅读器的用户无法使用它。[了解如何让命令元素更便于使用](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)。"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`、`link` 和 `menuitem` 元素都有可供访问的名称"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "只能在特定条件下使用元素的某些 ARIA 属性。[详细了解条件性 ARIA 属性](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)。"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "未按照指定方式在元素角色中使用 ARIA 属性"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "按照指定方式在元素角色中使用了 ARIA 属性"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "辅助技术可能无法正确处理已弃用的 ARIA 角色。[详细了解已弃用的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)。"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "使用了已弃用的 ARIA 角色"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "未使用已弃用的 ARIA 角色"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "如果 ARIA 对话框元素缺少无障碍名称，可能会妨碍屏幕阅读器用户理解这些元素的用途。[了解如何让 ARIA 对话框元素更符合无障碍需求](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)。"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` 元素都有可供访问的名称"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "在禁止使用 ARIA 属性的角色中使用 ARIA 属性可能会导致重要信息无法传达给使用辅助技术的用户。[详细了解被禁止的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)。"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "元素使用了禁止使用的 ARIA 属性"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "元素仅使用允许的 ARIA 属性"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "一些 ARIA 角色有必需属性，这些属性向屏幕阅读器描述了相应元素的状态。[详细了解角色和必需属性](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)。"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "预加载 LCP 元素所用图片"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "请务必将所有 HTTP 流量都重定向到 HTTPS，以便为所有用户启用安全的网络功能。[了解详情](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)。"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "未将 HTTP 流量重定向到 HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "将 HTTP 流量重定向到 HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "重定向会在网页可加载前引入更多延迟。[了解如何避免网页重定向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
   },
@@ -1713,7 +1749,7 @@
     "message": "使用 Serial API 的网页无法储存至往返缓存。"
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "使用 WebAuthetication API 的网页无法储存至往返缓存。"
+    "message": "使用 WebAuthentication API 的网页无法储存至往返缓存。"
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "使用 WebBluetooth API 的网页无法储存至往返缓存。"
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "提取资源内容的用时超出了分配的时间"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "浏览器标签页意外崩溃。"
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "您提供的网址似乎无效。"

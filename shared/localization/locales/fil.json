@@ -18,13 +18,13 @@
     "message": "Tumutugma ang mga attribute na `[aria-*]` sa mga tungkulin ng mga ito"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Nagbibigay-daan ang mga `role` ng ARIA para malaman ng mga pantulong na teknolohiya ang tungkulin ng bawat element sa web page. Kung ang mga value ng `role` ay mali ang pagbaybay, hindi value ng umiiral na `role` ng ARIA, o abstract na tungkulin, hindi maipagbibigay-alam ang layunin ng element sa mga user ng mga pantulong na teknolohiya. [Matuto pa tungkol sa mga tungkulin ng ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Hindi mga valid na tungkulin ng ARIA ang mga value na itinalaga sa `role=\"\"`."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Mga valid na tungkulin ng ARIA ang mga value na itinalaga sa `role=\"\"`."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Kapag walang accessible na pangalan ang isang element, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Alamin kung paano gawing mas accessible ang mga element ng command](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "May mga naa-access na pangalan ang mga element ng `button`, `link`, at `menuitem`"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Pinapayagan lang ang ilang attribute ng ARIA sa isang element sa ilalim ng ilang partikular na kundisyon. [Matuto pa tungkol sa mga kundisyonal na attribute ng ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Hindi ginagamit ang mga attribute ng ARIA gaya ng tinukoy para sa tungkulin ng element"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Ginagamit ang mga attribute ng ARIA gaya ng tinukoy para sa tungkulin ng element"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Posibleng hindi maproseso nang tama ng pantulong na teknolohiya ang mga hindi na ginagamit na tungkulin ng ARIA. [Matuto pa tungkol sa mga hindi na ginagamit na tungkulin ng ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Gumamit ng mga hindi na ginagamit na tungkulin ng ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Hindi gumamit ng mga hindi na ginagamit na tungkulin ng ARIA"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Posibleng mapigilan ng mga element ng dialog ng ARIA na walang accessible na pangalan ang mga user ng screen reader na matukoy ang layunin ng mga element na ito. [Matuto kung paano gagawing mas naa-access ang mga element ng dialog ng ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "May mga naa-access na pangalan ang mga element ng `progressbar` ng ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Kapag gumamit ng mga attribute ng ARIA sa mga tungkulin kung saan ipinagbabawal ang mga ito, puwede itong mangahulugang hindi naipaparating ang mahalagang impormasyon sa mga user ng mga pantulong na teknolohiya. [Matuto pa tungkol sa mga ipinagbabawal na tungkulin ng ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Gumagamit ang mga element ng mga ipinagbabawal na attribute ng ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Ang mga pinapahintulutang attribute ng ARIA lang ang ginagamit ng mga element"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Ang ilang tungkulin ng ARIA ay may mga kinakailangang attribute na naglalarawan sa status ng element sa mga screen reader. [Matuto pa tungkol sa mga tungkulin at kinakailangang attribute](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "I-preload ang larawan ng Largest Contentful Paint"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Tiyaking ire-redirect mo sa HTTPS ang lahat ng trapiko sa HTTP para ma-enable ang mga secure na feature sa web para sa lahat ng iyong user. [Matuto pa](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Hindi nire-redirect sa HTTPS ang trapiko sa HTTP"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Nire-redirect sa HTTPS ang trapiko sa HTTP"
   },
   "core/audits/redirects.js | description": {
     "message": "Nagpapasimula ang mga pag-redirect ng mga karagdagang pagkaantala bago ma-load ang page. [Alamin kung paano iwasan ang mga pag-redirect ng page](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Lumampas na sa nakalaang panahon ang pag-fetch ng content ng resource"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Nag-crash nang hindi inaasahan ang tab ng browser."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Mukhang invalid ang URL na ibinigay mo."

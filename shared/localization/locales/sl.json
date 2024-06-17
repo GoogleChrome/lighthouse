@@ -18,13 +18,13 @@
     "message": "Atributi `[aria-*]` se ujemajo s svojimi vlogami"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Vloge ARIA `role` podporni tehnologiji omogočajo poznavanje vlog posameznih elementov na spletni strani. Če so vrednosti vlog `role` napačno črkovane, niso obstoječe vrednosti ARIA `role` ali so abstraktne vloge, namen elementa ne bo posredovan uporabnikom podporne tehnologije. [Preberite več o vlogah ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Številnim elementom HTML je mogoče dodeliti samo nekatere vloge ARIA. Uporaba vlog ARIA, kjer niso dovoljene, lahko vpliva na dostopnost spletne strani. [Preberite več o vlogah ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Vrednosti, dodeljene vlogi `role=\"\"`, niso veljavne vloge ARIA."
+    "message": "Uporablja vloge ARIA za nezdružljive elemente"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Vrednosti, dodeljene vlogi `role=\"\"`, so veljavne vloge ARIA."
+    "message": "Uporablja vloge ARIA samo za združljive elemente"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Če element nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Preberite, kako izboljšate dostop do elementov ukaza](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementi `button`, `link` in `menuitem` imajo dostopna imena."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Nekateri atributi ARIA so za element dovoljeni samo pod določenimi pogoji. [Preberite več o pogojnih atributih ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Atributi ARIA se ne uporabljajo, kot je določeno za vlogo elementa"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Atributi ARIA se uporabljajo, kot je določeno za vlogo elementa"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Podporna tehnologija morda ne bo pravilno obdelala zastarelih vlog ARIA. [Preberite več o zastarelih vlogah ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Uporabljene so bile zastarele vloge ARIA"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Zastarele vloge ARIA niso bile uporabljene"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Elementi pogovornih oken ARIA brez imen za osebe s posebnimi potrebami lahko uporabnikom bralnikov zaslona preprečijo spoznati namen teh elementov. [Preberite, kako lahko naredite pogovorna okna ARIA dostopnejša za osebe s posebnimi potrebami](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Elementi ARIA `progressbar` imajo dostopna imena."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Če atribute ARIA uporabljate v vlogah, kjer so prepovedani, se uporabnikom podpornih tehnologij morda ne posredujejo pomembne informacije. [Preberite več o prepovedanih vlogah ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementi uporabljajo prepovedane atribute ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementi uporabljajo samo dovoljene atribute ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Nekatere vloge ARIA imajo zahtevane atribute, ki opišejo stanje elementa bralnikom zaslona. [Preberite več o vlogah in zahtevanih atributih](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1174,6 +1201,15 @@
   },
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Vnaprejšnje nalaganje slike največjega vsebinskega izrisa"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "Poskrbite za preusmeritev vsega prometa HTTP na protokol HTTPS, da zagotovite varne spletne funkcije vsem uporabnikom. [Več o tem](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Ne preusmeri prometa prek protokola HTTP na protokol HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Preusmeri promet prek protokola HTTP na protokol HTTPS"
   },
   "core/audits/redirects.js | description": {
     "message": "Preusmeritve vnašajo dodatne zakasnitve nalaganja strani. [Preberite več o preprečevanju preusmeritev strani](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Trajanje pridobivanja vsebine sredstva je preseglo dodeljeni čas"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Zavihek brskalnika se je nepričakovano zrušil."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Videti je, da ste navedli neveljaven URL."

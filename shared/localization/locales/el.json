@@ -18,13 +18,13 @@
     "message": "Τα χαρακτηριστικά `[aria-*]` αντιστοιχούν στους ρόλους τους"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "Οι `role` ARIA επιτρέπουν στις τεχνολογίες υποβοήθησης να γνωρίζουν τον ρόλο του κάθε στοιχείου στην ιστοσελίδα. Εάν οι τιμές του `role` δεν έχουν γραφτεί σωστά, δεν υπάρχουν οι υπάρχουσες τιμές `role`ARIA ή οι αφηρημένοι ρόλοι, τότε ο σκοπός του στοιχείου δεν θα κοινοποιείται στους χρήστες τεχνολογιών υποβοήθησης. [Μάθετε περισσότερα σχετικά με τους ρόλους ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Οι τιμές που έχουν εκχωρηθεί στο στοιχείο `role=\"\"` είναι έγκυροι ρόλοι ARIA."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Οι τιμές που έχουν εκχωρηθεί στο στοιχείο `role=\"\"` είναι έγκυροι ρόλοι ARIA."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Όταν ένα στοιχείο δεν έχει προσβάσιμο όνομα, οι αναγνώστες οθόνης το περιγράφουν με ένα γενικό όνομα, με αποτέλεσμα να μην μπορεί να χρησιμοποιηθεί από χρήστες που βασίζονται σε αναγνώστες οθόνης. [Μάθετε πώς μπορείτε να κάνετε πιο προσιτά τα στοιχεία εντολών](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Τα στοιχεία `button`, `link` και `menuitem` έχουν προσβάσιμα ονόματα"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Ορισμένα χαρακτηριστικά ARIA επιτρέπονται σε ένα στοιχείο μόνο υπό συγκεκριμένες συνθήκες. [Μάθετε περισσότερα σχετικά με τα χαρακτηριστικά ARIA υπό όρους](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Τα χαρακτηριστικά ARIA δεν χρησιμοποιούνται όπως καθορίζεται για τον ρόλο του στοιχείου"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Τα χαρακτηριστικά ARIA χρησιμοποιούνται όπως καθορίζεται για τον ρόλο του στοιχείου"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Οι ρόλοι ARIA που έχουν καταργηθεί ενδέχεται να μην υποβάλλονται σωστά σε επεξεργασία από την τεχνολογία υποβοήθησης. [Μάθετε περισσότερα σχετικά με τους ρόλους ARIA που έχουν καταργηθεί](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Χρησιμοποιήθηκαν ρόλοι ARIA που έχουν καταργηθεί"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Δεν χρησιμοποιήθηκαν ρόλοι ARIA που έχουν καταργηθεί"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Τα στοιχεία παραθύρου διαλόγου ARIA χωρίς προσβάσιμα ονόματα ενδέχεται να εμποδίζουν τους χρήστες του αναγνώστη οθόνης να διακρίνουν τον σκοπό αυτών των στοιχείων. [Μάθετε πώς μπορείτε να κάνετε τα στοιχεία διαλόγου ARIA πιο προσβάσιμα](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Τα στοιχεία ARIA `progressbar` έχουν προσβάσιμα ονόματα"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Η χρήση χαρακτηριστικών ARIA σε ρόλους όπου απαγορεύονται μπορεί να σημαίνει ότι δεν κοινοποιούνται σημαντικές πληροφορίες στους χρήστες τεχνολογιών υποβοήθησης. [Μάθετε περισσότερα σχετικά με τους απαγορευμένους ρόλους ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Τα στοιχεία χρησιμοποιούν απαγορευμένα χαρακτηριστικά ARIA"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Τα στοιχεία χρησιμοποιούν μόνο επιτρεπόμενα χαρακτηριστικά ARIA"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Ορισμένοι ρόλοι ARIA έχουν απαιτούμενα χαρακτηριστικά που περιγράφουν την κατάσταση του στοιχείου στους αναγνώστες οθόνης. [Μάθετε περισσότερα σχετικά με τους ρόλους και τα απαιτούμενα χαρακτηριστικά](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Προφόρτωση εικόνας Μεγαλύτερης σχεδίασης με περιεχόμενο"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Βεβαιωθείτε ότι ανακατευθύνετε όλη την επισκεψιμότητα HTTP σε HTTPS, προκειμένου να ενεργοποιήσετε ασφαλείς λειτουργίες ιστού για όλους τους χρήστες σας. [Μάθετε περισσότερα](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Δεν ανακατευθύνσει την επισκεψιμότητα HTTP σε HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Ανακατευθύνει την επισκεψιμότητα HTTP σε HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Οι ανακατευθύνσεις προκαλούν πρόσθετες καθυστερήσεις στη φόρτωση της σελίδας. [Μάθετε πώς μπορείτε να αποφύγετε τις ανακατευθύνσεις σελίδας](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Οι σελίδες που χρησιμοποιούν το Serial API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Οι σελίδες που χρησιμοποιούν το WebAuthetication API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+    "message": "Οι σελίδες που χρησιμοποιούν το WebAuthentication API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Οι σελίδες που χρησιμοποιούν το WebBluetooth API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Η λήψη περιεχομένου πόρων έχει υπερβεί τον εκχωρημένο χρόνο"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Η καρτέλα του προγράμματος περιήγησης παρουσίασε απροσδόκητο σφάλμα."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Το URL που παρείχατε φαίνεται ότι δεν είναι έγκυρο."

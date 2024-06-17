@@ -18,13 +18,13 @@
     "message": "מאפייני ה-`[aria-*]`‎ תואמים לתפקידים שלהם"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "באמצעות מאפייני `role` של ARIA מציינים לאמצעי הטכנולוגיה המסייעת את התפקיד של כל רכיב בדף האינטרנט. אם יש שגיאות איות בערכים של `role`, אם הם לא ערכי `role` קיימים של ARIA או שהתפקידים מופשטים, המשתמשים באמצעי הטכנולוגיה המסייעת לא יוכלו להבין את מטרת הרכיב. [מידע נוסף על תפקידים ב-ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "לרכיבי HTML רבים אפשר להקצות רק תפקידים מסוימים של ARIA. שימוש בתפקידי ARIA במקומות שבהם הם אסורים עלול לפגוע בנגישות של דף האינטרנט. [מידע נוסף על תפקידים ב-ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "הערכים שהוקצו לרכיב `role=\"\"` הם לא תפקידים חוקיים של ARIA."
+    "message": "נעשה שימוש בתפקידי ARIA ברכיבים לא תואמים"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "הערכים שהוקצו לרכיב `role=\"\"` הם תפקידים חוקיים של ARIA."
+    "message": "נעשה שימוש בתפקידי ARIA רק ברכיבים תואמים"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "כשאין לרכיב תווית נגישות, קוראי מסך מציינים שם גנרי, ובמצב כזה הרכיב לא שימושי לאנשים שמסתמכים על קוראי מסך. [איך לשפר את הנגישות של רכיבי פקודות](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)?"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "לרכיבים `button`, `link` וגם `menuitem` יש שמות נגישים"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "יש מאפיינים של ARIA שאפשר להשתמש בהם ברכיב רק בתנאים מסוימים. [מידע נוסף על מאפייני ARIA מותנים](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "מאפייני ARIA לא משמשים כפי שצוין לתפקיד של הרכיב"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "מאפייני ARIA משמשים כפי שצוין לתפקיד של הרכיב"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "יכול להיות שהטכנולוגיה המסייעת לא תצליח לעבד כראוי תפקידים ב-ARIA שהוצאו משימוש. [מידע נוסף על תפקידים ב-ARIA שהוצאו משימוש](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "נעשה שימוש בתפקידי ARIA שהוצאו משימוש"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "לא נעשה שימוש בתפקידי ARIA שהוצאו משימוש"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "רכיבים של תיבת דו-שיח מסוג ARIA שאין בהם תוויות נגישות עלולים למנוע ממשתמשים בקורא מסך להבין מה מטרת הרכיבים האלה. [כך משפרים את הנגישות ברכיבים של תיבת דו-שיח מסוג ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "לרכיבי `progressbar` מסוג ARIA יש שמות נגישים"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "אם משתמשים במאפייני ARIA בתפקידים שבהם הם אסורים לשימוש, יכול להיות שמידע חשוב לא יועבר למשתמשים בטכנולוגיות מסייעות. [מידע נוסף על תפקידי ARIA אסורים לשימוש](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "הרכיבים משתמשים במאפייני ARIA שאסורים לשימוש"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "ברכיבים נעשה שימוש רק במאפייני ARIA שמותרים לשימוש"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "חלק מתפקידי ה-ARIA כוללים מאפיינים נדרשים שמתארים לקוראי המסך את מצב הרכיב. [מידע נוסף על תפקידים ומאפיינים נדרשים](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -546,7 +573,7 @@
     "message": "ערך נוכחי"
   },
   "core/audits/autocomplete.js | columnSuggestions": {
-    "message": "האסימון המוצע"
+    "message": "הטוקן המוצע"
   },
   "core/audits/autocomplete.js | description": {
     "message": "בעזרת `autocomplete`, משתמשים יכולים לשלוח טפסים מהר יותר. כדי להקל על משתמשים, מומלץ להפעיל זאת על ידי הגדרת ערך חוקי למאפיין `autocomplete`. [למידע נוסף על `autocomplete` בטפסים](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
@@ -558,16 +585,16 @@
     "message": "נדרשת בדיקה ידנית"
   },
   "core/audits/autocomplete.js | reviewOrder": {
-    "message": "בדיקת סדר האסימונים"
+    "message": "בדיקת סדר הטוקנים"
   },
   "core/audits/autocomplete.js | title": {
     "message": "רכיבי `<input>` משתמשים באופן תקין במאפיין `autocomplete`"
   },
   "core/audits/autocomplete.js | warningInvalid": {
-    "message": "אסימוני `autocomplete`: האסימון \"{token}\" לא חוקי ב-{snippet}"
+    "message": "טוקנים של `autocomplete`: הטוקן \"{token}\" לא חוקי ב-{snippet}"
   },
   "core/audits/autocomplete.js | warningOrder": {
-    "message": "בדיקת סדר האסימונים: \"{tokens}\" בתוך {snippet}"
+    "message": "בדיקת סדר הטוקנים: \"{tokens}\" בתוך {snippet}"
   },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "ניתן לבצע פעולה"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "טעינה מראש של תמונת ה-Largest Contentful Paint (‏LCP)"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "חשוב לוודא שכל תנועת ה-HTTP מופנית אוטומטית ל-HTTPS כדי להפעיל תכונות אינטרנט מאובטחות לכל המשתמשים. [מידע נוסף](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "לא מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "הפניות אוטומטיות מעכבות את טעינת הדף. [איך להימנע מהפניות אוטומטיות לדפים](https://developer.chrome.com/docs/lighthouse/performance/redirects/)?"
   },
@@ -1713,7 +1749,7 @@
     "message": "דפים שנעשה בהם שימוש ב-Serial API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "דפים שנעשה בהם שימוש ב-WebAuthetication API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
+    "message": "דפים שנעשה בהם שימוש ב-WebAuthentication API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "דפים שנעשה בהם שימוש ב-WebBluetooth API לא מתאימים לשמירה במטמון לדף הקודם/הבא."
@@ -2061,7 +2097,7 @@
     "message": "ההרשאה לא תיכלל עם השימוש בסמל של התו הכללי לחיפוש (*) בהגדרות לטיפול ב-`Access-Control-Allow-Headers` של CORS."
   },
   "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "יש להשתמש במאפיין `disableRemotePlayback` כדי להשבית את שילוב ההעברה (cast) המוגדר כברירת מחדל במקום להשתמש בבורר `-internal-media-controls-overlay-cast-button`."
+    "message": "כדי להשבית את השילוב של הפעלת Cast שמוגדר כברירת מחדל, צריך להשתמש במאפיין `disableRemotePlayback`  במקום בבורר `-internal-media-controls-overlay-cast-button`."
   },
   "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
     "message": "בקשות למשאבים שכתובות ה-URL שלהן מכילות גם תווי `(n|r|t)` של רווח לבן מחוק וגם תווי 'פחות מ-' (`<`) חסומות. כדי לטעון את המשאבים האלה, יש להסיר תווי 'פחות מ-' מקודדים ושורות חדשות ממקומות כמו ערכי מאפיינים של רכיבים."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "אחזור תוכן של משאבים חרג מהזמן המוקצב"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "אחת הכרטיסיות בדפדפן קרסה באופן בלתי צפוי."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "נראה שכתובת ה-URL שסיפקת אינה חוקית."

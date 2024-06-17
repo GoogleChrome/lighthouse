@@ -18,13 +18,13 @@
     "message": "`[aria-*]` 속성이 역할과 일치함"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA `role`을 통해 보조 기술은 웹페이지에서 각 요소의 역할을 파악할 수 있습니다. `role` 값의 철자가 틀렸거나 이 값이 기존 ARIA `role` 값 또는 추상 역할이 아닌 경우 요소의 목적이 보조 기술 사용자에게 전달되지 않습니다. [ARIA 역할에 대해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "`role=\"\"`에 할당된 값은 유효한 ARIA 역할이 아닙니다"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "`role=\"\"`에 할당된 값은 유효한 ARIA 역할입니다"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "요소에 액세스 가능한 이름이 없는 경우 스크린 리더가 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 해당 요소를 사용할 수 없게 됩니다. [명령어 요소의 접근성을 높이는 방법 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "`button`, `link` 및 `menuitem` 요소에 접근성을 위한 이름이 있음"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "일부 ARIA 속성은 특정 조건에서만 요소에서 허용됩니다. [조건부 ARIA 속성에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA 속성이 요소의 역할에 지정된 대로 사용되지 않음"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA 속성이 요소의 역할에 지정된 대로 사용됨"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "지원 중단된 ARIA 역할은 보조 기술에서 올바르게 처리하지 못할 수 있습니다. [지원 중단된 ARIA 역할에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "지원 중단된 ARIA 역할이 사용됨"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "지원 중단된 ARIA 역할이 사용되지 않음"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "액세스 가능한 이름이 없는 ARIA 대화상자 요소로 인해 스크린 리더 사용자가 이러한 요소의 용도를 파악하지 못할 수 있습니다. [ARIA 대화상자 요소의 접근성을 높이는 방법 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA `progressbar` 요소에 접근성을 위한 이름이 있음"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "ARIA 속성을 사용이 금지된 역할에서 사용하면 보조 기술 사용자에게 중요한 정보가 전달되지 않을 수 있습니다. [금지된 ARIA 역할에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "요소에서 금지된 ARIA 속성을 사용함"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "요소에서 허용된 ARIA 속성만 사용함"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "일부 ARIA 역할에는 스크린 리더에 관한 요소의 상태를 설명하는 필수 속성이 있습니다. [역할 및 필수 속성에 관해 자세히 알아보기](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "콘텐츠가 포함된 최대 페인트 이미지 미리 로드"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "모든 사용자가 안전한 웹 기능을 사용할 수 있도록 모든 HTTP 트래픽을 HTTPS로 리디렉션해야 합니다. [자세히 알아보기](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP 트래픽을 HTTPS로 리디렉션하지 않음"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTP 트래픽을 HTTPS로 리디렉션함"
+  },
   "core/audits/redirects.js | description": {
     "message": "리디렉션을 사용하면 페이지가 로드되기 전 추가적인 지연이 발생합니다. [페이지 리디렉션을 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "Serial API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthetication API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+    "message": "WebAuthentication API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "WebBluetooth API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "리소스 콘텐츠 가져오기 시간이 할당된 시간을 초과했습니다"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "브라우저 탭이 예기치 않게 다운되었습니다."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "사용자가 제공한 URL이 잘못되었습니다."

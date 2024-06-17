@@ -18,13 +18,13 @@
     "message": "Các thuộc tính `[aria-*]` khớp với vai trò tương ứng"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "`role` ARIA cho phép công nghệ hỗ trợ biết vai trò của từng phần tử trên trang web. Nếu các giá trị `role` bị sai chính tả, là vai trò trừu tượng hoặc không phải giá trị ARIA `role` hiện có, thì mục đích của phần tử này sẽ không được thông báo cho người dùng công nghệ hỗ trợ. [Tìm hiểu thêm về các vai trò ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Nhiều phần tử HTML chỉ có thể được chỉ định những vai trò nhất định của ARIA. Việc sử dụng vai trò của ARIA cho các phần tử không được phép có thể ảnh hưởng đến khả năng hỗ trợ tiếp cận của trang web. [Tìm hiểu thêm về các vai trò của ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Giá trị được chỉ định cho `role=\"\"` không phải là vai trò ARIA hợp lệ."
+    "message": "Sử dụng vai trò của ARIA cho các phần tử không tương thích"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Giá trị được chỉ định cho `role=\"\"` là vai trò ARIA hợp lệ."
+    "message": "Chỉ sử dụng vai trò của ARIA cho các phần tử tương thích"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Khi một phần tử không có tên thành phần hỗ trợ tiếp cận, trình đọc màn hình sẽ gọi phần tử đó bằng một tên gọi chung, dẫn đến việc người dùng trình đọc màn hình không sử dụng được phần tử này. [Tìm hiểu cách giúp các phần tử lệnh dễ tiếp cận hơn](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Các phần tử `button`, `link` và `menuitem` có tên dễ đọc"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Một số thuộc tính ARIA chỉ có thể được sử dụng trên một phần tử trong những điều kiện nhất định. [Tìm hiểu thêm về các thuộc tính ARIA có điều kiện](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "Các thuộc tính ARIA không được dùng theo chỉ định cho vai trò của phần tử"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "Các thuộc tính ARIA được dùng theo chỉ định cho vai trò của phần tử"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Công nghệ hỗ trợ có thể sẽ không xử lý đúng cách đối với các vai trò của ARIA mà Chrome không còn hỗ trợ. [Tìm hiểu thêm về các vai trò của ARIA mà Chrome không còn hỗ trợ](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Các vai trò của ARIA mà Chrome không còn hỗ trợ đã được sử dụng"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Các vai trò của ARIA mà Chrome không còn hỗ trợ không được sử dụng"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "Các phần tử hộp thoại của ARIA không có tên thành phần hỗ trợ tiếp cận có thể khiến người dùng trình đọc màn hình không phân biệt được mục đích của các phần tử này. [Tìm hiểu cách giúp các phần tử hộp thoại của ARIA dễ tiếp cận hơn](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "Các phần tử `progressbar` của ARIA có tên dễ đọc"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "Việc sử dụng các thuộc tính ARIA ở vai trò bị cấm có thể khiến thông tin quan trọng không được truyền đạt tới những người dùng công nghệ hỗ trợ. [Tìm hiểu thêm về các vai trò bị cấm của ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Các phần tử sử dụng thuộc tính ARIA bị cấm"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Các phần tử chỉ sử dụng thuộc tính ARIA được phép"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Một số vai trò ARIA có các thuộc tính bắt buộc mô tả trạng thái của phần tử cho trình đọc màn hình. [Tìm hiểu thêm về các vai trò và thuộc tính bắt buộc](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Tải trước hình ảnh có Thời gian hiển thị nội dung lớn nhất"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Hãy nhớ chuyển hướng tất cả lưu lượng truy cập HTTP tới HTTPS để bật các tính năng web an toàn cho tất cả người dùng. [Tìm hiểu thêm](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Không chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "Các lần chuyển hướng sẽ khiến tốc độ tải trang chậm thêm. [Tìm hiểu cách tránh các lần chuyển hướng trang](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Những trang sử dụng API nối tiếp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Những trang sử dụng API WebAuthetication không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+    "message": "Những trang sử dụng WebAuthentication API không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Những trang sử dụng API WebBluetooth không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Quá trình tìm nạp nội dung tài nguyên đã vượt quá thời gian phân bổ"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Thẻ trình duyệt đã gặp sự cố bất ngờ."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "URL bạn cung cấp có vẻ không hợp lệ."

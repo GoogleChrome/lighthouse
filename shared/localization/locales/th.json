@@ -18,13 +18,13 @@
     "message": "แอตทริบิวต์ `[aria-*]` ตรงกับบทบาทของตน"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "`role` ARIA ช่วยให้เทคโนโลยีความช่วยเหลือพิเศษทราบถึงบทบาทของแต่ละองค์ประกอบในหน้าเว็บ หากค่า`role`สะกดผิด ไม่ใช่ค่า`role` ARIA ที่มีอยู่ หรือเป็นบทบาทนามธรรม ระบบก็จะไม่สื่อสารจุดประสงค์ขององค์ประกอบดังกล่าวไปยังผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ [ดูข้อมูลเพิ่มเติมเกี่ยวกับบทบาท ARIA](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)"
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "ค่าที่กำหนดให้กับ `role=\"\"` ไม่ใช่บทบาท ARIA ที่ถูกต้อง"
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "ค่าที่กําหนดให้กับ `role=\"\"` เป็นบทบาท ARIA ที่ถูกต้อง"
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "เมื่อองค์ประกอบไม่มีชื่อที่เข้าถึงได้ โปรแกรมอ่านหน้าจอจะอ่านองค์ประกอบนั้นโดยใช้ชื่อทั่วไป ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้องค์ประกอบดังกล่าวไม่ได้ [ดูวิธีทําให้องค์ประกอบคําสั่งเข้าถึงได้ง่ายขึ้น](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)"
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "องค์ประกอบ `button`, `link` และ `menuitem` มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "แอตทริบิวต์ ARIA บางรายการอนุญาตในองค์ประกอบภายใต้เงื่อนไขบางประการเท่านั้น [ดูข้อมูลเพิ่มเติมเกี่ยวกับแอตทริบิวต์ ARIA แบบมีเงื่อนไข](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ไม่ได้ใช้แอตทริบิวต์ ARIA ตามที่ระบุไว้สำหรับบทบาทขององค์ประกอบ"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ใช้แอตทริบิวต์ ARIA ตามที่ระบุสำหรับบทบาทขององค์ประกอบ"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "เทคโนโลยีความช่วยเหลือพิเศษอาจประมวลผลบทบาท ARIA ที่เลิกใช้งานแล้วอย่างไม่ถูกต้อง [ดูข้อมูลเพิ่มเติมเกี่ยวกับบทบาท ARIA ที่เลิกใช้งาน](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "มีการใช้บทบาท ARIA ที่เลิกใช้งานแล้ว"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "ไม่ได้ใช้บทบาท ARIA ที่เลิกใช้งานแล้ว"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "องค์ประกอบกล่องโต้ตอบ ARIA ที่ไม่มีชื่อที่เข้าถึงได้อาจทำให้ผู้ใช้โปรแกรมอ่านหน้าจอแยกแยะจุดประสงค์ขององค์ประกอบเหล่านี้ไม่ได้ [ดูวิธีทำให้องค์ประกอบกล่องโต้ตอบ ARIA เข้าถึงได้ง่ายขึ้น](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)"
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "องค์ประกอบ ARIA `progressbar` มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "การใช้แอตทริบิวต์ ARIA ในบทบาทที่ไม่ได้รับอนุญาตอาจหมายความว่าไม่มีการสื่อสารข้อมูลสำคัญไปยังผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ [ดูข้อมูลเพิ่มเติมเกี่ยวกับบทบาท ARIA ที่ไม่อนุญาต](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "องค์ประกอบใช้แอตทริบิวต์ ARIA ที่ไม่อนุญาต"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "องค์ประกอบใช้เฉพาะแอตทริบิวต์ ARIA ที่ได้รับอนุญาต"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "บทบาท ARIA บางบทบาทกำหนดให้มีแอตทริบิวต์ที่อธิบายสถานะขององค์ประกอบให้โปรแกรมอ่านหน้าจอทราบ [ดูข้อมูลเพิ่มเติมเกี่ยวกับบทบาทและแอตทริบิวต์ที่จำเป็น](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)"
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "โหลดรูปภาพ Largest Contentful Paint ล่วงหน้า"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "โปรดตรวจสอบว่าคุณเปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ทั้งหมดไปยัง HTTPS เพื่อเปิดใช้ฟีเจอร์เว็บที่ปลอดภัยให้กับผู้ใช้ทั้งหมด [ดูข้อมูลเพิ่มเติม](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "ไม่ได้เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
+  },
   "core/audits/redirects.js | description": {
     "message": "การเปลี่ยนเส้นทางทำให้เกิดความล่าช้ามากขึ้นก่อนที่หน้าเว็บจะโหลดได้ [ดูวิธีหลีกเลี่ยงการเปลี่ยนเส้นทางหน้าเว็บ](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
   },
@@ -1713,7 +1749,7 @@
     "message": "หน้าที่ใช้ Serial API ไม่มีสิทธิ์ใช้ฟีเจอร์ Back-Forward Cache"
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "หน้าที่ใช้ WebAuthetication API ไม่มีสิทธิ์ใช้ฟีเจอร์ Back-Forward Cache"
+    "message": "หน้าที่ใช้ WebAuthentication API ไม่มีสิทธิ์ใช้ฟีเจอร์ Back-Forward Cache"
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "หน้าที่ใช้ WebBluetooth API ไม่มีสิทธิ์ใช้ฟีเจอร์ Back-Forward Cache"
@@ -2432,6 +2468,9 @@
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "การดึงข้อมูลเนื้อหาทรัพยากรเกินเวลาที่จัดสรรไว้"
   },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "แท็บเบราว์เซอร์ขัดข้องโดยไม่คาดคิด"
+  },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "ดูเหมือนว่า URL ที่ระบุจะไม่ถูกต้อง"
   },
@@ -2442,7 +2481,7 @@
     "message": "ประเภท MIME ของหน้าเว็บคือ XHTML: Lighthouse ไม่รองรับเอกสารประเภทนี้อย่างชัดเจน"
   },
   "core/user-flow.js | defaultFlowName": {
-    "message": "การไหลเวียนของผู้ใช้ ({url})"
+    "message": "โฟลว์ผู้ใช้ ({url})"
   },
   "core/user-flow.js | defaultNavigationName": {
     "message": "รายงานการไปยังส่วนต่างๆ ({url})"

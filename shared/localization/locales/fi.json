@@ -18,13 +18,13 @@
     "message": "`[aria-*]`-määritteet vastaavat roolejaan"
   },
   "core/audits/accessibility/aria-allowed-role.js | description": {
-    "message": "ARIA-roolit (`role`) auttavat avustavia teknologioita tuntemaan jokaisen verkkosivun elementin roolin. Jos roolin (`role`) arvot on kirjoitettu väärin, ARIA-roolin (`role`) arvoja ei ole olemassa tai roolit ovat abstrakteja, elementin tarkoitusta ei kerrota avustavan teknologian käyttäjille. [Lue lisää ARIA-rooleista](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
+    "message": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-role)."
   },
   "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
-    "message": "Elementille (`role=\"\"`) määritetyt arvot eivät ole kelvollisia ARIA-rooleja."
+    "message": "Uses ARIA roles on incompatible elements"
   },
   "core/audits/accessibility/aria-allowed-role.js | title": {
-    "message": "Elementille (`role=\"\"`) määritetyt arvot ovat kelvollisia ARIA-rooleja."
+    "message": "Uses ARIA roles only on compatible elements"
   },
   "core/audits/accessibility/aria-command-name.js | description": {
     "message": "Jos elementin nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Katso, miten voit helpottaa komentoelementtien käyttöä](https://dequeuniversity.com/rules/axe/4.9/aria-command-name)."
@@ -34,6 +34,24 @@
   },
   "core/audits/accessibility/aria-command-name.js | title": {
     "message": "Elementeillä (`button`, `link` ja `menuitem`) on esteettömät nimet"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "Jotkin ARIA-määritteet sallitaan elementissä vain tietyin ehdoin. [Lue lisää ehdollisista ARIA-määritteistä](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr)."
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA-määritteitä ei käytetä elementin roolin mukaisesti"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA-määritteitä käytetään elementin roolin mukaisesti"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "Avustava teknologia ei välttämättä käsittele käytöstä poistettuja ARIA-rooleja oikein. [Lue lisää käytöstä poistetuista ARIA-rooleista](https://dequeuniversity.com/rules/axe/4.9/aria-deprecated-role)."
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "Käytöstä poistettuja ARIA-rooleja on käytetty"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "Käytöstä poistettuja ARIA-rooleja ei käytetty"
   },
   "core/audits/accessibility/aria-dialog-name.js | description": {
     "message": "ARIA-valintaikkunaelementit, joissa ei ole saavutettavia nimiä, voivat estää näytönlukuohjelmien käyttäjiä havaitsemasta elementtien tarkoituksen. [Katso, miten voit helpottaa ARIA-valintaikkunan elementtien käyttöä](https://dequeuniversity.com/rules/axe/4.9/aria-dialog-name)."
@@ -88,6 +106,15 @@
   },
   "core/audits/accessibility/aria-progressbar-name.js | title": {
     "message": "ARIA-elementeillä (`progressbar`) on esteettömät nimet"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "ARIA-määritteiden käyttäminen rooleissa, joissa ne on kielletty, voi tarkoittaa, että tärkeitä tietoja ei anneta avustavien teknologioiden käyttäjille. [Lue lisää kielletyistä ARIA-rooleista](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr)."
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "Elementeissä käytetään kiellettyjä ARIA-määritteitä"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "Elementit käyttävät vain sallittuja ARIA-määritteitä"
   },
   "core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Joillakin ARIA-rooleilla on pakollisia määritteitä, jotka kuvaavat elementin tilaa näytönlukuohjelmille. [Lue lisää rooleista ja pakollisista määritteistä](https://dequeuniversity.com/rules/axe/4.9/aria-required-attr)."
@@ -1175,6 +1202,15 @@
   "core/audits/prioritize-lcp-image.js | title": {
     "message": "Esilataa sivun latautumisajan kuva"
   },
+  "core/audits/redirects-http.js | description": {
+    "message": "Varmista, että uudelleenohjaat kaiken HTTP-liikenteen HTTPS:ään, jotta kaikki käyttäjät saavat turvalliset verkko-ominaisuudet. [Lue lisää](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "Ei uudelleenohjaa HTTP-liikennettä HTTPS:ään"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "Uudelleenohjaa HTTP-liikennettä HTTPS:ään"
+  },
   "core/audits/redirects.js | description": {
     "message": "Uudelleenohjaukset viivästyttävät sivun lataamista. [Lue, miten voit välttää sivujen uudelleenohjaukset](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
   },
@@ -1713,7 +1749,7 @@
     "message": "Serial APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthetication APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+    "message": "WebAuthentication APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "WebBluetooth APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
@@ -2431,6 +2467,9 @@
   },
   "core/lib/lh-error.js | requestContentTimeout": {
     "message": "Resurssisisällön hakeminen on ylittänyt sille varatun ajan"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "Selaimen välilehti on kaatunut yllättäen."
   },
   "core/lib/lh-error.js | urlInvalid": {
     "message": "Kirjoittamasi URL-osoite näyttää olevan virheellinen."
