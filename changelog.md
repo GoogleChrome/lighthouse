@@ -1,21 +1,23 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Hamir Mahal @hamirmahal
-angad-sethi @angad-sethi
-Junaid Ramzan @ajuni880
- <a name="12.1.0"></a>
+<a name="12.1.0"></a>
 # 12.1.0 (2024-06-18)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.0.0...v12.1.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 128](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Hamir Mahal @hamirmahal
+- angad-sethi @angad-sethi
+- Junaid Ramzan @ajuni880
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
 
+* remove first-meaningful-paint metric ([#16047](https://github.com/GoogleChrome/lighthouse/pull/16047))
 
 ## Core
 
-* remove first-meaningful-paint metric ([#16047](https://github.com/GoogleChrome/lighthouse/pull/16047))
 * move simulator creation and network analysis to lib/lantern ([#16003](https://github.com/GoogleChrome/lighthouse/pull/16003))
 * handle target crash at any point ([#15985](https://github.com/GoogleChrome/lighthouse/pull/15985))
 * aria-allowed-role: fix title and description ([#16042](https://github.com/GoogleChrome/lighthouse/pull/16042))
