@@ -1,3 +1,94 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Hamir Mahal @hamirmahal
+angad-sethi @angad-sethi
+Junaid Ramzan @ajuni880
+ <a name="12.1.0"></a>
+# 12.1.0 (2024-06-18)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.0.0...v12.1.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* remove first-meaningful-paint metric ([#16047](https://github.com/GoogleChrome/lighthouse/pull/16047))
+* move simulator creation and network analysis to lib/lantern ([#16003](https://github.com/GoogleChrome/lighthouse/pull/16003))
+* handle target crash at any point ([#15985](https://github.com/GoogleChrome/lighthouse/pull/15985))
+* aria-allowed-role: fix title and description ([#16042](https://github.com/GoogleChrome/lighthouse/pull/16042))
+* inspector-issues: add shared dictionary issue ([#15993](https://github.com/GoogleChrome/lighthouse/pull/15993))
+* lantern: refactor to DevTools modules convention ([#16071](https://github.com/GoogleChrome/lighthouse/pull/16071))
+* lantern: rename files to PascalCase ([#16068](https://github.com/GoogleChrome/lighthouse/pull/16068))
+* lantern: remove last usages of Lighthouse NetworkRequest ([#16067](https://github.com/GoogleChrome/lighthouse/pull/16067))
+* lantern: remove usage of Lighthouse constants module ([#16062](https://github.com/GoogleChrome/lighthouse/pull/16062))
+* lantern: remove all LH types ([#16061](https://github.com/GoogleChrome/lighthouse/pull/16061))
+* lantern: move tbt-util.js to lib/lantern ([#16058](https://github.com/GoogleChrome/lighthouse/pull/16058))
+* lantern: separate TraceEngine specific code ([#16051](https://github.com/GoogleChrome/lighthouse/pull/16051))
+* lantern: extract main thread events w/o TraceProcessor ([#16049](https://github.com/GoogleChrome/lighthouse/pull/16049))
+* lantern: remove usage of Lighthouse's ProcessedNavigation ([#16048](https://github.com/GoogleChrome/lighthouse/pull/16048))
+* lantern: use LCP instead of FMP for TTI simulation bounds ([#16046](https://github.com/GoogleChrome/lighthouse/pull/16046))
+* lantern: use computed artifact to create graph using trace ([#16040](https://github.com/GoogleChrome/lighthouse/pull/16040))
+* lantern: rename NetworkRequest record to rawRequest ([#16037](https://github.com/GoogleChrome/lighthouse/pull/16037))
+* lantern: resolve some differences when using trace ([#16033](https://github.com/GoogleChrome/lighthouse/pull/16033))
+* lantern: create network graph from trace (experimental) ([#16026](https://github.com/GoogleChrome/lighthouse/pull/16026))
+* network: align headers end time with send when no data received ([#16044](https://github.com/GoogleChrome/lighthouse/pull/16044))
+* network: fix time units in network quiet calc ([#16013](https://github.com/GoogleChrome/lighthouse/pull/16013))
+* test: add generatable squoosh trace ([#15997](https://github.com/GoogleChrome/lighthouse/pull/15997))
+* test: add generatable trace for paint metrics ([#15994](https://github.com/GoogleChrome/lighthouse/pull/15994))
+* test: add generatable iframe trace ([#15995](https://github.com/GoogleChrome/lighthouse/pull/15995))
+* types: add missing fields to `Result.Category` and `NodeDetails` ([#16006](https://github.com/GoogleChrome/lighthouse/pull/16006))
+
+## CLI
+
+* stop treating chrome launcher kill() as async ([#15998](https://github.com/GoogleChrome/lighthouse/pull/15998))
+
+## Deps
+
+* upgrade puppeteer to 22.11.1 ([#16070](https://github.com/GoogleChrome/lighthouse/pull/16070))
+* upgrade `chrome-launcher` to 1.1.2 ([#16069](https://github.com/GoogleChrome/lighthouse/pull/16069))
+* upgrade puppeteer to 22.10.0 ([#16054](https://github.com/GoogleChrome/lighthouse/pull/16054))
+* upgrade `third-party-web` to 0.24.3 ([#16055](https://github.com/GoogleChrome/lighthouse/pull/16055))
+* upgrade `axe-core` to 4.9.1 ([#16056](https://github.com/GoogleChrome/lighthouse/pull/16056))
+
+## I18n
+
+* import ([#16080](https://github.com/GoogleChrome/lighthouse/pull/16080))
+
+## Docs
+
+* remove await from chrome.kill() ([#15982](https://github.com/GoogleChrome/lighthouse/pull/15982))
+
+## Tests
+
+* use newer traces in network-analyzer-test.js ([#16043](https://github.com/GoogleChrome/lighthouse/pull/16043))
+* default to 0 for network trace data length ([#16041](https://github.com/GoogleChrome/lighthouse/pull/16041))
+* update remaining old traces for Lantern ([#16039](https://github.com/GoogleChrome/lighthouse/pull/16039))
+* use new trace in metrics-test for pwa ([#16025](https://github.com/GoogleChrome/lighthouse/pull/16025))
+* update many test traces, support .json.gz ([#16007](https://github.com/GoogleChrome/lighthouse/pull/16007))
+* add timeout to runSmokeTest ([#16017](https://github.com/GoogleChrome/lighthouse/pull/16017))
+* fix devtools e2e test runner ([#16018](https://github.com/GoogleChrome/lighthouse/pull/16018))
+* reduce expected value of render-blocking-requests smoke ([#16011](https://github.com/GoogleChrome/lighthouse/pull/16011))
+* update interactive test trace ([#16001](https://github.com/GoogleChrome/lighthouse/pull/16001))
+* use new button class name for devtools run script ([#15999](https://github.com/GoogleChrome/lighthouse/pull/15999))
+* ci: remove reference to deleted smoke test ([#16010](https://github.com/GoogleChrome/lighthouse/pull/16010))
+* lantern: fix some tests not running ([#16073](https://github.com/GoogleChrome/lighthouse/pull/16073))
+* lantern: refactor to DevTools test convention ([#16072](https://github.com/GoogleChrome/lighthouse/pull/16072))
+* lantern: remove usage of devtoolsLog in simulator tests ([#16065](https://github.com/GoogleChrome/lighthouse/pull/16065))
+* lantern: remove usage of computed SpeedIndex ([#16064](https://github.com/GoogleChrome/lighthouse/pull/16064))
+* lantern: remove usage of computed PageDependencyGraph ([#16063](https://github.com/GoogleChrome/lighthouse/pull/16063))
+* lantern: use TraceEngine directly in test fixtures ([#16057](https://github.com/GoogleChrome/lighthouse/pull/16057))
+* lantern: remove Speedline from Lantern unit test for now ([#16060](https://github.com/GoogleChrome/lighthouse/pull/16060))
+* lantern: remove devtools log from tests ([#16050](https://github.com/GoogleChrome/lighthouse/pull/16050))
+
+## Misc
+
+* change connectionId from string to number ([#15983](https://github.com/GoogleChrome/lighthouse/pull/15983))
+* ci: fix deprecated node usage in checkout@v3 ([#16022](https://github.com/GoogleChrome/lighthouse/pull/16022))
+* strings: fix WebAuthetication typo ([#16028](https://github.com/GoogleChrome/lighthouse/pull/16028))
+
 <a name="12.0.0"></a>
 # 12.0.0 (2024-04-22)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v11.7.1...v12.0.0)
