@@ -449,7 +449,7 @@ function saveDevtoolsLog(devtoolsLog, devtoolLogFilename, options = {}) {
 async function saveLanternDebugTraces(pathWithBasename) {
   if (!process.env.LANTERN_DEBUG) return;
 
-  for (const [label, nodeTimings] of Lantern.Simulation.Simulator.ALL_NODE_TIMINGS) {
+  for (const [label, nodeTimings] of Lantern.Simulation.Simulator.allNodeTimings) {
     if (lanternTraceSaver.simulationNamesToIgnore.includes(label)) continue;
 
     const traceFilename = `${pathWithBasename}-${label}${traceSuffix}`;

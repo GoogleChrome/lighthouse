@@ -565,7 +565,7 @@ declare module Artifacts {
     trace: Trace;
     settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: InstanceType<typeof Lantern.Simulation.Simulator>;
+    simulator?: Gatherer.Simulation.Simulator;
     URL: Artifacts['URL'];
   }
 

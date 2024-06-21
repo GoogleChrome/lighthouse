@@ -8,7 +8,6 @@
  * @fileoverview Audit a page to see if it does have resources that are blocking first paint
  */
 
-
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {BaseNode} from '../../lib/lantern/lantern.js';
@@ -19,10 +18,9 @@ import {FirstContentfulPaint} from '../../computed/metrics/first-contentful-pain
 import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 import {NavigationInsights} from '../../computed/navigation-insights.js';
 
-
-/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('../../lib/lantern/NetworkNode.js').NetworkNode<LH.Artifacts.NetworkRequest>} NetworkNode */
+/** @typedef {LH.Gatherer.Simulation.Simulator} Simulator */
+/** @typedef {LH.Gatherer.Simulation.GraphNode} Node */
+/** @typedef {LH.Gatherer.Simulation.GraphNetworkNode} NetworkNode */
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -93,7 +91,7 @@ function computeStackSpecificTiming(node, nodeTiming, Stacks) {
     // AMP will load a linked stylesheet asynchronously if it has not been loaded after 2.1 seconds:
     // https://github.com/ampproject/amphtml/blob/8e03ac2f315774070651584a7e046ff24212c9b1/src/font-stylesheet-timeout.js#L54-L59
     // Any potential savings must only include time spent on AMP stylesheet nodes before 2.1 seconds.
-    if (node.type === BaseNode.TYPES.NETWORK &&
+    if (node.type === BaseNode.types.NETWORK &&
         node.request.resourceType === NetworkRequest.TYPES.Stylesheet &&
         nodeTiming.endTime > 2100) {
       stackSpecificTiming.endTime = Math.max(nodeTiming.startTime, 2100);
@@ -225,7 +223,7 @@ class RenderBlockingResources extends Audit {
 
       // If a node can be deferred, exclude it from the new FCP graph
       const canDeferRequest = deferredIds.has(node.id);
-      if (node.type !== BaseNode.TYPES.NETWORK) return !canDeferRequest;
+      if (node.type !== BaseNode.types.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
         node.request.resourceType === NetworkRequest.TYPES.Stylesheet;

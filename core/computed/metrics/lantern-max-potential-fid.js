@@ -9,13 +9,11 @@ import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
-/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
-
 class LanternMaxPotentialFID extends Lantern.Metrics.MaxPotentialFID {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {MainResource} from './main-resource.js';
@@ -14,8 +15,8 @@ class CriticalRequestChains {
    * For now, we use network priorities as a proxy for "render-blocking"/critical-ness.
    * It's imperfect, but there is not a higher-fidelity signal available yet.
    * @see https://docs.google.com/document/d/1bCDuq9H1ih9iNjgzyAL0gpwNFiEP4TZS-YLRp_RuMlc
-   * @param {LH.Artifacts.NetworkRequest} request
-   * @param {LH.Artifacts.NetworkRequest} mainResource
+   * @param {Lantern.NetworkRequest} request
+   * @param {Lantern.NetworkRequest} mainResource
    * @return {boolean}
    */
   static isCritical(request, mainResource) {
@@ -105,7 +106,7 @@ class CriticalRequestChains {
     graph.traverse((node, traversalPath) => {
       seenNodes.add(node);
       if (node.type !== 'network') return;
-      if (!CriticalRequestChains.isCritical(node.rawRequest, mainResource)) return;
+      if (!CriticalRequestChains.isCritical(node.request, mainResource)) return;
 
       const networkPath = traversalPath
         .filter(/** @return {n is LH.Gatherer.Simulation.GraphNetworkNode} */
@@ -117,7 +118,7 @@ class CriticalRequestChains {
       if (networkPath.some(r => !CriticalRequestChains.isCritical(r, mainResource))) return;
 
       // Ignore non-network things (like data urls).
-      if (NetworkRequest.isNonNetworkRequest(node.rawRequest)) return;
+      if (NetworkRequest.isNonNetworkRequest(node.request)) return;
 
       addChain(networkPath);
     }, getNextNodes);

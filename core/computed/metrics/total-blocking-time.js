@@ -11,7 +11,7 @@ import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import {LanternTotalBlockingTime} from './lantern-total-blocking-time.js';
 import {Interactive} from './interactive.js';
 
-const {calculateSumOfBlockingTime} = Lantern.TBTUtils;
+const {calculateSumOfBlockingTime} = Lantern.Metrics.TBTUtils;
 
 /**
  * @fileoverview This audit determines Total Blocking Time.

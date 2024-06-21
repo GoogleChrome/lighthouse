@@ -43,7 +43,7 @@ async function run() {
 
   // Dump the TTI graph with simulated timings to a trace if LANTERN_DEBUG is enabled
   const pessimisticTTINodeTimings =
-    Lantern.Simulation.Simulator.ALL_NODE_TIMINGS.get('pessimisticInteractive');
+    Lantern.Simulation.Simulator.allNodeTimings.get('pessimisticInteractive');
   if (process.env.LANTERN_DEBUG && pessimisticTTINodeTimings) {
     const outputTraceFile = path.basename(tracePath).replace(/.trace.json$/, '.lantern.trace.json');
     const outputTracePath = path.join(LH_ROOT, '.tmp', outputTraceFile);

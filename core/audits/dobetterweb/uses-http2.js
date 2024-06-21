@@ -9,9 +9,6 @@
  * origin are over the http/2 protocol.
  */
 
-/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
-
 import {Audit} from '../audit.js';
 import {EntityClassification} from '../../computed/entity-classification.js';
 import UrlUtils from '../../lib/url-utils.js';
@@ -69,8 +66,8 @@ class UsesHTTP2Audit extends Audit {
    * Computes the estimated effect of all results being converted to http/2 on the provided graph.
    *
    * @param {Array<{url: string}>} results
-   * @param {Node} graph
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {{label?: string}=} options
    * @return {{savings: number, simulationBefore: LH.Gatherer.Simulation.Result, simulationAfter: LH.Gatherer.Simulation.Result}}
    */

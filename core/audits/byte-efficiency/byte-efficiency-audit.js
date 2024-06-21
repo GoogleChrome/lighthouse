@@ -14,9 +14,6 @@ import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
-/** @typedef {import('../../lib/lantern/simulation/Simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
-
 // Parameters for log-normal distribution scoring. These values were determined by fitting the
 // log-normal cumulative distribution function curve to the former method of linear interpolation
 // scoring between the control points {average = 300 ms, poor = 750 ms, zero = 5000 ms} using the
@@ -96,8 +93,8 @@ class ByteEfficiencyAudit extends Audit {
    * Computes the estimated effect of all the byte savings on the provided graph.
    *
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
-   * @param {Node} graph
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {{label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
    * @return {{savings: number, simulationBeforeChanges: LH.Gatherer.Simulation.Result, simulationAfterChanges: LH.Gatherer.Simulation.Result}}
    */
@@ -151,7 +148,7 @@ class ByteEfficiencyAudit extends Audit {
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {LH.Artifacts.MetricComputationDataInput} metricComputationInput
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}

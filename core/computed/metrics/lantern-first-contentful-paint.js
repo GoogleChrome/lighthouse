@@ -8,13 +8,11 @@ import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
-
 class LanternFirstContentfulPaint extends Lantern.Metrics.FirstContentfulPaint {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {

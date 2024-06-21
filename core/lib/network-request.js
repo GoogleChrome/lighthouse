@@ -616,7 +616,7 @@ class NetworkRequest {
   }
 
   /**
-   * @param {NetworkRequest} record
+   * @param {Pick<NetworkRequest, 'protocol'|'parsedURL'>} record
    * @return {boolean}
    */
   static isNonNetworkRequest(record) {

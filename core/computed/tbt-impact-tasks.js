@@ -12,7 +12,7 @@ import {Interactive} from './metrics/interactive.js';
 import {TotalBlockingTime} from './metrics/total-blocking-time.js';
 import {ProcessedTrace} from './processed-trace.js';
 
-const {calculateTbtImpactForEvent} = Lantern.TBTUtils;
+const {calculateTbtImpactForEvent} = Lantern.Metrics.TBTUtils;
 
 class TBTImpactTasks {
   /**

@@ -9,13 +9,11 @@ import {makeComputedArtifact} from '../computed-artifact.js';
 import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
-
 class LanternInteractive extends Lantern.Metrics.Interactive {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {

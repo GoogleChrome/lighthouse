@@ -10,13 +10,11 @@ import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 import {LanternInteractive} from './lantern-interactive.js';
 import {getComputationDataParams} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/Metric.js').Extras} Extras */
-
 class LanternTotalBlockingTime extends Lantern.Metrics.TotalBlockingTime {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {

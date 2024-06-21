@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('./lantern/BaseNode.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('./lantern/simulation/Simulator.js').CompleteNodeTiming} CompleteNodeTiming */
+/** @typedef {import('./lantern/lantern.js').Simulation.CompleteNodeTiming} CompleteNodeTiming */
 
 /**
- * @param {Map<Node, CompleteNodeTiming>} nodeTimings
+ * @param {Map<LH.Gatherer.Simulation.GraphNode, CompleteNodeTiming>} nodeTimings
  * @return {LH.Trace}
  */
 function convertNodeTimingsToTrace(nodeTimings) {

@@ -12,7 +12,7 @@ class LoadSimulator {
   /**
    * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<Lantern.Simulation.Simulator>}
+   * @return {Promise<LH.Gatherer.Simulation.Simulator>}
    */
   static async compute_(data, context) {
     const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
