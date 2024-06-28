@@ -19,7 +19,7 @@ function createNetworkNode() {
     protocol: 'http',
     parsedURL: {scheme: 'http', securityOrigin: 'https://pwa.rocks'},
   };
-  return new Lantern.NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
+  return new Lantern.Graph.NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
 }
 
 describe('Simulator artifact', () => {

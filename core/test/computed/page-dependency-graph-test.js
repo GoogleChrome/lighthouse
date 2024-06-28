@@ -22,7 +22,7 @@ describe('PageDependencyGraph computed artifact', () => {
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
       }, context);
-      assert.ok(output instanceof Lantern.BaseNode, 'did not return a graph');
+      assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
       const dependents = output.getDependents();
       const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
       assert.ok(nodeWithNestedDependents, 'did not link initiators');
