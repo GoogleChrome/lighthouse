@@ -18,10 +18,6 @@ import {FirstContentfulPaint} from '../../computed/metrics/first-contentful-pain
 import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 import {NavigationInsights} from '../../computed/navigation-insights.js';
 
-/** @typedef {LH.Gatherer.Simulation.Simulator} Simulator */
-/** @typedef {LH.Gatherer.Simulation.GraphNode} Node */
-/** @typedef {LH.Gatherer.Simulation.GraphNetworkNode} NetworkNode */
-
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
 // can be falsely flagged as blocking. Therefore, ignore stylesheets that loaded fast enough
@@ -42,10 +38,10 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
  * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
- * @return {Map<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
+ * @return {Map<string, {node: LH.Gatherer.Simulation.GraphNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
  */
 function getNodesAndTimingByRequestId(nodeTimings) {
-  /** @type {Map<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
+  /** @type {Map<string, {node: LH.Gatherer.Simulation.GraphNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
   const requestIdToNode = new Map();
 
   for (const [node, nodeTiming] of nodeTimings) {
@@ -59,8 +55,8 @@ function getNodesAndTimingByRequestId(nodeTimings) {
 
 /**
  * Adjust the timing of a node and its dependencies to account for stack specific overrides.
- * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} adjustedNodeTimings
- * @param {Node} node
+ * @param {Map<LH.Gatherer.Simulation.GraphNode, LH.Gatherer.Simulation.NodeTiming>} adjustedNodeTimings
+ * @param {LH.Gatherer.Simulation.GraphNode} node
  * @param {LH.Artifacts.DetectedStack[]} Stacks
  */
 function adjustNodeTimings(adjustedNodeTimings, node, Stacks) {
@@ -81,7 +77,7 @@ function adjustNodeTimings(adjustedNodeTimings, node, Stacks) {
  * Any stack specific timing overrides should go in this function.
  * @see https://github.com/GoogleChrome/lighthouse/issues/2832#issuecomment-591066081
  *
- * @param {Node} node
+ * @param {LH.Gatherer.Simulation.GraphNode} node
  * @param {LH.Gatherer.Simulation.NodeTiming} nodeTiming
  * @param {LH.Artifacts.DetectedStack[]} Stacks
  */
@@ -206,8 +202,8 @@ class RenderBlockingResources extends Audit {
    * devs that they should be able to get to a reasonable first paint without JS, which is not a bad
    * thing.
    *
-   * @param {Simulator} simulator
-   * @param {Node} fcpGraph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} fcpGraph
    * @param {Set<string>} deferredIds
    * @param {Map<string, number>} wastedCssBytesByUrl
    * @param {LH.Artifacts.DetectedStack[]} Stacks
