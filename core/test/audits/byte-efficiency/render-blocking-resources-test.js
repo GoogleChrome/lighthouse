@@ -12,7 +12,7 @@ import * as Lantern from '../../../lib/lantern/lantern.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const {NetworkNode, CPUNode} = Lantern;
+const {NetworkNode, CPUNode} = Lantern.Graph;
 const {Simulator} = Lantern.Simulation;
 
 const trace = readJson('../../fixtures/artifacts/render-blocking/trace.json', import.meta);
