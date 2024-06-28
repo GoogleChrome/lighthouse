@@ -15,8 +15,8 @@ class CriticalRequestChains {
    * For now, we use network priorities as a proxy for "render-blocking"/critical-ness.
    * It's imperfect, but there is not a higher-fidelity signal available yet.
    * @see https://docs.google.com/document/d/1bCDuq9H1ih9iNjgzyAL0gpwNFiEP4TZS-YLRp_RuMlc
-   * @param {Lantern.NetworkRequest} request
-   * @param {Lantern.NetworkRequest} mainResource
+   * @param {Lantern.Types.NetworkRequest} request
+   * @param {Lantern.Types.NetworkRequest} mainResource
    * @return {boolean}
    */
   static isCritical(request, mainResource) {

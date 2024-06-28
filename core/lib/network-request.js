@@ -577,7 +577,7 @@ class NetworkRequest {
 
   /**
    * @param {NetworkRequest} record
-   * @return {Lantern.NetworkRequest<NetworkRequest>}
+   * @return {Lantern.Types.NetworkRequest<NetworkRequest>}
    */
   static asLanternNetworkRequest(record) {
     // In LR, network records are missing connection timing, but we've smuggled it in via headers.

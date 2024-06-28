@@ -50,7 +50,7 @@ async function getComputationDataParamsFromTrace(data, context) {
  * @return {never}
  */
 function lanternErrorAdapter(err) {
-  if (!(err instanceof Lantern.Error)) {
+  if (!(err instanceof Lantern.Core.LanternError)) {
     throw err;
   }
 

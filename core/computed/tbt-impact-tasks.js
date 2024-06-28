@@ -134,7 +134,7 @@ class TBTImpactTasks {
     /** @type {Map<LH.Artifacts.TaskNode, {start: number, end: number, duration: number}>} */
     const topLevelTaskToEvent = new Map();
 
-    /** @type {Map<Lantern.TraceEvent, LH.Artifacts.TaskNode>} */
+    /** @type {Map<Lantern.Types.TraceEvent, LH.Artifacts.TaskNode>} */
     const traceEventToTask = new Map();
     for (const task of tasks) {
       traceEventToTask.set(task.event, task);

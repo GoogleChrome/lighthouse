@@ -10,7 +10,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {BaseNode} from '../../lib/lantern/lantern.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {UnusedCSS} from '../../computed/unused-css.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
@@ -91,7 +91,7 @@ function computeStackSpecificTiming(node, nodeTiming, Stacks) {
     // AMP will load a linked stylesheet asynchronously if it has not been loaded after 2.1 seconds:
     // https://github.com/ampproject/amphtml/blob/8e03ac2f315774070651584a7e046ff24212c9b1/src/font-stylesheet-timeout.js#L54-L59
     // Any potential savings must only include time spent on AMP stylesheet nodes before 2.1 seconds.
-    if (node.type === BaseNode.types.NETWORK &&
+    if (node.type === Lantern.Graph.BaseNode.types.NETWORK &&
         node.request.resourceType === NetworkRequest.TYPES.Stylesheet &&
         nodeTiming.endTime > 2100) {
       stackSpecificTiming.endTime = Math.max(nodeTiming.startTime, 2100);
@@ -223,7 +223,7 @@ class RenderBlockingResources extends Audit {
 
       // If a node can be deferred, exclude it from the new FCP graph
       const canDeferRequest = deferredIds.has(node.id);
-      if (node.type !== BaseNode.types.NETWORK) return !canDeferRequest;
+      if (node.type !== Lantern.Graph.BaseNode.types.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
         node.request.resourceType === NetworkRequest.TYPES.Stylesheet;

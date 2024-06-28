@@ -16,7 +16,7 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    return Lantern.Simulation.NetworkAnalyzer.analyze(records);
+    return Lantern.Core.NetworkAnalyzer.analyze(records);
   }
 }
 

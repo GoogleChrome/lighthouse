@@ -76,7 +76,7 @@ class UsesRelPreloadAudit extends Audit {
    * @return {Set<string>}
    */
   static getURLsFailedToPreload(graph) {
-    // TODO: add `fromPrefetchCache` to Lantern.NetworkRequest, then use node.request here instead of rawRequest.
+    // TODO: add `fromPrefetchCache` to Lantern.Types.NetworkRequest, then use node.request here instead of rawRequest.
     /** @type {Array<LH.Artifacts.NetworkRequest>} */
     const requests = [];
     graph.traverse(node => node.type === 'network' && requests.push(node.rawRequest));
@@ -111,8 +111,8 @@ class UsesRelPreloadAudit extends Audit {
    * Critical requests deeper than depth 2 are more likely to be a case-by-case basis such that it
    * would be a little risky to recommend blindly.
    *
-   * @param {Lantern.NetworkRequest} request
-   * @param {Lantern.NetworkRequest} mainResource
+   * @param {Lantern.Types.NetworkRequest} request
+   * @param {Lantern.Types.NetworkRequest} mainResource
    * @param {Array<LH.Gatherer.Simulation.GraphNode>} initiatorPath
    * @return {boolean}
    */

@@ -29,7 +29,7 @@ class MainResource {
     // would have evicted the first request by the time `MainDocumentRequest` (a consumer
     // of this computed artifact) attempts to fetch the contents, resulting in a protocol error.
     const mainResource =
-      Lantern.Simulation.NetworkAnalyzer.findLastDocumentForUrl(records, mainDocumentUrl);
+      Lantern.Core.NetworkAnalyzer.findLastDocumentForUrl(records, mainDocumentUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');
     }

@@ -36,7 +36,7 @@ class PageDependencyGraph {
     }
 
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
-    return Lantern.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+    return Lantern.Graph.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }
 

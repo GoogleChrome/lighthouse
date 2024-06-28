@@ -253,7 +253,7 @@ class NetworkRecorder extends RequestEventEmitter {
       return record.redirectSource;
     }
 
-    const initiatorURL = Lantern.PageDependencyGraph.getNetworkInitiators(record)[0];
+    const initiatorURL = Lantern.Graph.PageDependencyGraph.getNetworkInitiators(record)[0];
     let candidates = recordsByURL.get(initiatorURL) || [];
     // The (valid) initiator must come before the initiated request.
     candidates = candidates.filter(c => {
