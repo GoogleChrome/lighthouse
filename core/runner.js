@@ -387,7 +387,6 @@ vs
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
-          // @ts-expect-error: TODO why is this a type error now?
           const artifactError = artifacts[artifactName];
 
           log.warn('Runner', `${artifactName} gatherer, required by audit ${audit.meta.id},` +

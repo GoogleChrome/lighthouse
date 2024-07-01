@@ -113,7 +113,7 @@ class ProtocolSession extends CrdpEventEmitter {
     const timeoutMs = this.getNextProtocolTimeout();
     this._nextProtocolTimeout = undefined;
 
-    /** @type {NodeJS.Timer|undefined} */
+    /** @type {NodeJS.Timeout|undefined} */
     let timeout;
     const timeoutPromise = new Promise((resolve, reject) => {
       // Unexpected setTimeout invocation to preserve the error stack. https://github.com/GoogleChrome/lighthouse/issues/13332

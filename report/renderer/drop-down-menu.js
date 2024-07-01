@@ -168,23 +168,21 @@ export class DropDownMenu {
    * @return {HTMLElement}
    */
   _getNextSelectableNode(allNodes, startNode) {
-    const nodes = allNodes.filter(/** @return {node is HTMLElement} */ (node) => {
-      if (!(node instanceof HTMLElement)) {
-        return false;
-      }
+    const nodes = allNodes
+      .filter(node => node instanceof HTMLElement)
+      .filter(node => {
+        // 'Save as Gist' option may be disabled.
+        if (node.hasAttribute('disabled')) {
+          return false;
+        }
 
-      // 'Save as Gist' option may be disabled.
-      if (node.hasAttribute('disabled')) {
-        return false;
-      }
+        // 'Save as Gist' option may have display none.
+        if (window.getComputedStyle(node).display === 'none') {
+          return false;
+        }
 
-      // 'Save as Gist' option may have display none.
-      if (window.getComputedStyle(node).display === 'none') {
-        return false;
-      }
-
-      return true;
-    });
+        return true;
+      });
 
     let nextIndex = startNode ? (nodes.indexOf(startNode) + 1) : 0;
     if (nextIndex >= nodes.length) {

@@ -11,14 +11,3 @@
 
 // Import to augment querySelector/querySelectorAll with stricter type checking.
 import '../../types/internal/query-selector';
-
-declare global {
-  var CompressionStream: {
-    prototype: CompressionStream,
-    new (format: string): CompressionStream,
-  };
-
-  interface CompressionStream extends GenericTransformStream {
-    readonly format: string;
-  }
-}

@@ -94,18 +94,11 @@ function getLinkElementsInDOM() {
 /* c8 ignore stop */
 
 class LinkElements extends BaseGatherer {
-  constructor() {
-    super();
-    /**
-     * This needs to be in the constructor.
-     * https://github.com/GoogleChrome/lighthouse/issues/12134
-     * @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>}
-     */
-    this.meta = {
-      supportedModes: ['timespan', 'navigation'],
-      dependencies: {DevtoolsLog: DevtoolsLog.symbol},
-    };
-  }
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+  };
 
   /**
    * @param {LH.Gatherer.Context} context

@@ -8,7 +8,8 @@ const Platform = require('../Platform.js');
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SourceMap = exports.SourceMapEntry = exports.parseSourceMap = void 0;
+exports.SourceMap = exports.SourceMapEntry = void 0;
+exports.parseSourceMap = parseSourceMap;
 /*
  * Copyright (C) 2012 Google Inc. All rights reserved.
  *
@@ -58,7 +59,6 @@ function parseSourceMap(content) {
     }
     return JSON.parse(content);
 }
-exports.parseSourceMap = parseSourceMap;
 class SourceMapEntry {
     lineNumber;
     columnNumber;
@@ -470,7 +470,7 @@ exports.SourceMap = SourceMap;
         }
     }
     SourceMap.StringCharIterator = StringCharIterator;
-})(SourceMap = exports.SourceMap || (exports.SourceMap = {}));
+})(SourceMap || (exports.SourceMap = SourceMap = {}));
 
 
 module.exports = SourceMap;

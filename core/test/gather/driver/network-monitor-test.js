@@ -79,6 +79,7 @@ describe('NetworkMonitor', () => {
     ]);
 
     // Bring the starting events forward in the log.
+    /** @type {LH.Protocol.RawEventMessage[]} */
     const startEvents = log.filter(m => m.method === 'Network.requestWillBeSent');
     const restEvents = log.filter(m => !startEvents.includes(m));
     return [...startEvents, ...restEvents];

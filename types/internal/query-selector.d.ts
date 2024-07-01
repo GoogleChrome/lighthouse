@@ -23,8 +23,8 @@ type HtmlAndSvgElementTagNameMap = MergeTypes<HTMLElementTagNameMap|SVGElementTa
   [id: string]: Element;
 };
 type QuerySelectorParse<I extends string> = ParseSelectorToTagNames<I> extends infer TagNames ?
-  TagNames extends Array<string> ?
-    HtmlAndSvgElementTagNameMap[TagNames[number]] :
+  TagNames extends string ?
+    HtmlAndSvgElementTagNameMap[TagNames] :
     Element: // Fall back for queries typed-query-selector fails to parse, e.g. `'[alt], [aria-label]'`.
   never;
 

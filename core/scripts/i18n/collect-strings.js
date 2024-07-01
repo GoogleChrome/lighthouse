@@ -58,7 +58,7 @@ const ignoredPathComponents = [
 
 /**
  * Extract the description and examples (if any) from a jsDoc annotation.
- * @param {import('typescript').JSDoc|undefined} ast
+ * @param {import('typescript').JSDoc|import('typescript').JSDocTag|undefined} ast
  * @param {string} message
  * @return {{description: string, examples: Record<string, string>}}
  */
@@ -67,7 +67,7 @@ function computeDescription(ast, message) {
     throw Error(`Missing description comment for message "${message}"`);
   }
 
-  if (ast.tags) {
+  if ('tags' in ast && ast.tags) {
     // This is a complex description with description and examples.
     let description = '';
     /** @type {Record<string, string>} */
@@ -520,7 +520,6 @@ function parseUIStrings(sourceStr, liveUIStrings) {
     // Use live message to avoid having to e.g. concat strings broken into parts.
     const message = (liveUIStrings[key]);
 
-    // @ts-expect-error - Not part of the public tsc interface yet.
     const jsDocComments = tsc.getJSDocCommentsAndTags(property);
     const {description, examples} = computeDescription(jsDocComments[0], message);
 

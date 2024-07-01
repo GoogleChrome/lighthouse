@@ -109,8 +109,7 @@ class CriticalRequestChains {
       if (!CriticalRequestChains.isCritical(node.request, mainResource)) return;
 
       const networkPath = traversalPath
-        .filter(/** @return {n is LH.Gatherer.Simulation.GraphNetworkNode} */
-          n => n.type === 'network')
+        .filter(n => n.type === 'network')
         .reverse()
         .map(node => node.rawRequest);
 

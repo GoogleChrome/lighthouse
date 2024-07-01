@@ -8,12 +8,6 @@ declare global {
   var isDevtools: boolean | undefined;
   var isLightrider: boolean | undefined;
 
-  // Augment Intl to include
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales
-  namespace Intl {
-    var getCanonicalLocales: (locales?: string | Array<string>) => Array<string>;
-  }
-
   // Some functions defined in node are stringified and run in the browser.
   // Ensure those functions are working with the correct browser environment.
   interface Window {

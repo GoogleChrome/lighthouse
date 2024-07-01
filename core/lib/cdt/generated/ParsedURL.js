@@ -32,7 +32,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParsedURL = exports.normalizePath = void 0;
+exports.ParsedURL = void 0;
+exports.normalizePath = normalizePath;
 ;
 /**
  * http://tools.ietf.org/html/rfc3986#section-5.2.4
@@ -67,7 +68,6 @@ function normalizePath(path) {
     }
     return normalizedPath;
 }
-exports.normalizePath = normalizePath;
 class ParsedURL {
     isValid;
     url;

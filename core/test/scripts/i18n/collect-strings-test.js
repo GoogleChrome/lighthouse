@@ -293,7 +293,7 @@ describe('parseUIStrings', () => {
        */
       exampleString: 'Hello World {variable}',
       /**
-       * A description without an @tag and
+       * A description without an tag and
        * across multiple lines.
        */
       exampleString2: 'Just a plain string',
@@ -317,7 +317,7 @@ describe('parseUIStrings', () => {
       },
       exampleString2: {
         message: 'Just a plain string',
-        description: 'A description without an @tag and across multiple lines.',
+        description: 'A description without an tag and across multiple lines.',
         examples: {},
       },
       exampleString3: {
