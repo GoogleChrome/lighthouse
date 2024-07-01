@@ -32,6 +32,12 @@ const UIStrings = {
     =1 {Unsupported CSS Property: {properties}}
     other {Unsupported CSS Properties: {properties}}
   }`,
+  /**
+   * @description Descriptive reason for why a user-provided animation failed to be optimized by the browser due to the animated custom CSS property not being supported on the compositor. Shown in a table with a list of other potential failure reasons.
+   * @example {--my-custom-property} properties
+   * */
+  unsupportedCustomCSSProperty: 'Custom CSS properties cannot be animated on the compositor: ' +
+  '{properties}',
   /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `transform` property being dependent on the size of the element itself. Shown in a table with a list of other potential failure reasons.  */
   transformDependsBoxSize: 'Transform-related property depends on box size',
   /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `filter` property possibly moving pixels. Shown in a table with a list of other potential failure reasons.  */
@@ -55,6 +61,10 @@ const ACTIONABLE_FAILURE_REASONS = [
   {
     flag: 1 << 13,
     text: UIStrings.unsupportedCSSProperty,
+  },
+  {
+    flag: 1 << 13,
+    text: UIStrings.unsupportedCustomCSSProperty,
   },
   {
     flag: 1 << 11,
@@ -91,9 +101,18 @@ function getActionableFailureReasons(failureCode, unsupportedProperties) {
     .filter(reason => failureCode & reason.flag)
     .map(reason => {
       if (reason.text === UIStrings.unsupportedCSSProperty) {
+        const nonCustomUnSupportedProperties = unsupportedProperties
+        .filter(property => !property.startsWith('--'));
         return str_(reason.text, {
-          propertyCount: unsupportedProperties.length,
-          properties: unsupportedProperties.join(', '),
+          propertyCount: nonCustomUnSupportedProperties.length,
+          properties: nonCustomUnSupportedProperties.join(', '),
+        });
+      }
+      if (reason.text === UIStrings.unsupportedCustomCSSProperty) {
+        const customUnsupportedProperties = unsupportedProperties
+        .filter(property => property.startsWith('--'));
+        return str_(UIStrings.unsupportedCustomCSSProperty, {
+          properties: customUnsupportedProperties.join(', '),
         });
       }
       return str_(reason.text);
