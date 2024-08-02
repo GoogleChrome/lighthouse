@@ -338,8 +338,6 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[PageVitals](https://pagevitals.com)** - PageVitals combines Lighthouse, CrUX and field testing to monitor the performance of websites. See how your website performs over time and get alerted if it gets too slow. Drill down and find the real cause of any performance issue. PageVitals is a paid product with a free 14-day trial.
 
-* **[Alertdesk](https://www.alertdesk.com/)** - Alertdesk is based on Lighthouse and helps you to keep track of your site’s quality & performance. Run daily quality & performance tests from both Mobile and Desktop and dive into the powerful & intuitive reports. You can also monitor your uptime (every minute - 24/7) & domain health. Alertdesk is a paid product with a free 14-day trial.
-
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
 * **[Siteimprove Performance](https://siteimprove.com/en/performance/)** — Siteimprove Performance is a web Performance monitoring solution that enables a marketer, manager or decision maker to understand and optimize website load times. Get easy-to-use insights with a focus on quick and impactful wins. Siteimprove Performance is a paid product with a free 14-day trial.

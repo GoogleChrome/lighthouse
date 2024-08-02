@@ -60,63 +60,32 @@ class Stylesheets extends BaseGatherer {
 
   /**
    * @param {LH.Gatherer.Context} context
-   */
-  async startInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    this._session = session;
-
-    // Calling `CSS.enable` will emit events for stylesheets currently on the page.
-    // We want to ignore these events in navigation mode because they are not relevant to the
-    // navigation that is about to happen. Adding the event listener *after* calling `CSS.enable`
-    // ensures that the events for pre-existing stylesheets are ignored.
-    const isNavigation = context.gatherMode === 'navigation';
-    if (!isNavigation) {
-      session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
-    }
-
-    await session.sendCommand('DOM.enable');
-    await session.sendCommand('CSS.enable');
-
-    if (isNavigation) {
-      session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
-    }
-  }
-
-
-  /**
-   * @param {LH.Gatherer.Context} context
-   */
-  async stopInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
-
-    // Ensure we finish fetching all stylesheet contents before disabling the CSS domain
-    await Promise.all(this._sheetPromises.values());
-
-    await session.sendCommand('CSS.disable');
-    await session.sendCommand('DOM.disable');
-  }
-
-  /**
-   * @param {LH.Gatherer.Context} context
    * @return {Promise<LH.Artifacts['Stylesheets']>}
    */
   async getArtifact(context) {
     const executionContext = context.driver.executionContext;
+    const session = context.driver.defaultSession;
+    this._session = session;
 
-    if (context.gatherMode === 'snapshot') {
-      await this.startInstrumentation(context);
+    session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
 
-      // Force style to recompute.
-      // Doesn't appear to be necessary in newer versions of Chrome.
-      await executionContext.evaluateAsync('getComputedStyle(document.body)');
+    await session.sendCommand('DOM.enable');
+    await session.sendCommand('CSS.enable');
 
-      await this.stopInstrumentation(context);
-    }
+    // Force style to recompute.
+    // Doesn't appear to be necessary in newer versions of Chrome.
+    await executionContext.evaluateAsync('getComputedStyle(document.body)');
+
+    session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
+
+    // Ensure we finish fetching all stylesheet contents before disabling the CSS domain
+    const sheets = await Promise.all(this._sheetPromises.values());
+
+    await session.sendCommand('CSS.disable');
+    await session.sendCommand('DOM.disable');
 
     /** @type {Map<string, LH.Artifacts.CSSStyleSheetInfo>} */
     const dedupedStylesheets = new Map();
-    const sheets = await Promise.all(this._sheetPromises.values());
 
     for (const sheet of sheets) {
       // Erroneous sheets will be reported via sentry and the log.

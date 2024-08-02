@@ -72,12 +72,8 @@ describe('Navigation', function() {
     await navigateToLighthouseTab('lighthouse/hello.html');
     await registerServiceWorker();
 
-    await selectCategories([
-      'performance',
-      'accessibility',
-      'best-practices',
-      'seo',
-    ]);
+    await waitFor('.lighthouse-start-view');
+    // We don't call selectCategories explicitly, but it's implied we leave all the checkboxes checked
 
     let numNavigations = 0;
     const {target} = getBrowserAndPages();
@@ -88,6 +84,10 @@ describe('Navigation', function() {
     await clickStartButton();
 
     const {lhr, artifacts, reportEl} = await waitForResult();
+
+    const receivedCategories = Array.from(Object.keys(lhr.categories)).sort();
+    const sentCategories = Array.from(lhr.configSettings.onlyCategories).sort();
+    assert.deepStrictEqual(receivedCategories, sentCategories);
 
     // 1 initial about:blank jump
     // 1 navigation for the actual page load

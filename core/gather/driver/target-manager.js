@@ -188,7 +188,7 @@ class TargetManager extends ProtocolEventEmitter {
    * @param {LH.Crdp.Runtime.ExecutionContextCreatedEvent} event
    */
   _onExecutionContextCreated(event) {
-    if (event.context.name === '__puppeteer_utility_world__') return;
+    if (event.context.name.match(/^__puppeteer_utility_world__/)) return;
     if (event.context.name === 'lighthouse_isolated_context') return;
 
     this._executionContextIdToDescriptions.set(event.context.uniqueId, event.context);
