@@ -87,9 +87,12 @@ class TBTImpactTasks {
 
       tbtImpactTasks.push({
         ...task,
-        tbtImpact,
-        selfTbtImpact,
-        selfBlockingTime,
+        // Floating point numbers are not perfectly precise, so the subtraction operations above
+        // can sometimes output negative numbers close to 0 here. To prevent potentially confusing
+        // output we should bump those values to 0.
+        tbtImpact: Math.max(tbtImpact, 0),
+        selfTbtImpact: Math.max(selfTbtImpact, 0),
+        selfBlockingTime: Math.max(selfBlockingTime, 0),
       });
     }
 

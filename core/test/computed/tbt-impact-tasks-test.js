@@ -248,8 +248,7 @@ describe('TBTImpactTasks', () => {
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
-      // Should be >= 0 but provide some wiggle room for double precision
-      expect(tasks.every(t => t.selfTbtImpact >= -0.00001)).toBeTruthy();
+      expect(tasks.every(t => t.selfTbtImpact >= 0)).toBeTruthy();
 
       const tasksImpactingTbt = tasks.filter(t => t.tbtImpact);
       expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`7374`);
@@ -299,8 +298,7 @@ describe('TBTImpactTasks', () => {
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
 
-      // Should be >= 0 but provide some wiggle room for double precision
-      expect(tasks.every(t => t.selfTbtImpact >= -0.00001)).toBeTruthy();
+      expect(tasks.every(t => t.selfTbtImpact >= 0)).toBeTruthy();
 
       const tasksImpactingTbt = tasks.filter(t => t.tbtImpact);
       expect(tasksImpactingTbt.length).toMatchInlineSnapshot(`1722`);
