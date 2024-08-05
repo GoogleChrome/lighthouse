@@ -17,8 +17,11 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    return this.compute(await getComputationDataParams(data, context), extras)
-      .catch(lanternErrorAdapter);
+    try {
+      return this.compute(await getComputationDataParams(data, context), extras);
+    } catch (err) {
+      lanternErrorAdapter(err);
+    }
   }
 
   /**
