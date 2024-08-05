@@ -19,13 +19,44 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(traceEvents) {
-    const processor = TraceEngine.TraceProcessor.createWithAllHandlers();
+    const processor = new TraceEngine.TraceProcessor({
+      Animations: TraceEngine.TraceHandlers.Animations,
+      AuctionWorklets: TraceEngine.TraceHandlers.AuctionWorklets,
+      EnhancedTraces: TraceEngine.TraceHandlers.EnhancedTraces,
+      ExtensionTraceData: TraceEngine.TraceHandlers.ExtensionTraceData,
+      Frames: TraceEngine.TraceHandlers.Frames,
+      GPU: TraceEngine.TraceHandlers.GPU,
+      ImagePainting: TraceEngine.TraceHandlers.ImagePainting,
+      Initiators: TraceEngine.TraceHandlers.Initiators,
+      // TODO: Re-enable this when memory handling is improved in the trace engine
+      // https://github.com/GoogleChrome/lighthouse/issues/16111
+      // Invalidations: TraceEngine.TraceHandlers.Invalidations,
+      LargestImagePaint: TraceEngine.TraceHandlers.LargestImagePaint,
+      LargestTextPaint: TraceEngine.TraceHandlers.LargestTextPaint,
+      LayerTree: TraceEngine.TraceHandlers.LayerTree,
+      LayoutShifts: TraceEngine.TraceHandlers.LayoutShifts,
+      Memory: TraceEngine.TraceHandlers.Memory,
+      Meta: TraceEngine.TraceHandlers.Meta,
+      NetworkRequests: TraceEngine.TraceHandlers.NetworkRequests,
+      PageFrames: TraceEngine.TraceHandlers.PageFrames,
+      PageLoadMetrics: TraceEngine.TraceHandlers.PageLoadMetrics,
+      Renderer: TraceEngine.TraceHandlers.Renderer,
+      Samples: TraceEngine.TraceHandlers.Samples,
+      Screenshots: TraceEngine.TraceHandlers.Screenshots,
+      SelectorStats: TraceEngine.TraceHandlers.SelectorStats,
+      UserInteractions: TraceEngine.TraceHandlers.UserInteractions,
+      UserTimings: TraceEngine.TraceHandlers.UserTimings,
+      Warnings: TraceEngine.TraceHandlers.Warnings,
+      Workers: TraceEngine.TraceHandlers.Workers,
+    });
     // eslint-disable-next-line max-len
     await processor.parse(/** @type {import('@paulirish/trace_engine').Types.TraceEvents.TraceEventData[]} */ (
       traceEvents
     ));
     if (!processor.traceParsedData) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
+    // @ts-expect-error Invalidations handler is temporarily disabled
+    // It's not currently used anywhere in trace engine insights or Lighthouse.
     return {data: processor.traceParsedData, insights: processor.insights};
   }
 
