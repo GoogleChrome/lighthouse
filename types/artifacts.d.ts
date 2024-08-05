@@ -511,7 +511,7 @@ declare module Artifacts {
 
   interface TraceEngineResult {
     data: TraceEngine.Handlers.Types.TraceParseData;
-    insights: TraceEngine.Insights.Types.TraceInsightData;
+    insights: TraceEngine.Insights.Types.TraceInsightData<typeof TraceEngine.Handlers.ModelHandlers>;
   }
 
   interface TraceEngineRootCauses {

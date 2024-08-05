@@ -18,11 +18,8 @@ class LanternSpeedIndex extends Lantern.Metrics.SpeedIndex {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    try {
-      return this.compute(await getComputationDataParams(data, context), extras);
-    } catch (err) {
-      lanternErrorAdapter(err);
-    }
+    return this.compute(await getComputationDataParams(data, context), extras)
+      .catch(lanternErrorAdapter);
   }
 
   /**
