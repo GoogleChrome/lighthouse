@@ -19,7 +19,7 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(traceEvents) {
-    const traceHandlers = TraceEngine.TraceHandlers;
+    const traceHandlers = {...TraceEngine.TraceHandlers};
 
     // @ts-expect-error Temporarily disable this handler
     // It's not currently used anywhere in trace engine insights or Lighthouse.
