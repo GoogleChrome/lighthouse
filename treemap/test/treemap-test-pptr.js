@@ -31,7 +31,7 @@ describe('Lighthouse Treemap', () => {
   let browser;
   /** @type {import('puppeteer').Page} */
   let page;
-  /** @type {Error[]} */
+  /** @type {Array<string|Promise<string>>} */
   let pageErrors = [];
 
   let server;
@@ -80,7 +80,13 @@ describe('Lighthouse Treemap', () => {
   async function ensureNoErrors() {
     await page.bringToFront();
     await page.evaluate(() => new Promise(window.requestAnimationFrame));
-    const errors = await claimErrors();
+    const errors = (await claimErrors()).filter(error => {
+      // Filters out a cookie deprecation error that only occurs on ToT
+      // This error comes from gtag.js
+      // https://support.google.com/tagmanager/thread/288419928/error-failed-to-execute-getvalue-on-cookiedeprecationlabel?hl=en
+      return !error.match(
+        /Failed to execute 'getValue' on 'CookieDeprecationLabel': Illegal invocation/);
+    });
     expect(errors).toHaveLength(0);
   }
 
