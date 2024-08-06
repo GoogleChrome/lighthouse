@@ -101,10 +101,13 @@ class ThirdPartySummary extends Audit {
       const taskDuration = task.selfTime * cpuMultiplier;
       // The amount of time spent on main thread is the sum of all durations.
       urlSummary.mainThreadTime += taskDuration;
-      // The amount of time spent *blocking* on main thread is the sum of all time longer than 50ms.
-      // Note that this is not totally equivalent to the TBT definition since it fails to account for FCP,
-      // but a majority of third-party work occurs after FCP and should yield largely similar numbers.
-      urlSummary.blockingTime += Math.max(taskDuration - 50, 0);
+      // Blocking time is the amount of time spent on the main thread *over* 50ms.
+      // This value is interpolated because not all tasks attributed to this URL are at the top level.
+      //
+      // Note that this is not totally equivalent to the TBT definition since it fails to account for
+      // the FCP&TTI bounds of TBT.
+      urlSummary.blockingTime += task.selfBlockingTime;
+      // TBT impact is similar to blocking time, but it accounts for the FCP&TTI bounds of TBT.
       urlSummary.tbtImpact += task.selfTbtImpact;
       byURL.set(attributableURL, urlSummary);
     }

@@ -26,10 +26,10 @@ describe('Third party summary', () => {
     settings.throttlingMethod = 'devtools';
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map(), settings});
 
-    expect(results.score).toBe(1);
+    expect(results.score).toBe(0);
     expect(results.metricSavings).toEqual({TBT: 245});
     expect(results.displayValue).toBeDisplayString(
-      'Third-party code blocked the main thread for 250 ms'
+      'Third-party code blocked the main thread for 300 ms'
     );
     expect(results.details.items).toMatchSnapshot();
   });
@@ -49,9 +49,9 @@ describe('Third party summary', () => {
     expect(results.metricSavings).toEqual({TBT: 2570});
     expect(results.details.items).toHaveLength(145);
     expect(Math.round(results.details.items[0].mainThreadTime)).toEqual(3520);
-    expect(Math.round(results.details.items[0].blockingTime)).toEqual(1103);
+    expect(Math.round(results.details.items[0].blockingTime)).toEqual(1182);
     expect(Math.round(results.details.items[1].mainThreadTime)).toEqual(1392);
-    expect(Math.round(results.details.items[1].blockingTime)).toEqual(659);
+    expect(Math.round(results.details.items[1].blockingTime)).toEqual(508);
   });
 
   it('be not applicable when no third parties are present', async () => {
