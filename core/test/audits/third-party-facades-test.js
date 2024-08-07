@@ -468,7 +468,7 @@ Array [
     expect(results.score).toBe(0);
     expect(results.metricSavings).toEqual({TBT: 145});
     expect(results.displayValue).toBeDisplayString('1 facade alternative available');
-    expect(results.details.items[0].blockingTime).toEqual(134.076); // TBT impact is not equal to the blocking time
+    expect(results.details.items[0].blockingTime).toBeCloseTo(145);
     expect(results.details.items[0].product)
       .toBeDisplayString('Intercom Widget (Customer Success)');
   });

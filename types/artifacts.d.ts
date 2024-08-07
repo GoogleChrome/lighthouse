@@ -163,7 +163,7 @@ declare module Artifacts {
 
   type NetworkRequest = _NetworkRequest;
   type TaskNode = _TaskNode;
-  type TBTImpactTask = TaskNode & {tbtImpact: number, selfTbtImpact: number};
+  type TBTImpactTask = TaskNode & {tbtImpact: number, selfTbtImpact: number, selfBlockingTime: number};
   type MetaElement = Artifacts['MetaElements'][0];
 
   interface URL {
@@ -511,7 +511,7 @@ declare module Artifacts {
 
   interface TraceEngineResult {
     data: TraceEngine.Handlers.Types.TraceParseData;
-    insights: TraceEngine.Insights.Types.TraceInsightData<typeof TraceEngine.Handlers.ModelHandlers>;
+    insights: TraceEngine.Insights.Types.TraceInsightData;
   }
 
   interface TraceEngineRootCauses {
