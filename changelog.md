@@ -1,3 +1,42 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.2.0"></a>
+# 12.2.0 (2024-08-07)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.1.0...v12.2.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* import lantern from trace engine ([#16092](https://github.com/GoogleChrome/lighthouse/pull/16092))
+* long-tasks: link to latest guidance ([#16138](https://github.com/GoogleChrome/lighthouse/pull/16138))
+* stylesheets: disable transient stylesheet detection ([#16121](https://github.com/GoogleChrome/lighthouse/pull/16121))
+* third-party-summary: correct blocking time calculation ([#16117](https://github.com/GoogleChrome/lighthouse/pull/16117))
+* trace-engine-result: disable invalidations handler ([#16142](https://github.com/GoogleChrome/lighthouse/pull/16142))
+
+## Deps
+
+* upgrade `trace_engine` to 0.0.32 ([#16143](https://github.com/GoogleChrome/lighthouse/pull/16143))
+* upgrade puppeteer to 22.15.0 ([#16139](https://github.com/GoogleChrome/lighthouse/pull/16139))
+* upgrade `third-party-web` to 0.24.5 ([#16140](https://github.com/GoogleChrome/lighthouse/pull/16140))
+* upgrade puppeteer to 22.13.1 ([#16123](https://github.com/GoogleChrome/lighthouse/pull/16123))
+* upgrade typescript to 5.5.3 ([#16091](https://github.com/GoogleChrome/lighthouse/pull/16091))
+
+## Tests
+
+* devtools: sync e2e ([#16120](https://github.com/GoogleChrome/lighthouse/pull/16120))
+* treemap: ignore cookie deprecation error ([#16141](https://github.com/GoogleChrome/lighthouse/pull/16141))
+
+## Misc
+
+* remove alertdesk from README ([#16133](https://github.com/GoogleChrome/lighthouse/pull/16133))
+* build: update README.chromium when rolling devtools ([#16144](https://github.com/GoogleChrome/lighthouse/pull/16144))
+
 <a name="12.1.0"></a>
 # 12.1.0 (2024-06-18)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.0.0...v12.1.0)
