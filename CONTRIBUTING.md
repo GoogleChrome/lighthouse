@@ -2,13 +2,15 @@
 
 We'd love your help! This doc covers how to become a contributor and submit code to the project.
 
+Additonal guidance can be found on [this google doc](https://docs.google.com/document/d/118a05zwIN2_Qhw7ZNmxdg2rLbatoeIcG6i-aYedzsp4/edit?usp=sharing).
+
 ## Where can I start?
 
 We tag issues that are good candidates for those new to the code with [`good first issue`](https://github.com/GoogleChrome/lighthouse/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22). We recommend you start there!
 
 ## Follow the coding style
 
-The `.eslintrc.cjs` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). Annotations are encouraged for all contributions.
+The `.eslintrc.cjs` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). JSDoc annotations are required for all contributions.
 
 ## Learn about the architecture
 
@@ -16,14 +18,15 @@ See [Lighthouse Architecture](./docs/architecture.md), our overview and tour of 
 
 ## Contributing a patch
 
-If you have a contribution for our [documentation](https://developer.chrome.com/docs/lighthouse/), please submit it in the [developer.chrome.com repo](https://github.com/GoogleChrome/developer.chrome.com).
+If you have a contribution for our [documentation](https://developer.chrome.com/docs/lighthouse/), please submit it in the [developer.chrome.com repo](https://github.com/GoogleChrome/developer.chrome.com). Otherwise, for contributions to this repo:
 
-1. Submit an issue describing your proposed change.
-1. The maintainers will respond to your issue promptly.
-1. If your proposed change is accepted, and you haven't already done so, sign a Contributor License Agreement (see details below).
-1. Fork the repo, develop and test your code changes.
-1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
+1. If your issue has been discussed and it seems no one else is working on it, drop a note saying you plan to work take it. Feel free to ask questions. If your planned patch has no open issue already, it'd be best to first open an issue where you describe your idea and wait for us to give feedback.
+1. Fork the repo (unless you are a core contributor, then the preference is to use the main repo), develop and test your code changes.
+1. Ensure that your code adheres to the existing style in the sample to which you are contributing. In addition, run `yarn lint --fix`.
+1. We have quite a few files checked in that are derived from source files. With any change, it's good to ensure everything is up-to-date by running this command: `yarn build-report && yarn update:sample-json && yarn lint --fix`.
+1. You may also find some tests need to be updated. Run `yarn unit` and `yarn smoke` to ensure nothing broke.
 1. Submit a pull request.
+1. Sign a Contributor License Agreement ([see details below](#sign-the-contributor-license-agreement)).
 
 ## Audit PRs
 
@@ -35,7 +38,7 @@ A PR for a new audit or changing an existing audit almost always needs the follo
 
 1. **Unit tests**: in the matching test file (e.g. tests for `core/audits/my-swell-audit.js` go in `core/test/audits/my-swell-audit-test.js`).
 
-1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
+1. **Smoke (end-to-end) tests**: search through the [existing smoke test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test definition.
 
 1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
