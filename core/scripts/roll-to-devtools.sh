@@ -80,6 +80,20 @@ lh_e2e_res_dir="third-party/devtools-tests/e2e/resources/lighthouse/"
 fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
 rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --delete
 
+PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
+REVISION=$(git rev-parse HEAD)
+echo "Name: Lighthouse
+Short Name: lighthouse
+Version: $PKG_VERSION
+Revision: $REVISION
+URL: https://github.com/GoogleChrome/lighthouse
+License: Apache License 2.0
+License File: LICENSE
+Security Critical: no
+Shipped: yes
+
+This directory contains Chromium's version of the lighthouse report assets, including renderer." > "$fe_lh_dir/README.chromium"
+
 echo ""
 echo "Done. To run the e2e tests: "
 echo "    DEVTOOLS_PATH=\"$dt_dir\" yarn test-devtools"
