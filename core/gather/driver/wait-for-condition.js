@@ -245,24 +245,22 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
           return;
         }
 
-        if (typeof timeSinceLongTask !== 'number') {
-          throw new Error('Invalid value from checkTimeSinceLastLongTaskInPage');
+        if (typeof timeSinceLongTask === 'number') {
+          if (timeSinceLongTask >= waitForCPUQuiet) {
+            log.verbose('waitFor', `CPU has been idle for ${timeSinceLongTask} ms`);
+            return;
+          } else {
+            log.verbose('waitFor', `CPU has been idle for ${timeSinceLongTask} ms`);
+            const timeToWait = waitForCPUQuiet - timeSinceLongTask;
+            return new Promise((resolve, reject) => {
+              lastTimeout = setTimeout(() => {
+                checkForQuiet(executionContext)
+                  .then(resolve)
+                  .catch(reject);
+              }, timeToWait);
+            });
+          }
         }
-
-        log.verbose('waitFor', `CPU has been idle for ${timeSinceLongTask} ms`);
-
-        if (timeSinceLongTask >= waitForCPUQuiet) {
-          return;
-        }
-
-        const timeToWait = waitForCPUQuiet - timeSinceLongTask;
-        return new Promise((resolve, reject) => {
-          lastTimeout = setTimeout(() => {
-            checkForQuiet(executionContext)
-              .then(resolve)
-              .catch(reject);
-          }, timeToWait);
-        });
       });
   }
 
