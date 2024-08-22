@@ -516,23 +516,29 @@ describe('Convert Message to Placeholder', () => {
     });
   });
 
+  it('converts custom-formatted ICU to placholders (repeated)', () => {
+    const message = 'the time is {timeInMs, number, milliseconds}. ' +
+      'I repeat, the time is {timeInMs, number, milliseconds}.';
+    const res = collect.convertMessageToCtc(message);
+    const expectation = 'the time is $CUSTOM_ICU_0$. I repeat, the time is $CUSTOM_ICU_0$.';
+    expect(res.message).toBe(expectation);
+    expect(res.placeholders).toEqual({
+      CUSTOM_ICU_0: {
+        content: '{timeInMs, number, milliseconds}',
+        example: '499',
+      },
+    });
+  });
+
   it('replaces within ICU plural', () => {
     const message = '{var, select, male{time: {timeInSec, number, seconds}} ' +
       'female{time: {timeInSec, number, seconds}} other{time: {timeInSec, number, seconds}}}';
     const expectation = '{var, select, male{time: $CUSTOM_ICU_0$} ' +
-      'female{time: $CUSTOM_ICU_1$} other{time: $CUSTOM_ICU_2$}}';
+      'female{time: $CUSTOM_ICU_0$} other{time: $CUSTOM_ICU_0$}}';
     const res = collect.convertMessageToCtc(message);
     expect(res.message).toEqual(expectation);
     expect(res.placeholders).toEqual({
       CUSTOM_ICU_0: {
-        content: '{timeInSec, number, seconds}',
-        example: '2.4',
-      },
-      CUSTOM_ICU_1: {
-        content: '{timeInSec, number, seconds}',
-        example: '2.4',
-      },
-      CUSTOM_ICU_2: {
         content: '{timeInSec, number, seconds}',
         example: '2.4',
       },
@@ -549,6 +555,19 @@ describe('Convert Message to Placeholder', () => {
     const message = 'Hello {name}.';
     const res = collect.convertMessageToCtc(message, {name: 'Mary'});
     const expectation = 'Hello $ICU_0$.';
+    expect(res.message).toBe(expectation);
+    expect(res.placeholders).toEqual({
+      ICU_0: {
+        content: '{name}',
+        example: 'Mary',
+      },
+    });
+  });
+
+  it('converts direct ICU with examples to placeholders (repeated)', () => {
+    const message = 'Hello {name}. Nice to meet you, {name}';
+    const res = collect.convertMessageToCtc(message, {name: 'Mary'});
+    const expectation = 'Hello $ICU_0$. Nice to meet you, $ICU_0$';
     expect(res.message).toBe(expectation);
     expect(res.placeholders).toEqual({
       ICU_0: {
