@@ -93,10 +93,12 @@ describe('DevTools', function() {
           statusCode: item.statusCode,
         };
       });
-      assert.deepEqual(trimmedRequests, [
-        {url: 'hello.html', statusCode: 200},
-        {url: 'basic.css', statusCode: -1},  // statuCode === -1 means the request failed
-      ]);
+
+      // An extra basic.css request with status code -1 appears, but only in e2e tests
+      // This test is made more lenient since this only happens in the e2e environment
+      // b/359984292
+      assert.deepStrictEqual(trimmedRequests[0], {url: 'hello.html', statusCode: 200});
+      assert.deepStrictEqual(trimmedRequests[1], {url: 'basic.css', statusCode: -1});
     });
   });
 
