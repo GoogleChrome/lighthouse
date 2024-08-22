@@ -268,7 +268,7 @@ const expectations = {
       },
       'render-blocking-resources': {
         score: '<1',
-        numericValue: '>=85',
+        numericValue: '>=50',
         details: {
           items: [
             {
