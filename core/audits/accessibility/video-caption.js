@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'When a video provides a caption it is easier for deaf and hearing impaired ' +
       'users to access its information. ' +
-      '[Learn more about video captions](https://dequeuniversity.com/rules/axe/4.9/video-caption).',
+      '[Learn more about video captions](https://dequeuniversity.com/rules/axe/4.10/video-caption).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

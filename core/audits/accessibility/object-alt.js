@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Screen readers cannot translate non-text content. Adding alternate text to ' +
       '`<object>` elements helps screen readers convey meaning to users. ' +
-      '[Learn more about alt text for `object` elements](https://dequeuniversity.com/rules/axe/4.9/object-alt).',
+      '[Learn more about alt text for `object` elements](https://dequeuniversity.com/rules/axe/4.10/object-alt).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Adding discernable and accessible text to input buttons may help screen reader ' +
       'users understand the purpose of the input button. ' +
-      '[Learn more about input buttons](https://dequeuniversity.com/rules/axe/4.9/input-button-name).',
+      '[Learn more about input buttons](https://dequeuniversity.com/rules/axe/4.10/input-button-name).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
