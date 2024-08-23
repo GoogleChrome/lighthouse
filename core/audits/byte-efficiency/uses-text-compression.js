@@ -25,7 +25,7 @@ const UIStrings = {
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 1400;
-const IGNORE_THRESHOLD_IN_PERCENT = 0.05;
+const IGNORE_THRESHOLD_IN_PERCENT = 0.1;
 
 class ResponsesAreCompressed extends ByteEfficiencyAudit {
   /**
