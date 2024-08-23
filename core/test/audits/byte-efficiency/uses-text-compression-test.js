@@ -27,7 +27,7 @@ describe('Page uses optimized responses', () => {
         generateResponse({file: 'index.css', resourceSize: 6 * KB, gzipSize: 4.8 * KB}), // 1.2kb
         generateResponse({file: 'index2.css', resourceSize: 50 * KB, gzipSize: 37 * KB}), //  13kb (hit)
         generateResponse({file: 'index.json', resourceSize: 10 * KB, gzipSize: 10 * KB}), // 0kb
-        generateResponse({file: 'uncompressed.xcustom', resourceSize: 11 * MB, gzipSize: 10 * MB}), // 1mb
+        generateResponse({file: 'uncompressed.xcustom', resourceSize: 11 * MB, gzipSize: 10 * MB}), // 1mb (hit)
         generateResponse({file: 'compressed.json', resourceSize: 10 * KB, transferSize: 3 * KB,
           gzipSize: 6 * KB}), // 0kb
       ],
