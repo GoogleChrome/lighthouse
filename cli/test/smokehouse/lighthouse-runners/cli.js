@@ -12,8 +12,7 @@
  */
 
 import {promises as fs} from 'fs';
-import {promisify} from 'util';
-import {execFile} from 'child_process';
+import {spawn} from 'child_process';
 
 import log from 'lighthouse-logger';
 
@@ -21,8 +20,6 @@ import * as assetSaver from '../../../../core/lib/asset-saver.js';
 import {LocalConsole} from '../lib/local-console.js';
 import {ChildProcessError} from '../lib/child-process-error.js';
 import {LH_ROOT} from '../../../../shared/root.js';
-
-const execFileAsync = promisify(execFile);
 
 /**
  * Launch Chrome and do a full Lighthouse run via the Lighthouse CLI.
@@ -82,27 +79,23 @@ async function internalRun(url, tmpPath, config, logger, options) {
   const env = {...process.env, NODE_ENV: 'test'};
   logger.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
 
-  /** @type {{stdout: string, stderr: string, code?: number}} */
-  let execResult;
-  try {
-    execResult = await execFileAsync(command, args, {env});
-  } catch (e) {
-    // exec-thrown errors have stdout, stderr, and exit code from child process.
-    execResult = e;
-  }
-
-  const exitCode = execResult.code || 0;
-  if (isDebug) {
+  const cp = spawn(command, args, {env});
+  cp.stdout.on('data', data => logger.log(`[STDOUT] ${data.toString().trim()}`));
+  cp.stderr.on('data', data => logger.log(`[STDERR] ${data.toString().trim()}`));
+  /** @type {Promise<number|null>} */
+  const cpPromise = new Promise((resolve, reject) => {
+    cp.addListener('exit', resolve);
+    cp.addListener('error', reject);
+  });
+  const exitCode = await cpPromise;
+  if (exitCode) {
     logger.log(`exit code ${exitCode}`);
-    logger.log(`STDOUT: ${execResult.stdout}`);
-    logger.log(`STDERR: ${execResult.stderr}`);
   }
 
   try {
     await fs.access(outputPath);
   } catch (e) {
-    throw new ChildProcessError(`Lighthouse run failed to produce a report and exited with ${exitCode}.`, // eslint-disable-line max-len
-      logger.getLog());
+    throw new ChildProcessError(`Lighthouse run failed to produce a report.`, logger.getLog());
   }
 
   /** @type {LH.Result} */
