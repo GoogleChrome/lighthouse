@@ -40,21 +40,24 @@ async function setup() {
  * CHROME_PATH determines which Chrome is used–otherwise the default is puppeteer's chrome binary.
  * @param {string} url
  * @param {LH.Config=} config
+ * @param {import('../lib/local-console.js').LocalConsole=} logger
  * @param {Smokehouse.SmokehouseOptions['testRunnerOptions']=} testRunnerOptions
- * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
+ * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
-async function runLighthouse(url, config, testRunnerOptions) {
+async function runLighthouse(url, config, logger, testRunnerOptions) {
   const chromeFlags = [
     testRunnerOptions?.headless ? '--headless=new' : '',
     `--custom-devtools-frontend=file://${devtoolsDir}/out/LighthouseIntegration/gen/front_end`,
   ];
+  // TODO: `testUrlFromDevtools` should accept a logger, so we get some output even for time outs.
   const {lhr, artifacts, logs} = await testUrlFromDevtools(url, {
     config,
     chromeFlags,
   });
-
-  const log = logs.join('') + '\n';
-  return {lhr, artifacts, log};
+  if (logger) {
+    logger.log(logs.join('') + '\n');
+  }
+  return {lhr, artifacts};
 }
 
 export {
