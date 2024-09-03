@@ -12,7 +12,7 @@ import {
   waitForAria,
   waitForElementWithTextContent,
 } from '../../shared/helper.js';
-import {describe, it} from '../../shared/mocha-extensions.js';
+
 import {openDeviceToolbar, reloadDockableFrontEnd, selectDevice} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,
