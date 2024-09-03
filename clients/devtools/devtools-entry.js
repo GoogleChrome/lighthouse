@@ -95,4 +95,6 @@ if (typeof self !== 'undefined') {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.thirdPartyWeb = thirdPartyWeb;
 }

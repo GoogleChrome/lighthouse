@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import thirdPartyWeb_ from 'third-party-web/nostats-subset.js';
+import thirdPartyWebLib from 'third-party-web/nostats-subset.js';
 
-let thirdPartyWeb = thirdPartyWeb_;
+let thirdPartyWeb = thirdPartyWebLib;
 
 /**
  * For use by DevTools.

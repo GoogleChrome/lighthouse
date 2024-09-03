@@ -18,6 +18,7 @@ import {once} from 'events';
 
 import puppeteer from 'puppeteer-core';
 import * as ChromeLauncher from 'chrome-launcher';
+import thirdPartyWebLib from 'third-party-web/nostats-subset.js';
 
 import {LH_ROOT} from '../../../../shared/root.js';
 import {loadArtifacts, saveArtifacts} from '../../../../core/lib/asset-saver.js';
@@ -72,6 +73,11 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   /** @type {import('../../../../core/index.js')['default']} */
   // @ts-expect-error - not worth giving test global an actual type.
   const lighthouse = global.runBundledLighthouse;
+
+  /** @type {import('../../../../core/lib/third-party-web.js')['default']} */
+  // @ts-expect-error
+  const thirdPartyWeb = global.thirdPartyWeb;
+  thirdPartyWeb.provideThirdPartyWeb(thirdPartyWebLib);
 
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch({
