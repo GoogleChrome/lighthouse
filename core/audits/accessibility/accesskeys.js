@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Access keys let users quickly focus a part of the page. For proper ' +
       'navigation, each access key must be unique. ' +
-      '[Learn more about access keys](https://dequeuniversity.com/rules/axe/4.9/accesskeys).',
+      '[Learn more about access keys](https://dequeuniversity.com/rules/axe/4.10/accesskeys).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

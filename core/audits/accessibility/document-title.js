@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The title gives screen reader users an overview of the page, and search ' +
       'engine users rely on it heavily to determine if a page is relevant to their search. ' +
-      '[Learn more about document titles](https://dequeuniversity.com/rules/axe/4.9/document-title).',
+      '[Learn more about document titles](https://dequeuniversity.com/rules/axe/4.10/document-title).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

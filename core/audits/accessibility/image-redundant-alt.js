@@ -21,7 +21,7 @@ const UIStrings = {
   description: 'Informative elements should aim for short, descriptive alternative text. ' +
       'Alternative text that is exactly the same as the text adjacent to the link or image is ' +
       'potentially confusing for screen reader users, because the text will be read twice. ' +
-      '[Learn more about the `alt` attribute](https://dequeuniversity.com/rules/axe/4.9/image-redundant-alt).',
+      '[Learn more about the `alt` attribute](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

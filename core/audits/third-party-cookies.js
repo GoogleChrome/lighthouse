@@ -18,7 +18,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the use of third party cookies. This descriptive title is shown to users when the page uses third party cookies. */
   failureTitle: 'Uses third-party cookies',
   /** Description of a Lighthouse audit that tells the user why they should not use third party cookies on their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'Support for third-party cookies will be removed in a future version of Chrome. [Learn more about phasing out third-party cookies](https://developer.chrome.com/en/docs/privacy-sandbox/third-party-cookie-phase-out/).',
+  description: 'Chrome is moving towards a new experience that lets people make an informed choice with respect to third-party cookies. [Learn more about third-party cookies](https://developers.google.com/privacy-sandbox/cookies).',
   /** [ICU Syntax] Label for the audit identifying the number of third-party cookies. */
   displayValue: `{itemCount, plural,
     =1 {1 cookie found}

@@ -13,7 +13,7 @@ import {
   waitFor,
   waitForElementWithTextContent,
 } from '../../shared/helper.js';
-import {describe} from '../../shared/mocha-extensions.js';
+
 import {
   clickStartButton,
   getAuditsBreakdown,

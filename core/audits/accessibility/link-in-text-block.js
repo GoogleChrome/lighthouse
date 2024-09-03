@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Low-contrast text is difficult or impossible for many users to read. Link text ' +
       'that is discernible improves the experience for users with low vision. ' +
-      '[Learn how to make links distinguishable](https://dequeuniversity.com/rules/axe/4.9/link-in-text-block).',
+      '[Learn how to make links distinguishable](https://dequeuniversity.com/rules/axe/4.10/link-in-text-block).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
