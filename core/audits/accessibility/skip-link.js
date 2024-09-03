@@ -19,7 +19,7 @@ const UIStrings = {
   failureTitle: 'Skip links are not focusable.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Including a skip link can help users skip to the main content to save time. ' +
-      '[Learn more about skip links](https://dequeuniversity.com/rules/axe/4.9/skip-link).',
+      '[Learn more about skip links](https://dequeuniversity.com/rules/axe/4.10/skip-link).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

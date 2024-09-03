@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Disabling zooming is problematic for users with low vision who rely on ' +
       'screen magnification to properly see the contents of a web page. ' +
-      '[Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.9/meta-viewport).',
+      '[Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

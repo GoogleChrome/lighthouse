@@ -23,7 +23,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'If the webpage does not specify a consistent language, then the screen ' +
       'reader might not announce the page\'s text correctly. ' +
-      '[Learn more about the `lang` attribute](https://dequeuniversity.com/rules/axe/4.9/html-xml-lang-mismatch).',
+      '[Learn more about the `lang` attribute](https://dequeuniversity.com/rules/axe/4.10/html-xml-lang-mismatch).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

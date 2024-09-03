@@ -5,7 +5,7 @@
 import {assert} from 'chai';
 
 import {goTo, goToResource, waitFor} from '../../shared/helper.js';
-import {describe, it} from '../../shared/mocha-extensions.js';
+
 import {
   clearSiteData,
   getHelpText,

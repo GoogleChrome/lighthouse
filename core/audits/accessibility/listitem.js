@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Screen readers require list items (`<li>`) to be contained within a ' +
       'parent `<ul>`, `<ol>` or `<menu>` to be announced properly. ' +
-      '[Learn more about proper list structure](https://dequeuniversity.com/rules/axe/4.9/listitem).',
+      '[Learn more about proper list structure](https://dequeuniversity.com/rules/axe/4.10/listitem).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

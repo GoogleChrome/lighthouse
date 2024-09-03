@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'When an image is being used as an `<input>` button, providing alternative ' +
       'text can help screen reader users understand the purpose of the button. ' +
-      '[Learn about input image alt text](https://dequeuniversity.com/rules/axe/4.9/input-image-alt).',
+      '[Learn about input image alt text](https://dequeuniversity.com/rules/axe/4.10/input-image-alt).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

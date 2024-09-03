@@ -59,12 +59,18 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       const gzipSize = record.gzipSize;
       const gzipSavings = originalSize - gzipSize;
 
-      // we require at least 10% savings off the original size AND at least 1400 bytes
-      // if the savings is smaller than either, we don't care
-      if (1 - gzipSize / originalSize < IGNORE_THRESHOLD_IN_PERCENT ||
-          gzipSavings < IGNORE_THRESHOLD_IN_BYTES ||
-          record.transferSize < gzipSize
-      ) {
+      // Not every resource is smaller when compressed.
+      if (record.transferSize < gzipSize) {
+        return;
+      }
+
+      // If savings is small, let's be generous and not surface the minor savings.
+      if (gzipSavings < IGNORE_THRESHOLD_IN_BYTES) {
+        return;
+      }
+
+      // Require at least 20kb of savings ... or some percentage of total resource size.
+      if (gzipSavings < 20_000 && 1 - gzipSize / originalSize < IGNORE_THRESHOLD_IN_PERCENT) {
         return;
       }
 

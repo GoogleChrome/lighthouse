@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'When definition lists are not properly marked up, screen readers may produce ' +
       'confusing or inaccurate output. ' +
-      '[Learn how to structure definition lists correctly](https://dequeuniversity.com/rules/axe/4.9/definition-list).',
+      '[Learn how to structure definition lists correctly](https://dequeuniversity.com/rules/axe/4.10/definition-list).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
