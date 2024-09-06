@@ -1,3 +1,47 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.3.0"></a>
+# 12.3.0 (2024-09-06)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.0...v12.3.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* third-party-cookies: update description for 3PCD updates ([#16177](https://github.com/GoogleChrome/lighthouse/pull/16177))
+* third-party-cookies: update description for 3PCD updates ([#16158](https://github.com/GoogleChrome/lighthouse/pull/16158))
+* uses-text-compression: ignore percent threshold for large savings ([#16165](https://github.com/GoogleChrome/lighthouse/pull/16165))
+
+## Deps
+
+* upgrade puppeteer to 23.3.0 ([#16178](https://github.com/GoogleChrome/lighthouse/pull/16178))
+* upgrade `axe-core` to 4.10.0 ([#16162](https://github.com/GoogleChrome/lighthouse/pull/16162))
+* upgrade puppeteer to 23.1.1 ([#16161](https://github.com/GoogleChrome/lighthouse/pull/16161))
+
+## Clients
+
+* devtools: require third-party-web to be provided ([#16166](https://github.com/GoogleChrome/lighthouse/pull/16166))
+
+## I18n
+
+* support reusing the same placeholder for ICU ([#16159](https://github.com/GoogleChrome/lighthouse/pull/16159))
+
+## Tests
+
+* pass logger to smokehouse runners to get log even on timeout ([#16175](https://github.com/GoogleChrome/lighthouse/pull/16175))
+* update BUILD.gn due to upstream CDT change ([#16171](https://github.com/GoogleChrome/lighthouse/pull/16171))
+* devtools: sync e2e ([#16174](https://github.com/GoogleChrome/lighthouse/pull/16174))
+* devtools: sync e2e ([#16160](https://github.com/GoogleChrome/lighthouse/pull/16160))
+
+## Misc
+
+* format lighthouse-result.proto ([#16170](https://github.com/GoogleChrome/lighthouse/pull/16170))
+
 <a name="12.2.0"></a>
 # 12.2.0 (2024-08-07)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.1.0...v12.2.0)
