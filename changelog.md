@@ -1,20 +1,18 @@
-<a name="12.3.0"></a>
-# 12.3.0 (2024-09-06)
-[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.0...v12.3.0)
+<a name="12.2.1"></a>
+# 12.2.1 (2024-09-06)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.0...v12.2.1)
 
 We expect this release to ship in the DevTools of [Chrome 130](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
 ## Core
 
-* third-party-cookies: update description for 3PCD updates ([#16177](https://github.com/GoogleChrome/lighthouse/pull/16177))
-* third-party-cookies: update description for 3PCD updates ([#16158](https://github.com/GoogleChrome/lighthouse/pull/16158))
+* third-party-cookies: update description for 3PCD updates ([#16177](https://github.com/GoogleChrome/lighthouse/pull/16177), [#16158](https://github.com/GoogleChrome/lighthouse/pull/16158))
 * uses-text-compression: ignore percent threshold for large savings ([#16165](https://github.com/GoogleChrome/lighthouse/pull/16165))
 
 ## Deps
 
-* upgrade puppeteer to 23.3.0 ([#16178](https://github.com/GoogleChrome/lighthouse/pull/16178))
+* upgrade puppeteer to 23.3.0 ([#16178](https://github.com/GoogleChrome/lighthouse/pull/16178), [#16161](https://github.com/GoogleChrome/lighthouse/pull/16161))
 * upgrade `axe-core` to 4.10.0 ([#16162](https://github.com/GoogleChrome/lighthouse/pull/16162))
-* upgrade puppeteer to 23.1.1 ([#16161](https://github.com/GoogleChrome/lighthouse/pull/16161))
 
 ## Clients
 
