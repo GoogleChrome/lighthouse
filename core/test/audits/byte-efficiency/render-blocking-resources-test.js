@@ -50,6 +50,11 @@ describe('Render blocking resources audit', () => {
     });
 
     it('considers X-TotalFetchedSize in its reported transfer size', async () => {
+      // TODO(15841): The trace backend knows nothing of Lantern.
+      if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+        return;
+      }
+
       const artifacts = {
         URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
         GatherContext: {gatherMode: 'navigation'},
