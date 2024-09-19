@@ -42,7 +42,7 @@ const rootHooks = {
 
     // Functions not implemented in JSDOM.
     window.Element.prototype.scrollIntoView = jestMock.fn();
-    global.self.matchMedia = jestMock.fn<any, any>(() => ({
+    global.self.matchMedia = jestMock.fn<any>(() => ({
       addListener: jestMock.fn(),
     }));
 

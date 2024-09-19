@@ -41,8 +41,9 @@ describe('ExecutionContext', () => {
   it('should clear context on frame navigations', async () => {
     const executionContext = new ExecutionContext(sessionMock);
 
-    const frameListener = sessionMock.on.mock.calls.find(call => call[0] === 'Page.frameNavigated');
-    expect(frameListener).toBeDefined();
+    const frameListener = sessionMock.on.mock.calls
+      .find(call => call[0] === 'Page.frameNavigated') ?? [];
+    expect(frameListener[1]).toBeDefined();
 
     await forceNewContextId(executionContext, 42);
     expect(executionContext.getContextId()).toEqual(42);
@@ -54,8 +55,8 @@ describe('ExecutionContext', () => {
     const executionContext = new ExecutionContext(sessionMock);
 
     const executionDestroyed = sessionMock.on.mock.calls
-      .find(call => call[0] === 'Runtime.executionContextDestroyed');
-    expect(executionDestroyed).toBeDefined();
+      .find(call => call[0] === 'Runtime.executionContextDestroyed') ?? [];
+    expect(executionDestroyed[1]).toBeDefined();
 
     await forceNewContextId(executionContext, 42);
     expect(executionContext.getContextId()).toEqual(42);

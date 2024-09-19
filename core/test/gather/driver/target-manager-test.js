@@ -83,7 +83,7 @@ describe('TargetManager', () => {
       await targetManager.enable();
 
       expect(sessionMock.on).toHaveBeenCalled();
-      const sessionListener = sessionMock.on.mock.calls.find(c => c[0] === 'sessionattached')[1];
+      const sessionListener = sessionMock.on.mock.calls.find(c => c[0] === 'sessionattached')?.[1];
 
       // Original, attach.
       expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(1);
