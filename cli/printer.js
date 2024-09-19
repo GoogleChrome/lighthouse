@@ -5,6 +5,7 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 
 import log from 'lighthouse-logger';
 
@@ -58,13 +59,17 @@ function writeToStdout(output) {
  */
 function writeFile(filePath, output, outputMode) {
   return new Promise((resolve, reject) => {
-    // TODO: make this mkdir to the filePath.
-    fs.writeFile(filePath, output, (err) => {
-      if (err) {
+    fs.mkdir(path.dirname(filePath), { recursive: true }, (err) => {
+      if (err && err.code !== 'EEXIST') {
         return reject(err);
       }
-      log.log('Printer', `${OutputMode[outputMode]} output written to ${filePath}`);
-      resolve();
+      fs.writeFile(filePath, output, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        log.log('Printer', `${LH.OutputMode[outputMode]} output written to ${filePath}`);
+        resolve();
+      });
     });
   });
 }
