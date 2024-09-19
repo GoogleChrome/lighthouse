@@ -46,7 +46,7 @@ describe('Render blocking resources audit', () => {
     });
 
     after(() => {
-      global.isLightrider = false;
+      global.isLightrider = undefined;
     });
 
     it('considers X-TotalFetchedSize in its reported transfer size', async () => {
