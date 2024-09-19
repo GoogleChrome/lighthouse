@@ -40,11 +40,12 @@ describe('Render blocking resources audit', () => {
     assert.deepStrictEqual(result.metricSavings, {FCP: 300, LCP: 0});
   });
 
+  afterEach(() => {
+    global.isLightrider = false;
+  });
+
   it('considers X-TotalFetchedSize in its reported transfer size', async () => {
     global.isLightrider = true;
-    after(() => {
-      global.isLightrider = false;
-    });
 
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
