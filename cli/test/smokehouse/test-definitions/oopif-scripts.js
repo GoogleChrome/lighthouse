@@ -100,7 +100,7 @@ const expectations = {
       },
     ],
     // Only `:10200/oopif-simple-page.html`'s inclusion of `simple-script.js` shows here,
-    // as well as inline scripts of the iframe.
+    // as well as inline and eval scripts of the iframe.
     // All other scripts are filtered out because of our "OOPIF" filter.
     Scripts: {
       _includes: [
@@ -108,9 +108,41 @@ const expectations = {
           url: 'http://localhost:10200/simple-script.js',
           content: /🪁/,
         },
+        // inline script
         {
           url: 'http://localhost:10200/oopif-simple-page.html',
           content: /new Worker/,
+        },
+        // inline script
+        {
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /Force some stack frames/,
+        },
+        // fetch('simple-script.js').then(r => r.text()).then(eval);
+        {
+          name: '<compiled from string in http://localhost:10200/oopif-simple-page.html>',
+          url: undefined,
+          content: /🪁/,
+          stackTrace: undefined,
+        },
+        {
+          name: 'eval.js',
+          url: undefined,
+          content: /hello from _named_ eval world/,
+          // It seems chromium will only track a single frame.
+          stackTrace: {callFrames: [{functionName: '', lineNumber: 22}]},
+        },
+        {
+          name: '<compiled from string in http://localhost:10200/oopif-simple-page.html>',
+          url: undefined,
+          content: /hello from eval world/,
+          stackTrace: {callFrames: [{functionName: 'fnWrapper1', lineNumber: 10}]},
+        },
+        {
+          name: '<compiled from string in http://localhost:10200/oopif-simple-page.html>',
+          url: undefined,
+          content: /hello from setTimeout world/,
+          stackTrace: undefined,
         },
       ],
       _excludes: [{}],
