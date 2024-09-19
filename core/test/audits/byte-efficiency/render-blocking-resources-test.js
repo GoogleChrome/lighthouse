@@ -40,37 +40,42 @@ describe('Render blocking resources audit', () => {
     assert.deepStrictEqual(result.metricSavings, {FCP: 300, LCP: 0});
   });
 
-  afterEach(() => {
-    global.isLightrider = false;
+  describe('Lightrider', () => {
+    before(() => {
+      global.isLightrider = true;
+    });
+
+    after(() => {
+      global.isLightrider = false;
+    });
+
+    it('considers X-TotalFetchedSize in its reported transfer size', async () => {
+      const artifacts = {
+        URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
+        GatherContext: {gatherMode: 'navigation'},
+        traces: {defaultPass: lrTrace},
+        devtoolsLogs: {defaultPass: lrDevtoolsLog},
+        Stacks: [],
+      };
+
+      const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
+      const computedCache = new Map();
+      const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
+      expect(result.details.items).toMatchInlineSnapshot(`
+  Array [
+    Object {
+      "totalBytes": 128188,
+      "url": "https://www.llentab.cz/wp-content/uploads/fusion-styles/715df3f482419a9ed822189df6e57839.min.css?ver=3.11.10",
+      "wastedMs": 750,
+    },
+  ]
+  `);
+      assert.equal(result.score, 0);
+      assert.equal(result.numericValue, 0);
+      assert.deepStrictEqual(result.metricSavings, {FCP: 0, LCP: 0});
+    });
   });
 
-  it('considers X-TotalFetchedSize in its reported transfer size', async () => {
-    global.isLightrider = true;
-
-    const artifacts = {
-      URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
-      GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: lrTrace},
-      devtoolsLogs: {defaultPass: lrDevtoolsLog},
-      Stacks: [],
-    };
-
-    const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
-    const computedCache = new Map();
-    const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.items).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "totalBytes": 128188,
-    "url": "https://www.llentab.cz/wp-content/uploads/fusion-styles/715df3f482419a9ed822189df6e57839.min.css?ver=3.11.10",
-    "wastedMs": 750,
-  },
-]
-`);
-    assert.equal(result.score, 0);
-    assert.equal(result.numericValue, 0);
-    assert.deepStrictEqual(result.metricSavings, {FCP: 0, LCP: 0});
-  });
 
   it('evaluates correct wastedMs when LCP is text', async () => {
     const textLcpTrace = JSON.parse(JSON.stringify(trace));
