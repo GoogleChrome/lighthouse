@@ -30,7 +30,7 @@ jobs:
         fetch-depth: 2
 
     - name: Use Node.js ${{ matrix.node }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node }}
 
@@ -85,7 +85,7 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Unit (ubuntu; node ${{ matrix.node }})
         path: .tmp/unit-failures/
@@ -100,7 +100,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
 
