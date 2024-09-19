@@ -30,7 +30,7 @@ jobs:
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
     - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
 
@@ -74,7 +74,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
