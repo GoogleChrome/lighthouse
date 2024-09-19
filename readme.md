@@ -52,7 +52,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-> **Note**
+> [!NOTE]
 > Lighthouse requires Node 18 LTS (18.x) or later.
 
 **Installation**:
@@ -227,7 +227,8 @@ top of any Lighthouse HTML report and open the report in the
 In the Viewer, reports can be shared by clicking the share icon in the top
 right corner and signing in to GitHub.
 
-> **Note**: shared reports are stashed as a secret Gist in GitHub, under your account.
+> [!NOTE]
+>  shared reports are stashed as a secret Gist in GitHub, under your account.
 
 ## Docs & Recipes
 
