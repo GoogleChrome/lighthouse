@@ -38,10 +38,10 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
  * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
- * @return {Map<string, {node: LH.Gatherer.Simulation.GraphNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
+ * @return {Map<string, {node: LH.Gatherer.Simulation.GraphNetworkNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
  */
 function getNodesAndTimingByRequestId(nodeTimings) {
-  /** @type {Map<string, {node: LH.Gatherer.Simulation.GraphNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
+  /** @type {Map<string, {node: LH.Gatherer.Simulation.GraphNetworkNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
   const requestIdToNode = new Map();
 
   for (const [node, nodeTiming] of nodeTimings) {
@@ -169,7 +169,7 @@ class RenderBlockingResources extends Audit {
 
       results.push({
         url: resource.args.data.url,
-        totalBytes: resource.args.data.encodedDataLength,
+        totalBytes: node.request.transferSize,
         wastedMs,
       });
     }
