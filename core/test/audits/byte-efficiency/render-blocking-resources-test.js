@@ -76,7 +76,6 @@ describe('Render blocking resources audit', () => {
     });
   });
 
-
   it('evaluates correct wastedMs when LCP is text', async () => {
     const textLcpTrace = JSON.parse(JSON.stringify(trace));
 
