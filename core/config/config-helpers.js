@@ -8,7 +8,7 @@ import path from 'path';
 import {createRequire} from 'module';
 import url from 'url';
 
-import isDeepEqual from 'lodash/isEqual.js';
+import isDeepEqual from 'lodash-es/isEqual.js';
 
 import * as constants from './constants.js';
 import ConfigPlugin from './config-plugin.js';

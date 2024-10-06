@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import _set from 'lodash/set.js';
-import _get from 'lodash/get.js';
+import _set from 'lodash-es/set.js';
+import _get from 'lodash-es/get.js';
 
 import * as format from './format.js';
 

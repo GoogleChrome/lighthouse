@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import isDeepEqual from 'lodash/isEqual.js';
+import isDeepEqual from 'lodash-es/isEqual.js';
 
 /**
  * @fileoverview This class is designed to allow maps with arbitrary equality functions.

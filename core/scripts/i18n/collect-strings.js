@@ -16,7 +16,7 @@ import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
 import esMain from 'es-main';
-import isDeepEqual from 'lodash/isEqual.js';
+import isDeepEqual from 'lodash-es/isEqual.js';
 
 import {Util} from '../../../shared/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';

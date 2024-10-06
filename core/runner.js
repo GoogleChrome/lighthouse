@@ -9,7 +9,7 @@ import path from 'path';
 
 
 import log from 'lighthouse-logger';
-import isDeepEqual from 'lodash/isEqual.js';
+import isDeepEqual from 'lodash-es/isEqual.js';
 
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
