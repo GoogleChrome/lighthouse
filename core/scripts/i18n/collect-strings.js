@@ -16,7 +16,7 @@ import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
 import esMain from 'es-main';
-import isDeepEqual from 'lodash-es/isEqual.js';
+import {isEqual} from 'lodash-es';
 
 import {Util} from '../../../shared/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
@@ -660,7 +660,7 @@ function doPlaceholdersMatch(strings) {
   // Technically placeholder `content` is not required to match by TC, but since
   // `example` must match and any auto-generated `example` is copied from `content`,
   // it would be confusing to let it differ when `example` is explicit.
-  return strings.every(val => isDeepEqual(val.ctc.placeholders, strings[0].ctc.placeholders));
+  return strings.every(val => isEqual(val.ctc.placeholders, strings[0].ctc.placeholders));
 }
 
 /**
