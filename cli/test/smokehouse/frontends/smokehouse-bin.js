@@ -16,7 +16,7 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import cloneDeep from 'lodash/cloneDeep.js';
+import {cloneDeep} from 'lodash-es';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
