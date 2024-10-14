@@ -7,16 +7,15 @@
 import {pathToFileURL} from 'url';
 
 import * as td from 'testdouble';
-import jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../../shared/root.js';
-import {readJson} from '../../../core/test/test-utils.js';
+import {fnAny, readJson} from '../../../core/test/test-utils.js';
 
-const mockRunLighthouse = jestMock.fn();
-const mockGetFlags = jestMock.fn();
-const mockAskPermission = jestMock.fn();
-const mockSentryInit = jestMock.fn();
-const mockLoggerSetLevel = jestMock.fn();
+const mockRunLighthouse = fnAny();
+const mockGetFlags = fnAny();
+const mockAskPermission = fnAny();
+const mockSentryInit = fnAny();
+const mockLoggerSetLevel = fnAny();
 
 /** @type {import('../../bin.js')} */
 let bin;
