@@ -128,7 +128,15 @@ class TargetManager extends ProtocolEventEmitter {
     let targetType;
 
     try {
-      const {targetInfo} = await newSession.sendCommand('Target.getTargetInfo');
+      // This can throw an error when attaching to certain target types.
+      // If a target type doesn't implement `Target.getTargetInfo` then Lighthouse should probably
+      // ignore it anyways.
+      const target = await newSession.sendCommand('Target.getTargetInfo').catch(() => null);
+      if (!target) {
+        return;
+      }
+
+      const {targetInfo} = target;
       targetType = targetInfo.type;
 
       // TODO: should detach from target in this case?
