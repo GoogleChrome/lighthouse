@@ -93,10 +93,10 @@ describe('Metrics: TTI', () => {
   describe('#findOverlappingQuietPeriods', () => {
     it('should return entire range when no activity is present', () => {
       const timeOrigin = 220023532;
-      const firstContentfulPaint = 2500 * 1000 + timeOrigin;
+      const largestContentfulPaint = 2500 * 1000 + timeOrigin;
       const traceEnd = 10000 * 1000 + timeOrigin;
       const processedTrace = /** @type {LH.Artifacts.ProcessedNavigation} */ (
-        {timestamps: {timeOrigin, firstContentfulPaint, traceEnd}}
+        {timestamps: {timeOrigin, largestContentfulPaint, traceEnd}}
       );
       const network = generateNetworkRecords([], timeOrigin);
 
@@ -105,7 +105,21 @@ describe('Metrics: TTI', () => {
       assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
 
-    it('should throw when trace ended too soon after FCP', () => {
+    it('should throw when trace ended too soon after LCP', () => {
+      const timeOrigin = 220023532;
+      const largestContentfulPaint = 2500 * 1000 + timeOrigin;
+      const traceEnd = 5000 * 1000 + timeOrigin;
+      const processedTrace = /** @type {LH.Artifacts.ProcessedNavigation} */ (
+        {timestamps: {timeOrigin, largestContentfulPaint, traceEnd}}
+      );
+      const network = generateNetworkRecords([], timeOrigin);
+
+      assert.throws(() => {
+        Interactive.findOverlappingQuietPeriods([], network, processedTrace);
+      }, /NO.*IDLE_PERIOD/);
+    });
+
+    it('should throw when trace ended too soon after FCP (when LCP is missing)', () => {
       const timeOrigin = 220023532;
       const firstContentfulPaint = 2500 * 1000 + timeOrigin;
       const traceEnd = 5000 * 1000 + timeOrigin;
@@ -183,14 +197,14 @@ describe('Metrics: TTI', () => {
 
     it('should find first overlapping quiet period', () => {
       const timeOrigin = 220023532;
-      const firstContentfulPaint = 10000 * 1000 + timeOrigin;
+      const largestContentfulPaint = 10000 * 1000 + timeOrigin;
       const traceEnd = 45000 * 1000 + timeOrigin;
       const processedTrace = /** @type {LH.Artifacts.ProcessedNavigation} */ (
-        {timestamps: {timeOrigin, firstContentfulPaint, traceEnd}}
+        {timestamps: {timeOrigin, largestContentfulPaint, traceEnd}}
       );
 
       const cpu = [
-        // quiet period before FCP
+        // quiet period before LCP
         {start: 9000, end: 9900},
         {start: 11000, end: 13000},
         // quiet period during network activity
