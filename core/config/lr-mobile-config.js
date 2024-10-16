@@ -10,6 +10,11 @@ const config = {
   settings: {
     maxWaitForFcp: 15 * 1000,
     maxWaitForLoad: 35 * 1000,
+    throttling: {
+      // Determined using PSI CPU benchmark median and
+      // https://lighthouse-cpu-throttling-calculator.vercel.app/
+      cpuSlowdownMultiplier: 1.5,
+    },
     skipAudits: [
       // Skip the h2 audit so it doesn't lie to us. See https://github.com/GoogleChrome/lighthouse/issues/6539
       'uses-http2',
