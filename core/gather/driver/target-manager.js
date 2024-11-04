@@ -128,15 +128,7 @@ class TargetManager extends ProtocolEventEmitter {
     let targetType;
 
     try {
-      // This can throw an error when attaching to certain target types.
-      // If a target type doesn't implement `Target.getTargetInfo` then Lighthouse should probably
-      // ignore it anyways.
-      const target = await newSession.sendCommand('Target.getTargetInfo').catch(() => null);
-      if (!target) {
-        return;
-      }
-
-      const {targetInfo} = target;
+      const {targetInfo} = await newSession.sendCommand('Target.getTargetInfo');
       targetType = targetInfo.type;
 
       // TODO: should detach from target in this case?
@@ -177,6 +169,10 @@ class TargetManager extends ProtocolEventEmitter {
     } catch (err) {
       // Sometimes targets can be closed before we even have a chance to listen to their network activity.
       if (/Target closed/.test(err.message)) return;
+
+      // `Target.getTargetInfo` is not implemented for certain target types.
+      // Lighthouse isn't interested in these targets anyway so we can just ignore them.
+      if (/'Target.getTargetInfo' wasn't found/.test(err)) return;
 
       // Worker targets can be a bit fickle and we only enable them for diagnostic purposes.
       // We shouldn't throw a fatal error if there were issues attaching to them.
