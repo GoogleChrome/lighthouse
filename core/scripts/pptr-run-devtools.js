@@ -100,12 +100,22 @@ async function evaluateInSession(session, fn, deps) {
  * @return {Promise<R>}
  */
 async function waitForFunction(session, fn, deps) {
+  let iterations = 0;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await evaluateInSession(session, fn, deps);
-    } catch {
+    } catch (err) {
+      // Random transient errors are common when first booting up.
+      // Only surface errors if this fails 10 times in a row (~5s)
+      if (iterations > 10) {
+        console.error(`Error waiting for function (#${iterations}):`);
+        console.error(err);
+        console.error('Retrying...');
+      }
       await new Promise(r => setTimeout(r, 500));
+    } finally {
+      ++iterations;
     }
   }
 }
@@ -161,7 +171,7 @@ async function waitForLighthouseReady() {
 
   const panel = LighthousePanel.LighthousePanel.instance();
 
-  const button = panel.contentElement.querySelector('devtools-button,button');
+  const button = panel.contentElement.querySelector('.vbox.flex-auto').shadowRoot.querySelector('devtools-button,button');
   if (button.disabled) throw new Error('Start button disabled');
 
   const targetManager = TargetManager.TargetManager.instance();
@@ -213,7 +223,7 @@ async function runLighthouse() {
   // In CI clicking the start button just once is flaky and can cause a timeout.
   // Therefore, keep clicking the button until we detect that the run started.
   const intervalHandle = setInterval(() => {
-    const button = panel.contentElement.querySelector('devtools-button,button');
+    const button = panel.contentElement.querySelector('.vbox.flex-auto').shadowRoot.querySelector('devtools-button,button');
     button.click();
   }, 100);
 
