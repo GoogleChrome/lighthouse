@@ -5,7 +5,7 @@
  */
 
 import log from 'lighthouse-logger';
-import isDeepEqual from 'lodash/isEqual.js';
+import {isEqual} from 'lodash-es';
 
 import {
   getBrowserVersion, getBenchmarkIndex, getEnvironmentWarnings,
@@ -52,7 +52,7 @@ function deduplicateWarnings(warnings) {
   const unique = [];
 
   for (const warning of warnings) {
-    if (unique.some(existing => isDeepEqual(warning, existing))) continue;
+    if (unique.some(existing => isEqual(warning, existing))) continue;
     unique.push(warning);
   }
 
