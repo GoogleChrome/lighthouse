@@ -362,6 +362,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[DeploymentHawk](https://deploymenthawk.com)** - DeploymentHawk is an automated site auditing tool powered by Lighthouse. Effortlessly catch performance, accessibility, and SEO issues before they impact your users. DeploymentHawk is a paid product with a free 7-day trial.
 
+* **[Guardius](https://guardius.io)** - Guardius is a DevOps and DevSecOps SaaS platform that integrates Lighthouse to deliver automated web performance analysis. It not only provides metrics evaluation and automatic scanning but also enables performance comparisons across different periods and ongoing observation over time. Additionally, Guardius offers predefined and customized alerts tailored to your specific requirements. A free version of Guardius is available for users to explore its features.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
