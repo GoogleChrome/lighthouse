@@ -1,3 +1,58 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Nate @servusdei2018
+Gareth Jones @G-Rath
+JDev @JWebDev
+ <a name="12.3.0"></a>
+# 12.3.0 (2024-11-14)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.1...v12.3.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* network-monitor: treat EventSource as non-critical ([#16225](https://github.com/GoogleChrome/lighthouse/pull/16225))
+* target-manager: ignore target if type is unknown ([#16221](https://github.com/GoogleChrome/lighthouse/pull/16221))
+
+## CLI
+
+* create writeFile destination if necessary ([#15990](https://github.com/GoogleChrome/lighthouse/pull/15990))
+
+## Deps
+
+* upgrade puppeteer to 23.8.0 ([#16248](https://github.com/GoogleChrome/lighthouse/pull/16248))
+* upgrade `third-party-web` to 0.26.1 ([#16219](https://github.com/GoogleChrome/lighthouse/pull/16219))
+* upgrade puppeteer to 23.5.2 ([#16220](https://github.com/GoogleChrome/lighthouse/pull/16220))
+* lighthouse-stack-packs: upgrade to 1.12.2 ([#16242](https://github.com/GoogleChrome/lighthouse/pull/16242))
+* lodash: migrate lodash to lodash-es ([#16211](https://github.com/GoogleChrome/lighthouse/pull/16211))
+* sentry: upgrade to v7 ([#16215](https://github.com/GoogleChrome/lighthouse/pull/16215))
+
+## Clients
+
+* lr: set CPU throttling based on benchmark ([#16226](https://github.com/GoogleChrome/lighthouse/pull/16226))
+* lr: fix wrong render-blocking-resources transfer size ([#16190](https://github.com/GoogleChrome/lighthouse/pull/16190))
+
+## I18n
+
+* import ([#16250](https://github.com/GoogleChrome/lighthouse/pull/16250))
+
+## Docs
+
+* readme: add `lighthouse-matchers` to related projects ([#16239](https://github.com/GoogleChrome/lighthouse/pull/16239))
+* readme: add Guardius to services list ([#16235](https://github.com/GoogleChrome/lighthouse/pull/16235))
+
+## Tests
+
+* smoke: fix devtools test runner & a11y errors ([#16236](https://github.com/GoogleChrome/lighthouse/pull/16236))
+
+## Misc
+
+* ci: upgrade old actions ([#16191](https://github.com/GoogleChrome/lighthouse/pull/16191))
+
 <a name="12.2.1"></a>
 # 12.2.1 (2024-09-06)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.0...v12.2.1)
