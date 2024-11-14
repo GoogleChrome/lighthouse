@@ -1,17 +1,16 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Nate @servusdei2018
-Gareth Jones @G-Rath
-JDev @JWebDev
  <a name="12.3.0"></a>
 # 12.3.0 (2024-11-14)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.1...v12.3.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 133](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
-## Notable Changes
-~~ TODO: Move notable changes here ~~
+## New contributors
 
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Nate @servusdei2018
+- Gareth Jones @G-Rath
+- JDev @JWebDev
 
 ## Core
 
