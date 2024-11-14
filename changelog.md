@@ -1,6 +1,6 @@
- <a name="12.3.0"></a>
-# 12.3.0 (2024-11-14)
-[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.1...v12.3.0)
+ <a name="12.2.2"></a>
+# 12.2.2 (2024-11-14)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.1...v12.2.2)
 
 We expect this release to ship in the DevTools of [Chrome 133](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
