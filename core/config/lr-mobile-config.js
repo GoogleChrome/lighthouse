@@ -13,7 +13,7 @@ const config = {
     throttling: {
       // Determined using PSI CPU benchmark median and
       // https://lighthouse-cpu-throttling-calculator.vercel.app/
-      cpuSlowdownMultiplier: 1.5,
+      cpuSlowdownMultiplier: 1.2,
     },
     skipAudits: [
       // Skip the h2 audit so it doesn't lie to us. See https://github.com/GoogleChrome/lighthouse/issues/6539
