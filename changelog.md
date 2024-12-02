@@ -1,3 +1,24 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.2.3"></a>
+# 12.2.3 (2024-12-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.2...v12.2.3)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Clients
+
+* lr: adjust CPU throttling based on benchmark ([#16256](https://github.com/GoogleChrome/lighthouse/pull/16256))
+
+## Tests
+
+* inline-fs: fix error in Node 20 ([#16262](https://github.com/GoogleChrome/lighthouse/pull/16262))
+
  <a name="12.2.2"></a>
 # 12.2.2 (2024-11-14)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.1...v12.2.2)
