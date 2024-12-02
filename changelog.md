@@ -1,19 +1,15 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-
- <a name="12.2.3"></a>
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+<a name="12.2.3"></a>
 # 12.2.3 (2024-12-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.2...v12.2.3)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+This release is only for PageSpeed Insights and we expect it to ship within 2 weeks.
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
 
+The CPU throttling factor for PageSpeed Insights has been adjusted ([#16256](https://github.com/GoogleChrome/lighthouse/pull/16256)) to account for the low CPU performance benchmarks typical in PageSpeed production environments. In general, TBT metric times for all sites should improve when testing with PageSpeed Insights.
 
-## Clients
-
-* lr: adjust CPU throttling based on benchmark ([#16256](https://github.com/GoogleChrome/lighthouse/pull/16256))
+All other Lighthouse clients (Lighthouse CLI, the Node API, Lighthouse panel in DevTools, etc) should not be affected by this change.
 
 ## Tests
 
