@@ -34,6 +34,7 @@ const FAILING_THREE_REDIRECTS = [{
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},
+  transferSize: 1000,
 }];
 
 const FAILING_TWO_REDIRECTS = [{
@@ -54,6 +55,7 @@ const FAILING_TWO_REDIRECTS = [{
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 448},
+  transferSize: 1000,
 }];
 
 const SUCCESS_ONE_REDIRECT = [{
@@ -68,6 +70,7 @@ const SUCCESS_ONE_REDIRECT = [{
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 139},
+  transferSize: 1000,
 }];
 
 const SUCCESS_NOREDIRECT = [{
@@ -76,6 +79,7 @@ const SUCCESS_NOREDIRECT = [{
   priority: 'VeryHigh',
   url: 'https://www.google.com/',
   timing: {receiveHeadersEnd: 140},
+  transferSize: 1000,
 }];
 
 const FAILING_CLIENTSIDE = [
@@ -92,6 +96,7 @@ const FAILING_CLIENTSIDE = [
     priority: 'VeryHigh',
     url: 'https://lisairish.com/',
     timing: {receiveHeadersEnd: 447},
+    transferSize: 1000,
   },
   {
     requestId: '2',
@@ -99,6 +104,7 @@ const FAILING_CLIENTSIDE = [
     priority: 'VeryHigh',
     url: 'https://www.lisairish.com/',
     timing: {receiveHeadersEnd: 448},
+    transferSize: 1000,
   },
 ];
 
@@ -108,6 +114,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 0,
   responseHeadersEndTime: 500,
+  transferSize: 1000,
 },
 {
   requestId: '2',
@@ -115,6 +122,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 1000,
   responseHeadersEndTime: 1500,
+  transferSize: 1000,
 },
 {
   requestId: '3',
@@ -122,6 +130,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 3000,
   responseHeadersEndTime: 3500,
+  transferSize: 1000,
 }];
 
 describe('Performance: Redirects audit', () => {

@@ -32,9 +32,9 @@ describe('Simulator artifact', () => {
     }, context);
 
     assert.equal(Math.round(simulator._rtt), 3);
-    assert.equal(Math.round(simulator._throughput / 1024), 1590);
-    assert.equal(simulator._cpuSlowdownMultiplier, 1);
-    assert.equal(simulator._layoutTaskMultiplier, 1);
+    assert.equal(Math.round(simulator.throughput / 1024), 1590);
+    assert.equal(simulator.cpuSlowdownMultiplier, 1);
+    assert.equal(simulator.layoutTaskMultiplier, 1);
   });
 
   it('returns a simulator for "devtools" throttling', async () => {
@@ -47,9 +47,9 @@ describe('Simulator artifact', () => {
     }, context);
 
     assert.equal(simulator._rtt, 100);
-    assert.equal(simulator._throughput / 1024, 1000);
-    assert.equal(simulator._cpuSlowdownMultiplier, 1);
-    assert.equal(simulator._layoutTaskMultiplier, 1);
+    assert.equal(simulator.throughput / 1024, 1000);
+    assert.equal(simulator.cpuSlowdownMultiplier, 1);
+    assert.equal(simulator.layoutTaskMultiplier, 1);
   });
 
   it('returns a simulator for "simulate" throttling', async () => {
@@ -59,12 +59,12 @@ describe('Simulator artifact', () => {
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
 
     assert.equal(simulator._rtt, 120);
-    assert.equal(simulator._throughput / 1024, 1000);
-    assert.equal(simulator._cpuSlowdownMultiplier, 3);
-    assert.equal(simulator._layoutTaskMultiplier, 1.5);
+    assert.equal(simulator.throughput / 1024, 1000);
+    assert.equal(simulator.cpuSlowdownMultiplier, 3);
+    assert.equal(simulator.layoutTaskMultiplier, 1.5);
     simulator.simulate(createNetworkNode());
 
-    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator._connectionPool._options;
+    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator.connectionPool.options;
     expect(additionalRttByOrigin.get('https://pwa.rocks')).toMatchInlineSnapshot(
       `0.3960000176447025`
     );
@@ -90,7 +90,7 @@ describe('Simulator artifact', () => {
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
     const result = simulator.simulate(createNetworkNode());
 
-    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator._connectionPool._options;
+    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator.connectionPool.options;
     // Make sure we passed through the right RTT
     expect(additionalRttByOrigin).toEqual(new Map([
       ['https://pwa.rocks', 1000],

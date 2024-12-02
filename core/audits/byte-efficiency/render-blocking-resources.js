@@ -130,7 +130,7 @@ class RenderBlockingResources extends Audit {
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
     const navInsights = await NavigationInsights.request(trace, context);
 
-    const renderBlocking = navInsights.RenderBlocking;
+    const renderBlocking = navInsights.model.RenderBlocking;
     if (renderBlocking instanceof Error) throw renderBlocking;
 
     /** @type {LH.Audit.Context['settings']} */

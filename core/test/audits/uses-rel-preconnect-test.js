@@ -18,6 +18,10 @@ const mainResource = {
 };
 
 function buildArtifacts(networkRecords, fcpTs) {
+  for (const record of networkRecords) {
+    record.transferSize = record.transferSize ?? 1000;
+  }
+
   const trace = createTestTrace({
     timeOrigin: 0,
     largestContentfulPaint: 5000,

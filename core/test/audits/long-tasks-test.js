@@ -152,6 +152,7 @@ describe('Long tasks audit', () => {
       url: TASK_URL,
       priority: 'High',
       timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40},
+      transferSize: 1000,
     }];
 
     const artifacts = {

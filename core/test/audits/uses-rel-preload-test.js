@@ -51,6 +51,7 @@ describe('Performance: uses-rel-preload audit', () => {
       {
         requestId: '2',
         networkRequestTime: 10_000,
+        transferSize: 1000,
         isLinkPreload: false,
         url: secondRecordUrl,
         timing: defaultMainResource.timing,
@@ -63,6 +64,7 @@ describe('Performance: uses-rel-preload audit', () => {
         // Normally this request would be flagged for preloading.
         requestId: '3',
         networkRequestTime: 20_000,
+        transferSize: 1000,
         isLinkPreload: false,
         url: 'http://www.example.com/a-different-script.js',
         timing: defaultMainResource.timing,
@@ -100,6 +102,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 500,
         networkEndTime: 1000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 500},
         url: mainDocumentNodeUrl,
       },
@@ -110,6 +113,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 1000,
         networkEndTime: 2000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptNodeUrl,
         initiator: {type: 'parser', url: mainDocumentNodeUrl},
@@ -121,6 +125,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3_250,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1250},
         url: scriptAddedNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -132,6 +137,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptSubNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -143,6 +149,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3_500,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1500},
         url: scriptOtherNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -170,7 +177,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit(artifacts, context).then(output => {
-      assert.equal(output.details.overallSavingsMs, 314);
+      assert.equal(output.details.overallSavingsMs, 303);
       assert.equal(output.details.items.length, 1);
     });
   });

@@ -30,12 +30,12 @@ class TraceEngineResult {
     const processor = new TraceEngine.TraceProcessor(traceHandlers);
 
     // eslint-disable-next-line max-len
-    await processor.parse(/** @type {import('@paulirish/trace_engine').Types.TraceEvents.TraceEventData[]} */ (
+    await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
       traceEvents
-    ));
-    if (!processor.traceParsedData) throw new Error('No data');
+    ), {});
+    if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
-    return {data: processor.traceParsedData, insights: processor.insights};
+    return {data: processor.parsedTrace, insights: processor.insights};
   }
 
   /**

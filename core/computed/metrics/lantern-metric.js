@@ -38,8 +38,10 @@ async function getComputationDataParamsFromTrace(data, context) {
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
   const traceEngineResult = await TraceEngineResult.request(data, context);
-  const processedNavigation =
-    Lantern.TraceEngineComputationData.createProcessedNavigation(traceEngineResult.data);
+  const frameId = traceEngineResult.data.Meta.mainFrameId;
+  const navigationId = traceEngineResult.data.Meta.mainFrameNavigations[0].args.data.navigationId;
+  const processedNavigation = Lantern.TraceEngineComputationData.createProcessedNavigation(
+    traceEngineResult.data, frameId, navigationId);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};

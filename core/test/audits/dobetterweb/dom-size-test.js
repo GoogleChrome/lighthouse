@@ -18,7 +18,7 @@ describe('DOMSize audit', () => {
 
   beforeEach(() => {
     const mainDocumentUrl = 'https://example.com/';
-    const networkRecords = [{url: mainDocumentUrl, priority: 'High'}];
+    const networkRecords = [{url: mainDocumentUrl, priority: 'High', transferSize: 1000}];
     const trace = createTestTrace({
       largestContentfulPaint: 15,
       topLevelTasks: [
