@@ -1,4 +1,3 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻!
 <a name="12.2.3"></a>
 # 12.2.3 (2024-12-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.2...v12.2.3)
