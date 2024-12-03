@@ -69,10 +69,6 @@ function pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes) {
   const remainingMessages = {};
 
   for (const [messageId, {message}] of Object.entries(localeLhl)) {
-    if (messageId.startsWith('node_modules/@paulirish/trace_engine')) {
-      continue;
-    }
-
     const goldenArgumentIds = goldenLocaleArgumentIds[messageId];
     if (!goldenArgumentIds) {
       logRemoval(alreadyLoggedPrunes, messageId, 'it is no longer found in Lighthouse');

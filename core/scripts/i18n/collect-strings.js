@@ -841,8 +841,8 @@ async function main() {
 
   // Remove any obsolete strings in existing LHL files.
   console.log('Checking for out-of-date LHL messages...');
-  pruneObsoleteLhlMessages();
   injectTraceEngineStrings();
+  pruneObsoleteLhlMessages();
 
   // Report on translation progress.
   const progress = countTranslatedMessages();
