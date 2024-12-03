@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as i18n from '../lib/i18n/i18n.js';
 import * as TraceEngine from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {CumulativeLayoutShift} from './metrics/cumulative-layout-shift.js';
@@ -35,7 +36,28 @@ class TraceEngineResult {
     ), {});
     if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
+    this.localizeInsights(processor.insights);
     return {data: processor.parsedTrace, insights: processor.insights};
+  }
+
+  /**
+   * @param {import('@paulirish/trace_engine/models/trace/insights/types.js').TraceInsightSets} insightSets
+   */
+  static localizeInsights(insightSets) {
+    for (const insightSet of insightSets.values()) {
+      for (const [name, model] of Object.entries(insightSet.model)) {
+        const key = `node_modules/@paulirish/trace_engine/models/trace/insights/${name}.js`;
+        const str_ = i18n.createIcuMessageFn(key, {
+          title: model.title,
+          description: model.description,
+        });
+
+        // @ts-expect-error coerce to string, should be fine
+        model.title = str_(model.title);
+        // @ts-expect-error coerce to string, should be fine
+        model.description = str_(model.description);
+      }
+    }
   }
 
   /**

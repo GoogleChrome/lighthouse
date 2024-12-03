@@ -766,6 +766,54 @@ function checkKnownFixedCollisions(strings) {
   }
 }
 
+/**
+ * @param {Record<any, any>} obj
+ * @return {Record<any, any>}
+ */
+function sortObject(obj) {
+  return Object.keys(obj).sort().reduce(function(result, key) {
+    // @ts-expect-error
+    result[key] = obj[key];
+    return result;
+  }, {});
+}
+
+/**
+ * Inject translated strings from `node_modules/@paulirish/trace_engine`. This avoids Lighthouse
+ * re-translating these same strings.
+ */
+function injectTraceEngineStrings() {
+  const traceEngineStringsDir = `${LH_ROOT}/node_modules/@paulirish/trace_engine/locales`;
+  const lhTraceStringsDir = `${LH_ROOT}/shared/localization/locales`;
+  for (const file of glob.sync(`${lhTraceStringsDir}/*.json`)) {
+    let name = path.basename(file);
+    if (name.endsWith('.ctc.json')) {
+      continue;
+    }
+
+    if (name === 'ar-XB.json') {
+      name = 'ar.json';
+    }
+
+    if (['en-XA.json'].includes(name)) {
+      continue;
+    }
+
+    const traceEnginePath = `${traceEngineStringsDir}/${name}`;
+    if (!fs.existsSync(traceEnginePath)) {
+      throw new Error(`expected locale file to exist: ${traceEnginePath}`);
+    }
+
+    const traceEngineStrings = JSON.parse(fs.readFileSync(traceEnginePath, 'utf-8'));
+    const strings = JSON.parse(fs.readFileSync(file, 'utf-8'));
+    for (const [key, value] of Object.entries(traceEngineStrings)) {
+      strings[`node_modules/@paulirish/trace_engine/${key.replace('.ts', '.js')}`] = value;
+    }
+
+    fs.writeFileSync(file, JSON.stringify(sortObject(strings), null, 2) + '\n');
+  }
+}
+
 async function main() {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
@@ -794,6 +842,7 @@ async function main() {
   // Remove any obsolete strings in existing LHL files.
   console.log('Checking for out-of-date LHL messages...');
   pruneObsoleteLhlMessages();
+  injectTraceEngineStrings();
 
   // Report on translation progress.
   const progress = countTranslatedMessages();

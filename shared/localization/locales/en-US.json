@@ -1676,6 +1676,15 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "A page navigation was detected during the run. Using timespan mode to audit page navigations is not recommended. Use navigation mode to audit page navigations for better third-party attribution and main thread detection."
   },
+  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
+    "message": "Only pages loaded via a GET request are eligible for back/forward cache."
+  },
+  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
+    "message": "Only pages with a status code of 2XX can be cached."
+  },
+  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
+    "message": "Chrome detected an attempt to execute JavaScript while in the cache."
+  },
   "core/lib/bf-cache-strings.js | appBanner": {
     "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."
   },
@@ -1775,11 +1784,11 @@
   "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
     "message": "Extensions with long-lived connection should close the connection before entering back/forward cache."
   },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Back/forward cache is disabled due to extensions."
-  },
   "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
     "message": "Extensions with long-lived connection attempted to send messages to frames in back/forward cache."
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensions": {
+    "message": "Back/forward cache is disabled due to extensions."
   },
   "core/lib/bf-cache-strings.js | embedderModalDialog": {
     "message": "Modal dialog such as form resubmission or http password dialog was shown for the page upon navigating away."
@@ -1820,12 +1829,6 @@
   "core/lib/bf-cache-strings.js | haveInnerContents": {
     "message": "Pages that use portals are not currently eligible for back/forward cache."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Only pages loaded via a GET request are eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Only pages with a status code of 2XX can be cached."
-  },
   "core/lib/bf-cache-strings.js | idleManager": {
     "message": "Pages that use IdleManager are not currently eligible for back/forward cache."
   },
@@ -1846,9 +1849,6 @@
   },
   "core/lib/bf-cache-strings.js | internalError": {
     "message": "Internal error."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome detected an attempt to execute JavaScript while in the cache."
   },
   "core/lib/bf-cache-strings.js | keepaliveRequest": {
     "message": "Back/forward cache is disabled due to a keepalive request."
@@ -2063,11 +2063,11 @@
   "core/lib/csp-evaluator.js | plainWildcards": {
     "message": "Avoid using plain wildcards ({keyword}) in this directive. Plain wildcards allow scripts to be sourced from an unsafe domain."
   },
-  "core/lib/csp-evaluator.js | reportingDestinationMissing": {
-    "message": "No CSP configures a reporting destination. This makes it difficult to maintain the CSP over time and monitor for any breakages."
-  },
   "core/lib/csp-evaluator.js | reportToOnly": {
     "message": "The reporting destination is only configured via the report-to directive. This directive is only supported in Chromium-based browsers so it is recommended to also use a `report-uri` directive."
+  },
+  "core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "No CSP configures a reporting destination. This makes it difficult to maintain the CSP over time and monitor for any breakages."
   },
   "core/lib/csp-evaluator.js | strictDynamic": {
     "message": "Host allowlists can frequently be bypassed. Consider using CSP nonces or hashes instead, along with `'strict-dynamic'` if necessary."
@@ -2096,6 +2096,9 @@
   "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
     "message": "Authorization will not be covered by the wildcard symbol (*) in CORS `Access-Control-Allow-Headers` handling."
   },
+  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "The `disableRemotePlayback` attribute should be used in order to disable the default Cast integration instead of using `-internal-media-controls-overlay-cast-button` selector."
+  },
   "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
     "message": "Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
   },
@@ -2120,17 +2123,14 @@
   "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
     "message": "Triggering window.confirm from cross origin iframes has been deprecated and will be removed in the future."
   },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "The `disableRemotePlayback` attribute should be used in order to disable the default Cast integration instead of using `-internal-media-controls-overlay-cast-button` selector."
+  "core/lib/deprecations-strings.js | DOMMutationEvents": {
+    "message": "DOM Mutation Events, including `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, and `DOMCharacterDataModified` are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use `MutationObserver` instead."
   },
   "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
     "message": "Support for data: URLs in SVG <use> element is deprecated and it will be removed in the future."
   },
   "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
     "message": "Relaxing the same-origin policy by setting `document.domain` is deprecated, and will be disabled by default. To continue using this feature, please opt-out of origin-keyed agent clusters by sending an `Origin-Agent-Cluster: ?0` header along with the HTTP response for the document and frames. See https://developer.chrome.com/blog/immutable-document-domain/ for more details."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM Mutation Events, including `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, and `DOMCharacterDataModified` are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use `MutationObserver` instead."
   },
   "core/lib/deprecations-strings.js | ExpectCTHeader": {
     "message": "The `Expect-CT` header is deprecated and will be removed. Chrome requires Certificate Transparency for all publicly trusted certificates issued after April 30, 2018."
@@ -2165,11 +2165,11 @@
   "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
     "message": "Setting `MediaSource.duration` below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit `remove(newDuration, oldDuration)` on all `sourceBuffers`, where `newDuration < oldDuration`."
   },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "The older, non-standardized `shadowroot` attribute is deprecated, and will *no longer function* in M119. Please use the new, standardized `shadowrootmode` attribute instead."
-  },
   "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
     "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the `MIDIOptions`."
+  },
+  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
+    "message": "The older, non-standardized `shadowroot` attribute is deprecated, and will *no longer function* in M119. Please use the new, standardized `shadowrootmode` attribute instead."
   },
   "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
     "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
@@ -2207,29 +2207,23 @@
   "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
     "message": "HTMLVideoElement.webkitDisplayingFullscreen is deprecated. Please use Document.fullscreenElement instead."
   },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() is deprecated. Please use Element.requestFullscreen() instead."
-  },
   "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
     "message": "HTMLVideoElement.webkitEnterFullScreen() is deprecated. Please use Element.requestFullscreen() instead."
   },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() is deprecated. Please use Document.exitFullscreen() instead."
+  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() is deprecated. Please use Element.requestFullscreen() instead."
   },
   "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
     "message": "HTMLVideoElement.webkitExitFullScreen() is deprecated. Please use Document.exitFullscreen() instead."
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() is deprecated. Please use Document.exitFullscreen() instead."
   },
   "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
     "message": "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead."
   },
   "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
     "message": "We're deprecating the API `chrome.privacy.websites.privacySandboxEnabled`, though it will remain active for backward compatibility until release M113. Instead, please use `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` and `chrome.privacy.websites.adMeasurementEnabled`. See https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked."
   },
   "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
     "message": "The constraint `DtlsSrtpKeyAgreement` is removed. You have specified a `false` value for this constraint, which is interpreted as an attempt to use the removed `SDES key negotiation` method. This functionality is removed; use a service that supports `DTLS key negotiation` instead."
@@ -2239,6 +2233,12 @@
   },
   "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
     "message": "The callback-based getStats() is deprecated and will be removed. Use the spec-compliant getStats() instead."
+  },
+  "core/lib/deprecations-strings.js | RangeExpand": {
+    "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
+  },
+  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked."
   },
   "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
     "message": "The `rtcpMuxPolicy` option is deprecated and will be removed."
@@ -2381,11 +2381,11 @@
   "core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
   },
-  "core/lib/i18n/i18n.js | otherResourcesLabel": {
-    "message": "Other resources"
-  },
   "core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Other"
+  },
+  "core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Other resources"
   },
   "core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Script"
@@ -2620,6 +2620,72 @@
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse User Flow Report"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
+    "message": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
+    "message": "Layout shift culprits"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
+    "message": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
+    "message": "Document request latency"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
+    "message": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
+    "message": "Font display"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Improve image delivery"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
+    "message": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
+    "message": "INP by phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
+    "message": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
+    "message": "LCP request discovery"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
+    "message": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
+    "message": "LCP by phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
+    "message": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
+    "message": "Render blocking requests"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
+    "message": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
+    "message": "CSS Selector costs"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
+    "message": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
+    "message": "Third parties"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
+    "message": "The page's viewport is not mobile-optimized, so tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
+    "message": "Viewport not optimized for mobile"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimize CPU usage when the content is offscreen."
@@ -3128,11 +3194,11 @@
   "report/renderer/report-utils.js | dropdownSaveJSON": {
     "message": "Save as JSON"
   },
-  "report/renderer/report-utils.js | dropdownViewer": {
-    "message": "Open in Viewer"
-  },
   "report/renderer/report-utils.js | dropdownViewUnthrottledTrace": {
     "message": "View Unthrottled Trace"
+  },
+  "report/renderer/report-utils.js | dropdownViewer": {
+    "message": "Open in Viewer"
   },
   "report/renderer/report-utils.js | errorLabel": {
     "message": "Error!"
