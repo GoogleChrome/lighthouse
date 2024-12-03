@@ -46,6 +46,10 @@ class TraceEngineResult {
   static localizeInsights(insightSets) {
     for (const insightSet of insightSets.values()) {
       for (const [name, model] of Object.entries(insightSet.model)) {
+        if (model instanceof Error) {
+          continue;
+        }
+
         const key = `node_modules/@paulirish/trace_engine/models/trace/insights/${name}.js`;
         const str_ = i18n.createIcuMessageFn(key, {
           title: model.title,
