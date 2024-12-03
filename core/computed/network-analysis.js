@@ -16,11 +16,11 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const analyis = Lantern.Core.NetworkAnalyzer.analyze(records);
-    if (!analyis) {
+    const analysis = Lantern.Core.NetworkAnalyzer.analyze(records);
+    if (!analysis) {
       throw new Error('Could not compute network analysis');
     }
-    return analyis;
+    return analysis;
   }
 }
 
