@@ -191,10 +191,11 @@ describe('Individual modes API', function() {
         .sort((a, b) => a.url.localeCompare(b.url));
 
       // These results can change depending on which Chrome version is used.
-      // The expectation here is tuned for ToT Chromium WITHOUT the `--disable-field-trial-config`
+      // The expectation here is tuned for Chromium 133.0.6876.0
       //
-      // Adding the `--disable-field-trial-config` flag or using Chrome canary can change which
-      // target the root worker requests are associated with.
+      // Using an older Chromium version can change which target the root
+      // worker requests are associated with.
+      // (also depends on --disable-field-trial-config for older versions)
       expect(networkRequests).toMatchInlineSnapshot(`
 Array [
   Object {
@@ -210,11 +211,11 @@ Array [
     "url": "http://localhost:10200/simple-script.js?importScripts",
   },
   Object {
-    "sessionTargetType": "page",
+    "sessionTargetType": "worker",
     "url": "http://localhost:10200/simple-worker.js",
   },
   Object {
-    "sessionTargetType": "page",
+    "sessionTargetType": "worker",
     "url": "http://localhost:10200/simple-worker.mjs",
   },
   Object {
@@ -230,11 +231,11 @@ Array [
     "url": "http://localhost:10503/simple-script.js?importScripts",
   },
   Object {
-    "sessionTargetType": "iframe",
+    "sessionTargetType": "worker",
     "url": "http://localhost:10503/simple-worker.js",
   },
   Object {
-    "sessionTargetType": "iframe",
+    "sessionTargetType": "worker",
     "url": "http://localhost:10503/simple-worker.mjs",
   },
 ]
