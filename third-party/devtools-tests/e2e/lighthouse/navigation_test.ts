@@ -13,7 +13,6 @@ import {
   waitFor,
   waitForElementWithTextContent,
 } from '../../shared/helper.js';
-
 import {
   clickStartButton,
   getAuditsBreakdown,
