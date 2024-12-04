@@ -122,7 +122,7 @@ class TraceElements extends BaseGatherer {
    * that may have caused the shift.
    *
    * @param {LH.Trace} trace
-   * @param {LH.Artifacts.TraceEngineResult['data']} traceEngineResult
+   * @param {LH.Artifacts.TraceEngineResult['parsedTrace']} traceEngineResult
    * @param {LH.Artifacts.TraceEngineRootCauses} rootCauses
    * @param {LH.Gatherer.Context} context
    * @return {Promise<Array<{nodeId: number}>>}
@@ -322,7 +322,7 @@ class TraceElements extends BaseGatherer {
 
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
-      trace, traceEngineResult.data, rootCauses, context);
+      trace, traceEngineResult.parsedTrace, rootCauses, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
