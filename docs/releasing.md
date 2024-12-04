@@ -89,7 +89,7 @@ git status
 git log
 
 # Publish tag.
-git push --follow-tags
+git push --tags
 
 # Publish to npm.
 npm publish
@@ -137,7 +137,7 @@ yarn devtools ~/src/devtools/devtools-frontend
 cd ~/src/devtools/devtools-frontend
 git new-branch rls
 git commit -am "[Lighthouse] Roll Lighthouse x.x.x"
-git cl upload -b 772558
+git cl upload -b 40543651
 ```
 
 ### Lightrider
