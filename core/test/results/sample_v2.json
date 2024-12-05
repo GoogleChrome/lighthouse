@@ -2807,6 +2807,48 @@
         ]
       }
     },
+    "origin-isolation": {
+      "id": "origin-isolation",
+      "title": "Ensure the proper usage of the COOP header to isolate the origin.",
+      "description": "Deployment of the COOP header allows isolation of the top-level document to not share a browsing context group with cross-origin documents. [Learn what the COOP header is and how it should be deployed.](https://web.dev/articles/why-coop-coep#coop)",
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "description",
+            "valueType": "text",
+            "subItemsHeading": {
+              "key": "description"
+            },
+            "label": "Description"
+          },
+          {
+            "key": "directive",
+            "valueType": "code",
+            "subItemsHeading": {
+              "key": "directive"
+            },
+            "label": "Directive"
+          },
+          {
+            "key": "severity",
+            "valueType": "text",
+            "subItemsHeading": {
+              "key": "severity"
+            },
+            "label": "Severity"
+          }
+        ],
+        "items": [
+          {
+            "description": "No COOP header found",
+            "severity": "High"
+          }
+        ]
+      }
+    },
     "script-treemap-data": {
       "id": "script-treemap-data",
       "title": "Script Treemap Data",
@@ -6757,6 +6799,11 @@
           "group": "best-practices-trust-safety"
         },
         {
+          "id": "origin-isolation",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
           "id": "paste-preventing-inputs",
           "weight": 3,
           "group": "best-practices-ux"
@@ -8205,6 +8252,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:origin-isolation",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:script-treemap-data",
         "duration": 100,
         "entryType": "measure"
@@ -9255,7 +9308,8 @@
       "core/lib/i18n/i18n.js | columnDescription": [
         "audits[errors-in-console].details.headings[1].label",
         "audits[csp-xss].details.headings[0].label",
-        "audits[has-hsts].details.headings[0].label"
+        "audits[has-hsts].details.headings[0].label",
+        "audits[origin-isolation].details.headings[0].label"
       ],
       "core/audits/server-response-time.js | title": [
         "audits[server-response-time].title"
@@ -9677,7 +9731,8 @@
       ],
       "core/lib/i18n/i18n.js | itemSeverityHigh": [
         "audits[csp-xss].details.items[0].severity",
-        "audits[has-hsts].details.items[0].severity"
+        "audits[has-hsts].details.items[0].severity",
+        "audits[origin-isolation].details.items[0].severity"
       ],
       "core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
@@ -9696,6 +9751,21 @@
       ],
       "core/audits/has-hsts.js | noHsts": [
         "audits[has-hsts].details.items[0].description"
+      ],
+      "core/audits/origin-isolation.js | title": [
+        "audits[origin-isolation].title"
+      ],
+      "core/audits/origin-isolation.js | description": [
+        "audits[origin-isolation].description"
+      ],
+      "core/audits/origin-isolation.js | columnDirective": [
+        "audits[origin-isolation].details.headings[1].label"
+      ],
+      "core/audits/origin-isolation.js | columnSeverity": [
+        "audits[origin-isolation].details.headings[2].label"
+      ],
+      "core/audits/origin-isolation.js | noCoop": [
+        "audits[origin-isolation].details.items[0].description"
       ],
       "core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
