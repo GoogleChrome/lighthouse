@@ -119,12 +119,12 @@ describe('Page uses optimized responses', () => {
       Scripts: [
         {
           scriptId: '123.1',
-          src: 'foo.js',
+          url: 'foo.js',
           content: 'var f=new Set();f.add(1);f.add(2);if(f.has(2))console.log(1234)',
         },
         {
           scriptId: '123.2',
-          src: 'other.js',
+          url: 'other.js',
           content: `
           const foo = new Set();
           foo.add(1);
@@ -137,7 +137,7 @@ describe('Page uses optimized responses', () => {
         },
         {
           scriptId: '123.3',
-          src: 'invalid.js',
+          url: 'invalid.js',
           content: 'for{(wtf',
         },
       ].map(createScript),

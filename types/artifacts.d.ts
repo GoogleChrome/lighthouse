@@ -282,10 +282,18 @@ declare module Artifacts {
   interface Script extends Omit<Crdp.Debugger.ScriptParsedEvent, 'url'|'embedderName'> {
     /**
      * Set by a sourceURL= magic comment if present, otherwise this is the same as the URL.
+     * In some extreme cases dynamic scripts will on the protocol have neither a name or url,
+     * in which case name will be `<compiled from string in X>` with some possible best-guess as to
+     * what URL created the script.
      * Use this field for presentational purposes only.
      */
     name: string;
-    url: string;
+    /**
+     * The network url of the script.
+     * If the script is inline, this is the HTML document url.
+     * If the script is dynamic (compiled from a string via eval, for example), this is undefined.
+     */
+    url?: string;
     content?: string;
   }
 
