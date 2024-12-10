@@ -193,6 +193,7 @@ const defaultConfig = {
     'prioritize-lcp-image',
     'csp-xss',
     'has-hsts',
+    'origin-isolation',
     'script-treemap-data',
     'accessibility/accesskeys',
     'accessibility/aria-allowed-attr',
@@ -543,6 +544,7 @@ const defaultConfig = {
         {id: 'notification-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'csp-xss', weight: 0, group: 'best-practices-trust-safety'},
         {id: 'has-hsts', weight: 0, group: 'best-practices-trust-safety'},
+        {id: 'origin-isolation', weight: 0, group: 'hidden'},
         // User Experience
         {id: 'paste-preventing-inputs', weight: 3, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
