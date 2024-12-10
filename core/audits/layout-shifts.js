@@ -61,7 +61,7 @@ class LayoutShifts extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const traceEngineResult = await TraceEngineResult.request({trace}, context);
-    const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
+    const clusters = traceEngineResult.parsedTrace.LayoutShifts.clusters ?? [];
     const {cumulativeLayoutShift: clsSavings, impactByNodeId} =
       await CumulativeLayoutShiftComputed.request(trace, context);
     const traceElements = artifacts.TraceElements
