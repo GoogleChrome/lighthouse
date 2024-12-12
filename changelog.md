@@ -1,3 +1,44 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Sebastian Neuner @sebastian9er
+ <a name="12.3.0"></a>
+# 12.3.0 (2024-12-12)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.3...v12.3.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## New Audits
+
+* ensure proper origin isolation with COOP ([#16275](https://github.com/GoogleChrome/lighthouse/pull/16275))
+* use a strong HSTS policy ([#16257](https://github.com/GoogleChrome/lighthouse/pull/16257))
+
+## Core
+
+* font-size: exclude invisible text ([#16281](https://github.com/GoogleChrome/lighthouse/pull/16281))
+
+## Deps
+
+* upgrade puppeteer to v23.10.4 ([#16279](https://github.com/GoogleChrome/lighthouse/pull/16279))
+* upgrade `trace_engine` to 0.0.38 ([#16269](https://github.com/GoogleChrome/lighthouse/pull/16269))
+
+## I18n
+
+* import ([#16283](https://github.com/GoogleChrome/lighthouse/pull/16283))
+* inject strings from trace engine npm package ([#16272](https://github.com/GoogleChrome/lighthouse/pull/16272))
+
+## Docs
+
+* update releasing instructions ([#16252](https://github.com/GoogleChrome/lighthouse/pull/16252))
+
+## Tests
+
+* update network target type expectations ([#16273](https://github.com/GoogleChrome/lighthouse/pull/16273))
+* devtools: sync e2e ([#16253](https://github.com/GoogleChrome/lighthouse/pull/16253))
+
 <a name="12.2.3"></a>
 # 12.2.3 (2024-12-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.2...v12.2.3)
