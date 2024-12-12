@@ -12,7 +12,7 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 ## New Audits
 
-This release several new security audits. These audits are informative and won't affect your best practices score.
+This release adds new security audits. These audits are informative and won't affect your best practices score.
 
 * Ensure proper origin isolation with COOP ([#16275](https://github.com/GoogleChrome/lighthouse/pull/16275))
 * Use a strong HSTS policy ([#16257](https://github.com/GoogleChrome/lighthouse/pull/16257))
