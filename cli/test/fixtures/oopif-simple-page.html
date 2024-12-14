@@ -5,6 +5,33 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="simple-script.js"></script>
+  <script>
+    // Force some stack frames.
+    function fnWrapper1() {
+      eval(`
+      function fn1() {
+        console.log('hello from eval world');
+      }
+      fn1();
+      `);
+    }
+    function fnWrapper2() {
+      fnWrapper1();
+    }
+    fnWrapper2();
+
+    eval(`
+    function fn2() {
+      console.log('hello from _named_ eval world');
+    }
+    fn2();
+    //# sourceURL=eval.js
+    `);
+    setTimeout(`function fn3() {
+      console.log('hello from setTimeout world');
+    }
+    fn3();`, 1);
+  </script>
 </head>
 <body>
   <h1>Just a simple page</h1>

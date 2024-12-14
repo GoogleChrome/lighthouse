@@ -311,6 +311,28 @@ class Audit {
   }
 
   /**
+   * @param {LH.Artifacts.Script} script
+   * @param {number} line 0-indexed
+   * @param {number} column 0-indexed
+   * @param {LH.Artifacts.Bundle=} bundle
+   * @return {LH.Audit.Details.SourceLocationValue}
+   */
+  static makeSourceLocationFromScript(script, line, column, bundle) {
+    if (script.url) {
+      return this.makeSourceLocation(script.url, line, column, bundle);
+    } else {
+      return {
+        type: 'source-location',
+        url: script.name,
+        urlProvider: 'comment',
+        line,
+        column,
+        original: bundle && this._findOriginalLocation(bundle, line, column),
+      };
+    }
+  }
+
+  /**
    * @param {LH.Artifacts.ConsoleMessage} entry
    * @param {LH.Artifacts.Bundle=} bundle
    * @return {LH.Audit.Details.SourceLocationValue | undefined}
