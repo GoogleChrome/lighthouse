@@ -15,6 +15,10 @@ function runAudit({
   onclick = '',
   name = '',
   id = '',
+  attributeNames = [
+    (rawHref || href) ? 'href' : null, role ? 'role' : null, name ? 'name' : null,
+  ].filter(Boolean),
+  ariaCurrent = '',
   listeners = onclick.trim().length ? [{type: 'click'}] : [],
   node = {
     snippet: '',
@@ -34,6 +38,8 @@ function runAudit({
       role,
       node,
       id,
+      attributeNames,
+      ariaCurrent,
     }],
     URL: {
       finalDisplayedUrl: 'http://example.com',
@@ -56,11 +62,14 @@ describe('SEO: Crawlable anchors audit', () => {
     assert.equal(runAudit({rawHref: '//example.com'}), 1, 'protocol relative link');
     assert.equal(runAudit({rawHref: 'tel:5555555'}), 1, 'email link with a tel URI');
     assert.equal(runAudit({rawHref: '#'}), 1, 'link with only a hash symbol');
+    assert.equal(runAudit({ariaCurrent: 'page'}), 1, 'placeholder anchor element');
+    assert.equal(runAudit({ariaCurrent: 'location'}), 1, 'placeholder anchor element');
     assert.equal(runAudit({
       rawHref: '?query=string',
     }), 1, 'relative link which specifies a query string');
 
     assert.equal(runAudit({rawHref: 'ftp://'}), 0, 'invalid FTP links fails');
+    assert.equal(runAudit({rawHref: '', href: 'https://example.com', attributeNames: ['href']}), 1, 'empty attribute that links to current page');
     assert.equal(runAudit({rawHref: '', href: 'https://example.com'}), 1, 'empty attribute that links to current page');
   });
 
@@ -78,6 +87,11 @@ describe('SEO: Crawlable anchors audit', () => {
       rawHref: 'javascript:void(0)',
     });
     assert.equal(auditResult, 1, 'Href value has no effect when a role is present');
+    assert.equal(
+      runAudit({role: ' ', attributeNames: ['rel']}),
+      0,
+      'A role value of a space character fails the audit'
+    );
     assert.equal(runAudit({role: 'a'}), 1, 'Using a role attribute value is an immediate pass');
     assert.equal(runAudit({role: ' '}), 0, 'A role value of a space character fails the audit');
   });
@@ -103,7 +117,24 @@ describe('SEO: Crawlable anchors audit', () => {
   });
 
   it('disallows uncrawlable anchors', () => {
+    assert.equal(
+      runAudit({attributeNames: ['href']}),
+      0,
+      'link with an empty href and no other meaningful attributes and no event handlers'
+    );
+    assert.equal(runAudit({attributeNames: ['target']}), 0, 'link with only a target attribute');
+    assert.equal(runAudit({rawHref: 'file:///image.png'}), 0, 'hyperlink with a `file:` URI');
+    assert.equal(
+      runAudit({name: ' ', attributeNames: ['rel']}),
+      0,
+      'name attribute with only space characters'
+    );
     assert.equal(runAudit({}), 0, 'link with no meaningful attributes and no event handlers');
+    assert.equal(
+      runAudit({ariaCurrent: 'true'}),
+      0,
+      'link with no href attribute and aria-current is neither page nor location.'
+    );
     assert.equal(runAudit({rawHref: 'file:///image.png'}), 0, 'hyperlink with a `file:` URI');
     assert.equal(runAudit({name: ' '}), 0, 'name attribute with only space characters');
     assert.equal(runAudit({rawHref: ' '}), 1, 'href attribute with only space characters');
