@@ -365,7 +365,11 @@ declare module Artifacts {
     node: NodeDetails
     onclick: string
     id: string
+    attributeNames: Array<string>
     listeners?: Array<{
+      type: Crdp.DOMDebugger.EventListener['type']
+    }>
+    ancestorListeners?: Array<{
       type: Crdp.DOMDebugger.EventListener['type']
     }>
   }
