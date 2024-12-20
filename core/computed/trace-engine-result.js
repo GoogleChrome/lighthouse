@@ -20,15 +20,7 @@ class TraceEngineResult {
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
   static async runTraceEngine(traceEvents) {
-    const traceHandlers = {...TraceEngine.TraceHandlers};
-
-    // @ts-expect-error Temporarily disable this handler
-    // It's not currently used anywhere in trace engine insights or Lighthouse.
-    // TODO: Re-enable this when its memory usage is improved in the trace engine
-    // https://github.com/GoogleChrome/lighthouse/issues/16111
-    delete traceHandlers.Invalidations;
-
-    const processor = new TraceEngine.TraceProcessor(traceHandlers);
+    const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
 
     // eslint-disable-next-line max-len
     await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
