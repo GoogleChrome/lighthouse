@@ -53,6 +53,10 @@ jobs:
     - run: yarn build-report
     - run: yarn reset-link
 
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
     # Run pptr tests using ToT Chrome instead of stable default.
     - name: Install Chrome ToT
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
