@@ -50,6 +50,7 @@ Array [
   "navigatorUserAgentIssueDetails",
   "propertyRuleIssueDetails",
   "quirksModeIssueDetails",
+  "selectElementAccessibilityIssueDetails",
   "sharedArrayBufferIssueDetails",
   "sharedDictionaryIssueDetails",
   "stylesheetLoadingIssueDetails",

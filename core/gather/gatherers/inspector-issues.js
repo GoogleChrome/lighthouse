@@ -79,6 +79,7 @@ class InspectorIssues extends BaseGatherer {
       propertyRuleIssue: [],
       quirksModeIssue: [],
       cookieIssue: [],
+      selectElementAccessibilityIssue: [],
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       stylesheetLoadingIssue: [],
