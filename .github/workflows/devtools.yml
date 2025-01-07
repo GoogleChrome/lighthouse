@@ -105,6 +105,10 @@ jobs:
     - name: Download depot tools
       run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
 
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
     - name: Load build artifacts
       id: devtools-build-artifacts
       uses: actions/cache@v3
