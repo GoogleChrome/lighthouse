@@ -5,15 +5,38 @@ on:
   workflow_dispatch: {}
 
 jobs:
+  check_date:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
+
+      - id: should_run
+        continue-on-error: true
+        if: ${{ github.event_name == 'schedule' }}
+        run: test -z $(git rev-list --after="1 day" ${{ github.sha }}) && echo "should_run=false" >> $GITHUB_OUTPUT
+
   publish:
+    # Prevent scheduled job from running if...
+    # 1) this is a fork
+    # 2) there has not been a change in the last day
+    if: |
+      github.event_name != 'schedule' ||
+      (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12.x
+          node-version: 18.x
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
+
+      # Build report bundles needed for publishing.
+      - run: yarn build-report
 
       - name: Publish to npm
         run: |

@@ -8,16 +8,16 @@ jobs:
   check-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - uses: actions/checkout@v4
+      - uses: gaurav-nelson/github-action-markdown-link-check@a996638015fbc9ef96beef1a41bbad7df8e06154
         # checks all markdown files from /docs including all subfolders
         with:
           use-quiet-mode: 'yes'
           use-verbose-mode: 'yes'
           config-file: '.github/workflows/markdown.links.config.json'
           folder-path: 'docs/'
-      - uses: actions/checkout@master
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - uses: actions/checkout@v4
+      - uses: gaurav-nelson/github-action-markdown-link-check@a996638015fbc9ef96beef1a41bbad7df8e06154
         # checks all markdown files from root but ignores subfolders
         with:
           use-quiet-mode: 'yes'
@@ -30,11 +30,11 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/checkout@v4
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
       with:
-        node-version: 12.x
+        node-version: 18.x
     - run: yarn --frozen-lockfile
 
-    - run: yarn jest --testMatch="**/third-party/chromium-synchronization/*-test.js"
+    - run: yarn mocha --testMatch=third-party/chromium-synchronization/*-test.js

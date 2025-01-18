@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright 2020 Google LLC
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Lighthouse Treemap</title>
+  <link rel="icon" href='data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="%23F63"/><path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="%23FFA385"/><path fill="%23FF3" d="M20.5 10h7v7h-7z"/></svg>'>
+  <meta name="theme-color" content="#304ffe">
+  <link rel="stylesheet" href="styles/bundled.css">
+  <link rel="canonical" href="https://googlechrome.github.io/lighthouse/treemap/">
+</head>
+
+<body class="vars">
+  <div class="drop_zone"></div>
+
+  <div class="treemap-placeholder">
+    <div class="treemap-placeholder-inner">
+      <div>
+        <img src="images/lighthouse-logo.svg" class="treemap-placeholder-logo" alt="Lighthouse logo">
+      </div>
+      <div>
+        <h1 class="treemap-placeholder__heading">Lighthouse Treemap</h1>
+        <div class="treemap-placeholder__help">To view a treemap: Paste the Lighthouse result json or a Gist URL.<br>
+          You can also drag 'n drop the file or click here to select it.<br><br>
+        </div>
+        <input type="url" class="treemap-placeholder__url js-gist-url"
+               placeholder="Enter or paste Gist URL">
+      </div>
+    </div>
+  </div>
+
+  <div id="lh-log"></div>
+
+  <input id="hidden-file-input" type="file" hidden accept="application/json">
+
+  <main class="hidden lh-main lh-main--show-table">
+    <div class="lh-settings">
+      <header>
+        <div class="lh-header--section">
+          <span class="lh-logotitle">
+            <!-- Lighthouse logo. Stolen from templates.html -->
+            <svg role="img" class="lh-topbar__logo" title="Lighthouse logo" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="#F63"/>
+              <path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="#FFA385"/>
+              <path fill="#FF3" d="M20.5 10h7v7h-7z"/>
+            </svg>
+
+            <span class="lh-header--title lh-text-dim">Lighthouse Treemap</span>
+          </span>
+
+          <span class="lh-header__inputs">
+            <select class="bundle-selector"></select>
+            <button data-i18n="toggleTableButtonLabel" class="lh-button lh-button--active lh-button--toggle-table"></button>
+          </span>
+        </div>
+
+        <div class="lh-header--section">
+          <span class="lh-header--url-and-size">
+            <a href="" class="lh-header--url" target="_blank" rel="noopener"></a> <span class="lh-text-dim"></span></span>
+          </span>
+          <div class="lh-mode-wrapper">
+            <div class="lh-modes">
+              <!-- View modes go here -->
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div class="lh-treemap">
+      <!-- treemap goes here -->
+    </div>
+
+    <div class="lh-table">
+      <!-- table goes here -->
+    </div>
+  </main>
+
+  <script src="src/bundled.js"></script>
+
+  <script>
+    // b/298230436
+    window.__hash = window.location.hash;
+    window.location.hash = '';
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-16X003MB7V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-16X003MB7V');
+  </script>
+</body>
+
+</html>

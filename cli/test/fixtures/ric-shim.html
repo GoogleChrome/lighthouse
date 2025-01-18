@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<body>
+Request Idle Callback Shim Smoke Test
+<script>
+  let count = 0;
+  const iterations = 40;
+
+  let ricTaskDuration = 0;
+  if (window.location.search.includes('short')) {
+    ricTaskDuration = 1;
+  }
+  if (window.location.search.includes('long')) {
+    ricTaskDuration = 55; // ensure every task gets counted as a long task by PerformanceObserver
+  }
+
+  function sleep(milliseconds = 0) {
+    const timeStart = Date.now();
+    while (true) {
+      let elapsedTime = Date.now() - timeStart;
+      if (elapsedTime >= milliseconds) {
+        break;
+      }
+    }
+  }
+
+  function task(deadline) {
+    while (deadline.timeRemaining() > 0) {
+      sleep(ricTaskDuration);
+    }
+
+    if (count < iterations - 1) {
+      count++;
+      requestIdleCallback(task);
+    }
+  }
+
+  requestIdleCallback(task);
+</script>
+</body>
+</html>

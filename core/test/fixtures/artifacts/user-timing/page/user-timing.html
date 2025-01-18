@@ -1,0 +1,22 @@
+<body>
+  <button id="button">Click me</button>
+  <div id="results"></div>
+
+  <script>
+    performance.mark('start');
+
+    button.addEventListener('click', (clickEvent) => {
+      const marker = performance.mark('fetch-start');
+      fetch('robots.txt').then((data) => {
+        performance.measure('fetch-end', {
+          start: clickEvent.timeStamp,
+          end: marker.startTime,
+        });
+        results.textContent = clickEvent.timeStamp;
+    });
+
+    // Ensure a colon doesn't break audit.
+    performance.mark('Zone:ZonePromise');
+  });
+  </script>
+</body>

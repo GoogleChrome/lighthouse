@@ -1,0 +1,301 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+<head>
+<title>Byte Efficency tester</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<script>
+function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = false) {
+  const data = [];
+  while (sizeInBytes > 0) {
+    const index = Math.round(100000 * Math.random());
+    const className = `${used ? '' : 'un'}used-selector${index}`;
+    const prefix = used ? '' : '/* Here is a unused selector */\n';
+    const rule = `${prefix}.${className} { background: white; }`;
+    data.push(rule);
+    if (used) {
+      const div = document.createElement('div');
+      div.classList.add(className);
+      document.body.append(div);
+    }
+    sizeInBytes -= rule.length * 0.2; // 1 byte per character, GZip estimate is 20% for Stylesheets
+  }
+
+  const style = document.createElement('style');
+  style.append(firstContent + data.join('\n'));
+  document.head.append(style);
+}
+
+function longTask(length = 75) {
+  const start = Date.now();
+  while (Date.now() < start + length) ;
+}
+
+// Add a long task to delay FI and TTI
+setTimeout(longTask, 4000);
+
+// Lazily load the image
+setTimeout(() => {
+  const template = document.getElementById('lazily-loaded-image');
+  document.body.append(template.content.cloneNode(true));
+}, 7000);
+</script>
+<style>
+  .onscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .stylesheet-sizing {
+    width: 160px;
+    height: 110px;
+  }
+</style>
+<script src="script.js" type="application/javascript"></script>
+<script src="bundle.js"></script>
+</head>
+
+<body>
+
+<div>
+  <h2>Byte efficiency tester page</h2>
+  <span>Hi there!</span>
+  <div id="image-in-shadow-root"></div>
+  <script>
+  // Make sure image audits can handle images in shadow roots, see https://github.com/GoogleChrome/lighthouse/issues/3731
+  const shadowRoot = document.getElementById('image-in-shadow-root').attachShadow({mode: 'open'});
+  shadowRoot.innerHTML = '<img hidden>';
+  </script>
+</div>
+
+<div class="images">
+  <!-- FAIL(optimized): image is not JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image is not visible -->
+  <!-- FAIL(offscreen): image is offscreen -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <img style="position: absolute; top: -10000px;" src="lighthouse-unoptimized.jpg">
+
+  <!-- Image is cross-origin, which are disabled for now -->
+  <!-- FAIL(optimized): image is not optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
+  <!--<img src="http://localhost:10503/byte-efficiency/lighthouse-unoptimized.jpg">-->
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- FAIL(responsive): image is 50% used at DPR 3 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="width: 256px; height: 170px;" src="lighthouse-1024x680.jpg">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP optimized -->
+  <!-- FAIL(responsive): image is 25% used at DPR 2.625 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is offscreen but lazily loaded -->
+  <!-- PASS(unsized-images): CSS sizing is valid with current checks -->
+  <img style="width: 0px; height: 0px;" src="lighthouse-2048x1356.webp?size0" loading="lazy">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- FAIL(responsive): image is not fully used at DPR 2.625 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="width: 160px; height: 110px;" src="lighthouse-480x320.jpg">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- FAIL(responsive): image is not fully used at DPR 2.625 -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): has attribute sizing -->
+  <img width="160" height="110" src="lighthouse-480x320.jpg?attributesized">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- FAIL(unsized-images): no sizing information -->
+  <img src="lighthouse-320x212-poor.jpg">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- FAIL(unsized-images): invalid CSS sizing -->
+  <img style="width: auto; height: auto;" src="lighthouse-320x212-poor.jpg?cssauto">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is lazily loaded -->
+  <!-- PASS(unsized-images): CSS sizing from stylesheet, not inline -->
+  <img class="stylesheet-sizing" src="lighthouse-320x212-poor.jpg?stylesheet-sizing" loading="lazy">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP savings -->
+  <!-- PASS(responsive): image is used at full size with srcset -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <img class="onscreen" sizes="(max-width: 2000px) 160px, 2048px" src="lighthouse-320x212-poor.jpg?srcset" srcset="lighthouse-480x320.webp?srcset 480w, lighthouse-2048x1356.webp?srcset 2048w">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP savings -->
+  <!-- PASS(responsive): image is used at full size with <picture> -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <picture class="onscreen">
+    <source media="(max-width: 2000px)" srcset="lighthouse-480x320.webp?picture">
+    <source media="(min-width: 2001px)" srcset="lighthouse-2048x1356.webp?picture">
+    <img src="lighthouse-320x212-poor.jpg?picture" height="108">
+  </picture>
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP optimized -->
+  <!-- FAIL(responsive): image is 50% used at DPR 2.625 (but small savings) -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- FAIL(offscreen): image is offscreen -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="margin-top: 4000px; width: 120px; height: 80px;" src="lighthouse-480x320.webp">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP optimized -->
+  <!-- PASS(responsive): image is not visible -->
+  <!-- PASS(responsive-inverse): is not visible -->
+  <!-- FAIL(offscreen): image is not visible -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <div class="onscreen" style="display: none;"><img class="onscreen" style="width: 120px; height: 80px;" src="lighthouse-480x320.webp?invisible"></div>
+
+  <!-- PASS(optimized): image is vector -->
+  <!-- PASS(webp): image is vector -->
+  <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
+  <!-- FAIL(offscreen): image is offscreen -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="width: 100px; height: 100px;" src="large.svg">
+
+  <!-- PASS(optimized): image is vector -->
+  <!-- PASS(webp): image is vector -->
+  <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
+  <!-- PASS(offscreen): image is too small -->
+  <!-- PASS(unsized-images): is non-network SVG -->
+  <img src="data:image/svg+xml;charset=utf-8,<svg width=&quot;180&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;/>">
+
+  <!-- PASS(optimized): image is vector -->
+  <!-- PASS(webp): image is vector -->
+  <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
+  <!-- PASS(offscreen): image is offscreen and loads before TTI, but loads lazily -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="width: 100px; height: 100px;" src="large.svg?nativeLazyLoad" loading="lazy">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is later used at full size -->
+  <!-- PASS(responsive-inverse): image is big enough -->
+  <!-- PASS(offscreen): image is later used onscreen -->
+  <!-- PASS(unsized-images): has CSS sizing -->
+  <img style="width: 24px; height: 16px;"src="lighthouse-320x212-poor.jpg?duplicate">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <img class="onscreen" src="lighthouse-320x212-poor.jpg?duplicate">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image accounts for DPR 2.625 in srcset *with a redirect* -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <!-- The first 320x212 should never be requested by Lighthouse. -->
+  <!-- 320x212 image just there to ensure failure of other audits if srcset is used incorrectly. -->
+  <img class="onscreen" width="240" src="lighthouse-320x212-poor.jpg?neverused" srcset="lighthouse-320x212-poor.jpg?neverused 320w, made-up-image-redirect-image.jpg?redirect=lighthouse-480x320.webp 480w">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- PASS(responsive): image is in CSS -->
+  <!-- PASS(responsive-inverse): image is in CSS -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): CSS background images are ignored -->
+  <div class="onscreen" style="width: 120px; height: 80px; background: 50% 50% url(lighthouse-480x320.jpg?css);"></div>
+
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- FAIL(webp): image is not WebP optimized -->
+  <!-- PASS(responsive): image is in CSS -->
+  <!-- PASS(responsive-inverse): image is in CSS -->
+  <!-- PASS(offscreen): image is onscreen -->
+  <!-- PASS(unsized-images): CSS background images are ignored -->
+  <div class="onscreen" style="width: 30px; height: 30px; background: 0% 50% url(lighthouse-480x320.jpg?sprite);"></div>
+  <div class="onscreen" style="width: 30px; height: 30px; background: 25% 50% url(lighthouse-480x320.jpg?sprite);"></div>
+  <div class="onscreen" style="width: 30px; height: 30px; background: 50% 50% url(lighthouse-480x320.jpg?sprite);"></div>
+  <div class="onscreen" style="width: 30px; height: 30px; background: 75% 50% url(lighthouse-480x320.jpg?sprite);"></div>
+  <p style="background: blue;">Add some text here so axe will scroll to the bottom</p>
+</div>
+
+<template id="lazily-loaded-image">
+  <!-- PASS(optimized): image is WebP -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(offscreen): image is lazily loaded after TTI -->
+  <!-- PASS(unsized-images): css position is absolute -->
+  <img style="position: absolute; top: -5000px;" src="lighthouse-480x320.webp?lazilyLoaded=true">
+</template>
+
+<script>
+// PASS: unused but too small savings
+generateInlineStyleWithSize(512, '.too-small { background: none; }\n');
+// PASS: used
+generateInlineStyleWithSize(12000, '.mostly-used { background: none; }\n', true);
+// FAIL: unused and a bit of savings
+generateInlineStyleWithSize(12000, '.kinda-unused { background: none; }\n');
+// FAIL: unused and lots of savings
+generateInlineStyleWithSize(30000, '.definitely-unused { background: none; }\n');
+</script>
+
+<script>
+  // Used block #1
+  // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+  // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+  // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+  // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+  // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+</script>
+<script>
+  function unusedFunction() {
+    // Unused block #1
+    // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+    // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+    // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+    // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+    // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES
+  }
+
+  // This should effectively be ignored by JsUsage artifact.
+  //# sourceURL=/some-custom-url.js
+</script>
+
+<!-- Ensure the page takes at least 8 seconds and we don't exit before the lazily loaded image -->
+<script src="delay-complete.js?delay=8000" async></script>
+
+</body>
+</html>

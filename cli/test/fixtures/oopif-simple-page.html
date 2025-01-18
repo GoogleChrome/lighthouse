@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="simple-script.js"></script>
+</head>
+<body>
+  <h1>Just a simple page</h1>
+  <script>
+    const shouldDeferStuff = location.search === '?defer';
+    if (shouldDeferStuff) {
+      const el = document.createElement('button');
+      el.textContent = 'Click to load scripts';
+      el.addEventListener('click', () => {
+        new Worker('simple-worker.mjs', { type: 'module' });
+        new Worker('simple-worker.js');
+        fetch('simple-script.js').then(r => r.text()).then(eval);
+      });
+      document.body.append(el);
+    } else {
+      new Worker('simple-worker.mjs', { type: 'module' });
+      new Worker('simple-worker.js');
+      window.addEventListener('load', () => {
+        fetch('simple-script.js').then(r => r.text()).then(eval);
+      });
+    }
+  </script>
+</body>
+</html>

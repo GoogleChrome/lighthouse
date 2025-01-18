@@ -3,40 +3,42 @@
 # folders
 .vscode/
 .github/
-assets/
-build/
-coverage/
-dist/
-proto/
+/assets/
+/build/
+/coverage/
+/proto/
+/docs/
 
-lighthouse-core/scripts/*
-lighthouse-core/test/
-lighthouse-core/third_party/src/
-lighthouse-viewer/
-lighthouse-treemap/
-clients/
-lighthouse-cli/results/
-lighthouse-logger/
+/core/scripts/*
+/viewer/
+/treemap/
+/clients/
+/cli/results/
+/lighthouse-logger/
+**/test/**
+/report/test-assets/
 
 # keep a few scripts useful for CI
-!lighthouse-core/scripts/manual-chrome-launcher.js
-!lighthouse-core/scripts/download-chrome.sh
+!core/scripts/manual-chrome-launcher.js
+!core/scripts/download-chrome.sh
+!core/scripts/package.json
 
-# keep smokehouse tests, etc
-!lighthouse-cli/test
+# Exclude the CLI smoketests but keep the smoketest runner that is used
+# by downstream projects (e.g. publisher ads).
+!/cli/test/smokehouse/**
+/cli/test/smokehouse/test-definitions/
 
 results/
-lantern-data/
-timings-data/
+/lantern-data/
+/timings-data/
 
 # ignore all folders named as such
 node_modules
 latest-run
-chromium-webtests
+devtools-tests
 .tmp
 
 # generated files
-**/pages/scripts/lighthouse-report.js
 *.report.html
 *.dom.html
 *.devtoolslog.json
@@ -49,9 +51,26 @@ yarn-error.log
 results.html
 *.lcov
 
+# generated files needed for publish
+dist/**
+!dist/report/standalone.js
+!dist/report/flow.js
+!dist/report/bundle.esm.js
+
+# large files
+changelog.md
+
 # dev files
+.codecov.yml
+.cz-config.js
 .DS_Store
 .editorconfig
 .eslintignore
-.eslintrc.js
+.eslintrc.cjs
+.gitattributes
+.mailmap
 *.tgz
+CODE_OF_CONDUCT.md
+eslint-local-rules.cjs
+vercel.json
+yarn.lock

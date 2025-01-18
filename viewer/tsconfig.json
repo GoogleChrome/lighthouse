@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    // Limit to base JS and DOM defs.
+    "lib": ["es2020", "dom", "dom.iterable"],
+    // Don't include any types from node_modules/.
+    "types": [],
+  },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "../report/"},
+    {"path": "../flow-report/"}
+  ],
+  "include": [
+    "app/src/**/*.js",
+    "./types/*.d.ts",
+  ],
+}

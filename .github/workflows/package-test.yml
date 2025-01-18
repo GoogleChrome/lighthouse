@@ -1,0 +1,33 @@
+name: package-test
+
+on:
+  push:
+    branches: [main]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
+jobs:
+  package-test:
+    runs-on: ubuntu-latest
+    name: Package Test
+    env:
+      FORCE_COLOR: true
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+
+    - run: bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code

@@ -1,0 +1,176 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
+jobs:
+  # `smoke` runs as a matrix across 6 jobs:
+  #  * The smoke tests are split into 3 batches, to parallelize.
+  #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
+  smoke:
+    strategy:
+      matrix:
+        chrome-channel: ['stable', 'ToT']
+        smoke-test-shard: [1, 2, 3]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
+      # The total number of shards. Set dynamically when length of *single* matrix variable is
+      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
+      SHARD_TOTAL: 3
+      FORCE_COLOR: true
+    # Job named e.g. "Chrome stable 1/3".
+    name: Chrome ${{ matrix.chrome-channel }} ${{ matrix.smoke-test-shard }}/3
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+      with:
+        # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
+        fetch-depth: 2
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    # Chrome Stable is already installed by default.
+    - name: Install Chrome ToT
+      if: matrix.chrome-channel == 'ToT'
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn reset-link
+
+    - name: Run smoke tests
+      run: |
+        yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+        yarn c8 report --reporter text-lcov > smoke-coverage.lcov
+
+    # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
+    - name: Run smoke tests (lantern + trace)
+      if: matrix.smoke-test-shard == 1 && matrix.chrome-channel == 'ToT'
+      run: |
+        yarn smoke --debug -j=2 --retries=2 lantern
+      env:
+        INTERNAL_LANTERN_USE_TRACE: 1
+
+    - name: Upload test coverage to Codecov
+      if: matrix.chrome-channel == 'ToT'
+      uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
+      with:
+        flags: smoke
+        file: ./smoke-coverage.lcov
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
+        path: .tmp/smokehouse-failures/
+
+  smoke-windows:
+    strategy:
+      matrix:
+        smoke-test-shard: [1, 2]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: windows-latest
+    name: Windows smoke ${{ matrix.smoke-test-shard }}/2
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+
+    # Use Node 18 here earlier than everywhere else, see https://github.com/GoogleChrome/lighthouse/issues/15160#issuecomment-1589913408
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\.tmp\chrome-tot\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+
+    # Chrome Stable is already installed by default.
+    - name: Install Chrome ToT
+      run: bash ${env:GITHUB_WORKSPACE}\core\scripts\download-chrome.sh
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+
+    - name: Run smoke tests
+      # Windows bots are slow, so only run enough tests to verify matching behavior.
+      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif lantern metrics
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smokehouse (windows)
+        path: .tmp/smokehouse-failures/
+
+  smoke-bundle:
+    strategy:
+      matrix:
+        smoke-test-shard: [1, 2, 3]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
+      # The total number of shards. Set dynamically when length of *single* matrix variable is
+      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
+      SHARD_TOTAL: 3
+      FORCE_COLOR: true
+    name: Bundled Lighthouse ${{ matrix.smoke-test-shard }}/3
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn build-devtools
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    - name: Install Chrome ToT
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
+    - name: yarn test-bundle
+      run: yarn test-bundle --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --retries=2
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smokehouse (bundled)
+        path: .tmp/smokehouse-failures/

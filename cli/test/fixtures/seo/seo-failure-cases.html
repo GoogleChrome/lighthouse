@@ -1,0 +1,58 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<html>
+<head>
+  <!-- no <title>SEO audit failures page</title> -->
+  <meta charset="utf-8">
+  <!-- no <meta name="description" content=""> -->
+  <!-- FAIL(is-crawlable): noindex on root page, vary the case to make sure we are case insensitive -->
+  <meta name="RoBots" content="nofollow, NOINDEX, all">
+  <!-- FAIL(hreflang): invalid language code, vary the case to make sure we are case insensitive -->
+  <link rel="alTeRnate" hreflang="xx" href="https://xx.example.com" />
+  <!-- FAIL(hreflang): valid language code but no href -->
+  <link rel="alternate" hreflang="es" />
+  <!-- FAIL(hreflang): valid language code but a relative href -->
+  <link rel="alternate" hreflang="es" href="/example.html" />
+  <!-- FAIL(hreflang): spece before a valid code -->
+  <link rel="alternate" href="http://example.com/" hreflang=" x-default" />
+  <!-- FAIL(canonical): multiple canonical URLs provided (another one is in the HTTP header) -->
+  <link rel="canonical" href="https://example.com/other" />
+</head>
+<body>
+  <h1>SEO</h1>
+
+  <h2>Anchor text</h2>
+  <a href='https://example.com'>click this</a>
+  <a href='/test.html'> click this </a>
+  <a href='/test.html'>CLICK THIS</a>
+  <svg>
+    <a href='https://example.com/svg-link'>
+      <circle cx="50" cy="50" r="50"/>
+      <text x="0" y="0" >click this</text>
+    </a>
+  </svg>
+
+  <!-- FAIL(crawlable-anchors): Link using window.open() -->
+  <a onclick="window.open(`http://example.com`)">Some link</a>
+
+  <!-- FAIL(crawlable-anchors): Link using javascript:void -->
+  <a href="javascript:void(0)">Some link</a>
+
+  <!-- FAIL(crawlable-anchors): Link with a mousedown event listener -->
+  <a class="some-link">Some link</a>
+  <script>
+    document.querySelector('.some-link').addEventListener('mousedown', () => {});
+  </script>
+
+  <!-- FAIL(crawlable-anchors): Link event listener on parent -->
+  <div class="link-parent"><a>Some link</a></div>
+  <script>
+    document.querySelector('.link-parent').addEventListener('click', () => {});
+  </script>
+</body>
+</html>

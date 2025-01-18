@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 ##
-# @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-# Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+# @license
+# Copyright 2020 Google LLC
+# SPDX-License-Identifier: Apache-2.0
 ##
 
 set -euxo pipefail
 
 # Overview:
-# - build-tracker (https://lh-build-tracker.herokuapp.com/) relies on a common commit that's shared between HEAD and master.
+# - build-tracker (https://lh-build-tracker.herokuapp.com/) relies on a common commit that's shared between HEAD and main.
 # - Lighthouse runs on pull_request, not push, so the checkout is not the branch with shared history, but the result of a merge.
 # - checkout@v2 uses a merge remote (eg. remotes/pull/9605/merge) that often has just a single commit.
 # - This script creates a new branch that matches the current checkout, but does have a shared history.
@@ -27,11 +27,11 @@ fi
 git -c protocol.version=2 fetch --deepen=100
 echo "History is deepened."
 
-if git merge-base HEAD origin/master > /dev/null; then
-  echo "We have a common commit w/ origin/master. Skipping this script…";
+if git merge-base HEAD origin/main > /dev/null; then
+  echo "We have a common commit w/ origin/main. Skipping this script…";
   exit 0
 else
-  echo "We don't have a common commit w/ origin/master. We'll checkout the associated branch, merge master, and then we'll be good"
+  echo "We don't have a common commit w/ origin/main. We'll checkout the associated branch, merge main, and then we'll be good"
 fi
 
 # get the human readable remote name
@@ -63,7 +63,7 @@ git checkout -b "$mergebranch_name"
 
 # Merge 'n commit
 git -c "user.name=LH GH Action bot" -c "user.email=ghbot@lighthouse.repo" merge --no-verify \
-    -m "Merge remote-tracking branch 'origin/master' into $mergebranch_name" origin/master
+    -m "Merge remote-tracking branch 'origin/main' into $mergebranch_name" origin/main
 
 # If there's a diff aginst where we started.. we fucked up
 if git --no-pager diff --color=always --exit-code "$checkout_name" > /dev/null; then
@@ -74,7 +74,7 @@ else
 fi
 
 # Lastly, now we should definitely have a merge-base.
-if git merge-base HEAD origin/master > /dev/null; then
+if git merge-base HEAD origin/main > /dev/null; then
   echo "Merge-base found. Perfect. 👌"
 else
   echo "No diff, but still no merge-base. Very unexpected. 🤔"

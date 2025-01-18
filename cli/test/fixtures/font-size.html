@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .small {
+      font-size: 11px;
+    }
+  </style>
+  <style> /* some filler to offset things */ .small-2 { font-size: 11px; }</style>
+  <style>
+    /* some filler to offset things */
+    .small-3 {
+      font-size: 6px;
+    }
+    /*# sourceURL=font-size-inline-magic.css */
+  </style>
+  <link rel="stylesheet" href="font-size-styles.css">
+</head>
+<body>
+  <h2>Small text but still legible</h2>
+  <!-- PASS(font-size): amount of illegible text is below the 60% threshold -->
+  <!-- font-size items are ordered by text length, so force an order with filler for stable expectations. -->
+  <p class='small'> 1.... </p>
+  <p class='small-2'> 2... </p>
+  <p class='small-3'> 3.. </p>
+  <p class='small-4'> 4. </p>
+  <h6>2</h6>
+  <font size="1">3<b>4</b></font>
+  <div style=''>
+    <p style='font-size:10px'> 5 </p>
+  </div>
+  <script class='small'>
+    // text from SCRIPT tags should be ignored by the font-size audit
+  </script>
+
+  <!-- PASS(font-size): text is not visible -->
+  <div style="visibility: hidden;">
+    <div class="small">Invisible</div>
+  </div>
+</body>
+</html>

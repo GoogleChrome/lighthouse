@@ -1,0 +1,118 @@
+name: unit
+
+on:
+  push:
+    branches: [main]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
+jobs:
+  # `unit` includes just unit and proto tests.
+  unit:
+    strategy:
+      matrix:
+        node: ['18', '20']
+      fail-fast: false
+    runs-on: ubuntu-latest
+    name: node ${{ matrix.node }}
+    env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
+      LATEST_NODE: '18'
+      FORCE_COLOR: true
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+      with:
+        # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
+        fetch-depth: 2
+
+    - name: Use Node.js ${{ matrix.node }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node }}
+
+    - name: Set up protoc
+      uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3
+      with:
+        version: '3.20'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3
+    - name: Install Python dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install protobuf==3.20
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn reset-link
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    # Run pptr tests using ToT Chrome instead of stable default.
+    - name: Install Chrome ToT
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
+    - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
+
+    - name: yarn unit
+      if: ${{ matrix.node != env.LATEST_NODE }}
+      run: yarn unit:ci
+    - name: yarn unit-lantern-trace
+      if: ${{ matrix.node != env.LATEST_NODE }}
+      run: yarn unit-lantern-trace:ci
+
+    # Only gather coverage on latest node, where c8 is the most accurate.
+    - name: yarn unit:cicoverage
+      if: ${{ matrix.node == env.LATEST_NODE }}
+      run: |
+        yarn unit:cicoverage
+        yarn c8 report --reporter text-lcov > unit-coverage.lcov
+    - name: Upload test coverage to Codecov
+      if: ${{ matrix.node == env.LATEST_NODE }}
+      uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
+      with:
+        flags: unit
+        file: ./unit-coverage.lcov
+
+    # Runs here because it needs the roundtrip proto.
+    - name: yarn test-viewer
+      run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Unit (ubuntu; node ${{ matrix.node }})
+        path: .tmp/unit-failures/
+
+  # For windows, just test the potentially platform-specific code.
+  unit-windows:
+    runs-on: windows-latest
+    name: Windows unit
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+
+    - run: yarn unit-cli
+    - run: yarn diff:sample-json
+
+    # Fail if any changes were written to any source files or generated untracked files (ex, from -GA).
+    - run: git add -A && git diff --cached --exit-code

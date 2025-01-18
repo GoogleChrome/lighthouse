@@ -1,0 +1,345 @@
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.vars {
+  /* Palette using Material Design Colors
+   * https://www.materialui.co/colors */
+  --color-gray-600: #757575;
+  --color-gray-900: #212121;
+
+  --control-background-color: #e7f1fe;
+  --text-color-secondary: var(--color-gray-600);
+  --text-color: var(--color-gray-900);
+  --text-color-active: #2a67ce;
+  --text-color-active-secondary: #4484f3c7;
+}
+
+body {
+  font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  color: var(--text-color);
+  margin: 0;
+  overflow-y: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.lh-button {
+  background: none;
+  color: var(--text-color-active);
+  border: solid 1px #e1e2e5;
+}
+.lh-button--active {
+  background-color: var(--control-background-color);
+}
+
+.lh-text-dim {
+  color: var(--text-color-secondary);
+}
+
+.lh-main {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 0.1fr 1fr 0fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  transition: grid-template-rows 0.2s;
+  animation: 0.7s curtain cubic-bezier(0.86, 0, 0.07, 1) 0.4s both;
+}
+.lh-main--show-table {
+  grid-template-rows: 0.1fr 1fr 0.3fr;
+}
+
+/* TODO: BEM is backwards here and many other places */
+.lh-header--section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.lh-header--section:nth-of-type(2) {
+  font-size: 20px;
+}
+.lh-header--url {
+  font-weight: bold;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.lh-header__inputs {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lh-logotitle {
+  display: flex;
+  align-items: center;
+}
+
+.bundle-selector {
+  flex: 1;
+  padding: 2px;
+  margin: 2px;
+}
+
+.bundle-selector {
+  width: 50%;
+  padding: 2px;
+}
+
+.lh-topbar__logo {
+  width: 24px;
+  height: 24px;
+  user-select: none;
+  flex: none;
+}
+
+.lh-modes {
+  display: flex;
+}
+
+.lh-treemap {
+  margin: 2px;
+  contain: content;
+}
+
+.lh-table {
+  overflow-y: hidden;
+}
+
+.tabulator {
+  /* Better default for unloaded portions of table. */
+  background-color: #f3f3f3;
+  contain: strict;
+}
+
+.lh-coverage-bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.lh-coverage-bar--used {
+  background-color: #63acbe;
+  width: calc(100% * var(--used) / var(--max));
+  height: 7px;
+}
+.lh-coverage-bar--unused {
+  background-color: #ee442f;
+  width: calc(100% * var(--unused) / var(--max));
+  height: 7px;
+  margin-left: 2px;
+  background: repeating-linear-gradient(
+          -45deg,
+          hsl(7, 85%, 58%),
+          hsl(7, 85%, 58%) 2px,
+          hsla(7, 80%, 45%, 1) 2px,
+          hsla(7, 80%, 45%, 1) 4px
+  );
+}
+
+.view-mode {
+  cursor: pointer;
+  border: solid 1px #e1e2e5;
+  box-shadow: 0 0 0 1px #e1e2e5;
+  padding: 5px;
+  font-size: 16px;
+}
+.view-mode input[type='radio']:focus-visible + label {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+.view-mode--disabled {
+  text-decoration: line-through;
+}
+.view-mode:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.view-mode:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.view-mode--active {
+  background-color: var(--control-background-color);
+  border-color: #d2e3fc;
+}
+.view-mode--active .view-mode__label {
+  color: var(--text-color-active);
+}
+.view-mode--active .view-mode__sublabel {
+  color: var(--text-color-active-secondary);
+}
+
+.view-mode__button {
+  /* Hide the default browser UI. */
+  position: absolute;
+  left: -9999px;
+}
+
+.view-mode label {
+  cursor: pointer;
+}
+
+header {
+  margin: 5px;
+}
+
+.webtreemap-node {
+  cursor: pointer;
+  position: absolute;
+  border: solid 1px #666;
+  border-radius: 2px;
+  overflow: hidden;
+  background: white;
+  transition: left .15s, top .15s, width .15s, height .15s;
+}
+.webtreemap-node--root {
+  border: none;
+  background-color: transparent !important;
+}
+.webtreemap-node--root > .webtreemap-node {
+  margin: 5px;
+}
+
+.webtreemap-node--hover {
+  outline: 2px solid black;
+}
+
+.lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  content: '';
+  display: block;
+  width: var(--pctUnused);
+  background: repeating-linear-gradient(
+          -45deg,
+          hsla(0, 0%, 0%, 0),
+          hsla(0, 0%, 0%, 0) 2px,
+          hsla(7, 85%, 56%, 0.3) 2px,
+          hsla(7, 85%, 56%, 0.3) 4px
+  );
+}
+
+.webtreemap-caption {
+  font-size: 12px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Copied from viewer.css */
+
+.drop_zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+}
+.drop_zone.dropping {
+  visibility: visible;
+  font-size: var(--heading-font-size);
+  background-color: rgba(255,255,255,0.8);
+  color: var(--unknown-color);
+}
+.drop_zone.dropping::after {
+  content: 'Drop report here';
+  border: 2px dashed currentColor;
+  border-radius: 5px;
+  padding: 25px;
+  width: 33vw;
+  min-width: 250px;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+.treemap-placeholder {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+.treemap-placeholder-inner {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 16px;
+  max-width: 80vw;
+  border: 2px dashed rgba(0,0,0,0.2);
+  cursor: pointer;
+  background-color: #fff;
+}
+.treemap-placeholder-inner.lh-loading {
+  filter: blur(2px) grayscale(1);
+  cursor: wait
+}
+.treemap-placeholder-inner.lh-loading>div {
+  pointer-events: none;
+}
+.treemap-placeholder-inner.dropping {
+  border-color: currentColor;
+}
+.treemap-placeholder__heading {
+  font-weight: 300;
+  margin: 0;
+  line-height: 32px;
+}
+.treemap-placeholder__help {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.treemap-placeholder-logo {
+  width: 140px;
+  height: 140px;
+}
+.treemap-placeholder__url {
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #eee;
+  margin-top: 16px;
+  display: none;
+}
+
+
+@media screen and (max-width: 635px) {
+  .treemap-placeholder-inner {
+    display: block;
+    text-align: center;
+  }
+  .treemap-placeholder-logo {
+    width: 100px;
+    height: 100px;
+  }
+  .treemap-placeholder__url {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 636px) {
+  .treemap-placeholder-inner {
+    padding: 40px 32px;
+  }
+  .treemap-placeholder-logo {
+    margin-right: 16px;
+  }
+}
+
+/* app z-indexes */
+.drop_zone {
+  z-index: 3;
+}

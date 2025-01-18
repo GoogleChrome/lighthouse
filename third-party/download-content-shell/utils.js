@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 'use strict';
 
-const fs = require('fs');
-const http = require('http');
-const https = require('https');
-const path = require('path');
-const parseURL = require('url').parse;
-const shell = require('child_process').execSync;
-const Stream = require('stream').Transform;
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
+import path from 'path';
+import { parse as parseURL } from 'url';
+import { execSync as shell } from 'child_process';
+import { Transform as Stream } from 'stream';
 
 function fetch(url) {
   return new Promise(fetchPromise);
@@ -96,29 +96,6 @@ function copyRecursive(src, dest) {
   }
 }
 
-function removeRecursive(filePath) {
-  try {
-    if (fs.existsSync(filePath)) {
-      if (isFile(filePath)) {
-        fs.unlinkSync(filePath);
-        return;
-      }
-      const files = fs.readdirSync(filePath);
-      for (let i = 0; i < files.length; i++) {
-        const childPath = path.resolve(filePath, files[i]);
-        if (isDir(childPath)) {
-          removeRecursive(childPath);
-        } else {
-          fs.unlinkSync(childPath);
-        }
-      }
-      fs.rmdirSync(filePath);
-    }
-  } catch (error) {
-    throw new Error(`Received an error: [${error}] while trying to remove: ${filePath}`);
-  }
-}
-
 function includes(sequence, target) {
   return sequence.indexOf(target) > -1;
 }
@@ -138,14 +115,13 @@ function parseArgs(args) {
   return argObject;
 }
 
-module.exports = {
+export {
   fetch,
   atob,
   isFile,
   isDir,
   copy,
   copyRecursive,
-  removeRecursive,
   includes,
   shellOutput,
   parseArgs,

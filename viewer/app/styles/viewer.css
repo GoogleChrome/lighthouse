@@ -1,0 +1,157 @@
+/**
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  margin: 0;
+}
+
+:root {
+  --lh-background-color: #304ffe;
+}
+
+.drop_zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+}
+.drop_zone.dropping {
+  visibility: visible;
+  font-size: var(--heading-font-size);
+  background-color: rgba(255,255,255,0.8);
+  color: var(--unknown-color);
+}
+.drop_zone.dropping::after {
+  content: 'Drop report here';
+  border: 2px dashed currentColor;
+  border-radius: 5px;
+  padding: 25px;
+  width: 33vw;
+  min-width: 250px;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+.viewer-placeholder {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+.viewer-placeholder-inner {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 16px;
+  max-width: 80vw;
+  border: 2px dashed rgba(0,0,0,0.2);
+  background-color: #fff;
+}
+
+.viewer-placeholder p {
+  margin-bottom: 0;
+}
+.viewer-placeholder ul {
+  margin: 0;
+}
+.viewer-placeholder hr {
+  margin: 16px 0;
+}
+
+.viewer-placeholder-inner.lh-loading {
+  filter: blur(2px) grayscale(1);
+  cursor: wait
+}
+.viewer-placeholder-inner.lh-loading>div {
+  pointer-events: none;
+}
+.viewer-placeholder-inner.dropping {
+  border-color: currentColor;
+}
+.viewer-placeholder__heading {
+  font-weight: 300;
+  margin: 0 0 24px;
+  line-height: 32px;
+}
+.viewer-placeholder__help {
+  line-height: 1.6;
+}
+
+.viewer-placeholder__file-button {
+  border: 0;
+  background: 0;
+  display: inline;
+  padding: 0;
+  color: #0000ee;
+  color: -webkit-link;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.viewer-placeholder-logo {
+  width: 140px;
+  height: 140px;
+}
+.viewer-placeholder__url {
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #eee;
+  margin-top: 16px;
+  display: none;
+}
+
+@media screen and (max-width: 635px) {
+  .viewer-placeholder-inner {
+    display: block;
+    text-align: center;
+  }
+  .viewer-placeholder-logo {
+    width: 100px;
+    height: 100px;
+  }
+  .viewer-placeholder__url {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 636px) {
+  .viewer-placeholder-inner {
+    padding: 40px 32px;
+  }
+  .viewer-placeholder-logo {
+    margin-right: 16px;
+  }
+}
+
+/* app z-indexes */
+.drop_zone {
+  z-index: 3;
+}
+
+/* open-viewer option hidden in Viewer */
+.lh-tools__dropdown a[data-action="open-viewer"] {
+  display: none;
+}
+
+/* save-gist option visible in Viewer */
+.lh-tools__dropdown a[data-action="save-gist"] {
+  display: flex !important;
+}

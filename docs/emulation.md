@@ -4,7 +4,7 @@
 In Lighthouse, "Emulation" refers to the screen/viewport emulation and UserAgent string spoofing.
 ["Throttling"](./throttling.md) covers the similar topics around network and CPU throttling/simulation.
 
-With the default configuration, Lighthouse emulates a mobile device. There's [a `desktop` configuration](../lighthouse-core/config/desktop-config.js), available to CLI users with `--preset=desktop`, which applies a consistent desktop environment and scoring calibration. This is recommended as a replacement for `--emulated-form-factor=desktop`.
+With the default configuration, Lighthouse emulates a mobile device. There's [a `desktop` configuration](../core/config/desktop-config.js), available to CLI users with `--preset=desktop`, which applies a consistent desktop environment and scoring calibration. This is recommended as a replacement for `--emulated-form-factor=desktop`.
 
 ### Advanced emulation setups
 

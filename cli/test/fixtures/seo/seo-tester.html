@@ -1,0 +1,52 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<html>
+<head>
+  <title>SEO audit tester</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="Description" content="The premiere destination for testing your SEO audit gathering">
+  <!-- PASS(hreflang): valid language codes -->
+  <link rel="alternate" hreflang="es" href="https://lat.example.com" />
+  <link rel="alternate" Hreflang="en-PH" href="https://ph.example.com" />
+  <LINK REL="ALTERNATE" HREFLANG="ru-RU" HREF="https://ru.example.com" />
+  <LINK REL="alternate" HREFLANG="zh-Hans-TW" HREF="https://zh.example.com" />
+  <link rel="alternate" href="http://example.com/" hreflang="x-default" />
+  <!-- PASS(canonical): valid canonical URL -->
+  <link rel="canonical" href="http://localhost:10200/seo/" />
+</head>
+<body>
+  <!-- PASS(hreflang): should ignore links in the body -->
+  <link rel="alternate" hreflang="nonsense" href="https://nonsense.example.com" />
+  <!-- PASS(canonical): should ignore links in the body -->
+  <link rel="canonical" href="http://localhost:10200/seo/" />
+
+  <h1>SEO</h1>
+
+  <h2>Anchor text</h2>
+  <a href='https://example.com'>descriptive link</a>
+  <a href='#non-descriptive-local'>click this</a>
+  <a href='https://example.com/non-descriptive-no-follow.html' rel="nofollow">click this</a>
+  <a href='javascript:;'>click this</a>
+
+  <!-- override global URL - bug #5701 -->
+  <script>URL = '';</script>
+
+  <!-- PASS(crawlable-anchors): Link with a relative path -->
+  <a href="/pass">Some link</a>
+
+  <!-- FAIL(crawlable-anchors): Link with a click event listener -->
+  <a class="some-link">Some link</a>
+  <script>
+    document.querySelector('.some-link').addEventListener('click', () => {});
+  </script>
+
+  <!-- FAIL(crawlable-anchors): Link with an onclick which won't match the audit regex -->
+  <a onclick="window.Location = '';">Some link</a>
+</body>
+</html>

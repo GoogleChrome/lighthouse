@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "install-all": "rm -rf /tmp/.junk && rm -f {auth,custom-gatherer-puppeteer,integration-test,type-checking}/yarn.lock && yarn --cwd auth/ --cache-folder /tmp/.junk && yarn --cwd integration-test/ --cache-folder /tmp/.junk && yarn --cwd custom-gatherer-puppeteer/ --cache-folder /tmp/.junk && yarn --cwd type-checking/ --cache-folder /tmp/.junk",
+    "integration-test": "yarn --cwd integration-test/ test",
+    "custom-gatherer-puppeteer-test": "yarn --cwd custom-gatherer-puppeteer/ test",
+    "type-checking-test": "yarn --cwd type-checking/ test",
+    "test": "bash test-recipes.sh"
+  }
+}

@@ -8,7 +8,7 @@ We tag issues that are good candidates for those new to the code with [`good fir
 
 ## Follow the coding style
 
-The `.eslintrc.js` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). Annotations are encouraged for all contributions.
+The `.eslintrc.cjs` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript `checkJs`](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc). Annotations are encouraged for all contributions.
 
 ## Learn about the architecture
 
@@ -16,7 +16,7 @@ See [Lighthouse Architecture](./docs/architecture.md), our overview and tour of 
 
 ## Contributing a patch
 
-If you have a contribution for our [documentation](https://web.dev/learn/#lighthouse), please submit it in the [web.dev repo](https://github.com/GoogleChrome/web.dev).
+If you have a contribution for our [documentation](https://developer.chrome.com/docs/lighthouse/), please submit it in the [developer.chrome.com repo](https://github.com/GoogleChrome/developer.chrome.com).
 
 1. Submit an issue describing your proposed change.
 1. The maintainers will respond to your issue promptly.
@@ -25,21 +25,19 @@ If you have a contribution for our [documentation](https://web.dev/learn/#lighth
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Submit a pull request.
 
-If you've submitted a number of significant patches, feel free to add yourself in a PR to the project's `AUTHORS` [file](https://github.com/GoogleChrome/lighthouse/blob/master/AUTHORS) in the root of the repo to be recognized for your contributions!
-
 ## Audit PRs
 
 If proposing a new audit for Lighthouse, see the [new audit proposal guide](./docs/new-audits.md) and open an issue for discussion before starting.
 
 A PR for a new audit or changing an existing audit almost always needs the following:
 
-1. If new, add the audit to the [default config file](lighthouse-core/config/default-config.js) (or, rarely, one of the other config files) so Lighthouse will run it.
+1. If new, add the audit to the [default config file](core/config/default-config.js) (or, rarely, one of the other config files) so Lighthouse will run it.
 
-1. **Unit tests**: in the matching test file (e.g. tests for `lighthouse-core/audits/my-swell-audit.js` go in `lighthouse-core/test/audits/my-swell-audit-test.js`).
+1. **Unit tests**: in the matching test file (e.g. tests for `core/audits/my-swell-audit.js` go in `core/test/audits/my-swell-audit-test.js`).
 
-1. **Smoke (end-to-end) tests**: search through the [existing test expectations](lighthouse-cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
+1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
 
-1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](lighthouse-core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
+1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
 ### Audit `description` Guidelines
 
@@ -68,26 +66,26 @@ It can be tempting to serialize the entire state of the world into the artifact 
 
 A PR adding or changing a gatherer almost always needs to include the following:
 
-1. If new, add the gatherer to the [default config file](lighthouse-core/config/default-config.js) (or, rarely, one of the other config files) so Lighthouse will run it.
+1. If new, add the gatherer to the [default config file](core/config/default-config.js) (or, rarely, one of the other config files) so Lighthouse will run it.
 
 1. **Unit tests**: gatherer execution often takes place mostly on the browser side, either through protocol functionality or executing javascript in the test page. This makes gatherers difficult to unit test without extensive mocking, ending up mostly exercising the mocks instead of the actual gatherer.
 
-   As a result, we mostly rely on smoke testing for gatherers. However, if there are parts of a gatherer that naturally lend themselves to unit testing, the new tests would go in the matching test file (e.g. tests for `lighthouse-core/gather/gatherers/reap.js` go in `lighthouse-core/test/gather/gatherers/reap-test.js`).
+   As a result, we mostly rely on smoke testing for gatherers. However, if there are parts of a gatherer that naturally lend themselves to unit testing, the new tests would go in the matching test file (e.g. tests for `core/gather/gatherers/reap.js` go in `core/test/gather/gatherers/reap-test.js`).
 
-1. **Smoke (end-to-end) tests**: search through the [existing test expectations](lighthouse-cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test if one is required.
+1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test if one is required.
 
    It's most important to get true end-to-end coverage, so be sure that audits that consume the new gatherer output are in the expectations. Artifacts can also have expectations for those intermediate results.
 
 1. **Golden artifacts**: `sample_v2.json` is generated from a set of artifacts that come from running LH against `dbw_tester.html`. Those artifacts likely need to be updated after gatherer changes with `yarn update:sample-artifacts`, but limit to just the artifact being altered if possible. For example:
 
    ```sh
-   # update just the ScriptElements artifact
-   yarn update:sample-artifacts ScriptElements
+   # update just the Scripts artifact
+   yarn update:sample-artifacts Scripts
    ```
 
-   This command works for updating `yarn update:sample-artifacts devtoolsLogs` or `traces` as well, but the resulting `sample_v2.json` churn may be extensive and you might be better off editing manually.
+   This command works for updating `yarn update:sample-artifacts DevtoolsLog` or `Trace` as well, but the resulting `sample_v2.json` churn may be extensive and you might be better off editing manually.
 
-1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](lighthouse-core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
+1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
 ## Protobuf errors
 
@@ -96,6 +94,7 @@ If there is an error in one of the proto tests (`proto-test.js` or `psi-test.js`
 ## Adding Images to a Readme
 
 If you are adding an image to a readme use the absolute path to the image for the specific commit hash where the image was introduced.  This requires multiple commits.
+
 1. Make the commit to introduce the image.
 1. Get the [absolute path](https://help.github.com/articles/getting-permanent-links-to-files/) to the image with the commit hash e.g. `https://raw.githubusercontent.com/GoogleChrome/lighthouse/e7997b3db01de3553d8cb208a40f3d4fd350195c/assets/example_dev_tools.png`
 1. Add to readme as an absolute reference to that image.
@@ -108,7 +107,7 @@ We're using [conventional-commit](https://conventionalcommits.org/) for our comm
 
 > type(scope): message subject
 
-* The `type` must be one of: `new_audit` `core` `tests` `i18n`, `docs` `deps` `report` `cli` `clients` `misc`. (See [`.cz-config`](https://github.com/GoogleChrome/lighthouse/blob/master/.cz-config.js#L13))
+* The `type` must be one of: `new_audit` `core` `tests` `i18n`, `docs` `deps` `report` `cli` `clients` `misc`. (See [`.cz-config`](https://github.com/GoogleChrome/lighthouse/blob/main/.cz-config.js#L13))
 * The `scope` is optional, but recommended. Any string is allowed; it should indicate what the change affects.
 * The `message subject` should be pithy and direct.
 
@@ -128,13 +127,12 @@ accept your pull requests.
 
 ## Tracking Errors
 
-We track our errors in the wild with Sentry. In general, do not worry about wrapping your audits or gatherers in try/catch blocks and reporting every error that could possibly occur; `lighthouse-core/runner.js` and `lighthouse-core/gather/gather-runner.js` already catch and report any errors that occur while running a gatherer or audit, including errors fatal to the entire run. However, there are some situations when you might want to explicitly handle an error and report it to Sentry or wrap it to avoid reporting. Generally, you can interact with Sentry simply by requiring the `lighthouse-core/lib/sentry.js` file and call its methods. The module exports a delegate that will correctly handle the error reporting based on the user's opt-in preference and will simply no-op if they haven't so you don't need to check.
+We track our errors in the wild with Sentry. In general, do not worry about wrapping your audits or gatherers in try/catch blocks and reporting every error that could possibly occur; `core/runner.js` and `core/gather/*-runner.js` already catch and report any errors that occur while running a gatherer or audit, including errors fatal to the entire run. However, there are some situations when you might want to explicitly handle an error and report it to Sentry or wrap it to avoid reporting. Generally, you can interact with Sentry simply by requiring the `core/lib/sentry.js` file and call its methods. The module exports a delegate that will correctly handle the error reporting based on the user's opt-in preference and will simply no-op if they haven't so you don't need to check.
 
-
-#### If you have an expected error that is recoverable but want to track how frequently it happens, *use Sentry.captureException*.
+#### If you have an expected error that is recoverable but want to track how frequently it happens, *use Sentry.captureException*
 
 ```js
-const Sentry = require('./lighthouse-core/lib/sentry');
+const Sentry = require('./core/lib/sentry');
 
 try {
   doRiskyThing();
@@ -147,12 +145,12 @@ try {
 }
 ```
 
-#### If you need to track a code path that doesn't necessarily mean an error occurred, *use Sentry.captureMessage*.
+#### If you need to track a code path that doesn't necessarily mean an error occurred, *use Sentry.captureMessage*
 
 NOTE: If the message you're capturing is dynamic/based on user data or you need a stack trace, then create a fake error instead and use `Sentry.captureException` so that the instances will be grouped together in Sentry.
 
 ```js
-const Sentry = require('./lighthouse-core/lib/sentry');
+const Sentry = require('./core/lib/sentry');
 
 if (networkRecords.length === 1) {
   Sentry.captureMessage('Site only had 1 network request', {level: 'info'});

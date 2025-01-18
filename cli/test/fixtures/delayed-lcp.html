@@ -1,0 +1,17 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<body>
+  This is FCP (and LCP until the image finishes).
+  <!--
+    Load the real LCP after a long XHR.
+    We are testing Lighthouse's ability to wait for Largest Contentful Paint.
+  -->
+  <script>
+    fetch('/404?delay=7000').then(() => {
+      const imageEl = document.createElement('img');
+      imageEl.src = '/byte-efficiency/lighthouse-480x320.jpg?delay=7000';
+      document.body.append(imageEl);
+    })
+  </script>
+</body>
+</html>

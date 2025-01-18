@@ -1,0 +1,29 @@
+// Base compiler options for all tsconfig files.
+
+{
+  "compilerOptions": {
+    "composite": true,
+
+    // Set up incremental builds. All sub-projects emit under outDir, maintaining
+    // directory structure relative to rootDir. No effect on include, exclude, etc.
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": ".tmp/tsbuildinfo/",
+    "rootDir": ".",
+
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    // TODO: remove the next line to be fully `strict`.
+    "useUnknownInCatchVariables": false,
+
+    // "listFiles": true,
+    // "noErrorTruncation": true,
+    // "extendedDiagnostics": true,
+  },
+}

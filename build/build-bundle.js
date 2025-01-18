@@ -1,43 +1,44 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
-'use strict';
 
 /**
  * @fileoverview Script to bundle lighthouse entry points so that they can be run
  * in the browser (as long as they have access to a debugger protocol Connection).
  */
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert').strict;
-const mkdir = fs.promises.mkdir;
+import fs from 'fs';
+import path from 'path';
+import {execSync} from 'child_process';
+import {createRequire} from 'module';
 
-const LighthouseRunner = require('../lighthouse-core/runner.js');
-const exorcist = require('exorcist');
-const browserify = require('browserify');
-const terser = require('terser');
-const {minifyFileTransform} = require('./build-utils.js');
+import esMain from 'es-main';
+import esbuild from 'esbuild';
+// @ts-expect-error: plugin has no types.
+import SoftNavPlugin from 'lighthouse-plugin-soft-navigation';
 
-const COMMIT_HASH = require('child_process')
-  .execSync('git rev-parse HEAD')
-  .toString().trim();
+import * as plugins from './esbuild-plugins.js';
+import {Runner} from '../core/runner.js';
+import {LH_ROOT} from '../shared/root.js';
+import {readJson} from '../core/test/test-utils.js';
+import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
-const audits = LighthouseRunner.getAuditList()
-    .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
+const require = createRequire(import.meta.url);
 
-const gatherers = LighthouseRunner.getGathererList()
-    .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
+/**
+ * The git tag for the current HEAD (if HEAD is itself a tag),
+ * otherwise a combination of latest tag + #commits since + sha.
+ * Note: can't do this in CI because it is a shallow checkout.
+ */
+const GIT_READABLE_REF =
+  execSync(process.env.CI ? 'git rev-parse HEAD' : 'git describe').toString().trim();
 
-const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
-    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
-
-// HACK: manually include the lighthouse-plugin-publisher-ads audits.
+// HACK: manually include plugin audits.
 /** @type {Array<string>} */
 // @ts-expect-error
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+const softNavAudits = SoftNavPlugin.audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -45,147 +46,226 @@ const isDevtools = file =>
 /** @param {string} file */
 const isLightrider = file => path.basename(file).includes('lightrider');
 
-// Set to true for source maps.
-const DEBUG = false;
+const today = (() => {
+  const date = new Date();
+  const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+  const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+  const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
+  return `${month} ${day} ${year}`;
+})();
+/* eslint-disable max-len */
+const pkg = readJson(`${LH_ROOT}/package.json`);
+const banner = `
+/**
+ * Lighthouse ${GIT_READABLE_REF} (${today})
+ *
+ * ${pkg.description}
+ *
+ * @homepage ${pkg.homepage}
+ * @author   Copyright 2023 ${pkg.author}
+ * @license  ${pkg.license}
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+`.trim();
+/* eslint-enable max-len */
 
 /**
- * Browserify starting at the file at entryPath. Contains entry-point-specific
- * ignores (e.g. for DevTools or the extension) to trim the bundle depending on
- * the eventual use case.
+ * Bundle starting at entryPath, writing the minified result to distPath.
  * @param {string} entryPath
  * @param {string} distPath
+ * @param {{minify: boolean}=} opts
  * @return {Promise<void>}
  */
-async function browserifyFile(entryPath, distPath) {
-  let bundle = browserify(entryPath, {debug: DEBUG});
+async function buildBundle(entryPath, distPath, opts = {minify: true}) {
+  // List of paths (absolute / relative to config-helpers.js) to include
+  // in bundle and make accessible via config-helpers.js `requireWrapper`.
+  const dynamicModulePaths = [
+    ...Runner.getGathererList().map(gatherer => `../gather/gatherers/${gatherer}`),
+    ...Runner.getAuditList().map(gatherer => `../audits/${gatherer}`),
+  ];
 
-  bundle
-    .plugin('browserify-banner', {
-      pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
-      file: require.resolve('./banner.txt'),
-    })
-    // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
-      global: true,
-      parserOpts: {ecmaVersion: 12},
-    })
-    // Strip everything out of package.json includes except for the version.
-    .transform('package-json-versionify');
+  // Include plugins.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
+    dynamicModulePaths.push('lighthouse-plugin-soft-navigation');
+    softNavAudits.forEach(softNavAudit => {
+      dynamicModulePaths.push(softNavAudit);
+    });
+  }
 
-  // scripts will need some additional transforms, ignores and requires…
-  bundle.ignore('source-map')
-    .ignore('debug/node')
-    .ignore('intl')
-    .ignore('intl-pluralrules')
-    .ignore('raven')
-    .ignore('rimraf')
-    .ignore('pako/lib/zlib/inflate.js');
+  const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
+    const pathNoExt = modulePath.replace('.js', '');
+    return `['${pathNoExt}', import('${modulePath}')]`;
+  }).join(',\n');
 
-  // Don't include the desktop protocol connection.
-  bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
+  /** @type {Record<string, string>} */
+  const shimsObj = {
+    // zlib's decompression code is very large and we don't need it.
+    // We export empty functions, instead of an empty module, simply to silence warnings
+    // about no exports.
+    '__zlib-lib/inflate': `
+      export function inflateInit2() {};
+      export function inflate() {};
+      export function inflateEnd() {};
+      export function inflateReset() {};
+    `,
+  };
+
+  const modulesToIgnore = [
+    'puppeteer-core',
+    // ScreenRecorder.js imports `child_process` functions that are unavailable in bundled environments.
+    // This module is imported dynamically in a function we never use, so safe to ignore:
+    // https://github.com/puppeteer/puppeteer/blob/35f9c6d1e699ea37e89ef3bbb7940f5599df4724/packages/puppeteer-core/src/api/Page.ts#L2365-L2369
+    'puppeteer-core/lib/esm/puppeteer/node/ScreenRecorder.js',
+    'pako/lib/zlib/inflate.js',
+    '@sentry/node',
+    'source-map',
+    'ws',
+  ];
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
+    shimsObj[`${LH_ROOT}/report/generator/report-assets.js`] =
+      'export const reportAssets = {}';
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    // @ts-expect-error bundle.ignore does accept an array of strings.
-    bundle.ignore(locales);
+    shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
   }
 
-  // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
-  // Exposed path must be a relative path from lighthouse-core/config/config-helpers.js (where loading occurs).
-  const corePath = './lighthouse-core/';
-  const driverPath = `${corePath}gather/`;
-  audits.forEach(audit => {
-    bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
-  });
-  gatherers.forEach(gatherer => {
-    bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
-  });
-
-  // HACK: manually include the lighthouse-plugin-publisher-ads audits.
-  if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.require('lighthouse-plugin-publisher-ads');
-    pubAdsAudits.forEach(pubAdAudit => {
-      bundle = bundle.require(pubAdAudit);
-    });
+  // Don't bundle third-party-web (CDT provides its own copy). This prevents duplications of 40+ KB.
+  if (isDevtools(entryPath)) {
+    shimsObj['third-party-web/nostats-subset.js'] = 'export default {};';
   }
 
-  // browerify's url shim doesn't work with .URL in node_modules,
-  // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
-  // @see https://github.com/GoogleChrome/lighthouse/issues/5273
-  const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
-  bundle = bundle.require(pathToURLShim, {expose: 'url'});
-
-  let bundleStream = bundle.bundle();
-
-  // Make sure path exists.
-  await mkdir(path.dirname(distPath), {recursive: true});
-  return new Promise((resolve, reject) => {
-    const writeStream = fs.createWriteStream(distPath);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    // Extract the inline source map to an external file.
-    if (DEBUG) bundleStream = bundleStream.pipe(exorcist(`${distPath}.map`));
-    bundleStream.pipe(writeStream);
-  });
-}
-
-/**
- * Minify a javascript file, in place.
- * @param {string} filePath
- */
-async function minifyScript(filePath) {
-  const code = fs.readFileSync(filePath, 'utf-8');
-  const result = await terser.minify(code, {
-    ecma: 2019,
-    output: {
-      comments: /^!/,
-      max_line_len: 1000,
-    },
-    // The config relies on class names for gatherers.
-    keep_classnames: true,
-    // Runtime.evaluate errors if function names are elided.
-    keep_fnames: true,
-    sourceMap: DEBUG && {
-      content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
-      url: path.basename(`${filePath}.map`),
-    },
-  });
-
-  // Add the banner and modify globals for DevTools if necessary.
-  if (isDevtools(filePath) && result.code) {
-    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
-    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
-    if (!DEBUG) {
-      result.code =
-        '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;
-    }
-
-    assert.ok(result.code.includes('\nrequire='), 'missing browserify require stub');
-    result.code = result.code.replace('\nrequire=', '\nglobalThis.require=');
-    assert.ok(!result.code.includes('\nrequire='), 'contained unexpected browserify require stub');
+  for (const modulePath of modulesToIgnore) {
+    shimsObj[modulePath] = 'export default {}';
   }
 
-  fs.writeFileSync(filePath, result.code);
-  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
-}
+  await esbuild.build({
+    entryPoints: [entryPath],
+    outfile: distPath,
+    write: false,
+    format: 'iife',
+    charset: 'utf8',
+    bundle: true,
+    minify: opts.minify,
+    treeShaking: true,
+    sourcemap: 'linked',
+    banner: {js: banner},
+    lineLimit: 1000,
+    // Because of page-functions!
+    keepNames: true,
+    inject: ['./build/process-global.js'],
+    /** @type {esbuild.Plugin[]} */
+    plugins: [
+      plugins.replaceModules({
+        ...shimsObj,
+        'url': `
+          export const URL = globalThis.URL;
+          export const fileURLToPath = url => url;
+          export default {URL, fileURLToPath};
+        `,
+        'module': `
+          export const createRequire = () => {
+            return {
+              resolve() {
+                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
+              },
+            };
+          };
+        `,
+      }, {
+        // buildBundle is used in a lot of different contexts. Some share the same modules
+        // that need to be replaced, but others don't use those modules at all.
+        disableUnusedError: true,
+      }),
+      nodeModulesPolyfillPlugin(),
+      plugins.bulkLoader([
+        // TODO: when we used rollup, various things were tree-shaken out before inlineFs did its
+        // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it
+        // did before. Some of those new cases emit warnings. Safe to ignore, but should be
+        // resolved eventually.
+        plugins.partialLoaders.inlineFs({
+          verbose: Boolean(process.env.DEBUG),
+        }),
+        plugins.partialLoaders.rmGetModuleDirectory,
+        plugins.partialLoaders.replaceText({
+          '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          // TODO: Use globalThis directly.
+          'global.isLightrider': 'globalThis.isLightrider',
+          'global.isDevtools': 'globalThis.isDevtools',
+          // By default esbuild converts `import.meta` to an empty object.
+          // We need at least the url property for i18n things.
+          /** @param {string} id */
+          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
+        }),
+      ]),
+      {
+        name: 'alias',
+        setup({onResolve}) {
+          onResolve({filter: /\.*/}, (args) => {
+            /** @type {Record<string, string>} */
+            const entries = {
+              'debug': require.resolve('debug/src/browser.js'),
+              'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
+            };
+            if (args.path in entries) {
+              return {path: entries[args.path]};
+            }
+          });
+        },
+      },
+      {
+        name: 'postprocess',
+        setup({onEnd}) {
+          onEnd(async (result) => {
+            if (result.errors.length) {
+              return;
+            }
 
-/**
- * Browserify starting at entryPath, writing the minified result to distPath.
- * @param {string} entryPath
- * @param {string} distPath
- * @return {Promise<void>}
- */
-async function build(entryPath, distPath) {
-  await browserifyFile(entryPath, distPath);
-  await minifyScript(distPath);
+            const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
+            const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
+            if (!codeFile) {
+              throw new Error('missing output');
+            }
+
+            // Just make sure the above shimming worked.
+            let code = codeFile.text;
+            if (code.includes('inflate_fast')) {
+              throw new Error('Expected zlib inflate code to have been removed');
+            }
+
+            // Get rid of our extra license comments.
+            // All comments would have been moved to the end of the file, so removing some will not break
+            // source maps.
+            // https://stackoverflow.com/a/35923766
+            const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
+            let hasSeenFirst = false;
+            code = code.replace(re, (match) => {
+              if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
+                if (hasSeenFirst) {
+                  return '';
+                }
+
+                hasSeenFirst = true;
+              }
+
+              return match;
+            });
+
+            await fs.promises.writeFile(codeFile.path, code);
+            if (mapFile) {
+              await fs.promises.writeFile(mapFile.path, mapFile.text);
+            }
+          });
+        },
+      },
+    ],
+  });
 }
 
 /**
@@ -195,16 +275,14 @@ async function cli(argv) {
   // Take paths relative to cwd and build.
   const [entryPath, distPath] = argv.slice(2)
     .map(filePath => path.resolve(process.cwd(), filePath));
-  build(entryPath, distPath);
+  await buildBundle(entryPath, distPath, {minify: !process.env.DEBUG});
 }
 
 // Test if called from the CLI or as a module.
-if (require.main === module) {
-  cli(process.argv);
-} else {
-  module.exports = {
-    /** The commit hash for the current HEAD. */
-    COMMIT_HASH,
-    build,
-  };
+if (esMain(import.meta)) {
+  await cli(process.argv);
 }
+
+export {
+  buildBundle,
+};

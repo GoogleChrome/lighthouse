@@ -1,0 +1,177 @@
+<!--
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<!--
+  This fake psi page is intended to reproduce the experience of rendering two LHRs within the same DOM,
+  like in PageSpeed Insights. This helps surface the peculiar behavior around tabs,
+  expectations of unique IDs, and scoped report containment.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Faux PageSpeed Report</title>
+
+  <style>
+/* Inspired by https://codepen.io/markcaron/pen/MvGRYV?editors=1100 but improved. s*/
+/*
+ The tab visibility basics
+*/
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+.tabset > input:nth-of-type(1):checked ~ .tab-panels > .tab-panel:nth-of-type(1),
+.tabset > input:nth-of-type(2):checked ~ .tab-panels > .tab-panel:nth-of-type(2) {
+  display: block;
+}
+
+/*
+ Purdy tabs
+*/
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 55px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+}
+
+.tabset > label:hover {
+  background-color: hsl(0deg 0% 100% / 24%);
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: #06c;
+}
+
+.tabset > input:checked + label {
+  margin-bottom: -1px;
+  background: white;
+  border-bottom: 3px solid blue;
+}
+
+.tab-panel {
+  border: 1px solid #ccc;
+  padding: 24px;
+  row-gap: calc(8px*2);
+  border-radius: calc(8px/2);
+}
+
+
+.tabset {
+
+}
+
+.tab-panels {
+  background: white;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  color: rgba(0,0,0,0.87);
+  font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  margin: 0;
+  text-size-adjust: 100%;
+  bottom: auto;
+  right: auto;
+  width: auto;
+  overflow: visible;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+}
+.page {
+  max-width: 960px;
+  width: calc(100% - 24px*2);
+  margin: auto;
+  padding: 24px;
+  padding-top: calc(24px*2);
+  min-width: calc(360px -  8px *2);
+}
+@media screen and (max-width: 768px) {
+  .page {
+    padding:8px;
+    width: calc(100% - 8px*2);
+    padding-top: calc(24px/2)
+  }
+  .tab-panel {
+    padding:unset;
+    border-width: 0;
+  }
+}
+.hrefbar {
+  background: hsl(210deg 17% 98%);
+  border: 1px solid hsl(0deg 0% 85%);
+  border-width: 1px 0;
+  padding: 4px;
+}
+#reanalyze {
+  background-color: hsl(216deg 100% 50%);
+  border-radius: 4px;
+  color: white;
+  padding: 13px;
+  border: 0;
+  cursor: pointer;
+  float: right;
+}
+
+  </style>
+</head>
+<body >
+  <noscript>PSI requires JavaScript. Please enable.</noscript>
+  <button type=button id="translate">rotate locale</button>
+  <div class="page">
+    <button type=button id="reanalyze">Reanalyze</button>
+    <div class="tabset">
+      <input type="radio" name="tabset" id="tab1" aria-controls="mobile" checked />
+      <label for="tab1">Mobile</label>
+
+      <input type="radio" name="tabset" id="tab2" aria-controls="desktop" />
+      <label for="tab2">Desktop</label>
+
+      <div class="tab-panels">
+        <section id="mobile" class="tab-panel">
+          <h2>Diagnose performance issues</h2>
+          <h4>
+            See detailed analysis and recommendations from loading your site in a simulated
+            environment.
+          </h4>
+          <div class="hrefbar">🔗 http://thisurl.com</div>
+          <div class="reportContainer"></div>
+        </section>
+
+        <section id="desktop" class="tab-panel">
+          <h2>Diagnose performance issues</h2>
+          <h4>
+            See detailed analysis and recommendations from loading your site in a simulated
+            environment.
+          </h4>
+          <div class="hrefbar">🔗 http://thisurl.com</div>
+          <div class="reportContainer"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
+  <script type="module">
+%%LIGHTHOUSE_JAVASCRIPT%%
+  //# sourceURL=psi-reportrenderer.js
+  </script>
+  <script>console.log('window.__LIGHTHOUSE_JSON__', __LIGHTHOUSE_JSON__);</script>
+</body>
+</html>

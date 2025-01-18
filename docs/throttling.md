@@ -10,7 +10,7 @@ This is the standard recommendation for mobile throttling:
 - Throughput: 1.6Mbps down / 750 Kbps up.
 - Packet loss: none.
 
-These exact figures are [defined in the Lighthouse configuration](https://github.com/GoogleChrome/lighthouse/blob/v6.4.1/lighthouse-core/config/constants.js#L22-L29) and used as [Lighthouse's throttling default](https://github.com/GoogleChrome/lighthouse/blob/v6.4.1/lighthouse-core/config/constants.js#L59).
+These exact figures are [defined in the Lighthouse constants](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js#:~:text=of%204G%20connections.-,mobileSlow4G,-%3A%20%7B) and used as Lighthouse's throttling default.
 They represent roughly the bottom 25% of 4G connections and top 25% of 3G connections (in Lighthouse this configuration is currently called "Slow 4G" but used to be labeled as "Fast 3G").
 This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample) and, due to a lower latency, slightly faster for some pages than the [WebPageTest "4G" preset](https://github.com/WPO-Foundation/webpagetest/blob/master/www/settings/connectivity.ini.sample).
 
@@ -19,7 +19,7 @@ This preset is identical to the [WebPageTest's "Mobile 3G - Fast"](https://githu
 Within web performance testing, there are four typical styles of network throttling:
 
 1. **_Simulated throttling_**, which Lighthouse uses by **default**, uses a simulation of a page load, based on the data observed in the initial unthrottled load. This approach makes it both very fast and deterministic. However, due to the imperfect nature of predicting alternate execution paths, there is inherent inaccuracy that is summarized in this doc: [Lighthouse Metric Variability and Accuracy](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit). The TLDR: while it's roughly as accurate or better than DevTools throttling for most sites, it suffers from edge cases and a deep investigation to performance should use _Packet-level_ throttling tools.
-1. **_Request-level throttling_** , also referred to as **_Applied throttling_** in the Audits panel or _`devtools` throttling_ in Lighthouse configuration, is how throttling is implemented with Chrome DevTools. In real mobile connectivity, latency affects things at the packet level rather than the request level. As a result, this throttling isn't highly accurate. It also has a few more downsides that are summarized in [Network Throttling & Chrome - status](https://docs.google.com/document/d/1TwWLaLAfnBfbk5_ZzpGXegPapCIfyzT4MWuZgspKUAQ/edit). The TLDR: while it's a [decent approximation](https://docs.google.com/document/d/10lfVdS1iDWCRKQXPfbxEn4Or99D64mvNlugP1AQuFlE/edit), it's not a sufficient model of a slow connection. The [multipliers used in Lighthouse](https://github.com/GoogleChrome/lighthouse/blob/3be483287a530fb560c843b7299ef9cfe91ce1cc/lighthouse-core/lib/emulation.js#L33-L39) attempt to correct for the differences.
+1. **_Request-level throttling_** , also referred to as **_DevTools throttling_** in the Lighthouse panel or _`devtools` throttling_ in Lighthouse configuration, is how throttling is implemented with Chrome DevTools. In real mobile connectivity, latency affects things at the packet level rather than the request level. As a result, this throttling isn't highly accurate. It also has a few more downsides that are summarized in [Network Throttling & Chrome - status](https://docs.google.com/document/d/1TwWLaLAfnBfbk5_ZzpGXegPapCIfyzT4MWuZgspKUAQ/edit). The TLDR: while it's a [decent approximation](https://docs.google.com/document/d/10lfVdS1iDWCRKQXPfbxEn4Or99D64mvNlugP1AQuFlE/edit), it's not a sufficient model of a slow connection. The [multipliers used in Lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js#:~:text=*%201024%2C-,requestLatencyMs,-%3A%20150%20*) attempt to correct for the differences.
 1. **_Proxy-level_** throttling tools do not affect UDP data, so they're decent, but not ideal.
 1. **_Packet-level_** throttling tools are able to make the most accurate network simulation. While this approach can model real network conditions most effectively, it also can introduce [more variance](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit) than request-level or simulated throttling. [WebPageTest uses](https://github.com/WPO-Foundation/wptagent/blob/master/docs/remote_trafficshaping.md) packet-level throttling.
 
@@ -27,27 +27,26 @@ Lighthouse, by default, uses simulated throttling as it provides both quick eval
 
 ## DevTools' Lighthouse Panel Throttling
 
-In Chrome 79 and earlier, you could choose between [the throttling types](#types-of-throttling) of Simulated, Applied, and none.
+The Lighthouse panel has a simplified throttling setup:
 
-Starting with Chrome 80, the Audits panel is simplifying the throttling configuration:
+1. _Simulated throttling_ remains the default setting. This matches the setup of PageSpeed Insights and the Lighthouse CLI default, maintaining cross-tool consistency.
+   - If you click the `View Original Trace` button, the trace values will not match up with Lighthouse's metric results, as the original trace is prior to the simulation.
+1. _DevTools throttling_ is available within the Lighthouse panel settings (⚙): select _DevTools throttling_ from the throttling method dropdown.
+   - In this mode, the performance data seen after clicking the [`View Trace` button](https://developers.google.com/web/updates/2018/04/devtools#traces) will match Lighthouses's numbers.
 
-1. _Simulated throttling_ remains the default setting. This matches the setup of PageSpeed Insights and the Lighthouse CLI default, so this provides cross-tool consistency.
-1. _No throttling_ is removed as it leads to innacurate scoring and misleading metric results.
-1. Within the Audits panel settings, you can uncheck the _Simulated throttling_ checkbox to use _Applied throttling_. For the moment, we are keeping this _Applied throttling_ option available for users of the [`View Trace` button](https://developers.google.com/web/updates/2018/04/devtools#traces). Under applied throttling, the trace matches the metrics values, whereas under Simulated things do not currently match up.
-
-We plan to improve the experience of viewing a trace under simulated throttling. At that point, the _Applied throttling_ option will be removed and _Simulated throttling_ will be the only option within the DevTools Audits panel. Of course, CLI users can still control the exact [configuration](../readme.md#cli-options) of throttling.
+Of course, CLI users can still control the exact [configuration](../readme.md#cli-options) of throttling.
 
 ## How do I get packet-level throttling?
 
 This Performance Calendar article, [Testing with Realistic Networking Conditions](https://calendar.perfplanet.com/2016/testing-with-realistic-networking-conditions/), has a good explanation of packet-level traffic shaping (which applies across TCP/UDP/ICMP) and recommendations.
 
-The `throttle` npm package appears to be the most usable Mac/Linux commandline app for managing your network connection. Important to note: it changes your **entire** machine's network interface. Also, **`throttle` requires `sudo`** (as all packet-level shapers do).
+The [`@sitespeed.io/throttle`](https://www.npmjs.com/package/@sitespeed.io/throttle) npm package appears to be the most usable Mac/Linux commandline app for managing your network connection. Important to note: it changes your **entire** machine's network interface. Also, **`@sitespeed.io/throttle` requires `sudo`** (as all packet-level shapers do).
 
 **Windows?** As of today, there is no single cross-platform tool for throttling. But there are two recommended **Windows 7** network shaping utilities: [WinShaper](https://calendar.perfplanet.com/2016/testing-with-realistic-networking-conditions/#introducing_winshaper) and [Clumsy](http://jagt.github.io/clumsy/).
 
 For **Windows 10** [NetLimiter](https://www.netlimiter.com/buy/nl4lite/standard-license/1/0) (Paid option) and [TMeter](http://www.tmeter.ru/en/) (Freeware Edition) are the most usable solutions.
 
-### `throttle` set up
+### `@sitespeed.io/throttle` set up
 
 ```sh
 # Install with npm
@@ -66,9 +65,11 @@ throttle --stop
 
 For more information and a complete list of features visit the documentation on [sitespeed.io website](https://www.sitespeed.io/documentation/throttle/).
 
-### Using Lighthouse with `throttle`
+### Using Lighthouse with `@sitespeed.io/throttle`
 
 ```sh
+npm install @sitespeed.io/throttle -g
+
 # Enable system traffic throttling
 throttle 3gfast
 
@@ -110,15 +111,15 @@ Below is a table of various device classes and their approximate ranges of `benc
 
 ## Calibrating the CPU slowdown
 
-By default, Lighthouse uses **a constant 4x CPU multiplier** which moves a typical run in the high-end desktop bracket somewhere into the mid-tier mobile bracket. 
+By default, Lighthouse uses **a constant 4x CPU multiplier** which moves a typical run in the high-end desktop bracket somewhere into the mid-tier mobile bracket.
 
 You may choose to calibrate if your benchmarkIndex is in a different range than the above table would expect. Additionally, when Lighthouse is run from the CLI with default settings on an underpowered device, a warning will be added to the report suggesting you calibrate the slowdown:
 
 ![image](https://user-images.githubusercontent.com/39191/101437249-99cc9880-38c4-11eb-8122-76f2c73d9283.png)
 
-The `--throttling.cpuSlowdownMultiplier` CLI flag allows you to configure the throttling level applied. On a weaker machine, you can lower it from the default of 4x  to something more appropriate. 
+The `--throttling.cpuSlowdownMultiplier` CLI flag allows you to configure the throttling level applied. On a weaker machine, you can lower it from the default of 4x  to something more appropriate.
 
-The [Lighthouse CPU slowdown calculator webapp](https://lighthouse-cpu-throttling-calculator.vercel.app/) will compute what mutiplier to use from the  `CPU/Memory Power` value from the bottom of the report.
+The [Lighthouse CPU slowdown calculator webapp](https://lighthouse-cpu-throttling-calculator.vercel.app/) will compute what multiplier to use from the  `CPU/Memory Power` value from the bottom of the report.
 
 <a href="https://lighthouse-cpu-throttling-calculator.vercel.app/">
 <img src="https://user-images.githubusercontent.com/39191/101436708-8a991b00-38c3-11eb-89c5-7d43752932e9.png" width=300>
@@ -146,5 +147,5 @@ lighthouse --throttling.cpuSlowdownMultiplier=6 https://example.com
 
 Within web performance testing, there are two typical styles of CPU throttling:
 
-1. **_Simulated throttling_**, which Lighthouse uses by **default**, uses a simulation of a page load, based on the data observed in the initial unthrottled load. This approach makes it very fast. However, due to the imperfect nature of predicting alternate execution paths, there is inherent inaccuracy that is summarized in this doc: [Lighthouse Metric Variability and Accuracy](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit). The TLDR: while it's fairly accurate for most circumstances, it suffers from edge cases and a deep investigation to performance should use _applied_ CPU throttling tools.
-1. **_Applied throttling_** , also called _`devtools` throttling_ in Lighthouse configuration. This method actually interrupts execution of CPU work at periodic intervals to emulate a slower processor. It is [fairly accurate](https://docs.google.com/document/d/1jGHeGjjjzfTAE2WHXipKF3aqwF2bFA6r0B877nFtBpc/edit) and much easier than obtaining target hardware. The same underlying principle can be used by [linux cgroups](https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html) to throttle any process, not just the browser. Other tools like [WebPageTest use applied CPU throttling](https://github.com/WPO-Foundation/wptagent/commit/f7fe0d6b5b01bd1b042a1fe3144c68a6bff846a6) offered by DevTools.
+1. **_Simulated throttling_**, which Lighthouse uses by **default**, uses a simulation of a page load, based on the data observed in the initial unthrottled load. This approach makes it very fast. However, due to the imperfect nature of predicting alternate execution paths, there is inherent inaccuracy that is summarized in this doc: [Lighthouse Metric Variability and Accuracy](https://docs.google.com/document/d/1BqtL-nG53rxWOI5RO0pItSRPowZVnYJ_gBEQCJ5EeUE/edit). The TLDR: while it's fairly accurate for most circumstances, it suffers from edge cases and a deep investigation to performance should use _DevTools_ CPU throttling tools.
+1. **_DevTools throttling_** , also called _`devtools` throttling_ in Lighthouse configuration. This method actually interrupts execution of CPU work at periodic intervals to emulate a slower processor. It is [fairly accurate](https://docs.google.com/document/d/1jGHeGjjjzfTAE2WHXipKF3aqwF2bFA6r0B877nFtBpc/edit) and much easier than obtaining target hardware. The same underlying principle can be used by [linux cgroups](https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html) to throttle any process, not just the browser. Other tools like [WebPageTest use CPU throttling](https://github.com/WPO-Foundation/wptagent/commit/f7fe0d6b5b01bd1b042a1fe3144c68a6bff846a6) offered by DevTools.

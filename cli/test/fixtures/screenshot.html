@@ -1,0 +1,32 @@
+<!--
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<style>
+  body {
+    background: lightblue url('screenshot.gif') no-repeat fixed center;
+  }
+  p {
+    background-color: white;
+  }
+</style>
+
+<body>
+  <p id="textEl">Screenshot tester.</p>
+
+  <script>
+    const params = new URLSearchParams(document.location.search);
+    if (params.has('width')) document.body.style.width = params.get('width');
+    if (params.has('height')) document.body.style.height = params.get('height');
+
+    textEl.style.color = 'gray';
+    textEl.style.backgroundColor = 'lightgrey';
+    let padding = 1;
+    setInterval(() => {
+      textEl.style.paddingTop = padding + 'px';
+      padding += 1;
+    }, 50);
+  </script>  
+</body>

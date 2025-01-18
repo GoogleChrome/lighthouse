@@ -1,0 +1,3356 @@
+{
+  "core/audits/accessibility/accesskeys.js | description": {
+    "message": "アクセスキーは、ユーザーがページの特定の部分にすばやくフォーカスを移動するときに使います。正しく操作できるよう、各アクセスキーは一意にする必要があります。[アクセスキーの詳細](https://dequeuniversity.com/rules/axe/4.10/accesskeys)"
+  },
+  "core/audits/accessibility/accesskeys.js | failureTitle": {
+    "message": "`[accesskey]` の値が一意ではありません"
+  },
+  "core/audits/accessibility/accesskeys.js | title": {
+    "message": "`[accesskey]` の値は一意です"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | description": {
+    "message": "各 ARIA `role` は、`aria-*` 属性の特定のサブセットに対応しています。これらが一致しない場合、`aria-*` 属性は無効になります。[ARIA 属性をロールと照合する方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-attr)"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
+    "message": "`[aria-*]` 属性は役割と一致していません"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | title": {
+    "message": "`[aria-*]` 属性は役割と一致しています"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | description": {
+    "message": "多くの HTML 要素は、特定の ARIA ロールのみを割り当てることができます。ARIA ロールを許可されていない場所で使用すると、ウェブページのアクセシビリティが妨げられる可能性があります。[ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role)"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
+    "message": "互換性のない要素に ARIA ロールを使用する"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | title": {
+    "message": "互換性のある要素にのみ ARIA ロールを使用する"
+  },
+  "core/audits/accessibility/aria-command-name.js | description": {
+    "message": "要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[コマンド要素にアクセスしやすくする方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-command-name)"
+  },
+  "core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "`button`、`link`、`menuitem` 要素にユーザー補助機能向けの名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-command-name.js | title": {
+    "message": "`button`、`link`、`menuitem` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "一部の ARIA 属性は、特定の条件下に限り要素で使用できます。[条件付き ARIA 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-conditional-attr)"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "ARIA 属性が要素のロールで指定されたとおりに使用されていません"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "ARIA 属性は要素のロールで指定されたとおりに使用されています"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "非推奨の ARIA ロールは、支援技術によって正しく処理されない可能性があります。[非推奨の ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-deprecated-role)"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "非推奨の ARIA ロールが使用されています"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "非推奨の ARIA ロールは使用されていませんでした"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | description": {
+    "message": "ARIA ダイアログ要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーのユーザーはこれらの要素の用途を識別できません。[ARIA ダイアログ要素をアクセスしやすくする方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-dialog-name)"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | failureTitle": {
+    "message": "`role=\"dialog\"` または `role=\"alertdialog\"` が含まれる要素に、ユーザー補助機能用の名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | title": {
+    "message": "`role=\"dialog\"` または `role=\"alertdialog\"` が含まれる要素に、ユーザー補助機能用の名前が設定されています。"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "スクリーン リーダーなどの支援技術は、ドキュメントの `<body>` に `aria-hidden=\"true\"` が設定されていると、正常に動作しません。[`aria-hidden` がドキュメントの本文に与える影響についての詳細](https://dequeuniversity.com/rules/axe/4.10/aria-hidden-body)"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "ドキュメントの `<body>` に `[aria-hidden=\"true\"]` が設定されています"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "ドキュメントの `<body>` に `[aria-hidden=\"true\"]` は設定されていません"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "フォーカス可能な子要素が `[aria-hidden=\"true\"]` 要素内にある場合、スクリーン リーダーなどの支援技術を使用するユーザーはこれらの操作可能な要素を使用できません。[`aria-hidden` がフォーカス可能な要素に与える影響の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-hidden-focus)"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 要素にフォーカス可能な子要素が含まれています"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 要素にフォーカス可能な子要素は含まれていません"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "入力フィールドにユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[入力フィールドのラベルの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-input-field-name)"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 入力フィールドにユーザー補助機能向けの名前が設定されていません"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 入力フィールドにユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "メーター要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[`meter` 要素に名前を付ける方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-meter-name)"
+  },
+  "core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "ARIA `meter` 要素にユーザー補助機能向けの名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "ARIA `meter` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "`progressbar` 要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[`progressbar` 要素にラベルを付ける方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-progressbar-name)"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "ARIA `progressbar` 要素にユーザー補助機能向けの名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "ARIA `progressbar` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "禁止されているロールで ARIA 属性を使用すると、支援技術のユーザーに重要な情報が伝わらない可能性があります。[禁止されている ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-prohibited-attr)"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "禁止されている ARIA 属性が要素で使用されています"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "許可された ARIA 属性のみが要素で使用されています"
+  },
+  "core/audits/accessibility/aria-required-attr.js | description": {
+    "message": "一部の ARIA ロールには、スクリーン リーダーに要素の状態を伝える必須の属性があります。[ロールと必須属性の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-required-attr)"
+  },
+  "core/audits/accessibility/aria-required-attr.js | failureTitle": {
+    "message": "`[role]` に必須の `[aria-*]` 属性が一部指定されていません"
+  },
+  "core/audits/accessibility/aria-required-attr.js | title": {
+    "message": "`[role]` に必須の `[aria-*]` 属性がすべて指定されています"
+  },
+  "core/audits/accessibility/aria-required-children.js | description": {
+    "message": "目的のユーザー補助機能を実行するには、一部の ARIA 親ロールに特定の子ロールを含める必要があります。[ロールと必要な子要素の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-required-children)"
+  },
+  "core/audits/accessibility/aria-required-children.js | failureTitle": {
+    "message": "ARIA `[role]` が指定されている要素には、特定の `[role]` を含む子を指定する必要がありますが、その一部またはすべてが指定されていません。"
+  },
+  "core/audits/accessibility/aria-required-children.js | title": {
+    "message": "ARIA `[role]` が指定されている要素に、特定の `[role]` を含む必要な子がすべて指定されています。"
+  },
+  "core/audits/accessibility/aria-required-parent.js | description": {
+    "message": "想定されるユーザー補助機能が適切に動作するためには、一部の ARIA 子ロールは、特定の親ロールに含まれている必要があります。[ARIA ロールと必要な親要素の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-required-parent)"
+  },
+  "core/audits/accessibility/aria-required-parent.js | failureTitle": {
+    "message": "`[role]` が必須の親要素に含まれていません"
+  },
+  "core/audits/accessibility/aria-required-parent.js | title": {
+    "message": "`[role]` は必須の親要素に含まれています"
+  },
+  "core/audits/accessibility/aria-roles.js | description": {
+    "message": "目的のユーザー補助機能を実行するには、ARIA ロールに有効な値を指定してください。[有効な ARIA ロールの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-roles)"
+  },
+  "core/audits/accessibility/aria-roles.js | failureTitle": {
+    "message": "`[role]` の値は無効です"
+  },
+  "core/audits/accessibility/aria-roles.js | title": {
+    "message": "`[role]` の値は有効です"
+  },
+  "core/audits/accessibility/aria-text.js | description": {
+    "message": "マークアップによってテキストノードの分割を `role=text` で囲むと、ナレーションで 1 つのフレーズとして扱うことができますが、要素のフォーカス可能な子孫は読み上げられません。[`role=text` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-text)"
+  },
+  "core/audits/accessibility/aria-text.js | failureTitle": {
+    "message": "`role=text` 属性が指定された要素にフォーカス可能な子孫があります。"
+  },
+  "core/audits/accessibility/aria-text.js | title": {
+    "message": "`role=text` 属性が指定された要素にフォーカス可能な子孫がありません。"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "切り替えフィールドにユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[切り替えフィールドの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-toggle-field-name)"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切り替えフィールドにユーザー補助機能向けの名前が設定されていません"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切り替えフィールドにユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "ツールチップ要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[`tooltip` 要素に名前を付ける方法の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-tooltip-name)"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "ARIA `tooltip` 要素にユーザー補助機能向けの名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "ARIA `tooltip` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "`treeitem` 要素にユーザー補助機能用の名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[`treeitem` 要素のラベル付けの詳細](https://dequeuniversity.com/rules/axe/4.10/aria-treeitem-name)"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "ARIA `treeitem` 要素にユーザー補助機能向けの名前が設定されていません。"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "ARIA `treeitem` 要素にユーザー補助機能向けの名前が設定されています"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | description": {
+    "message": "支援技術（スクリーン リーダーなど）で、無効な値が指定された ARIA 属性を解釈できません。[ARIA 属性で有効な値の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr-value)"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
+    "message": "`[aria-*]` 属性に有効な値が指定されていません"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | title": {
+    "message": "`[aria-*]` 属性に有効な値が指定されています"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | description": {
+    "message": "支援技術（スクリーン リーダーなど）で、無効な名前が指定された ARIA 属性を解釈できません。[有効な ARIA 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr)"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | failureTitle": {
+    "message": "`[aria-*]` 属性は無効か、スペルミスがあります"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | title": {
+    "message": "`[aria-*]` 属性は有効で、スペルミスもありません"
+  },
+  "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
+    "message": "問題のある要素"
+  },
+  "core/audits/accessibility/button-name.js | description": {
+    "message": "ボタンにユーザー補助機能名が指定されていない場合、スクリーン リーダーでは「ボタン」と読み上げられるため、スクリーン リーダーを使用しているユーザーはボタンの用途がわからず、使用することができなくなります。[ボタンにアクセスしやすくするための方法の詳細](https://dequeuniversity.com/rules/axe/4.10/button-name)"
+  },
+  "core/audits/accessibility/button-name.js | failureTitle": {
+    "message": "ボタンにユーザー補助機能名が指定されていません"
+  },
+  "core/audits/accessibility/button-name.js | title": {
+    "message": "ボタンにユーザー補助機能名が指定されています"
+  },
+  "core/audits/accessibility/bypass.js | description": {
+    "message": "重複するコンテンツをスキップする手段を追加すると、キーボードを使ったページの移動を効率化できます。[ブロックの回避についての詳細](https://dequeuniversity.com/rules/axe/4.10/bypass)"
+  },
+  "core/audits/accessibility/bypass.js | failureTitle": {
+    "message": "ページに見出し、スキップリンク、またはランドマーク領域が設定されていません"
+  },
+  "core/audits/accessibility/bypass.js | title": {
+    "message": "ページに見出し、スキップリンク、またはランドマーク領域が設定されています"
+  },
+  "core/audits/accessibility/color-contrast.js | description": {
+    "message": "低コントラストのテキストを使用すると、多くのユーザーは読むことが困難または不可能になります。[十分なカラー コントラストを確保する方法の詳細](https://dequeuniversity.com/rules/axe/4.10/color-contrast)"
+  },
+  "core/audits/accessibility/color-contrast.js | failureTitle": {
+    "message": "背景色と前景色には十分なコントラスト比がありません"
+  },
+  "core/audits/accessibility/color-contrast.js | title": {
+    "message": "背景色と前景色には十分なコントラスト比があります"
+  },
+  "core/audits/accessibility/definition-list.js | description": {
+    "message": "定義リストが適切にマークアップされていないと、スクリーン リーダーで、誤解を招く内容や不正確な内容が読み上げられる可能性があります。[定義リストを正しく構成する方法の詳細](https://dequeuniversity.com/rules/axe/4.10/definition-list)"
+  },
+  "core/audits/accessibility/definition-list.js | failureTitle": {
+    "message": "`<dl>` には、正しく順序付けられた `<dt>` および `<dd>` グループ、`<script>`、`<template>`、または `<div>` 要素以外も含まれています。"
+  },
+  "core/audits/accessibility/definition-list.js | title": {
+    "message": "`<dl>` には、正しく順序付けられた `<dt>` および `<dd>` グループ、`<script>`、`<template>`、または `<div>` 要素のみが含まれています。"
+  },
+  "core/audits/accessibility/dlitem.js | description": {
+    "message": "スクリーン リーダーで正しく読み上げられるようにするには、定義リストの項目（`<dt>` と `<dd>`）を親の `<dl>` 要素でラップする必要があります。[定義リストを正しく構成する方法の詳細](https://dequeuniversity.com/rules/axe/4.10/dlitem)"
+  },
+  "core/audits/accessibility/dlitem.js | failureTitle": {
+    "message": "定義リストの項目が `<dl>` 要素でラップされていません"
+  },
+  "core/audits/accessibility/dlitem.js | title": {
+    "message": "定義リストの項目は `<dl>` 要素でラップされています"
+  },
+  "core/audits/accessibility/document-title.js | description": {
+    "message": "タイトルを指定すると、スクリーン リーダーのユーザーがページの概要を把握できるようになります。検索エンジンの使用時には、検索語句に関連するページかどうかを判断するための重要な要素となります。[ドキュメントのタイトルに関する詳細](https://dequeuniversity.com/rules/axe/4.10/document-title)"
+  },
+  "core/audits/accessibility/document-title.js | failureTitle": {
+    "message": "ドキュメントに `<title>` 要素が指定されていません"
+  },
+  "core/audits/accessibility/document-title.js | title": {
+    "message": "ドキュメントに `<title>` 要素が指定されています"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "他のインスタンスが支援技術によって見落とされることのないように、ARIA ID の値は一意にする必要があります。[重複する ARIA ID の修正方法の詳細](https://dequeuniversity.com/rules/axe/4.10/duplicate-id-aria)"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID が一意ではありません"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA ID は一意です"
+  },
+  "core/audits/accessibility/empty-heading.js | description": {
+    "message": "見出しにコンテンツがない場合やアクセスできないテキストが含まれている場合、スクリーン リーダーのユーザーはページの構造に関する情報にアクセスできません。[見出しの詳細](https://dequeuniversity.com/rules/axe/4.10/empty-heading)"
+  },
+  "core/audits/accessibility/empty-heading.js | failureTitle": {
+    "message": "見出し要素にコンテンツが含まれていません。"
+  },
+  "core/audits/accessibility/empty-heading.js | title": {
+    "message": "すべての見出し要素にコンテンツが含まれています。"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "フォーム フィールドに複数のラベルが設定されている場合、スクリーン リーダーなどの支援技術で最初または最後のラベルだけ、もしくはすべてのラベルが読み上げられるため、混乱が生じる可能性があります。[フォームラベルの使用方法の詳細](https://dequeuniversity.com/rules/axe/4.10/form-field-multiple-labels)"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "フォーム フィールドに複数のラベルが設定されています"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "複数のラベルが設定されたフォーム フィールドはありません"
+  },
+  "core/audits/accessibility/frame-title.js | description": {
+    "message": "スクリーン リーダーでは、フレームのコンテンツを説明するためにフレームのタイトルが使用されます。[フレームのタイトルの詳細](https://dequeuniversity.com/rules/axe/4.10/frame-title)"
+  },
+  "core/audits/accessibility/frame-title.js | failureTitle": {
+    "message": "`<frame>` または `<iframe>` の要素にタイトルが指定されていません"
+  },
+  "core/audits/accessibility/frame-title.js | title": {
+    "message": "`<frame>` または `<iframe>` の要素にタイトルが指定されています"
+  },
+  "core/audits/accessibility/heading-order.js | description": {
+    "message": "見出しを適切なレベルの順序で配置すると、ページのセマンティック構造を伝えることができ、支援技術を使用した操作やコンテンツの把握が簡単になります。[見出しの順序の詳細](https://dequeuniversity.com/rules/axe/4.10/heading-order)"
+  },
+  "core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "見出し要素は降順になっていません"
+  },
+  "core/audits/accessibility/heading-order.js | title": {
+    "message": "見出し要素は降順になっています"
+  },
+  "core/audits/accessibility/html-has-lang.js | description": {
+    "message": "ページで `lang` 属性が指定されていない場合、スクリーン リーダーは、スクリーン リーダーの設定時にユーザーが選択したデフォルト言語がページで使用されているものと見なします。そのページでデフォルト言語が実際には使用されていない場合、スクリーン リーダーはページのテキストを正しく読み上げられない可能性があります。[`lang` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/html-has-lang)"
+  },
+  "core/audits/accessibility/html-has-lang.js | failureTitle": {
+    "message": "`<html>` 要素に `[lang]` 属性が指定されていません"
+  },
+  "core/audits/accessibility/html-has-lang.js | title": {
+    "message": "`<html>` 要素に `[lang]` 属性が指定されています"
+  },
+  "core/audits/accessibility/html-lang-valid.js | description": {
+    "message": "有効な [BCP 47 言語](https://www.w3.org/International/questions/qa-choosing-language-tags#question)を指定すると、スクリーン リーダーでテキストが正しく読み上げられるようになります。[`lang` 属性の使用方法の詳細](https://dequeuniversity.com/rules/axe/4.10/html-lang-valid)"
+  },
+  "core/audits/accessibility/html-lang-valid.js | failureTitle": {
+    "message": "`<html>` 要素の `[lang]` 属性に有効な値が指定されていません。"
+  },
+  "core/audits/accessibility/html-lang-valid.js | title": {
+    "message": "`<html>` 要素の `[lang]` 属性に有効な値が指定されています"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | description": {
+    "message": "ウェブページで一貫性のある言語が指定されていない場合、スクリーン リーダーでページのテキストが正しく読み上げられないことがあります。[`lang` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/html-xml-lang-mismatch)"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | failureTitle": {
+    "message": "`<html>` 要素に、`[lang]` 属性と同じベース言語の `[xml:lang]` 属性がありません。"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | title": {
+    "message": "`<html>` 要素に、`[lang]` 属性と同じベース言語の `[xml:lang]` 属性があります。"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | description": {
+    "message": "リンク先が同じリンクは、ユーザーがそのリンクの目的を理解し、クリックするかどうかを判断できるように、説明を同じものにする必要があります。[同一リンクの詳細](https://dequeuniversity.com/rules/axe/4.10/identical-links-same-purpose)"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | failureTitle": {
+    "message": "同一のリンクの目的が同じではありません。"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | title": {
+    "message": "同一のリンクの目的は同じです。"
+  },
+  "core/audits/accessibility/image-alt.js | description": {
+    "message": "説明的要素は、簡潔でわかりやすい代替テキストにする必要があります。装飾的要素は、alt 属性が空の場合は無視される可能性があります。[`alt` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/image-alt)"
+  },
+  "core/audits/accessibility/image-alt.js | failureTitle": {
+    "message": "画像要素に `[alt]` 属性が指定されていません"
+  },
+  "core/audits/accessibility/image-alt.js | title": {
+    "message": "画像要素に `[alt]` 属性が指定されています"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | description": {
+    "message": "説明的要素は、簡潔でわかりやすい代替テキストにする必要があります。リンクや画像の近くのテキストとまったく同じ代替テキストを指定すると、スクリーン リーダーで同じ内容が 2 回読み上げられるため、混乱を招く可能性があります。[`alt` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt)"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | failureTitle": {
+    "message": "画像要素に、重複する内容の`[alt]` 属性が含まれています。"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | title": {
+    "message": "画像要素に、重複する内容の`[alt]` 属性は含まれていません。"
+  },
+  "core/audits/accessibility/input-button-name.js | description": {
+    "message": "識別可能およびアクセス可能なテキストを入力ボタンに追加すると、スクリーン リーダーのユーザーが入力ボタンの目的を把握するのに役立ちます。[入力ボタンの詳細](https://dequeuniversity.com/rules/axe/4.10/input-button-name)"
+  },
+  "core/audits/accessibility/input-button-name.js | failureTitle": {
+    "message": "入力ボタンに識別可能なテキストがありません。"
+  },
+  "core/audits/accessibility/input-button-name.js | title": {
+    "message": "入力ボタンに識別可能なテキストがあります。"
+  },
+  "core/audits/accessibility/input-image-alt.js | description": {
+    "message": "画像を `<input>` ボタンとして使用している場合は、代替テキストを指定すると、スクリーン リーダーのユーザーがボタンの用途を理解しやすくなります。[入力画像の代替テキストの詳細](https://dequeuniversity.com/rules/axe/4.10/input-image-alt)"
+  },
+  "core/audits/accessibility/input-image-alt.js | failureTitle": {
+    "message": "`<input type=\"image\">` 要素に `[alt]` テキストが指定されていません"
+  },
+  "core/audits/accessibility/input-image-alt.js | title": {
+    "message": "`<input type=\"image\">` 要素に `[alt]` テキストが指定されています"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | description": {
+    "message": "表示されるテキストラベルがユーザー補助機能用の名前と一致しない場合、スクリーン リーダーのユーザーが混乱する可能性があります。[ユーザー補助機能用の名前の詳細](https://dequeuniversity.com/rules/axe/4.10/label-content-name-mismatch)"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | failureTitle": {
+    "message": "表示されるテキストラベルの要素に、一致するユーザー補助機能用の名前がありません。"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | title": {
+    "message": "表示されるテキストラベルの要素に、一致するユーザー補助機能用の名前があります。"
+  },
+  "core/audits/accessibility/label.js | description": {
+    "message": "ラベルを使用すると、フォームの各コントロールが支援技術（スクリーン リーダーなど）によって正しく読み上げられるようになります。[フォーム要素のラベルの詳細](https://dequeuniversity.com/rules/axe/4.10/label)"
+  },
+  "core/audits/accessibility/label.js | failureTitle": {
+    "message": "フォームの要素にラベルが関連付けられていません"
+  },
+  "core/audits/accessibility/label.js | title": {
+    "message": "フォームの要素にラベルが関連付けられています"
+  },
+  "core/audits/accessibility/landmark-one-main.js | description": {
+    "message": "メインのランドマークが 1 つ設定されていると、スクリーン リーダーのユーザーがウェブページを移動しやすくなります。[ランドマークの詳細](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main)"
+  },
+  "core/audits/accessibility/landmark-one-main.js | failureTitle": {
+    "message": "ドキュメントにメインのランドマークが設定されていません。"
+  },
+  "core/audits/accessibility/landmark-one-main.js | title": {
+    "message": "ドキュメントにメインのランドマークが設定されています。"
+  },
+  "core/audits/accessibility/link-in-text-block.js | description": {
+    "message": "低コントラストのテキストを使用すると、多くのユーザーは読むことが困難または不可能になります。識別可能なリンクテキストを使用すると、ロービジョンのユーザーの利便性が向上します。[リンクを識別可能にする方法の詳細](https://dequeuniversity.com/rules/axe/4.10/link-in-text-block)"
+  },
+  "core/audits/accessibility/link-in-text-block.js | failureTitle": {
+    "message": "リンクは色に依存して識別可能です。"
+  },
+  "core/audits/accessibility/link-in-text-block.js | title": {
+    "message": "リンクは色に依存せずに識別可能です。"
+  },
+  "core/audits/accessibility/link-name.js | description": {
+    "message": "識別可能、フォーカス可能な一意のリンクテキスト（および画像をリンクとして使用している場合はその代替テキスト）を使用すると、スクリーン リーダーでのナビゲーションの操作性が向上します。[リンクをアクセス可能にする方法の詳細](https://dequeuniversity.com/rules/axe/4.10/link-name)"
+  },
+  "core/audits/accessibility/link-name.js | failureTitle": {
+    "message": "リンクに識別可能な名前が指定されていません"
+  },
+  "core/audits/accessibility/link-name.js | title": {
+    "message": "リンクに識別可能な名前が指定されています"
+  },
+  "core/audits/accessibility/list.js | description": {
+    "message": "スクリーン リーダーでは、特殊な方法でリストが読み上げられます。適切に読み上げられるようにするには、正しいリスト構造を指定する必要があります。[適切なリスト構造についての詳細](https://dequeuniversity.com/rules/axe/4.10/list)"
+  },
+  "core/audits/accessibility/list.js | failureTitle": {
+    "message": "リストには、`<li>` 要素と、スクリプト対応要素（`<script>` と `<template>`）以外も含まれています。"
+  },
+  "core/audits/accessibility/list.js | title": {
+    "message": "リストには、`<li>` 要素と、スクリプト対応要素（`<script>` と `<template>`）のみが含まれています。"
+  },
+  "core/audits/accessibility/listitem.js | description": {
+    "message": "スクリーン リーダーで正しく読み上げられるようにするには、リスト項目（`<li>`）を親の `<ul>`、`<ol>`、`<menu>` に含める必要があります。[適切なリスト構造についての詳細](https://dequeuniversity.com/rules/axe/4.10/listitem)"
+  },
+  "core/audits/accessibility/listitem.js | failureTitle": {
+    "message": "リスト項目（`<li>`）が `<ul>`、`<ol>` または `<menu>` の親要素に含まれていません。"
+  },
+  "core/audits/accessibility/listitem.js | title": {
+    "message": "リスト項目（`<li>`）は `<ul>`、`<ol>`、`<menu>` の親要素に含まれています"
+  },
+  "core/audits/accessibility/meta-refresh.js | description": {
+    "message": "ユーザーはページが自動的に更新されると思っていないため、自動更新によってフォーカスがページ上部に戻ると、ユーザーの利便性が低下する可能性があります。[メタタグの更新の詳細](https://dequeuniversity.com/rules/axe/4.10/meta-refresh)"
+  },
+  "core/audits/accessibility/meta-refresh.js | failureTitle": {
+    "message": "ドキュメントで `<meta http-equiv=\"refresh\">` が使用されています"
+  },
+  "core/audits/accessibility/meta-refresh.js | title": {
+    "message": "ドキュメントで `<meta http-equiv=\"refresh\">` が使用されていません"
+  },
+  "core/audits/accessibility/meta-viewport.js | description": {
+    "message": "ズーム機能を無効にすると、画面の拡大操作を利用する視力の弱いユーザーがウェブページのコンテンツを確認できなくなります。[ビューポート メタタグの詳細](https://dequeuniversity.com/rules/axe/4.10/meta-viewport)"
+  },
+  "core/audits/accessibility/meta-viewport.js | failureTitle": {
+    "message": "`[user-scalable=\"no\"]` が `<meta name=\"viewport\">` 要素で使用されているか、`[maximum-scale]` 属性が 5 未満に指定されています。"
+  },
+  "core/audits/accessibility/meta-viewport.js | title": {
+    "message": "`[user-scalable=\"no\"]` は `<meta name=\"viewport\">` 要素で使用されておらず、`[maximum-scale]` 属性も 5 未満ではありません。"
+  },
+  "core/audits/accessibility/object-alt.js | description": {
+    "message": "スクリーン リーダーは、テキスト以外のコンテンツを解釈できません。`<object>` 要素に代替テキストを追加すると、スクリーン リーダーを使用するユーザーが意味を把握するのに役立ちます。[`object` 要素の代替テキストの詳細](https://dequeuniversity.com/rules/axe/4.10/object-alt)"
+  },
+  "core/audits/accessibility/object-alt.js | failureTitle": {
+    "message": "`<object>` 要素に代替テキストが指定されていません"
+  },
+  "core/audits/accessibility/object-alt.js | title": {
+    "message": "`<object>` 要素に代替テキストが指定されています"
+  },
+  "core/audits/accessibility/select-name.js | description": {
+    "message": "効果的なラベルのないフォーム要素は、スクリーン リーダーのユーザーにとって不便となる可能性があります。[`select` 要素の詳細](https://dequeuniversity.com/rules/axe/4.10/select-name)"
+  },
+  "core/audits/accessibility/select-name.js | failureTitle": {
+    "message": "一部の要素にラベル要素が関連付けられていません。"
+  },
+  "core/audits/accessibility/select-name.js | title": {
+    "message": "一部の要素にラベル要素が関連付けられています。"
+  },
+  "core/audits/accessibility/skip-link.js | description": {
+    "message": "スキップリンクを含めると、メインのコンテンツにスキップできるようになり、ユーザーの手間が省けます。[スキップリンクの詳細](https://dequeuniversity.com/rules/axe/4.10/skip-link)"
+  },
+  "core/audits/accessibility/skip-link.js | failureTitle": {
+    "message": "スキップリンクはフォーカス不可能です。"
+  },
+  "core/audits/accessibility/skip-link.js | title": {
+    "message": "スキップリンクはフォーカス可能です。"
+  },
+  "core/audits/accessibility/tabindex.js | description": {
+    "message": "値が 0 より大きい場合は、明示的なナビゲーション順序を示します。技術的には有効ですが、多くの場合、支援技術を使用しているユーザーにとって利便性が低下します。[`tabindex` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/tabindex)"
+  },
+  "core/audits/accessibility/tabindex.js | failureTitle": {
+    "message": "一部の要素で `[tabindex]` に 0 より大きい値が指定されています"
+  },
+  "core/audits/accessibility/tabindex.js | title": {
+    "message": "`[tabindex]` に 0 より大きい値を指定している要素はありません"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | description": {
+    "message": "summary 属性では表構造を説明し、`<caption>` には画面に表示されるタイトルを指定します。表のマークアップを正確に行うと、スクリーン リーダーを使用するユーザーに役立ちます。[summary と caption の詳細](https://dequeuniversity.com/rules/axe/4.10/table-duplicate-name)"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | failureTitle": {
+    "message": "表の summary 属性と `<caption>.` の内容が同じです"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | title": {
+    "message": "表の summary 属性と `<caption>` の内容は異なっています。"
+  },
+  "core/audits/accessibility/table-fake-caption.js | description": {
+    "message": "スクリーン リーダーには、表内の移動を補助する機能があります。表で `[colspan]` 属性を含むセルの代わりに、実際の字幕要素を使用すると、スクリーン リーダー ユーザーの利便性が向上する可能性があります。[字幕の詳細](https://dequeuniversity.com/rules/axe/4.10/table-fake-caption)"
+  },
+  "core/audits/accessibility/table-fake-caption.js | failureTitle": {
+    "message": "表で字幕を示すために `[colspan]` 属性を含むセルの代わりに `<caption>` が使用されていません。"
+  },
+  "core/audits/accessibility/table-fake-caption.js | title": {
+    "message": "表で字幕を示すために `[colspan]` 属性を含むセルの代わりに `<caption>` が使用されています。"
+  },
+  "core/audits/accessibility/target-size.js | description": {
+    "message": "タップ ターゲットのサイズと間隔を十分な大きさにすると、小さいコントロールでもターゲットを選択しやすくなります。[タップ ターゲットの詳細](https://dequeuniversity.com/rules/axe/4.10/target-size)"
+  },
+  "core/audits/accessibility/target-size.js | failureTitle": {
+    "message": "タップ ターゲットのサイズや間隔は十分な大きさではありません。"
+  },
+  "core/audits/accessibility/target-size.js | title": {
+    "message": "タップ ターゲットのサイズと間隔は十分な大きさです。"
+  },
+  "core/audits/accessibility/td-has-header.js | description": {
+    "message": "スクリーン リーダーには、表内の移動を補助する機能があります。サイズの大きい表（幅と高さが 3 セル以上）の `<td>` 要素にテーブル ヘッダーを関連付けると、スクリーン リーダー ユーザーの利便性が向上する可能性があります。[テーブル ヘッダーの詳細](https://dequeuniversity.com/rules/axe/4.10/td-has-header)"
+  },
+  "core/audits/accessibility/td-has-header.js | failureTitle": {
+    "message": "サイズの大きい `<table>` の `<td>` 要素にテーブル ヘッダーがありません。"
+  },
+  "core/audits/accessibility/td-has-header.js | title": {
+    "message": "サイズの大きい `<table>` の `<td>` 要素にテーブル ヘッダーが 1 つ以上含まれています。"
+  },
+  "core/audits/accessibility/td-headers-attr.js | description": {
+    "message": "スクリーン リーダーには、表内の移動を補助する機能があります。`[headers]` 属性を使用している `<td>` セルが同じ表の他のセルのみを参照するように設定すると、スクリーン リーダーの利便性が向上する可能性があります。[`headers` 属性の詳細](https://dequeuniversity.com/rules/axe/4.10/td-headers-attr)"
+  },
+  "core/audits/accessibility/td-headers-attr.js | failureTitle": {
+    "message": "`<table>` 要素で `[headers]` 属性を使用しているセルが、同じ表内にない要素 `id` を参照しています。"
+  },
+  "core/audits/accessibility/td-headers-attr.js | title": {
+    "message": "`<table>` 要素で `[headers]` 属性を使用しているセルは、同じ表内の表セルを参照しています。"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | description": {
+    "message": "スクリーン リーダーには、表内の移動を補助する機能があります。表のヘッダーが常に一部のセルを参照するように設定すると、スクリーン リーダーの利便性が向上する可能性があります。[テーブル ヘッダーの詳細](https://dequeuniversity.com/rules/axe/4.10/th-has-data-cells)"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | failureTitle": {
+    "message": "`<th>` 要素および `[role=\"columnheader\"/\"rowheader\"]` が指定された要素に、記述されたデータセルがありません。"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | title": {
+    "message": "`<th>` 要素および `[role=\"columnheader\"/\"rowheader\"]` が指定された要素に、記述されたデータセルがあります。"
+  },
+  "core/audits/accessibility/valid-lang.js | description": {
+    "message": "要素に有効な [BCP 47 言語](https://www.w3.org/International/questions/qa-choosing-language-tags#question)を指定すると、スクリーン リーダーでテキストが正しく読み上げられるようになります。[`lang` 属性の使用方法の詳細](https://dequeuniversity.com/rules/axe/4.10/valid-lang)"
+  },
+  "core/audits/accessibility/valid-lang.js | failureTitle": {
+    "message": "`[lang]` 属性に有効な値が指定されていません"
+  },
+  "core/audits/accessibility/valid-lang.js | title": {
+    "message": "`[lang]` 属性に有効な値が指定されています"
+  },
+  "core/audits/accessibility/video-caption.js | description": {
+    "message": "動画に字幕を設定すると、聴覚障がいのあるユーザーが情報にアクセスしやすくなります。[動画の字幕についての詳細](https://dequeuniversity.com/rules/axe/4.10/video-caption)"
+  },
+  "core/audits/accessibility/video-caption.js | failureTitle": {
+    "message": "`<video>` 要素に、`[kind=\"captions\"]` が指定された `<track>` 要素が含まれていません。"
+  },
+  "core/audits/accessibility/video-caption.js | title": {
+    "message": "`<video>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素が含まれています"
+  },
+  "core/audits/autocomplete.js | columnCurrent": {
+    "message": "現在の値"
+  },
+  "core/audits/autocomplete.js | columnSuggestions": {
+    "message": "推奨トークン"
+  },
+  "core/audits/autocomplete.js | description": {
+    "message": "`autocomplete` を使用すると、ユーザーがフォームを迅速に送信できます。ユーザーの負担を軽減するため、`autocomplete` 属性を有効な値に設定することを検討してください。[フォームの `autocomplete` の詳細](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "core/audits/autocomplete.js | failureTitle": {
+    "message": "`<input>` 要素に正しい `autocomplete` 属性が指定されていません"
+  },
+  "core/audits/autocomplete.js | manualReview": {
+    "message": "手動での確認が必要です"
+  },
+  "core/audits/autocomplete.js | reviewOrder": {
+    "message": "トークンの順序を確認する"
+  },
+  "core/audits/autocomplete.js | title": {
+    "message": "`<input>` 要素で `autocomplete` が正しく使用されています"
+  },
+  "core/audits/autocomplete.js | warningInvalid": {
+    "message": "`autocomplete` トークン: 「{token}」は {snippet} で無効です"
+  },
+  "core/audits/autocomplete.js | warningOrder": {
+    "message": "トークンの順序を確認: {snippet} の「{tokens}」"
+  },
+  "core/audits/bf-cache.js | actionableFailureType": {
+    "message": "対応可能"
+  },
+  "core/audits/bf-cache.js | description": {
+    "message": "多くのナビゲーションは、前のページに戻るか、次に進むことで実行されます。バックフォワード キャッシュ（bfcache）を使用すると、こうした戻るナビゲーションを高速化できます。[bfcache について](https://developer.chrome.com/docs/lighthouse/performance/bf-cache/)"
+  },
+  "core/audits/bf-cache.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件の失敗の理由}other{# 件の失敗の理由}}"
+  },
+  "core/audits/bf-cache.js | failureReasonColumn": {
+    "message": "失敗の理由"
+  },
+  "core/audits/bf-cache.js | failureTitle": {
+    "message": "ページでバックフォワード キャッシュの復元が妨げられました"
+  },
+  "core/audits/bf-cache.js | failureTypeColumn": {
+    "message": "失敗の種類"
+  },
+  "core/audits/bf-cache.js | notActionableFailureType": {
+    "message": "対応不可"
+  },
+  "core/audits/bf-cache.js | supportPendingFailureType": {
+    "message": "ブラウザ サポートは保留中です"
+  },
+  "core/audits/bf-cache.js | title": {
+    "message": "ページでバックフォワード キャッシュの復元は妨げられませんでした"
+  },
+  "core/audits/bf-cache.js | warningHeadless": {
+    "message": "バックフォワード キャッシュは、古いヘッドレス Chrome（`--chrome-flags=\"--headless=old\"`）ではテストできません。監査結果を表示するには、新しいヘッドレス Chrome（`--chrome-flags=\"--headless=new\"`）または標準の Chrome を使用してください。"
+  },
+  "core/audits/bootup-time.js | chromeExtensionsWarning": {
+    "message": "Chrome 拡張機能がこのページの読み込みに悪影響を及ぼしています。シークレット モードで、または拡張機能なしの Chrome プロファイルからページを監査してみてください。"
+  },
+  "core/audits/bootup-time.js | columnScriptEval": {
+    "message": "スクリプトの評価"
+  },
+  "core/audits/bootup-time.js | columnScriptParse": {
+    "message": "スクリプトの解析"
+  },
+  "core/audits/bootup-time.js | columnTotal": {
+    "message": "合計 CPU 時間"
+  },
+  "core/audits/bootup-time.js | description": {
+    "message": "JavaScript の解析、コンパイル、実行にかかる時間の短縮をご検討ください。JavaScript ペイロードのサイズを抑えるなどの方法があります。[JavaScript の実行時間を短縮する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/)"
+  },
+  "core/audits/bootup-time.js | failureTitle": {
+    "message": "JavaScript の実行にかかる時間の低減"
+  },
+  "core/audits/bootup-time.js | title": {
+    "message": "JavaScript の実行にかかる時間"
+  },
+  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "重複する大きい JavaScript モジュールをバンドルから削除すると、データ通信量を減らすことができます。 "
+  },
+  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "JavaScript バンドル内の重複モジュールを削除する"
+  },
+  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
+    "message": "サイズの大きい GIF は、アニメーション コンテンツの配信方法として効率的ではありません。ネットワークの通信量を抑えるため、GIF を使用する代わりに、アニメーションには MPEG4 か WebM、静止画像には PNG か WebP を使用することをご検討ください。[効果的な動画フォーマットの詳細](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
+  },
+  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
+    "message": "アニメーション コンテンツでの動画フォーマットの使用"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。バンドルされた JavaScript の場合、モジュールあり / モジュールなしの機能検出を使用する最新スクリプトの導入戦略を採用することにより、従来のブラウザに対するサポートを維持しながら、最新ブラウザに送るコード量を減らすことができます。[最新の JavaScript の使用方法の詳細](https://web.dev/articles/publish-modern-javascript)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
+  },
+  "core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "WebP や AVIF などの画像形式は、一般的に PNG や JPEG より圧縮率が高く、ダウンロード時間やデータ消費量を抑えられます。[最新の画像形式の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)"
+  },
+  "core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "次世代フォーマットでの画像の配信"
+  },
+  "core/audits/byte-efficiency/offscreen-images.js | description": {
+    "message": "オフスクリーンの非表示の画像は、重要なリソースをすべて読み込んだ後に遅れて読み込むようにして、操作可能になるまでの時間を短縮することをご検討ください。[オフスクリーンの画像を保留する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)"
+  },
+  "core/audits/byte-efficiency/offscreen-images.js | title": {
+    "message": "オフスクリーン画像の遅延読み込み"
+  },
+  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
+    "message": "ページの First Paint をリソースがブロックしています。重要な JavaScript や CSS はインラインで配信し、それ以外の JavaScript やスタイルはすべて遅らせることをご検討ください。[レンダリング ブロック リソースを削除する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)"
+  },
+  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
+    "message": "レンダリングを妨げるリソースの除外"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | description": {
+    "message": "ネットワーク ペイロードのサイズが大きいと、ユーザーの金銭的負担が大きくなり、多くの場合、読み込み時間が長くなります。[ペイロード サイズを小さくする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
+    "message": "合計サイズは {totalBytes, number, bytes} KiB でした"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
+    "message": "過大なネットワーク ペイロードの回避"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | title": {
+    "message": "過大なネットワーク ペイロードの回避"
+  },
+  "core/audits/byte-efficiency/unminified-css.js | description": {
+    "message": "CSS ファイルを最小化すると、ネットワーク ペイロードのサイズを抑えることができます。[CSS を圧縮する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/unminified-css/)"
+  },
+  "core/audits/byte-efficiency/unminified-css.js | title": {
+    "message": "CSS の最小化"
+  },
+  "core/audits/byte-efficiency/unminified-javascript.js | description": {
+    "message": "JavaScript ファイルを最小化すると、ペイロード サイズとスクリプトの解析時間を抑えることができます。[JavaScript を圧縮する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/)"
+  },
+  "core/audits/byte-efficiency/unminified-javascript.js | title": {
+    "message": "JavaScript の最小化"
+  },
+  "core/audits/byte-efficiency/unused-css-rules.js | description": {
+    "message": "スタイルシートから使用していないルールを削除して、スクロールせずに見える範囲のコンテンツで使用されていない CSS の読み込みを遅らせると、ネットワークの通信量を減らすことができます。[未使用の CSS を削減する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)"
+  },
+  "core/audits/byte-efficiency/unused-css-rules.js | title": {
+    "message": "使用していない CSS の削減"
+  },
+  "core/audits/byte-efficiency/unused-javascript.js | description": {
+    "message": "使用していない JavaScript を削除して、必要になるまでスクリプトの読み込みを遅らせると、ネットワークの通信量を減らすことができます。[使用していない JavaScript を削除する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/)"
+  },
+  "core/audits/byte-efficiency/unused-javascript.js | title": {
+    "message": "使用していない JavaScript の削減"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
+    "message": "キャッシュの有効期間を長くすると、再訪問したユーザーへのページの読み込み速度を向上できます。[効果的なキャッシュ ポリシーの詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件のリソースが見つかりました}other{# 件のリソースが見つかりました}}"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
+    "message": "静的なアセットと効率的なキャッシュ ポリシーの配信"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
+    "message": "静的なアセットでの効率的なキャッシュ ポリシーの使用"
+  },
+  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
+    "message": "画像を最適化すると、読み込み時間を短縮しモバイルデータ量を抑えることができます。[画像を効率的にエンコードする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
+    "message": "効率的な画像フォーマット"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "実際のサイズ"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "表示サイズ"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "画像は表示サイズより大きいサイズとなっています"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "画像は表示サイズに合ったサイズとなっています"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
+    "message": "適切なサイズの画像を配信して、モバイルデータ量を節約し読み込み時間を短縮します。[画像サイズの調整方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
+    "message": "適切なサイズの画像"
+  },
+  "core/audits/byte-efficiency/uses-text-compression.js | description": {
+    "message": "テキストベースのリソースは圧縮（gzip、deflate、または brotli）して配信し、ネットワークの全体的な通信量を最小限に抑えてください。[テキスト圧縮の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)"
+  },
+  "core/audits/byte-efficiency/uses-text-compression.js | title": {
+    "message": "テキスト圧縮の有効化"
+  },
+  "core/audits/critical-request-chains.js | description": {
+    "message": "下のクリティカル リクエスト チェーンでは、高い優先度で読み込まれたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどの手段を行って、ページの読み込み速度を改善することをご検討ください。[重要なリクエストのチェーンを回避する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
+  },
+  "core/audits/critical-request-chains.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件のチェーンが見つかりました}other{# 件のチェーンが見つかりました}}"
+  },
+  "core/audits/critical-request-chains.js | title": {
+    "message": "クリティカル リクエスト チェーンを回避してください"
+  },
+  "core/audits/csp-xss.js | columnDirective": {
+    "message": "ディレクティブ"
+  },
+  "core/audits/csp-xss.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/csp-xss.js | description": {
+    "message": "厳格なコンテンツ セキュリティ ポリシー（CSP）を設定すると、クロスサイト スクリプティング（XSS）攻撃のリスクを大幅に軽減できます。[CSP を使用して XSS を防ぐ方法の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
+  },
+  "core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "構文"
+  },
+  "core/audits/csp-xss.js | metaTagMessage": {
+    "message": "このページでは CSP が `<meta>` タグで定義されています。CSP を HTTP ヘッダーに移動するか、HTTP ヘッダーで別の厳密な CSP を定義することを検討してください。"
+  },
+  "core/audits/csp-xss.js | noCsp": {
+    "message": "適用されている CSP はありません"
+  },
+  "core/audits/csp-xss.js | title": {
+    "message": "CSP が XSS 攻撃を防げるよう設定されているか確認する"
+  },
+  "core/audits/deprecations.js | columnDeprecate": {
+    "message": "非推奨 / 警告"
+  },
+  "core/audits/deprecations.js | columnLine": {
+    "message": "行"
+  },
+  "core/audits/deprecations.js | description": {
+    "message": "非推奨の API は最終的にブラウザから削除されます。[非推奨 API の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/deprecations/)"
+  },
+  "core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件の警告が見つかりました}other{# 件の警告が見つかりました}}"
+  },
+  "core/audits/deprecations.js | failureTitle": {
+    "message": "サポートを終了した API が使用されています"
+  },
+  "core/audits/deprecations.js | title": {
+    "message": "サポートを終了した API は使用されていません"
+  },
+  "core/audits/dobetterweb/charset.js | description": {
+    "message": "文字エンコードの宣言が必要です。これには、HTML の最初の 1,024 バイトか Content-Type HTTP レスポンス ヘッダーの中で `<meta>` タグを使用します。[文字エンコードの宣言についての詳細](https://developer.chrome.com/docs/lighthouse/best-practices/charset/)"
+  },
+  "core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "文字セットが宣言されていないか、HTML での宣言が遅すぎます"
+  },
+  "core/audits/dobetterweb/charset.js | title": {
+    "message": "文字セットを適切に定義する"
+  },
+  "core/audits/dobetterweb/doctype.js | description": {
+    "message": "doctype を指定すると、ブラウザは後方互換モードに切り替えることができなくなります。[doctype 宣言の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/)"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "doctype 名には `html` を文字列で指定する必要があります"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationLimitedQuirks": {
+    "message": "ドキュメントに `limited-quirks-mode` をトリガーする `doctype` が含まれています"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "ドキュメントには doctype を指定する必要があります"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "publicId は空の文字列であることが想定されています"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "systemId は空の文字列であることが想定されています"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationWrongDoctype": {
+    "message": "ドキュメントに `quirks-mode` をトリガーする `doctype` が含まれています"
+  },
+  "core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "ページに HTML doctype が指定されていないため、後方互換モードに切り替わります"
+  },
+  "core/audits/dobetterweb/doctype.js | title": {
+    "message": "ページに HTML doctype が指定されています"
+  },
+  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "統計情報"
+  },
+  "core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "値"
+  },
+  "core/audits/dobetterweb/dom-size.js | description": {
+    "message": "DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生します。[過度な DOM サイズの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "core/audits/dobetterweb/dom-size.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件の要素}other{# 件の要素}}"
+  },
+  "core/audits/dobetterweb/dom-size.js | failureTitle": {
+    "message": "過大な DOM サイズの回避"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM の最大深さ"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
+    "message": "合計 DOM 要素数"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "子要素の上限数"
+  },
+  "core/audits/dobetterweb/dom-size.js | title": {
+    "message": "過大な DOM サイズの回避"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "サイトから脈絡なしに位置情報の許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[位置情報の権限に関する詳細](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "ページの読み込み時に位置情報の許可がリクエストされます"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "ページの読み込み時に位置情報の許可はリクエストされません"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "問題の種類"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Chrome デベロッパー ツールの [`Issues`] パネルに記録された問題は未解決のものです。ネットワーク リクエストの失敗、不十分なセキュリティ コントロールや、他のブラウザの問題が原因で表示される可能性があります。各問題について詳しくは、Chrome DevTools の [Issues] パネルを開いてご確認ください。"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "問題が Chrome デベロッパー ツールの [`Issues`] パネルに記録されました"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "クロスオリジンのポリシーによってブロック"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "広告によるリソース使用量が多い"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Chrome デベロッパー ツールの [`Issues`] パネルに記録されている問題はありません"
+  },
+  "core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "バージョン"
+  },
+  "core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "ページで検出されたすべてのフロントエンドの JavaScript ライブラリです。[JavaScript ライブラリ検出の診断監査についての詳細](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/)"
+  },
+  "core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "JavaScript ライブラリが検出されました"
+  },
+  "core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "接続速度が遅い環境のユーザーの場合、`document.write()` で動的に挿入される外部スクリプトによってページの読み込みが数十秒遅れる可能性があります。[document.write() を回避する方法の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/)"
+  },
+  "core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "`document.write()` を使用しない"
+  },
+  "core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "`document.write()` は使用されていません"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "サイトから脈絡なしに通知の送信許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[通知の許可を責任を持って取得する方法の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/notification-on-start/)"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "ページの読み込み時に通知の許可がリクエストされます"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "ページの読み込み時に通知の許可はリクエストされません"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | description": {
+    "message": "ユーザーの利便性が損なわれるため、入力フィールドへの貼り付けを禁止することは推奨されません。パスワード マネージャーがブロックされるため、セキュリティの低下にもつながります。詳しくは、[ユーザー フレンドリーな入力フィールド](https://developer.chrome.com/docs/lighthouse/best-practices/paste-preventing-inputs/)をご覧ください。"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | failureTitle": {
+    "message": "ユーザーは入力フィールドに貼り付けることができません"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
+    "message": "ユーザーは入力フィールドに貼り付けできます"
+  },
+  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "プロトコル"
+  },
+  "core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2 には、バイナリ ヘッダー、多重化など、HTTP/1.1 と比べて多くのメリットがあります。[HTTP/2 の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{HTTP/2 経由で配信されなかったリクエストが 1 件あります}other{HTTP/2 経由で配信されなかったリクエストが # 件あります}}"
+  },
+  "core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "HTTP/2 を使用してください"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "ページのスクロール パフォーマンスを高めるには、touch および wheel イベント リスナーを `passive` として指定することをご検討ください。[パッシブ イベント リスナーの採用についての詳細](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "スクロール パフォーマンスを高める受動的なリスナーが使用されていません"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "スクロール パフォーマンスを高める受動的なリスナーが使用されています"
+  },
+  "core/audits/errors-in-console.js | description": {
+    "message": "コンソールに記録されたエラーは未解決の問題を表します。これらはネットワーク リクエストの失敗や他のブラウザの問題が原因で表示される可能性があります。[コンソールの診断監査でのこのエラーの詳細](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)"
+  },
+  "core/audits/errors-in-console.js | failureTitle": {
+    "message": "ブラウザのエラーがコンソールに記録されました"
+  },
+  "core/audits/errors-in-console.js | title": {
+    "message": "コンソールに記録されたブラウザのエラーはありません"
+  },
+  "core/audits/font-display.js | description": {
+    "message": "`font-display` の CSS 機能を使用して、Web フォントの読み込み中にユーザーがテキストを読めるようにしてください。[`font-display` の詳細](https://developer.chrome.com/docs/lighthouse/performance/font-display/)"
+  },
+  "core/audits/font-display.js | failureTitle": {
+    "message": "ウェブフォント読み込み中のテキストの表示"
+  },
+  "core/audits/font-display.js | title": {
+    "message": "ウェブフォント読み込み中の全テキストの表示"
+  },
+  "core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}other{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}}"
+  },
+  "core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "アスペクト比（実際）"
+  },
+  "core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "アスペクト比（表示）"
+  },
+  "core/audits/image-aspect-ratio.js | description": {
+    "message": "画像は本来のアスペクト比で表示する必要があります。[画像のアスペクト比についての詳細](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/)"
+  },
+  "core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "不適切なアスペクト比の画像が表示されています"
+  },
+  "core/audits/image-aspect-ratio.js | title": {
+    "message": "正しいアスペクト比の画像が表示されています"
+  },
+  "core/audits/image-size-responsive.js | columnActual": {
+    "message": "実サイズ"
+  },
+  "core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "表示されるサイズ"
+  },
+  "core/audits/image-size-responsive.js | columnExpected": {
+    "message": "適切なサイズ"
+  },
+  "core/audits/image-size-responsive.js | description": {
+    "message": "画像をできるだけ鮮明に表示するには、画像の実サイズを、表示するサイズとピクセル比に比例させる必要があります。[レスポンシブな画像の表示方法の詳細](https://web.dev/articles/serve-responsive-images)"
+  },
+  "core/audits/image-size-responsive.js | failureTitle": {
+    "message": "画像が低い解像度で表示されています"
+  },
+  "core/audits/image-size-responsive.js | title": {
+    "message": "画像が適切な解像度で表示されています"
+  },
+  "core/audits/is-on-https.js | allowed": {
+    "message": "許可"
+  },
+  "core/audits/is-on-https.js | blocked": {
+    "message": "ブロック"
+  },
+  "core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "安全でない URL"
+  },
+  "core/audits/is-on-https.js | columnResolution": {
+    "message": "リクエストの解決方法"
+  },
+  "core/audits/is-on-https.js | description": {
+    "message": "すべてのサイトは、機密性の高い情報を扱っていない場合でも、HTTPS で保護する必要があります。たとえば、[混合コンテンツ](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)（HTTPS で送信されたリクエストに対して一部のリソースを HTTP で読み込む）などは使用しないようにします。HTTPS は、侵入者があなたのアプリとユーザー間の通信を改ざんしたり、傍受したりするのを防ぎます。HTTPS は、HTTP/2 や多くの新しいウェブ プラットフォーム API を使用するための前提条件となります。[HTTPS についての詳細](https://developer.chrome.com/docs/lighthouse/pwa/is-on-https/)"
+  },
+  "core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{安全でないリクエストが 1 件見つかりました}other{安全でないリクエストが # 件見つかりました}}"
+  },
+  "core/audits/is-on-https.js | failureTitle": {
+    "message": "HTTPS が使用されていません"
+  },
+  "core/audits/is-on-https.js | title": {
+    "message": "HTTPS を使用しています"
+  },
+  "core/audits/is-on-https.js | upgraded": {
+    "message": "HTTPS に自動アップグレード"
+  },
+  "core/audits/is-on-https.js | warning": {
+    "message": "許可（警告あり）"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
+    "message": "LCP の割合"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnPhase": {
+    "message": "位相"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnTiming": {
+    "message": "タイミング"
+  },
+  "core/audits/largest-contentful-paint-element.js | description": {
+    "message": "ビューポート内で描画された最大のコンテンツ要素です。[Largest Contentful Paint 要素の詳細](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
+    "message": "読み込み遅延"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
+    "message": "読み込み時間"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
+    "message": "レンダリング遅延"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
+    "message": "TTFB"
+  },
+  "core/audits/largest-contentful-paint-element.js | title": {
+    "message": "「最大コンテンツの描画」要素"
+  },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "レイアウト シフトのスコア"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "これらは、ページで確認された最大のレイアウト シフトです。表の各項目は 1 つのレイアウト シフトを表し、最もシフトの大きかった要素が表示されます。各項目の下には、レイアウト シフトにつながったと考えられる根本原因が表示されます。[ウィンドウ処理](https://web.dev/articles/cls#what_is_cls)が原因で、これらのレイアウト シフトの一部が CLS 指標値に含まれていない場合があります。[CLS を改善する方法について](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 件のレイアウト シフトが見つかりました}other{# 件のレイアウト シフトが見つかりました}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "ウェブフォントを読み込みました"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "挿入された iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
+    "message": "遅延したネットワーク リクエストによりページ レイアウトが調整されました"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "メディア要素に明示的なサイズが含まれていません"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "レイアウトが大きく変わらないようにする"
+  },
+  "core/audits/lcp-lazy-loaded.js | description": {
+    "message": "スクロールせずに見える範囲にある画像が遅延読み込みによってページのライフサイクルの後半にレンダリングされると、Largest Contentful Paint の遅延につながります。[最適な遅延読み込みの詳細](https://web.dev/articles/lcp-lazy-loading)"
+  },
+  "core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Largest Contentful Paint の画像が遅延読み込みされています"
+  },
+  "core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Largest Contentful Paint の画像は遅延読み込みされていません"
+  },
+  "core/audits/long-tasks.js | description": {
+    "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[長いメインスレッド タスクの回避方法の詳細](https://web.dev/articles/optimize-long-tasks)"
+  },
+  "core/audits/long-tasks.js | displayValue": {
+    "message": "{itemCount,plural, =1{長時間実行されているタスクが # 件見つかりました}other{長時間実行されているタスクが # 件見つかりました}}"
+  },
+  "core/audits/long-tasks.js | title": {
+    "message": "メインスレッドでタスクが長時間実行されないようにしてください"
+  },
+  "core/audits/mainthread-work-breakdown.js | columnCategory": {
+    "message": "カテゴリ"
+  },
+  "core/audits/mainthread-work-breakdown.js | description": {
+    "message": "JavaScript の解析、コンパイル、実行にかかる時間を短縮することをご検討ください。JavaScript ペイロードのサイズを抑えるなどの方法があります。[メインスレッドでの作業を最小限に抑える方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)"
+  },
+  "core/audits/mainthread-work-breakdown.js | failureTitle": {
+    "message": "メインスレッド処理の最小化"
+  },
+  "core/audits/mainthread-work-breakdown.js | title": {
+    "message": "メインスレッド処理の最小化"
+  },
+  "core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Cumulative Layout Shift はビューポート内の視覚要素がどのくらい移動しているかを測定する指標です。[Cumulative Layout Shift 指標の詳細](https://web.dev/articles/cls)"
+  },
+  "core/audits/metrics/first-contentful-paint.js | description": {
+    "message": "First Contentful Paint は、テキストまたは画像が初めてペイントされるまでにかかった時間です。[First Contentful Paint の指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/)"
+  },
+  "core/audits/metrics/first-meaningful-paint.js | description": {
+    "message": "First Meaningful Paint は、ページの主要なコンテンツが可視化されるまでにかかった時間です。[First Meaningful Paint の指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/first-meaningful-paint/)"
+  },
+  "core/audits/metrics/interaction-to-next-paint.js | description": {
+    "message": "Interaction to Next Paint は、ページの応答性、ユーザーの入力に対してページが視覚的に応答するまでの時間を測定します。[Interaction to Next Paint 指標の詳細](https://web.dev/articles/inp)"
+  },
+  "core/audits/metrics/interactive.js | description": {
+    "message": "操作可能になるまでの時間とは、ページが完全に操作可能になるのに要する時間です。[操作可能になるまでの時間の指標についての詳細](https://developer.chrome.com/docs/lighthouse/performance/interactive/)"
+  },
+  "core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Largest Contentful Paint は、最も大きなテキストまたは画像が描画されるまでにかかった時間です。[Largest Contentful Paint 指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
+  },
+  "core/audits/metrics/max-potential-fid.js | description": {
+    "message": "初回入力遅延の最大推定時間は、ユーザーが最も長いタスクを行うのにかかると推定される時間です。[Maximum Potential First Input Delay 指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
+  },
+  "core/audits/metrics/speed-index.js | description": {
+    "message": "Speed Index は、ページのコンテンツが取り込まれて表示される速さを表します。[Speed Index の指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+  },
+  "core/audits/metrics/total-blocking-time.js | description": {
+    "message": "タスクの処理時間が 50 ミリ秒を上回った場合の、コンテンツの初回ペイントから操作可能になるまでの合計時間（ミリ秒）です。[Total Blocking Time の指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
+  },
+  "core/audits/network-rtt.js | description": {
+    "message": "ネットワークのラウンド トリップ時間（RTT）はパフォーマンスに大きく影響します。オリジンへの RTT が高い場合は、サーバーの場所をユーザーの近くにするとパフォーマンスを改善できることを示しています。[ラウンド トリップ時間の詳細](https://hpbn.co/primer-on-latency-and-bandwidth/)"
+  },
+  "core/audits/network-rtt.js | title": {
+    "message": "ネットワークのラウンドトリップ時間"
+  },
+  "core/audits/network-server-latency.js | description": {
+    "message": "サーバーの待ち時間はウェブ パフォーマンスに影響することがあります。オリジンのサーバー レイテンシが高い場合は、サーバーが過負荷であるか、サーバーのバックエンド パフォーマンスが低いことを示しています。[サーバー応答時間の詳細](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
+  },
+  "core/audits/network-server-latency.js | title": {
+    "message": "サーバーのバックエンド待ち時間"
+  },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "合成されていないアニメーションは動きが不自然になり、CLS が大きくなることがあります。[合成されていないアニメーションを避ける方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# 件のアニメーション要素が見つかりました}other{# 件のアニメーション要素が見つかりました}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "filter 関連のプロパティはピクセルの移動につながる可能性があります"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "ターゲットに互換性のない別のアニメーションが含まれています"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "エフェクトに「replace」以外の合成モードが含まれています"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "合成されていないアニメーションは使用しないでください"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "transform 関連のプロパティがボックスのサイズに依存しています"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{サポートされていない CSS プロパティ: {properties}}other{サポートされていない CSS プロパティ: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "サポートされていないタイミング パラメータがエフェクトで使用されています"
+  },
+  "core/audits/preload-fonts.js | description": {
+    "message": "`optional` のフォントをプリロードすると、初めてのユーザーも使用できます。[フォントのプリロードの詳細](https://web.dev/articles/preload-optional-fonts)"
+  },
+  "core/audits/preload-fonts.js | failureTitle": {
+    "message": "`font-display: optional` を使用するフォントがプリロードされていません"
+  },
+  "core/audits/preload-fonts.js | title": {
+    "message": "`font-display: optional` を使用するフォントがプリロードされています"
+  },
+  "core/audits/prioritize-lcp-image.js | description": {
+    "message": "LCP 要素がページに動的に追加された場合、LCP を改善するため画像をプリロードする必要があります。[LCP 要素のプリロードの詳細](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
+  },
+  "core/audits/prioritize-lcp-image.js | title": {
+    "message": "Largest Contentful Paint の画像のプリロード"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "すべてのユーザーに安全なウェブ機能を提供できるように、すべての HTTP トラフィックが HTTPS にリダイレクトされることを確認してください。[詳細](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP トラフィックは HTTPS にリダイレクトされません"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "HTTP トラフィックは HTTPS にリダイレクトされます"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[ページ リダイレクトの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "複数のページ リダイレクトの回避"
+  },
+  "core/audits/seo/canonical.js | description": {
+    "message": "正規リンクで、検索結果に表示する URL を指定します。[正規リンクの詳細](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
+  },
+  "core/audits/seo/canonical.js | explanationConflict": {
+    "message": "複数の URL が競合しています（{urlList}）"
+  },
+  "core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "URL（{url}）が無効です"
+  },
+  "core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "別の `hreflang` 位置（{url}）を指しています"
+  },
+  "core/audits/seo/canonical.js | explanationRelative": {
+    "message": "絶対 URL（{url}）ではありません"
+  },
+  "core/audits/seo/canonical.js | explanationRoot": {
+    "message": "コンテンツの同等のページではなく、ドメインのルート URL（ホームページ）を参照しています。"
+  },
+  "core/audits/seo/canonical.js | failureTitle": {
+    "message": "ドキュメントに有効な `rel=canonical` が指定されていません"
+  },
+  "core/audits/seo/canonical.js | title": {
+    "message": "ドキュメントに有効な `rel=canonical` が指定されています"
+  },
+  "core/audits/seo/crawlable-anchors.js | columnFailingLink": {
+    "message": "クロール不可のリンク"
+  },
+  "core/audits/seo/crawlable-anchors.js | description": {
+    "message": "検索エンジンでは、ウェブサイトのクロールにリンクの `href` 属性を使用する場合があります。アンカー要素の `href` 属性に適切なリンク先が設定されていて、ウェブサイトの他のページを見つけられるようになっていることを確認してください。[リンクをクロール可能にする方法の詳細](https://support.google.com/webmasters/answer/9112205)"
+  },
+  "core/audits/seo/crawlable-anchors.js | failureTitle": {
+    "message": "リンクはクロールできません"
+  },
+  "core/audits/seo/crawlable-anchors.js | title": {
+    "message": "リンクはクロール可能です"
+  },
+  "core/audits/seo/font-size.js | additionalIllegibleText": {
+    "message": "追加の判読不可能なテキスト"
+  },
+  "core/audits/seo/font-size.js | columnFontSize": {
+    "message": "フォントサイズ"
+  },
+  "core/audits/seo/font-size.js | columnPercentPageText": {
+    "message": "ページテキストの割合"
+  },
+  "core/audits/seo/font-size.js | columnSelector": {
+    "message": "選択ツール"
+  },
+  "core/audits/seo/font-size.js | description": {
+    "message": "12 px より小さいフォントサイズは小さすぎて判読できず、モバイル ユーザーには「ピンチしてズーム」の操作が必要になります。60% を超えるページテキストでフォント サイズが 12 px 以上になるようにしてください。[判読可能なフォントサイズの詳細](https://developer.chrome.com/docs/lighthouse/seo/font-size/)"
+  },
+  "core/audits/seo/font-size.js | displayValue": {
+    "message": "判読可能なテキスト: {decimalProportion, number, extendedPercent}"
+  },
+  "core/audits/seo/font-size.js | explanationViewport": {
+    "message": "テキストが判読できません。モバイル スクリーン向けに最適化されたビューポート メタタグがありません。"
+  },
+  "core/audits/seo/font-size.js | failureTitle": {
+    "message": "ドキュメントで判読可能なフォントサイズが使用されていません"
+  },
+  "core/audits/seo/font-size.js | legibleText": {
+    "message": "判読可能なテキスト"
+  },
+  "core/audits/seo/font-size.js | title": {
+    "message": "ドキュメントで判読可能なフォントサイズが使用されています"
+  },
+  "core/audits/seo/hreflang.js | description": {
+    "message": "hreflang リンクを利用して、所定の言語や地域の検索結果に掲載する必要があるページのバージョンを検索エンジンに伝えます。[`hreflang` の詳細](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)"
+  },
+  "core/audits/seo/hreflang.js | failureTitle": {
+    "message": "ドキュメントに有効な `hreflang` が指定されていません"
+  },
+  "core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "関連する href 値"
+  },
+  "core/audits/seo/hreflang.js | title": {
+    "message": "ドキュメントに有効な `hreflang` が指定されています"
+  },
+  "core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "予期しない言語コード"
+  },
+  "core/audits/seo/http-status-code.js | description": {
+    "message": "HTTP ステータス コードが正しくないページはインデックスに適切に登録されていない可能性があります。[HTTP ステータス コードの詳細](https://developer.chrome.com/docs/lighthouse/seo/http-status-code/)"
+  },
+  "core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "ページに設定されている HTTP ステータス コードが正しくありません"
+  },
+  "core/audits/seo/http-status-code.js | title": {
+    "message": "ページに適切な HTTP ステータス コードが指定されています"
+  },
+  "core/audits/seo/is-crawlable.js | description": {
+    "message": "ページのクロールを許可しない場合、検索エンジンはそのページを検索結果に追加できません。[クローラ ディレクティブの詳細](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/)"
+  },
+  "core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "ページのインデックス登録を行えません"
+  },
+  "core/audits/seo/is-crawlable.js | title": {
+    "message": "ページのインデックス登録はブロックされていません"
+  },
+  "core/audits/seo/link-text.js | description": {
+    "message": "リンクテキストをわかりやすくすると、検索エンジンがコンテンツを認識しやすくなります。[リンクにアクセスしやすくする方法の詳細](https://developer.chrome.com/docs/lighthouse/seo/link-text/)"
+  },
+  "core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件のリンクが見つかりました}other{# 件のリンクが見つかりました}}"
+  },
+  "core/audits/seo/link-text.js | failureTitle": {
+    "message": "リンクにわかりやすいテキストが設定されていません"
+  },
+  "core/audits/seo/link-text.js | title": {
+    "message": "リンクにわかりやすいテキストが設定されています"
+  },
+  "core/audits/seo/manual/structured-data.js | description": {
+    "message": "[構造化データ テストツール](https://search.google.com/structured-data/testing-tool/)と[構造化データ用 Linter](http://linter.structured-data.org/) を実行して構造化データを検証してください。[構造化データの詳細](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+  },
+  "core/audits/seo/manual/structured-data.js | title": {
+    "message": "構造化データが無効です"
+  },
+  "core/audits/seo/meta-description.js | description": {
+    "message": "メタ ディスクリプションを検索結果に追加すると、ページ コンテンツの内容を簡潔にまとめることができます。[メタ ディスクリプションの詳細](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)"
+  },
+  "core/audits/seo/meta-description.js | explanation": {
+    "message": "説明のテキストが空です。"
+  },
+  "core/audits/seo/meta-description.js | failureTitle": {
+    "message": "ドキュメントにメタ ディスクリプションが指定されていません"
+  },
+  "core/audits/seo/meta-description.js | title": {
+    "message": "ドキュメントにメタ ディスクリプションが指定されています"
+  },
+  "core/audits/seo/robots-txt.js | description": {
+    "message": "robots.txt ファイルの形式が間違っていると、ウェブサイトのクロールやインデックス登録について指定した設定をクローラが認識できない可能性があります。[robots.txt についての詳細](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/)"
+  },
+  "core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "robots.txt のリクエストで返された HTTP ステータス: {statusCode}"
+  },
+  "core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{1 件のエラーが見つかりました}other{# 件のエラーが見つかりました}}"
+  },
+  "core/audits/seo/robots-txt.js | explanation": {
+    "message": "Lighthouse は robots.txt ファイルをダウンロードできませんでした"
+  },
+  "core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "robots.txt が無効です"
+  },
+  "core/audits/seo/robots-txt.js | title": {
+    "message": "robots.txt は有効です"
+  },
+  "core/audits/server-response-time.js | description": {
+    "message": "メイン ドキュメントのサーバー応答時間は、他のすべてのリクエストに影響するため、速くする必要があります。[Time to First Byte 指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "ルート ドキュメントの読み込みに {timeInMs, number, milliseconds} ミリ秒かかりました"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "最初のサーバー応答時間を速くしてください"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "最初のサーバー応答時間は問題ない速さです"
+  },
+  "core/audits/third-party-cookies.js | description": {
+    "message": "Chrome は、サードパーティ Cookie を使用しない新しいブラウジング環境に移行しています。[サードパーティ Cookie の詳細](https://developers.google.com/privacy-sandbox/cookies)"
+  },
+  "core/audits/third-party-cookies.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件の Cookie が見つかりました}other{# 件の Cookie が見つかりました}}"
+  },
+  "core/audits/third-party-cookies.js | failureTitle": {
+    "message": "サードパーティ Cookie が使用されています"
+  },
+  "core/audits/third-party-cookies.js | title": {
+    "message": "サードパーティ Cookie は使用されていません"
+  },
+  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName}（カスタマー サポート）"
+  },
+  "core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName}（マーケティング）"
+  },
+  "core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName}（ソーシャル）"
+  },
+  "core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName}（動画）"
+  },
+  "core/audits/third-party-facades.js | columnProduct": {
+    "message": "プロダクト"
+  },
+  "core/audits/third-party-facades.js | description": {
+    "message": "一部のサードパーティ埋め込みは遅延読み込みできます。必要になるまで、ファサードと置き換えることをご検討ください。[ファサードでサードパーティを保留にする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)"
+  },
+  "core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{利用可能な代替ファサード: # 件}other{利用可能な代替ファサード: # 件}}"
+  },
+  "core/audits/third-party-facades.js | failureTitle": {
+    "message": "一部のサードパーティ リソースはファサードで遅延読み込みできます。"
+  },
+  "core/audits/third-party-facades.js | title": {
+    "message": "ファサードでのサードパーティ リソースの遅延読み込み"
+  },
+  "core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "第三者"
+  },
+  "core/audits/third-party-summary.js | description": {
+    "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。重複するサードパーティ プロバイダの数を制限したうえで、ページのメインの部分を読み込み終えた後にサードパーティのコードを読み込んでみてください。[サードパーティの影響を最小限に抑える方法の詳細](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
+  },
+  "core/audits/third-party-summary.js | displayValue": {
+    "message": "第三者コードによってメインスレッドが {timeInMs, number, milliseconds} ミリ秒間ブロックされました"
+  },
+  "core/audits/third-party-summary.js | failureTitle": {
+    "message": "第三者コードの影響を抑えてください"
+  },
+  "core/audits/third-party-summary.js | title": {
+    "message": "第三者の使用の最小化"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "画像要素で幅と高さを明示的に設定すると、レイアウト シフトを減らして、CLS を改善できます。[画像サイズの設定方法の詳細](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "画像要素で `width` と `height` が明示的に指定されていない"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "画像要素で `width` と `height` が明示的に指定されている"
+  },
+  "core/audits/user-timings.js | columnType": {
+    "message": "タイプ"
+  },
+  "core/audits/user-timings.js | description": {
+    "message": "User Timing API を使用してアプリを計測可能にし、主要なユーザー エクスペリエンスでのアプリの実際のパフォーマンスを測定できるようにしてください。[カスタム速度マークの詳細](https://developer.chrome.com/docs/lighthouse/performance/user-timings/)"
+  },
+  "core/audits/user-timings.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 件のカスタム速度}other{# 件のカスタム速度}}"
+  },
+  "core/audits/user-timings.js | title": {
+    "message": "カスタム速度の記録と計測"
+  },
+  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
+    "message": "「{securityOrigin}」で `<link rel=preconnect>` が見つかりましたが、ブラウザで使用されませんでした。`crossorigin` 属性を適切に使用していることをご確認ください。"
+  },
+  "core/audits/uses-rel-preconnect.js | description": {
+    "message": "重要な第三者ドメインへの接続を早期に確立できるように、`preconnect` または `dns-prefetch` のリソースヒントを追加することを検討してください。[必要なオリジンに事前接続する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)"
+  },
+  "core/audits/uses-rel-preconnect.js | title": {
+    "message": "必須のドメインへの事前接続"
+  },
+  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "3 つ以上の `<link rel=preconnect>` 接続が見つかりました。これらの接続は控えめに、重要なソースにのみ使用してください。"
+  },
+  "core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "「{securityOrigin}」で `<link rel=preconnect>` が見つかりましたが、ブラウザで使用されませんでした。`preconnect` は、ページで確実にリクエストされる重要なソースにのみ使用してください。"
+  },
+  "core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "「{preloadURL}」でプリロード `<link>` が見つかりましたが、ブラウザで使用されませんでした。`crossorigin` 属性を適切に使用していることをご確認ください。"
+  },
+  "core/audits/uses-rel-preload.js | description": {
+    "message": "`<link rel=preload>` を使用して、ページ読み込みの後のほうで現在リクエストしているリソースを優先的に取得することをご検討ください。[主要なリクエストをプリロードする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)"
+  },
+  "core/audits/uses-rel-preload.js | title": {
+    "message": "キー リクエストのプリロード"
+  },
+  "core/audits/valid-source-maps.js | columnMapURL": {
+    "message": "マップ URL"
+  },
+  "core/audits/valid-source-maps.js | description": {
+    "message": "ソースマップは軽量化したコードを元のソースコードに変換するもので、デベロッパーが本番環境でデバッグする際に役立ちます。また、Lighthouse で詳しい分析情報を提供することも可能になります。このようなメリットをふまえ、ソースマップの導入をご検討ください。[ソースマップの詳細](https://developer.chrome.com/docs/devtools/javascript/source-maps/)"
+  },
+  "core/audits/valid-source-maps.js | failureTitle": {
+    "message": "サイズの大きいファーストパーティの JavaScript でソースマップが使用されていません"
+  },
+  "core/audits/valid-source-maps.js | missingSourceMapErrorMessage": {
+    "message": "サイズの大きい JavaScript ファイルでソースマップが使用されていません"
+  },
+  "core/audits/valid-source-maps.js | missingSourceMapItemsWarningMesssage": {
+    "message": "{missingItems,plural, =1{警告: `.sourcesContent` に 1 件のアイテムが不足しています}other{警告: `.sourcesContent` に # 件のアイテムが不足しています}}"
+  },
+  "core/audits/valid-source-maps.js | title": {
+    "message": "ページで有効なソースマップが使用されています"
+  },
+  "core/audits/viewport.js | description": {
+    "message": "`<meta name=\"viewport\">` を使用すると、モバイル画面サイズ向けにアプリを最適化できるほか、[ユーザー入力の遅延を 300 ミリ秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)短縮できます。[ビューポート メタタグの使用の詳細](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)"
+  },
+  "core/audits/viewport.js | explanationNoTag": {
+    "message": "`<meta name=\"viewport\">` タグが見つかりません"
+  },
+  "core/audits/viewport.js | failureTitle": {
+    "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがありません"
+  },
+  "core/audits/viewport.js | title": {
+    "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがあります"
+  },
+  "core/audits/work-during-interaction.js | description": {
+    "message": "これは、Interaction to Next Paint の測定時に行われるスレッド ブロッキング処理です。[Interaction to Next Paint 指標の詳細](https://web.dev/articles/inp)"
+  },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "イベント「{interactionType}」に費やした時間（{timeInMs, number, milliseconds} ミリ秒）"
+  },
+  "core/audits/work-during-interaction.js | eventTarget": {
+    "message": "イベント ターゲット"
+  },
+  "core/audits/work-during-interaction.js | failureTitle": {
+    "message": "キー操作時の作業を最小限に抑える"
+  },
+  "core/audits/work-during-interaction.js | inputDelay": {
+    "message": "入力遅延"
+  },
+  "core/audits/work-during-interaction.js | presentationDelay": {
+    "message": "表示の遅延"
+  },
+  "core/audits/work-during-interaction.js | processingDuration": {
+    "message": "処理期間"
+  },
+  "core/audits/work-during-interaction.js | title": {
+    "message": "キー操作時の作業を最小限に抑える"
+  },
+  "core/config/default-config.js | a11yAriaGroupDescription": {
+    "message": "ここには、アプリでの ARIA の使用方法に関する改善点が表示されます。修正すると、支援技術（スクリーン リーダーなど）の利便性が向上する可能性があります。"
+  },
+  "core/config/default-config.js | a11yAriaGroupTitle": {
+    "message": "ARIA"
+  },
+  "core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "ここで、音声と動画の代替コンテンツを提供できます。代替コンテンツを提供すると、聴覚や視覚に障がいがあるユーザーの利便性が向上する可能性があります。"
+  },
+  "core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "音声と動画"
+  },
+  "core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "ここで、一般的なユーザー補助機能のおすすめの方法を確認できます。"
+  },
+  "core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "おすすめの方法"
+  },
+  "core/config/default-config.js | a11yCategoryDescription": {
+    "message": "これらのチェックにより、[ウェブアプリのユーザー補助機能の改善点](https://developer.chrome.com/docs/lighthouse/accessibility/)が明確になります。ただし、自動的に検出できる問題は一部に過ぎず、ウェブアプリのユーザー補助機能に問題がないことが保証されたわけではないため、[手動テスト](https://web.dev/articles/how-to-review)も実施することをおすすめします。"
+  },
+  "core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "ここに、自動テストツールではカバーできない範囲に対処する項目が表示されます。詳しくは、[ユーザー補助機能の審査を実施する](https://web.dev/articles/how-to-review)方法についてのガイドをご覧ください。"
+  },
+  "core/config/default-config.js | a11yCategoryTitle": {
+    "message": "ユーザー補助"
+  },
+  "core/config/default-config.js | a11yColorContrastGroupDescription": {
+    "message": "ここには、コンテンツの読みやすさに関する改善点が表示されます。"
+  },
+  "core/config/default-config.js | a11yColorContrastGroupTitle": {
+    "message": "コントラスト"
+  },
+  "core/config/default-config.js | a11yLanguageGroupDescription": {
+    "message": "ここには、地域ユーザー別のコンテンツの解釈に関する改善点が表示されます。"
+  },
+  "core/config/default-config.js | a11yLanguageGroupTitle": {
+    "message": "多言語対応とローカライズ"
+  },
+  "core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "ここには、アプリ内のコントロールのセマンティクスに関する改善点が表示されます。修正すると、支援技術（スクリーン リーダーなど）の利便性が向上する可能性があります。"
+  },
+  "core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "名前とラベル"
+  },
+  "core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "ここには、アプリのキーボード操作性に関する改善点が表示されます。"
+  },
+  "core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "操作性"
+  },
+  "core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "ここには、支援技術（スクリーン リーダーなど）を使用した表やリストのデータの読み取りの利便性に関する改善点が表示されます。"
+  },
+  "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "表とリスト"
+  },
+  "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "ブラウザの互換性"
+  },
+  "core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "おすすめの方法"
+  },
+  "core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "全般"
+  },
+  "core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "信頼性と安全性"
+  },
+  "core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "ユーザー エクスペリエンス"
+  },
+  "core/config/default-config.js | diagnosticsGroupDescription": {
+    "message": "アプリケーションのパフォーマンスに関する詳細。これらの数値は、パフォーマンス スコアには[直接影響](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)しません。"
+  },
+  "core/config/default-config.js | diagnosticsGroupTitle": {
+    "message": "診断"
+  },
+  "core/config/default-config.js | firstPaintImprovementsGroupDescription": {
+    "message": "パフォーマンスの最も重要な点は、ピクセルをどのくらい速く画面にレンダリングできるかです。主要な指標: First Contentful Paint、First Meaningful Paint"
+  },
+  "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
+    "message": "First Paint の改善点"
+  },
+  "core/config/default-config.js | metricGroupTitle": {
+    "message": "指標"
+  },
+  "core/config/default-config.js | overallImprovementsGroupDescription": {
+    "message": "読み込みの全体的なパフォーマンスを改善して、ページの反応性や操作性を高めましょう。主要な指標: インタラクティブになるまでの時間、速度インデックス"
+  },
+  "core/config/default-config.js | overallImprovementsGroupTitle": {
+    "message": "全体的な改善点"
+  },
+  "core/config/default-config.js | performanceCategoryTitle": {
+    "message": "パフォーマンス"
+  },
+  "core/config/default-config.js | seoCategoryDescription": {
+    "message": "これらのチェックを行うことで、ページが検索エンジン最適化の基本的な推奨事項に沿っていることを確認できます。検索ランキングに影響する可能性のある要素には、Lighthouse で考慮されている要素以外に、[ウェブに関する主な指標](https://web.dev/explore/vitals)のスコアなどもあります。[Google 検索の基本事項の詳細](https://support.google.com/webmasters/answer/35769)"
+  },
+  "core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "サイトでこれらの他の検証ツールを実行し、SEO のその他のおすすめの方法をご確認ください。"
+  },
+  "core/config/default-config.js | seoCategoryTitle": {
+    "message": "SEO"
+  },
+  "core/config/default-config.js | seoContentGroupDescription": {
+    "message": "クローラがアプリのコンテンツを正確に読み取れるように HTML を適切な形式で記述します。"
+  },
+  "core/config/default-config.js | seoContentGroupTitle": {
+    "message": "コンテンツ制作のおすすめの方法"
+  },
+  "core/config/default-config.js | seoCrawlingGroupDescription": {
+    "message": "検索結果に表示するには、クローラがアプリにアクセスできるようにする必要があります。"
+  },
+  "core/config/default-config.js | seoCrawlingGroupTitle": {
+    "message": "クロールとインデックス登録"
+  },
+  "core/config/default-config.js | seoMobileGroupDescription": {
+    "message": "ページをスマホ対応にして、ピンチ操作や拡大操作なしでコンテンツを読めるようにします。[ページをスマホ対応にする方法の詳細](https://developers.google.com/search/mobile-sites/)"
+  },
+  "core/config/default-config.js | seoMobileGroupTitle": {
+    "message": "スマホ対応"
+  },
+  "core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "テストしたデバイスの CPU が Lighthouse の推定より遅いようです。これは、パフォーマンス スコアに悪影響を与える可能性があります。詳しくは、[適切な CPU 速度低下乗数の調整](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)についての説明をご覧ください。"
+  },
+  "core/gather/driver/navigation.js | warningRedirected": {
+    "message": "テスト URL（{requested}）が「{final}」にリダイレクトされているため、このページは想定どおりに読み込まれない可能性があります。2 番目の URL を直接テストしてみてください。"
+  },
+  "core/gather/driver/navigation.js | warningTimeout": {
+    "message": "ページの読み込みに時間がかかり、制限時間内に完了できませんでした。結果は不完全な場合があります。"
+  },
+  "core/gather/driver/storage.js | warningCacheTimeout": {
+    "message": "ブラウザ キャッシュの消去がタイムアウトしました。このページを再度監査し、問題が解決しない場合はバグを報告してください。"
+  },
+  "core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{次の場所に保存されているデータが読み込みパフォーマンスに影響を与えている可能性があります: {locations}。これらのリソースがスコアに影響しないようにするためには、シークレット ウィンドウでこのページを監査してください。}other{次の場所に保存されているデータが読み込みパフォーマンスに影響を与えている可能性があります: {locations}。これらのリソースがスコアに影響しないようにするためには、シークレット ウィンドウでこのページを監査してください。}}"
+  },
+  "core/gather/driver/storage.js | warningOriginDataTimeout": {
+    "message": "オリジンデータの消去がタイムアウトしました。このページを再度監査し、問題が解決しない場合はバグを報告してください。"
+  },
+  "core/gather/gatherers/link-elements.js | headerParseWarning": {
+    "message": "`link`ヘッダーの解析中にエラーが発生しました（{error}）: `{header}`"
+  },
+  "core/gather/timespan-runner.js | warningNavigationDetected": {
+    "message": "実行中にページ ナビゲーションが検出されました。タイムスパン モードを使用したページ ナビゲーションの監査は推奨されません。サードパーティ アトリビューションとメインスレッド検出を改善するには、ナビゲーション モードを使用してページ ナビゲーションの監査を行ってください。"
+  },
+  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
+    "message": "バックフォワード キャッシュの対象になるのは、GET リクエストで読み込まれたページのみです。"
+  },
+  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
+    "message": "キャッシュに保存できるのは、ステータス コードが 2XX のページのみです。"
+  },
+  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
+    "message": "キャッシュにある間に JavaScript を実行しようとしていることが検出されました。"
+  },
+  "core/lib/bf-cache-strings.js | appBanner": {
+    "message": "AppBanner をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | authorizationHeader": {
+    "message": "バックフォワード キャッシュはキープアライブ リクエストが原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
+    "message": "バックフォワード キャッシュはフラグにより無効になっています。chrome://flags/#back-forward-cache に移動して、このデバイスでローカルに有効化してください。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "バックフォワード キャッシュはコマンドラインにより無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "バックフォワード キャッシュはメモリ不足のため無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
+    "message": "バックフォワード キャッシュは委任には対応していません。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
+    "message": "バックフォワード キャッシュは事前レンダリングのため無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | broadcastChannel": {
+    "message": "このページにはリスナーが登録された BroadcastChannel インスタンスがあるため、キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
+    "message": "Cache-Control: no-store ヘッダーがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | cacheFlushed": {
+    "message": "キャッシュは意図的に消去されました。"
+  },
+  "core/lib/bf-cache-strings.js | cacheLimit": {
+    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
+  },
+  "core/lib/bf-cache-strings.js | containsPlugins": {
+    "message": "プラグインを含むページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentFileChooser": {
+    "message": "FileChooser API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
+    "message": "File System Access API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
+    "message": "メディア デバイス ディスパッチャーを使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaPlay": {
+    "message": "ページから移動するときにメディア プレーヤーが再生中でした。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaSession": {
+    "message": "MediaSession API を使用しており再生状態にあるページは、バックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
+    "message": "MediaSession API を使用しておりアクション ハンドラを設定するページは、バックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentScreenReader": {
+    "message": "バックフォワード キャッシュはスクリーン リーダーが原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
+    "message": "SecurityHandler を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentSerial": {
+    "message": "Serial API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
+    "message": "WebAuthentication API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
+    "message": "WebBluetooth API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebUSB": {
+    "message": "WebUSB API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | cookieDisabled": {
+    "message": "`Cache-Control: no-store` を使用するページで Cookie が無効になっているため、バックフォワード キャッシュは無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
+    "message": "専用のワーカーまたはワークレットを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | documentLoaded": {
+    "message": "読み込みが終了していないドキュメントから移動しました。"
+  },
+  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
+    "message": "ページから移動するときにアプリバナーが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "ページから移動するときに Chrome パスワード マネージャーが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "ページから移動するときに DOM 抽出の処理が実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
+    "message": "ページから移動するときに DOM Distiller ビューアが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
+    "message": "バックフォワード キャッシュは、Messaging API を使用している拡張機能が原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "バックフォワード キャッシュを使用する前に、持続的に接続している拡張機能の接続を終了する必要があります。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "持続的に接続している拡張機能で、バックフォワード キャッシュのフレームへのメッセージ送信が試行されていました。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensions": {
+    "message": "バックフォワード キャッシュは拡張機能が原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | embedderModalDialog": {
+    "message": "ページから移動するときにフォームの再送信や HTTP パスワード ダイアログなどのモーダル ダイアログがページに表示されていました。"
+  },
+  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
+    "message": "ページから移動するときにオフラインのページが表示されていました。"
+  },
+  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
+    "message": "ページから移動するときにメモリ不足介入バーが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
+    "message": "ページから移動するときに権限リクエストが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
+    "message": "ページから移動するときにポップアップ ブロッカーが実行中でした。"
+  },
+  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "ページから移動するときにセーフ ブラウジングのメッセージが表示されていました。"
+  },
+  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "セーフ ブラウジングでこのページが不正と判断され、ポップアップがブロックされました。"
+  },
+  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "ページがバックフォワード キャッシュにある間に、Service Worker が起動されました。"
+  },
+  "core/lib/bf-cache-strings.js | errorDocument": {
+    "message": "バックフォワード キャッシュはドキュメントのエラーが原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
+    "message": "Fenced Frame を使用しているページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
+    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
+  },
+  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
+    "message": "メディア ストリーム アクセスが可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | haveInnerContents": {
+    "message": "ポータルを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | idleManager": {
+    "message": "IdleManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | indexedDBConnection": {
+    "message": "IndexedDB 接続が開いているページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | indexedDBEvent": {
+    "message": "バックフォワード キャッシュは IndexedDB イベントが原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | ineligibleAPI": {
+    "message": "対象外の API が使用されました。"
+  },
+  "core/lib/bf-cache-strings.js | injectedJavascript": {
+    "message": "拡張機能によって `JavaScript` が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
+    "message": "拡張機能によって `StyleSheet` が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | internalError": {
+    "message": "内部エラーが発生しました。"
+  },
+  "core/lib/bf-cache-strings.js | keepaliveRequest": {
+    "message": "バックフォワード キャッシュはキープアライブ リクエストが原因で無効になっています。"
+  },
+  "core/lib/bf-cache-strings.js | keyboardLock": {
+    "message": "キーボード ロックを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | loading": {
+    "message": "読み込みが終了していないページから移動しました。"
+  },
+  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Cache-Control: no-cache のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Cache-Control: no-store のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
+    "message": "ページがバックフォワード キャッシュから復元される前に移動がキャンセルされました。"
+  },
+  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
+    "message": "アクティブなネットワーク接続による受信データが多すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページが受信できるデータ量に上限を設けています。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "処理中の fetch() または XHR があるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
+    "message": "アクティブなネットワーク リクエストにリダイレクトが含まれていたため、ページがバックフォワード キャッシュから削除されました。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
+    "message": "ネットワーク接続の時間が長すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページがデータを受信できる時間に上限を設けています。"
+  },
+  "core/lib/bf-cache-strings.js | noResponseHead": {
+    "message": "有効なレスポンス ヘッダーのないページはバックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | notMainFrame": {
+    "message": "メインフレーム以外のフレームで移動が行われました。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
+    "message": "インデックス登録済み DB のトランザクションが進行中のページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
+    "message": "処理中の fetch ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
+    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
+    "message": "処理中の XHR ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | paymentManager": {
+    "message": "PaymentManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | pictureInPicture": {
+    "message": "ピクチャー イン ピクチャーを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | portal": {
+    "message": "ポータルを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | printing": {
+    "message": "印刷 UI を表示するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
+    "message": "このページは、`window.open()` を使用して開かれ、他のタブから参照されているか、ウィンドウが開かれています。"
+  },
+  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
+    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスに問題が発生しました。"
+  },
+  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
+    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスが強制終了されました。"
+  },
+  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
+    "message": "音声キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "センサーの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
+    "message": "バックグラウンド同期またはバックグラウンド フェッチの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
+    "message": "MIDI の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
+    "message": "通知の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
+    "message": "ストレージ アクセスをリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
+    "message": "動画キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
+    "message": "キャッシュに保存できるのは、URL スキームが HTTP または HTTPS のページのみです。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
+    "message": "ページがバックフォワード キャッシュにある間に Service Worker に要求されました。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
+    "message": "Service Worker がバックフォワード キャッシュ内のページに `MessageEvent` を送信しようとしました。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
+    "message": "ページがバックフォワード キャッシュにある間に Service Worker が登録解除されました。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
+    "message": "Service Worker の起動により、ページがバックフォワード キャッシュから削除されました。"
+  },
+  "core/lib/bf-cache-strings.js | sessionRestored": {
+    "message": "Chrome が再起動し、バックフォワード キャッシュの内容が消去されました。"
+  },
+  "core/lib/bf-cache-strings.js | sharedWorker": {
+    "message": "SharedWorker を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | speechRecognizer": {
+    "message": "SpeechRecognizer を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | speechSynthesis": {
+    "message": "SpeechSynthesis を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
+    "message": "ページ上で iframe が移動を開始し、完了しませんでした。"
+  },
+  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
+    "message": "Cache-Control: no-cache のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
+    "message": "Cache-Control: no-store のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | timeout": {
+    "message": "このページは、バックフォワード キャッシュの最大保存時間を超えたため期限切れとなりました。"
+  },
+  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
+    "message": "ページのバックフォワード キャッシュへの保存がタイムアウトしました（長時間実行中の pagehide ハンドラが原因である可能性があります）。"
+  },
+  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
+    "message": "ページのメインフレームにアンロード ハンドラがあります。"
+  },
+  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
+    "message": "ページのサブフレームにアンロード ハンドラがあります。"
+  },
+  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
+    "message": "ブラウザによりユーザー エージェント オーバーライド ヘッダーが変更されました。"
+  },
+  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
+    "message": "録画や録音が可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webDatabase": {
+    "message": "WebDatabase を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webHID": {
+    "message": "WebHID を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webLocks": {
+    "message": "WebLocks を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webNfc": {
+    "message": "WebNFC を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webOTPService": {
+    "message": "WebOTPService を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webRTC": {
+    "message": "WebRTC を使用するページは、バックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | webShare": {
+    "message": "WebShare を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/bf-cache-strings.js | webSocket": {
+    "message": "WebSocket を使用するページはバックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | webTransport": {
+    "message": "WebTransport を使用するページはバックフォワード キャッシュに保存できません。"
+  },
+  "core/lib/bf-cache-strings.js | webXR": {
+    "message": "WebXR を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "古いブラウザとの下位互換性を保つため、https: と http: の URL スキームを追加することを検討してください（`'strict-dynamic'` をサポートしているブラウザでは無視されます）。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "`disown-opener` は CSP3 以降ではサポートされていません。代わりに、Cross-Origin-Opener-Policy ヘッダーを使用してください。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "`referrer` は CSP2 以降ではサポートされていません。代わりに、Referrer-Policy ヘッダーを使用してください。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "`reflected-xss` は CSP2 以降ではサポートされていません。代わりに、X-XSS-Protection ヘッダーを使用してください。"
+  },
+  "core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "`base-uri` を指定しないと、挿入された `<base>`　タグによって、すべての相対 URL（スクリプトなど）のベース URL が攻撃者の管理ドメインに設定される可能性があります。`base-uri` を `'none'` または `'self'` に設定することを検討してください。"
+  },
+  "core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "`object-src` が設定されていない場合、安全でないスクリプトを実行するプラグインを挿入される恐れがあります。可能であれば、`object-src` を `'none'` に設定することを検討してください。"
+  },
+  "core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "`script-src` ディレクティブがありません。このため、安全でないスクリプトを実行できる状態になっています。"
+  },
+  "core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "セミコロンが指定されていません。{keyword} はキーワードではなくディレクティブのようです。"
+  },
+  "core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "nonce には base64 文字セットを使用する必要があります。"
+  },
+  "core/lib/csp-evaluator.js | nonceLength": {
+    "message": "nonce は 8 文字以上である必要があります。"
+  },
+  "core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "このディレクティブでは、プレーンな URL スキーム（{keyword}）を使用しないでください。プレーンな URL スキームを使用すると、安全でないドメインからスクリプトが挿入される恐れがあります。"
+  },
+  "core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "このディレクティブでは、プレーンなワイルドカード（{keyword}）を使用しないでください。プレーンなワイルドカードを使用すると、安全でないドメインからスクリプトが挿入される恐れがあります。"
+  },
+  "core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "報告先が report-to ディレクティブ経由でのみ設定されています。このディレクティブは、Chromium ベースのブラウザでしかサポートされていないため、`report-uri` ディレクティブも使用することをおすすめします。"
+  },
+  "core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "CSP で報告先が設定されていません。CSP の動作状況や問題が発生した場合の確認が難しくなります。"
+  },
+  "core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "ホストの許可リストが頻繁に回避されています。必要な場合は、代わりに CSP nonce または hash と `'strict-dynamic'` を使用することを検討してください。"
+  },
+  "core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "不明な CSP ディレクティブです。"
+  },
+  "core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "{keyword} は無効なキーワードのようです。"
+  },
+  "core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "`'unsafe-inline'` が指定されているため、安全でないページ内スクリプトやイベント ハンドラを実行できる状態になっています。CSP nonce または hash を使用して、スクリプトを個別に許可することを検討してください。"
+  },
+  "core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "古いブラウザとの下位互換性を保つため、`'unsafe-inline'` を追加することを検討してください（nonce / hash をサポートしているブラウザでは無視されます）。"
+  },
+  "core/lib/deprecation-description.js | feature": {
+    "message": "詳しくは、機能のステータス ページをご覧ください。"
+  },
+  "core/lib/deprecation-description.js | milestone": {
+    "message": "この変更はマイルストーン {milestone} で有効になります。"
+  },
+  "core/lib/deprecation-description.js | title": {
+    "message": "非推奨の機能が使用されています"
+  },
+  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
+    "message": "CORS の `Access-Control-Allow-Headers` の処理では、Authorization はワイルドカード記号（*）で表されなくなります。"
+  },
+  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "デフォルトの Cast の統合を無効にするには、`-internal-media-controls-overlay-cast-button` セレクタではなく `disableRemotePlayback` 属性を使用する必要があります。"
+  },
+  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
+    "message": "URL に削除された空白文字（`(n|r|t)`）と小なり記号（`<`）が含まれるリソース リクエストはブロックされます。これらのリソースを読み込むには、要素の属性値などの場所にある改行を削除し、小なり記号をエンコードしてください。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
+    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API の Navigation Timing 2 を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API の Paint Timing を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API である Navigation Timing 2 の `nextHopProtocol` を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
+    "message": "`(0|r|n)` 文字が含まれる Cookie は、切り捨てではなく拒否されます。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "`document.domain` の設定による同一オリジン ポリシーの緩和は非推奨であり、デフォルトで無効になる予定です。この非推奨の警告は、`document.domain` の設定により有効にしたクロスオリジンのアクセスに対して行われます。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
+    "message": "クロスオリジンの iframe から window.alert をトリガーすることは非推奨であり、今後削除される予定です。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
+    "message": "クロスオリジンの iframe から window.confirm をトリガーすることは非推奨であり、今後削除される予定です。"
+  },
+  "core/lib/deprecations-strings.js | DOMMutationEvents": {
+    "message": "`DOMSubtreeModified`、`DOMNodeInserted`、`DOMNodeRemoved`、`DOMNodeRemovedFromDocument`、`DOMNodeInsertedIntoDocument`、`DOMCharacterDataModified` を含む DOM ミューテーション イベントは非推奨となり（https://w3c.github.io/uievents/#legacy-event-types）、削除される予定です。代わりに `MutationObserver` を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
+    "message": "データのサポート: SVG の <use> 要素の URL は非推奨となり、今後削除される予定です。"
+  },
+  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
+    "message": "`document.domain` の設定による同一オリジン ポリシーの緩和は非推奨であり、デフォルトで無効になる予定です。引き続きこの機能を使用するには、オリジンキー エージェント クラスタを無効にしてください。これには、ドキュメントとフレームの HTTP レスポンスとともに `Origin-Agent-Cluster: ?0` ヘッダーを送信します。詳しくは、https://developer.chrome.com/blog/immutable-document-domain/ をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | ExpectCTHeader": {
+    "message": "`Expect-CT` ヘッダーは非推奨であり、削除される予定です。Chrome では、2018 年 4 月 30 日以降に発行されたすべての公的に信頼されている証明書に対して、Certificate Transparency（証明書の透明性）を設定する必要があります。"
+  },
+  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
+    "message": "`getCurrentPosition()` と `watchPosition()` は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "`getCurrentPosition()` と `watchPosition()` は、保護されていないオリジンでは非推奨となっています。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
+    "message": "`getUserMedia()` は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
+    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` は非推奨になりました。代わりに `RTCPeerConnectionIceErrorEvent.address` または `RTCPeerConnectionIceErrorEvent.port` を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
+    "message": "`canmakepayment` Service Worker イベントの、次の販売者のオリジンと任意のデータのサポートは終了し、削除される予定です。`topOrigin`、`paymentRequestOrigin`、`methodData`、`modifiers`。"
+  },
+  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "ウェブサイトが、ネットワークで特権を持つユーザーのみアクセス可能な、ネットワークのサブリソースをリクエストしました。これらのリクエストにより、非公開のデバイスやサーバーがインターネット上で参照できるようになるため、クロスサイト リクエスト フォージェリ（CSRF）攻撃や情報漏洩のリスクが高まります。これらのリスクを軽減するため、Chrome では、保護されていないコンテキストからの非公開サブリソースへのリクエストは非推奨となっており、今後ブロックされるようになる予定です。"
+  },
+  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
+    "message": "動作を正確に反映させるため、`joinAdInterestGroup()` に渡される `InterestGroups` の `dailyUpdateUrl` フィールドの名前を `updateUrl` に変更しました。"
+  },
+  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
+    "message": "末尾が `.css` ファイル拡張子ではない CSS を、`file:` の URL から読み込むことはできません。"
+  },
+  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
+    "message": "`remove()` の非同期の範囲の削除を中止するための `SourceBuffer.abort()` の使用は、仕様変更により非推奨となっており、今後サポートされなくなります。代わりに `updateend` イベントをリッスンします。なお、`abort()` については、非同期メディアの追加の中止と、パーサーの状態のリセットのみを行います。"
+  },
+  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "バッファ済みコードフレームの最も高いプレゼンテーション タイムスタンプを下回る `MediaSource.duration` の設定は、仕様変更により非推奨となりました。切り捨てられたバッファ済みメディアの暗黙的な削除は、今後サポートされなくなります。代わりに、すべての `sourceBuffers` で明示的に `remove(newDuration, oldDuration)` を実行してください。このとき、`newDuration < oldDuration` となるよう指定してください。"
+  },
+  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI は、`MIDIOptions` で SysEx が指定されていない場合でも使用許可を要求します。"
+  },
+  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
+    "message": "標準化されていない古い `shadowroot` 属性は非推奨になり、M119 以降*は機能しなくなります*。代わりに、標準化されている新しい `shadowrootmode` 属性を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
+    "message": "Notification API は保護されていないオリジンから使用できなくなっている可能性があります。アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
+    "message": "通知 API の権限は、クロスオリジンの iframe からリクエストできなくなっている可能性があります。最上位フレームからの権限をリクエストするか、代わりに新しいウィンドウを開くことを検討してください。"
+  },
+  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmap の `imageOrientation: 'none'` オプションは非推奨になりました。createImageBitmap を使用する際は、代わりに \\{imageOrientation: 'from-image'\\} オプションを使用してください。"
+  },
+  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
+    "message": "パートナーは古い (D)TLS バージョンの交渉を行っています。パートナーに確認してこれを修正してもらってください。"
+  },
+  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
+    "message": "img タグ、video タグ、canvas タグに `overflow: visible` を指定すると、要素の境界外にビジュアル コンテンツが作成される場合があります。https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | PaymentInstruments": {
+    "message": "`paymentManager.instruments` が非推奨となりました。支払いハンドラには、代わりに JIT インストールを使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
+    "message": "`PaymentRequest` 呼び出しが Content-Security-Policy（CSP）`connect-src` ディレクティブをバイパスしました。このバイパスは非推奨となっています。`PaymentRequest` API（`supportedMethods` フィールド）のお支払い方法 ID を CSP の `connect-src` ディレクティブに追加してください。"
+  },
+  "core/lib/deprecations-strings.js | PersistentQuotaType": {
+    "message": "`StorageType.persistent` が非推奨となりました。代わりに、標準化された `navigator.storage` を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PictureSourceSrc": {
+    "message": "`<source src>` で `<picture>` 親要素を使用すると無効となり、無視されます。代わりに `<source srcset>` を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame はベンダー固有です。代わりに標準の cancelAnimationFrame を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame はベンダー固有です。代わりに標準の requestAnimationFrame を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen は非推奨になりました。代わりに Document.fullscreenElement を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen は非推奨になりました。代わりに Document.fullscreenEnabled を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
+    "message": "API `chrome.privacy.websites.privacySandboxEnabled` は非推奨になりますが、下位互換性を確保するため、リリース M113 まで引き続き有効です。代わりに、`chrome.privacy.websites.topicsEnabled`、`chrome.privacy.websites.fledgeEnabled`、`chrome.privacy.websites.adMeasurementEnabled` を使用してください。詳しくは https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "`DtlsSrtpKeyAgreement` の制約は削除されました。この制約に指定されている `false` 値は、削除された `SDES key negotiation` の方法を使用する試みとして解釈されます。この機能は削除されたため、`DTLS key negotiation` をサポートしているサービスで代用してください。"
+  },
+  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "`DtlsSrtpKeyAgreement` の制約は削除されました。この制約に指定されている `true` 値は適用されませんが、この制約を削除するとシンプルにできます。"
+  },
+  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "コールバックベースの getStats() は非推奨になっており、今後削除されます。代わりに、仕様に準拠した getStats() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | RangeExpand": {
+    "message": "Range.expand() は非推奨になりました。代わりに Selection.modify() を使用してください。"
+  },
+  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "URL に埋め込み認証情報（`https://user:pass@host/` など）が含まれるサブリソース リクエストはブロックされます。"
+  },
+  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
+    "message": "`rtcpMuxPolicy` オプションは非推奨であり、削除される予定です。"
+  },
+  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "`SharedArrayBuffer` ではクロスオリジン分離が必要となります。詳しくは、https://developer.chrome.com/blog/enabling-shared-array-buffer/ をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "ユーザー アクティベーションのない `speechSynthesis.speak()` は非推奨であり、削除される予定です。"
+  },
+  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "拡張機能で引き続き `SharedArrayBuffer` を使用するには、クロスオリジン分離を有効にする必要があります。https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | WebSQL": {
+    "message": "ウェブ SQL は非推奨となっています。SQLite WebAssembly または Indexed Database を使用してください"
+  },
+  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
+    "message": "権限記述子 `window-placement` は非推奨になりました。代わりに `window-management` を使用してください。詳しくは、https://bit.ly/window-placement-rename をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
+    "message": "権限ポリシー `window-placement` は非推奨になりました。代わりに `window-management` を使用してください。詳しくは、https://bit.ly/window-placement-rename をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 は、`XMLHttpRequest` のレスポンス JSON ではサポートされていません。"
+  },
+  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "メインスレッドの同期的な `XMLHttpRequest` は、エンドユーザーのエクスペリエンスに悪影響があるため、非推奨となっています。詳しくは、https://xhr.spec.whatwg.org/ をご覧ください。"
+  },
+  "core/lib/deprecations-strings.js | XRSupportsSession": {
+    "message": "`supportsSession()` は非推奨になりました。代わりに `isSessionSupported()` を使用して、解決済みのブール値を確認してください。"
+  },
+  "core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "メインスレッドのブロック時間"
+  },
+  "core/lib/i18n/i18n.js | columnCacheTTL": {
+    "message": "キャッシュの TTL"
+  },
+  "core/lib/i18n/i18n.js | columnDescription": {
+    "message": "説明"
+  },
+  "core/lib/i18n/i18n.js | columnDuration": {
+    "message": "継続時間"
+  },
+  "core/lib/i18n/i18n.js | columnElement": {
+    "message": "要素"
+  },
+  "core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "問題のある要素"
+  },
+  "core/lib/i18n/i18n.js | columnLocation": {
+    "message": "場所"
+  },
+  "core/lib/i18n/i18n.js | columnName": {
+    "message": "名前"
+  },
+  "core/lib/i18n/i18n.js | columnRequests": {
+    "message": "リクエスト"
+  },
+  "core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "リソースのサイズ"
+  },
+  "core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "リソースの種類"
+  },
+  "core/lib/i18n/i18n.js | columnSize": {
+    "message": "サイズ"
+  },
+  "core/lib/i18n/i18n.js | columnSource": {
+    "message": "ソース"
+  },
+  "core/lib/i18n/i18n.js | columnStartTime": {
+    "message": "開始時間"
+  },
+  "core/lib/i18n/i18n.js | columnTimeSpent": {
+    "message": "かかった時間"
+  },
+  "core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "転送サイズ"
+  },
+  "core/lib/i18n/i18n.js | columnURL": {
+    "message": "URL"
+  },
+  "core/lib/i18n/i18n.js | columnWastedBytes": {
+    "message": "減らせるデータ量"
+  },
+  "core/lib/i18n/i18n.js | columnWastedMs": {
+    "message": "短縮できる時間"
+  },
+  "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Cumulative Layout Shift"
+  },
+  "core/lib/i18n/i18n.js | displayValueByteSavings": {
+    "message": "{wastedBytes, number, bytes} KiB 削減可能"
+  },
+  "core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount,plural, =1{1 件の要素が見つかりました}other{# 件の要素が見つかりました}}"
+  },
+  "core/lib/i18n/i18n.js | displayValueMsSavings": {
+    "message": "{wastedMs, number, milliseconds} ミリ秒短縮できます"
+  },
+  "core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "ドキュメント"
+  },
+  "core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "First Meaningful Paint"
+  },
+  "core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "フォント"
+  },
+  "core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "画像"
+  },
+  "core/lib/i18n/i18n.js | interactionToNextPaint": {
+    "message": "Interaction to Next Paint"
+  },
+  "core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Time to Interactive"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "高"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "低"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "中"
+  },
+  "core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
+  },
+  "core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "初回入力遅延の最大推定時間"
+  },
+  "core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "メディア"
+  },
+  "core/lib/i18n/i18n.js | ms": {
+    "message": "{timeInMs, number, milliseconds} ミリ秒"
+  },
+  "core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "その他"
+  },
+  "core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "その他のリソース"
+  },
+  "core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "スクリプト"
+  },
+  "core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
+  },
+  "core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Speed Index"
+  },
+  "core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "スタイルシート"
+  },
+  "core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "第三者"
+  },
+  "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Total Blocking Time"
+  },
+  "core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "合計"
+  },
+  "core/lib/lh-error.js | badTraceRecording": {
+    "message": "ページを読み込む際のトレースの記録中にエラーが発生しました。もう一度 Lighthouse を実行してください。（{errorCode}）"
+  },
+  "core/lib/lh-error.js | criTimeout": {
+    "message": "Debugger プロトコル接続の開始中にタイムアウトが発生しました。"
+  },
+  "core/lib/lh-error.js | didntCollectScreenshots": {
+    "message": "Chrome でページの読み込み中にスクリーンショットが収集されませんでした。ページにコンテンツが表示されていることを確認してから、Lighthouse を再実行してください。（{errorCode}）"
+  },
+  "core/lib/lh-error.js | dnsFailure": {
+    "message": "DNS サーバーは指定したドメインを解決できませんでした。"
+  },
+  "core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "必須の {artifactName} の収集でエラー（{errorMessage}）が発生しました"
+  },
+  "core/lib/lh-error.js | internalChromeError": {
+    "message": "Chrome 内部エラーが発生しました。Chrome を再起動して Lighthouse を再実行してください。"
+  },
+  "core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "必須の {artifactName} の収集は行われませんでした。"
+  },
+  "core/lib/lh-error.js | noFcp": {
+    "message": "ページにコンテンツが描画されませんでした。読み込みの際にブラウザ ウィンドウをフォアグラウンドのままにして、もう一度お試しください（{errorCode}）。"
+  },
+  "core/lib/lh-error.js | noLcp": {
+    "message": "Largest Contentful Paint（LCP）に該当するコンテンツがページに表示されていません。ページに有効な LCP 要素があることを確認してから、もう一度お試しください（{errorCode}）。"
+  },
+  "core/lib/lh-error.js | notHtml": {
+    "message": "指定されたページは HTML ではありません（MIME タイプ {mimeType} として配信されています）。"
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "このバージョンの Chrome は古すぎて「{featureName}」に対応していません。すべての結果を表示するには最新バージョンを使用してください。"
+  },
+  "core/lib/lh-error.js | pageLoadFailed": {
+    "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。正しい URL でテストを行い、すべてのリクエストに対してサーバーからの応答が適切であることを確認してください。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedHung": {
+    "message": "ページからの応答が停止されたため、リクエストした URL を Lighthouse で正確に読み込めませんでした。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedInsecure": {
+    "message": "指定した URL には有効なセキュリティ証明書がありません。{securityMessages}"
+  },
+  "core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome によりページ読み込みが停止され、中間ページが表示されました。テスト対象の URL が正しいこと、サーバーがすべてのリクエストに適切に応答していることを確認してください。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedWithDetails": {
+    "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。テスト対象の URL が正しいこと、サーバーがすべてのリクエストに適切に応答していることを確認してください。（詳細: {errorDetails}）"
+  },
+  "core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
+    "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。テスト対象の URL が正しいこと、サーバーがすべてのリクエストに適切に応答していることを確認してください。（ステータス コード: {statusCode}）"
+  },
+  "core/lib/lh-error.js | pageLoadTookTooLong": {
+    "message": "ページの読み込み時間が長すぎます。ページの読み込み時間を短縮するには、レポートに示される提案を実施してください。その後で、Lighthouse を再実行してください。（{errorCode}）"
+  },
+  "core/lib/lh-error.js | protocolTimeout": {
+    "message": "DevTools プロトコルからの応答の待ち時間が、割り当てられた時間を超えました。（メソッド: {protocolMethod}）"
+  },
+  "core/lib/lh-error.js | requestContentTimeout": {
+    "message": "リソース コンテンツの取得時間が、割り当てられた時間を超えました"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "ブラウザタブが予期せずクラッシュしました。"
+  },
+  "core/lib/lh-error.js | urlInvalid": {
+    "message": "指定した URL は無効の可能性があります。"
+  },
+  "core/lib/navigation-error.js | warningStatusCode": {
+    "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。テスト対象の URL が正しいこと、サーバーがすべてのリクエストに適切に応答していることを確認してください。（ステータス コード: {errorCode}）"
+  },
+  "core/lib/navigation-error.js | warningXhtml": {
+    "message": "ページの MIME タイプは XHTML です。Lighthouse では、このドキュメント タイプが明示的にはサポートされていません"
+  },
+  "core/user-flow.js | defaultFlowName": {
+    "message": "ユーザーフロー（{url}）"
+  },
+  "core/user-flow.js | defaultNavigationName": {
+    "message": "ナビゲーション レポート（{url}）"
+  },
+  "core/user-flow.js | defaultSnapshotName": {
+    "message": "スナップショット レポート（{url}）"
+  },
+  "core/user-flow.js | defaultTimespanName": {
+    "message": "タイムスパン レポート（{url}）"
+  },
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "すべてのレポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "カテゴリ"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "ユーザー補助"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "おすすめの方法"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "パフォーマンス"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "パソコン"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Lighthouse フローレポートについて"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "フローの詳細"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "ナビゲーション レポートの使用例"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "スナップショット レポートの使用例"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "期間レポートの使用例"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Lighthouse のパフォーマンス スコアを取得する。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Largest Contentful Paint（最大コンテンツの描画時間）、Speed Index（速度インデックス）などのページ読み込みに関するパフォーマンス指標を測定する。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "プログレッシブ ウェブアプリの機能を評価する。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "シングルページ アプリケーションや複雑なフォームでユーザー補助機能の問題がないか調べる。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "操作の背後に隠れてしまうメニューや UI 要素のおすすめの方法を検討する。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "一連の操作におけるレイアウトの移動と JavaScript の実行時間を測定する。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "長期使用のページやシングルページ アプリケーションでパフォーマンスの利便性を改善できる余地を見つける。"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "最も影響が大きい"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} 件の監査で情報が提供されました}other{{numInformative} 件の監査で情報が提供されました}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "モバイル"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "ページの読み込み"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "ナビゲーション レポートでは、Lighthouse のオリジナルのレポートとまったく同じように単一ページの読み込みについて分析できます。"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "ナビゲーション レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} 件のナビゲーション レポート}other{{numNavigation} 件のナビゲーション レポート}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} 件の監査にパスする可能性があります}other{{numPassableAudits} 件の監査にパスする可能性があります}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} 件の監査をパスしました}other{{numPassed} 件の監査をパスしました}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "普通"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "エラー"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "低"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "高"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "保存"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "取得したページの状態"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "スナップショット レポートでは、特定の状態（通常はユーザー操作後）のページを分析できます。"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "スナップショット レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} 件のスナップショット レポート}other{{numSnapshot} 件のスナップショット レポート}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "概要"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "ユーザー操作"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "期間レポートでは、任意の期間（ユーザーの操作が見込まれる期間など）を分析できます。"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "期間レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} 件の期間レポート}other{{numTimespan} 件の期間レポート}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Lighthouse ユーザーフロー レポート"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
+    "message": "レイアウト シフトは、ユーザーの操作なしで要素が移動する場合に発生します。[レイアウト シフトの原因を調査](https://web.dev/articles/optimize-cls)してください。たとえば、ページの読み込み時に要素が追加、削除される、フォントが変更されるなどの原因が考えられます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
+    "message": "レイアウト シフトの原因"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
+    "message": "最初のネットワーク リクエストは最も重要です。リダイレクトを回避し、サーバー応答を高速に保ち、テキスト圧縮を有効にして、レイテンシを削減します。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
+    "message": "ドキュメント リクエストのレイテンシ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
+    "message": "テキストの表示を統一するため、[font-display](https://developer.chrome.com/blog/font-display) を swap または optional に設定することを検討してください。swap をさらに最適化して、[フォント指標のオーバーライド](https://developer.chrome.com/blog/font-fallbacks)でレイアウト シフトを軽減できます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
+    "message": "フォント表示"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
+    "message": "最も長いフェーズから調査を開始します。[遅延を最小限に抑えることができます](https://web.dev/articles/optimize-inp#optimize_interactions)。処理期間を削減するには、[メインスレッドのコスト（通常は JS）を最適化](https://web.dev/articles/optimize-long-tasks)します。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
+    "message": "フェーズ別の INP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
+    "message": "LCP 画像を HTML からすぐに[検出できる](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)ようにし、[遅延読み込みを回避](https://web.dev/articles/lcp-lazy-loading)して、LCP を最適化します"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
+    "message": "LCP リクエストの検出"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
+    "message": "各[フェーズには、それに適した改善戦略があります](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想的なのは、LCP 時間のほとんどがリソースの読み込みに使われ、遅延に費やされないことです。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
+    "message": "フェーズ別の LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
+    "message": "リクエストがページの最初のレンダリングをブロックしているため、LCP が遅れる可能性があります。これらのネットワーク リクエストを[遅らせるかインライン化](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)すると、クリティカル パスから移動できます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
+    "message": "レンダリングをブロックしているリクエスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
+    "message": "スタイルの再計算のコストが引き続き高い場合は、セレクタの最適化によってコストを削減できます。経過時間が長く、遅いパスの割合（%）が高い[セレクタを最適化](https://developer.chrome.com/docs/devtools/performance/selector-stats)します。セレクタの複雑さや数、DOM のサイズや深さを抑えて、一致コストを削減します。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
+    "message": "CSS セレクタのコスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
+    "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。ページのコンテンツを優先させるには、[サードパーティのコードの読み込みを減らして遅らせ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)ます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
+    "message": "サードパーティ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
+    "message": "ページのビューポートはモバイル向けに最適化されていないため、タップ操作が[最大 300 ミリ秒遅延](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)する可能性があります。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
+    "message": "ビューポートがモバイル向けに最適化されていません"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
+    "message": "アニメーション コンテンツの場合は、[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) を使用して、コンテンツが画面外にあるときの CPU 使用量を最小限に抑えることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "すべての [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) コンポーネントを WebP 形式で表示し、他のブラウザには適切な代替画像を表示することを検討してください。[詳細](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
+    "message": "自動的に遅延読み込みされる画像に対し、[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) を使用していることを確認します。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
+    "message": "[AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) などのツールを使用して、[AMP レイアウトをサーバーサイドでレンダリング](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
+    "message": "[AMP のドキュメント](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)で、スタイルがすべてサポートされているか確認します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
+    "message": "[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) コンポーネントは [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) 属性に対応しており、画面サイズに応じてどの画像アセットを使用するかを指定できます。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
+    "message": "大きなリストをレンダリングする場合は、Component Dev Kit（CDK）で仮想スクロールを行うことを検討してください。[詳細](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | total-byte-weight": {
+    "message": "JavaScript バンドルのサイズを最小限に抑えるには、[ルートレベルのコード分割](https://web.dev/route-level-code-splitting-in-angular/)を適用します。また、[Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) でアセットを事前キャッシュすることも検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unminified-warning": {
+    "message": "Angular CLI を使用している場合は、本番環境モードでビルドを生成していることを確認します。[詳細](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
+    "message": "Angular CLI を使用している場合は、ソースマップを本番環境用ビルドに含め、バンドルを調べられるようにします。[詳細](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
+    "message": "ナビゲーションの速度を上げるにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses-responsive-images": {
+    "message": "画像のブレークポイントを管理するには、Component Dev Kit（CDK）の `BreakpointObserver` ユーティリティを使用することを検討してください。[詳細](https://material.angular.io/cdk/layout/overview)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
+    "message": "`GIF` を HTML5 動画として埋め込み可能なサービスにアップロードすることを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "サイトで [Convert 画像スタイルを使用して WebP 画像形式](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles)を設定することを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
+    "message": "`Drupal` で画像の遅延読み込みを設定することを検討してください。画像のフィールド フォーマッタは `lazy` または `eager` に対応しています。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | prioritize-lcp-image": {
+    "message": "LCP 要素がページに動的に追加された場合、LCP を改善するため画像を最適化する必要があります。[詳細](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | redirects": {
+    "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[Redirect](https://www.drupal.org/project/redirect) モジュールがインストールされている場合は、不要なリダイレクトを削除できるかどうかを確認します。[詳細](https://developers.google.com/web/tools/lighthouse/audits/redirects)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
+    "message": "[モジュール](https://www.drupal.org/project/critical_css)を使用して重要な CSS と JavaScript をインライン化し、重要でない CSS または JavaScript に defer 属性を使用することを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "`Internal Page Cache`、`Internal Dynamic Page Cache`、`BigPipe` などの `Drupal` キャッシュ モジュールを 1 つ以上使用してトラフィックをオフロードします。CDN と組み合わせると、応答時間をさらに短縮できます。ホスティング サーバーでは、PHP OPcache を使用する必要があります。データベースのクエリ時間を短縮するには、Redis や Memcached などのメモリ キャッシュの使用を検討してください。最後に、パフォーマンスの高いテーマ、モジュール、高速サーバーを使用して、サーバー応答時間を短縮してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
+    "message": "ページに読み込まれる画像のサイズを小さくするには、[Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) の使用をご検討ください。`Views` を使用して 1 つのページに複数のコンテンツ アイテムを表示している場合は、ページネーションを実装して、ページに表示されるコンテンツ アイテムの数を制限することを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
+    "message": "[Administration] > [Configuration] > [Development] ページで、[Aggregate CSS files] を有効にしていることを確認してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
+    "message": "[Administration] > [Configuration] > [Development] ページで [Aggregate JavaScript files] を有効にしていることを確認してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
+    "message": "使用されていない CSS ルールの削除を検討し、必要な `Drupal` ライブラリのみを関連性の高いページまたはページのコンポーネントに接続してください。詳しくは、[`Drupal`ドキュメント](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define)をご覧ください。不要な CSS を読み込んでいる接続済みライブラリを特定するには、Chrome DevTools で[コード カバレッジ](https://developer.chrome.com/docs/devtools/coverage)を確認します。`Drupal` のサイトで CSS の集約が無効になっている場合は、スタイルシートの URL から該当のテーマやモジュールを特定できます。多くのスタイルシートを使用しているテーマやモジュール（コード カバレッジで赤色の部分が多いもの）をリストで探します。テーマやモジュールでは、実際にページで使用されているスタイルシート ライブラリのみを接続する必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
+    "message": "使用されていない JavaScript アセットの削除を検討し、必要な `Drupal` ライブラリのみを関連性の高いページまたはページのコンポーネントに接続してください。詳しくは、[Drupal のドキュメント](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define)をご覧ください。不要な JavaScript を読み込んでいる接続済みライブラリを特定するには、Chrome DevTools で[コード カバレッジ](https://developer.chrome.com/docs/devtools/coverage)を確認します。`Drupal` のサイトで JavaScript の集約が無効になっている場合は、スクリプトの URL から該当するテーマやモジュールを特定できます。多くのスクリプトを使用しているテーマやモジュール（コード カバレッジで赤色の部分が多いもの）をリストで探します。テーマやモジュールでは、実際にページで使用されているスクリプト ライブラリのみを接続する必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
+    "message": "[Administration] > [Configuration] > [Development] ページで [Browser and proxy cache maximum age] を設定してください。[`Drupal` のキャッシュとパフォーマンスの最適化](https://www.drupal.org/docs/8/api/cache-api/cache-api)についての説明をご覧ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
+    "message": "画質を落とさずにサイトでアップロードされる画像のサイズを自動的に最適化して縮小できる[モジュール](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search)の使用を検討してください。また、サイトでレンダリングされるすべての画像に対して、`Drupal` から提供されるネイティブの [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) を使用していることを確認してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
+    "message": "ユーザー エージェントのリソースヒント用の機能がある[モジュール](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search)をインストールして設定することで、`Preconnect` または `dns-prefetch` のリソースヒントを追加できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
+    "message": "`Drupal` から提供されるネイティブの [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) を使用していることを確認してください。表示モード、ビュー、WYSIWYG エディタでアップロードした画像を使って画像フィールドをレンダリングする際は、Responsive Image Styles を使用してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-text-compression": {
+    "message": "テキストベースのリソースは圧縮（gzip、deflate、または brotli）して配信し、ネットワークの全体的な通信量を最小限に抑えてください。これをネイティブでサポートしている CDN の使用を検討するか、この処理を行うようウェブサーバーを設定してください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Optimize Fonts` を有効にし、`font-display` CSS 機能を自動的に利用することで、Web フォントの読み込み中にテキストが確実にユーザーに表示されるようにします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Lazy Load Images` を有効にし、画面外の画像の読み込みを必要になるまで遅らせます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Critical CSS` と `Script Delay` を有効にし、クリティカルでない JS/CSS を遅らせます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
+    "message": "[Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) を使用して、世界各国のネットワークに広がるコンテンツをキャッシュし、最初の 1 バイトまでの時間を改善します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Minify CSS` を有効にし、CSS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Minify Javascript` を有効にし、JS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Remove Unused CSS` を有効にすると、問題の解決に役立ちます。サイトの各ページで実際に使用されている CSS クラスが特定され、それ以外が削除されることで、ファイルサイズが小さく保たれます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Efficient Static Cache Policy` を有効にし、静的アセット用のキャッシュ ヘッダーに推奨値を設定します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Pre-Connect Origins` を有効にし、自動的に `preconnect` リソースヒントを追加することで、重要なサードパーティ オリジンへの早期接続を確立します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Preload Fonts` と `Preload Background Images` を有効にし、`preload` リンクを追加することで、現在リクエストされているリソースの取得をページ読み込みの後半で優先します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Resize Images` を有効にし、画像のサイズをデバイスに適したサイズに変更することで、ネットワーク ペイロード サイズを削減します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
+    "message": "画像形式が自動的に最適化されるように、`<img>` ではなく `gatsby-plugin-image` コンポーネントを使用します。[詳細](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | offscreen-images": {
+    "message": "画像が自動的に遅延読み込みされるように、`<img>` ではなく `gatsby-plugin-image` コンポーネントを使用します。[詳細](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | prioritize-lcp-image": {
+    "message": "`gatsby-plugin-image` コンポーネントを使用して、`loading` プロパティを `eager` に設定します。[詳細](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image#shared-props)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | render-blocking-resources": {
+    "message": "重要でない第三者スクリプトの読み込みを遅らせるように、`Gatsby Script API` を使用します。[詳細](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | unused-css-rules": {
+    "message": "使用されていないルールをスタイルシートから削除できるように、`PurgeCSS` `Gatsby` プラグインを使用します。[詳細](https://purgecss.com/plugins/gatsby.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | unused-javascript": {
+    "message": "使用されていない JavaScript コードを検出できるように、`Webpack Bundle Analyzer` を使用します。[詳細](https://www.gatsbyjs.com/plugins/gatsby-plugin-webpack-bundle-analyser-v2/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-long-cache-ttl": {
+    "message": "不変アセットのキャッシュを構成してください。[詳細](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/caching/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-optimized-images": {
+    "message": "画質が調整されるように、`<img>` ではなく `gatsby-plugin-image` コンポーネントを使用します。[詳細](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-responsive-images": {
+    "message": "適切な `sizes` を設定できるように、`gatsby-plugin-image` コンポーネントを使用します。[詳細](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
+    "message": "GIF を HTML5 動画として埋め込み可能なサービスにアップロードすることをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "アップロードした画像を最適なフォーマットに自動変換する[プラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)またはサービスの使用をご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
+    "message": "[Joomla の遅延読み込みプラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading)をインストールして画面外の画像の読み込みを遅らせるか、遅延読み込み機能のあるテンプレートに切り替えてください。Joomla 4.0 より、新しい画像はすべて、コアから[自動的に](https://github.com/joomla/joomla-cms/pull/30748) `loading` 属性を取得します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
+    "message": "[重要なアセットをインラインで読み込む](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)または[重要度が低いリソースの読み込みを遅らせる](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)ために役立つ、さまざまな Joomla プラグインがあります。ただし、これらのプラグインの最適化処理によって、テンプレートやプラグインの機能が阻害されることがあります。これらのプラグインを使用する場合は、十分にテストする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
+    "message": "テンプレート、拡張機能、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテンプレートを探す、最適化拡張機能を慎重に選ぶ、サーバーをアップグレードすることをおすすめします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
+    "message": "「詳しく読む」リンクなどを使用して記事のカテゴリに抜粋を表示する、ページに表示する記事の数を減らす、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
+    "message": "CSS スタイルを結合、軽量化、圧縮してサイトの動作を速くする、さまざまな [Joomla 拡張機能](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)があります。この機能を提供するテンプレートもあります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
+    "message": "スクリプトを結合、軽量化、圧縮してサイトの動作を速くする、さまざまな [Joomla 拡張機能](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)があります。この機能を提供するテンプレートもあります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
+    "message": "ページで使用されていない CSS を読み込む [Joomla 拡張機能](https://extensions.joomla.org/)の数を減らすか、他の拡張機能に切り替えることをご検討ください。不要な CSS を読み込んでいる拡張機能を特定するには、Chrome DevTools で[コードの Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) を確認します。該当するテーマやプラグインは、スタイルシートの URL から特定できます。多くのスタイルシートを使用しているプラグイン（コードの Coverage で赤色の部分が多いもの）をリストで探します。プラグインによってキューに追加されるスタイルシートは、実際にページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
+    "message": "ページで使用されていない JavaScript を読み込む [Joomla 拡張機能](https://extensions.joomla.org/)の数を減らすか、他の拡張機能に切り替えることをご検討ください。不要な JavaScript を読み込んでいるプラグインを特定するには、Chrome DevTools で[コードの Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) を確認します。該当する拡張機能は、スクリプトの URL から特定できます。多くのスクリプトを使用している拡張機能（コードの Coverage で赤色の部分が多いもの）をリストで探します。拡張機能によってキューに追加されるスクリプトは、実際にページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
+    "message": "[Joomla のブラウザ キャッシング](https://docs.joomla.org/Cache)についてご確認ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
+    "message": "画質を落とさずに画像を圧縮できる[画像最適化プラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)の使用をご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
+    "message": "コンテンツでレスポンシブ画像を使用する場合は、[レスポンシブ画像のプラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images)の使用をご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
+    "message": "Joomla で Gzip ページ圧縮を有効にすると（[システム] > [グローバル設定] > [サーバ]）、テキスト圧縮を有効にできます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
+    "message": "JavaScript アセットをバンドルしていない場合は、[baler](https://github.com/magento/baler) の使用を検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | disable-bundling": {
+    "message": "Magento の組み込みの [JavaScript バンドルと圧縮](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)を無効にします。代わりに [baler](https://github.com/magento/baler/) の使用を検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
+    "message": "[カスタム フォントを定義](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)する際に `@font-display` を指定します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "より新しい画像形式を活用するには、[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) にさまざまな第三者の拡張機能がありますので、検索してみてください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
+    "message": "ウェブ プラットフォームの[遅延読み込み](https://web.dev/native-lazy-loading)機能を活用できるように、ご使用のサービスとカタログのテンプレートを編集することを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Magento の [Varnish 統合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)を使用します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
+    "message": "ストアのデベロッパー設定で [CSS ファイルを圧縮] オプションを有効にします。[詳細](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
+    "message": "[Terser](https://www.npmjs.com/package/terser) を使用して静的なコンテンツ実装からの JavaScript アセットをすべて圧縮するとともに、組み込みの圧縮機能を無効にします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
+    "message": "Magento の組み込みの [JavaScript バンドル](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)を無効にします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-optimized-images": {
+    "message": "画像を最適化するには、[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) にさまざまな第三者の拡張機能がありますので、検索してみてください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preconnect": {
+    "message": "[テーマのレイアウトを編集](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)して、事前接続または DNS プリフェッチのリソースヒントを追加できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
+    "message": "[テーマのレイアウトを編集](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)して、`<link rel=preload>` タグを追加できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "画像形式が自動的に最適化されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "画像が自動的に遅延読み込みされるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
+    "message": "`next/image` コンポーネントを使用して、「priority」を true に設定し、LCP 画像をプリロードします。[詳細](https://nextjs.org/docs/api-reference/next/image#priority)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "重要でない第三者スクリプトの読み込みを遅らせるには、`next/script` コンポーネントを使用してください。[詳細](https://nextjs.org/docs/basic-features/script)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
+    "message": "画像が常に適切なサイズで表示されるように、`next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/api-reference/next/image#width)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "使用されていないルールをスタイルシートから削除するには、`Next.js` で `PurgeCSS` を設定することをご検討ください。[詳細](https://purgecss.com/guides/next.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "使用されていない JavaScript コードを検出できるように、`Webpack Bundle Analyzer` を使用します。[詳細](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "アプリの実際のパフォーマンスを測定するには、`Next.js Analytics` の使用をご検討ください。[詳細](https://nextjs.org/docs/advanced-features/measuring-performance)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "不変アセットと `Server-side Rendered`（SSR）ページのキャッシュを設定してください。[詳細](https://nextjs.org/docs/going-to-production#caching)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "画質が調整されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "適切な `sizes` を設定するには、`next/image` コンポーネントを使用してください。[詳細](https://nextjs.org/docs/api-reference/next/image#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Next.js サーバーで圧縮を有効にしてください。[詳細](https://nextjs.org/docs/api-reference/next.config.js/compression)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | dom-size": {
+    "message": "アカウント マネージャーに連絡して、[`HTML Lazy Load`](https://support.nitropack.io/hc/en-us/articles/17144942904337) を有効にしてください。有効にすると、ページ レンダリングのパフォーマンスが優先され、最適化されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | font-display": {
+    "message": "NitroPack の [`Override Font Rendering Behavior`](https://support.nitropack.io/hc/en-us/articles/16547358865041) オプションを使用すると、CSS のフォント表示ルールに必要な値を設定できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | modern-image-formats": {
+    "message": "[`Image Optimization`](https://support.nitropack.io/hc/en-us/articles/16547237162513) を使用すると、画像を WebP に自動変換できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | offscreen-images": {
+    "message": "[`Automatic Image Lazy Loading`](https://support.nitropack.io/hc/en-us/articles/12457493524369-NitroPack-Lazy-Loading-Feature-for-Images) を有効にすると、画面外の画像の読み込みを遅らせることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | render-blocking-resources": {
+    "message": "NitroPack で [`Remove render-blocking resources`](https://support.nitropack.io/hc/en-us/articles/13820893500049-How-to-Deal-with-Render-Blocking-Resources-in-NitroPack) を有効にすると、初期の読み込み時間を短縮できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unminified-css": {
+    "message": "キャッシュ設定で [`Minify resources`](https://support.nitropack.io/hc/en-us/articles/360061059394-Minify-Resources) を有効にすると、CSS、HTML、JavaScript ファイルのサイズを抑えて、読み込み時間を短縮できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unminified-javascript": {
+    "message": "キャッシュ設定で [`Minify resources`](https://support.nitropack.io/hc/en-us/articles/360061059394-Minify-Resources) を有効にすると、JavaScript、HTML、CSS ファイルのサイズを抑えて、読み込み時間を短縮できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unused-css-rules": {
+    "message": "[`Reduce Unused CSS`](https://support.nitropack.io/hc/en-us/articles/360020418457-Reduce-Unused-CSS) を有効にすると、このページに適用されない CSS ルールを削除できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unused-javascript": {
+    "message": "NitroPack で [`Delayed Scripts`](https://support.nitropack.io/hc/en-us/articles/1500002600942-Delayed-Scripts) を設定すると、スクリプトの読み込みを必要なときまで遅らせることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-long-cache-ttl": {
+    "message": "`Caching` メニューの [`Improve Server Response Time`](https://support.nitropack.io/hc/en-us/articles/1500002321821-Improve-Server-Response-Time) 機能に移動してページ キャッシュの有効期限を調整すると、読み込み時間とユーザー エクスペリエンスを改善できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-optimized-images": {
+    "message": "[`Image Optimization`](https://support.nitropack.io/hc/en-us/articles/14177271695121-How-to-serve-images-in-next-gen-formats-using-NitroPack) 設定を有効にすると、画像が自動的に圧縮、最適化され、WebP に変換されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
+    "message": "[`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site) を有効にすると、画像を事前に最適化して、各種デバイスに表示されるコンテナのサイズに合わせることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
+    "message": "NitroPack の [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) を使用すると、ブラウザに送信されるファイルのサイズを抑えることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
+    "message": "`nuxt/image` コンポーネントを使用して、`format=\"webp\"` を設定します。[詳細](https://image.nuxt.com/usage/nuxt-img#format)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | offscreen-images": {
+    "message": "`nuxt/image` コンポーネントを使用して、画面外の画像の `loading=\"lazy\"` を設定します。[詳細](https://image.nuxt.com/usage/nuxt-img#loading)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | prioritize-lcp-image": {
+    "message": "`nuxt/image` コンポーネントを使用して、LCP 画像の `preload` を指定します。[詳細](https://image.nuxt.com/usage/nuxt-img#preload)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | unsized-images": {
+    "message": "`nuxt/image` コンポーネントを使用して、`width` と `height` を明示的に指定します。[詳細](https://image.nuxt.com/usage/nuxt-img#width-height)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-optimized-images": {
+    "message": "`nuxt/image` コンポーネントを使用して、適切な `quality` を設定します。[詳細](https://image.nuxt.com/usage/nuxt-img#quality)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-responsive-images": {
+    "message": "`nuxt/image` コンポーネントを使用して、適切な `sizes` を設定します。[詳細](https://image.nuxt.com/usage/nuxt-img#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "[アニメーション GIF を動画に置き換えて](https://web.dev/replace-gifs-with-videos/)ウェブページの読み込みを速くし、[WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos)、[AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) などの最先端のファイル形式を使用して、圧縮効率を現在の最新の動画コーデック VP9 より 30% 以上改善することをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "アップロードした画像を最適なフォーマットに自動変換する[プラグイン](https://octobercms.com/plugins?search=image)またはサービスの使用をご検討ください。[WebP の非可逆圧縮画像](https://developers.google.com/speed/webp)のサイズは、PNG に比べて 26%、SSIM 画質指標が同等の JPEG 画像より 25～34% 小さくなります。検討すべきもう 1 つの次世代画像形式は [AVIF](https://jakearchibald.com/2020/avif-has-landed/) です。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "[画像遅延読み込みプラグイン](https://octobercms.com/plugins?search=lazy)をインストールして画面外の画像の読み込みを遅らせるか、遅延読み込み機能のあるテーマに切り替えることをご検討ください。[AMP プラグイン](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)の使用もご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "[重要なアセットをインラインで読み込む](https://octobercms.com/plugins?search=css)ために役立つさまざまなプラグインがあります。これらのプラグインは他のプラグインを阻害することがあるため、十分にテストする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "テーマ、プラグイン、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテーマを探す、最適化プラグインを慎重に選ぶ、サーバーをアップグレードすることをご検討ください。October CMS でも、デベロッパーは [`Queues`](https://octobercms.com/docs/services/queues) を使用して、メールの送信など、時間のかかるタスクの処理を遅延させることができます。この方法を使用すると、ウェブ リクエストの処理が大幅に迅速化されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "[`show more`] ボタンなどを使用して投稿リストに抜粋を表示する、所定のウェブページに表示する投稿の数を減らず、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "スタイルを結合、軽量化、圧縮してウェブサイトの動作を速くする、さまざまな[プラグイン](https://octobercms.com/plugins?search=css)があります。ビルドプロセスで事前にこの軽量化を行っておくと、開発時間を短縮できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "スクリプトを結合、軽量化、圧縮してウェブサイトの動作を速くする、さまざまな[プラグイン](https://octobercms.com/plugins?search=javascript)があります。ビルドプロセスで事前にこの軽量化を行っておくと、開発時間を短縮できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "ウェブサイトで使用されていない CSS を読み込んでいる[プラグイン](https://octobercms.com/plugins)を確認することをご検討ください。不要な CSS を読み込むプラグインを特定するには、Chrome デベロッパー ツールで[コード カバレッジ](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)を実行します。該当するテーマやプラグインは、スタイルシートの URL から特定できます。多くのスタイルシートを使用しているプラグイン（コード カバレッジで赤色の部分が多いもの）を探します。プラグインによって追加されるスタイルシートは、実際にウェブページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "ウェブページで使用されていない JavaScript を読み込む[プラグイン](https://octobercms.com/plugins?search=javascript)を確認することをご検討ください。不要な JavaScript を読み込むプラグインを特定するには、Chrome デベロッパー ツールで[コード カバレッジ](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)を実行します。該当するテーマやプラグインは、スクリプトの URL から特定できます。多くのスクリプトを使用しているプラグイン（コード カバレッジで赤色の部分が多いもの）を探します。プラグインによって追加されるスクリプトは、実際にウェブページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "[HTTP キャッシュで不要なネットワーク リクエストを防ぐ](https://web.dev/http-cache/#caching-checklist)方法についての説明をご覧ください。キャッシュ保存を高速化するためのさまざまな[プラグイン](https://octobercms.com/plugins?search=Caching)があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "画質を落とさずに画像を圧縮できる[画像最適化プラグイン](https://octobercms.com/plugins?search=image)の使用をご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "メディア マネージャーに画像を直接アップロードして、必要な画像サイズを利用できるようにします。[サイズ変更フィルタ](https://octobercms.com/docs/markup/filter-resize)または[画像サイズ変更プラグイン](https://octobercms.com/plugins?search=image)を使用して、最適な画像サイズが使用されるようにすることをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "ウェブサーバーの設定でテキスト圧縮を有効にしてください"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
+    "message": "ページに多くの繰り返し要素をレンダリングする場合は、作成される DOM ノードの数が最小限で済むように、`react-window` などの「ウィンドウ処理」用のライブラリを使用することを検討してください。[詳細](https://web.dev/virtualize-long-lists-react-window/)をご確認ください。また、ランタイム パフォーマンスの向上に `Effect` フックを使用している場合は、[`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent)、または [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) を使用した不要な再レンダリングを抑えるとともに、特定の依存関係が変化するところまでのみ[効果をスキップ](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
+    "message": "React Router を使用している場合、`<Redirect>` コンポーネントを使った[ナビゲーションのルーティング](https://reacttraining.com/react-router/web/api/Redirect)は最小限にします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "React コンポーネントをサーバーサイドでレンダリングする場合は、クライアントでマークアップの全体を一度に受信するのではなく一部ずつ受信してデータを挿入できるように、`renderToPipeableStream()` または `renderToStaticNodeStream()` を使用することを検討してください。[詳細](https://reactjs.org/docs/react-dom-server.html#renderToPipeableStream)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
+    "message": "ご使用のビルドシステムで CSS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
+    "message": "ご使用のビルドシステムで JS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
+    "message": "サーバーサイドのレンダリングを行わない場合は、`React.lazy()` で [JavaScript バンドルを分割](https://web.dev/code-splitting-suspense/)します。それ以外は、[loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) などの第三者ライブラリを使用してコードを分割します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
+    "message": "Profiler API を採用している React DevTools Profiler を使用して、コンポーネントのレンダリング性能を測定します。[詳細](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | efficient-animated-content": {
+    "message": "動画を `VideoBoxes` 内に配置するか、`Video Masks` を使用してカスタマイズするか、`Transparent Videos` を追加します。[詳細](https://support.wix.com/en/article/wix-video-about-wix-video)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | modern-image-formats": {
+    "message": "`Wix Media Manager` を使用して画像をアップロードし、自動的に WebP として配信されるようにします。サイトのメディアを[最適化するその他の方法](https://support.wix.com/en/article/site-performance-optimizing-your-media)をご確認ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | render-blocking-resources": {
+    "message": "サイトのダッシュボードの `Custom Code` タブに[サードパーティのコードを追加](https://support.wix.com/en/article/site-performance-using-third-party-code-on-your-site)する際は、遅延させるか、コード本文の最後に読み込まれるようにしてください。可能な場合は、Wix の[統合](https://support.wix.com/en/article/about-marketing-integrations)を使用してサイトにマーケティング ツールを埋め込みます。 "
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | server-response-time": {
+    "message": "Wix は CDN とキャッシュを活用して、ほとんどの訪問者にできるだけ早く応答を返せるようにします。特に `Velo` を使用する場合は、サイトの[キャッシュを手動で有効にする](https://support.wix.com/en/article/site-performance-caching-pages-to-optimize-loading-speed)ことを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | unused-javascript": {
+    "message": "サイトに追加したサードパーティのコードをサイトのダッシュボードの `Custom Code` タブで確認して、サイトに必要なサービスのみを残します。[詳細](https://support.wix.com/en/article/site-performance-removing-unused-javascript)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
+    "message": "GIF を HTML5 動画として埋め込み可能なサービスにアップロードすることをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "[Performance Lab](https://wordpress.org/plugins/performance-lab/) プラグインを使用すると、アップロードした JPEG 画像を WebP に自動変換できます（サポートされている場合）。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
+    "message": "[WordPress の遅延読み込みプラグイン](https://wordpress.org/plugins/search/lazy+load/)をインストールすると、画面外の画像の読み込みを遅らせたり、遅延読み込み機能のあるテーマに切り替えたりできます。[AMP プラグイン](https://wordpress.org/plugins/amp/)の使用もご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
+    "message": "[重要なアセットをインラインで読み込む](https://wordpress.org/plugins/search/critical+css/)または[重要度が低いリソースの読み込みを遅らせる](https://wordpress.org/plugins/search/defer+css+javascript/)ために役立つ、さまざまな WordPress プラグインがあります。ただし、これらのプラグインの最適化処理によって、テーマやプラグインの機能が阻害されることがあります。その場合は、コードを変更する必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "軽量のテーマ（ブロック テーマが理想的）を選択し、フルページ キャッシュまたは静的なサイト ソリューションを実装します。不要なプラグインを無効にして、サーバーのオーバーヘッドを最小限に抑えます。ホスティングをマネージド サービスまたは専用サービスにアップグレードすることを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
+    "message": "「詳しく読む」タグなどを使用して投稿リストに抜粋を表示する、ページに表示する投稿の数を減らす、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-css": {
+    "message": "スタイルを結合、軽量化、圧縮してサイトの動作を速くする、さまざまな [WordPress プラグイン](https://wordpress.org/plugins/search/minify+css/)があります。可能な場合は、ビルド処理で事前に軽量化しておくこともおすすめします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-javascript": {
+    "message": "スクリプトを結合、軽量化、圧縮してサイトの動作を速くする、さまざまな [WordPress プラグイン](https://wordpress.org/plugins/search/minify+javascript/)があります。可能な場合は、ビルド処理で事前に軽量化しておくこともおすすめします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": {
+    "message": "ページで使用されていない CSS を読み込む [WordPress プラグイン](https://wordpress.org/plugins/)の数を減らすか、他のプラグインに切り替えることをご検討ください。不要な CSS を読み込んでいるプラグインを特定するには、Chrome DevTools で[コードの Coverage](https://developer.chrome.com/docs/devtools/coverage/) を確認します。スタイルシートの URL から、それを使用しているテーマやプラグインを特定できます。多くのスタイルシートを使用しているプラグイン（コードの Coverage で赤色の部分が多いもの）をリストで探します。プラグインによってキューに追加されるスタイルシートは、実際にページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": {
+    "message": "ページで使用されていない JavaScript を読み込む [WordPress プラグイン](https://wordpress.org/plugins/)の数を減らすか、他のプラグインに切り替えることをご検討ください。不要な JavaScript を読み込んでいるプラグインを特定するには、Chrome DevTools で[コードの Coverage](https://developer.chrome.com/docs/devtools/coverage/) を確認します。スクリプトの URL から、該当のテーマやプラグインを特定できます。多くのスクリプトを使用しているプラグイン（コードの Coverage で赤色の部分が多いもの）をリストで探します。プラグインによってキューに追加されるスクリプトは、実際にページで使用されるもののみにする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": {
+    "message": "[WordPress のブラウザ キャッシング](https://wordpress.org/support/article/optimization/#browser-caching)についてご確認ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-optimized-images": {
+    "message": "画質を落とさずに画像を圧縮できる [WordPress の画像最適化プラグイン](https://wordpress.org/plugins/search/optimize+images/)の使用をご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": {
+    "message": "[メディア ライブラリ](https://wordpress.org/support/article/media-library-screen/)から直接画像をアップロードして必要な画像サイズを利用できるようにしたうえで、メディア ライブラリから挿入するか、画像ウィジェットを使用して、最適な画像サイズ（レスポンシブ ブレークポイントのサイズを含む）が使用されるようにします。「`Full Size`」の画像は、十分なスペースがある場合を除いて使用しないようにします。[詳細](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
+    "message": "ウェブサーバーの設定でテキスト圧縮を有効にできます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | modern-image-formats": {
+    "message": "画像を WebP に変換するには、WP Rocket の [Image Optimization] タブで [Imagify] を有効にします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | offscreen-images": {
+    "message": "この推奨事項に対応するには、WP Rocket で [LazyLoad](https://docs.wp-rocket.me/article/1141-lazyload-for-images) を有効にします。この機能では、ユーザーがページを下にスクロールして実際に表示する必要が生じるまで、画像の読み込みを遅らせます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | render-blocking-resources": {
+    "message": "この推奨事項に対応するには、WP Rocket で [Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css) と [Load JavaScript deferred](https://docs.wp-rocket.me/article/1265-load-javascript-deferred) を有効にします。これらの機能では、ページのレンダリングを妨げないように、それぞれ CSS ファイルと JavaScript ファイルが最適化されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unminified-css": {
+    "message": "この問題を解決するには、WP Rocket で [Minify CSS files](https://docs.wp-rocket.me/article/1350-css-minify-combine) を有効にします。サイトの CSS ファイルのスペースやコメントが削除されてファイルサイズが小さくなり、ダウンロード時間が短縮されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unminified-javascript": {
+    "message": "この問題を解決するには、WP Rocket で [Minify JavaScript files](https://docs.wp-rocket.me/article/1351-javascript-minify-combine) を有効にします。JavaScript ファイルから空のスペースやコメントが削除されてサイズが小さくなり、ダウンロード時間が短縮されます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unused-css-rules": {
+    "message": "この問題を解決するには、WP Rocket で [Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css) を有効にします。この機能では、各ページで使用される CSS のみを保持し、使用されていないすべての CSS とスタイルシートを削除することでページのサイズを小さくします。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unused-javascript": {
+    "message": "この問題を解決するには、WP Rocket で [Delay JavaScript execution](https://docs.wp-rocket.me/article/1349-delay-javascript-execution) を有効にします。この機能では、ユーザーが操作するまでスクリプトの実行を遅らせて、ページの読み込み速度を改善します。サイトに iframe が含まれている場合は、WP Rocket の [LazyLoad for iframes and videos](https://docs.wp-rocket.me/article/1674-lazyload-for-iframes-and-videos) と [Replace YouTube iframe with preview image](https://docs.wp-rocket.me/article/1488-replace-youtube-iframe-with-preview-image) を使用できます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-optimized-images": {
+    "message": "画像を圧縮するには、WP Rocket の [Image Optimization] タブで [Imagify] を有効にし、[Bulk Optimization] を実行します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-rel-preconnect": {
+    "message": "WP Rocket で [Prefetch DNS Requests](https://docs.wp-rocket.me/article/1302-prefetch-dns-requests) を使用して「dns-prefetch」を追加し、外部ドメインとの接続速度を改善します。また、WP Rocket で [Google フォント ドメイン](https://docs.wp-rocket.me/article/1312-optimize-google-fonts)と、[Enable CDN](https://docs.wp-rocket.me/article/42-using-wp-rocket-with-a-cdn) 機能により追加された CNAME に「preconnect」を自動的に追加します。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-rel-preload": {
+    "message": "フォントに関するこの問題を解決するには、WP Rocket で [Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css) を有効にします。サイトの重要なフォントが優先的に読み込まれるようになります。"
+  },
+  "report/renderer/report-utils.js | calculatorLink": {
+    "message": "計算ツールはこちら。"
+  },
+  "report/renderer/report-utils.js | collapseView": {
+    "message": "ビューを閉じる"
+  },
+  "report/renderer/report-utils.js | crcInitialNavigation": {
+    "message": "最初の移動先"
+  },
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
+    "message": "クリティカル パスの最大待ち時間:"
+  },
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
+    "message": "JSON をコピー"
+  },
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
+    "message": "ダークモードの切り替え"
+  },
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
+    "message": "完全版を印刷"
+  },
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
+    "message": "概要を印刷"
+  },
+  "report/renderer/report-utils.js | dropdownSaveGist": {
+    "message": "Gist 形式で保存"
+  },
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
+    "message": "HTML 形式で保存"
+  },
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
+    "message": "JSON 形式で保存"
+  },
+  "report/renderer/report-utils.js | dropdownViewUnthrottledTrace": {
+    "message": "スロットリングされていないトレースを表示"
+  },
+  "report/renderer/report-utils.js | dropdownViewer": {
+    "message": "ビューアで開く"
+  },
+  "report/renderer/report-utils.js | errorLabel": {
+    "message": "エラー"
+  },
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
+    "message": "レポートエラー: 監査情報はありません"
+  },
+  "report/renderer/report-utils.js | expandView": {
+    "message": "ビューを開く"
+  },
+  "report/renderer/report-utils.js | firstPartyChipLabel": {
+    "message": "自社"
+  },
+  "report/renderer/report-utils.js | footerIssue": {
+    "message": "問題を提出"
+  },
+  "report/renderer/report-utils.js | hide": {
+    "message": "非表示"
+  },
+  "report/renderer/report-utils.js | labDataTitle": {
+    "message": "ラボデータ"
+  },
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
+    "message": "エミュレート済みモバイル ネットワークでの現在のページに関する [Lighthouse](https://developers.google.com/web/tools/lighthouse/) 分析です。推定値のため変動する可能性があります。"
+  },
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
+    "message": "個別の検証が必要な他の項目"
+  },
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
+    "message": "該当なし"
+  },
+  "report/renderer/report-utils.js | openInANewTabTooltip": {
+    "message": "新しいタブで開く"
+  },
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
+    "message": "改善できる項目"
+  },
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
+    "message": "短縮できる時間（推定）"
+  },
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
+    "message": "合格した監査"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
+    "message": "最初のページ読み込み"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindowSnapshot": {
+    "message": "特定の時点のスナップショット"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindowTimespan": {
+    "message": "ユーザー インタラクションの期間"
+  },
+  "report/renderer/report-utils.js | runtimeCustom": {
+    "message": "カスタム スロットリング"
+  },
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
+    "message": "デスクトップのエミュレーション"
+  },
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
+    "message": "Moto G Power のエミュレーション"
+  },
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
+    "message": "エミュレーションなし"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
+    "message": "Axe バージョン"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
+    "message": "スロットリングされていない CPU / メモリ容量"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU スロットリング"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
+    "message": "デバイス"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
+    "message": "ネットワーク スロットリング"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsScreenEmulation": {
+    "message": "画面のエミュレーション"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
+    "message": "ユーザー エージェント（ネットワーク）"
+  },
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
+    "message": "1 ページのみのセッション"
+  },
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
+    "message": "このデータは 1 回のページ セッションで取得されたもので、フィールド データは多数のセッションを要約したものです。"
+  },
+  "report/renderer/report-utils.js | runtimeSlow4g": {
+    "message": "低速 4G スロットリング"
+  },
+  "report/renderer/report-utils.js | runtimeUnknown": {
+    "message": "不明"
+  },
+  "report/renderer/report-utils.js | show": {
+    "message": "表示"
+  },
+  "report/renderer/report-utils.js | showRelevantAudits": {
+    "message": "次に関連する監査を表示:"
+  },
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
+    "message": "スニペットを折りたたむ"
+  },
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
+    "message": "スニペットを展開"
+  },
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
+    "message": "第三者リソースを表示"
+  },
+  "report/renderer/report-utils.js | throttlingProvided": {
+    "message": "環境により提供"
+  },
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
+    "message": "Lighthouse の実行に影響する問題が発生しました。"
+  },
+  "report/renderer/report-utils.js | unattributable": {
+    "message": "アトリビューション不可"
+  },
+  "report/renderer/report-utils.js | varianceDisclaimer": {
+    "message": "推定値のため変動する可能性があります。[パフォーマンス スコアの計算](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)は、これらの指標を基に行っています。"
+  },
+  "report/renderer/report-utils.js | viewTraceLabel": {
+    "message": "トレースを表示"
+  },
+  "report/renderer/report-utils.js | viewTreemapLabel": {
+    "message": "ツリーマップを見る"
+  },
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
+    "message": "監査には合格しましたが警告があります"
+  },
+  "report/renderer/report-utils.js | warningHeader": {
+    "message": "警告: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "すべて"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "すべてのスクリプト"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "カバレッジ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "重複モジュール"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "リソースのサイズ（バイト）"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "名前"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "表を切り替える"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "使用していないバイト"
+  }
+}

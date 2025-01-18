@@ -2,70 +2,184 @@ name: DevTools
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+env:
+  DEPOT_TOOLS_PATH: ${{ github.workspace }}/depot-tools
+  DEVTOOLS_PATH: ${{ github.workspace }}/devtools-frontend
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
 jobs:
-  smoke-devtools:
-    runs-on: macos-latest # while macbots are much slower, linux reliably crashes running this
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
 
     steps:
-    - name: Set $DEPOT_TOOLS_PATH
-      run: echo "DEPOT_TOOLS_PATH=$GITHUB_WORKSPACE/depot-tools" >> $GITHUB_ENV
-    - name: Set $DEVTOOLS_PATH
-      run: echo "DEVTOOLS_PATH=$GITHUB_WORKSPACE/devtools-frontend" >> $GITHUB_ENV
-    - name: Set $BLINK_TOOLS_PATH
-      run: echo "BLINK_TOOLS_PATH=$GITHUB_WORKSPACE/blink_tools" >> $GITHUB_ENV
     - name: Set $PATH
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
 
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         path: lighthouse
 
-    - name: Cache depot tools, devtools, blink tools and content shell
-      uses: actions/cache@v2
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - name: Generate cache hash
+      run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
+    - name: Set week of the year
+      run: echo "WEEK_OF_THE_YEAR=$(date +%V)" >> $GITHUB_ENV
+    # Caches are invalidated at least once a week, so that's the max time between testing
+    # with the latest dependencies. Any commit to the DevTools repo touching Lighthouse
+    # code will invalidate the cache sooner.
+    - name: Cache depot tools and devtools
+      id: devtools-cache
+      uses: actions/cache@v3
       with:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.DEVTOOLS_PATH }}
-          ${{ env.BLINK_TOOLS_PATH }}
-          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        # This hash key changes:
+        # 1) every monday (so invalidates once a week)
+        # 2) every commit to CDT touching files important to Lighthouse web tests
+        # 3) every change to file in Lighthouse repo important to running these tests.
+        #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-1-${{ hashFiles('third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
+        key: ${{ runner.os }}-12-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-12
+    - name: Set GHA_DEVTOOLS_CACHE_HIT
+      if: steps.devtools-cache.outputs.cache-hit == 'true'
+      run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - run: yarn --frozen-lockfile
-      working-directory: ${{ github.workspace }}/lighthouse
-    - run: yarn build-devtools
+    - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-devtools.sh
 
-    - name: Install python deps
-      run: pip install six requests
+    - name: Roll Lighthouse + build DevTools
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
-    - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
-
-    - name: Print diff
-      if: failure()
-      run: find "$GITHUB_WORKSPACE/lighthouse/.tmp/layout-test-results/retry_3" -name '*-diff.txt' -exec cat {} \;
-    - name: Upload results
-      uses: actions/upload-artifact@v2
-      if: failure()
+    - name: Cache build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
       with:
-        name: results
-        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
+
+  e2e:
+    needs: [build]
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+      with:
+        path: lighthouse
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - run: yarn --frozen-lockfile --network-timeout 1000000
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Set $PATH
+      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
+    # For vpython.
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    - name: Load build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
+
+    - name: Run e2e tests
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
+
+  smoke:
+    needs: [build]
+    strategy:
+      matrix:
+        smoke-test-shard: [1, 2, 3]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      CHROME_PATH: ${{ github.workspace }}/lighthouse/.tmp/chrome-tot/chrome
+      FORCE_COLOR: true
+    name: DevTools smoke ${{ matrix.smoke-test-shard }}/${{ strategy.job-total }}
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v4
+      with:
+        path: lighthouse
+
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - name: Load build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
+
+    - run: yarn --frozen-lockfile --network-timeout 1000000
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    # This is only done because the import of `parseChromeFlags` in pptr-run-devtool.js triggers imports that eventually
+    # fail because of how report-assets.js reads generated files.
+    - run: yarn build-report
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    - name: Install Chrome ToT
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh
+
+    - run: mkdir latest-run
+      working-directory: ${{ github.workspace }}/lighthouse
+    - name: yarn smoke --runner devtools
+      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --debug
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smokehouse (devtools smoke)
+        path: ${{ github.workspace }}/lighthouse/.tmp/smokehouse-failures/

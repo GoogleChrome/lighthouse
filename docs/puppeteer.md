@@ -4,7 +4,7 @@
 
 ### [Using Puppeteer for authenticated pages](./recipes/auth/README.md)
 
-### [Using Puppeteer in a custom gatherer](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-gatherer-puppeteer)
+### [Using Puppeteer in a custom gatherer](https://github.com/GoogleChrome/lighthouse/tree/main/docs/recipes/custom-gatherer-puppeteer)
 
 ## General Process
 
@@ -14,22 +14,24 @@ The example below shows how to inject CSS into the page before Lighthouse audits
 A similar approach can be taken for injecting JavaScript.
 
 ```js
-const puppeteer = require('puppeteer');
-const lighthouse = require('lighthouse');
-const {URL} = require('url');
+import puppeteer from 'puppeteer';
+import lighthouse from 'lighthouse';
 
-(async() => {
-const url = 'https://www.chromestatus.com/features';
+const url = 'https://chromestatus.com/features';
 
-// Use Puppeteer to launch headful Chrome and don't use its default 800x600 viewport.
+// Use Puppeteer to launch headless Chrome
+// - Omit `--enable-automation` (See https://github.com/GoogleChrome/lighthouse/issues/12988)
+// - Don't use 800x600 default viewport
 const browser = await puppeteer.launch({
-  headless: false,
+  // Set to false if you want to see the script in action.
+  headless: 'new',
   defaultViewport: null,
+  ignoreDefaultArgs: ['--enable-automation']
 });
+const page = await browser.newPage();
 
 // Wait for Lighthouse to open url, then inject our stylesheet.
 browser.on('targetchanged', async target => {
-  const page = await target.page();
   if (page && page.url() === url) {
     await page.addStyleTag({content: '* {color: red}'});
   }
@@ -37,16 +39,11 @@ browser.on('targetchanged', async target => {
 
 // Lighthouse will open the URL.
 // Puppeteer will observe `targetchanged` and inject our stylesheet.
-const {lhr} = await lighthouse(url, {
-  port: (new URL(browser.wsEndpoint())).port,
-  output: 'json',
-  logLevel: 'info',
-});
+const {lhr} = await lighthouse(url, undefined, undefined, page);
 
 console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score).join(', ')}`);
 
 await browser.close();
-})();
 ```
 
 ### Option 2: Launch Chrome with Lighthouse/chrome-launcher and handoff to Puppeteer
@@ -55,41 +52,26 @@ When using Lighthouse programmatically, you'll often use chrome-launcher to laun
 Puppeteer can reconnect to this existing browser instance like so:
 
 ```js
-const chromeLauncher = require('chrome-launcher');
-const puppeteer = require('puppeteer');
-const lighthouse = require('lighthouse');
-const request = require('request');
-const util = require('util');
+import chromeLauncher from 'chrome-launcher';
+import puppeteer from 'puppeteer';
+import lighthouse from 'lighthouse';
+import fetch from 'node-fetch';
 
-(async() => {
-
-const URL = 'https://www.chromestatus.com/features';
-
-const opts = {
-  //chromeFlags: ['--headless'],
-  logLevel: 'info',
-  output: 'json'
-};
+const url = 'https://chromestatus.com/features';
 
 // Launch chrome using chrome-launcher.
-const chrome = await chromeLauncher.launch(opts);
-opts.port = chrome.port;
+const chrome = await chromeLauncher.launch();
 
 // Connect to it using puppeteer.connect().
-const resp = await util.promisify(request)(`http://localhost:${opts.port}/json/version`);
-const {webSocketDebuggerUrl} = JSON.parse(resp.body);
+const resp = await fetch(`http://localhost:${chrome.port}/json/version`);
+const {webSocketDebuggerUrl} = await resp.json();
 const browser = await puppeteer.connect({browserWSEndpoint: webSocketDebuggerUrl});
+const page = await browser.newPage();
 
 // Run Lighthouse.
-const {lhr}  = await lighthouse(URL, opts, null);
+const {lhr}  = await lighthouse(url, undefined, undefined, page);
 console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score).join(', ')}`);
 
 await browser.disconnect();
-await chrome.kill();
-
-})();
+chrome.kill();
 ```
-
---------------
-
-**Note**: https://github.com/GoogleChrome/lighthouse/issues/3837 tracks the overall discussion for making Lighthouse work in concert with Puppeteer. Some things, like A/B testing the perf of UI changes, are tricky or not yet possible.

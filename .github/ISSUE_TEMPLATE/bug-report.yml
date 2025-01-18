@@ -1,0 +1,106 @@
+name: Bug Report
+description: Report something working incorrectly
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    id: faq
+    attributes:
+      label: FAQ
+      description: Please double check that this isn't one of our most common questions already answered by [documentation]((https://github.com/GoogleChrome/lighthouse/blob/main/docs).
+      options:
+        - label: Yes, my issue is not about [variability](https://github.com/GoogleChrome/lighthouse/blob/main/docs/variability.md) or [throttling](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md).
+          required: true
+        - label: Yes, my issue is not about a specific accessibility audit (file with [axe-core](https://github.com/dequelabs/axe-core) instead).
+          required: true
+        - label: Yes, my issue is not answered by [other FAQs](https://github.com/GoogleChrome/lighthouse#faq).
+          required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: What URL did you run Lighthouse on? If this happened locally, please upload a minimal repro to a public location (e.g. https://glitch.com/, http://jsbin.com/, etc)
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A brief description of the behavior you observed.
+      placeholder: Tell us what you saw!
+    validations:
+      required: true
+  - type: textarea
+    id: what-expected
+    attributes:
+      label: What did you expect?
+      description: A brief description of the behavior you _expected_.
+      placeholder: Tell us what you expected to see instead!
+    validations:
+      required: true
+  - type: textarea
+    id: what-debug
+    attributes:
+      label: What have you tried?
+      description: A brief description of the steps you have already taken to debug the behavior.
+      placeholder: Tell us what you've already tried to know it is a Lighthouse bug.
+    validations:
+      required: false
+  - type: dropdown
+    id: channels
+    attributes:
+      label: How were you running Lighthouse?
+      description: Where were you running Lighthouse when you observed this behavior?
+      multiple: true
+      options:
+        - CLI
+        - node
+        - PageSpeed Insights
+        - Chrome DevTools
+        - web.dev
+        - WebPageTest
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Lighthouse Version
+      description: >
+        What version of Lighthouse were you using? The version of Lighthouse can be found at the bottom of every report. (Note: if using the CLI, you should be using the latest version, see https://github.com/GoogleChrome/lighthouse/releases)
+    validations:
+      required: true
+  - type: input
+    id: chromeversion
+    attributes:
+      label: Chrome Version
+      description: >
+        What version of Chrome were you using? (Only applicable if you ran locally using Node, the CLI or DevTools) (Note: you should be using at least the Stable version of Chrome, see https://chromiumdash.appspot.com/releases. If you are not on a recent version, first try upgrading Chrome.)
+    validations:
+      required: false
+  - type: input
+    id: nodeversion
+    attributes:
+      label: Node Version
+      description: >
+        What version of node.js were you using? (Only applicable to CLI and node) (Note: the minimum Node version we support is 14.15.0)
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      description: >
+        What OS are you using? (Note: specific granularity not necessary, enough to say Windows / Mac / Linux, etc.)
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: sh

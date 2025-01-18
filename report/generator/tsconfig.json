@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    // Limit defs to base JS and DOM (for URL: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34960).
+    "lib": ["es2020", "dom"],
+    // Only include `@types/node` from node_modules/.
+    "types": ["node"],
+  },
+  "references": [
+    {"path": "../../types/lhr/"},
+    {"path": "../../shared/"},
+  ],
+  "include": [
+    "**/*.js",
+  ],
+}

@@ -1,0 +1,77 @@
+<!--
+@license
+Copyright 2016 Google LLC
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Lighthouse Report Viewer</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href='data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="%23F63"/><path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="%23FFA385"/><path fill="%23FF3" d="M20.5 10h7v7h-7z"/></svg>'>
+  <meta name="theme-color" content="#304ffe">
+  <link rel="stylesheet" href="styles/bundled.css">
+  <link rel="canonical" href="https://googlechrome.github.io/lighthouse/viewer/">
+</head>
+<body>
+
+<div class="drop_zone"></div>
+
+<main><!-- report populated here --></main>
+
+<div class="viewer-placeholder">
+  <div class="viewer-placeholder-inner">
+    <div>
+      <img src="images/lighthouse-logo.svg" class="viewer-placeholder-logo" alt="Lighthouse logo">
+    </div>
+    <div>
+      <h1 class="viewer-placeholder__heading">Lighthouse Report Viewer</h1>
+      <div class="viewer-placeholder__help">
+        <p>To view a report:</p>
+        <ul>
+          <li>
+            Drag 'n drop the file (or <button class="viewer-placeholder__file-button">select a file</button>)
+            <input id="hidden-file-input" type="file" hidden accept="application/json">
+          </li>
+          <li>
+            Or, paste the JSON or a Gist URL
+            <input type="url" class="viewer-placeholder__url js-gist-url" placeholder="Enter or paste Gist URL">
+          </li>
+        </ul>
+
+        <p>Also, perhaps visit the <a href="https://googlechrome.github.io/lighthouse-ci/difftool/">Lighthouse Report Diff tool</a> to compare two reports.</p>
+
+        <hr>
+
+        <p>To collect a fresh report of a public URL:</p>
+        <ul>
+          <li>Use the Lighthouse browser extension (<a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk">Chrome</a> / <a href="https://addons.mozilla.org/en-US/firefox/addon/google-lighthouse/">Firefox</a>)<br>
+          <li>Or, use <a href="https://pagespeed.web.dev/">PageSpeed Insights</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="lh-log"></div>
+
+<script>
+  // b/298230436
+  window.__hash = window.location.hash;
+  window.location.hash = '';
+</script>
+<script src="src/bundled.js" type="module"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85519014-2', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

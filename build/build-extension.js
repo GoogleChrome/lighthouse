@@ -1,17 +1,18 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
-'use strict';
 
-const fs = require('fs');
-const mkdir = fs.promises.mkdir;
+import fs from 'fs';
 
-const archiver = require('archiver');
-const cpy = require('cpy');
-const browserify = require('browserify');
-const path = require('path');
+import archiver from 'archiver';
+import cpy from 'cpy';
+import esbuild from 'esbuild';
+
+import * as plugins from './esbuild-plugins.js';
+import {LH_ROOT} from '../shared/root.js';
+import {readJson} from '../core/test/test-utils.js';
 
 const argv = process.argv.slice(2);
 const browserBrand = argv[0];
@@ -19,39 +20,37 @@ const browserBrand = argv[0];
 const sourceName = 'popup.js';
 const distName = 'popup-bundle.js';
 
-const sourceDir = `${__dirname}/../clients/extension`;
-const distDir = `${__dirname}/../dist/extension-${browserBrand}`;
+const sourceDir = `${LH_ROOT}/clients/extension`;
+const distDir = `${LH_ROOT}/dist/extension-${browserBrand}`;
 const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
-const manifestVersion = require(`${sourceDir}/manifest.json`).version;
+const manifestVersion = readJson(`${sourceDir}/manifest.json`).version;
 
-/**
- * Browserify and minify entry point.
- */
 async function buildEntryPoint() {
-  const inFile = `${sourceDir}/scripts/${sourceName}`;
-  const outFile = `${distDir}/scripts/${distName}`;
-  const bundleStream = browserify(inFile).bundle();
-
-  await mkdir(path.dirname(outFile), {recursive: true});
-  await new Promise((resolve, reject) => {
-    const writeStream = fs.createWriteStream(outFile);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    bundleStream.pipe(writeStream);
+  const locales = fs.readdirSync(`${LH_ROOT}/shared/localization/locales`)
+    .filter(f => !f.includes('.ctc.json'))
+    .map(f => f.replace('.json', ''))
+    .filter(locale => !['en-XA', 'en-XL', 'ar-XB'].includes(locale));
+  await esbuild.build({
+    entryPoints: [`${sourceDir}/scripts/${sourceName}`],
+    outfile: `${distDir}/scripts/${distName}`,
+    format: 'iife',
+    bundle: true,
+    // Minified extensions tend to be more difficult to get approved in managed extension stores.
+    minify: false,
+    plugins: [
+      plugins.bulkLoader([
+        plugins.partialLoaders.replaceText({
+          '___BROWSER_BRAND___': browserBrand,
+          '__LOCALES__': JSON.stringify(locales),
+        }),
+      ]),
+    ],
   });
-
-  let outCode = fs.readFileSync(outFile, 'utf-8');
-  outCode = outCode.replace('___BROWSER_BRAND___', browserBrand);
-  fs.writeFileSync(outFile, outCode);
 }
 
-/**
- * @return {Promise<void>}
- */
 function copyAssets() {
-  return cpy([
+  cpy([
     '*.html',
     'styles/**/*.css',
     'images/**/*',
@@ -68,7 +67,7 @@ function copyAssets() {
  * @return {Promise<void>}
  */
 async function packageExtension() {
-  await mkdir(packagePath, {recursive: true});
+  await fs.promises.mkdir(packagePath, {recursive: true});
 
   return new Promise((resolve, reject) => {
     const archive = archiver('zip', {
@@ -86,7 +85,7 @@ async function packageExtension() {
   });
 }
 
-async function run() {
+async function main() {
   await Promise.all([
     buildEntryPoint(),
     copyAssets(),
@@ -95,4 +94,4 @@ async function run() {
   await packageExtension();
 }
 
-run();
+await main();

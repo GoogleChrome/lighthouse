@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+body {
+  background-color: #eee;
+}
+.doesnotapply {
+  display: flexbox; /* FAIL */
+}
+/* redirected LCP image in a pseudo-element */
+#toppy::before {
+  content: '';
+  background-image: url('lighthouse-1024x680.jpg?lcp&redirect=lighthouse-1024x680.jpg%3Fredirected-lcp');
+  position: absolute;
+  top: 0;
+  width: 480px;
+  height: 318px;
+}

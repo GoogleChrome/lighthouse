@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Service worker, reloaded</title>
+</head>
+
+<body>
+  Service worker, reloaded
+  <script>
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('reloading');
+      window.location.reload();
+    });
+    navigator.serviceWorker.register('./offline-ready-sw.js');
+  </script>
+</body>
+
+</html>

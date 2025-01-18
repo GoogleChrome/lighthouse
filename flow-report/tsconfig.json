@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    // Limit to base JS and DOM defs.
+    "lib": ["es2020", "dom", "dom.iterable"],
+    // Selectively include types from node_modules/.
+    "types": ["node", "mocha"],
+
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+  },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "../report"},
+    {"path": "../shared"},
+  ],
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "**/*.tsx",
+    "./types",
+    "../types/internal/test.d.ts",
+    "../core/test/test-env/fake-timers.js",
+  ],
+}

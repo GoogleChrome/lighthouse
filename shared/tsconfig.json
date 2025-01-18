@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    // Limit defs to base JS.
+    "lib": ["es2020", "es2022.intl"],
+    // Only include `@types/node` from node_modules/.
+    "types": ["node"],
+    // "listFiles": true,
+  },
+  "references": [
+    {"path": "../types/lhr/"},
+  ],
+  "include": [
+    "**/*.js",
+    "types/**/*.d.ts",
+  ],
+  "exclude": [
+    "test/**/*.js",
+  ],
+}

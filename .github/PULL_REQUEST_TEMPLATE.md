@@ -1,7 +1,7 @@
 <!--
 Thank you for submitting a pull request!
 See CONTRIBUTING.MD for help in getting a change landed.
-  https://github.com/GoogleChrome/lighthouse/blob/master/CONTRIBUTING.md
+  https://github.com/GoogleChrome/lighthouse/blob/main/CONTRIBUTING.md
 -->
 
 **Summary**

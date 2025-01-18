@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>So offline-ready. The most.</title>
+<link rel="manifest" href="/manifest.json">
+
+<h1>
+  Whenever you call me, I'll be there.
+</h1>
+<h2>
+  Whenever you want me, I'll be there.
+</h2>
+<h3>
+  Whenever you need me, I'll be there.
+</h3>
+<h4>
+  I'll be arounddddd.
+</h4>
+
+<script>
+  async function registerServiceWorker(qs = '') {
+    if (!('serviceWorker' in navigator)) return
+
+    try {
+      const registration = await navigator.serviceWorker.register(`/offline-ready-sw.js${qs}`)
+      console.log('service worker registration complete');
+
+      registration.addEventListener('statechange',  e => {
+        console.log('sw registration is now', e.target.state);
+      });
+    } catch (e) {
+      console.error('service worker is not so cool.', e);
+      throw e;
+    }
+  }
+
+  if (window.location.search.includes('slow')) {
+    window.addEventListener('load', () => registerServiceWorker('?delay=5000&slow'));
+  } else {
+    registerServiceWorker(window.location.search);
+  }
+
+</script>
+
+<!--
+Lighthouse will move on to the next thing at onload, however this will race with
+the cache population in the serviceworker's install phase.
+We use an image that takes 2-seconds to load to delay window onload. -->
+<img src="icon-128.png?delay">

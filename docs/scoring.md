@@ -2,15 +2,7 @@
 
 ## How is the Performance score calculated?
 
-➡️ Please read [Lighthouse Performance Scoring at web.dev](https://web.dev/performance-scoring/).
-
-## How is the PWA (Progressive Web App) score calculated?
-
-The PWA category doesn't get a 0-100 score, but instead is evaluated in 3 separate groups (Fast and reliable, Installable, and PWA Optimized). In order to satisfy each grouping (and get the associated badge), every audit within the group must be passing.
-
-![Lighthouse PWA badge - states](https://user-images.githubusercontent.com/39191/80662283-c292d280-8a45-11ea-84e8-7f8248657acf.png)
-
-Note on https redirects: some metrics in this category have issues with https redirects because of TLS-handshake errors. More specifically you will run into this when using the ```simplehttp2server``` npm package. Subsequent metrics will fail after the https redirects (see [#1217](https://github.com/GoogleChrome/lighthouse/issues/1217), [#5910](https://github.com/GoogleChrome/lighthouse/issues/5910)).
+➡️ Please read [Lighthouse Performance Scoring at developer.chrome.com](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/).
 
 ## How is the Best Practices score calculated?
 
@@ -18,12 +10,12 @@ All audits in the Best Practices category are equally weighted. Therefore, imple
 
 ## How is the SEO score calculated?
 
-All audits in the SEO category are [equally weighted](https://github.com/GoogleChrome/lighthouse/blob/080c6b4b9fec6dfcaf8e0cd8d09c3224465e4fd3/lighthouse-core/config/default-config.js#L531-L547), with the exception ofStructured Data, which is an unscored manual audit. Therefore, implementing each audit correctly will increase your overall score by ~8 points.
+All audits in the SEO category are [equally weighted](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/default-config.js#:~:text=%7D%2C-,%27seo%27%3A,-%7B), with the exception of Structured Data, which is an unscored manual audit. Therefore, implementing each audit correctly will increase your overall score by ~8 points.
 
 
 ## How is the accessibility score calculated?
 
-<!-- To regnerate score weights, run `node lighthouse-core/scripts/print-a11y-scoring.js`-->
+<!-- To regnerate score weights, run `node core/scripts/print-a11y-scoring.js`-->
 
 The accessibility score is a weighted average. The specific weights for v7 are as follows:
 

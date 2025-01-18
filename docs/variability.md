@@ -18,7 +18,7 @@ Variability in performance measurement is introduced via a number of channels wi
 | Client resource contention  | High   | LIKELY           | POSSIBLE           | UNLIKELY       |
 | Browser nondeterminism      | Medium | CERTAIN          | CERTAIN            | CERTAIN        |
 
-Below are more detailed descriptions of the sources of variance and the impact they have on the most likely combinations of Lighthouse runtime + environment. While applied throttling and simulated throttling approaches could be used in any of these three environments, the typical end user uses simulated throttling.
+Below are more detailed descriptions of the sources of variance and the impact they have on the most likely combinations of Lighthouse runtime + environment. While DevTools throttling and simulated throttling approaches could be used in any of these three environments, the typical end user uses simulated throttling.
 
 ### Page Nondeterminism
 
@@ -26,41 +26,41 @@ Pages can contain logic that is nondeterministic that changes the way a user exp
 
 ### Local Network Variability
 
-Local networks have inherent variability from packet loss, variable traffic prioritization, and last-mile network congestion. Users with cheap routers and many devices sharing limited bandwidth are usually the most susceptible to this. _Applied_ throttling partially mitigates these effects by applying a minimum request latency and maximum throughput that masks underlying retries. _Simulated_ throttling mitigates these effects by replaying network activity on its own.
+Local networks have inherent variability from packet loss, variable traffic prioritization, and last-mile network congestion. Users with cheap routers and many devices sharing limited bandwidth are usually the most susceptible to this. _DevTools_ throttling partially mitigates these effects by applying a minimum request latency and maximum throughput that masks underlying retries. _Simulated_ throttling mitigates these effects by replaying network activity on its own.
 
 ### Tier-1 Network Variability
 
-Network interconnects are generally very stable and have minimal impact but cross-geo requests, i.e. measuring performance of a Chinese site from the US, can start to experience a high degree of latency introduced from tier-1 network hops. _Applied_ throttling partially masks these effects with network throttling. _Simulated_ throttling mitigates these effects by replaying network activity on its own.
+Network interconnects are generally very stable and have minimal impact but cross-geo requests, i.e. measuring performance of a Chinese site from the US, can start to experience a high degree of latency introduced from tier-1 network hops. _DevTools_ throttling partially masks these effects with network throttling. _Simulated_ throttling mitigates these effects by replaying network activity on its own.
 
 ### Web Server Variability
 
-Web servers have variable load and do not always respond with the same delay. Lower-traffic sites with shared hosting infrastructure are typically more susceptible to this. _Applied_ throttling partially masks these effects by applying a minimum request latency in its network throttling. _Simulated_ throttling is susceptible to this effect but the overall impact is usually low when compared to other network variability.
+Web servers have variable load and do not always respond with the same delay. Lower-traffic sites with shared hosting infrastructure are typically more susceptible to this. _DevTools_ throttling partially masks these effects by applying a minimum request latency in its network throttling. _Simulated_ throttling is susceptible to this effect but the overall impact is usually low when compared to other network variability.
 
 ### Client Hardware Variability
 
-The hardware on which the webpage is loading can greatly impact performance. _Applied_ throttling cannot do much to mitigate this issue. _Simulated_ throttling partially mitigates this issue by capping the theoretical execution time of CPU tasks during simulation.
+The hardware on which the webpage is loading can greatly impact performance. _DevTools_ throttling cannot do much to mitigate this issue. _Simulated_ throttling partially mitigates this issue by capping the theoretical execution time of CPU tasks during simulation.
 
 ### Client Resource Contention
 
-Other applications running on the same machine while Lighthouse is running can cause contention for CPU, memory, and network resources. Malware, browser extensions, and anti-virus software have particularly strong impacts on web performance. Multi-tenant server environments (such as Travis, AWS, etc) can also suffer from these issues. Running multiple instances of Lighthouse at once also typically distorts results due to this problem. _Applied_ throttling is susceptible to this issue. _Simulated_ throttling partially mitigates this issue by replaying network activity on its own and capping CPU execution.
+Other applications running on the same machine while Lighthouse is running can cause contention for CPU, memory, and network resources. Malware, browser extensions, and anti-virus software have particularly strong impacts on web performance. Multi-tenant server environments (such as Travis, AWS, etc) can also suffer from these issues. Running multiple instances of Lighthouse at once also typically distorts results due to this problem. _DevTools_ throttling is susceptible to this issue. _Simulated_ throttling partially mitigates this issue by replaying network activity on its own and capping CPU execution.
 
 ### Browser Nondeterminism
 
-Browsers have inherent variability in their execution of tasks that impacts the way webpages are loaded. This is unavoidable for applied throttling as at the end of the day they are simply reporting whatever was observed by the browser. _Simulated_ throttling is able to partially mitigate this effect by simulating execution on its own, only re-using task execution times from the browser in its estimate.
+Browsers have inherent variability in their execution of tasks that impacts the way webpages are loaded. This is unavoidable for devtools throttling as at the end of the day they are simply reporting whatever was observed by the browser. _Simulated_ throttling is able to partially mitigate this effect by simulating execution on its own, only re-using task execution times from the browser in its estimate.
 
 ### Effect of Throttling Strategies
 
 Below is a table containing several common sources of metric variability, the typical impact they have on results, and the extent to which different Lighthouse throttling strategies are able to mitigate their effect. Learn more about different throttling strategies in our [throttling documentation](./throttling.md).
 
-| Source                      | Impact | Simulated Throttling | Applied Throttling  | No Throttling |
-| --------------------------- | ------ | -------------------- | ------------------- | ------------- |
-| Page nondeterminism         | High   | NO MITIGATION        | NO MITIGATION       | NO MITIGATION |
-| Local network variability   | High   | MITIGATED            | PARTIALLY MITIGATED | NO MITIGATION |
-| Tier-1 network variability  | Medium | MITIGATED            | PARTIALLY MITIGATED | NO MITIGATION |
-| Web server variability      | Low    | NO MITIGATION        | PARTIALLY MITIGATED | NO MITIGATION |
-| Client hardware variability | High   | PARTIALLY MITIGATED  | NO MITIGATION       | NO MITIGATION |
-| Client resource contention  | High   | PARTIALLY MITIGATED  | NO MITIGATION       | NO MITIGATION |
-| Browser nondeterminism      | Medium | PARTIALLY MITIGATED  | NO MITIGATION       | NO MITIGATION |
+| Source                      | Impact | Simulated Throttling | DevTools Throttling  | No Throttling |
+| --------------------------- | ------ | -------------------- | -------------------  | ------------- |
+| Page nondeterminism         | High   | NO MITIGATION        | NO MITIGATION        | NO MITIGATION |
+| Local network variability   | High   | MITIGATED            | PARTIALLY MITIGATED  | NO MITIGATION |
+| Tier-1 network variability  | Medium | MITIGATED            | PARTIALLY MITIGATED  | NO MITIGATION |
+| Web server variability      | Low    | NO MITIGATION        | PARTIALLY MITIGATED  | NO MITIGATION |
+| Client hardware variability | High   | PARTIALLY MITIGATED  | NO MITIGATION        | NO MITIGATION |
+| Client resource contention  | High   | PARTIALLY MITIGATED  | NO MITIGATION        | NO MITIGATION |
+| Browser nondeterminism      | Medium | PARTIALLY MITIGATED  | NO MITIGATION        | NO MITIGATION |
 
 ## Strategies for Dealing With Variance
 
@@ -100,7 +100,7 @@ npx -p @lhci/cli lhci upload --target filesystem --outputDir ./path/to/dump/repo
 
 > Note: you must have [Node](https://nodejs.org/en/download/package-manager/) installed.
 
-You can then process the reports that are output to the filesystem. Read the [Lighthouse CI documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/configuration.md#outputdir) for more.
+You can then process the reports that are output to the filesystem. Read the [Lighthouse CI documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#outputdir) for more.
 
 ```js
 const fs = require('fs');
@@ -121,8 +121,8 @@ If you're running Lighthouse directly via node, you can use the `computeMedianRu
 
 ```js
 const spawnSync = require('child_process').spawnSync;
-const lighthouseCli = require.resolve('lighthouse/lighthouse-cli');
-const {computeMedianRun} = require('lighthouse/lighthouse-core/lib/median-run.js');
+const lighthouseCli = require.resolve('lighthouse/cli');
+const {computeMedianRun} = require('lighthouse/core/lib/median-run.js');
 
 const results = [];
 for (let i = 0; i < 5; i++) {

@@ -1,0 +1,39 @@
+/**
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import assert from 'assert/strict';
+
+import NotificationOnStart from '../../../audits/dobetterweb/notification-on-start.js';
+
+describe('UX: notification audit', () => {
+  it('fails when notification has been automatically requested', async () => {
+    const text = 'Do not request notification permission without a user action.';
+    const context = {computedCache: new Map()};
+    const auditResult = await NotificationOnStart.audit({
+      ConsoleMessages: [
+        {source: 'violation', url: 'https://example.com/', text},
+        {source: 'violation', url: 'https://example2.com/two', text},
+        {source: 'violation', url: 'http://abc.com/', text: 'No document.write'},
+        {source: 'deprecation', url: 'https://example.com/two'},
+      ],
+      SourceMaps: [],
+      Scripts: [],
+    }, context);
+    assert.equal(auditResult.score, 0);
+    assert.equal(auditResult.details.items.length, 2);
+  });
+
+  it('passes when notification has not been automatically requested', async () => {
+    const context = {computedCache: new Map()};
+    const auditResult = await NotificationOnStart.audit({
+      ConsoleMessages: [],
+      SourceMaps: [],
+      Scripts: [],
+    }, context);
+    assert.equal(auditResult.score, 1);
+    assert.equal(auditResult.details.items.length, 0);
+  });
+});

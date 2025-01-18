@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+<head>
+<title>Interactive Onclick Tester</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+  Hello, User Flows!
+
+  This page has no accessibility violations until the mouse is clicked.
+
+  <template id="click-target">
+    <button>Click to add violations</button>
+  </template>
+
+  <template id="violations">
+    <input type="text" />
+  </template>
+
+  <script>
+    function addTemplate(selector) {
+      /** @type {HTMLTemplateElement} */
+      const template = document.querySelector(selector);
+      document.body.append(template.content.cloneNode(true));
+    }
+
+    document.addEventListener('click', () => {
+      addTemplate('#violations');
+      this.location.hash = 'done';
+      console.error('Accessibility violations added!');
+    });
+
+    // Add the click target with JavaScript so when we `waitFor('#click-target')` we know that
+    // the listener has been installed too.
+    addTemplate('#click-target');
+  </script>
+</body>
+</html>

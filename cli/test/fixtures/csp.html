@@ -1,0 +1,24 @@
+<!--
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+  <head>
+    <script nonce="00000000">
+      // Use a source map so we can test the injected iframe fetcher.
+      //# sourceMappingURL=source-map/script.js.map
+    </script>
+  </head>
+  <body>
+    <h1>Test this page with a CSP</h1>
+    <h2 aria-checked="">Should have red text</h2>
+    <script nonce="00000000">
+      // Element has invalid `aria-checked` attribute so Lighthouse will call getNodeDetails on it.
+      const el = document.querySelector('h2');
+      // Style attributes are allowed by the CSP if they are added via `el.style.cssText` and not `el.setAttribute`.
+      // Ensure that Lighthouse truncates the long attribute value without violating the CSP.
+      el.style.cssText = 'width: 406px; height: 240px; top: 0px; left: 0px; border-bottom: 0px solid black; text-align: left; padding: 0px; position: relative; overflow: hidden; z-index: 2; color: red';
+    </script>
+  </body>
+</html>

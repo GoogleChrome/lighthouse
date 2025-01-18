@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<body>
+  <script>
+    /**
+     * Stalls the main thread for timeInMs
+     */
+    function stall(timeInMs) {
+      const start = performance.now();
+      while (performance.now() - start < timeInMs) {
+        for (let i = 0; i < 1000000; i++) ;
+      }
+    }
+
+    setTimeout(() => stall(100), 1000); // stall for 100ms, 1 second out
+    setTimeout(() => stall(100), 3000); // stall for 100ms, 3 seconds out
+
+    // FCP at 5 seconds out, after load, network quiet, and CPU quiet
+    // NOTE: devtools throttling has a bug that makes even this layout become a long task
+    // so must be run with --throttling-method=provided.
+    setTimeout(() => document.body.textContent = 'Hello FCP!', 5000);
+  </script>
+</body>
+</html>

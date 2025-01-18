@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="basic.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+<body>
+  <h1>Hello</h1>
+  <button>Add a11y violation</button>
+  <script>
+    const button = document.querySelector('button');
+
+    // Add an input with an a11y violation (no label) on click
+    button.onclick = () => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      document.body.append(input);
+    }
+
+    window.registerServiceWorker = async () => {
+      await navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>

@@ -21,6 +21,7 @@ The server responds with different HTML for each of these pages and session stat
 ```sh
 # be in root lighthouse directory
 yarn # install global project deps
+yarn build-report
 cd docs/recipes/auth
 yarn # install deps related to just this recipe
 yarn start # start the server on http://localhost:10632
@@ -34,28 +35,25 @@ What does this do?  Read on....
 
 ## Process
 
-Puppeteer - a browser automation tool - can be used to programatically setup a session.
+Puppeteer - a browser automation tool - can be used to programmatically setup a session.
 
 1. Launch a new browser.
 1. Navigate to the login page.
 1. Fill and submit the login form.
 1. Run Lighthouse using the same browser.
 
-First, launch Chrome:
+First, launch Chrome and create a new page:
 ```js
-// This port will be used by Lighthouse later. The specific port is arbitrary.
-const PORT = 8041;
 const browser = await puppeteer.launch({
-  args: [`--remote-debugging-port=${PORT}`],
-  // Optional, if you want to see the tests in action.
-  headless: false,
+  // Set to false if you want to see the script in action.
+  headless: 'new',
   slowMo: 50,
 });
+const page = await browser.newPage();
 ```
 
 Navigate to the login form:
 ```js
-const page = await browser.newPage();
 await page.goto('http://localhost:10632');
 ```
 
@@ -88,18 +86,13 @@ await Promise.all([
 
 At this point, the session that Puppeteer is managing is now logged in.
 
-Close the page used to log in:
-```js
-await page.close();
-// The page has been closed, but the browser still has the relevant session.
-```
-
-Now run Lighthouse, using the same port as before:
+Now run Lighthouse, using the same page as before:
 ```js
 // The local server is running on port 10632.
 const url = 'http://localhost:10632/dashboard';
-// Direct Lighthouse to use the same port.
-const result = await lighthouse(url, {port: PORT, disableStorageReset: true});
+// Direct Lighthouse to use the same page.
+// Disable storage reset so login session is preserved.
+const result = await lighthouse(url, {disableStorageReset: true}, undefined, page);
 const lhr = result.lhr;
 
 // Direct Puppeteer to close the browser - we're done with it.
@@ -114,7 +107,7 @@ node example-lh-auth.js # login via puppeteer and run lighthouse
 
 ## Alternatives
 
-### [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies)
+### [`page.setCookie`](https://puppeteer.github.io/pptr.dev/#?product=Puppeteer&version=v15.0.0&show=api-pagesetcookiecookies)
 
 **NOTE:** We strongly recommend your tests use the form-based login flow above instead. Only directly set the token like this as a last resort.
 

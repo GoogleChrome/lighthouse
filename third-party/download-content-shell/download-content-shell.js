@@ -7,16 +7,18 @@
 
 // Grabbed from https://github.com/ChromeDevTools/devtools-frontend/commit/26bb5ad91b147e9c918819711542ec2337d6b268
 
-const fs = require('fs');
-const path = require('path');
-const shell = require('child_process').execSync;
-const utils = require('./utils.js');
+import fs from 'fs';
+
+import path from 'path';
+import { execSync as shell } from 'child_process';
+import * as utils from './utils.js';
+import { LH_ROOT } from '../../shared/root.js';
 
 const TARGET = 'Release';
 const CONTENT_SHELL_ZIP = 'content-shell.zip';
 const MAX_CONTENT_SHELLS = 10;
 const PLATFORM = getPlatform();
-const LH_ROOT = `${__dirname}/../..`;
+
 const CACHE_PATH = path.resolve(LH_ROOT, '.tmp', 'chromium-web-tests', 'content-shells');
 const COMMIT_POSITION_UPDATE_PERIOD = 420;
 
@@ -33,7 +35,6 @@ function main() {
     console.log('Unable to download because of error:', error);
   }
 }
-main();
 
 function onUploadedCommitPosition(commitPosition) {
   const contentShellDirPath = path.resolve(CACHE_PATH, commitPosition, 'out', TARGET);
@@ -84,7 +85,7 @@ function deleteOldContentShells() {
   const remainingNumberOfContentShells = MAX_CONTENT_SHELLS / 2;
   const oldContentShellDirs = files.slice(remainingNumberOfContentShells);
   for (let i = 0; i < oldContentShellDirs.length; i++) {
-    utils.removeRecursive(path.resolve(CACHE_PATH, oldContentShellDirs[i]));
+    fs.rmSync(path.resolve(CACHE_PATH, oldContentShellDirs[i]), {recursive: true, force: true});
   }
   console.log(`Removed old content shells: ${oldContentShellDirs}`);
 }
@@ -125,7 +126,7 @@ function findPreviousUploadedPosition(commitPosition) {
 async function prepareContentShellDirectory(folder) {
   const contentShellPath = path.join(CACHE_PATH, folder);
   if (utils.isDir(contentShellPath)) {
-    utils.removeRecursive(contentShellPath);
+    fs.rmSync(contentShellPath, {recursive: true, force: true});
   }
   fs.mkdirSync(contentShellPath);
   return folder;
@@ -174,4 +175,10 @@ function getContentShellBinaryPath(dirPath) {
   if (process.platform === 'darwin') {
     return path.resolve(dirPath, 'Content Shell.app', 'Contents', 'MacOS', 'Content Shell');
   }
+}
+
+if (process.argv[2] === '--resolve-executable-path') {
+  console.log(getContentShellBinaryPath(process.argv[3]));
+} else {
+  main();
 }

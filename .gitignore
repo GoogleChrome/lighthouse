@@ -5,16 +5,18 @@ npm-debug.log
 .tmp
 .idea
 .tmp_env
+.tgz
 
-/dist
+dist
 coverage
 lcov.info
 .nyc_output
 *.lcov
 
-lighthouse-cli/results
+cli/results
 results.html
 last-run-results.html
+/lighthouse-plugin-simple
 
 *.trace.json
 *.devtoolslog.json
@@ -26,16 +28,18 @@ last-run-results.html
 *.artifacts.log
 *.ctc.json
 
-!lighthouse-core/test/results/artifacts/*.trace.json
-!lighthouse-core/test/results/artifacts/*.devtoolslog.json
-!lighthouse-core/test/fixtures/artifacts/**/*.trace.json
-!lighthouse-core/test/fixtures/artifacts/**/*.devtoolslog.json
-!lighthouse-core/test/fixtures/traces/**/*.trace.json
-!lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
-!lighthouse-core/test/fixtures/config/**/node_modules
+!core/test/results/artifacts/*.trace.json
+!core/test/results/artifacts/*.devtoolslog.json
+!core/test/fixtures/artifacts/**/*.trace.json
+!core/test/fixtures/artifacts/**/*.devtoolslog.json
+!core/test/fixtures/user-flows/**/*.trace.json
+!core/test/fixtures/user-flows/**/*.devtoolslog.json
+!core/test/fixtures/traces/**/*.trace.json
+!core/test/fixtures/traces/**/*.devtoolslog.json
+!core/test/fixtures/config/**/node_modules
 
-lighthouse-core/scripts/legacy-javascript/variants
-lighthouse-core/scripts/gcp-collection/gcp-data
+core/scripts/legacy-javascript/variants
+core/scripts/gcp-collection/gcp-data
 
 latest-run
 lantern-data
@@ -46,6 +50,7 @@ yarn-error.log
 
 /chrome-linux/
 /chrome-win32/
+/chrome-mac/
 /chrome.zip
 
 *__pycache__
@@ -57,3 +62,9 @@ proto/scripts/*_processed.json
 # require any lock file to be checked in explicitly
 yarn.lock
 
+# ignore generated d.ts files
+**/*.d.ts
+**/*.d.cts
+!**/types/**/*.d.ts
+
+page-functions-test-case*out*.js

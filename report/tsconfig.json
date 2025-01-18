@@ -1,0 +1,24 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    // Limit to base JS and DOM defs.
+    "lib": ["es2020", "dom", "dom.iterable"],
+    // Don't include any types from node_modules/.
+    "types": [],
+  },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "./generator/"},
+    {"path": "../shared/"}
+  ],
+  "include": [
+    "**/*.js",
+    "types/**/*.d.ts",
+    "../core/lib/lighthouse-compatibility.js",
+  ],
+  "exclude": [
+    "generator/**/*.js",
+    // These test files require further changes before they can be type checked.
+    "test/**/*.js",
+  ],
+}

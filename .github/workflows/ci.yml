@@ -1,49 +1,60 @@
-name: 💡🏠
+name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
 jobs:
-  # `basics` includes all non-smoke CI, except for unit and proto
+  # `basics` includes all non-smoke and non-unit CI
   basics:
     runs-on: ubuntu-latest
+    env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
+      FORCE_COLOR: true
 
     # A few steps are duplicated across all jobs. Can be done better when this feature lands:
     #   https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
     #   https://github.com/actions/runner/issues/438
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 100
-    - run: bash lighthouse-core/scripts/github-actions-commit-range.sh
+    - run: bash core/scripts/github-actions-commit-range.sh
       env:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
       with:
-        node-version: 12.x
+        node-version: 18.x
 
-    - run: yarn --frozen-lockfile
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn type-check
     - run: yarn build-all
 
-    # Run tests that require headfull Chrome.
-    - run: sudo apt-get install xvfb
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+    # Run pptr tests using ToT Chrome instead of stable default.
+    - name: Install Chrome ToT
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
     - name: yarn test-clients
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-clients
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
     - name: yarn test-docs
-      run: xvfb-run --auto-servernum yarn test-docs
-    - name: yarn test-viewer
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-viewer
+      run: yarn test-docs
     - name: yarn test-treemap
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-treemap
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
 
     - run: yarn diff:sample-json
-    - run: yarn type-check
+    - run: yarn diff:flow-sample-json
     - run: yarn lint
     - run: yarn test-lantern
     - run: yarn test-legacy-javascript
@@ -67,167 +78,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
-
-  # `unit` includes just unit and proto tests.
-  unit:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    name: unit_${{ matrix.os }}
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - name: Set up protoc
-      uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3
-      with:
-        version: '3.7.1'
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 2.7
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install protobuf==3.7.1
-
-    - run: yarn --frozen-lockfile
-
-    - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
-
-    - run: sudo apt-get install xvfb
-      if: matrix.os == 'ubuntu-latest'
-
-    - name: yarn unit
-      run: |
-        xvfb-run --auto-servernum yarn unit:cicoverage
-        yarn c8 report --reporter text-lcov > unit-coverage.lcov
-      if: matrix.os == 'ubuntu-latest'
-    - name: Upload test coverage to Codecov
-      if: matrix.os == 'ubuntu-latest'
-      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
-      with:
-        flags: unit
-        file: ./unit-coverage.lcov
-
-    # For windows, just test the potentially platform-specific code.
-    - name: yarn unit-cli
-      run: yarn unit-cli
-      if: matrix.os == 'windows-latest'
-    - run: yarn diff:sample-json
-      if: matrix.os == 'windows-latest'
-
-    # Fail if any changes were written to any source files or generated untracked files (ex, from -GA).
-    - run: git add -A && git diff --cached --exit-code
-
-  # `smoke` runs as a matrix across 4 jobs:
-  #  * The smoketest groups are split across two runners, to parallelize.
-  #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
-  smoke:
-    strategy:
-      matrix:
-        chrome-channel: ['stable', 'ToT']
-        smoke-test-invert: [false, true]
-      # e.g. if smoke 0 fails, continue with smoke 1 anyway
-      fail-fast: false
-    runs-on: ubuntu-latest
-    env:
-      # The smokehouse tests run by job `smoke_0`. `smoke_1` will run the rest.
-      SMOKE_GROUP_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
-    name: smoke_${{ strategy.job-index }}_${{ matrix.chrome-channel }}
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - name: Define ToT chrome path
-      if: matrix.chrome-channel == 'ToT'
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
-
-    # Chrome Stable is already installed by default.
-    - name: Install Chrome ToT
-      if: matrix.chrome-channel == 'ToT'
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
-
-    - run: yarn --frozen-lockfile
-
-    - run: sudo apt-get install xvfb
-    - name: Run smoke tests
-      run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_GROUP_1
-        yarn c8 report --reporter text-lcov > smoke-coverage.lcov
-
-    - name: Upload test coverage to Codecov
-      if: matrix.chrome-channel == 'ToT'
-      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
-      with:
-        flags: smoke
-        file: ./smoke-coverage.lcov
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code
-
-  # Only run smoke tests for windows against stable chrome.
-  smoke-windows:
-    runs-on: windows-latest
-    name: smoke_stable_windows
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - run: yarn --frozen-lockfile
-
-    - name: Run smoke tests
-      run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
-
-  smoke-bundle:
-    runs-on: ubuntu-latest
-    name: smoke_bundle
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - run: yarn --frozen-lockfile
-    - run: yarn build-devtools
-
-    - run: sudo apt-get install xvfb
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code

@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package googlechrome.lighthouse;
+
 // This comment required for Lightrider import compatibility # header
 
 import "google/protobuf/struct.proto";
@@ -59,10 +61,14 @@ enum LighthouseError {
   NOT_HTML = 21;
   // The trace did not contain a ResourceSendRequest event.
   NO_RESOURCE_REQUEST = 22;
+  // Used when any Chrome interstitial error prevents page load.
+  CHROME_INTERSTITIAL_ERROR = 23;
+  // The page has crashed and will no longer respond to 99% of CDP commmands.
+  TARGET_CRASHED = 24;
 }
 
 // The overarching Lighthouse Response object (LHR)
-// https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
+// https://github.com/GoogleChrome/lighthouse/blob/main/types/lhr.d.ts
 message LighthouseResult {
   // The timestamp of when the results were generated.
   google.protobuf.Timestamp fetch_time = 1;
@@ -126,14 +132,14 @@ message LighthouseResult {
   map<string, CategoryGroup> category_groups = 11;
 
   // Message containing the configuration settings for the LH run
-  // Next field number: 6
+  // Next ID: 11
   message ConfigSettings {
     // The possible form factors an audit can be run in.
     // This enum served the emulated_form_factor field, but in v7, that field
     // was deprecated. Meanwhile in v7, the form_factor field was added and has
     // a mobile/desktop enum, so we simplify reuse, minus the `none` option.
     // See
-    // https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md#changes-made-in-v7
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/emulation.md#changes-made-in-v7
     enum EmulatedFormFactor {
       UNKNOWN_FORM_FACTOR = 0;
       mobile = 1;
@@ -158,6 +164,61 @@ message LighthouseResult {
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm
     // module
     string channel = 4;
+
+    // Next ID: 7
+    message ThrottlingSettings {
+      // The round trip time in milliseconds.
+      double rtt_ms = 1;
+
+      // The network throughput in kilobits per second.
+      double throughput_kbps = 2;
+
+      // The network request latency in milliseconds.
+      double request_latency_ms = 3;
+
+      // The network download throughput in kilobits per second.
+      double download_throughput_kbps = 4;
+
+      // The network upload throughput in kilobits per second.
+      double upload_throughput_kbps = 5;
+
+      // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
+      double cpu_slowdown_multiplier = 6;
+    }
+
+    // The throttling config settings.
+    ThrottlingSettings throttling = 7;
+
+    // The method used to throttle the network.
+    string throttling_method = 8;
+
+    message ScreenEmulation {
+      // Overriding width value in pixels (minimum 0, maximum 10000000). 0
+      // disables the override.
+      double width = 1;
+      // Overriding height value in pixels (minimum 0, maximum 10000000). 0
+      // disables the override.
+      double height = 2;
+      // Overriding device scale factor value. 0 disables the override.
+      double deviceScaleFactor = 3;
+      // Whether to emulate mobile device. This includes viewport meta tag,
+      // overlay scrollbars, text autosizing and more.
+      bool mobile = 4;
+      // Whether screen emulation is disabled. If true, the other emulation
+      // settings are ignored.
+      bool disabled = 5;
+    }
+
+    // Screen emulation properties (width, height, dpr, mobile viewport) to
+    // apply or an object of `{disabled: true}` if Lighthouse should avoid
+    // applying screen emulation. If either emulation is applied outside of
+    // Lighthouse, or it's being run on a mobile device, it typically should be
+    // set to disabled. For desktop, we recommend applying consistent desktop
+    // screen emulation.
+    ScreenEmulation screen_emulation = 9;
+
+    // Indicating whether Lighthouse should ignore status codes.
+    bool ignore_status_code = 10;
   }
 
   // The settings that were used to run this audit
@@ -193,6 +254,22 @@ message LighthouseResult {
 
   // The Stack Pack data used by audits in this run.
   repeated StackPack stack_packs = 15;
+
+  // Gather mode used to collect artifacts.
+  string gather_mode = 16;
+
+  // URL of the main document request of the final navigation.
+  string main_document_url = 17;
+
+  // URL displayed on the page after Lighthouse finishes.
+  string final_displayed_url = 18;
+
+  // Screenshot data of the full page, along with node rects relevant to the
+  // audit results.
+  google.protobuf.Value full_page_screenshot = 19;
+
+  // Entity classification data.
+  repeated LhrEntity entities = 20;
 }
 
 // Message containing a category
@@ -213,7 +290,7 @@ message LhrCategory {
   string title = 2;
 
   // A description of what this category is about (e.g. these help you validate
-  // your PWA).
+  // your seo).
   string description = 3;
 
   // The overall score of the category, the weighted average of all its audits,
@@ -233,12 +310,49 @@ message LhrCategory {
     // The weight of the audit's score in the overall category score.
     google.protobuf.DoubleValue weight = 2;
 
-    // The category group that the audit belongs to
+    // The category group that the audit belongs to.
     string group = 3;
+
+    // The conventional acronym for the audit/metric.
+    string acronym = 4;
+
+    // Any audit IDs closely relevant to this one.
+    repeated string relevant_audits = 5;
   }
 
   // References to all the audit members and their weight in this category.
   repeated AuditRef audit_refs = 6;
+
+  // List of gather modes this category is available in.
+  repeated string supported_modes = 7;
+}
+
+// The ways an audit score should be interpreted:
+enum ScoreDisplayMode {
+  // Unknown mode. This should not be used.
+  SCORE_DISPLAY_MODE_UNSPECIFIED = 0;
+  // Pass/fail audit (0 and 1 are the only possible scores).
+  binary = 1;
+  // Scores of 0-1, inclusive.
+  numeric = 2;
+  // Audit result score is determined by the metric savings and product score.
+  // 1 - audit passed
+  // 0.5 - audit failed and had no metric savings
+  // 0 - audit failed and had metric savings
+  metricSavings = 8;
+  // The audit is an FYI only, and can't be interpreted as pass/fail. Score is
+  // NaN and should be ignored.
+  informative = 3;
+  // The audit turned out to not apply to the page. Score is NaN and should be
+  // ignored.
+  not_applicable = 4;
+  notApplicable = 7;
+  // The audit exists only to tell you to review something yourself. Score is
+  // NaN and should be ignored
+  manual = 5;
+  // There was an error while running the audit (check `error_message` for
+  // details). Score is NaN and should be ignored.
+  error = 6;
 }
 
 // Message containing the result of an individual Lighthouse audit.
@@ -258,29 +372,6 @@ message AuditResult {
   // `score_display_mode` indicates not scored.
   // This value is nullable, so is a `Value` type
   google.protobuf.Value score = 4;
-
-  // The ways an audit score should be interpreted:
-  enum ScoreDisplayMode {
-    // Unknown mode. This should not be used.
-    SCORE_DISPLAY_MODE_UNSPECIFIED = 0;
-    // Pass/fail audit (0 and 1 are the only possible scores).
-    binary = 1;
-    // Scores of 0-1, inclusive.
-    numeric = 2;
-    // The audit is an FYI only, and can't be interpreted as pass/fail. Score is
-    // NaN and should be ignored.
-    informative = 3;
-    // The audit turned out to not apply to the page. Score is NaN and should be
-    // ignored.
-    not_applicable = 4;
-    notApplicable = 7;
-    // The audit exists only to tell you to review something yourself. Score is
-    // NaN and should be ignored
-    manual = 5;
-    // There was an error while running the audit (check `error_message` for
-    // details). Score is NaN and should be ignored.
-    error = 6;
-  }
 
   // The mode for how the score should be interpreted.
   ScoreDisplayMode score_display_mode = 5;
@@ -310,6 +401,50 @@ message AuditResult {
   // The unit of the numeric_value field. Used to format the numeric value for
   // display.
   string numeric_unit = 12;
+
+  // Stacktrace of error, if any occurred while processing the audit.
+  string errorStack = 13;
+
+  // Message containing the audit's MetricSavings.
+  message MetricSavings {
+    // Optional numeric value representing the audit's savings for the LCP
+    // metric.
+    optional google.protobuf.DoubleValue LCP = 1;
+
+    // Optional numeric value representing the audit's savings for the FCP
+    // metric.
+    optional google.protobuf.DoubleValue FCP = 2;
+
+    // Optional numeric value representing the audit's savings for the CLS
+    // metric.
+    optional google.protobuf.DoubleValue CLS = 3;
+
+    // Optional numeric value representing the audit's savings for the TBT
+    // metric.
+    optional google.protobuf.DoubleValue TBT = 4;
+
+    // Optional numeric value representing the audit's savings for the INP
+    // metric.
+    optional google.protobuf.DoubleValue INP = 5;
+  }
+
+  // The audit's MetricSavings.
+  MetricSavings metricSavings = 14;
+
+  // Message containing ScoringOptions.
+  message ScoringOptions {
+    // Scoring option's p10.
+    google.protobuf.DoubleValue p10 = 1;
+
+    // Scoring option's median.
+    google.protobuf.DoubleValue median = 2;
+  }
+
+  // The audit's ScoringOption.
+  ScoringOptions scoringOptions = 15;
+
+  // An audit's guidance level.
+  google.protobuf.DoubleValue guidanceLevel = 16;
 }
 
 // Message containing the i18n data for the LHR - Version 1
@@ -360,7 +495,7 @@ message I18n {
     // The label for the initial request in a critical request chain
     string crc_initial_navigation = 14;
 
-    // The disclaimer shown under performance explaning that the network can
+    // The disclaimer shown under performance explaining that the network can
     // vary
     string ls_performance_category_description = 15;
 
@@ -406,7 +541,7 @@ message I18n {
 
     // Label for a row in a table that shows the time at which a Lighthouse run
     // was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC.
-    string runtime_settings_fetch_time = 27;
+    string runtime_settings_fetch_time = 27 [deprecated = true];
 
     // Label for a row in a table that describes the network throttling
     // conditions that were used during a Lighthouse run, if any.
@@ -415,11 +550,11 @@ message I18n {
     // Title of the Runtime settings table in a Lighthouse report.  Runtime
     // settings are the environment configurations that a specific report used
     // at auditing time.
-    string runtime_settings_title = 29;
+    string runtime_settings_title = 29 [deprecated = true];
 
     // Label for a row in a table that shows the User Agent that was detected on
     // the Host machine that ran Lighthouse.
-    string runtime_settings_UA = 30;
+    string runtime_settings_UA = 30 [deprecated = true];
 
     // Label for a row in a table that shows the User Agent that was used to
     // send out all network requests during the Lighthouse run.
@@ -427,7 +562,7 @@ message I18n {
 
     // Label for a row in a table that shows the URL that was audited during a
     // Lighthouse run.
-    string runtime_settings_Url = 32;
+    string runtime_settings_Url = 32 [deprecated = true];
 
     // Descriptive explanation for a runtime setting that is set to an unknown
     // value.
@@ -449,7 +584,7 @@ message I18n {
     // dialog.
     string dropdown_print_summary = 37;
 
-    // Option in a dropdown menu that saves the current report as a new Github
+    // Option in a dropdown menu that saves the current report as a new GitHub
     // Gist.
     string dropdown_save_gist = 38;
 
@@ -465,7 +600,7 @@ message I18n {
     // Viewer Application.
     string dropdown_viewer = 41;
 
-    // Label for button to create an issue against the Lighthouse Github
+    // Label for button to create an issue against the Lighthouse GitHub
     // project.
     string footer_issue = 42;
 
@@ -476,7 +611,7 @@ message I18n {
     // Label for a row in a table that shows in what tool Lighthouse is being
     // run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest,
     // etc).
-    string runtime_settings_channel = 44;
+    string runtime_settings_channel = 44 [deprecated = true];
 
     // Text link pointing to the Lighthouse scoring calculator. This link
     // immediately follows a sentence stating the performance score is
@@ -485,10 +620,96 @@ message I18n {
 
     // Label for a row in a table that shows the version of the Axe library used
     string runtime_settings_axe_version = 46;
+
+    // Label for a button that opens the Treemap App
+    string view_treemap_label = 47;
+
+    // Label preceding a radio control for filtering the list of audits. The
+    // radio choices are various performance metrics (FCP, LCP, TBT), and if
+    // chosen, the audits in the report are hidden if they are not relevant to
+    // the selected metric.
+    string show_relevant_audits = 48;
+
+    // Descriptive label that this analysis run was from a single pageload
+    // of a browser (not a summary of hundreds of loads)
+    string runtime_single_load = 49;
+
+    // Descriptive explanation that this analysis run was from a single pageload
+    // of a browser, whereas field data often summarizes hundreds+ of page loads
+    string runtime_single_load_tooltip = 50;
+
+    // Descriptive label that this analysis only considers the initial load of
+    // the page, and no interaction beyond when the page had "fully loaded"
+    string runtime_analysis_window = 51;
+
+    // Label for an interactive control that will reveal or hide a group of
+    // content. This control toggles between the text 'Show' and 'Hide'.
+    string show = 52;
+
+    // Label for an interactive control that will reveal or hide a group of
+    // content. This control toggles between the text 'Show' and 'Hide'.
+    string hide = 53;
+
+    // Label for an interactive control that will reveal or hide a group of
+    // content. This control toggles between the text 'Expand view' and
+    // 'Collapse view'.
+    string expand_view = 54;
+
+    // Label for an interactive control that will reveal or hide a group of
+    // content. This control toggles between the text 'Expand view' and
+    // 'Collapse view'.
+    string collapse_view = 55;
+
+    // Label indicating that Lighthouse throttled the page to emulate a slow 4G
+    // network connection.
+    string runtime_slow_4g = 56;
+
+    // Label indicating that Lighthouse throttled the page using custom
+    // throttling settings.
+    string runtime_custom = 57;
+
+    // This label is for a button that will show the user a trace of the page.
+    string view_trace_label = 58;
+
+    // This label is for a button that will show the user a trace of the page.
+    string view_original_trace_label = 59 [deprecated = true];
+
+    // Label for a row in a table that shows the screen emulation used
+    string runtime_settings_screen_emulation = 60;
+
+    // Label for a row decorative chip indiciating entity is first-party.
+    string first_party_chip_label = 61;
+
+    // Label for a link tooltip indicating that it will be opened in a new tab
+    // of the browser.
+    string open_in_a_new_tab_tooltip = 62;
+
+    // Label for a generic category for all resources that could not be
+    // attributed against a 1st or 3rd party entity.
+    string unattributable = 63;
+
+    // This label is for a button that will show the user a trace of the page.
+    string dropdown_view_unthrottled_trace = 64;
+
+    // Descriptive label that this analysis considers some arbitrary period of
+    // time containing user interactions
+    string runtime_analysis_window_timespan = 65;
+
+    // Descriptive label that this analysis considers a snapshot of the page at
+    // a single point in time
+    string runtime_analysis_window_snapshot = 66;
+
+    // Message for PWA deprecation.
+    string pwa_removal_message = 67;
   }
 
-  // The message holding all formatted strings
+  // The message holding all formatted strings used in the renderer.
   RendererFormattedStrings renderer_formatted_strings = 1;
+
+  // Holds all message paths used. The locale of the report has already be used
+  // to translated the strings in this LighthouseResult, but this field can be
+  // used to translate into another language.
+  map<string, google.protobuf.ListValue> icu_message_paths = 2;
 }
 
 // Message containing Stack Pack information.
@@ -504,4 +725,25 @@ message StackPack {
 
   // Map of audit-ids to Stack Pack descriptions.
   map<string, string> descriptions = 4;
+}
+
+// Message containing an Entity.
+message LhrEntity {
+  // Name of the entity.
+  string name = 1;
+
+  // An optional homepage URL of the entity.
+  optional string homepage = 2;
+
+  // An optional category name for the entity.
+  optional string category = 3;
+
+  // An optional flag indicating if the entity is the first party.
+  optional bool is_first_party = 4;
+
+  // An optional flag indicating if the entity is not recognized.
+  optional bool is_unrecognized = 5;
+
+  // A list of URL origin strings that belong to this entity.
+  repeated string origins = 6;
 }

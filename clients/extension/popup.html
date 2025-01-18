@@ -1,7 +1,7 @@
 <!--
-Copyright 2016 The Lighthouse Authors. All Rights Reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+@license
+Copyright 2016 Google LLC
+SPDX-License-Identifier: Apache-2.0
 -->
 
 <!doctype html>
@@ -19,54 +19,66 @@ Unless required by applicable law or agreed to in writing, software distributed 
       <img class="header__icon" src="images/lh_logo.svg" width="75" height="75"></svg>
       <!-- <object data="images/lh_logo.svg" type="image/svg+xml"></object> -->
       <button class="button button--generate">Generate report</button>
-      <button class="button button--configure">
-        <svg class="gear__icon" width="25" height="25" viewBox="0 0 14 15">
-          <path fill="#fff" d="M-1-1h16v17H-1z" />
-          <path fill="currentColor" d="M12.526 8.07c.029-.224.05-.448.05-.686 0-.238-.021-.462-.05-.686l1.518-1.155a.347.347 0 0 0 .087-.448l-1.44-2.422a.367.367 0 0 0-.439-.154l-1.791.7a5.295 5.295 0 0 0-1.217-.686L8.971.678a.348.348 0 0 0-.353-.294H5.74a.348.348 0 0 0-.353.294l-.273 1.855a5.568 5.568 0 0 0-1.216.686l-1.792-.7a.356.356 0 0 0-.44.154L.228 5.095a.339.339 0 0 0 .087.448l1.518 1.155c-.029.224-.05.455-.05.686 0 .23.021.462.05.686L.314 9.225a.347.347 0 0 0-.087.448l1.44 2.422c.086.154.28.21.439.154l1.792-.7c.374.28.777.51 1.216.686l.273 1.855a.348.348 0 0 0 .353.294h2.878c.18 0 .331-.126.353-.294l.273-1.855a5.568 5.568 0 0 0 1.217-.686l1.792.7c.165.063.352 0 .438-.154l1.44-2.422a.347.347 0 0 0-.087-.448L12.526 8.07zM7.179 9.834c-1.389 0-2.519-1.1-2.519-2.45 0-1.351 1.13-2.45 2.52-2.45 1.388 0 2.518 1.099 2.518 2.45 0 1.35-1.13 2.45-2.519 2.45z" />
-        </svg>
-      </button>
       <span class="psi-disclaimer"><a href="https://developers.google.com/speed/docs/insights/v5/get-started?utm_source=lh-chrome-ext" title="https://developers.google.com/speed/docs/insights/v5/get-started" target="_blank" rel="noopener nofollow">Uses the PSI API</a></span>
       <div class="errormsg"></div>
     </div>
-    <div class="section section--secondary-panel">
-      <div class="hidden browser-brand browser-brand--chrome">
-        <h2 class="section--header">Chrome DevTools</h2>
-        <span class="section--description">
-          You can also run Lighthouse via the DevTools Audits panel.
-          <br><br>
-          Shortcut to open DevTools: <span class="devtools-shortcut"><!-- filled dynamically --></span>
-        </span>
-      </div>
-      <div class="hidden browser-brand browser-brand--firefox">
-        <h2 class="section--header">Node CLI</h2>
-        <span class="section--description">
-          You can also run Lighthouse via the <a href="https://github.com/GoogleChrome/lighthouse#using-the-node-cli">Node CLI</a>.
-        </span>
-      </div>
+    <div class="section section--options">
+      <form class="options__form">
+        <div class="options__group">
+          <h3 class="options__title">Show results in:</h3>
+          <ul class="options__list options__backend">
+            <!-- filled dynamically -->
+          </ul>
+        </div>
+
+        <div class="options__group">
+          <h3 class="options__title">Device</h2>
+          <ul class="options__list options__device">
+            <li>
+              <label>
+                <input type="radio" name="device" value="mobile"></input><span>Mobile</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="radio" name="device" value="desktop"></input><span>Desktop</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="options__group">
+          <h3 class="options__title">Categories</h3>
+          <ul class="options__list options__categories">
+            <!-- filled dynamically -->
+          </ul>
+        </div>
+
+        <div class="options__group options__group--locales">
+          <h3 class="options__title">Locale</h3>
+          <select class="options__select options__locales">
+            <!-- filled dynamically -->
+          </select>
+        </div>
+      </form>
     </div>
   </main>
 
-  <aside class="section section--options">
-    <form class="options__form">
-      <h3 class="options__title">Categories</h3>
-      <ul class="options__list options__categories">
-        <!-- filled dynamically -->
-      </ul>
-
-      <h3 class="options__title">Device</h2>
-      <ul class="options__list options__device">
-        <li>
-          <label>
-            <input type="radio" name="device" value="mobile"></input><span>Mobile</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="radio" name="device" value="desktop"></input><span>Desktop</span>
-          </label>
-        </li>
-      </ul>
-    </form>
+  <aside class="section section--secondary-panel">
+    <div class="hidden browser-brand browser-brand--chrome">
+      <h2 class="section--header">Chrome DevTools</h2>
+      <span class="section--description">
+        This extension uses the PSI API, so it cannot be used to test sites hosted locally or behind auth. Instead, you can run Lighthouse via the DevTools Lighthouse panel.
+        <br><br>
+        Shortcut to open DevTools: <span class="devtools-shortcut"><!-- filled dynamically --></span>
+      </span>
+    </div>
+    <div class="hidden browser-brand browser-brand--firefox">
+      <h2 class="section--header">Node CLI</h2>
+      <span class="section--description">
+        This extension uses the PSI API, so it cannot be used to test sites hosted locally or behind auth. Instead, you can run Lighthouse via the <a href="https://github.com/GoogleChrome/lighthouse#using-the-node-cli">Node CLI</a>.
+      </span>
+    </div>
   </aside>
 
   <script src="scripts/popup-bundle.js"></script>

@@ -1,9 +1,16 @@
 {
+  "type": "module",
   "name": "lighthouse-logger",
-  "version": "1.2.0",
+  "version": "2.0.1",
   "license": "Apache-2.0",
+  "main": "./index.js",
+  "repository": "GoogleChrome/lighthouse",
+  "scripts": {
+    "prepack": "yarn build-types",
+    "build-types": "npx tsc index.js --allowJs --emitDeclarationOnly --declaration"
+  },
   "dependencies": {
     "debug": "^2.6.9",
-    "marky": "^1.2.0"
+    "marky": "^1.2.2"
   }
 }

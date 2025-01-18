@@ -1,0 +1,535 @@
+<!doctype html>
+<!--
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+
+<html>
+<head>
+<title>DoBetterWeb Mega Tester... Of Death</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=2899">
+<meta property="og:description" content="Open Graph smoke test description">
+
+<template id="links-blocking-first-paint-tmpl">
+  <link rel="stylesheet" href="./dbw_tester.css?scriptActivated&delay=200"> <!-- PASS: initiator is script -->
+</template>
+
+<!-- AMP-style stylesheet script -->
+<!-- based on https://github.com/ampproject/amphtml/blob/38f1bdf4cc385f9a25cf2979abf215952880b876/src/font-stylesheet-timeout.js#L87-L103 -->
+<script type="text/javascript" id="amp-style-styling-script">
+  setTimeout(() => {
+    const stylesheet = document.getElementById('amp-style-link');
+    stylesheet.media = 'not-matching';
+    stylesheet.onload = () => stylesheet.media = 'screen';
+    stylesheet.parentNode.insertBefore(stylesheet, stylesheet.nextSibling);
+  }, 1500);
+</script>
+
+<!-- Note: these will only fail when using the static-server.js, which supports the ?delay=true param.
+     If you're using your own server, the resource will load instantly and the
+     stylesheets will be ignored for being below the threshold. -->
+<link rel="stylesheet" href="./dbw_tester.css?delay=100">
+<link rel="stylesheet" href="./unknown404.css?delay=200"> <!-- FAIL -->
+<link rel="stylesheet" href="./dbw_tester.css?delay=2200"> <!-- FAIL -->
+<link rel="stylesheet" href="./dbw_disabled.css?delay=200&isdisabled" disabled> <!-- PASS -->
+
+<!-- FAIL: render blocking but capped at 500ms -->
+<link id="amp-style-link" rel="stylesheet" href="./dbw_tester.css?delay=3000&capped">
+<!-- PASS: preload that's activated later does not block rendering. -->
+<link rel="preload" href="./dbw_tester.css?delay=2000&async=true" as="style" onload="this.rel = 'stylesheet'">
+<!-- PASS: async stylesheet -->
+<link rel="stylesheet" href="./dbw_tester.css?delay=3000&async=true" disabled onload="this.disabled = false">
+
+<!-- Alternate stylesheets should not be considered render blocking -->
+<link rel="alternate stylesheet" href="./empty.css">
+
+<!-- Malformed links should not be considered render blocking -->
+<link rel="stylesheet" href="">
+
+<script>
+  // Set a mobile-friendly viewport only on load.
+  const metaViewport = document.querySelector('meta[name="viewport"]');
+  metaViewport.content = 'width=device-width, initial-scale=1, minimum-scale=1';
+</script>
+
+<!-- FAIL: block rendering -->
+<script src="./dbw_tester.js" id="dbw-tester-script"></script>
+
+<!-- PASS: 'modules' are deferred by default and don't block rendering -->
+<script type="module" src="./empty_module.js?delay=500"></script>
+
+<!-- FAIL(errors-in-console): exception thrown -->
+<script type="text/javascript" id="error-time">throw new Error('A distinctive error');</script>
+
+<!-- PASS(errors-in-console): exception thrown but ignoredPatterns removes it -->
+<script type="text/javascript">throw new Error('An ignored error');</script>
+
+<!-- Add non-functional script to appear to be a Wordpress page for Stack Packs. -->
+<script type="example" src="fake-script-wp-includes"></script>
+
+<style>
+  body {
+    color: #000;
+  }
+  .failedselector {
+    -webkit-box-flex: 1; /* FAIL */
+    box-flex: 1; /* FAIL */
+  }
+</style>
+
+<template id="old-flexbox-tmpl">
+<style>
+  p, div {
+    background: red, green;
+    border-radius: 3px;
+    transform: translateZ(0);
+    display: box; /* FAIL */
+    transition: opacity 300ms ease-in-out;
+  }
+  .span {
+    transform: translate3d(0,0,0);
+    display: box; /* FAIL: old flexbox usage */
+  }
+  .span2,
+  .span3 {
+          display: box;  /* FAIL: old flexbox usage */
+    color:     red;
+  }
+  .span4,
+  .span5 { display:     box; /* FAIL - old flexbox, weird formatting */
+    box-shadow: 3px 3px 3px purple,
+                3px 3px 3px blue;
+  }
+  .span6 {
+    box-shadow: 3px 3px 3px purple,
+                3px 3px
+                3px green;
+  }
+</style>
+</template>
+
+<!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
+<!-- even when other forces were responsible for delaying the render. -->
+<script src="./fcp-delayer.js?delay=5000"></script>
+
+<script>
+  const promise = new Promise(resolve => {
+    setTimeout(resolve, 50);
+  }).then(() => {
+    const image = new Image(50, 50);
+    image.src = './lighthouse-480x318.jpg?async';
+  });
+</script>
+
+</head>
+<body>
+
+<div class="shifter">Shifter</div>
+<script>
+  setTimeout(() => {
+    document.querySelector('.shifter').style.fontSize = '50px';
+  }, 1000);
+  setTimeout(() => {
+    document.querySelector('.shifter').style.display = 'none';
+  }, 2000);
+</script>
+
+<!-- Various sites like to assign HTMLElements a custom `matches` property. See issue #5934 -->
+
+<!-- Was for deprecated plugins audit, keeping them so smoke expectations don't change (e.g. dom-size) -->
+<object id="5934a"></object>
+<object id="5934b"></object>
+
+<div id="shadow-root-container"></div>
+<script>
+  // DOM Size has had trouble with very specific shadow root traversal issues.
+  // Make sure it can handle reporting of the widest element being a shadow root.
+  const shadowRootContainer = document.getElementById('shadow-root-container');
+  const shadowRoot = shadowRootContainer.attachShadow({mode: 'open'});
+  for (let i = 0; i < 100; i++) {
+    const span = document.createElement('span');
+    shadowRoot.append(span);
+  }
+</script>
+
+<script>
+  // Ensure gatherers still work when individual elements override '.matches'
+  document.getElementById("5934a").matches = "blahblah";
+  Object.defineProperty(document.getElementById("5934b"), 'matches', {
+    value: "blahblah"
+  });
+  // Ensure gatherers still work when the prototype is messed with
+  HTMLElement.prototype.matches = { value: "blahblah" };
+
+
+  // Ensure long-task collection still works when performance.now is redefined
+  window.performance.now = 'right now';
+
+  // Ensure bounding rectangles still work when getBoundingClientRect is overridden.
+  window.HTMLElement.prototype.getBoundingClientRect = function() {
+    return {top: '', left: ''};
+  };
+</script>
+
+<div>
+  <!-- Empty url('') will attempt to load the page itself as a background image. -->
+  <!-- A pseudo-element LCP image is added in dbw_tester.css. -->
+  <h2 id="toppy" style="background-image:url('');">Do better web tester page</h2>
+  <span>Hi there!</span>
+
+  <!-- Invalid SVG with a link just to ensure the `LinkElements` gatherer can handle it. -->
+  <svg role="img" class="social-facebook" aria-labelledby="social-facebook-5">
+    <title id="social-facebook-5">Facebook</title>
+    <link rel="preload" href="https://fonts.googleapis.com/made-up-url"></link>
+    <use xlink:href=""></use>
+  </svg>
+</div>
+
+<section id="touchmove-section">touchmove section</section>
+
+<template id="noopener-links-tmpl">
+  <!-- FAIL - does not use rel="noopener" to open external link -->
+  <a href="https://www.google.com/" target="_blank">external link</a>
+  <!-- FAIL - does not use rel="noopener" and has no href attribute, giving an
+    href value of '' when read, which will throw in a `new URL('')` constructor -->
+  <a target="_blank">external link</a>
+  <!-- FAIL - external link that does have a rel attribute but it is not "noopener" -->
+  <a href="https://www.google.com/" target="_blank" rel="nofollow">external link</a>
+  <!-- PASS - external link correctly uses rel="noopener" and an additional rel value -->
+  <a href="https://www.google.com/" target="_blank" rel="noopener nofollow">external link that uses rel noopener and another unrelated rel attribute</a>
+  <!-- PASS - external link correctly uses rel="noreferrer" and an additional rel value -->
+  <a href="https://www.google.com/" target="_blank" rel="noreferrer nofollow">external link that uses rel noreferrer and another unrelated rel attribute</a>
+  <!-- PASS - external link correctly uses rel="noopener" -->
+  <a href="https://www.google.com/" target="_blank" rel="noopener">external link that uses rel noopener</a>
+  <!-- PASS - external link correctly uses rel="noreferrer" -->
+  <a href="https://www.google.com/" target="_blank" rel="noreferrer">external link that uses rel noreferrer</a>
+  <!-- PASS - external link correctly uses rel="noopener" and rel="noreferrer" -->
+  <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">external link that uses rel noopener and noreferrer</a>
+  <!-- PASS - internal link without rel="noopener" -->
+  <a href="./doesnotexist" target="_blank">internal link is ok</a>
+  <!-- PASS - href uses javascript: -->
+  <a href="javascript:void(0)" target="_blank"></a>
+  <!-- PASS - href uses mailto: -->
+  <a href="mailto:inbox@email.com" target="_blank"></a>
+</template>
+
+<template id="paste-preventing-inputs">
+  <!-- FAIL - calls preventDefault on event -->
+  <input type="password" onpaste="event.preventDefault();" />
+  <!-- PASS -->
+  <input type="password" />
+  <!-- FAIL - returns false in event handler -->
+  <input type="password" onpaste="return false;" />
+
+</template>
+
+<!-- FAIL(image-aspect-ratio): image is naturally 1024x680 -->
+<img src="lighthouse-1024x680.jpg?iar1" width="120" height="15">
+<!-- PASS(image-aspect-ratio) -->
+<img loading="lazy" src="lighthouse-1024x680.jpg?iar2" width="120" height="80" fetchpriority="low">
+
+<!-- FAIL(image-size-responsive): image is naturally 480x318 -->
+<img src="lighthouse-480x318.jpg?isr1" width="400" height="360" style="position: absolute;">
+<!-- PASS(image-size-responsive) -->
+<img src="lighthouse-1024x680.jpg?isr2" width="120" height="80" style="position: absolute;">
+<!-- PASS(image-size-responsive) -->
+<img src="lighthouse-1024x680.jpg?isr3" width="360" height="240" style="image-rendering: pixelated; position: absolute;">
+<!-- PASS(image-size-responsive) -->
+<img src="lighthouse-1024x680.jpg?isr4" srcset="lighthouse-1024x680.jpg 2x" width="360" height="240" style="position: absolute;">
+
+<!-- FAIL(efficient-animated-content): animated gif found -->
+<img src="lighthouse-rotating.gif" width="811" height="462">
+
+<!-- Some websites overwrite the original Error object. The captureJSCallUsage function
+  relies on the native Error object and prepareStackTrace from V8. When overwriting the stack
+  property the e.stack inside the gatherer won't be in the correct format
+  https://github.com/GoogleChrome/lighthouse/issues/1194 -->
+<script>window.Error = function(error) { this.stack = 'stacktrace'; };</script>
+
+<!-- Does the automatic dialog suppression `driver.dismissJavaScriptDialogs()` work? -->
+<script>window.confirm('Is DBW Mega Tester the best site?')</script>
+
+<script>
+function stampTemplate(id, location) {
+  const template = document.querySelector('#' + id);
+  location.append(template.content.cloneNode(true));
+}
+
+function dateNowTest() {
+  function helloDate() {
+    // FAIL - Date.now() usage in a function.
+    return Date.now();
+  }
+  helloDate();
+  const d = Date.now(); // FAIL
+  eval('Date.now()'); // FAIL
+  new Function('Date.now()')() // FAIL
+}
+
+function consoleTimeTest() {
+  // FAIL
+  console.time('arg1');
+  for (let i = 0; i < 2; i++) {
+    // FAIL
+    console.time('arg2');
+  }
+  console.timeEnd('arg1');
+  console.timeEnd('arg2');
+
+  eval("console.time('arg3')"); // FAIL
+}
+
+function documentWriteTest() {
+  document.write('Hi'); // FAIL
+  document.write('There'); // FAIL
+  document.write('2.0!'); // FAIL
+}
+
+function passiveEventsListenerTest() {
+  // FAIL or PASS - field trial for document level defaulting to passive M71+
+  window.addEventListener('wheel', function(e) {
+    console.log('wheel');
+  });
+
+  // PASS - document level defaults to passive M56+
+  window.addEventListener('touchstart', function(e) {
+    console.log('touchstart');
+  });
+
+  // PASS - passive:false doesn't get a warning now. crbug.com/770208
+  window.addEventListener('mousewheel', function(e) {
+    console.log('mousewheel');
+  }, {passive: false});
+
+  // PASS - document level defaults to passive M56+
+  document.addEventListener('touchstart', function(e) {
+    console.log('touchstart document');
+  });
+
+  // PASS - document level defaults to passive M56+
+  document.body.addEventListener('touchmove', function(e) {
+    console.log('touchmove');
+  });
+
+  // FAIL
+  const el = document.querySelector('#touchmove-section');
+  el.addEventListener('touchmove', function(e) {
+    console.log('touchmove');
+  });
+
+  // PASS - calls preventDefault() but isnt passive;
+  document.addEventListener('touchstart', function(e) {
+
+    e.preventDefault(); // intentionally surrounded by whitespace.
+
+    console.log('touchstart - preventDefault called');
+  });
+
+  // PASS
+  document.body.addEventListener('touchstart', function(e) {
+    console.log('touchstart');
+  }, {passive: true});
+
+  // PASS
+  window.addEventListener('touchstart', function(e) {
+    console.log('touchstart passive');
+  }, {passive: true});
+
+  // PASS - another event on window that isn't wheel/touch
+  window.addEventListener('scroll', function(e) {
+    console.log('scroll');
+  });
+}
+
+function geolocationOnStartTest() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    // noop
+  });
+
+  const watchID = navigator.geolocation.watchPosition(function(position) {
+    navigator.geolocation.clearWatch(watchID);
+  });
+}
+
+function notificationOnStartTest() {
+  Notification.requestPermission().then(function () {
+    // noop
+  });
+}
+
+function oldCSSFlexboxTest() {
+  stampTemplate('old-flexbox-tmpl', document.body);
+}
+
+function linksBlockingFirstPaintTest() {
+  stampTemplate('links-blocking-first-paint-tmpl', document.head);
+}
+
+function noRelOpenLinksTest() {
+  stampTemplate('noopener-links-tmpl', document.body);
+}
+
+function inputsCanBePastedIntoTest() {
+  stampTemplate('paste-preventing-inputs', document.body);
+}
+
+
+function deprecationsTest() {
+  // TODO: some deprecated API messages are not currently being logged correctly.
+  // See: https://crbug.com/680832
+
+  // FAIL
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'dbw_tester.html', false);
+  xhr.send();
+
+  // One more failure in dbw_tester.js
+}
+
+function isOnHttps() {
+  // Check blob URL.
+  const blob = new Blob(['fake'])
+  const img = document.createElement('img');
+  img.src = URL.createObjectURL(blob);
+  document.body.append(img); // PASS
+}
+
+function noUnloadListenersTest() {
+  window.addEventListener('unload', () => {
+    console.log('unload on unload');
+  });
+}
+
+function thirdPartyCookieTest() {
+  const cookieInlineParam = headersParam([[
+    'Set-Cookie',
+    'Foo=Bar;SameSite=None;Secure;',
+  ]]);
+  const script = document.createElement('script');
+  // Use [::1] instead of localhost so this shows up as third party
+  script.src = 'http://[::1]:10503/dobetterweb/empty_module.js?' + cookieInlineParam;
+  requestAnimationFrame(() => {
+    document.body.append(script);
+  });
+}
+
+function headersParam(headers) {
+  const headerString = new URLSearchParams(headers).toString();
+  return new URLSearchParams([['extra_header', headerString]]).toString();
+}
+
+// Figure out which tests to fun.
+const params = new URLSearchParams(location.search);
+if (location.search === '') {
+  documentWriteTest();
+  dateNowTest();
+  consoleTimeTest();
+  passiveEventsListenerTest();
+  geolocationOnStartTest();
+  notificationOnStartTest();
+  linksBlockingFirstPaintTest();
+  noRelOpenLinksTest();
+  // oldCSSFlexboxTest();
+  deprecationsTest();
+  inputsCanBePastedIntoTest();
+  isOnHttps();
+  noUnloadListenersTest();
+  thirdPartyCookieTest();
+} else {
+  if (params.has('documentWrite')) {
+    documentWriteTest();
+  }
+  if (params.has('dateNow')) {
+    dateNowTest();
+  }
+  if (params.has('consoleTime')) {
+    consoleTimeTest();
+  }
+  if (params.has('passiveEvents')) {
+    passiveEventsListenerTest();
+  }
+  if (params.has('geolocation')) {
+    geolocationOnStartTest();
+  }
+  if (params.has('notifications')) {
+    notificationOnStartTest();
+  }
+  if (params.has('linksblockfp')) {
+    linksBlockingFirstPaintTest();
+  }
+  if (params.has('relnoopener')) {
+    noRelOpenLinksTest();
+  }
+  // if (params.has('oldcssflexbox')) {
+  //   oldCSSFlexboxTest();
+  // }
+  if (params.has('deprecations')) {
+    deprecationsTest();
+  }
+  if (params.has('passwordinputs')) {
+    inputsCanBePastedIntoTest();
+  }
+  if (params.has('isonhttps')) {
+    isOnHttps();
+  }
+  if (params.has('3pcookie')) {
+    thirdPartyCookieTest();
+  }
+}
+</script>
+
+<!-- Including this script validates that driver.executionContext.evaluateAsync() still works even with
+  window.Promise being mucked with. See file source for details.
+  Also, script is located down here to avoid being flagged in render-blocking-resources. -->
+<script src="./third_party/aggressive-promise-polyfill.js"></script>
+
+<!-- Including this validates that pages that override fetch don't crash our entire stacks gatherer. -->
+<script>window.fetch = () => new Promise(r => setTimeout(r, 90000));</script>
+
+<!-- Include a fake jquery, to test js-libraries -->
+<script>
+  window.$ = {fn: {jquery: '2.1.1'}};
+</script>
+
+<!-- Filesystem URL shouldn't be flagged is-on-https. -->
+<script>
+  function onInitFs(fs) {
+    fs.root.getFile(`empty-${Math.random()}.png`, {create: true, exclusive: true}, function (fileEntry) {
+      const img = document.createElement('img');
+      img.src = fileEntry.toURL();
+      document.body.append(img);
+    }, console.error);
+  }
+
+  window.webkitRequestFileSystem(window.TEMPORARY, 1024 * 1024, onInitFs, console.error);
+</script>
+
+<script>
+  // Log console.error calls in the console.
+  console.error('Error! Error!');
+</script>
+
+<style>
+  #animated-boi {
+    animation: 3s badanim;
+    border: 1px solid black;
+  }
+
+  @keyframes badanim {
+    from {
+      margin-left: 100%;
+      height: 50px;
+    }
+
+    to {
+      margin-left: 0%;
+      height: 200px;
+    }
+  }
+</style>
+<div id="animated-boi">hi</div>
+
+</body>
+</html>

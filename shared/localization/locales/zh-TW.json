@@ -1,0 +1,3356 @@
+{
+  "core/audits/accessibility/accesskeys.js | description": {
+    "message": "快速鍵可讓使用者快速聚焦網頁的特定部分。要讓使用者正確瀏覽，每個快速鍵一律不得重複。[進一步瞭解快速鍵](https://dequeuniversity.com/rules/axe/4.10/accesskeys)。"
+  },
+  "core/audits/accessibility/accesskeys.js | failureTitle": {
+    "message": "`[accesskey]` 的值重複"
+  },
+  "core/audits/accessibility/accesskeys.js | title": {
+    "message": "`[accesskey]` 的值沒有重複"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | description": {
+    "message": "每個 ARIA `role`都支援一部分特定的 `aria-*` 屬性。若配對錯誤，`aria-*` 屬性將失去效力。[瞭解如何讓 ARIA 屬性與其角色相符](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-attr)。"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
+    "message": "`[aria-*]` 屬性與其角色不符"
+  },
+  "core/audits/accessibility/aria-allowed-attr.js | title": {
+    "message": "`[aria-*]` 屬性與其角色相符"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | description": {
+    "message": "許多 HTML 元素只能接受指派特定的 ARIA 角色。如果使用禁用的 ARIA 角色，可能會影響網頁的無障礙功能。[進一步瞭解 ARIA 角色](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role)。"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | failureTitle": {
+    "message": "有不相容的元素使用 ARIA 角色"
+  },
+  "core/audits/accessibility/aria-allowed-role.js | title": {
+    "message": "使用 ARIA 角色的元素均為相容元素"
+  },
+  "core/audits/accessibility/aria-command-name.js | description": {
+    "message": "如果元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個元素的用途。[瞭解如何讓指令元素更容易使用](https://dequeuniversity.com/rules/axe/4.10/aria-command-name)。"
+  },
+  "core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "`button`、`link` 和 `menuitem` 元素沒有可解讀的名稱。"
+  },
+  "core/audits/accessibility/aria-command-name.js | title": {
+    "message": "`button`、`link` 和 `menuitem` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | description": {
+    "message": "元素的某些 ARIA 屬性只能在特定條件下使用。[進一步瞭解條件式 ARIA 屬性](https://dequeuniversity.com/rules/axe/4.10/aria-conditional-attr)。"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | failureTitle": {
+    "message": "未按照指定方式在元素角色中使用 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-conditional-attr.js | title": {
+    "message": "已按照指定方式在元素角色中使用 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | description": {
+    "message": "輔助技術可能無法正確處理已淘汰的 ARIA 角色。[進一步瞭解已淘汰的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.10/aria-deprecated-role)。"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | failureTitle": {
+    "message": "使用已淘汰的 ARIA 角色"
+  },
+  "core/audits/accessibility/aria-deprecated-role.js | title": {
+    "message": "未使用已淘汰的 ARIA 角色"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | description": {
+    "message": "如果 ARIA 對話方塊元素缺少無障礙元素名稱，螢幕閱讀器使用者就可能無法分辨這些元素的用途。[瞭解如何讓 ARIA 對話方塊元素更易於存取](https://dequeuniversity.com/rules/axe/4.10/aria-dialog-name)。"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | failureTitle": {
+    "message": "含有 `role=\"dialog\"` 或 `role=\"alertdialog\"` 的元素缺少無障礙元素名稱。"
+  },
+  "core/audits/accessibility/aria-dialog-name.js | title": {
+    "message": "含有 `role=\"dialog\"` 或 `role=\"alertdialog\"` 的元素具有無障礙元素名稱。"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "在 `<body>` 文件上設定 `aria-hidden=\"true\"` 時，輔助技術 (例如螢幕閱讀器) 無法一致地進行作業。[瞭解 `aria-hidden` 對文件內文的影響](https://dequeuniversity.com/rules/axe/4.10/aria-hidden-body)。"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`<body>` 文件中出現 `[aria-hidden=\"true\"]`"
+  },
+  "core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`<body>` 文件中並未出現 `[aria-hidden=\"true\"]`"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` 元素中的可聚焦子系會禁止輔助技術 (例如螢幕閱讀器) 的使用者存取這些互動元素。[瞭解 `aria-hidden` 對可聚焦元素的影響](https://dequeuniversity.com/rules/axe/4.10/aria-hidden-focus)。"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` 元素包含可聚焦的子系"
+  },
+  "core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` 元素不包含可聚焦的子系"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "如果沒有可解讀的輸入欄位名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個輸入欄位的用途。[進一步瞭解輸入欄位標籤](https://dequeuniversity.com/rules/axe/4.10/aria-input-field-name)。"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA 輸入欄位沒有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA 輸入欄位具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "如果 meter 元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法瞭解這個元素的用途與用法。[瞭解如何命名 `meter` 元素](https://dequeuniversity.com/rules/axe/4.10/aria-meter-name)。"
+  },
+  "core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "ARIA `meter` 元素沒有可解讀的名稱。"
+  },
+  "core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "ARIA `meter` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "如果 `progressbar` 元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個元素的用途。[瞭解如何為 `progressbar` 元素加上標籤](https://dequeuniversity.com/rules/axe/4.10/aria-progressbar-name)。"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "ARIA `progressbar` 元素沒有可解讀的名稱。"
+  },
+  "core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "ARIA `progressbar` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | description": {
+    "message": "如果在禁止使用 ARIA 屬性的角色中使用這些屬性，可能會導致輔助技術使用者無法取得重要資訊。[進一步瞭解禁止使用的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.10/aria-prohibited-attr)。"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | failureTitle": {
+    "message": "多項元素使用禁用的 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-prohibited-attr.js | title": {
+    "message": "元素僅使用允許的 ARIA 屬性"
+  },
+  "core/audits/accessibility/aria-required-attr.js | description": {
+    "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器的使用者說明元素狀態。[進一步瞭解角色和必要屬性](https://dequeuniversity.com/rules/axe/4.10/aria-required-attr)。"
+  },
+  "core/audits/accessibility/aria-required-attr.js | failureTitle": {
+    "message": "`[role]` 未具備所有必要的 `[aria-*]` 屬性"
+  },
+  "core/audits/accessibility/aria-required-attr.js | title": {
+    "message": "`[role]` 具備所有必要的 `[aria-*]` 屬性"
+  },
+  "core/audits/accessibility/aria-required-children.js | description": {
+    "message": "部分 ARIA 父項角色必須包含特定的子項角色，才能正確執行無障礙功能。[進一步瞭解角色和必要的子項元素](https://dequeuniversity.com/rules/axe/4.10/aria-required-children)。"
+  },
+  "core/audits/accessibility/aria-required-children.js | failureTitle": {
+    "message": "有些元素具備 ARIA `[role]` 且要求子項包含特定 `[role]`，這些元素缺少部分或全部的必要子項。"
+  },
+  "core/audits/accessibility/aria-required-children.js | title": {
+    "message": "具備 ARIA `[role]` 且要求子項包含特定 `[role]` 的元素具有全部的必要子項。"
+  },
+  "core/audits/accessibility/aria-required-parent.js | description": {
+    "message": "部分 ARIA 子項角色必須包含在特定的父項角色中，才能正確執行其無障礙功能。[進一步瞭解 ARIA 角色和必要的父項元素](https://dequeuniversity.com/rules/axe/4.10/aria-required-parent)。"
+  },
+  "core/audits/accessibility/aria-required-parent.js | failureTitle": {
+    "message": "`[role]` 未包含在必要的父項元素中"
+  },
+  "core/audits/accessibility/aria-required-parent.js | title": {
+    "message": "`[role]` 包含在必要的父項元素中"
+  },
+  "core/audits/accessibility/aria-roles.js | description": {
+    "message": "ARIA 角色必須具備有效的值，才能執行其無障礙功能。[進一步瞭解有效的 ARIA 角色](https://dequeuniversity.com/rules/axe/4.10/aria-roles)。"
+  },
+  "core/audits/accessibility/aria-roles.js | failureTitle": {
+    "message": "`[role]` 不具備有效的值"
+  },
+  "core/audits/accessibility/aria-roles.js | title": {
+    "message": "`[role]` 具備有效的值"
+  },
+  "core/audits/accessibility/aria-text.js | description": {
+    "message": "在由標記分割的文字節點前後新增 `role=text`，VoiceOver 就會將其視為一個詞組，但系統不會通知該元素的可聚焦子系。[進一步瞭解 `role=text` 屬性](https://dequeuniversity.com/rules/axe/4.10/aria-text)。"
+  },
+  "core/audits/accessibility/aria-text.js | failureTitle": {
+    "message": "具有 `role=text` 屬性的元素具有可聚焦子系。"
+  },
+  "core/audits/accessibility/aria-text.js | title": {
+    "message": "具有 `role=text` 屬性的元素缺少可聚焦子系。"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "如果沒有可解讀的切換欄位名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個切換欄位的用途。[進一步瞭解切換欄位](https://dequeuniversity.com/rules/axe/4.10/aria-toggle-field-name)。"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA 切換欄位沒有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA 切換欄位具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "如果 tooltip 元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法瞭解這個元素的用途與用法。[瞭解如何命名 `tooltip` 元素](https://dequeuniversity.com/rules/axe/4.10/aria-tooltip-name)。"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "ARIA `tooltip` 元素沒有可解讀的名稱。"
+  },
+  "core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "ARIA `tooltip` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "如果 `treeitem` 元素沒有無障礙元素名稱，螢幕閱讀器只會讀出通用名稱，這樣仰賴螢幕閱讀器的使用者就無法知道這個元素的用途。[進一步瞭解如何為 `treeitem` 元素加上標籤](https://dequeuniversity.com/rules/axe/4.10/aria-treeitem-name)。"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "ARIA `treeitem` 元素沒有可解讀的名稱。"
+  },
+  "core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "ARIA `treeitem` 元素具有可解讀的名稱"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | description": {
+    "message": "輔助技術 (例如螢幕閱讀器) 無法解讀數值無效的 ARIA 屬性。[進一步瞭解 ARIA 屬性的有效值](https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr-value)。"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
+    "message": "`[aria-*]` 屬性缺少有效的值"
+  },
+  "core/audits/accessibility/aria-valid-attr-value.js | title": {
+    "message": "`[aria-*]` 屬性具備有效的值"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | description": {
+    "message": "輔助技術 (例如螢幕閱讀器) 無法解讀包含無效名稱的 ARIA 屬性。[進一步瞭解有效的 ARIA 屬性](https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr)。"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | failureTitle": {
+    "message": "`[aria-*]` 屬性無效或有錯字"
+  },
+  "core/audits/accessibility/aria-valid-attr.js | title": {
+    "message": "`[aria-*]` 屬性有效且拼字正確"
+  },
+  "core/audits/accessibility/axe-audit.js | failingElementsHeader": {
+    "message": "未通過稽核的元素"
+  },
+  "core/audits/accessibility/button-name.js | description": {
+    "message": "如果沒有可解讀的按鈕名稱，螢幕閱讀器只會讀出「按鈕」，這樣仰賴螢幕閱讀器的使用者就無法知道這個按鈕的用途。[瞭解如何讓使用者更容易使用按鈕](https://dequeuniversity.com/rules/axe/4.10/button-name)。"
+  },
+  "core/audits/accessibility/button-name.js | failureTitle": {
+    "message": "按鈕沒有可存取的名稱"
+  },
+  "core/audits/accessibility/button-name.js | title": {
+    "message": "按鈕具有可解讀的名稱"
+  },
+  "core/audits/accessibility/bypass.js | description": {
+    "message": "針對重複的內容增設略過選項，可提高鍵盤使用者的網頁瀏覽效率。[進一步瞭解略過模塊](https://dequeuniversity.com/rules/axe/4.10/bypass)。"
+  },
+  "core/audits/accessibility/bypass.js | failureTitle": {
+    "message": "這個網頁中沒有標題、略過連結或標記區域"
+  },
+  "core/audits/accessibility/bypass.js | title": {
+    "message": "這個網頁包含標題、略過連結或標記區域"
+  },
+  "core/audits/accessibility/color-contrast.js | description": {
+    "message": "低對比度的文字對許多讀者來說難以閱讀或無法閱讀。[瞭解如何提供充足的色彩對比](https://dequeuniversity.com/rules/axe/4.10/color-contrast)。"
+  },
+  "core/audits/accessibility/color-contrast.js | failureTitle": {
+    "message": "背景和前景顏色沒有足夠的對比度。"
+  },
+  "core/audits/accessibility/color-contrast.js | title": {
+    "message": "背景和前景顏色具有足夠的對比度"
+  },
+  "core/audits/accessibility/definition-list.js | description": {
+    "message": "如果定義清單的標記不正確，螢幕閱讀器可能會輸出令人混淆或不正確的內容。[瞭解如何正確建構定義清單](https://dequeuniversity.com/rules/axe/4.10/definition-list)。"
+  },
+  "core/audits/accessibility/definition-list.js | failureTitle": {
+    "message": "`<dl>` 並非只包含排序正確的 `<dt>` 和 `<dd>` 群組，以及 `<script>`、`<template>` 或 `<div>` 元素。"
+  },
+  "core/audits/accessibility/definition-list.js | title": {
+    "message": "`<dl>` 只包含排序正確的 `<dt>` 和 `<dd>` 群組，以及 `<script>`、`<template>` 或 `<div>` 元素。"
+  },
+  "core/audits/accessibility/dlitem.js | description": {
+    "message": "定義清單項目 (`<dt>` 和 `<dd>`) 必須納入在父項 `<dl>` 元素中，才能確保螢幕閱讀器正確朗讀這些項目。[瞭解如何正確建構定義清單](https://dequeuniversity.com/rules/axe/4.10/dlitem)。"
+  },
+  "core/audits/accessibility/dlitem.js | failureTitle": {
+    "message": "定義清單項目未納入在 `<dl>` 元素中"
+  },
+  "core/audits/accessibility/dlitem.js | title": {
+    "message": "定義清單項目已納入在 `<dl>` 元素中"
+  },
+  "core/audits/accessibility/document-title.js | description": {
+    "message": "標題可讓螢幕閱讀器使用者概略瞭解網頁內容；搜尋引擎使用者經常需要使用這項資訊，以判斷網頁內容是否與他們的搜尋項目有關。[進一步瞭解文件標題](https://dequeuniversity.com/rules/axe/4.10/document-title)。"
+  },
+  "core/audits/accessibility/document-title.js | failureTitle": {
+    "message": "文件缺少 `<title>` 元素"
+  },
+  "core/audits/accessibility/document-title.js | title": {
+    "message": "文件具有 `<title>` 元素"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA ID 的值不得重複，以免輔助技術忽略其他重複的執行個體。[瞭解如何修正重複的 ARIA ID](https://dequeuniversity.com/rules/axe/4.10/duplicate-id-aria)。"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA ID 重複"
+  },
+  "core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "沒有重複的 ARIA ID"
+  },
+  "core/audits/accessibility/empty-heading.js | description": {
+    "message": "如果 heading 缺少內容或無障礙設計的文字，螢幕閱讀器使用者就無法存取網頁結構中的資訊。[進一步瞭解標題](https://dequeuniversity.com/rules/axe/4.10/empty-heading)。"
+  },
+  "core/audits/accessibility/empty-heading.js | failureTitle": {
+    "message": "Heading 元素不含任何內容。"
+  },
+  "core/audits/accessibility/empty-heading.js | title": {
+    "message": "所有 heading 元素都含有內容。"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "如果表單欄位含有多個標籤，可能會造成螢幕閱讀器等輔助技術無法判斷該讀出第一個、最後一個或所有標籤。[瞭解如何使用表單標籤](https://dequeuniversity.com/rules/axe/4.10/form-field-multiple-labels)。"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "表單欄位包含多個標籤"
+  },
+  "core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "沒有任何表單欄位包含多個標籤"
+  },
+  "core/audits/accessibility/frame-title.js | description": {
+    "message": "螢幕閱讀器需使用頁框標題才能說明頁框內容。[進一步瞭解頁框標題](https://dequeuniversity.com/rules/axe/4.10/frame-title)。"
+  },
+  "core/audits/accessibility/frame-title.js | failureTitle": {
+    "message": "`<frame>` 或 `<iframe>` 元素缺少名稱"
+  },
+  "core/audits/accessibility/frame-title.js | title": {
+    "message": "`<frame>` 或 `<iframe>` 元素包含名稱"
+  },
+  "core/audits/accessibility/heading-order.js | description": {
+    "message": "排序正確且未略過層級的標頭可傳達網頁的語意結構，讓使用者在運用輔助技術時更容易瀏覽及理解。[進一步瞭解標頭順序](https://dequeuniversity.com/rules/axe/4.10/heading-order)。"
+  },
+  "core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "標題元素未依遞減順序顯示"
+  },
+  "core/audits/accessibility/heading-order.js | title": {
+    "message": "標題元素已依遞減順序顯示"
+  },
+  "core/audits/accessibility/html-has-lang.js | description": {
+    "message": "如果網頁未指定 `lang` 屬性，螢幕閱讀器會假設網頁採用的是使用者在設定螢幕閱讀器時所選擇的預設語言。如果網頁實際採用的語言並非預設語言，那麼螢幕閱讀器可能無法正確朗讀網頁文字。[進一步瞭解 `lang` 屬性](https://dequeuniversity.com/rules/axe/4.10/html-has-lang)。"
+  },
+  "core/audits/accessibility/html-has-lang.js | failureTitle": {
+    "message": "`<html>` 元素缺少 `[lang]` 屬性"
+  },
+  "core/audits/accessibility/html-has-lang.js | title": {
+    "message": "`<html>` 元素具備 `[lang]` 屬性"
+  },
+  "core/audits/accessibility/html-lang-valid.js | description": {
+    "message": "指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助螢幕閱讀器正確朗讀文字。[瞭解如何使用 `lang` 屬性](https://dequeuniversity.com/rules/axe/4.10/html-lang-valid)。"
+  },
+  "core/audits/accessibility/html-lang-valid.js | failureTitle": {
+    "message": "`<html>` 元素的 `[lang]` 屬性缺少有效的值。"
+  },
+  "core/audits/accessibility/html-lang-valid.js | title": {
+    "message": "`<html>` 元素的 `[lang]` 屬性具備有效的值"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | description": {
+    "message": "如果網頁指定的語言不一致，螢幕閱讀器可能無法正確朗讀頁面上的文字。[進一步瞭解 `lang` 屬性](https://dequeuniversity.com/rules/axe/4.10/html-xml-lang-mismatch)。"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | failureTitle": {
+    "message": "`<html>` 元素的 `[xml:lang]` 屬性與`[lang]` 屬性中的基本語言不同。"
+  },
+  "core/audits/accessibility/html-xml-lang-mismatch.js | title": {
+    "message": "`<html>` 元素的 `[xml:lang]` 屬性與 `[lang]` 屬性的基本語言相同。"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | description": {
+    "message": "具有相同目的地的連結應提供相同的說明，協助使用者瞭解連結的用途，並決定是否前往。[進一步瞭解相同連結](https://dequeuniversity.com/rules/axe/4.10/identical-links-same-purpose)。"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | failureTitle": {
+    "message": "相同連結的用途不同。"
+  },
+  "core/audits/accessibility/identical-links-same-purpose.js | title": {
+    "message": "相同的連結用途相同。"
+  },
+  "core/audits/accessibility/image-alt.js | description": {
+    "message": "說明元素應提供簡短貼切的替代文字。如果是裝飾元素，只要將 alt 屬性留空，系統即會忽略該元素。[進一步瞭解 `alt` 屬性](https://dequeuniversity.com/rules/axe/4.10/image-alt)。"
+  },
+  "core/audits/accessibility/image-alt.js | failureTitle": {
+    "message": "圖片元素缺少 `[alt]` 屬性"
+  },
+  "core/audits/accessibility/image-alt.js | title": {
+    "message": "圖片元素具有 `[alt]` 屬性"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | description": {
+    "message": "說明元素應提供簡短貼切的替代文字。替代文字如果與連結或圖片旁的文字完全相同，可能會對螢幕閱讀器使用者造成困擾，因為系統會朗讀同樣的文字兩次。[進一步瞭解 `alt` 屬性](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt)。"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | failureTitle": {
+    "message": "圖片元素所含「`[alt]`」屬性有多餘的文字。"
+  },
+  "core/audits/accessibility/image-redundant-alt.js | title": {
+    "message": "圖片元素所含「`[alt]`」屬性沒有多餘的文字。"
+  },
+  "core/audits/accessibility/input-button-name.js | description": {
+    "message": "你可以為輸入按鈕加上容易識讀的說明文字，協助螢幕閱讀器使用者瞭解輸入按鈕的用途。[進一步瞭解輸入按鈕](https://dequeuniversity.com/rules/axe/4.10/input-button-name)。"
+  },
+  "core/audits/accessibility/input-button-name.js | failureTitle": {
+    "message": "輸入按鈕的文字不易辨識。"
+  },
+  "core/audits/accessibility/input-button-name.js | title": {
+    "message": "輸入按鈕的文字容易辨識。"
+  },
+  "core/audits/accessibility/input-image-alt.js | description": {
+    "message": "如果 `<input>` 按鈕是以圖片呈現，提供替代文字可協助螢幕閱讀器使用者瞭解該按鈕的用途。[瞭解輸入圖片替代文字](https://dequeuniversity.com/rules/axe/4.10/input-image-alt)。"
+  },
+  "core/audits/accessibility/input-image-alt.js | failureTitle": {
+    "message": "`<input type=\"image\">` 元素沒有 `[alt]` 文字"
+  },
+  "core/audits/accessibility/input-image-alt.js | title": {
+    "message": "`<input type=\"image\">` 元素具有 `[alt]` 文字"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | description": {
+    "message": "如果顯示的文字標籤與無障礙元素名稱不符，可能對螢幕閱讀器使用者造成困惑。[進一步瞭解無障礙元素名稱](https://dequeuniversity.com/rules/axe/4.10/label-content-name-mismatch)。"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | failureTitle": {
+    "message": "含有可見文字標籤的元素沒有相符的無障礙元素名稱。"
+  },
+  "core/audits/accessibility/label-content-name-mismatch.js | title": {
+    "message": "含有可見文字標籤的元素有相符的無障礙元素名稱。"
+  },
+  "core/audits/accessibility/label.js | description": {
+    "message": "標籤可確保輔助技術 (例如螢幕閱讀器) 正確朗讀表單控制項。[進一步瞭解表單元素標籤](https://dequeuniversity.com/rules/axe/4.10/label)。"
+  },
+  "core/audits/accessibility/label.js | failureTitle": {
+    "message": "表單元素沒有相關聯的標籤"
+  },
+  "core/audits/accessibility/label.js | title": {
+    "message": "表單元素具有相關聯的標籤"
+  },
+  "core/audits/accessibility/landmark-one-main.js | description": {
+    "message": "主要位置標記可協助螢幕閱讀器使用者瀏覽網頁。[進一步瞭解位置標記](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main)。"
+  },
+  "core/audits/accessibility/landmark-one-main.js | failureTitle": {
+    "message": "文件缺少主要位置標記。"
+  },
+  "core/audits/accessibility/landmark-one-main.js | title": {
+    "message": "文件設有主要位置標記。"
+  },
+  "core/audits/accessibility/link-in-text-block.js | description": {
+    "message": "低對比度的文字對許多讀者來說難以閱讀或無法閱讀。可辨別的連結文字有助於改善低視能讀者的使用者體驗。[瞭解如何設定可明確區別的連結](https://dequeuniversity.com/rules/axe/4.10/link-in-text-block)。"
+  },
+  "core/audits/accessibility/link-in-text-block.js | failureTitle": {
+    "message": "連結必須依賴顏色區別。"
+  },
+  "core/audits/accessibility/link-in-text-block.js | title": {
+    "message": "就算不依賴顏色，也可以明確區別連結。"
+  },
+  "core/audits/accessibility/link-name.js | description": {
+    "message": "使用可辨別、未重複且可聚焦的連結文字 (以及連結圖片的替代文字)，有助於改善螢幕閱讀器使用者的瀏覽體驗。[瞭解如何讓連結易於存取](https://dequeuniversity.com/rules/axe/4.10/link-name)。"
+  },
+  "core/audits/accessibility/link-name.js | failureTitle": {
+    "message": "連結缺少可辨別的名稱"
+  },
+  "core/audits/accessibility/link-name.js | title": {
+    "message": "連結具有可辨別的名稱"
+  },
+  "core/audits/accessibility/list.js | description": {
+    "message": "螢幕閱讀器會以特定方式朗讀清單。請務必採用正確的清單結構，這樣螢幕閱讀器才能順利讀出畫面上的內容。[進一步瞭解適當的清單結構](https://dequeuniversity.com/rules/axe/4.10/list)。"
+  },
+  "core/audits/accessibility/list.js | failureTitle": {
+    "message": "清單中並非只包含 `<li>` 元素和指令碼支援元素 (`<script>` 和 `<template>`)。"
+  },
+  "core/audits/accessibility/list.js | title": {
+    "message": "清單只包含 `<li>` 元素和指令碼支援元素 (`<script>` 和 `<template>`)。"
+  },
+  "core/audits/accessibility/listitem.js | description": {
+    "message": "清單項目 (`<li>`) 必須包含在父項元素 `<ul>`、`<ol>` 或 `<menu>` 中，螢幕閱讀器才能正確朗讀這些項目。[進一步瞭解適當的清單結構](https://dequeuniversity.com/rules/axe/4.10/listitem)。"
+  },
+  "core/audits/accessibility/listitem.js | failureTitle": {
+    "message": "清單項目 (`<li>`) 未包含在 `<ul>`、`<ol>` 或 `<menu>` 父項元素中。"
+  },
+  "core/audits/accessibility/listitem.js | title": {
+    "message": "清單項目 (`<li>`) 已包含在 `<ul>`、`<ol>` 或 `<menu>` 父項元素中"
+  },
+  "core/audits/accessibility/meta-refresh.js | description": {
+    "message": "使用者不會預期系統自動重新整理網頁，而且這麼做會將焦點移回網頁頂端。這可能會對使用者造成困擾或混淆。[進一步瞭解重新整理中繼標記](https://dequeuniversity.com/rules/axe/4.10/meta-refresh)。"
+  },
+  "core/audits/accessibility/meta-refresh.js | failureTitle": {
+    "message": "這個文件使用 `<meta http-equiv=\"refresh\">`"
+  },
+  "core/audits/accessibility/meta-refresh.js | title": {
+    "message": "這個文件未使用 `<meta http-equiv=\"refresh\">`"
+  },
+  "core/audits/accessibility/meta-viewport.js | description": {
+    "message": "停用縮放功能會對低視能使用者造成困擾，他們需要使用螢幕放大功能才能清楚看見網頁內容。[進一步瞭解可視區域中繼標記](https://dequeuniversity.com/rules/axe/4.10/meta-viewport)。"
+  },
+  "core/audits/accessibility/meta-viewport.js | failureTitle": {
+    "message": "`<meta name=\"viewport\">` 元素中使用了 `[user-scalable=\"no\"]`，或是 `[maximum-scale]` 屬性小於 5。"
+  },
+  "core/audits/accessibility/meta-viewport.js | title": {
+    "message": "`<meta name=\"viewport\">` 元素中未使用 `[user-scalable=\"no\"]`，而且 `[maximum-scale]` 屬性大於或等於 5。"
+  },
+  "core/audits/accessibility/object-alt.js | description": {
+    "message": "螢幕閱讀器無法解讀非文字內容。為 `<object>` 元素新增替代文字，可協助螢幕閱讀器向使用者傳達該元素的意義。[進一步瞭解 `object` 元素的替代文字](https://dequeuniversity.com/rules/axe/4.10/object-alt)。"
+  },
+  "core/audits/accessibility/object-alt.js | failureTitle": {
+    "message": "`<object>` 元素沒有替代文字"
+  },
+  "core/audits/accessibility/object-alt.js | title": {
+    "message": "`<object>` 元素具有替代文字"
+  },
+  "core/audits/accessibility/select-name.js | description": {
+    "message": "如果 Form 元素沒有有效的標籤，螢幕閱讀器使用者可能會感到困擾。[進一步瞭解 `select` 元素](https://dequeuniversity.com/rules/axe/4.10/select-name)。"
+  },
+  "core/audits/accessibility/select-name.js | failureTitle": {
+    "message": "Select 元素沒有相關聯的 label 元素。"
+  },
+  "core/audits/accessibility/select-name.js | title": {
+    "message": "Select 元素具有相關聯的 label 元素。"
+  },
+  "core/audits/accessibility/skip-link.js | description": {
+    "message": "加入跳轉連結可協助使用者直接前往主要內容，以節省時間。[進一步瞭解跳轉連結](https://dequeuniversity.com/rules/axe/4.10/skip-link)。"
+  },
+  "core/audits/accessibility/skip-link.js | failureTitle": {
+    "message": "跳轉連結無法聚焦。"
+  },
+  "core/audits/accessibility/skip-link.js | title": {
+    "message": "跳轉連結可聚焦。"
+  },
+  "core/audits/accessibility/tabindex.js | description": {
+    "message": "如果值大於 0，表示採用的是明確的瀏覽排序。雖然這在技術上可行，但經常會對仰賴輔助技術的使用者造成困擾。[進一步瞭解 `tabindex` 屬性](https://dequeuniversity.com/rules/axe/4.10/tabindex)。"
+  },
+  "core/audits/accessibility/tabindex.js | failureTitle": {
+    "message": "部分元素的 `[tabindex]` 值大於 0"
+  },
+  "core/audits/accessibility/tabindex.js | title": {
+    "message": "所有元素的 `[tabindex]` 值皆未超過 0"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | description": {
+    "message": "摘要屬性應說明表格結構，而「`<caption>`」應含有顯示在螢幕上的標題。提供準確的表格標記，對螢幕閱讀器使用者有幫助。[進一步瞭解摘要和說明文字](https://dequeuniversity.com/rules/axe/4.10/table-duplicate-name)。"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | failureTitle": {
+    "message": "表格內容與摘要屬性和「`<caption>.`」相同"
+  },
+  "core/audits/accessibility/table-duplicate-name.js | title": {
+    "message": "表格內容與摘要屬性和「`<caption>`」不同"
+  },
+  "core/audits/accessibility/table-fake-caption.js | description": {
+    "message": "使用者可運用螢幕閱讀器的功能輕鬆瀏覽表格。如果表格使用實際的標題元素，而非含有 `[colspan]` 屬性的儲存格，或許可以提升螢幕閱讀器的使用體驗。[進一步瞭解標題](https://dequeuniversity.com/rules/axe/4.10/table-fake-caption)。"
+  },
+  "core/audits/accessibility/table-fake-caption.js | failureTitle": {
+    "message": "表格使用含有 `[colspan]` 屬性的儲存格表示標題，而非使用 `<caption>` 屬性。"
+  },
+  "core/audits/accessibility/table-fake-caption.js | title": {
+    "message": "表格使用 `<caption>` 屬性表示標題，而非使用含有 `[colspan]` 屬性的儲存格。"
+  },
+  "core/audits/accessibility/target-size.js | description": {
+    "message": "只要觸控目標提供足夠的大小和間距，就能協助難以點按小型控制項的使用者啟動目標。[進一步瞭解觸控目標](https://dequeuniversity.com/rules/axe/4.10/target-size)。"
+  },
+  "core/audits/accessibility/target-size.js | failureTitle": {
+    "message": "觸控目標的大小或間距不足。"
+  },
+  "core/audits/accessibility/target-size.js | title": {
+    "message": "觸控目標的大小和間距充足。"
+  },
+  "core/audits/accessibility/td-has-header.js | description": {
+    "message": "使用者可運用螢幕閱讀器的功能輕鬆瀏覽表格。如果大型表格 (寬度和高度為 3 個以上儲存格) 中的 `<td>` 元素使用相關聯的表格標頭，或許可以提升螢幕閱讀器的使用體驗。[進一步瞭解表格標頭](https://dequeuniversity.com/rules/axe/4.10/td-has-header)。"
+  },
+  "core/audits/accessibility/td-has-header.js | failureTitle": {
+    "message": "大型 `<table>` 中的 `<td>` 元素沒有表格標頭。"
+  },
+  "core/audits/accessibility/td-has-header.js | title": {
+    "message": "大型 `<table>` 中的 `<td>` 元素有一或多個表格標頭。"
+  },
+  "core/audits/accessibility/td-headers-attr.js | description": {
+    "message": "螢幕閱讀器的功能可讓使用者輕鬆瀏覽表格。請確保使用 `[headers]` 屬性的 `<td>` 儲存格只參照同一表格中的其他儲存格，這樣可改善螢幕閱讀器的使用體驗。[進一步瞭解 `headers` 屬性](https://dequeuniversity.com/rules/axe/4.10/td-headers-attr)。"
+  },
+  "core/audits/accessibility/td-headers-attr.js | failureTitle": {
+    "message": "在 `<table>` 元素中使用 `[headers]` 屬性的儲存格參照了元素 `id`，系統無法在相同表格中找到這個元素。"
+  },
+  "core/audits/accessibility/td-headers-attr.js | title": {
+    "message": "在 `<table>` 元素中使用 `[headers]` 屬性的儲存格參照了同一表格中的表格儲存格。"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | description": {
+    "message": "螢幕閱讀器的功能可讓使用者輕鬆瀏覽表格。如果能確保表格標頭一律參照特定一組儲存格，或許能讓螢幕閱讀器的使用體驗更上一層樓。[進一步瞭解表格標頭](https://dequeuniversity.com/rules/axe/4.10/th-has-data-cells)。"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | failureTitle": {
+    "message": "`<th>` 元素和具有 `[role=\"columnheader\"/\"rowheader\"]` 的元素不包含所描述的資料儲存格。"
+  },
+  "core/audits/accessibility/th-has-data-cells.js | title": {
+    "message": "`<th>` 元素和帶有 `[role=\"columnheader\"/\"rowheader\"]` 的元素具有其所描述的資料儲存格。"
+  },
+  "core/audits/accessibility/valid-lang.js | description": {
+    "message": "為元素指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助確保螢幕閱讀器正確朗讀文字。[瞭解如何使用 `lang` 屬性](https://dequeuniversity.com/rules/axe/4.10/valid-lang)。"
+  },
+  "core/audits/accessibility/valid-lang.js | failureTitle": {
+    "message": "`[lang]` 屬性缺少有效的值"
+  },
+  "core/audits/accessibility/valid-lang.js | title": {
+    "message": "`[lang]` 屬性具備有效的值"
+  },
+  "core/audits/accessibility/video-caption.js | description": {
+    "message": "如果在影片中提供字幕，將有助於失聰或聽障使用者瞭解影片資訊。[進一步瞭解影片字幕](https://dequeuniversity.com/rules/axe/4.10/video-caption)。"
+  },
+  "core/audits/accessibility/video-caption.js | failureTitle": {
+    "message": "`<video>` 元素不含任何帶有 `[kind=\"captions\"]` 的 `<track>` 元素。"
+  },
+  "core/audits/accessibility/video-caption.js | title": {
+    "message": "`<video>` 元素包含帶有 `[kind=\"captions\"]` 的 `<track>` 元素"
+  },
+  "core/audits/autocomplete.js | columnCurrent": {
+    "message": "目前的值"
+  },
+  "core/audits/autocomplete.js | columnSuggestions": {
+    "message": "建議使用的權杖"
+  },
+  "core/audits/autocomplete.js | description": {
+    "message": "`autocomplete` 可協助使用者更快速地提交表單。建議你將 `autocomplete` 屬性設為有效值以啟用這項功能，減少使用者需要執行的動作。[進一步瞭解表單中的 `autocomplete`](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+  },
+  "core/audits/autocomplete.js | failureTitle": {
+    "message": "`<input>` 元素沒有正確的 `autocomplete` 屬性"
+  },
+  "core/audits/autocomplete.js | manualReview": {
+    "message": "必須手動查看"
+  },
+  "core/audits/autocomplete.js | reviewOrder": {
+    "message": "查看權杖的順序"
+  },
+  "core/audits/autocomplete.js | title": {
+    "message": "`<input>` 元素已正確使用 `autocomplete`"
+  },
+  "core/audits/autocomplete.js | warningInvalid": {
+    "message": "`autocomplete` 權杖：「{snippet}」中的「{token}」無效"
+  },
+  "core/audits/autocomplete.js | warningOrder": {
+    "message": "查看權杖的順序：{snippet} 中的「{tokens}」"
+  },
+  "core/audits/bf-cache.js | actionableFailureType": {
+    "message": "可操作"
+  },
+  "core/audits/bf-cache.js | description": {
+    "message": "許多瀏覽操作都是在來回往返頁面之間進行，往返快取 (bfcache) 可以加快這些返回瀏覽的速度。[進一步瞭解 bfcache](https://developer.chrome.com/docs/lighthouse/performance/bf-cache/)"
+  },
+  "core/audits/bf-cache.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 個失敗原因}other{# 個失敗原因}}"
+  },
+  "core/audits/bf-cache.js | failureReasonColumn": {
+    "message": "失敗原因"
+  },
+  "core/audits/bf-cache.js | failureTitle": {
+    "message": "網頁已禁止還原往返快取"
+  },
+  "core/audits/bf-cache.js | failureTypeColumn": {
+    "message": "失敗類型"
+  },
+  "core/audits/bf-cache.js | notActionableFailureType": {
+    "message": "無法操作"
+  },
+  "core/audits/bf-cache.js | supportPendingFailureType": {
+    "message": "尚不支援瀏覽器"
+  },
+  "core/audits/bf-cache.js | title": {
+    "message": "網頁並未禁止還原往返快取"
+  },
+  "core/audits/bf-cache.js | warningHeadless": {
+    "message": "無法在舊版無頭 Chrome (`--chrome-flags=\"--headless=old\"`) 中測試往返快取。如要查看稽核結果，請使用新的無頭 Chrome (`--chrome-flags=\"--headless=new\"`) 或標準 Chrome。"
+  },
+  "core/audits/bootup-time.js | chromeExtensionsWarning": {
+    "message": "Chrome 擴充功能對這個頁面的載入效能有負面影響。建議透過無痕模式或不含擴充功能的 Chrome 設定檔來稽核頁面。"
+  },
+  "core/audits/bootup-time.js | columnScriptEval": {
+    "message": "指令碼評估"
+  },
+  "core/audits/bootup-time.js | columnScriptParse": {
+    "message": "指令碼剖析"
+  },
+  "core/audits/bootup-time.js | columnTotal": {
+    "message": "CPU 總執行時間"
+  },
+  "core/audits/bootup-time.js | description": {
+    "message": "建議你縮短剖析、編譯及執行 JavaScript 所耗費的時間。提供較小的 JavaScript 酬載可能會有幫助。[瞭解如何縮短 JavaScript 的執行時間](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/)。"
+  },
+  "core/audits/bootup-time.js | failureTitle": {
+    "message": "減少 JavaScript 執行時間"
+  },
+  "core/audits/bootup-time.js | title": {
+    "message": "JavaScript 執行時間"
+  },
+  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "從套件中移除重複的大型 JavaScript 模組，盡量避免網路活動消耗不必要的流量。 "
+  },
+  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "請移除 JavaScript 套件中重複的模組"
+  },
+  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
+    "message": "使用大型 GIF 檔案呈現動畫內容會降低網路傳輸效率。建議你改用 MPEG4/WebM 影片格式呈現動畫內容，或是使用 PNG/WebP 格式顯示靜態圖片，以減少網路傳輸的資料量。[進一步瞭解高效率的影片格式](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
+  },
+  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
+    "message": "使用影片格式的動畫內容"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | description": {
+    "message": "Polyfill 和轉換作業可讓舊版瀏覽器使用新版 JavaScript 的功能。不過這些功能對於新式瀏覽器而言，有很多都是不必要的。如果是 JavaScript 套件，請採用具備模組/非模組功能偵測機制的新型指令碼部署策略，以減少新式瀏覽器所需要的程式碼，同時保留對舊版瀏覽器的支援。[瞭解如何使用新版 JavaScript](https://web.dev/articles/publish-modern-javascript)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | title": {
+    "message": "避免將舊版 JavaScript 提供給新型瀏覽器"
+  },
+  "core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "WebP 和 AVIF 等圖片格式的壓縮效果通常比 PNG 或 JPEG 要好，這代表下載速度更快，數據用量更少。[進一步瞭解新型圖片格式](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)。"
+  },
+  "core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "提供 next-gen 格式的圖片"
+  },
+  "core/audits/byte-efficiency/offscreen-images.js | description": {
+    "message": "建議在所有重要資源載入完成之前，延遲載入畫面外圖片和隱藏項目，以縮短互動準備時間。[瞭解如何延遲載入畫面外圖片](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)。"
+  },
+  "core/audits/byte-efficiency/offscreen-images.js | title": {
+    "message": "延後載入畫面外圖片"
+  },
+  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
+    "message": "網頁的資源過多，因此妨礙了首次顯示畫面的時間。建議你先載入重要的內嵌 JavaScript/CSS，並延後載入不重要的 JavaScript/樣式。[瞭解如何排除會妨礙顯示的資源](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)。"
+  },
+  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
+    "message": "排除禁止轉譯的資源"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | description": {
+    "message": "大量的網路酬載會增加使用者的費用負擔，而且往往會延長網頁載入時間。[瞭解如何減少酬載大小](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)。"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
+    "message": "總大小為 {totalBytes, number, bytes} KiB"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
+    "message": "避免耗用大量網路資源"
+  },
+  "core/audits/byte-efficiency/total-byte-weight.js | title": {
+    "message": "避免耗用大量網路資源"
+  },
+  "core/audits/byte-efficiency/unminified-css.js | description": {
+    "message": "壓縮 CSS 檔案能減少網路酬載大小。[瞭解如何壓縮 CSS](https://developer.chrome.com/docs/lighthouse/performance/unminified-css/)。"
+  },
+  "core/audits/byte-efficiency/unminified-css.js | title": {
+    "message": "壓縮 CSS"
+  },
+  "core/audits/byte-efficiency/unminified-javascript.js | description": {
+    "message": "壓縮 JavaScript 檔案能減少酬載大小，並縮短剖析指令碼的時間。[瞭解如何壓縮 JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/)。"
+  },
+  "core/audits/byte-efficiency/unminified-javascript.js | title": {
+    "message": "壓縮 JavaScript"
+  },
+  "core/audits/byte-efficiency/unused-css-rules.js | description": {
+    "message": "移除樣式表中的無用規則，並延遲載入在不需捲動位置內容中未使用的 CSS，即可減少網路活動消耗的流量。[瞭解如何減少未使用的 CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)。"
+  },
+  "core/audits/byte-efficiency/unused-css-rules.js | title": {
+    "message": "減少無用的 CSS"
+  },
+  "core/audits/byte-efficiency/unused-javascript.js | description": {
+    "message": "減少無用的 JavaScript 並延遲載入指令碼 (等需要時才載入)，即可減少網路活動消耗的流量。[瞭解如何減少無用的 JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/)。"
+  },
+  "core/audits/byte-efficiency/unused-javascript.js | title": {
+    "message": "減少無用的 JavaScript"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
+    "message": "延長快取生命週期可以加快使用者再次造訪網頁的速度。[進一步瞭解高效率的快取政策](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)。"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 1 項資源}other{找到 # 項資源}}"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
+    "message": "運用有效的快取政策提供靜態資產"
+  },
+  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
+    "message": "使用有效的快取政策處理靜態資產"
+  },
+  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
+    "message": "經過最佳化的圖片載入速度較快，且能節省使用者的行動數據用量。[瞭解如何有效率地對圖片進行編碼](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)。"
+  },
+  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
+    "message": "圖片編碼有效率"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "實際尺寸"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "顯示的尺寸"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "圖片大於其顯示大小"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "圖片適合其顯示大小"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
+    "message": "使用大小合適的圖片有助於節省行動數據用量並縮短載入時間。[瞭解如何調整圖片大小](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)。"
+  },
+  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
+    "message": "使用合適的圖片大小"
+  },
+  "core/audits/byte-efficiency/uses-text-compression.js | description": {
+    "message": "提供的文字資源應經過 (gzip、deflate 或 brotli) 壓縮，將網路傳輸的資料量降至最低。[進一步瞭解文字壓縮](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)。"
+  },
+  "core/audits/byte-efficiency/uses-text-compression.js | title": {
+    "message": "啟用文字壓縮"
+  },
+  "core/audits/critical-request-chains.js | description": {
+    "message": "下方的「關鍵要求鏈結」顯示優先載入的資源。建議你縮短鏈結長度、降低下載資源的大小，或是將非必要資源延後載入，以提高網頁載入速度。[瞭解如何避免鏈結關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)。"
+  },
+  "core/audits/critical-request-chains.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 1 個鏈結}other{找到 # 個鏈結}}"
+  },
+  "core/audits/critical-request-chains.js | title": {
+    "message": "避免鏈結關鍵要求"
+  },
+  "core/audits/csp-xss.js | columnDirective": {
+    "message": "指令"
+  },
+  "core/audits/csp-xss.js | columnSeverity": {
+    "message": "嚴重程度"
+  },
+  "core/audits/csp-xss.js | description": {
+    "message": "強大的內容安全政策 (CSP) 可以大幅降低遭到跨網站指令碼 (XSS) 攻擊的風險。[瞭解如何使用 CSP 防範 XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
+  },
+  "core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "語法"
+  },
+  "core/audits/csp-xss.js | metaTagMessage": {
+    "message": "網頁含有在 `<meta>` 標記中定義的 CSP，建議將 CSP 移到 HTTP 標頭，或在 HTTP 標頭中定義其他嚴格 CSP。"
+  },
+  "core/audits/csp-xss.js | noCsp": {
+    "message": "找不到處於強制執行模式的 CSP"
+  },
+  "core/audits/csp-xss.js | title": {
+    "message": "確保 CSP 能有效防範 XSS 攻擊"
+  },
+  "core/audits/deprecations.js | columnDeprecate": {
+    "message": "淘汰/警告"
+  },
+  "core/audits/deprecations.js | columnLine": {
+    "message": "行數"
+  },
+  "core/audits/deprecations.js | description": {
+    "message": "系統最終會從瀏覽器中移除已淘汰的 API。[進一步瞭解已淘汰的 API](https://developer.chrome.com/docs/lighthouse/best-practices/deprecations/)。"
+  },
+  "core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{發現 1 則警告}other{發現 # 則警告}}"
+  },
+  "core/audits/deprecations.js | failureTitle": {
+    "message": "使用已淘汰的 API"
+  },
+  "core/audits/deprecations.js | title": {
+    "message": "避免使用已淘汰的 API"
+  },
+  "core/audits/dobetterweb/charset.js | description": {
+    "message": "必須定義字元編碼宣告。你可以在 HTML 的前 1024 個位元組中使用 `<meta>` 標記定義，或在 Content-Type HTTP 回應標頭中定義。[進一步瞭解如何宣告字元編碼](https://developer.chrome.com/docs/lighthouse/best-practices/charset/)。"
+  },
+  "core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "字元集宣告遺失或在 HTML 中太晚出現"
+  },
+  "core/audits/dobetterweb/charset.js | title": {
+    "message": "正確定義字元集"
+  },
+  "core/audits/dobetterweb/doctype.js | description": {
+    "message": "指定 DOCTYPE 能防止瀏覽器切換至相容模式。[進一步瞭解 DOCTYPE 宣告](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/)。"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "DOCTYPE 名稱必須是字串 `html`"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationLimitedQuirks": {
+    "message": "文件含有會觸發 `limited-quirks-mode` 的 `doctype`"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "文件必須包含 DOCTYPE"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "publicId 須為空白字串"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "systemId 須為空白字串"
+  },
+  "core/audits/dobetterweb/doctype.js | explanationWrongDoctype": {
+    "message": "文件含有會觸發 `quirks-mode` 的 `doctype`"
+  },
+  "core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "網頁缺少 HTML DOCTYPE，因此觸發了相容模式"
+  },
+  "core/audits/dobetterweb/doctype.js | title": {
+    "message": "網頁含有 HTML DOCTYPE"
+  },
+  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "統計資料"
+  },
+  "core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "值"
+  },
+  "core/audits/dobetterweb/dom-size.js | description": {
+    "message": "大型 DOM 會增加記憶體用量、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的時間，並產生費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解如何避免 DOM 過大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
+  },
+  "core/audits/dobetterweb/dom-size.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 個元素}other{# 個元素}}"
+  },
+  "core/audits/dobetterweb/dom-size.js | failureTitle": {
+    "message": "避免 DOM 過大"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM 層級上限"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
+    "message": "DOM 元素總計"
+  },
+  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "子元素數量上限"
+  },
+  "core/audits/dobetterweb/dom-size.js | title": {
+    "message": "避免 DOM 過大"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "如果未提供其他資訊就要求存取使用者的位置資訊，會讓使用者感到困惑或不信任網站。建議你在使用者執行特定動作時，再提出這項要求。[進一步瞭解地理位置權限](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)。"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "在載入網頁時要求存取使用者的位置資訊"
+  },
+  "core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "避免在載入網頁時要求存取使用者的位置資訊"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "問題類型"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Chrome 開發人員工具的 `Issues` 面板中記錄的問題指出有未解決的狀況。這些狀況可能起因於網路要求失敗、安全性控制項不足，以及其他瀏覽器方面的疑慮。請開啟 Chrome 開發人員工具的 Issues 面板，查看每個問題的詳細資訊。"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "Chrome 開發人員工具的 `Issues` 面板中有問題記錄"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "依跨來源政策封鎖"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "廣告耗用大量資源"
+  },
+  "core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Chrome 開發人員工具的 `Issues` 面板中沒有任何問題"
+  },
+  "core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "版本"
+  },
+  "core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "在此網頁上偵測到的所有前端 JavaScript 程式庫。[進一步瞭解這個 JavaScript 程式庫偵測診斷稽核](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/)。"
+  },
+  "core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "偵測到 JavaScript 程式庫"
+  },
+  "core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "對於連線速度較慢的使用者，透過 `document.write()` 動態插入的外部指令碼可能會導致網頁延遲數十秒載入。[瞭解如何避免 document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/)。"
+  },
+  "core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "避免使用 `document.write()`"
+  },
+  "core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "避免使用 `document.write()`"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "如果未提供其他資訊就要求使用者允許網站顯示通知，會讓使用者感到困惑或不信任網站。建議你在使用者操作特定手勢時，再提出這項要求。[進一步瞭解以負責任的方式取得通知權限](https://developer.chrome.com/docs/lighthouse/best-practices/notification-on-start/)。"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "在載入網頁時要求使用者允許網站顯示通知"
+  },
+  "core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "避免在載入網頁時要求使用者允許網站顯示通知"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | description": {
+    "message": "禁止在輸入欄貼上內容對於使用者體驗來說是種負面做法，而且會封鎖密碼管理工具，導致安全性降低。[進一步瞭解容易使用的輸入欄位](https://developer.chrome.com/docs/lighthouse/best-practices/paste-preventing-inputs/)。"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | failureTitle": {
+    "message": "禁止使用者將內容貼到輸入欄位"
+  },
+  "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
+    "message": "允許使用者將內容貼到輸入欄位"
+  },
+  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "通訊協定"
+  },
+  "core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2 提供許多 HTTP/1.1 沒有的優點，包括二進位標頭和多工處理。[進一步瞭解 HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)。"
+  },
+  "core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{有 1 項要求未透過 HTTP/2 傳送}other{有 # 項要求未透過 HTTP/2 傳送}}"
+  },
+  "core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "使用 HTTP/2"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "建議將輕觸動作和滑鼠滾輪事件監聽器標示為 `passive`，以提升網頁的捲動效能。[進一步瞭解如何採用被動事件監聽器](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)。"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "未使用被動事件監聽器來提升捲動效能"
+  },
+  "core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "使用被動事件監聽器來提升捲動效能"
+  },
+  "core/audits/errors-in-console.js | description": {
+    "message": "如果主控台有錯誤記錄，表示系統有問題尚待解決，例如網路要求錯誤和其他瀏覽器問題。[進一步瞭解主控台診斷稽核中的這些錯誤](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)"
+  },
+  "core/audits/errors-in-console.js | failureTitle": {
+    "message": "主控台已記錄瀏覽器發生的錯誤"
+  },
+  "core/audits/errors-in-console.js | title": {
+    "message": "系統未在主控台中記錄瀏覽器發生的錯誤"
+  },
+  "core/audits/font-display.js | description": {
+    "message": "利用 `font-display` CSS 功能，確保系統在載入網站字型時使用者可以看到文字。[進一步瞭解 `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)。"
+  },
+  "core/audits/font-display.js | failureTitle": {
+    "message": "確認載入網站字型時文字不會消失"
+  },
+  "core/audits/font-display.js | title": {
+    "message": "載入網站字型時沒有任何文字消失"
+  },
+  "core/audits/font-display.js | undeclaredFontOriginWarning": {
+    "message": "{fontCountForOrigin,plural, =1{Lighthouse 無法自動檢查 {fontOrigin} 來源的 `font-display` 值。}other{Lighthouse 無法自動檢查 {fontOrigin} 來源的 `font-display` 值。}}"
+  },
+  "core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "實際顯示比例"
+  },
+  "core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "網頁上顯示的圖片比例"
+  },
+  "core/audits/image-aspect-ratio.js | description": {
+    "message": "圖片顯示尺寸應符合正常顯示比例。[進一步瞭解圖片顯示比例](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/)。"
+  },
+  "core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "圖片的顯示比例不正確"
+  },
+  "core/audits/image-aspect-ratio.js | title": {
+    "message": "圖片的顯示比例正確"
+  },
+  "core/audits/image-size-responsive.js | columnActual": {
+    "message": "實際大小"
+  },
+  "core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "顯示大小"
+  },
+  "core/audits/image-size-responsive.js | columnExpected": {
+    "message": "預期大小"
+  },
+  "core/audits/image-size-responsive.js | description": {
+    "message": "圖片的實際尺寸應與顯示大小和像素比例成比例，才能呈現最清晰的圖片效果。[瞭解如何提供回應式圖片](https://web.dev/articles/serve-responsive-images)。"
+  },
+  "core/audits/image-size-responsive.js | failureTitle": {
+    "message": "提供的圖片解析度過低"
+  },
+  "core/audits/image-size-responsive.js | title": {
+    "message": "提供的圖片解析度適當"
+  },
+  "core/audits/is-on-https.js | allowed": {
+    "message": "已允許"
+  },
+  "core/audits/is-on-https.js | blocked": {
+    "message": "已封鎖"
+  },
+  "core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "不安全的網址"
+  },
+  "core/audits/is-on-https.js | columnResolution": {
+    "message": "要求的解決方案"
+  },
+  "core/audits/is-on-https.js | description": {
+    "message": "所有網站都應該使用 HTTPS 確保安全，即使網站未處理機密資料也一樣。這包括避免載入[複合型內容](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)，因為其中有些內容會透過 HTTPS 傳送初始要求，但透過 HTTP 載入部分資源。HTTPS 能防範入侵者竄改或被動監聽應用程式與使用者之間的通訊，同時也是使用 HTTP/2 和許多新式網路平台 API 的先決條件。[進一步瞭解 HTTPS](https://developer.chrome.com/docs/lighthouse/pwa/is-on-https/)。"
+  },
+  "core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{發現 1 個不安全的要求}other{發現 # 個不安全的要求}}"
+  },
+  "core/audits/is-on-https.js | failureTitle": {
+    "message": "未使用 HTTPS"
+  },
+  "core/audits/is-on-https.js | title": {
+    "message": "使用 HTTPS"
+  },
+  "core/audits/is-on-https.js | upgraded": {
+    "message": "已自動升級為 HTTPS"
+  },
+  "core/audits/is-on-https.js | warning": {
+    "message": "已允許並顯示警告訊息"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
+    "message": "LCP 百分比"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnPhase": {
+    "message": "階段"
+  },
+  "core/audits/largest-contentful-paint-element.js | columnTiming": {
+    "message": "時間"
+  },
+  "core/audits/largest-contentful-paint-element.js | description": {
+    "message": "這是在可視區域中繪製的最大內容元素。[進一步瞭解最大內容繪製元素](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
+    "message": "載入延遲"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
+    "message": "載入時間"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
+    "message": "轉譯延遲"
+  },
+  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
+    "message": "TTFB"
+  },
+  "core/audits/largest-contentful-paint-element.js | title": {
+    "message": "最大內容繪製元素"
+  },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "版面配置位移分數"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "這些是網頁上發現的最大版面配置位移。每個表格項目都代表一個版面配置位移，並會顯示位移最多的元素。每個項目下方是導致版面配置位移的可能根本原因。由於[執行時間較短](https://web.dev/articles/cls#what_is_cls)，CLS 指標值可能不會包含所有的版面配置位移。[瞭解如何改善 CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{發現 1 個版面配置位移}other{發現 # 個版面配置位移}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "載入了網頁字型"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "插入了 iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
+    "message": "延遲的網路要求導致網頁版面配置變更"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "媒體元素沒有明確尺寸"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "避免大量版面配置轉移"
+  },
+  "core/audits/lcp-lazy-loaded.js | description": {
+    "message": "不需捲動位置的圖片經過延遲載入後，會在頁面生命週期的較晚階段顯示，這可能會延遲最大內容繪製作業。[進一步瞭解如何讓延遲載入最佳化](https://web.dev/articles/lcp-lazy-loading)。"
+  },
+  "core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "已延遲載入最大內容繪製圖片"
+  },
+  "core/audits/lcp-lazy-loaded.js | title": {
+    "message": "未延遲載入最大內容繪製圖片"
+  },
+  "core/audits/long-tasks.js | description": {
+    "message": "列出主執行緒上執行時間最長的工作，這項資訊有助於找出造成輸入延遲的主因。[瞭解如何避免冗長的主執行緒工作](https://web.dev/articles/optimize-long-tasks)"
+  },
+  "core/audits/long-tasks.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 # 項長時間執行的工作}other{找到 # 項長時間執行的工作}}"
+  },
+  "core/audits/long-tasks.js | title": {
+    "message": "避免長時間在主執行緒上執行的工作"
+  },
+  "core/audits/mainthread-work-breakdown.js | columnCategory": {
+    "message": "類別"
+  },
+  "core/audits/mainthread-work-breakdown.js | description": {
+    "message": "建議你縮短剖析、編譯及執行 JavaScript 所耗費的時間。提供較小的 JavaScript 酬載可能會有幫助。[瞭解如何盡量減少主執行緒作業](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)"
+  },
+  "core/audits/mainthread-work-breakdown.js | failureTitle": {
+    "message": "將主執行緒的工作降到最低"
+  },
+  "core/audits/mainthread-work-breakdown.js | title": {
+    "message": "將主執行緒的工作降到最低"
+  },
+  "core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "「累計版面配置轉移」指標是用於測量可見元素在可視區域內的移動情形。[進一步瞭解「累計版面配置位移」指標](https://web.dev/articles/cls)。"
+  },
+  "core/audits/metrics/first-contentful-paint.js | description": {
+    "message": "首次顯示內容所需時間是指瀏覽器首次顯示文字或圖片的時間。[進一步瞭解「首次顯示內容所需時間」指標](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/)。"
+  },
+  "core/audits/metrics/first-meaningful-paint.js | description": {
+    "message": "畫面首次有效顯示所需時間是指網頁顯示主要內容的時間。[進一步瞭解「畫面首次有效顯示所需時間」指標](https://developer.chrome.com/docs/lighthouse/performance/first-meaningful-paint/)。"
+  },
+  "core/audits/metrics/interaction-to-next-paint.js | description": {
+    "message": "「與下一個顯示的內容互動」指標的用途是測量網頁回應，也就是網頁明顯回應使用者輸入內容所需的時間。[進一步瞭解「與下一個顯示的內容互動」指標](https://web.dev/articles/inp)。"
+  },
+  "core/audits/metrics/interactive.js | description": {
+    "message": "互動準備時間是網頁進入完整互動狀態前花費的時間。[進一步瞭解「互動準備時間」指標](https://developer.chrome.com/docs/lighthouse/performance/interactive/)。"
+  },
+  "core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "「最大內容繪製」是指繪製最大的文字或圖片所需要的時間。[進一步瞭解「最大內容繪製」指標](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
+  },
+  "core/audits/metrics/max-potential-fid.js | description": {
+    "message": "使用者可能會遇到的最長「首次輸入延遲時間」就是耗時最久的工作持續時間。[進一步瞭解「可能的最長首次輸入延遲時間」指標](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)。"
+  },
+  "core/audits/metrics/speed-index.js | description": {
+    "message": "速度指數會顯示網頁可見內容的填入速度。[進一步瞭解「速度指數」指標](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)。"
+  },
+  "core/audits/metrics/total-blocking-time.js | description": {
+    "message": "當工作長度超過 50 毫秒時，從 FCP 到互動準備時間的時間範圍總計 (以毫秒為單位)。[進一步瞭解「總封鎖時間」指標](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)。"
+  },
+  "core/audits/network-rtt.js | description": {
+    "message": "網路封包往返時間 (RTT) 對效能有很大的影響。如果將封包傳送到某個來源的 RTT 很高，表示靠近使用者端的伺服器在效能方面有改善空間。[進一步瞭解封包往返時間](https://hpbn.co/primer-on-latency-and-bandwidth/)。"
+  },
+  "core/audits/network-rtt.js | title": {
+    "message": "網路封包往返時間"
+  },
+  "core/audits/network-server-latency.js | description": {
+    "message": "伺服器延遲時間可能會影響網站效能。如果原始伺服器的延遲時間很高，表示伺服器有超載情形或後端效能不佳。[進一步瞭解伺服器回應時間](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)。"
+  },
+  "core/audits/network-server-latency.js | title": {
+    "message": "伺服器後端延遲時間"
+  },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "未合成的動畫可能無法順暢播放，而且會增加 CLS。[瞭解如何避免使用非合成動畫](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 # 個動畫元素}other{找到 # 個動畫元素}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "篩選器相關的屬性可能會移動像素"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "目標包含其他不相容的動畫"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "效果包含「replace」以外的合成模式"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "避免使用非合成的動畫"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "轉換相關屬性取決於定界框大小"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{不支援的 CSS 屬性：{properties}}other{不支援的 CSS 屬性：{properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "效果包含不支援的時間參數"
+  },
+  "core/audits/preload-fonts.js | description": {
+    "message": "請預先載入 `optional` 字型，以便新訪客使用。[進一步瞭解如何預先載入字型](https://web.dev/articles/preload-optional-fonts)"
+  },
+  "core/audits/preload-fonts.js | failureTitle": {
+    "message": "並未預先載入使用 `font-display: optional` 的字型"
+  },
+  "core/audits/preload-fonts.js | title": {
+    "message": "已預先載入使用 `font-display: optional` 的字型"
+  },
+  "core/audits/prioritize-lcp-image.js | description": {
+    "message": "如果 LCP 元素是以動態方式新增到網頁，則必須預先載入圖片才能改善 LCP。[進一步瞭解如何預先載入 LCP 元素](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)。"
+  },
+  "core/audits/prioritize-lcp-image.js | title": {
+    "message": "預先載入最大內容繪製圖片"
+  },
+  "core/audits/redirects-http.js | description": {
+    "message": "請確認所有 HTTP 流量都已重新導向到 HTTPS，讓所有使用者可以安全存取網路功能。[瞭解詳情](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)。"
+  },
+  "core/audits/redirects-http.js | failureTitle": {
+    "message": "未將 HTTP 流量重新導向至 HTTPS"
+  },
+  "core/audits/redirects-http.js | title": {
+    "message": "將 HTTP 流量重新導向至 HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "重新導向會導致網頁進一步延遲載入。[瞭解如何避免網頁重新導向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "避免進行多次頁面重新導向"
+  },
+  "core/audits/seo/canonical.js | description": {
+    "message": "標準連結可指出要在搜尋結果中顯示哪個網址。[進一步瞭解標準連結](https://developer.chrome.com/docs/lighthouse/seo/canonical/)。"
+  },
+  "core/audits/seo/canonical.js | explanationConflict": {
+    "message": "多個衝突的網址 ({urlList})"
+  },
+  "core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "網址無效 ({url})"
+  },
+  "core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "指向其他 `hreflang` 位置 ({url})"
+  },
+  "core/audits/seo/canonical.js | explanationRelative": {
+    "message": "不是絕對網址 ({url})"
+  },
+  "core/audits/seo/canonical.js | explanationRoot": {
+    "message": "指向目標為網域的根網址 (首頁)，而不是相應的內容網頁"
+  },
+  "core/audits/seo/canonical.js | failureTitle": {
+    "message": "文件缺少有效的 `rel=canonical`"
+  },
+  "core/audits/seo/canonical.js | title": {
+    "message": "文件具備有效的 `rel=canonical`"
+  },
+  "core/audits/seo/crawlable-anchors.js | columnFailingLink": {
+    "message": "無法檢索的連結"
+  },
+  "core/audits/seo/crawlable-anchors.js | description": {
+    "message": "搜尋引擎可能會使用連結上的 `href` 屬性來檢索網站。請確認錨點元素的 `href` 屬性可連結適當的目的地，這樣才能檢索網站上的更多網頁。[瞭解如何讓連結可供檢索](https://support.google.com/webmasters/answer/9112205)"
+  },
+  "core/audits/seo/crawlable-anchors.js | failureTitle": {
+    "message": "無法檢索的連結"
+  },
+  "core/audits/seo/crawlable-anchors.js | title": {
+    "message": "可檢索的連結"
+  },
+  "core/audits/seo/font-size.js | additionalIllegibleText": {
+    "message": "其他難以辨識的文字"
+  },
+  "core/audits/seo/font-size.js | columnFontSize": {
+    "message": "字型大小"
+  },
+  "core/audits/seo/font-size.js | columnPercentPageText": {
+    "message": "頁面文字百分比"
+  },
+  "core/audits/seo/font-size.js | columnSelector": {
+    "message": "選取器"
+  },
+  "core/audits/seo/font-size.js | description": {
+    "message": "如果字型小於 12 像素，文字會太小而難以辨識；行動裝置訪客必須「以雙指撥動縮放」才能閱讀內容。網頁中應有超過 60% 的文字採用 12 像素以上的大小。[進一步瞭解清晰易讀的字型大小](https://developer.chrome.com/docs/lighthouse/seo/font-size/)。"
+  },
+  "core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} 的文字清晰易讀"
+  },
+  "core/audits/seo/font-size.js | explanationViewport": {
+    "message": "文字難以辨識，這是因為網頁沒有針對行動裝置螢幕設定合適的可視區域中繼標記。"
+  },
+  "core/audits/seo/font-size.js | failureTitle": {
+    "message": "文件使用的字型大小難以辨識"
+  },
+  "core/audits/seo/font-size.js | legibleText": {
+    "message": "清晰易讀的文字"
+  },
+  "core/audits/seo/font-size.js | title": {
+    "message": "文件使用的字型大小清晰易讀"
+  },
+  "core/audits/seo/hreflang.js | description": {
+    "message": "hreflang 連結會告訴搜尋引擎在特定語言或區域的搜尋結果中應顯示哪種版本的網頁。[進一步瞭解 `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)。"
+  },
+  "core/audits/seo/hreflang.js | failureTitle": {
+    "message": "文件缺少有效的 `hreflang`"
+  },
+  "core/audits/seo/hreflang.js | notFullyQualified": {
+    "message": "相對 href 值"
+  },
+  "core/audits/seo/hreflang.js | title": {
+    "message": "文件具備有效的 `hreflang`"
+  },
+  "core/audits/seo/hreflang.js | unexpectedLanguage": {
+    "message": "非預期的語言代碼"
+  },
+  "core/audits/seo/http-status-code.js | description": {
+    "message": "如果網頁傳回失敗的 HTTP 狀態碼，可能無法正確編入索引。[進一步瞭解 HTTP 狀態碼](https://developer.chrome.com/docs/lighthouse/seo/http-status-code/)。"
+  },
+  "core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "網頁傳回失敗的 HTTP 狀態碼"
+  },
+  "core/audits/seo/http-status-code.js | title": {
+    "message": "網頁傳回成功的 HTTP 狀態碼"
+  },
+  "core/audits/seo/is-crawlable.js | description": {
+    "message": "如果搜尋引擎沒有檢索網頁的權限，將無法在搜尋結果中顯示你的網頁。[進一步瞭解檢索器指令](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/)。"
+  },
+  "core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "網頁的索引功能遭到封鎖"
+  },
+  "core/audits/seo/is-crawlable.js | title": {
+    "message": "網頁的索引功能未遭到封鎖"
+  },
+  "core/audits/seo/link-text.js | description": {
+    "message": "連結說明文字可協助搜尋引擎瞭解你的內容。[瞭解如何讓連結更易於存取](https://developer.chrome.com/docs/lighthouse/seo/link-text/)。"
+  },
+  "core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 1 個連結}other{找到 # 個連結}}"
+  },
+  "core/audits/seo/link-text.js | failureTitle": {
+    "message": "連結缺少說明文字"
+  },
+  "core/audits/seo/link-text.js | title": {
+    "message": "連結具有說明文字"
+  },
+  "core/audits/seo/manual/structured-data.js | description": {
+    "message": "執行[結構化資料測試工具](https://search.google.com/structured-data/testing-tool/)和 [Structured Data Linter](http://linter.structured-data.org/) 來驗證結構化資料。[進一步瞭解結構化資料](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)。"
+  },
+  "core/audits/seo/manual/structured-data.js | title": {
+    "message": "結構化資料有效"
+  },
+  "core/audits/seo/meta-description.js | description": {
+    "message": "你可以在搜尋結果中加入中繼說明，簡要描述網頁內容。[進一步瞭解中繼說明](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)。"
+  },
+  "core/audits/seo/meta-description.js | explanation": {
+    "message": "沒有說明文字。"
+  },
+  "core/audits/seo/meta-description.js | failureTitle": {
+    "message": "文件缺少中繼說明"
+  },
+  "core/audits/seo/meta-description.js | title": {
+    "message": "文件具有中繼說明"
+  },
+  "core/audits/seo/robots-txt.js | description": {
+    "message": "如果 robots.txt 檔案格式錯誤，檢索器可能無法瞭解你偏好的網站檢索方式或索引建立方式。[進一步瞭解 robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/)。"
+  },
+  "core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "robots.txt 要求傳回以下 HTTP 狀態：{statusCode}"
+  },
+  "core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{發現 1 項錯誤}other{發現 # 項錯誤}}"
+  },
+  "core/audits/seo/robots-txt.js | explanation": {
+    "message": "Lighthouse 無法下載 robots.txt 檔"
+  },
+  "core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "robots.txt 無效"
+  },
+  "core/audits/seo/robots-txt.js | title": {
+    "message": "robots.txt 有效"
+  },
+  "core/audits/server-response-time.js | description": {
+    "message": "請確保伺服器能快速回應主要文件，因為這會影響到所有其他要求的回應時間。[進一步瞭解「第一個位元組時間」指標](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)。"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "根文件回應時間為 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "請縮短初始伺服器回應時間"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "初始伺服器回應時間很短"
+  },
+  "core/audits/third-party-cookies.js | description": {
+    "message": "在 Chrome 中瀏覽網頁時，將可選擇不用第三方 Cookie。[進一步瞭解第三方 Cookie](https://developers.google.com/privacy-sandbox/cookies)。"
+  },
+  "core/audits/third-party-cookies.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 1 個 Cookie}other{找到 # 個 Cookie}}"
+  },
+  "core/audits/third-party-cookies.js | failureTitle": {
+    "message": "使用第三方 Cookie"
+  },
+  "core/audits/third-party-cookies.js | title": {
+    "message": "避免使用第三方 Cookie"
+  },
+  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (客戶成功案例)"
+  },
+  "core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (行銷)"
+  },
+  "core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (社交)"
+  },
+  "core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (影片)"
+  },
+  "core/audits/third-party-facades.js | columnProduct": {
+    "message": "產品"
+  },
+  "core/audits/third-party-facades.js | description": {
+    "message": "某些第三方內嵌內容可延遲載入。建議你以門面元件取代這些內容，等到需要顯示時再載入。[瞭解如何使用門面元件延遲載入第三方內容](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)。"
+  },
+  "core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{# 個可用的替代門面元件}other{# 個可用的替代門面元件}}"
+  },
+  "core/audits/third-party-facades.js | failureTitle": {
+    "message": "某些第三方資源可使用門面元件延遲載入"
+  },
+  "core/audits/third-party-facades.js | title": {
+    "message": "使用門面元件延遲載入第三方資源"
+  },
+  "core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "第三方"
+  },
+  "core/audits/third-party-summary.js | description": {
+    "message": "第三方程式碼可能會嚴重影響載入效能。請盡量減少不必要的第三方供應商，並在網頁的主要內容載入完畢後，再載入第三方程式碼。[瞭解如何盡量減少第三方程式碼的影響](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)。"
+  },
+  "core/audits/third-party-summary.js | displayValue": {
+    "message": "第三方程式碼將主執行緒封鎖了 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/audits/third-party-summary.js | failureTitle": {
+    "message": "降低第三方程式碼的影響"
+  },
+  "core/audits/third-party-summary.js | title": {
+    "message": "盡量減少第三方程式碼的使用量"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "請明確設定圖片元素的寬度和高度，以減少版面配置轉移並改善 CLS。[瞭解如何設定圖片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "圖片元素沒有明確的`width`和`height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "圖片元素具有明確的`width`和`height`"
+  },
+  "core/audits/user-timings.js | columnType": {
+    "message": "類型"
+  },
+  "core/audits/user-timings.js | description": {
+    "message": "建議你使用 User Timing API 評估應用程式在關鍵使用者體驗期間的實際效能。[進一步瞭解使用者載入時間標記](https://developer.chrome.com/docs/lighthouse/performance/user-timings/)。"
+  },
+  "core/audits/user-timings.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 個 User Timing 標記}other{# 個 User Timing 標記}}"
+  },
+  "core/audits/user-timings.js | title": {
+    "message": "User Timing 標記和測量結果"
+  },
+  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
+    "message": "「{securityOrigin}」有「`<link rel=preconnect>`」，但未獲瀏覽器使用。請檢查你使用 `crossorigin` 屬性的方式是否正確。"
+  },
+  "core/audits/uses-rel-preconnect.js | description": {
+    "message": "建議你新增 `preconnect` 或 `dns-prefetch` 資源提示，及早連線至重要的第三方來源。[瞭解如何預先連線到必要來源](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)。"
+  },
+  "core/audits/uses-rel-preconnect.js | title": {
+    "message": "預先連上必要來源"
+  },
+  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "已找到超過 2 個「`<link rel=preconnect>`」連結。請盡量避免使用這些連結，僅用於最重要的來源。"
+  },
+  "core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "「{securityOrigin}」有「`<link rel=preconnect>`」，但未獲瀏覽器使用。「`preconnect`」僅應用於網頁一定會要求的重要來源。"
+  },
+  "core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "「{preloadURL}」有預先載入的「`<link>`」，但未獲瀏覽器使用。請檢查你使用 `crossorigin` 屬性的方式是否正確。"
+  },
+  "core/audits/uses-rel-preload.js | description": {
+    "message": "建議使用 `<link rel=preload>` 優先擷取目前在網頁載入時較晚要求的資源。[瞭解如何預先載入關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)。"
+  },
+  "core/audits/uses-rel-preload.js | title": {
+    "message": "預先載入重要要求"
+  },
+  "core/audits/valid-source-maps.js | columnMapURL": {
+    "message": "對應網址"
+  },
+  "core/audits/valid-source-maps.js | description": {
+    "message": "來源對應會將經過壓縮的程式碼轉譯成原始碼。這項功能可協助開發人員在正式版中偵錯。此外，Lighthouse 還能提供進一步的深入分析。我們建議你部署來源對應，以善用這些優勢。[進一步瞭解來源對應](https://developer.chrome.com/docs/devtools/javascript/source-maps/)。"
+  },
+  "core/audits/valid-source-maps.js | failureTitle": {
+    "message": "缺少大型第一方 JavaScript 的來源對應"
+  },
+  "core/audits/valid-source-maps.js | missingSourceMapErrorMessage": {
+    "message": "大型 JavaScript 檔案缺少來源對應"
+  },
+  "core/audits/valid-source-maps.js | missingSourceMapItemsWarningMesssage": {
+    "message": "{missingItems,plural, =1{警告：`.sourcesContent` 中缺少 1 個項目}other{警告：`.sourcesContent` 中缺少 # 個項目}}"
+  },
+  "core/audits/valid-source-maps.js | title": {
+    "message": "頁面包含有效的來源對應"
+  },
+  "core/audits/viewport.js | description": {
+    "message": "`<meta name=\"viewport\">`不僅會根據行動裝置螢幕大小將應用程式最佳化，還能避免[使用者輸入內容出現 300 毫秒的延遲](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。[進一步瞭解如何使用可視區域中繼標記](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)。"
+  },
+  "core/audits/viewport.js | explanationNoTag": {
+    "message": "找不到任何 `<meta name=\"viewport\">` 標記"
+  },
+  "core/audits/viewport.js | failureTitle": {
+    "message": "缺少包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 標記"
+  },
+  "core/audits/viewport.js | title": {
+    "message": "具備包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 標記"
+  },
+  "core/audits/work-during-interaction.js | description": {
+    "message": "這是在「與下一個顯示的內容互動」測量期間發生的執行緒封鎖作業。[進一步瞭解「與下一個顯示的內容互動」指標](https://web.dev/articles/inp)。"
+  },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "事件「{interactionType}」花費了 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/audits/work-during-interaction.js | eventTarget": {
+    "message": "事件目標"
+  },
+  "core/audits/work-during-interaction.js | failureTitle": {
+    "message": "在進行重要互動時盡量減少作業"
+  },
+  "core/audits/work-during-interaction.js | inputDelay": {
+    "message": "輸入延遲"
+  },
+  "core/audits/work-during-interaction.js | presentationDelay": {
+    "message": "回應顯示延遲"
+  },
+  "core/audits/work-during-interaction.js | processingDuration": {
+    "message": "處理時間"
+  },
+  "core/audits/work-during-interaction.js | title": {
+    "message": "在進行重要互動時盡量減少作業"
+  },
+  "core/config/default-config.js | a11yAriaGroupDescription": {
+    "message": "這些稽核建議可協助改善 ARIA 在應用程式中的使用情形，進而讓輔助技術 (例如螢幕閱讀器) 的使用體驗更上一層樓。"
+  },
+  "core/config/default-config.js | a11yAriaGroupTitle": {
+    "message": "ARIA"
+  },
+  "core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "你可以根據這些資訊判斷是否要提供用來替代音訊和影片的內容。這或許能改善聽障或視障人士的使用體驗。"
+  },
+  "core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "音訊和影片"
+  },
+  "core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "這些稽核項目會提供常見的無障礙功能最佳做法。"
+  },
+  "core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "最佳做法"
+  },
+  "core/config/default-config.js | a11yCategoryDescription": {
+    "message": "這些檢查可找出[網頁應用程式無障礙設計值得改善之處](https://developer.chrome.com/docs/lighthouse/accessibility/)。自動偵測功能只能偵測出部分問題，而且無法保證網頁應用程式的無障礙程度，因此建議一併使用[手動測試](https://web.dev/articles/how-to-review)。"
+  },
+  "core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "這些稽核項目會檢查自動化測試工具未涵蓋的區域。詳情請參閱[無障礙功能審查的執行指南](https://web.dev/articles/how-to-review)。"
+  },
+  "core/config/default-config.js | a11yCategoryTitle": {
+    "message": "無障礙功能"
+  },
+  "core/config/default-config.js | a11yColorContrastGroupDescription": {
+    "message": "這些稽核建議有助於提高內容的易讀性。"
+  },
+  "core/config/default-config.js | a11yColorContrastGroupTitle": {
+    "message": "對比"
+  },
+  "core/config/default-config.js | a11yLanguageGroupDescription": {
+    "message": "你可以根據這些稽核建議做出改善，讓其他地區的使用者更容易理解你的內容。"
+  },
+  "core/config/default-config.js | a11yLanguageGroupTitle": {
+    "message": "國際化和本地化"
+  },
+  "core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "這些稽核建議可協助提高應用程式中的控制項語義品質。這或許能改善輔助技術 (例如螢幕閱讀器) 的使用體驗。"
+  },
+  "core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "名稱和標籤"
+  },
+  "core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "你可以根據這些資訊來改善應用程式的鍵盤瀏覽操作方式。"
+  },
+  "core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "瀏覽"
+  },
+  "core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "請參考這些建議事項，讓使用者能夠更容易藉由輔助技術 (例如螢幕閱讀器) 來閱讀表格或清單資料。"
+  },
+  "core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "表格和清單"
+  },
+  "core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
+    "message": "瀏覽器相容性"
+  },
+  "core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "最佳做法"
+  },
+  "core/config/default-config.js | bestPracticesGeneralGroupTitle": {
+    "message": "一般"
+  },
+  "core/config/default-config.js | bestPracticesTrustSafetyGroupTitle": {
+    "message": "信任與安全性"
+  },
+  "core/config/default-config.js | bestPracticesUXGroupTitle": {
+    "message": "使用者體驗"
+  },
+  "core/config/default-config.js | diagnosticsGroupDescription": {
+    "message": "進一步瞭解應用程式的效能。這些數字不會[直接影響](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)「效能」分數。"
+  },
+  "core/config/default-config.js | diagnosticsGroupTitle": {
+    "message": "診斷"
+  },
+  "core/config/default-config.js | firstPaintImprovementsGroupDescription": {
+    "message": "像素呈現在畫面上的速度是最重要的效能層面。重點指標：首次內容繪製、首次有效繪製"
+  },
+  "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
+    "message": "改進首次繪製程序"
+  },
+  "core/config/default-config.js | metricGroupTitle": {
+    "message": "指標"
+  },
+  "core/config/default-config.js | overallImprovementsGroupDescription": {
+    "message": "改進整體載入體驗，採用回應式頁面設計，儘快為使用者提供服務。重點指標：可互動時間、速度指數"
+  },
+  "core/config/default-config.js | overallImprovementsGroupTitle": {
+    "message": "整體改進"
+  },
+  "core/config/default-config.js | performanceCategoryTitle": {
+    "message": "效能"
+  },
+  "core/config/default-config.js | seoCategoryDescription": {
+    "message": "這些檢查項目可確保你的網頁採用基本的搜尋引擎最佳化建議。請注意，Lighthouse 這裡未列入評分的其他因素還有很多，這些因素也可能會影響你的網頁搜尋結果排名，包括[網站體驗核心指標](https://web.dev/explore/vitals)的成效。[進一步瞭解 Google 搜尋基礎入門](https://support.google.com/webmasters/answer/35769)。"
+  },
+  "core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "在您的網站上執行這些額外的驗證工具，以檢查其他 SEO 最佳做法。"
+  },
+  "core/config/default-config.js | seoCategoryTitle": {
+    "message": "搜尋引擎最佳化 (SEO)"
+  },
+  "core/config/default-config.js | seoContentGroupDescription": {
+    "message": "請設定適當的 HTML 格式，讓檢索器更容易辨識你的應用程式內容。"
+  },
+  "core/config/default-config.js | seoContentGroupTitle": {
+    "message": "內容最佳做法"
+  },
+  "core/config/default-config.js | seoCrawlingGroupDescription": {
+    "message": "檢索器需要存取你的應用程式，才能將網站顯示在搜尋結果中。"
+  },
+  "core/config/default-config.js | seoCrawlingGroupTitle": {
+    "message": "檢索及建立索引"
+  },
+  "core/config/default-config.js | seoMobileGroupDescription": {
+    "message": "請確認你的網頁適合在行動裝置上瀏覽，這樣使用者不須撥動雙指或縮放螢幕即可閱讀網頁內容。[瞭解如何打造適合在行動裝置上瀏覽的網頁](https://developers.google.com/search/mobile-sites/)。"
+  },
+  "core/config/default-config.js | seoMobileGroupTitle": {
+    "message": "適合透過行動裝置瀏覽"
+  },
+  "core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "測試裝置的 CPU 速度似乎比 Lighthouse 預期要慢。這可能會對效能分數造成負面影響。進一步瞭解[如何校準至適當的 CPU 減速倍頻](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)。"
+  },
+  "core/gather/driver/navigation.js | warningRedirected": {
+    "message": "你的測試網址 ({requested}) 已重新導向至 {final}，因此頁面可能無法如預期載入。請直接測試第二個網址。"
+  },
+  "core/gather/driver/navigation.js | warningTimeout": {
+    "message": "頁面載入速度過慢，無法在時限內完成，因此結果可能不完整。"
+  },
+  "core/gather/driver/storage.js | warningCacheTimeout": {
+    "message": "瀏覽器快取清除作業逾時，建議你再次稽核這個網頁。如果問題仍未解決，請回報錯誤。"
+  },
+  "core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{下列位置儲存的資料可能會影響載入效能：{locations}。使用無痕視窗審核這個頁面，可避免這些資源影響你的分數。}other{下列位置儲存的資料可能會影響載入效能：{locations}。使用無痕視窗審核這個頁面，可避免這些資源影響你的分數。}}"
+  },
+  "core/gather/driver/storage.js | warningOriginDataTimeout": {
+    "message": "原始資料清除作業逾時，建議你再次稽核這個網頁。如果問題仍未解決，請回報錯誤。"
+  },
+  "core/gather/gatherers/link-elements.js | headerParseWarning": {
+    "message": "剖析`link`標頭 ({error}) 時發生錯誤：`{header}`"
+  },
+  "core/gather/timespan-runner.js | warningNavigationDetected": {
+    "message": "系統在執行期間偵測到網頁瀏覽活動。我們不建議使用時間範圍模式稽核網頁瀏覽活動。請使用導覽模式稽核網頁瀏覽活動，提升第三方歸因和主執行緒偵測的效能。"
+  },
+  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
+    "message": "只有透過 GET 要求載入的網頁才適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
+    "message": "只能快取狀態碼為 2XX 的網頁。"
+  },
+  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
+    "message": "Chrome 偵測到嘗試在快取中執行 JavaScript 的作業。"
+  },
+  "core/lib/bf-cache-strings.js | appBanner": {
+    "message": "已要求 AppBanner 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | authorizationHeader": {
+    "message": "系統收到保持運作的要求，因此停用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
+    "message": "往返快取已因旗標設定而停用。如要在這部裝置本機上啟用該功能，請前往 chrome://flags/#back-forward-cache。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "往返快取已因指令列而停用。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "由於記憶體不足，往返快取已停用。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
+    "message": "委派目標不支援往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
+    "message": "為了執行預先轉譯器，往返快取已停用。"
+  },
+  "core/lib/bf-cache-strings.js | broadcastChannel": {
+    "message": "這個網頁有內含已註冊事件監聽器的 BroadcastChannel 例項，因此系統無法快取。"
+  },
+  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
+    "message": "含有 cache-control:no-store 標頭的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | cacheFlushed": {
+    "message": "快取已遭刻意清除。"
+  },
+  "core/lib/bf-cache-strings.js | cacheLimit": {
+    "message": "為了讓系統能夠快取其他網頁，這個網頁已從快取中移除。"
+  },
+  "core/lib/bf-cache-strings.js | containsPlugins": {
+    "message": "含有外掛程式的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentFileChooser": {
+    "message": "使用 FileChooser API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
+    "message": "使用 File System Access API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
+    "message": "使用媒體裝置調度工具的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaPlay": {
+    "message": "使用者離開網頁時，媒體播放器正在播放內容。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaSession": {
+    "message": "使用 MediaSession API 並設定播放狀態的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
+    "message": "使用 MediaSession API 並設定動作處理常式的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentScreenReader": {
+    "message": "往返快取已因螢幕閱讀器而停用。"
+  },
+  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
+    "message": "使用 SecurityHandler 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentSerial": {
+    "message": "使用 Serial API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
+    "message": "使用 WebAuthentication API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
+    "message": "使用 WebBluetooth API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | contentWebUSB": {
+    "message": "使用 WebUSB API 的網頁不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | cookieDisabled": {
+    "message": "使用 `Cache-Control: no-store` 的頁面停用 Cookie，因此系統停用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
+    "message": "使用專屬 Worker 或 Worklet 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | documentLoaded": {
+    "message": "文件未在使用者離開前完成載入。"
+  },
+  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
+    "message": "使用者離開網頁時，系統顯示了應用程式橫幅。"
+  },
+  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "使用者離開網頁時，系統顯示了 Chrome 密碼管理工具。"
+  },
+  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "使用者離開網頁時，系統正在處理 DOM distillation。"
+  },
+  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
+    "message": "使用者離開網頁時，系統顯示了 DOM Distiller Viewer。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
+    "message": "由於擴充功能使用訊息 API，因此往返快取已停用。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "在儲存到往返快取之前，可持續連線的擴充功能必須中斷連線。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "可持續連線的擴充功能嘗試在往返快取中傳送訊息給頁框。"
+  },
+  "core/lib/bf-cache-strings.js | embedderExtensions": {
+    "message": "往返快取已因擴充功能而停用。"
+  },
+  "core/lib/bf-cache-strings.js | embedderModalDialog": {
+    "message": "使用者離開網頁時，網頁上顯示了強制回應對話方塊，例如重新提交表單或 HTTP 密碼對話方塊。"
+  },
+  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
+    "message": "使用者離開網頁時，系統顯示了離線頁面。"
+  },
+  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
+    "message": "使用者離開網頁時，系統顯示了 Out-Of-Memory 列。"
+  },
+  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
+    "message": "使用者離開網頁時，系統會要求權限。"
+  },
+  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
+    "message": "使用者離開網頁時，系統顯示了彈出式視窗攔截器。"
+  },
+  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "使用者離開網頁時，系統顯示了安全瀏覽詳細資料。"
+  },
+  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "安全瀏覽功能認定這個網頁有濫用疑慮，因此封鎖彈出式視窗。"
+  },
+  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Service Worker 已在網頁儲存於往返快取時啟用。"
+  },
+  "core/lib/bf-cache-strings.js | errorDocument": {
+    "message": "由於文件發生錯誤，往返快取已停用。"
+  },
+  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
+    "message": "使用 FencedFrames 的網頁無法儲存在往返快取中。"
+  },
+  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
+    "message": "為了讓系統能夠快取其他網頁，這個網頁已從快取中移除。"
+  },
+  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
+    "message": "已授予媒體串流播放存取權的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | haveInnerContents": {
+    "message": "使用入口網站的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | idleManager": {
+    "message": "使用 IdleManager 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | indexedDBConnection": {
+    "message": "含有開放式 IndexedDB 連線的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | indexedDBEvent": {
+    "message": "發生 IndexedDB 事件，因此往返快取已停用。"
+  },
+  "core/lib/bf-cache-strings.js | ineligibleAPI": {
+    "message": "使用了不支援的 API。"
+  },
+  "core/lib/bf-cache-strings.js | injectedJavascript": {
+    "message": "由擴充功能插入 `JavaScript` 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
+    "message": "由擴充功能插入 `StyleSheet` 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | internalError": {
+    "message": "內部錯誤。"
+  },
+  "core/lib/bf-cache-strings.js | keepaliveRequest": {
+    "message": "系統收到保持運作的要求，因此停用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | keyboardLock": {
+    "message": "使用鍵盤鎖定功能的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | loading": {
+    "message": "網頁未在使用者離開前完成載入。"
+  },
+  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
+    "message": "主要資源含有 cache-control:no-cache 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
+    "message": "主要資源含有 cache-control:no-store 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
+    "message": "瀏覽作業已在網頁可從往返快取中還原前取消。"
+  },
+  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
+    "message": "某個作用中的網路連線收到太多資料，因此網頁已從快取中移除。Chrome 會限制網頁處於快取狀態時可接收的資料量。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "含有 in-flight fetch() 或 XHR 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
+    "message": "某個作用中的網路要求涉及重新導向，因此網頁已從往返快取中移除。"
+  },
+  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
+    "message": "網路連線處於開放狀態太久，因此網頁已從快取中移除。Chrome 會限制網頁可在快取時接收資料的時間長度。"
+  },
+  "core/lib/bf-cache-strings.js | noResponseHead": {
+    "message": "不含有效回應標頭的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | notMainFrame": {
+    "message": "瀏覽作業是在主頁框以外的頁框中執行。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
+    "message": "網頁含有進行中的已建立索引資料庫交易，因此目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "含有 in-flight 網路要求的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
+    "message": "含有 in-flight 擷取網路要求的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
+    "message": "含有 in-flight 網路要求的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
+    "message": "含有 in-flight XHR 網路要求的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | paymentManager": {
+    "message": "使用 PaymentManager 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | pictureInPicture": {
+    "message": "使用子母畫面的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | portal": {
+    "message": "使用入口網站的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | printing": {
+    "message": "顯示列印使用者介面的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
+    "message": "這個網頁已透過「`window.open()`」開啟，且其他分頁含有該網頁的參照內容，或者該網頁開啟了視窗。"
+  },
+  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
+    "message": "往返快取中網頁的轉譯器程序異常終止。"
+  },
+  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
+    "message": "往返快取中網頁的轉譯器程序已終止。"
+  },
+  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
+    "message": "已要求音訊擷取權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "已要求感應器權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
+    "message": "已要求背景同步或擷取權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
+    "message": "已要求 MIDI 權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
+    "message": "已要求通知權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
+    "message": "已要求儲存空間存取權的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
+    "message": "已要求影片擷取權限的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
+    "message": "只能快取網址配置為 HTTP/HTTPS 的網頁。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
+    "message": "這個網頁已在儲存於往返快取時由 Service Worker 聲明擁有權。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
+    "message": "Service Worker 已嘗試向往返快取中的網頁傳送 `MessageEvent`。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker 已在網頁儲存於往返快取時取消註冊。"
+  },
+  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
+    "message": "系統啟用了 Service Worker，因此網頁已從往返快取中移除。"
+  },
+  "core/lib/bf-cache-strings.js | sessionRestored": {
+    "message": "Chrome 已重新啟動，並清除往返快取項目。"
+  },
+  "core/lib/bf-cache-strings.js | sharedWorker": {
+    "message": "使用 SharedWorker 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | speechRecognizer": {
+    "message": "使用 SpeechRecognizer 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | speechSynthesis": {
+    "message": "使用 SpeechSynthesis 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
+    "message": "網頁上 iframe 啟動的瀏覽作業並未完成。"
+  },
+  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
+    "message": "子資源含有 cache-control:no-cache 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
+    "message": "子資源含有 cache-control:no-store 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | timeout": {
+    "message": "網頁超出存放在往返快取中的時間上限，因此已失效。"
+  },
+  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
+    "message": "將網頁儲存至到返快取的作業逾時，原因可能是頁面隱藏事件處理常式的執行時間太長。"
+  },
+  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
+    "message": "網頁在主頁框中含有卸載處理常式。"
+  },
+  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
+    "message": "網頁在子頁框中含有卸載處理常式。"
+  },
+  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
+    "message": "瀏覽器已變更使用者代理程式覆寫標頭。"
+  },
+  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
+    "message": "已授予影片或音訊錄製存取權的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webDatabase": {
+    "message": "使用 WebDatabase 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webHID": {
+    "message": "使用 WebHID 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webLocks": {
+    "message": "使用 WebLocks 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webNfc": {
+    "message": "使用 WebNfc 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webOTPService": {
+    "message": "使用 WebOTPService 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webRTC": {
+    "message": "使用 WebRTC 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webShare": {
+    "message": "使用 WebShare 的網頁目前不適用往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webSocket": {
+    "message": "使用 WebSocket 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webTransport": {
+    "message": "使用 WebTransport 的網頁無法儲存到往返快取。"
+  },
+  "core/lib/bf-cache-strings.js | webXR": {
+    "message": "使用 WebXR 的網頁目前不適用往返快取。"
+  },
+  "core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "建議新增 https: 和 http: 網址配置，以便回溯相容於舊版瀏覽器 (支援 `'strict-dynamic'` 的瀏覽器會忽略這些配置)。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "`disown-opener` 已於 CSP3 淘汰，請改用 Cross-Origin-Opener-Policy 標頭。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "`referrer` 已於 CSP2 淘汰，請改用 Referrer-Policy 標頭。"
+  },
+  "core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "`reflected-xss` 已於 CSP2 淘汰，請改用 X-XSS-Protection 標頭。"
+  },
+  "core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "如果缺少 `base-uri`，有心人士就能利用插入的 `<base>` 標記，將所有相對網址 (例如指令碼) 的基準網址設為攻擊者控制的網域。建議將 `base-uri` 設為 `'none'` 或 `'self'`。"
+  },
+  "core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "如果缺少 `object-src`，有心人士就能插入可以執行不安全指令碼的外掛程式。在可行情況下，建議將 `object-src` 設為 `'none'`。"
+  },
+  "core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "缺少 `script-src` 指令。這可能會允許系統執行不安全的指令碼。"
+  },
+  "core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "忘記使用分號了嗎？{keyword} 似乎是指令，而不是關鍵字。"
+  },
+  "core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "nonce 應使用 base64 字元集。"
+  },
+  "core/lib/csp-evaluator.js | nonceLength": {
+    "message": "nonce 的長度至少要有 8 個字元。"
+  },
+  "core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "請避免在這個指令中使用純網址配置 ({keyword})。純網址配置會讓指令碼能夠使用不安全的網域來源。"
+  },
+  "core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "請避免在這個指令中使用純萬用字元 ({keyword})。純萬用字元會讓指令碼能夠使用不安全的網域來源。"
+  },
+  "core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "回報目的地只能透過 report-to 指令設定。由於只有以 Chromium 為基礎的瀏覽器支援這項指令，建議同時使用 `report-uri` 指令。"
+  },
+  "core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "尚無 CSP 設定回報目的地。這會導致系統難以持續維護 CSP 及監控故障情況。"
+  },
+  "core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "由於主機許可清單經常受到忽略，建議改用 CSP Nonce 或 Hash，並視需要搭配使用 `'strict-dynamic'`。"
+  },
+  "core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "CSP 指令不明。"
+  },
+  "core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "{keyword} 似乎是無效關鍵字。"
+  },
+  "core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "`'unsafe-inline'` 允許執行不安全的網頁內指令碼和事件處理常式，建議使用 CSP Nonce 或 Hash 個別允許指令碼。"
+  },
+  "core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "建議新增 `'unsafe-inline'` (支援 Nonce/Hash 的瀏覽器會忽略)，以便與舊版瀏覽器回溯相容。"
+  },
+  "core/lib/deprecation-description.js | feature": {
+    "message": "查看「功能狀態」頁面瞭解詳情。"
+  },
+  "core/lib/deprecation-description.js | milestone": {
+    "message": "這項變更將於主要版本 {milestone} 生效。"
+  },
+  "core/lib/deprecation-description.js | title": {
+    "message": "使用已淘汰的功能"
+  },
+  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
+    "message": "CORS `Access-Control-Allow-Headers` 處理作業中無法使用萬用字元符號 (*) 標示授權。"
+  },
+  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "應使用 `disableRemotePlayback` 屬性 (而非 `-internal-media-controls-overlay-cast-button` 選取器) 停用預設的 Cast 整合功能。"
+  },
+  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
+    "message": "如果資源要求網址中同時包含已移除的 `(n|r|t)` 空白字元和小於字元 (`<`)，系統會予以封鎖。請從元素屬性值等位置移除換行符號，並編碼小於字元，以便載入這些資源。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
+    "message": "`chrome.loadTimes()` 已淘汰，請改用標準化 API：Navigation Timing 2。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "`chrome.loadTimes()` 已遭淘汰，請改用標準化 API：Paint Timing。"
+  },
+  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "`chrome.loadTimes()` 已淘汰，請改用標準化 API：Navigation Timing 2 中的 `nextHopProtocol`。"
+  },
+  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
+    "message": "系統會拒絕包含 `(0|r|n)` 字元的 Cookie，而非截斷。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "透過設定 `document.domain` 放寬相同來源政策的功能已淘汰，將於日後予以移除。如果是透過設定 `document.domain` 啟用跨來源存取功能，系統就會顯示這則淘汰警告訊息。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
+    "message": "從跨來源 iframe 觸發 window.alert 的功能已淘汰，並將於日後移除。"
+  },
+  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
+    "message": "從跨來源 iframe 觸發 window.confirm 的功能已淘汰，並將在之後移除。"
+  },
+  "core/lib/deprecations-strings.js | DOMMutationEvents": {
+    "message": "DOM 變更事件 (包括 `DOMSubtreeModified`、`DOMNodeInserted`、`DOMNodeRemoved`、`DOMNodeRemovedFromDocument`、`DOMNodeInsertedIntoDocument` 和 `DOMCharacterDataModified`) 已淘汰 (https://w3c.github.io/uievents/#legacy-event-types)，並將於日後移除。請改用 `MutationObserver`。"
+  },
+  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
+    "message": "SVG <use> 元素不再支援「data: 網址」，並將於日後移除。"
+  },
+  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
+    "message": "透過設定 `document.domain` 放寬相同來源政策的功能已淘汰，將於日後予以移除。如要繼續使用這項功能，請傳送文件和頁框的 `Origin-Agent-Cluster: ?0` 標頭和 HTTP 回應，藉此選擇不採用 origin-keyed 代理程式叢集。詳情請參閱 https://developer.chrome.com/blog/immutable-document-domain/。"
+  },
+  "core/lib/deprecations-strings.js | ExpectCTHeader": {
+    "message": "`Expect-CT` 標頭已遭淘汰，日後將予以移除。Chrome 要求 2018 年 4 月 30 日後核發的所有公開信任憑證都必須符合憑證透明化政策的規範。"
+  },
+  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
+    "message": "`getCurrentPosition()` 和 `watchPosition()` 不再適用於不安全的來源。如要使用這個功能，請考慮將應用程式轉移至安全來源，例如 HTTPS。詳情請參閱 https://goo.gle/chrome-insecure-origins。"
+  },
+  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "不安全來源上的 `getCurrentPosition()` 和 `watchPosition()` 已遭淘汰。如要使用這個功能，請考慮將應用程式轉移至安全來源，例如 HTTPS。詳情請參閱 https://goo.gle/chrome-insecure-origins。"
+  },
+  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
+    "message": "`getUserMedia()` 不再適用於不安全的來源。如要使用這個功能，請考慮將應用程式轉移至安全來源，例如 HTTPS。詳情請參閱 https://goo.gle/chrome-insecure-origins。"
+  },
+  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
+    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` 已淘汰。請改用 `RTCPeerConnectionIceErrorEvent.address` 或 `RTCPeerConnectionIceErrorEvent.port`。"
+  },
+  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
+    "message": "「`canmakepayment`」Service Worker 事件的商家來源和任意資料目前已淘汰，並將在之後移除：`topOrigin`、`paymentRequestOrigin`、`methodData`、`modifiers`。"
+  },
+  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "由於網站的使用者具有權限可存取網路位置，因此網站透過只能存取的網路要求一個子資源。這些要求會讓非公開裝置和伺服器暴露在網際網路上，導致遭到跨網站要求偽造 (CSRF) 攻擊和/或資訊外洩的風險增加。為降低風險，Chrome 會忽略不安全內容向非公開子資源發出的要求，並將開始封鎖這類要求。"
+  },
+  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
+    "message": "傳遞到 `joinAdInterestGroup()` 的 `InterestGroups` `dailyUpdateUrl` 欄位已重新命名為 `updateUrl`，這樣可以更準確地反映其行為。"
+  },
+  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
+    "message": "除非 CSS 以 `.css` 的副檔名結尾，否則無法從 `file:` 網址載入。"
+  },
+  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
+    "message": "由於規格變更，系統已淘汰使用 `SourceBuffer.abort()` 取消 `remove()` 的非同步範圍移除作業，日後也將停止支援這項功能。建議你改為監聽 `updateend` 事件。`abort()` 的用途僅限於取消非同步媒體附加內容或重設剖析器狀態。"
+  },
+  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "由於規格變更，系統已淘汰將 `MediaSource.duration` 設為低於任何緩衝編碼頁框的最高顯示時間戳記。日後將停止支援對已截斷緩衝媒體的隱性移除作業。請改為在 `newDuration < oldDuration` 的所有 `sourceBuffers` 上執行明確 `remove(newDuration, oldDuration)`。"
+  },
+  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "即使在 `MIDIOptions` 中未指定系統專用 (SysEx) 訊息，Web MIDI 也會要求使用權限。"
+  },
+  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
+    "message": "未標準化的舊款 `shadowroot` 屬性已淘汰，自 M119 起將*無法再使用*。請改用標準化的新 `shadowrootmode` 屬性。"
+  },
+  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
+    "message": "系統不再允許透過不安全的來源使用 Notification API。請考慮將應用程式轉移至安全來源，例如 HTTPS。詳情請參閱 https://goo.gle/chrome-insecure-origins。"
+  },
+  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
+    "message": "系統已不再允許透過跨來源 iframe 要求 Notification API 的權限。請考慮透過頂層頁框要求權限，或改為開啟新視窗。"
+  },
+  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmap 中的 `imageOrientation: 'none'` 選項已淘汰，使用 createImageBitmap 時請改用 \\{imageOrientation: 'from-image'\\} 選項。"
+  },
+  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
+    "message": "你的合作夥伴正在交涉已過時的 TLS/DTLS 版本。請洽詢你的合作夥伴，請對方解決這個問題。"
+  },
+  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
+    "message": "如果指定 img、video 和 canvas 標記的「`overflow: visible`」，可能會導致這些標記產生的視覺內容超出元素邊界。詳情請參閱 https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md。"
+  },
+  "core/lib/deprecations-strings.js | PaymentInstruments": {
+    "message": "`paymentManager.instruments` 已淘汰，請改用付款處理常式的即時安裝方法。"
+  },
+  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
+    "message": "你的「`PaymentRequest`」呼叫略過了內容安全政策 (CSP)「`connect-src`」指令，但目前已無法再略過。請將 `PaymentRequest` API 的付款方式 ID (位於「`supportedMethods`」欄位) 新增到 CSP「`connect-src`」指令。"
+  },
+  "core/lib/deprecations-strings.js | PersistentQuotaType": {
+    "message": "`StorageType.persistent` 已淘汰，請改用標準化的 `navigator.storage`。"
+  },
+  "core/lib/deprecations-strings.js | PictureSourceSrc": {
+    "message": "具有 `<picture>` 父項的 `<source src>` 無效，因此予以忽略。請改用 `<source srcset>`。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame 僅限供應商使用，請改用標準 cancelAnimationFrame。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame 僅限供應商使用，請改用標準 requestAnimationFrame。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen 已淘汰，請改用 Document.fullscreenElement。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() 已淘汰，請改用 Element.requestFullscreen()。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() 已淘汰，請改用 Element.requestFullscreen()。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() 已淘汰，請改用 Document.exitFullscreen()。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() 已淘汰，請改用 Document.exitFullscreen()。"
+  },
+  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen 已淘汰，請改用 Document.fullscreenEnabled。"
+  },
+  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
+    "message": "我們已淘汰這個 API `chrome.privacy.websites.privacySandboxEnabled`，但為了提供回溯相容性，這個 API 可持續使用到版本 M113。請改用 `chrome.privacy.websites.topicsEnabled`、`chrome.privacy.websites.fledgeEnabled` 和 `chrome.privacy.websites.adMeasurementEnabled`。詳情請參閱 https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled。"
+  },
+  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "已移除 `DtlsSrtpKeyAgreement` 限制條件。系統將你為這項限制指定的 `false` 值解讀為嘗試使用已移除的「`SDES key negotiation`」方法。這項功能已移除，請改用支援「`DTLS key negotiation`」的服務。"
+  },
+  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "已移除 `DtlsSrtpKeyAgreement` 限制條件。你為這項限制指定的 `true` 值已不再適用，可以將這項限制移除以保持畫面整潔。"
+  },
+  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "回呼式 getStats() 已淘汰，並將在之後移除。請改用符合規格要求的 getStats()。"
+  },
+  "core/lib/deprecations-strings.js | RangeExpand": {
+    "message": "Range.expand() 已淘汰，請改用 Selection.modify()。"
+  },
+  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "如果子資源要求的網址包含內嵌憑證 (例如 `https://user:pass@host/`)，系統會予以封鎖。"
+  },
+  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
+    "message": "`rtcpMuxPolicy` 選項已遭淘汰，日後將予以移除。"
+  },
+  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "`SharedArrayBuffer` 會要求跨來源隔離。詳情請參閱 https://developer.chrome.com/blog/enabling-shared-array-buffer/。"
+  },
+  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "無須使用者啟用即可呼叫 `speechSynthesis.speak()` 的功能已遭淘汰，日後將予以移除。"
+  },
+  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "擴充功能應選擇啟用跨來源隔離功能，以便繼續使用 `SharedArrayBuffer`。詳情請參閱 https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/。"
+  },
+  "core/lib/deprecations-strings.js | WebSQL": {
+    "message": "網路 SQL 已淘汰，請使用 SQLite WebAssembly 或已建立索引的資料庫"
+  },
+  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
+    "message": "權限描述元 `window-placement` 已淘汰，請改用 `window-management`。詳情請參閱 https://bit.ly/window-placement-rename。"
+  },
+  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
+    "message": "權限政策 `window-placement` 已淘汰，請改用 `window-management`。詳情請參閱 https://bit.ly/window-placement-rename。"
+  },
+  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
+    "message": "`XMLHttpRequest` 中的 JSON 回應不支援 UTF-16"
+  },
+  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "主執行緒上的同步 `XMLHttpRequest` 對使用者體驗有負面影響，因此已淘汰。如需更多說明，請前往 https://xhr.spec.whatwg.org/。"
+  },
+  "core/lib/deprecations-strings.js | XRSupportsSession": {
+    "message": "`supportsSession()` 已淘汰。請改用 `isSessionSupported()` 並查看解析的布林值。"
+  },
+  "core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "主執行緒封鎖時間"
+  },
+  "core/lib/i18n/i18n.js | columnCacheTTL": {
+    "message": "快取 TTL"
+  },
+  "core/lib/i18n/i18n.js | columnDescription": {
+    "message": "說明"
+  },
+  "core/lib/i18n/i18n.js | columnDuration": {
+    "message": "時間長度"
+  },
+  "core/lib/i18n/i18n.js | columnElement": {
+    "message": "元素"
+  },
+  "core/lib/i18n/i18n.js | columnFailingElem": {
+    "message": "未通過稽核的元素"
+  },
+  "core/lib/i18n/i18n.js | columnLocation": {
+    "message": "位置"
+  },
+  "core/lib/i18n/i18n.js | columnName": {
+    "message": "名稱"
+  },
+  "core/lib/i18n/i18n.js | columnRequests": {
+    "message": "要求"
+  },
+  "core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "資源大小"
+  },
+  "core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "資源類型"
+  },
+  "core/lib/i18n/i18n.js | columnSize": {
+    "message": "大小"
+  },
+  "core/lib/i18n/i18n.js | columnSource": {
+    "message": "來源"
+  },
+  "core/lib/i18n/i18n.js | columnStartTime": {
+    "message": "開始時間"
+  },
+  "core/lib/i18n/i18n.js | columnTimeSpent": {
+    "message": "花費的時間"
+  },
+  "core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "傳輸大小"
+  },
+  "core/lib/i18n/i18n.js | columnURL": {
+    "message": "網址"
+  },
+  "core/lib/i18n/i18n.js | columnWastedBytes": {
+    "message": "可節省的數據用量"
+  },
+  "core/lib/i18n/i18n.js | columnWastedMs": {
+    "message": "可節省的時間"
+  },
+  "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Cumulative Layout Shift"
+  },
+  "core/lib/i18n/i18n.js | displayValueByteSavings": {
+    "message": "可減少 {wastedBytes, number, bytes} KiB"
+  },
+  "core/lib/i18n/i18n.js | displayValueElementsFound": {
+    "message": "{nodeCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
+  },
+  "core/lib/i18n/i18n.js | displayValueMsSavings": {
+    "message": "可減少 {wastedMs, number, milliseconds} 毫秒"
+  },
+  "core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "文件"
+  },
+  "core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "First Contentful Paint"
+  },
+  "core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "首次有效繪製"
+  },
+  "core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "字型"
+  },
+  "core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "圖片"
+  },
+  "core/lib/i18n/i18n.js | interactionToNextPaint": {
+    "message": "與下一個顯示的內容互動"
+  },
+  "core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Time to Interactive"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "高"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "低"
+  },
+  "core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "中"
+  },
+  "core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
+  },
+  "core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "首次輸入延遲時間最長預估值"
+  },
+  "core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "媒體"
+  },
+  "core/lib/i18n/i18n.js | ms": {
+    "message": "{timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "其他"
+  },
+  "core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "其他資源"
+  },
+  "core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "指令碼"
+  },
+  "core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
+  },
+  "core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Speed Index"
+  },
+  "core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "樣式表"
+  },
+  "core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "第三方"
+  },
+  "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Total Blocking Time"
+  },
+  "core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "總計"
+  },
+  "core/lib/lh-error.js | badTraceRecording": {
+    "message": "追蹤記錄網頁載入情形時發生錯誤。請重新執行 Lighthouse。({errorCode})"
+  },
+  "core/lib/lh-error.js | criTimeout": {
+    "message": "等候偵錯工具通訊協定初始連線時發生逾時。"
+  },
+  "core/lib/lh-error.js | didntCollectScreenshots": {
+    "message": "Chrome 在網頁載入期間未能擷取螢幕畫面。請確認網頁上有可見內容，然後嘗試重新執行 Lighthouse。({errorCode})"
+  },
+  "core/lib/lh-error.js | dnsFailure": {
+    "message": "DNS 伺服器無法解析你提供的網域。"
+  },
+  "core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "必要的 {artifactName} 收集程式發生錯誤：{errorMessage}"
+  },
+  "core/lib/lh-error.js | internalChromeError": {
+    "message": "Chrome 發生內部錯誤。請重新啟動 Chrome，並嘗試重新執行 Lighthouse。"
+  },
+  "core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "未執行必要的 {artifactName} 收集程式。"
+  },
+  "core/lib/lh-error.js | noFcp": {
+    "message": "網頁未繪製任何內容。請確認載入期間瀏覽器視窗皆保持在前景，然後再試一次。({errorCode})"
+  },
+  "core/lib/lh-error.js | noLcp": {
+    "message": "這個網頁顯示的內容不符合最大內容繪製 (LCP) 的資格，請確保網頁含有有效的 LCP 元素，然後再試一次。({errorCode})"
+  },
+  "core/lib/lh-error.js | notHtml": {
+    "message": "提供的頁面未採用 HTML 格式 (以 MIME 類型 {mimeType} 提供)。"
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "這個 Chrome 版本過舊，因此無法支援「{featureName}」。請使用較新的版本查看完整結果。"
+  },
+  "core/lib/lh-error.js | pageLoadFailed": {
+    "message": "Lighthouse 無法穩定載入你要求的網頁。請確認你測試的網址是否正確，以及伺服器是否正確回應所有要求。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedHung": {
+    "message": "你要求的網頁已停止回應，因此 Lighthouse 無法穩定載入該網址。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedInsecure": {
+    "message": "你所提供的網址缺少有效的安全性憑證。{securityMessages}"
+  },
+  "core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome 使用插頁式畫面阻止系統載入網頁。請確認你的測試網址是否正確，以及伺服器是否正確回應所有要求。"
+  },
+  "core/lib/lh-error.js | pageLoadFailedWithDetails": {
+    "message": "Lighthouse 無法穩定載入你要求的網頁。請確認你的測試網址是否正確，以及伺服器是否正確回應所有要求。(詳細資訊：{errorDetails})"
+  },
+  "core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
+    "message": "Lighthouse 無法穩定載入要求的網頁。請確認測試網址是否正確，以及伺服器是否正確回應所有要求 (狀態碼：{statusCode})。"
+  },
+  "core/lib/lh-error.js | pageLoadTookTooLong": {
+    "message": "網頁載入時間過長。請按照報告中的建議做法縮短網頁載入時間，然後嘗試重新執行 Lighthouse。({errorCode})"
+  },
+  "core/lib/lh-error.js | protocolTimeout": {
+    "message": "等待 DevTools 通訊協定回應的時間超出系統分配上限。(方法：{protocolMethod})"
+  },
+  "core/lib/lh-error.js | requestContentTimeout": {
+    "message": "擷取資源內容的時間超出系統分配上限。"
+  },
+  "core/lib/lh-error.js | targetCrashed": {
+    "message": "瀏覽器分頁意外停止運作。"
+  },
+  "core/lib/lh-error.js | urlInvalid": {
+    "message": "你所提供的網址無效。"
+  },
+  "core/lib/navigation-error.js | warningStatusCode": {
+    "message": "Lighthouse 無法穩定載入要求的網頁。請確認測試網址是否正確，以及伺服器是否正確回應所有要求 (狀態碼：{errorCode})。"
+  },
+  "core/lib/navigation-error.js | warningXhtml": {
+    "message": "網頁 MIME 類型為 XHTML：Lighthouse 未明確支援這種文件類型"
+  },
+  "core/user-flow.js | defaultFlowName": {
+    "message": "使用者流程 ({url})"
+  },
+  "core/user-flow.js | defaultNavigationName": {
+    "message": "導覽報表 ({url})"
+  },
+  "core/user-flow.js | defaultSnapshotName": {
+    "message": "快照報表 ({url})"
+  },
+  "core/user-flow.js | defaultTimespanName": {
+    "message": "時間範圍報表 ({url})"
+  },
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "所有報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "類別"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "無障礙功能"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "最佳做法"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "效能"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "搜尋引擎最佳化 (SEO)"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "電腦版"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "解讀 Lighthouse 流程報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "解讀流程"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "使用導覽報表來..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "使用快照報表來..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "使用時間範圍報表來..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "取得 Lighthouse 效能分數。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "評估載入網頁的效能指標，例如最大內容繪製和速度指數。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "評估漸進式網頁應用程式功能。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "針對單頁應用程式或複雜的表單尋找無障礙功能方面的問題。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "針對隱藏在互動背後的選單和 UI 元素評估最佳做法。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "測量一系列互動的版面配置位移和 JavaScript 執行時間。"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "找出增進效能的機會，進而改善長期網頁和單頁應用程式的使用體驗。"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "最大影響力"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} 項資訊型稽核}other{{numInformative} 項資訊型稽核}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "行動版"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "載入網頁"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "導覽報表能分析單一網頁的載入作業，與原 Lighthouse 報表完全相同。"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "導覽報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} 份導覽報表}other{{numNavigation} 份導覽報表}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} 項可通過的稽核}other{{numPassableAudits} 項可通過的稽核}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{已通過 {numPassed} 項稽核}other{已通過 {numPassed} 項稽核}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "平均"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "錯誤"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "不佳"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "良好"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "儲存"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "網頁擷取狀態"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "快照報表能分析特定狀態下的網頁，通常是在使用者互動之後的網頁。"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "快照報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} 份快照報表}other{{numSnapshot} 份快照報表}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "摘要"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "使用者互動"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "時間範圍報表能分析任意一段時間，通常包含使用者與網頁互動的時間。"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "時間範圍報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} 份時間範圍報表}other{{numTimespan} 份時間範圍報表}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Lighthouse 使用者流程報表"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
+    "message": "版面配置位移是指元素在使用者未進行任何互動時移動。[調查版面配置位移的原因](https://web.dev/articles/optimize-cls)，例如在網頁載入期間新增、移除元素，或變更字型。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
+    "message": "版面配置位移主因"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
+    "message": "第一個網路要求最為重要。避免重新導向、確保伺服器快速回應，並啟用文字壓縮功能，即可縮短延遲時間。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
+    "message": "文件要求延遲"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
+    "message": "建議將 [font-display](https://developer.chrome.com/blog/font-display) 設為 swap 或 optional，確保文字始終可見。swap 可透過[字型指標覆寫](https://developer.chrome.com/blog/font-fallbacks)，進一步減少版面配置位移。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
+    "message": "字型顯示"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
+    "message": "從最長的階段開始調查，[可盡量縮短延遲時間](https://web.dev/articles/optimize-inp#optimize_interactions)。如要縮短處理時間，請[盡量降低主執行緒的成本](https://web.dev/articles/optimize-long-tasks)，通常是針對 JavaScript。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
+    "message": "依階段顯示 INP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
+    "message": "如要提升 LCP，請讓 LCP 圖片立即[顯示](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)在 HTML 中，[避免延遲載入](https://web.dev/articles/lcp-lazy-loading)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
+    "message": "LCP 要求探索"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
+    "message": "每個[階段都有特定改善策略](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想狀態下，大部分的 LCP 時間應該用於載入資源，而非延遲。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
+    "message": "依階段顯示 LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
+    "message": "要求會阻礙網頁的初始轉譯作業，進而導致 LCP 延遲。你可以透過[延後或內嵌](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)的方式，將這些網路要求移出關鍵路徑。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
+    "message": "轉譯封鎖要求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
+    "message": "如果「重新計算樣式」的成本仍然偏高，可以使用選取器最佳化功能降低成本。針對經過時間偏長及慢速路徑百分比偏高的[選取器進行最佳化](https://developer.chrome.com/docs/devtools/performance/selector-stats)。選取器越簡單、數量越少，DOM 的規模越小、結構越單純，越能降低比對成本。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
+    "message": "CSS 選取器成本"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
+    "message": "第三方程式碼可能會嚴重影響載入效能。建議[減少第三方程式碼並延遲載入](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)，優先載入網頁內容。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
+    "message": "第三方"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
+    "message": "網頁的可視區域並未針對行動裝置最佳化，因此輕觸互動可能會[延遲最多 300 毫秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
+    "message": "可視區域未針對行動裝置完成最佳化調整"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
+    "message": "你可以對動畫內容使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)，這樣一來，畫面外的內容即會盡量節省 CPU 用量。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "建議你以 WebP 格式顯示所有 [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) 元件，同時為其他瀏覽器指定適當的備用格式。[瞭解詳情](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
+    "message": "請確認你已使用 [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) 讓圖片自動延遲載入。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
+    "message": "使用 [AMP 最佳化工具](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)或類似工具，在[伺服器端轉譯 AMP 版面配置](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
+    "message": "請參閱 [AMP 說明文件](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)，確保所有樣式都受到支援。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
+    "message": "[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) 元件支援 [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) 屬性，可根據螢幕大小指定要使用的圖片素材資源。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
+    "message": "如果要轉譯超大型清單，建議使用元件開發套件 (CDK) 進行虛擬捲動。[瞭解詳情](https://web.dev/virtualize-lists-with-angular-cdk/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | total-byte-weight": {
+    "message": "套用[路徑層級的程式碼分割](https://web.dev/route-level-code-splitting-in-angular/)，盡可能減少 JavaScript 套件大小。此外，建議你使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 預先快取素材資源。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unminified-warning": {
+    "message": "如果你使用 Angular CLI，請確認你是在正式版模式中產生版本。[瞭解詳情](https://angular.io/guide/deployment#enable-runtime-production-mode)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
+    "message": "如果你使用 Angular CLI，請在正式版本中加入來源對應功能，以檢查套件。[瞭解詳情](https://angular.io/guide/deployment#inspect-the-bundles)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
+    "message": "在瀏覽前預先載入路徑以加快瀏覽速度。[瞭解詳情](https://web.dev/route-preloading-in-angular/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/angular.js | uses-responsive-images": {
+    "message": "建議你使用元件開發套件 (CDK) 中的 `BreakpointObserver` 公用程式來管理圖片中斷點。[瞭解詳情](https://material.angular.io/cdk/layout/overview)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
+    "message": "建議你採用能將上傳的 `GIF` 以 HTML5 影片形式嵌入的服務。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "請考慮在網站上設定[含有 Convert 圖片樣式的 WebP 圖片格式](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
+    "message": "建議你在 `Drupal` 中設定延遲載入圖片。圖片的欄位格式設定工具支援 `lazy` 或 `eager`。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | prioritize-lcp-image": {
+    "message": "如果 LCP 元素是以動態方式新增到網頁，必須完成圖片最佳化才能提升 LCP。[瞭解詳情](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | redirects": {
+    "message": "重新導向會導致網頁載入的延遲時間更長。如果已安裝 [Redirect](https://www.drupal.org/project/redirect) 模組，請檢查是否可移除非必要的重新導向。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/redirects)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
+    "message": "建議你使用[模組](https://www.drupal.org/project/critical_css)來內嵌重要的 CSS 和 JavaScript，並針對重要性較低的 CSS 或 JavaScript 使用延遲屬性。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "使用 `Internal Page Cache`、`Internal Dynamic Page Cache` 和 `BigPipe` 等一或多個 `Drupal` 快取模組卸載流量。將上述模組搭配 CDN 使用，可進一步縮短回應時間。代管伺服器應採用 PHP OPcache。建議你使用 Redis 或 Memcache 等記憶體快取，縮短資料庫查詢時間。最後，請使用效能良好的主題、模組和速度更快的伺服器，縮短伺服器回應時間。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
+    "message": "建議你使用[回應式圖片樣式](https://www.drupal.org/documentation/modules/responsive_image)來縮減網頁載入圖片的大小。如果你使用 `Views` 在網頁上顯示多個內容項目，建議你實作分頁來限制特定網頁顯示的內容項目數量。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
+    "message": "確認你已啟用「Administration」»「Configuration」»「Development」頁面上的「Aggregate CSS files」。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
+    "message": "確認你已啟用「Administration」»「Configuration」»「Development」頁面上的「Aggregate JavaScript files」。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
+    "message": "建議你移除未使用的 CSS 規則，並僅將必要的 `Drupal` 程式庫附加至相關網頁或網頁上的元件。詳情請參閱 [`Drupal` 說明文件](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define)。如要找出會新增多餘 CSS 的附加程式庫，請前往 Chrome 開發人員工具執行[程式碼涵蓋率](https://developer.chrome.com/docs/devtools/coverage)功能。在 `Drupal` 網站上停用 CSS 匯總功能後，你可以透過樣式表網址找出有問題的主題/模組。如果在主題/模組的清單中，有許多樣式表的程式碼涵蓋率大量標示為紅色，請特別留意。主題/模組只應附加網頁實際使用的樣式表程式庫。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
+    "message": "建議你移除未使用的 JavaScript 資產，並僅將必要的 `Drupal` 程式庫附加至相關網頁或網頁上的元件。詳情請參閱 [Drupal 說明文件](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define)。如要找出會新增多餘 JavaScript 的附加程式庫，請前往 Chrome 開發人員工具執行[程式碼涵蓋率](https://developer.chrome.com/docs/devtools/coverage)功能。在 `Drupal` 網站上停用 JavaScript 匯總功能後，你可以透過指令碼網址找出有問題的主題/模組。如果在主題/模組的清單中，有許多指令碼的程式碼涵蓋率大量標示為紅色，請特別留意。主題/模組只應附加網頁實際使用的指令碼程式庫。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
+    "message": "在「Administration」»「Configuration」»「Development」頁面上設定「Browser and proxy cache maximum age」。瞭解 [`Drupal` 快取及如何提高效能](https://www.drupal.org/docs/8/api/cache-api/cache-api)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
+    "message": "如果圖片是透過網站上傳，建議你使用可自動最佳化及縮減圖片大小，而且不會影響畫質的[模組](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search)。此外，請確保網站上所有轉譯的圖片都採用 `Drupal` 內建的[回應式圖片樣式](https://www.drupal.org/documentation/modules/responsive_image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
+    "message": "如要新增 `Preconnect` 或 `dns-prefetch` 資源提示，可以安裝並設定[模組](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search)來執行使用者代理程式資源提示的功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
+    "message": "確認你已採用 `Drupal` 內建的[回應式圖片樣式](https://www.drupal.org/documentation/modules/responsive_image)。透過檢視模式、檢視畫面或透過 WYSIWYG 編輯器上傳的圖片轉譯圖片欄位時，請採用回應式圖片樣式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-text-compression": {
+    "message": "提供的文字資源應經過 (gzip、deflate 或 brotli) 壓縮，盡量減少網路傳輸資料量。建議你使用原生支援這項功能的 CDN，或是設定網路伺服器來執行這項作業。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/text-compression)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Optimize Fonts` 以自動利用 `font-display` CSS 功能，確保系統在載入網站字型時使用者可以到文字。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Lazy Load Images` 以延遲載入螢幕關閉圖片，直到需要時才載入。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Critical CSS` 和 `Script Delay` 以延遲不重要的 JS/CSS。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
+    "message": "使用 [Ezoic Cloud 快取](https://pubdash.ezoic.com/speed/caching)，以便在我們的全球網路上快取你的內容，改善載入第一個位元組的時間。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Minify CSS` 以自動壓縮 CSS 來減少網路酬載大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Minify Javascript` 以自動壓縮 JS 來減少網路酬載大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Remove Unused CSS` 以協助解決這個問題。這項功能會識別在你網站的每個頁面上實際使用的 CSS 類別，並移除任何其他類別，以維持小的檔案大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Efficient Static Cache Policy` 以便在快取標頭中為靜態資產設定建議的值。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Pre-Connect Origins` 以自動新增 `preconnect` 資源提示，及早連線至重要的第三方來源。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Preload Fonts` 和 `Preload Background Images` 來加入 `preload` 連結，以便優先擷取目前在網頁載入時較晚要求的資源。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Resize Images` 以將圖片大小調整至適合裝置的尺寸，減少網路酬載大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
+    "message": "如要讓系統自動為圖片格式進行最佳化調整，請使用 `gatsby-plugin-image` 元件，而非 `<img>`。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | offscreen-images": {
+    "message": "如要自動延遲載入圖片，請使用 `gatsby-plugin-image` 元件，而非 `<img>`。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | prioritize-lcp-image": {
+    "message": "請使用 `gatsby-plugin-image` 元件，並將 `loading` 屬性設為 `eager`。[瞭解詳情](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image#shared-props)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | render-blocking-resources": {
+    "message": "請使用 `Gatsby Script API` 延遲載入非關鍵的第三方指令碼。[瞭解詳情](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | unused-css-rules": {
+    "message": "請使用 `PurgeCSS` `Gatsby` 外掛程式，從樣式表中移除未使用的規則。[瞭解詳情](https://purgecss.com/plugins/gatsby.html)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | unused-javascript": {
+    "message": "請使用 `Webpack Bundle Analyzer` 偵測未使用的 JavaScript 程式碼。[瞭解詳情](https://www.gatsbyjs.com/plugins/gatsby-plugin-webpack-bundle-analyser-v2/)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-long-cache-ttl": {
+    "message": "設定不可變動資產的快取。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/caching/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-optimized-images": {
+    "message": "請使用 `gatsby-plugin-image` 元件調整圖片品質，而非 `<img>`。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/gatsby.js | uses-responsive-images": {
+    "message": "請使用 `gatsby-plugin-image` 元件設定適當的 `sizes`。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
+    "message": "建議您將 GIF 上傳到可將 GIF 做為 HTML5 影片嵌入的服務。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "建議你使用會自動將已上傳圖片轉換成最佳格式的[外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)或服務。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
+    "message": "安裝可延遲載入所有畫面外圖片的[延遲載入 Joomla 外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading)，或是改用提供這項功能的範本。自 Joomla 4.0 開始，所有新圖片都會[自動](https://github.com/joomla/joomla-cms/pull/30748)從系統核心取得 `loading` 屬性。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
+    "message": "有些 Joomla 外掛程式能協助你[內嵌重要的素材資源](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)，或是[延後載入較不重要的資源](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)。請注意，這些外掛程式的最佳化設定可能會對現有範本或外掛程式的功能有不良影響，因此你需要全面測試這些外掛程式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
+    "message": "範本、擴充功能和伺服器規格都會影響伺服器回應時間。建議你尋找經過最佳化調整的範本、謹慎選擇最佳化擴充功能，並 (或) 升級伺服器。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
+    "message": "建議你在文章類別中顯示摘錄 (例如加入閱讀完整內容的連結)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
+    "message": "有些 [Joomla 擴充功能](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)可以透過串連、縮小及壓縮 CSS 樣式來提升網站速度。此外，也有範本提供這項功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
+    "message": "有些 [Joomla 擴充功能](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) 可以透過串連、縮小及壓縮指令碼來提升網站速度。此外，也有範本提供這項功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
+    "message": "有些 [Joomla 擴充功能](https://extensions.joomla.org/)會在網頁中載入未使用的 CSS，建議你減少這類擴充功能的數量，或改用其他擴充功能。如要找出會新增多餘 CSS 的擴充功能，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)功能。你可以透過樣式表網址找出有問題的主題/外掛程式。請留意在清單中包含許多樣式表，且程式碼涵蓋率中有許多紅色標示的外掛程式。外掛程式只應將網頁上實際使用的樣式表加入清單。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
+    "message": "有些 [Joomla 擴充功能](https://extensions.joomla.org/)會在網頁中載入未使用的 JavaScript，建議你減少這類擴充功能的數量，或改用其他擴充功能。如要找出會新增多餘 JavaScript 的外掛程式，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)功能。你可以透過指令碼網址找出有問題的擴充功能。請留意在清單中包含許多指令碼，且程式碼涵蓋率中有許多紅色標示的擴充功能。擴充功能只應將網頁實際使用的指令碼加入佇列。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
+    "message": "瞭解 [Joomla 的瀏覽器快取功能](https://docs.joomla.org/Cache)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
+    "message": "建議你使用壓縮圖片時不會影響到畫質的[圖片最佳化外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
+    "message": "建議你使用[回應式的圖片外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images)，以在內容中使用回應式圖片。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
+    "message": "你可以透過啟用 Joomla 中的 Gzip 頁面壓縮 ([System] > [Global configuration] > [Server]) 來啟用文字壓縮功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
+    "message": "如果你不是在統合 JavaScript 素材資源，建議你使用 [baler](https://github.com/magento/baler)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | disable-bundling": {
+    "message": "停用 Magento 內建的 [JavaScript 統合及壓縮功能](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)，考慮改用 [baler](https://github.com/magento/baler/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
+    "message": "在[定義自訂字型](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)時指定 `@font-display`。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "建議你在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) 搜尋多種第三方擴充功能，以運用較新的圖片格式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
+    "message": "建議你修改產品和目錄範本，以使用網路平台的[延遲載入](https://web.dev/native-lazy-loading)功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "使用 Magento 的 [Varnish 整合功能](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
+    "message": "在商店的開發人員設定中啟用 [Minify CSS Files] 選項。[瞭解詳情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
+    "message": "如果 JavaScript 素材資源是來自靜態內容部署作業，建議你使用 [Terser](https://www.npmjs.com/package/terser) 來進行壓縮，並停用內建的壓縮功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
+    "message": "停用 Magento 的內建 [JavaScript 統合功能](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-optimized-images": {
+    "message": "建議你在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) 搜尋多種的第三方擴充功能，以進行圖片最佳化。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preconnect": {
+    "message": "你可以透過[修改主題的版面配置](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)，新增 preconnect 或 dns-prefetch 資源提示。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
+    "message": "你可以透過[修改主題版面配置](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)來新增 `<link rel=preload>` 標記。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "如要讓系統自動為圖片格式進行最佳化調整，請使用 `next/image` 元件，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "如要自動延遲載入圖片，請使用 `next/image` 元件，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
+    "message": "使用 `next/image` 元件並將「priority」設為 True 以預先載入 LCP 圖片。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#priority)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "請使用 `next/script` 元件延遲載入非關鍵的第三方指令碼。[瞭解詳情](https://nextjs.org/docs/basic-features/script)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
+    "message": "請使用 `next/image` 元件確保圖片一律會調整成適當大小。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#width)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "建議您在 `Next.js` 設定中設定 `PurgeCSS` 以從樣式表中移除未使用的規則。[瞭解詳情](https://purgecss.com/guides/next.html)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "請使用 `Webpack Bundle Analyzer` 偵測未使用的 JavaScript 程式碼。[瞭解詳情](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "建議您使用 `Next.js Analytics` 評估應用程式的實際效能。[瞭解詳情](https://nextjs.org/docs/advanced-features/measuring-performance)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "請設定不可變動資產和 `Server-side Rendered` (SSR) 頁面的快取。[瞭解詳情](https://nextjs.org/docs/going-to-production#caching)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "請使用 `next/image` 元件調整圖片品質，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "請使用 `next/image` 元件設定適當的 `sizes`。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#sizes)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "請為您的 Next.js 伺服器啟用壓縮功能。[瞭解詳情](https://nextjs.org/docs/api-reference/next.config.js/compression)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | dom-size": {
+    "message": "如要啟用「[`HTML Lazy Load`](https://support.nitropack.io/hc/en-us/articles/17144942904337)」，請與您的客戶經理聯絡。設定這項功能後，系統會將網頁轉譯效能視為優先事項，並進行最佳化。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | font-display": {
+    "message": "在 NitroPack 中使用「[`Override Font Rendering Behavior`](https://support.nitropack.io/hc/en-us/articles/16547358865041)」選項，即可為 CSS 字型顯示規則設定所需的值。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | modern-image-formats": {
+    "message": "使用「[`Image Optimization`](https://support.nitropack.io/hc/en-us/articles/16547237162513)」可自動將圖片轉換為 WebP。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | offscreen-images": {
+    "message": "啟用「[`Automatic Image Lazy Loading`](https://support.nitropack.io/hc/en-us/articles/12457493524369-NitroPack-Lazy-Loading-Feature-for-Images)」，可延遲載入畫面外圖片。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | render-blocking-resources": {
+    "message": "在 NitroPack 中啟用「[`Remove render-blocking resources`](https://support.nitropack.io/hc/en-us/articles/13820893500049-How-to-Deal-with-Render-Blocking-Resources-in-NitroPack)」，加快初始載入時間。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unminified-css": {
+    "message": "在「快取」設定中啟用「[`Minify resources`](https://support.nitropack.io/hc/en-us/articles/360061059394-Minify-Resources)」，可縮減 CSS、HTML 和 JavaScript 檔案的大小，以縮短載入時間。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unminified-javascript": {
+    "message": "在「快取」設定中啟用「[`Minify resources`](https://support.nitropack.io/hc/en-us/articles/360061059394-Minify-Resources)」，可縮減 JS、HTML 和 CSS 檔案的大小，以縮短載入時間。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unused-css-rules": {
+    "message": "啟用「[`Reduce Unused CSS`](https://support.nitropack.io/hc/en-us/articles/360020418457-Reduce-Unused-CSS)」可移除不適用於這個網頁的 CSS 規則。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | unused-javascript": {
+    "message": "在 NitroPack 中設定「[`Delayed Scripts`](https://support.nitropack.io/hc/en-us/articles/1500002600942-Delayed-Scripts)」，可延遲載入指令碼，直到有需要再載入。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-long-cache-ttl": {
+    "message": "前往「`Caching`」選單中的「[`Improve Server Response Time`](https://support.nitropack.io/hc/en-us/articles/1500002321821-Improve-Server-Response-Time)」功能，並調整網頁快取的到期時間，以改善載入時間和使用者體驗。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-optimized-images": {
+    "message": "啟用「[`Image Optimization`](https://support.nitropack.io/hc/en-us/articles/14177271695121-How-to-serve-images-in-next-gen-formats-using-NitroPack)」設定後，系統會自動將圖片壓縮、最佳化，並轉換為 WebP。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
+    "message": "啟用「[`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site)」可預先將圖片最佳化，讓圖片能吻合所有裝置上的顯示容器尺寸。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
+    "message": "在 NitroPack 中使用「[`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression)」，可減少傳送至瀏覽器的檔案大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
+    "message": "請使用 `nuxt/image` 元件並設定 `format=\"webp\"`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#format)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | offscreen-images": {
+    "message": "如要延遲載入畫面外圖片，請使用 `nuxt/image` 元件並設定 `loading=\"lazy\"`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#loading)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | prioritize-lcp-image": {
+    "message": "如要延遲載入 LCP 圖片，請使用 `nuxt/image` 元件並指定 `preload`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#preload)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | unsized-images": {
+    "message": "請使用 `nuxt/image` 元件，並明確指定 `width` 和 `height`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#width-height)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-optimized-images": {
+    "message": "請使用 `nuxt/image` 元件設定適當的 `quality`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#quality)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-responsive-images": {
+    "message": "請使用 `nuxt/image` 元件並設定適當的 `sizes`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#sizes)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "[用影片取代 GIF 動畫](https://web.dev/replace-gifs-with-videos/)以加快載入網頁，並考慮使用 [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) 或 [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) 等新型檔案格式，這樣可讓目前最先進的視訊轉碼器 VP9 的壓縮效率再提高超過 30%。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "建議你使用可自動將上傳圖片轉換成最佳格式的[外掛程式](https://octobercms.com/plugins?search=image)或服務。[WebP 無失真圖片](https://developers.google.com/speed/webp)的大小比 PNG 小 26%，與 SSIM 畫質指數相等的類似 JPEG 圖片相比，則小 25-34%。另一種可考慮使用的新一代圖片格式為 [AVIF](https://jakearchibald.com/2020/avif-has-landed/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "建議你安裝可延遲載入所有畫面外圖片的[圖片延遲載入外掛程式](https://octobercms.com/plugins?search=lazy)，或是改用提供這項功能的主題。你也可以考慮使用 [AMP 外掛程式](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "有許多外掛程式可協助[內嵌重要的素材資源](https://octobercms.com/plugins?search=css)。這些外掛程式可能會導致其他外掛程式無法正常運作，因此你需要仔細測試。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "主題、外掛程式和伺服器規格都會影響伺服器回應時間。建議你尋找最佳化設定更完善的主題、謹慎選擇最佳化外掛程式，以及/或是升級伺服器。透過 October CMS，開發人員也能使用 [`Queues`](https://octobercms.com/docs/services/queues) 延遲處理耗時的工作，例如電子郵件傳送工作。這可大幅加快網頁要求執行速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "建議你在文章清單中顯示摘錄 (例如加入 [`show more`] 按鈕)、減少特定網頁顯示的文章數量、將較長的文章分為多個網頁，或是使用可延遲載入留言的外掛程式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "有許多[外掛程式](https://octobercms.com/plugins?search=css)可透過串連、縮小及壓縮樣式提升網站執行速度。如果預先透過建構程序執行這項壓縮作業，將可加快開發速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "有許多[外掛程式](https://octobercms.com/plugins?search=javascript)可透過串連、縮小及壓縮指令碼提升網站執行速度。如果預先透過建構程序執行這項壓縮作業，將可加快開發速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "有些[外掛程式](https://octobercms.com/plugins)會在網站中載入未使用的 CSS，建議你進行檢查。如要找出這些會加入多餘 CSS 的外掛程式，請在 Chrome 開發人員工具中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)計算功能。接著，透過樣式表網址找出有問題的主題/外掛程式。在程式碼涵蓋率資料中，如果外掛程式有許多指令碼呈現高比例的紅色，代表可能有問題。外掛程式只應加入網頁中實際用到的樣式表。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "有些[外掛程式](https://octobercms.com/plugins?search=javascript)會在網頁中載入未使用的 JavaScript，建議你進行檢查。如要找出這些會加入多餘 JavaScript 的外掛程式，請在 Chrome 開發人員工具中執行[程式碼涵蓋率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)計算功能。接著，透過指令碼網址找出有問題的主題/外掛程式。在程式碼涵蓋率資料中，如果外掛程式有許多指令碼呈現高比例的紅色，代表可能有問題。外掛程式只應加入網頁中實際用到的指令碼。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "閱讀[這篇文章](https://web.dev/http-cache/#caching-checklist)，瞭解如何透過 HTTP 快取防止不必要的網路要求。有許多[外掛程式](https://octobercms.com/plugins?search=Caching)可用於提升快取速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "建議你使用[圖片最佳化外掛程式](https://octobercms.com/plugins?search=image)壓縮圖片，這樣可以保持原始畫質。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "直接在媒體管理員中上傳圖片，確保你提供的圖片大小符合系統規定。建議你使用[調整大小篩選器](https://octobercms.com/docs/markup/filter-resize)或[圖片大小調整外掛程式](https://octobercms.com/plugins?search=image)，確保使用的是最佳圖片大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "在網路伺服器設定中啟用文字壓縮功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
+    "message": "如要在網頁上轉譯許多重複的元素，建議你使用「視窗化」程式庫 (例如 `react-window`)，盡可能減少系統建立的 DOM 節點數量。[瞭解詳情](https://web.dev/virtualize-long-lists-react-window/)。此外，如果你使用 `Effect` Hook 改善執行階段的效能，請使用 [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) 或 [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) 以及[略過效果](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)，盡量減少不必要的重新轉譯，但某些相依性已變更時除外。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
+    "message": "如果使用 React Router，請盡量避免在[路徑導航](https://reacttraining.com/react-router/web/api/Redirect)中使用 `<Redirect>` 元件。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "如果你在伺服器端轉譯任何 React 元件，建議你使用 `renderToPipeableStream()` 或 `renderToStaticNodeStream()`，以允許用戶端接收並填入標記的不同部分，而非一次接收整個標記。[瞭解詳情](https://reactjs.org/docs/react-dom-server.html#renderToPipeableStream)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
+    "message": "如果你的建構系統會自動壓縮 CSS 檔案，請確定你部署的應用程式為正式版本。你可以使用 React Developer Tools 擴充功能進行檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
+    "message": "如果你的建構系統會自動壓縮 JavaScript 檔案，請確定你部署的應用程式為正式版本。你可以使用 React Developer Tools 擴充功能進行檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
+    "message": "如果你不是在伺服器端進行轉譯，請以 `React.lazy()` [分割你的 JavaScript 套件](https://web.dev/code-splitting-suspense/)。否則請使用 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) 等第三方程式庫來分割程式碼。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
+    "message": "使用 React DevTools Profiler，這項工具會採用 Profiler API 來測量你的元件轉譯效能。[瞭解詳情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | efficient-animated-content": {
+    "message": "將影片置於 `VideoBoxes` 中、使用 `Video Masks` 自訂影片，或新增 `Transparent Videos`。[瞭解詳情](https://support.wix.com/en/article/wix-video-about-wix-video)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | modern-image-formats": {
+    "message": "使用 `Wix Media Manager` 上傳圖片，確保圖片會自動以 WebP 格式提供。瞭解[更多網站媒體最佳化的方式](https://support.wix.com/en/article/site-performance-optimizing-your-media)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | render-blocking-resources": {
+    "message": "在網站資訊主頁的「`Custom Code`」分頁中[新增第三方程式碼](https://support.wix.com/en/article/site-performance-using-third-party-code-on-your-site)時，請務必將其延遲或載入至程式碼主體末端。請盡可能使用 Wix 的[整合](https://support.wix.com/en/article/about-marketing-integrations)功能，將行銷工具嵌入網站。 "
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | server-response-time": {
+    "message": "Wix 會使用 CDN 和快取，盡快為大多數訪客提供回應。建議你為網站[手動啟用快取](https://support.wix.com/en/article/site-performance-caching-pages-to-optimize-loading-speed)功能，特別是使用 `Velo` 時。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wix.js | unused-javascript": {
+    "message": "在網站資訊主頁的「`Custom Code`」分頁中，查看你在網站上加入的任何第三方程式碼，只保留網站所需的服務。[瞭解詳情](https://support.wix.com/en/article/site-performance-removing-unused-javascript)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
+    "message": "建議您將 GIF 上傳到可將 GIF 做為 HTML5 影片嵌入的服務。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "若有支援，建議你使用 [Performance Lab](https://wordpress.org/plugins/performance-lab/) 外掛程式，將上傳的 JPEG 圖片自動轉換成 WebP。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
+    "message": "安裝可延遲載入所有畫面外圖片的[延遲載入 WordPress 外掛程式](https://wordpress.org/plugins/search/lazy+load/)，或改用提供這項功能的主題。你也可以考慮使用 [AMP 外掛程式](https://wordpress.org/plugins/amp/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
+    "message": "有些 WordPress 外掛程式能協助你[內嵌重要的素材資源](https://wordpress.org/plugins/search/critical+css/)或[延後載入較不重要的資源](https://wordpress.org/plugins/search/defer+css+javascript/)。請注意，這些外掛程式的最佳化設定可能會對現有主題或外掛程式的功能有不良影響，因此你可能需要變更程式碼。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "選擇輕量主題 (最好是區塊主題)，並實作全頁快取或靜態網站解決方案。停用不必要的外掛程式，盡量減少伺服器負擔。建議你將代管作業升級為代管或專屬服務。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
+    "message": "建議你在文章清單中顯示摘錄 (例如加入更多標記)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-css": {
+    "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/search/minify+css/) 可以透過串連、縮小及壓縮樣式來提升網站速度。你也可以透過建構流程直接執行這項壓縮作業 (如果可行的話)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unminified-javascript": {
+    "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/search/minify+javascript/) 可以透過串連、縮小及壓縮指令碼來提升網站速度。你也可以透過建構流程直接執行這項壓縮作業 (如果可行的話)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": {
+    "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/)會在網頁中載入未使用的 CSS，建議你減少這類外掛程式的數量，或改用其他外掛程式。如要找出會新增多餘 CSS 的外掛程式，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developer.chrome.com/docs/devtools/coverage/)功能。你可以透過樣式表網址找出有問題的主題/外掛程式。請留意在清單中包含許多樣式表，且程式碼涵蓋率中有許多紅色標示的外掛程式。外掛程式只應將網頁上實際使用的樣式表加入清單。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": {
+    "message": "有些 [WordPress 外掛程式](https://wordpress.org/plugins/)會在網頁中載入未使用的 JavaScript，建議你減少這類外掛程式的數量，或改用其他外掛程式。如要找出會新增多餘 JavaScript 的外掛程式，請嘗試在 Chrome DevTools 中執行[程式碼涵蓋率](https://developer.chrome.com/docs/devtools/coverage/)功能。你可以透過指令碼網址找出有問題的主題/外掛程式。請留意在清單中包含許多指令碼，且程式碼涵蓋率中有許多紅色標示的外掛程式。外掛程式只應將網頁實際使用的指令碼加入佇列。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": {
+    "message": "瞭解 [WordPress 的瀏覽器快取功能](https://wordpress.org/support/article/optimization/#browser-caching)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-optimized-images": {
+    "message": "建議你使用壓縮圖片時不會影響到畫質的[圖片最佳化 WordPress 外掛程式](https://wordpress.org/plugins/search/optimize+images/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": {
+    "message": "你可以直接透過[媒體庫](https://wordpress.org/support/article/media-library-screen/)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用`Full Size`圖片。[瞭解詳情](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
+    "message": "你可以在網路伺服器設定中啟用文字壓縮功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | modern-image-formats": {
+    "message": "如要將圖片轉成 WebP 格式，請在「WP Rocket」的「Image Optimization」分頁中啟用「Imagify」。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | offscreen-images": {
+    "message": "如要修正這項建議，請在 WP Rocket 中啟用「[LazyLoad](https://docs.wp-rocket.me/article/1141-lazyload-for-images)」。這項功能會延遲圖片載入，直到訪客捲動網頁並實際看到圖片為止。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | render-blocking-resources": {
+    "message": "如要修正這項建議，請在「WP Rocket」中啟用「[Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css)」和「[Load JavaScript deferred](https://docs.wp-rocket.me/article/1265-load-javascript-deferred)」。這些功能將分別最佳化 CSS 和 JavaScript 檔案，避免網頁因這兩種檔案而無法算繪。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unminified-css": {
+    "message": "為解決這個問題，請在「WP Rocket」中啟用「[Minify CSS files](https://docs.wp-rocket.me/article/1350-css-minify-combine)」。系統將移除網站 CSS 檔案中的任何空格和評論，藉此縮小檔案並提升下載速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unminified-javascript": {
+    "message": "為解決這個問題，請在「WP Rocket」中啟用「[Minify JavaScript files](https://docs.wp-rocket.me/article/1351-javascript-minify-combine)」。系統將移除 JavaScript 檔案中的空白處和評論，藉此縮小檔案並提升下載速度。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unused-css-rules": {
+    "message": "為解決這個問題，請在「WP Rocket」中啟用「[Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css)」。系統將移除所有未使用的 CSS 和樣式表，同時只保留每個網頁的使用中 CSS，藉此降低網頁大小。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | unused-javascript": {
+    "message": "為解決這個問題，請在「WP Rocket」中啟用「[Delay JavaScript execution](https://docs.wp-rocket.me/article/1349-delay-javascript-execution)」，讓系統等到使用者開始互動時才執行指令碼，藉此改善網頁載入方式。如果網站有 iframe，你也可以使用 WP Rocket 的「[LazyLoad for iframes and videos](https://docs.wp-rocket.me/article/1674-lazyload-for-iframes-and-videos)」和「[Replace YouTube iframe with preview image](https://docs.wp-rocket.me/article/1488-replace-youtube-iframe-with-preview-image)」。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-optimized-images": {
+    "message": "如要壓縮圖片，請在「WP Rocket」的「Image Optimization」分頁中啟用「Imagify」，並執行「Bulk Optimization」。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-rel-preconnect": {
+    "message": "在「WP Rocket」中使用「[Prefetch DNS Requests](https://docs.wp-rocket.me/article/1302-prefetch-dns-requests)」，即可新增「dns-prefetch」並提高與外部網域的連線速度。此外，「WP Rocket」也會自動將「preconnect」新增到 [Google Fonts 網域](https://docs.wp-rocket.me/article/1312-optimize-google-fonts)和透過「[Enable CDN](https://docs.wp-rocket.me/article/42-using-wp-rocket-with-a-cdn)」功能新增的任何 CNAME。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wp-rocket.js | uses-rel-preload": {
+    "message": "為解決這個字型問題，請在「WP Rocket」中啟用「[Remove Unused CSS](https://docs.wp-rocket.me/article/1529-remove-unused-css)」，系統就會優先友善載入網站的重要字型。"
+  },
+  "report/renderer/report-utils.js | calculatorLink": {
+    "message": "查看計算機。"
+  },
+  "report/renderer/report-utils.js | collapseView": {
+    "message": "收合檢視畫面"
+  },
+  "report/renderer/report-utils.js | crcInitialNavigation": {
+    "message": "起始導覽"
+  },
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
+    "message": "關鍵路徑延遲時間上限："
+  },
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
+    "message": "複製 JSON"
+  },
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
+    "message": "切換深色主題"
+  },
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
+    "message": "已展開列印"
+  },
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
+    "message": "列印摘要"
+  },
+  "report/renderer/report-utils.js | dropdownSaveGist": {
+    "message": "另存為 Gist"
+  },
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
+    "message": "另存為 HTML"
+  },
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
+    "message": "另存為 JSON"
+  },
+  "report/renderer/report-utils.js | dropdownViewUnthrottledTrace": {
+    "message": "查看原始追蹤記錄"
+  },
+  "report/renderer/report-utils.js | dropdownViewer": {
+    "message": "在檢視器中開啟"
+  },
+  "report/renderer/report-utils.js | errorLabel": {
+    "message": "發生錯誤！"
+  },
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
+    "message": "回報錯誤：無稽核資訊"
+  },
+  "report/renderer/report-utils.js | expandView": {
+    "message": "展開檢視畫面"
+  },
+  "report/renderer/report-utils.js | firstPartyChipLabel": {
+    "message": "第一方"
+  },
+  "report/renderer/report-utils.js | footerIssue": {
+    "message": "回報問題"
+  },
+  "report/renderer/report-utils.js | hide": {
+    "message": "隱藏"
+  },
+  "report/renderer/report-utils.js | labDataTitle": {
+    "message": "研究資料"
+  },
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) 在模擬行動網路上對目前網頁進行的分析。此為預估值，可能與實際情況有所不同。"
+  },
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
+    "message": "其他手動檢查項目"
+  },
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
+    "message": "不適用"
+  },
+  "report/renderer/report-utils.js | openInANewTabTooltip": {
+    "message": "在新分頁中開啟"
+  },
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
+    "message": "最佳化建議"
+  },
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
+    "message": "預估減少量"
+  },
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
+    "message": "通過稽核項目"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
+    "message": "初次載入網頁"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindowSnapshot": {
+    "message": "特定時間點數據匯報"
+  },
+  "report/renderer/report-utils.js | runtimeAnalysisWindowTimespan": {
+    "message": "使用者互動時間範圍"
+  },
+  "report/renderer/report-utils.js | runtimeCustom": {
+    "message": "自訂節流"
+  },
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
+    "message": "模擬電腦"
+  },
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
+    "message": "已模擬 Moto G Power"
+  },
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
+    "message": "沒有任何模擬的裝置"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
+    "message": "Axe 版本"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
+    "message": "不受節流限制的 CPU/記憶體效能"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU 溫控降頻"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
+    "message": "裝置"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
+    "message": "網路節流"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsScreenEmulation": {
+    "message": "螢幕模擬"
+  },
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
+    "message": "使用者代理程式 (網路)"
+  },
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
+    "message": "單頁工作階段"
+  },
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
+    "message": "這項資料取自單頁工作階段，而非匯總多個工作階段的現場資料。"
+  },
+  "report/renderer/report-utils.js | runtimeSlow4g": {
+    "message": "慢速 4G 節流"
+  },
+  "report/renderer/report-utils.js | runtimeUnknown": {
+    "message": "不明"
+  },
+  "report/renderer/report-utils.js | show": {
+    "message": "顯示"
+  },
+  "report/renderer/report-utils.js | showRelevantAudits": {
+    "message": "顯示與下列指標相關的稽核項目："
+  },
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
+    "message": "收合程式碼片段"
+  },
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
+    "message": "展開程式碼片段"
+  },
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
+    "message": "顯示第三方資源"
+  },
+  "report/renderer/report-utils.js | throttlingProvided": {
+    "message": "由執行階段環境提供"
+  },
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
+    "message": "有問題導致 Lighthouse 無法順利執行這項作業："
+  },
+  "report/renderer/report-utils.js | unattributable": {
+    "message": "無法歸因"
+  },
+  "report/renderer/report-utils.js | varianceDisclaimer": {
+    "message": "此為預估值，可能與實際情況有所不同。系統會直接根據這些指標[計算效能分數](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)。"
+  },
+  "report/renderer/report-utils.js | viewTraceLabel": {
+    "message": "查看追蹤記錄"
+  },
+  "report/renderer/report-utils.js | viewTreemapLabel": {
+    "message": "查看矩形式樹狀結構圖"
+  },
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
+    "message": "通過稽核，但附有警告訊息"
+  },
+  "report/renderer/report-utils.js | warningHeader": {
+    "message": "警告： "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "全部"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "所有指令碼"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "涵蓋率"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "重複模組"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "資源位元組"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "名稱"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "顯示/隱藏表格"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "未使用的位元組"
+  }
+}

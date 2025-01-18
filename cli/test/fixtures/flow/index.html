@@ -1,0 +1,22 @@
+<!--
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+  <body>
+    <div id="list"></div>
+    <h1>Landing page for our user flows!</h1>
+    <button id="add-item">Add item</button>
+    <a id="link" href="/flow/next.html">Link to new page!</a>
+  </body>
+  <script>
+    const button = document.getElementById('add-item');
+    button.onclick = async () => {
+      const list = document.getElementById('list');
+      const item = document.createElement('h3');
+      item.textContent = 'New item!';
+      list.append(item);
+    }
+  </script>
+</html>

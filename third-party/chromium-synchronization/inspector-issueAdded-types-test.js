@@ -1,24 +1,23 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 'use strict';
 
-const fs = require('fs');
-const fetch = require('node-fetch');
+import fs from 'fs';
+import fetch from 'node-fetch';
+import { LH_ROOT } from '../../shared/root.js';
 
-const inspectorIssuesGathererPath = __dirname +
-    '/../../lighthouse-core/gather/gatherers/inspector-issues.js';
+const inspectorIssuesGathererPath = LH_ROOT +
+  '/core/gather/gatherers/inspector-issues.js';
 const inspectorIssuesGathererSource = fs.readFileSync(inspectorIssuesGathererPath, 'utf-8');
-
-/* eslint-env jest */
 
 describe('issueAdded types', () => {
   /** @type {Array<LH.Crdp.Audits.InspectorIssueDetails>} */
   let inspectorIssueDetailsTypes;
 
-  beforeAll(async () => {
+  before(async () => {
     const browserProtocolUrl =
       'https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/json/browser_protocol.json';
     const json = await fetch(browserProtocolUrl).then(r => r.json());
@@ -32,18 +31,35 @@ describe('issueAdded types', () => {
 
   it('should notify us if something changed', () => {
     expect(inspectorIssueDetailsTypes).toMatchInlineSnapshot(`
-      Array [
-        "blockedByResponseIssueDetails",
-        "contentSecurityPolicyIssueDetails",
-        "heavyAdIssueDetails",
-        "mixedContentIssueDetails",
-        "sameSiteCookieIssueDetails",
-        "sharedArrayBufferTransferIssueDetails",
-      ]
-    `);
+Array [
+  "attributionReportingIssueDetails",
+  "blockedByResponseIssueDetails",
+  "bounceTrackingIssueDetails",
+  "clientHintIssueDetails",
+  "contentSecurityPolicyIssueDetails",
+  "cookieDeprecationMetadataIssueDetails",
+  "cookieIssueDetails",
+  "corsIssueDetails",
+  "deprecationIssueDetails",
+  "federatedAuthRequestIssueDetails",
+  "federatedAuthUserInfoRequestIssueDetails",
+  "genericIssueDetails",
+  "heavyAdIssueDetails",
+  "lowTextContrastIssueDetails",
+  "mixedContentIssueDetails",
+  "navigatorUserAgentIssueDetails",
+  "propertyRuleIssueDetails",
+  "quirksModeIssueDetails",
+  "selectElementAccessibilityIssueDetails",
+  "sharedArrayBufferIssueDetails",
+  "sharedDictionaryIssueDetails",
+  "stylesheetLoadingIssueDetails",
+]
+`);
   });
 
-  it('are each handled explicitly in the gatherer', () => {
+  // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147
+  it.skip('are each handled explicitly in the gatherer', () => {
     // Regex relies on the typecasts
     const sourceTypeMatches = inspectorIssuesGathererSource.matchAll(
       /LH\.Crdp\.Audits\.(.*?Details)>/g

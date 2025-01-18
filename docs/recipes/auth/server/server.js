@@ -1,22 +1,26 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
-'use strict';
 
 /**
  * @fileoverview Example Express server for demonstrating how to run Lighthouse on an authenticated
  * page. See docs/recipes/auth/README.md for more.
  */
 
-const createError = require('http-errors');
-const express = require('express');
-const morgan = require('morgan');
-const session = require('express-session');
-const http = require('http');
-const path = require('path');
-const PUBLIC_DIR = path.join(__dirname, 'public');
+import http from 'http';
+import path from 'path';
+import url from 'url';
+
+import createError from 'http-errors';
+import express from 'express';
+import morgan from 'morgan';
+import session from 'express-session';
+import esMain from 'es-main';
+
+const moduleDir = path.dirname(url.fileURLToPath(import.meta.url));
+const PUBLIC_DIR = path.join(moduleDir, 'public');
 
 const app = express();
 
@@ -78,8 +82,9 @@ app.use(function(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-if (require.main === module) {
+
+if (esMain(import.meta)) {
   server.listen(10632);
-} else {
-  module.exports = server;
 }
+
+export default server;
