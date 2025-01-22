@@ -753,6 +753,7 @@ function checkKnownFixedCollisions(strings) {
       'Severity',
       'Severity',
       'Severity',
+      'Severity',
       'The page was evicted from the cache to allow another page to be cached.',
       'The page was evicted from the cache to allow another page to be cached.',
       'Use $MARKDOWN_SNIPPET_0$ to detect unused JavaScript code. $LINK_START_0$Learn more$LINK_END_0$',

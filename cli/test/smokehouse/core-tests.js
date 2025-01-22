@@ -7,6 +7,8 @@
 import a11y from './test-definitions/a11y.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
+import clickjackingMissingHeaders from './test-definitions/clickjacking-missing-headers.js';
+import clickjackingMitigationPresent from './test-definitions/clickjacking-mitigation-headers-present.js';
 import crash from './test-definitions/crash.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
 import cspBlockAll from './test-definitions/csp-block-all.js';
@@ -69,6 +71,8 @@ const smokeTests = [
   a11y,
   byteEfficiency,
   byteGzip,
+  clickjackingMissingHeaders,
+  clickjackingMitigationPresent,
   crash,
   cspAllowAll,
   cspBlockAll,
