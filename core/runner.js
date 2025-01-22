@@ -499,6 +499,7 @@ vs
       ...fs.readdirSync(path.join(moduleDir, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
       ...fs.readdirSync(path.join(moduleDir, './audits/manual')).map(f => `manual/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/insights')).map(f => `insights/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);

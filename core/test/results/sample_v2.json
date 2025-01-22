@@ -6071,6 +6071,23 @@
         ]
       },
       "guidanceLevel": 4
+    },
+    "viewport-insight": {
+      "id": "viewport-insight",
+      "title": "Optimize viewport for mobile",
+      "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
+      "score": 0,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "INP": 300
+      },
+      "details": {
+        "type": "debugdata",
+        "items": [
+          null
+        ]
+      },
+      "guidanceLevel": 3
     }
   },
   "configSettings": {
@@ -6164,6 +6181,11 @@
           "weight": 10,
           "group": "metrics",
           "acronym": "SI"
+        },
+        {
+          "id": "viewport-insight",
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "interactive",
@@ -9119,6 +9141,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:viewport-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:runner:generate",
         "duration": 100,
         "entryType": "measure"
@@ -10571,6 +10599,12 @@
       ],
       "core/audits/bf-cache.js | actionableFailureType": [
         "audits[bf-cache].details.items[0].failureType"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
+        "audits[viewport-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": [
+        "audits[viewport-insight].description"
       ],
       "core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"

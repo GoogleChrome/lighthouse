@@ -308,6 +308,7 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/viewport-insight',
   ],
   groups: {
     'metrics': {
@@ -387,6 +388,9 @@ const defaultConfig = {
         {id: 'cumulative-layout-shift', weight: 25, group: 'metrics', acronym: 'CLS'},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
+
+        // Insights.
+        {id: 'viewport-insight', weight: 0, group: 'hidden'},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'interactive', weight: 0, group: 'hidden', acronym: 'TTI'},
