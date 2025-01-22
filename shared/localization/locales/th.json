@@ -2627,6 +2627,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "สาเหตุของการเปลี่ยนแปลงเลย์เอาต์"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "DOM ที่มีขนาดใหญ่จะใช้หน่วยความจำเพิ่มขึ้น ทำให้การคำนวณสไตล์ใช้เวลานานขึ้นและส่งผลให้เกิดการจัดเรียงเลย์เอาต์ใหม่ที่มีค่าใช้จ่ายสูง ซึ่งส่งผลกระทบต่อการตอบสนองของหน้าเว็บ [ดูวิธีหลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "ปรับขนาด DOM ให้เหมาะสม"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "คำขอเครือข่ายครั้งแรกเป็นสิ่งสำคัญที่สุด  ลดเวลาในการตอบสนองโดยหลีกเลี่ยงการเปลี่ยนเส้นทาง ตรวจสอบการตอบกลับของเซิร์ฟเวอร์ที่รวดเร็ว และเปิดใช้การบีบอัดข้อความ"
   },
@@ -2638,6 +2644,24 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "การแสดงแบบอักษร"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "การลดเวลาดาวน์โหลดรูปภาพจะช่วยปรับปรุงเวลาที่ใช้ในการโหลดที่รับรู้ของหน้าเว็บและ LCP ได้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับการเพิ่มประสิทธิภาพขนาดรูปภาพ](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "ปรับปรุงการนำส่งรูปภาพ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "การเพิ่มค่าการบีบอัดรูปภาพสามารถปรับปรุงขนาดการดาวน์โหลดของรูปภาพนี้ได้ (ประมาณ {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "การใช้รูปแบบรูปภาพสมัยใหม่ (WebP, AVIF) หรือการเพิ่มการบีบอัดรูปภาพอาจช่วยปรับปรุงขนาดการดาวน์โหลดของรูปภาพนี้ได้ (ประมาณ {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "ไฟล์ภาพนี้มีขนาดใหญ่เกินความจำเป็น ({PH2}) สำหรับมิติข้อมูลที่แสดง ({PH3}) โปรดใช้รูปภาพที่ปรับเปลี่ยนตามอุปกรณ์เพื่อลดขนาดการดาวน์โหลดรูปภาพ (ประมาณ {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "การใช้รูปแบบวิดีโอแทน GIF จะช่วยปรับปรุงขนาดการดาวน์โหลดเนื้อหาที่เป็นภาพเคลื่อนไหวได้ (ประมาณ {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "เริ่มตรวจสอบด้วยระยะที่ยาวที่สุด [ลดการหน่วงเวลาให้น้อยที่สุด](https://web.dev/articles/optimize-inp#optimize_interactions) หากต้องการลดระยะเวลาในการประมวลผล ให้[เพิ่มประสิทธิภาพต้นทุนของเทรดหลัก](https://web.dev/articles/optimize-long-tasks) ซึ่งมักจะเป็น JS"
@@ -2676,10 +2700,10 @@
     "message": "บุคคลที่สาม"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "วิวพอร์ตของหน้าเว็บไม่ได้เพิ่มประสิทธิภาพสำหรับอุปกรณ์เคลื่อนที่ การโต้ตอบด้วยการแตะจึงอาจ[มีการหน่วงเวลาสูงสุด 300 มิลลิวินาที](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)"
+    "message": "การโต้ตอบด้วยการแตะอาจ[มีการหน่วงเวลาสูงสุด 300 มิลลิวินาที](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)หากวิวพอร์ตไม่เหมาะกับอุปกรณ์เคลื่อนที่"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "วิวพอร์ตไม่เหมาะกับอุปกรณ์เคลื่อนที่"
+    "message": "เพิ่มประสิทธิภาพวิวพอร์ตสำหรับอุปกรณ์เคลื่อนที่"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "สำหรับเนื้อหาที่เป็นภาพเคลื่อนไหว ให้ใช้ [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) เพื่อลดการใช้ CPU ขณะที่เนื้อหาไม่ได้อยู่ในหน้าจอ"

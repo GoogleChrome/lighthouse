@@ -2627,6 +2627,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "版面配置位移主因"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "大型 DOM 會增加記憶體用量、延長樣式運算的時間，並產生費工的版面配置自動重排，進而影響網頁的反應速度。[瞭解如何避免 DOM 過大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "最佳化 DOM 大小"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "第一個網路要求最為重要。避免重新導向、確保伺服器快速回應，並啟用文字壓縮功能，即可縮短延遲時間。"
   },
@@ -2638,6 +2644,24 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "字型顯示"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "縮短圖片下載時間，可縮減使用者感知的網頁載入時間，並提升 LCP 指標的表現。[進一步瞭解如何最佳化圖片大小](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "提升圖片傳送效能"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "提高圖片壓縮係數可縮減這張圖片的下載大小 (預估大小為 {PH1})。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "使用新式圖片格式 (WebP、AVIF) 或提高圖片壓縮係數，可縮減這張圖片的下載大小 (預估大小為 {PH1})。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "這個圖片檔的原始尺寸 ({PH2}) 大於所需顯示尺寸 ({PH3})。請使用回應式圖片來縮減圖片下載大小 (預估大小為 {PH1})。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "使用影片格式而非 GIF，可以縮減動畫內容的下載大小 (預估大小為 {PH1})。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "從最長的階段開始調查，[可盡量縮短延遲時間](https://web.dev/articles/optimize-inp#optimize_interactions)。如要縮短處理時間，請[盡量降低主執行緒的成本](https://web.dev/articles/optimize-long-tasks)，通常是針對 JavaScript。"
@@ -2676,10 +2700,10 @@
     "message": "第三方"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "網頁的可視區域並未針對行動裝置最佳化，因此輕觸互動可能會[延遲最多 300 毫秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。"
+    "message": "如果可視區域未針對行動裝置進行最佳化調整，輕觸互動可能會[延遲最多 300 毫秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "可視區域未針對行動裝置完成最佳化調整"
+    "message": "針對行動裝置最佳化可視區域"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "你可以對動畫內容使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)，這樣一來，畫面外的內容即會盡量節省 CPU 用量。"

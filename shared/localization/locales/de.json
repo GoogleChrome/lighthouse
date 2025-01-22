@@ -2627,6 +2627,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Verursacher von Layout Shifts"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Ein großes DOM führt zu hoher Arbeitsspeichernutzung, langwierigen Stilberechnungen und kostspieligen dynamischen Umbrüchen im Layout, was sich auf die Reaktionsfähigkeit der Seite auswirkt. [Informationen zum Vermeiden eines zu großen DOMs](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "DOM-Größe optimieren"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Deine erste Netzwerkanfrage ist die wichtigste.  Verringere die Latenz, indem du Weiterleitungen vermeidest, eine schnelle Serverantwort sicherstellst und die Textkomprimierung aktivierst."
   },
@@ -2638,6 +2644,24 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Schriftart-Anzeige"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Wenn du die Downloadzeit von Bildern reduzierst, kannst du die wahrgenommene Ladezeit der Seite und den LCP verbessern. [Weitere Informationen zur Optimierung der Bildgröße](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Bildübermittlung verbessern"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Durch eine höhere Bildkomprimierung könnte die Downloadgröße dieses Bilds verbessert werden. (Geschätzt: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Wenn du ein modernes Bildformat (WebP, AVIF) verwendest oder die Bildkomprimierung erhöhst, könnte sich die Downloadgröße dieses Bilds verbessern. (Geschätzt: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Diese Bilddatei ist für die angezeigten Abmessungen ({PH3}) größer als nötig ({PH2}). Verwende responsive Bilder, um die Bilddownloadgröße zu reduzieren. (Geschätzt: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Wenn du Videoformate statt GIFs verwendest, kannst du die Downloadgröße von animierten Inhalten verringern. (Geschätzt: {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Sieh dir zuerst die längste Phase an. [Verzögerungen können minimiert werden.](https://web.dev/articles/optimize-inp#optimize_interactions) Damit sich die Verarbeitungsdauer verringert, [musst du die Kosten des Hauptthreads](https://web.dev/articles/optimize-long-tasks), meist JS, optimieren."
@@ -2676,10 +2700,10 @@
     "message": "Drittanbieter"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Der Darstellungsbereich der Seite ist nicht für Mobilgeräte optimiert. Daher kann es bei Interaktionen durch Tippen zu einer [Verzögerung von bis zu 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) kommen."
+    "message": "Bei Interaktionen durch Tippen kann es zu einer [Verzögerung von bis zu 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) kommen, wenn der Darstellungsbereich nicht für Mobilgeräte optimiert ist."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Darstellungsbereich nicht für Mobilgeräte optimiert"
+    "message": "Darstellungsbereich für Mobilgeräte optimieren"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Verwende [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) für animierte Inhalte, um die CPU-Last auf ein Mindestmaß zu reduzieren, wenn die Inhalte nicht zu sehen sind."

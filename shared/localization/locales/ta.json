@@ -2627,6 +2627,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "லே-அவுட் ஷிஃப்ட்டுக்கான காரணங்கள்"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "பெரிய DOMமைப் பயன்படுத்துவதால் நினைவக உபயோகம் அதிகரிக்கும், ஸ்டைல் கணக்கீடுகள் நீட்டிக்கப்படும், அதிக டேட்டா செலவாகும் வகையில் தளவமைப்பு மறுசீராக்கங்கள் ஏற்படும். இவற்றால் பக்கத்தின் பதிலளிக்கும் தன்மை பாதிக்கப்படும். [அதிகப்படியான DOM அளவைத் தவிர்ப்பது எப்படி என்று தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "DOM அளவு மேம்பாடு"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "உங்களின் முதல் நெட்வொர்க் கோரிக்கை மிகவும் முக்கியமானது.  திசைதிருப்புதல்களைத் தவிர்த்தல், விரைவான சேவையகப் பதிலை உறுதிசெய்தல், வார்த்தையைச் சுருக்குதல் ஆகியவற்றின் மூலம் அதன் தாமதத்தைக் குறைக்கவும்."
   },
@@ -2638,6 +2644,24 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "எழுத்து வடிவக் காட்சி"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "படங்களின் பதிவிறக்க நேரத்தைக் குறைப்பதால் பக்கம் மற்றும் LCP ஏற்றப்படும் நேரம் மேம்படலாம். [பட அளவை மேம்படுத்துவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "படம் காட்டப்படும் விதத்தை மேம்படுத்துதல்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "படச் சுருக்கக் காரணியை அதிகரிப்பது இந்தப் படத்திற்கான பதிவிறக்க அளவை மேம்படுத்தக்கூடும். (மதிப்பிடப்பட்ட அளவு: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "நவீனப் பட வடிவமைப்பை (WebP, AVIF) பயன்படுத்துவது அல்லது படச் சுருக்குதலை அதிகரிப்பது படத்தின் பதிவிறக்க அளவை மேம்படுத்தக்கூடும். (மதிப்பிடப்பட்ட அளவு: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "காட்டப்படும் பரிமாணங்களை ({PH3}) விடவும் இந்தப் பட ஃபைல் ({PH2}) பெரிதாக உள்ளது. படத்தின் பதிவிறக்க அளவைக் குறைக்க, தானாகப் பொருந்தும் தன்மையுள்ள படங்களைப் பயன்படுத்தவும். (மதிப்பிடப்பட்ட அளவு: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "GIFகளுக்குப் பதிலாக வீடியோ வடிவமைப்புகளைப் பயன்படுத்துவது அனிமேஷன் செய்யப்படும் உள்ளடக்கத்தின் பதிவிறக்க அளவை மேம்படுத்தும். (மதிப்பிடப்பட்ட அளவு: {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "நீளமான நிலையில் இருந்து ஆய்வைத் தொடங்கவும். [தாமதங்களைக் குறைக்கலாம்](https://web.dev/articles/optimize-inp#optimize_interactions). செயலாக்கத்திற்கான கால அளவைக் குறைக்க, [முக்கியத் தொடரிழையின் (பெரும்பாலும் JS செயலாக்கங்கள்) செயல்திறன் பாதிப்புகளை](https://web.dev/articles/optimize-long-tasks) மேம்படுத்தவும்."
@@ -2676,10 +2700,10 @@
     "message": "மூன்றாம் தரப்பினர்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "பக்கத்தின் காட்சிப் பகுதி மொபைலுக்கு ஏற்றதாக இல்லை என்பதால் தட்டுதல் செயல்பாடுகள் [300 மிவி வரை தாமதம் ஆகக்கூடும்](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "காட்சிப் பகுதி மொபைலுக்கு ஏற்றவாறு மேம்படுத்தப்படவில்லை என்றால் தட்டுதல் செயல்பாடுகள் [300 மிவி வரை தாமதம் ஆகக்கூடும்](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "காட்சிப் பகுதி மொபைலுக்கு ஏற்றதாக இல்லை"
+    "message": "காட்சிப் பகுதியை மொபைலுக்கு ஏற்றதாக மேம்படுத்துதல்"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கமாக இருந்தால், உள்ளடக்கம் திரைக்கு வெளியில் இருக்கும்போது CPU உபயோகத்தைக் குறைக்கும் வகையில் [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) காம்பனென்ட்டைப் பயன்படுத்தவும்."
