@@ -230,6 +230,8 @@ declare module Details {
     snippet?: string;
     /** A human-friendly text descriptor that's used to identify the node more quickly. */
     nodeLabel?: string;
+    /** A human-friendly explainer on how to approach the possible fix. */
+    explanation?: string;
   }
 
   /**
