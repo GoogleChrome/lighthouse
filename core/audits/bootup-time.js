@@ -14,7 +14,6 @@ import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 import {TBTImpactTasks} from '../computed/tbt-impact-tasks.js';
 import {Sentry} from '../lib/sentry.js';
-import {Util} from '../../shared/util.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -173,7 +172,6 @@ class BootupTime extends Audit {
 
     return {
       score,
-      scoreDisplayMode: score >= Util.PASS_THRESHOLD ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       notApplicable: !results.length,
       numericValue: totalBootupTime,
       numericUnit: 'millisecond',

@@ -220,7 +220,6 @@ class ThirdPartySummary extends Audit {
 
     return {
       score: Number(passed),
-      scoreDisplayMode: passed ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       displayValue: str_(UIStrings.displayValue, {
         timeInMs: overallSummary.wastedMs,
       }),
