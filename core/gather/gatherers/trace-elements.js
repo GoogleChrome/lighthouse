@@ -74,7 +74,7 @@ class TraceElements extends BaseGatherer {
     // Can only resolve elements for the latest insight set, which should correspond
     // to the current frame id. Can't resolve elements for pages that are gone.
     const insightSet = [...traceEngineResult.insights.values()]
-      .findLast(insightSet => insightSet.frameId === mainFrameId);
+      .reverse().find(insightSet => insightSet.frameId === mainFrameId);
     if (!insightSet) {
       return [];
     }
