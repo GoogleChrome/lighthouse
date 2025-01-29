@@ -23,7 +23,7 @@ class ViewportInsight extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'TraceElements'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -35,6 +35,11 @@ class ViewportInsight extends Audit {
    */
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'Viewport', (insight) => {
+      // TODO !
+      // const nodeId = insight.viewportEvent?.args.data.node_id;
+      // const te = artifacts.TraceElements
+      //   .find(te => te.traceEventType === 'trace-engine' && te.nodeId === nodeId);
+      // te?.node.lhId;
       const htmlSnippet = insight.viewportEvent ?
         `<meta name=viewport content="${insight.viewportEvent.args.data.content}">` :
         null;

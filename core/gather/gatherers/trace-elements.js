@@ -66,6 +66,29 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {string} mainFrameId
+   * @return {Promise<Array<{nodeId: number}>>}
+   */
+  static async getTraceEngineElements(traceEngineResult, mainFrameId) {
+    // Can only resolve elements for the latest insight set, which should correspond
+    // to the current frame id. Can't resolve elements for pages that are gone.
+    const insightSet = [...traceEngineResult.insights.values()]
+      .findLast(insightSet => insightSet.frameId === mainFrameId);
+    if (!insightSet) {
+      return [];
+    }
+
+    const nodeIds = [
+      insightSet.model.DOMSize.maxDOMStats?.args.data.maxChildren?.nodeId,
+      insightSet.model.DOMSize.maxDOMStats?.args.data.maxDepth?.nodeId,
+      insightSet.model.Viewport.viewportEvent?.args.data.node_id,
+    ];
+
+    return nodeIds.filter(id => id !== undefined).map(id => ({nodeId: id}));
+  }
+
+  /**
    * We want to a single representative node to represent the shift, so let's pick
    * the one with the largest impact (size x distance moved).
    *
@@ -320,6 +343,11 @@ class TraceElements extends BaseGatherer {
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
 
+    const frameTreeResponse = await session.sendCommand('Page.getFrameTree');
+    const mainFrameId = frameTreeResponse.frameTree.frame.id;
+
+    const traceEngineData = await TraceElements.getTraceEngineElements(
+      traceEngineResult, mainFrameId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
       trace, traceEngineResult.data, rootCauses, context);
@@ -328,6 +356,7 @@ class TraceElements extends BaseGatherer {
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
+      ['trace-engine', traceEngineData],
       ['largest-contentful-paint', lcpNodeData ? [lcpNodeData] : []],
       ['layout-shift', shiftsData],
       ['animation', animatedElementData],
@@ -336,6 +365,7 @@ class TraceElements extends BaseGatherer {
 
     /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
     const callFunctionOnCache = new Map();
+    /** @type {LH.Artifacts.TraceElement[]} */
     const traceElements = [];
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
