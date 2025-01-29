@@ -201,7 +201,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.append(filmstripEl);
     }
 
-    const allInsights = category.auditRefs
+    // Insights
+    const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
+    insightsGroupEl.classList.add('lh-audit-group--insights');
+    for (const audit of category.auditRefs.filter(audit => audit.group === 'insights')) {
+      const auditEl = this.renderAudit(audit);
+      insightsGroupEl.append(auditEl);
+    }
+    element.append(insightsGroupEl);
+    if (insightsFooterEl) {
+      element.append(insightsFooterEl);
+    }
+
+    // Diagnostics
+    const allDiagnostics = category.auditRefs
       .filter(audit => audit.group === 'diagnostics')
       .map(auditRef => {
         const {overallImpact, overallLinearImpact} = this.overallImpact(auditRef, metricAudits);
@@ -211,21 +224,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return {auditRef, auditEl, overallImpact, overallLinearImpact, guidanceLevel};
       });
 
-    // Diagnostics
-    const diagnosticAudits = allInsights
+    const diagnosticAudits = allDiagnostics
       .filter(audit => !ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const passedAudits = allInsights
+    const passedAudits = allDiagnostics
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const [groupEl, footerEl] = this.renderAuditGroup(groups['diagnostics']);
-    groupEl.classList.add('lh-audit-group--diagnostics');
+    const [diagnosticsGroupEl, diagnosticsFooterEl] = this.renderAuditGroup(groups['diagnostics']);
+    diagnosticsGroupEl.classList.add('lh-audit-group--diagnostics');
 
     /**
      * @param {string} acronym
      */
     function refreshFilteredAudits(acronym) {
-      for (const audit of allInsights) {
+      for (const audit of allDiagnostics) {
         if (acronym === 'All') {
           audit.auditEl.hidden = false;
         } else {
@@ -267,7 +279,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       });
 
       for (const audit of diagnosticAudits) {
-        groupEl.insertBefore(audit.auditEl, footerEl);
+        diagnosticsGroupEl.insertBefore(audit.auditEl, diagnosticsFooterEl);
       }
     }
 
@@ -291,7 +303,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     refreshFilteredAudits('All');
 
     if (diagnosticAudits.length) {
-      element.append(groupEl);
+      element.append(diagnosticsGroupEl);
     }
 
     if (!passedAudits.length) return element;
