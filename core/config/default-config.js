@@ -310,6 +310,7 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/dom-size-insight',
     'insights/viewport-insight',
   ],
   groups: {
@@ -394,6 +395,7 @@ const defaultConfig = {
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
 
+        {id: 'dom-size-insight', weight: 0, group: 'insights'},
         {id: 'viewport-insight', weight: 0, group: 'insights'},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.

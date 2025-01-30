@@ -28,4 +28,27 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   };
 }
 
-export {adaptInsightToAuditProduct};
+/**
+ * @param {LH.Artifacts.TraceElement[]} traceElements
+ * @param {number|null|undefined} nodeId
+ * @return {LH.Audit.Details.NodeValue|undefined}
+ */
+function makeNodeItemForNodeId(traceElements, nodeId) {
+  if (typeof nodeId !== 'number') {
+    return;
+  }
+
+  const traceElement =
+    traceElements.find(te => te.traceEventType === 'trace-engine' && te.nodeId === nodeId);
+  const node = traceElement?.node;
+  if (!node) {
+    return;
+  }
+
+  return Audit.makeNodeItem(node);
+}
+
+export {
+  adaptInsightToAuditProduct,
+  makeNodeItemForNodeId,
+};

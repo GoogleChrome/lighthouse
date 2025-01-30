@@ -8,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/Viewport.
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct} from './insight-audit.js';
+import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js', UIStrings);
@@ -36,8 +36,6 @@ class ViewportInsight extends Audit {
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'Viewport', (insight) => {
       const nodeId = insight.viewportEvent?.args.data.node_id;
-      const te = artifacts.TraceElements
-        .find(te => te.traceEventType === 'trace-engine' && te.nodeId === nodeId);
       const htmlSnippet = insight.viewportEvent ?
         `<meta name=viewport content="${insight.viewportEvent.args.data.content}">` :
         null;
@@ -46,12 +44,16 @@ class ViewportInsight extends Audit {
       const headings = [
         {key: 'node', valueType: 'node', label: ''},
       ];
-      Audit.makeListDetails([
-        Audit.makeTableDetails(headings, [{node: te?.node.lhId}]),
+      /** @type {LH.Audit.Details.Table['items']} */
+      const items = [
+        {node: makeNodeItemForNodeId(artifacts.TraceElements, nodeId)},
+      ];
+      const table = Audit.makeTableDetails(headings, items);
+
+      return Audit.makeListDetails([
+        table,
         {type: 'debugdata', items: [htmlSnippet]},
       ]);
-
-      return {type: 'debugdata', items: [htmlSnippet]};
     });
   }
 }
