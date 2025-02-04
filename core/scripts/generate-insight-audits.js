@@ -127,8 +127,7 @@ let defaultConfigText = fs.readFileSync(defaultConfigPath, 'utf-8');
 const auditListCode = allAuditIds.map(id => `    'insights/${id}',\n`).join('') + '  ';
 defaultConfigText = insert(defaultConfigText, `'bf-cache',\n`, ']', auditListCode);
 
-// {id: 'dom-size-insight', weight: 0, group: 'insights'}
-const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'insights'},`).join('\n');
+const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'hidden'},`).join('\n');
 defaultConfigText = insert(defaultConfigText, 'Insight audits.\n', '\n\n', auditRefListCode);
 
 fs.writeFileSync(defaultConfigPath, defaultConfigText);

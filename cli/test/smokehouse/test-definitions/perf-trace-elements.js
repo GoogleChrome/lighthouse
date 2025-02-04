@@ -31,6 +31,12 @@ const expectations = {
   },
   artifacts: {
     TraceElements: [
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
       {
         traceEventType: 'largest-contentful-paint',
         node: {
