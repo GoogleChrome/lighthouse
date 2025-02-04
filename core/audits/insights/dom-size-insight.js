@@ -43,9 +43,9 @@ class DOMSizeInsight extends Audit {
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'statistic', valueType: 'text', label: 'Statistic'}, // TODO !
-        {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnElement)},
-        {key: 'value', valueType: 'numeric', label: 'Value'}, // TODO !
+        {key: 'statistic', valueType: 'text', label: str_(UIStrings.statistic)},
+        {key: 'node', valueType: 'node', label: str_(UIStrings.element)},
+        {key: 'value', valueType: 'numeric', label: str_(UIStrings.value)},
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [

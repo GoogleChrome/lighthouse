@@ -36,6 +36,7 @@ class ViewportInsight extends Audit {
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'Viewport', (insight) => {
       const nodeId = insight.viewportEvent?.args.data.node_id;
+      // TODO: we want to show this snippet in the report.
       const htmlSnippet = insight.viewportEvent ?
         `<meta name=viewport content="${insight.viewportEvent.args.data.content}">` :
         null;
