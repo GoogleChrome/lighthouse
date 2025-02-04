@@ -60,6 +60,7 @@ jobs:
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
+    - run: yarn generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code

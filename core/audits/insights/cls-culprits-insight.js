@@ -4,27 +4,27 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/Viewport.js';
+import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/CLSCulprits.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
-const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js', UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js', UIStrings);
 
-class ViewportInsight extends Audit {
+class CLSCulpritsInsight extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'viewport-insight',
+      id: 'cls-culprits-insight',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3,
+      guidanceLevel: 3, // TODO: confirm/change.
       requiredArtifacts: ['traces', 'TraceElements'],
-      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS, // TODO: confirm/change.
     };
   }
 
@@ -34,20 +34,17 @@ class ViewportInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    return adaptInsightToAuditProduct(artifacts, context, 'Viewport', (insight) => {
-      const nodeId = insight.viewportEvent?.args.data.node_id;
-
+    // TODO: implement.
+    return adaptInsightToAuditProduct(artifacts, context, 'CLSCulprits', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'node', valueType: 'node', label: ''},
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
-        {node: makeNodeItemForNodeId(artifacts.TraceElements, nodeId)},
       ];
       return Audit.makeTableDetails(headings, items);
     });
   }
 }
 
-export default ViewportInsight;
+export default CLSCulpritsInsight;
