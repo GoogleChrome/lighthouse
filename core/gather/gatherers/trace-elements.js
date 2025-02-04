@@ -83,12 +83,19 @@ class TraceElements extends BaseGatherer {
      * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
      * @param {any} obj
      * @param {(obj: Record<string, string>, key: string) => void} cb
+     * @param {Set<object>} seen
      */
-    function recursiveObjectEnumerate(obj, cb) {
+    function recursiveObjectEnumerate(obj, cb, seen) {
+      if (seen.has(seen)) {
+        return;
+      }
+
+      seen.add(obj);
+
       if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
         Object.keys(obj).forEach(key => {
           if (typeof obj[key] === 'object') {
-            recursiveObjectEnumerate(obj[key], cb);
+            recursiveObjectEnumerate(obj[key], cb, seen);
           } else {
             cb(obj, key);
           }
@@ -96,7 +103,7 @@ class TraceElements extends BaseGatherer {
       } else if (Array.isArray(obj)) {
         obj.forEach(item => {
           if (typeof item === 'object' || Array.isArray(item)) {
-            recursiveObjectEnumerate(item, cb);
+            recursiveObjectEnumerate(item, cb, seen);
           }
         });
       }
@@ -108,7 +115,7 @@ class TraceElements extends BaseGatherer {
       if (typeof obj[key] === 'number' && (key === 'nodeId' || key === 'node_id')) {
         nodeIds.push(obj[key]);
       }
-    });
+    }, new Set());
 
     return [...new Set(nodeIds)].map(id => ({nodeId: id}));
   }
