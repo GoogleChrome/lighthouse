@@ -79,13 +79,38 @@ class TraceElements extends BaseGatherer {
       return [];
     }
 
-    const nodeIds = [
-      insightSet.model.DOMSize.maxDOMStats?.args.data.maxChildren?.nodeId,
-      insightSet.model.DOMSize.maxDOMStats?.args.data.maxDepth?.nodeId,
-      insightSet.model.Viewport.viewportEvent?.args.data.node_id,
-    ];
+    /**
+     * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
+     * @param {any} obj
+     * @param {(obj: Record<string, string>, key: string) => void} cb
+     */
+    function recursiveObjectEnumerate(obj, cb) {
+      if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        Object.keys(obj).forEach(key => {
+          if (typeof obj[key] === 'object') {
+            recursiveObjectEnumerate(obj[key], cb);
+          } else {
+            cb(obj, key);
+          }
+        });
+      } else if (Array.isArray(obj)) {
+        obj.forEach(item => {
+          if (typeof item === 'object' || Array.isArray(item)) {
+            recursiveObjectEnumerate(item, cb);
+          }
+        });
+      }
+    }
 
-    return nodeIds.filter(id => id !== undefined).map(id => ({nodeId: id}));
+    /** @type {number[]} */
+    const nodeIds = [];
+    recursiveObjectEnumerate(insightSet.model, (obj, key) => {
+      if (typeof obj[key] === 'number' && (key === 'nodeId' || key === 'node_id')) {
+        nodeIds.push(obj[key]);
+      }
+    });
+
+    return [...new Set(nodeIds)].map(id => ({nodeId: id}));
   }
 
   /**
