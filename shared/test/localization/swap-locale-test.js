@@ -41,9 +41,9 @@ describe('swap-locale', () => {
 
     // Formatted numbers in placeholders.
     expect(lhrEn.audits['mainthread-work-breakdown'].displayValue).
-toMatchInlineSnapshot(`"2.7 s"`);
+toMatchInlineSnapshot(`"2.1 s"`);
     expect(lhrDe.audits['mainthread-work-breakdown'].displayValue).
-toMatchInlineSnapshot(`"2,7 s"`);
+toMatchInlineSnapshot(`"2,1 s"`);
     /* eslint-enable no-irregular-whitespace */
   });
 
