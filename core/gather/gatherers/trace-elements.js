@@ -67,16 +67,26 @@ class TraceElements extends BaseGatherer {
 
   /**
    * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
-   * @param {string} mainFrameId
+   * @param {string|undefined} navigationId
    * @return {Promise<Array<{nodeId: number}>>}
    */
-  static async getTraceEngineElements(traceEngineResult, mainFrameId) {
+  static async getTraceEngineElements(traceEngineResult, navigationId) {
     // Can only resolve elements for the latest insight set, which should correspond
-    // to the current frame id. Can't resolve elements for pages that are gone.
-    const insightSet = [...traceEngineResult.insights.values()]
-      .reverse().find(insightSet => insightSet.frameId === mainFrameId);
+    // to the current navigation id (if present). Can't resolve elements for pages
+    // that are gone.
+    const insightSet = [...traceEngineResult.insights.values()].at(-1);
     if (!insightSet) {
       return [];
+    }
+
+    if (navigationId) {
+      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+        return [];
+      }
+    } else {
+      if (insightSet.navigation) {
+        return [];
+      }
     }
 
     /**
@@ -374,12 +384,10 @@ class TraceElements extends BaseGatherer {
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
-
-    const frameTreeResponse = await session.sendCommand('Page.getFrameTree');
-    const mainFrameId = frameTreeResponse.frameTree.frame.id;
+    const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
 
     const traceEngineData = await TraceElements.getTraceEngineElements(
-      traceEngineResult, mainFrameId);
+      traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
       trace, traceEngineResult.data, rootCauses, context);
