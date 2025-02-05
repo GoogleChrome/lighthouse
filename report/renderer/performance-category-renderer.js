@@ -202,15 +202,18 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Insights
-    const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
-    insightsGroupEl.classList.add('lh-audit-group--insights');
-    for (const audit of category.auditRefs.filter(audit => audit.group === 'insights')) {
-      const auditEl = this.renderAudit(audit);
-      insightsGroupEl.append(auditEl);
-    }
-    element.append(insightsGroupEl);
-    if (insightsFooterEl) {
-      element.append(insightsFooterEl);
+    const insightAudits = category.auditRefs.filter(audit => audit.group === 'insights');
+    if (insightAudits.length) {
+      const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
+      insightsGroupEl.classList.add('lh-audit-group--insights');
+      for (const audit of category.auditRefs.filter(audit => audit.group === 'insights')) {
+        const auditEl = this.renderAudit(audit);
+        insightsGroupEl.append(auditEl);
+      }
+      element.append(insightsGroupEl);
+      if (insightsFooterEl) {
+        element.append(insightsFooterEl);
+      }
     }
 
     // Diagnostics
