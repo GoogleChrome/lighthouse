@@ -4,8 +4,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NavigationInsights} from '../../computed/navigation-insights.js';
+import {NO_NAVIGATION} from '@paulirish/trace_engine/models/trace/types/TraceEvents.js';
+
+import {ProcessedTrace} from '../../computed/processed-trace.js';
+import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import {Audit} from '../audit.js';
+
+/**
+ * @param {LH.Artifacts} artifacts
+ * @param {LH.Audit.Context} context
+ * @return {Promise<import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet>}
+ */
+async function getInsightSet(artifacts, context) {
+  const trace = artifacts.traces[Audit.DEFAULT_PASS];
+
+  const processedTrace = await ProcessedTrace.request(trace, context);
+  const traceEngineResult = await TraceEngineResult.request({trace}, context);
+
+  const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
+  const key = navigationId ?? NO_NAVIGATION;
+  const insights = traceEngineResult.insights.get(key);
+  if (!insights) throw new Error('No navigations insights found');
+
+  return insights;
+}
 
 /**
  * @param {LH.Artifacts} artifacts
@@ -16,9 +38,8 @@ import {Audit} from '../audit.js';
  * @return {Promise<LH.Audit.Product>}
  */
 async function adaptInsightToAuditProduct(artifacts, context, insightName, createDetails) {
-  const trace = artifacts.traces[Audit.DEFAULT_PASS];
-  const navInsights = await NavigationInsights.request(trace, context);
-  const insight = navInsights.model[insightName];
+  const insights = await getInsightSet(artifacts, context);
+  const insight = insights.model[insightName];
   const details = createDetails(insight);
   return {
     score: insight.shouldShow ? 0 : 1,

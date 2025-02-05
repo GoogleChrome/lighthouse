@@ -11075,140 +11075,234 @@
             "id": "cls-culprits-insight",
             "title": "Layout shift culprits",
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 0.5,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "document-latency-insight": {
             "id": "document-latency-insight",
             "title": "Document request latency",
             "description": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "dom-size-insight": {
             "id": "dom-size-insight",
             "title": "Optimize DOM size",
             "description": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "statistic",
+                  "valueType": "text",
+                  "label": "Statistic"
+                },
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "label": "Element"
+                },
+                {
+                  "key": "value",
+                  "valueType": "numeric",
+                  "label": "Value"
+                }
+              ],
+              "items": [
+                {
+                  "statistic": "Total elements",
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 363
+                  }
+                },
+                {
+                  "statistic": "Most children",
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 17
+                  }
+                },
+                {
+                  "statistic": "DOM depth",
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 11
+                  }
+                }
+              ]
+            },
             "guidanceLevel": 3
           },
           "font-display-insight": {
             "id": "font-display-insight",
             "title": "Font display",
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "forced-reflow-insight": {
             "id": "forced-reflow-insight",
             "title": "Forced reflow",
             "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "image-delivery-insight": {
             "id": "image-delivery-insight",
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "interaction-to-next-paint-insight": {
             "id": "interaction-to-next-paint-insight",
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 0.5,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "lcp-discovery-insight": {
             "id": "lcp-discovery-insight",
             "title": "LCP request discovery",
             "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "lcp-phases-insight": {
             "id": "lcp-phases-insight",
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "long-critical-network-tree-insight": {
             "id": "long-critical-network-tree-insight",
             "title": "Long critical network tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
             "title": "Render blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "slow-css-selector-insight": {
             "id": "slow-css-selector-insight",
             "title": "CSS Selector costs",
             "description": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "third-parties-insight": {
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 0.5,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            },
             "guidanceLevel": 3
           },
           "viewport-insight": {
             "id": "viewport-insight",
             "title": "Optimize viewport for mobile",
             "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "No navigationId found",
-            "errorStack": "Error: No navigationId found\n    at NavigationInsights.compute_ (file:///core/computed/navigation-insights.js)",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "label": ""
+                }
+              ],
+              "items": [
+                {}
+              ]
+            },
             "guidanceLevel": 3
           }
         },
@@ -12429,96 +12523,90 @@
             },
             {
               "startTime": 102,
-              "name": "lh:computed:NavigationInsights",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 103,
               "name": "lh:audit:document-latency-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 104,
+              "startTime": 103,
               "name": "lh:audit:dom-size-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 105,
+              "startTime": 104,
               "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 106,
+              "startTime": 105,
               "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 107,
+              "startTime": 106,
               "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 108,
+              "startTime": 107,
               "name": "lh:audit:interaction-to-next-paint-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 109,
+              "startTime": 108,
               "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 110,
+              "startTime": 109,
               "name": "lh:audit:lcp-phases-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 111,
+              "startTime": 110,
               "name": "lh:audit:long-critical-network-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 112,
+              "startTime": 111,
               "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 113,
+              "startTime": 112,
               "name": "lh:audit:slow-css-selector-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 114,
+              "startTime": 113,
               "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 115,
+              "startTime": 114,
               "name": "lh:audit:viewport-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 116,
+              "startTime": 115,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 117
+          "total": 116
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -12828,7 +12916,8 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnElement": [
-              "audits[layout-shifts].details.headings[0].label"
+              "audits[layout-shifts].details.headings[0].label",
+              "audits[dom-size-insight].details.headings[1].label"
             ],
             "core/audits/layout-shifts.js | columnScore": [
               "audits[layout-shifts].details.headings[1].label"
@@ -13024,6 +13113,21 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": [
               "audits[dom-size-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": [
+              "audits[dom-size-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": [
+              "audits[dom-size-insight].details.headings[2].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": [
+              "audits[dom-size-insight].details.items[0].statistic"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": [
+              "audits[dom-size-insight].details.items[1].statistic"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
+              "audits[dom-size-insight].details.items[2].statistic"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
               "audits[font-display-insight].title"
