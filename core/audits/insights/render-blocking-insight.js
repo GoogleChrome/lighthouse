@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
-
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -10,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/RenderBlo
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
+import {adaptInsightToAuditProduct} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js', UIStrings);
@@ -25,7 +23,7 @@ class RenderBlockingInsight extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3, // TODO: confirm/change.
+      guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
     };
   }

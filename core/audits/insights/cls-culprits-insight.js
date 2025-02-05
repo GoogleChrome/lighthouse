@@ -25,7 +25,7 @@ class CLSCulpritsInsight extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3, // TODO: confirm/change.
+      guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
     };
   }
