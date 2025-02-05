@@ -484,6 +484,7 @@ vs
       'multi-check-audit.js',
       'byte-efficiency/byte-efficiency-audit.js',
       'manual/manual-audit.js',
+      'insights/insight-audit.js',
     ];
 
     const fileList = [
