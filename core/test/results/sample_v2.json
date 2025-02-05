@@ -5867,6 +5867,52 @@
       "description": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
       "score": 1,
       "scoreDisplayMode": "metricSavings",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "statistic",
+            "valueType": "text",
+            "label": "Statistic"
+          },
+          {
+            "key": "node",
+            "valueType": "node",
+            "label": "Element"
+          },
+          {
+            "key": "value",
+            "valueType": "numeric",
+            "label": "Value"
+          }
+        ],
+        "items": [
+          {
+            "statistic": "Total elements",
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 153
+            }
+          },
+          {
+            "statistic": "Most children",
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 100
+            }
+          },
+          {
+            "statistic": "DOM depth",
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 4
+            }
+          }
+        ]
+      },
       "guidanceLevel": 3
     },
     "font-display-insight": {
@@ -5967,8 +6013,12 @@
       "id": "render-blocking-insight",
       "title": "Render blocking requests",
       "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
-      "score": 0.5,
+      "score": 0,
       "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 3500,
+        "LCP": 0
+      },
       "details": {
         "type": "table",
         "headings": [],
@@ -9754,7 +9804,8 @@
         "audits[largest-contentful-paint-element].details.items[0].headings[0].label",
         "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
-        "audits[dom-size].details.headings[1].label"
+        "audits[dom-size].details.headings[1].label",
+        "audits[dom-size-insight].details.headings[1].label"
       ],
       "core/audits/largest-contentful-paint-element.js | columnPhase": [
         "audits[largest-contentful-paint-element].details.items[1].headings[0].label"
@@ -10709,6 +10760,21 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": [
         "audits[dom-size-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": [
+        "audits[dom-size-insight].details.headings[0].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": [
+        "audits[dom-size-insight].details.headings[2].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": [
+        "audits[dom-size-insight].details.items[0].statistic"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": [
+        "audits[dom-size-insight].details.items[1].statistic"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
+        "audits[dom-size-insight].details.items[2].statistic"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
         "audits[font-display-insight].title"

@@ -418,8 +418,8 @@ class TraceElements extends BaseGatherer {
 
         if (response?.result?.value) {
           traceElements.push({
-            traceEventType,
             ...response.result.value,
+            traceEventType,
             animations: backendNodeData[i].animations,
             nodeId: backendNodeId,
             type: backendNodeData[i].type,
