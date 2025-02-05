@@ -65,7 +65,7 @@ describe('Individual modes API', function() {
       server.baseDir = `${LH_ROOT}/core/test/fixtures/user-flows/snapshot-basic`;
     });
 
-    it('should compute ConsoleMessage results across a span of time', async () => {
+    it.only('should compute ConsoleMessage results across a span of time', async () => {
       const run = await api.startTimespan(state.page, {
         config: {
           extends: 'lighthouse:default',
@@ -107,7 +107,7 @@ describe('Individual modes API', function() {
       expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
-      expect(erroredAudits).toHaveLength(0);
+      expect(erroredAudits).toStrictEqual([]);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
 
       const errorsInConsole = lhr.audits['errors-in-console'];

@@ -13,20 +13,17 @@ import {Audit} from '../audit.js';
 /**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
- * @return {Promise<import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet>}
+ * @return {Promise<import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined>}
  */
 async function getInsightSet(artifacts, context) {
   const trace = artifacts.traces[Audit.DEFAULT_PASS];
-
   const processedTrace = await ProcessedTrace.request(trace, context);
   const traceEngineResult = await TraceEngineResult.request({trace}, context);
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const key = navigationId ?? NO_NAVIGATION;
-  const insights = traceEngineResult.insights.get(key);
-  if (!insights) throw new Error('No navigations insights found');
 
-  return insights;
+  return traceEngineResult.insights.get(key);
 }
 
 /**
@@ -39,6 +36,12 @@ async function getInsightSet(artifacts, context) {
  */
 async function adaptInsightToAuditProduct(artifacts, context, insightName, createDetails) {
   const insights = await getInsightSet(artifacts, context);
+  if (!insights) {
+    return {
+      score: null,
+    };
+  }
+
   const insight = insights.model[insightName];
   const details = createDetails(insight);
   return {
