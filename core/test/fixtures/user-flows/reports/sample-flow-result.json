@@ -3841,7 +3841,7 @@
             "title": "Layout shift culprits",
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -3871,7 +3871,7 @@
             "title": "Optimize DOM size",
             "description": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -3941,7 +3941,7 @@
             "title": "Forced reflow",
             "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -3971,7 +3971,7 @@
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -3983,8 +3983,8 @@
             "id": "lcp-discovery-insight",
             "title": "LCP request discovery",
             "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -3996,8 +3996,8 @@
             "id": "lcp-phases-insight",
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -4010,7 +4010,7 @@
             "title": "Long critical network tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -4040,7 +4040,7 @@
             "title": "CSS Selector costs",
             "description": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -4052,8 +4052,8 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -4066,7 +4066,7 @@
             "title": "Optimize viewport for mobile",
             "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -11075,8 +11075,8 @@
             "id": "cls-culprits-insight",
             "title": "Layout shift culprits",
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11089,12 +11089,7 @@
             "title": "Document request latency",
             "description": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            },
+            "scoreDisplayMode": "numeric",
             "guidanceLevel": 3
           },
           "dom-size-insight": {
@@ -11102,7 +11097,7 @@
             "title": "Optimize DOM size",
             "description": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -11172,7 +11167,7 @@
             "title": "Forced reflow",
             "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11185,7 +11180,7 @@
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11197,8 +11192,8 @@
             "id": "interaction-to-next-paint-insight",
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11211,7 +11206,7 @@
             "title": "LCP request discovery",
             "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11224,7 +11219,7 @@
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11237,7 +11232,7 @@
             "title": "Long critical network tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11250,7 +11245,7 @@
             "title": "Render blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11263,7 +11258,7 @@
             "title": "CSS Selector costs",
             "description": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11275,8 +11270,8 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -11289,7 +11284,7 @@
             "title": "Optimize viewport for mobile",
             "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -22672,7 +22667,7 @@
             "title": "Layout shift culprits",
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22702,7 +22697,7 @@
             "title": "Optimize DOM size",
             "description": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -22772,7 +22767,7 @@
             "title": "Forced reflow",
             "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22785,7 +22780,7 @@
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22798,7 +22793,7 @@
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22810,8 +22805,8 @@
             "id": "lcp-discovery-insight",
             "title": "LCP request discovery",
             "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22823,8 +22818,8 @@
             "id": "lcp-phases-insight",
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22837,7 +22832,7 @@
             "title": "Long critical network tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22867,7 +22862,7 @@
             "title": "CSS Selector costs",
             "description": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22879,8 +22874,8 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0.5,
-            "scoreDisplayMode": "metricSavings",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [],
@@ -22893,7 +22888,7 @@
             "title": "Optimize viewport for mobile",
             "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
             "score": 1,
-            "scoreDisplayMode": "metricSavings",
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [

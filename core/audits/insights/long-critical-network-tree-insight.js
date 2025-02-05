@@ -23,10 +23,10 @@ class LongCriticalNetworkTreeInsight extends Audit {
     return {
       id: 'long-critical-network-tree-insight',
       title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3, // TODO: confirm/change.
       requiredArtifacts: ['traces', 'TraceElements'],
-      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS, // TODO: confirm/change.
     };
   }
 

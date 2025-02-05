@@ -45,6 +45,8 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   const insight = insights.model[insightName];
   const details = createDetails(insight);
   return {
+    scoreDisplayMode:
+      insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,
     score: insight.shouldShow ? 0 : 1,
     metricSavings: insight.metricSavings,
     warnings: insight.warnings,

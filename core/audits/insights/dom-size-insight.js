@@ -21,10 +21,10 @@ class DOMSizeInsight extends Audit {
     return {
       id: 'dom-size-insight',
       title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
-      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
