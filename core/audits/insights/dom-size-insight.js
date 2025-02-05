@@ -39,7 +39,7 @@ class DOMSizeInsight extends Audit {
         return;
       }
 
-      const {maxChildren, maxDepth} = insight.maxDOMStats.args.data;
+      const {totalElements, maxChildren, maxDepth} = insight.maxDOMStats.args.data;
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
@@ -50,7 +50,15 @@ class DOMSizeInsight extends Audit {
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
         {
-          statistic: 'Most children',
+          statistic: str_(UIStrings.totalElements),
+          value: {
+            type: 'numeric',
+            granularity: 1,
+            value: totalElements,
+          },
+        },
+        {
+          statistic: str_(UIStrings.maxChildren),
           node: makeNodeItemForNodeId(artifacts.TraceElements, maxChildren.nodeId),
           value: {
             type: 'numeric',
@@ -59,7 +67,7 @@ class DOMSizeInsight extends Audit {
           },
         },
         {
-          statistic: 'DOM depth',
+          statistic: str_(UIStrings.maxDOMDepth),
           node: makeNodeItemForNodeId(artifacts.TraceElements, maxDepth.nodeId),
           value: {
             type: 'numeric',
