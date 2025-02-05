@@ -47,7 +47,6 @@ async function getPageFromConnection(connection) {
   const pptrConnection = new PptrConnection(mainTargetInfo.url, transport);
 
   const browser = await CdpBrowser._create(
-    'chrome',
     pptrConnection,
     [] /* contextIds */,
     false /* ignoreHTTPSErrors */
