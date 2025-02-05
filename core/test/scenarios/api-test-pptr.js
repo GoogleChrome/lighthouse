@@ -65,7 +65,7 @@ describe('Individual modes API', function() {
       server.baseDir = `${LH_ROOT}/core/test/fixtures/user-flows/snapshot-basic`;
     });
 
-    it.only('should compute ConsoleMessage results across a span of time', async () => {
+    it('should compute ConsoleMessage results across a span of time', async () => {
       const run = await api.startTimespan(state.page, {
         config: {
           extends: 'lighthouse:default',
