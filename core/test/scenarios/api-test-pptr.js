@@ -106,7 +106,7 @@ describe('Individual modes API', function() {
 
       expect(
         notApplicableAudits
-          // Flaky in CI.
+          // TODO(16323): Flaky in CI.
           .filter(audit => audit.id !== 'viewport-insight')
           .map(audit => audit.id)
           .sort()
