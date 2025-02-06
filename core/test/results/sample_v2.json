@@ -5843,8 +5843,29 @@
       "id": "document-latency-insight",
       "title": "Document request latency",
       "description": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 0.5,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 0
+      },
+      "details": {
+        "type": "checklist",
+        "items": {
+          "noRedirects": {
+            "label": "Avoids redirects",
+            "value": true
+          },
+          "serverResponseIsFast": {
+            "label": "Server responds quickly",
+            "value": true
+          },
+          "usesCompression": {
+            "label": "No compression applied",
+            "value": false
+          }
+        }
+      },
       "guidanceLevel": 3
     },
     "dom-size-insight": {
@@ -5937,8 +5958,25 @@
       "id": "lcp-discovery-insight",
       "title": "LCP request discovery",
       "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "details": {
+        "type": "checklist",
+        "items": {
+          "priorityHinted": {
+            "label": "fetchpriority=high applied",
+            "value": false
+          },
+          "requestDiscoverable": {
+            "label": "Request is discoverable in initial document",
+            "value": false
+          },
+          "eagerlyLoaded": {
+            "label": "lazy load not applied",
+            "value": true
+          }
+        }
+      },
       "guidanceLevel": 3
     },
     "lcp-phases-insight": {
