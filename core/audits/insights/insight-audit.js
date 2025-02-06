@@ -38,12 +38,20 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   const insights = await getInsightSet(artifacts, context);
   if (!insights) {
     return {
+      scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,
     };
   }
 
   const insight = insights.model[insightName];
   const details = createDetails(insight);
+  if (!details) {
+    return {
+      scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
+      score: null,
+    };
+  }
+
   return {
     scoreDisplayMode:
       insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,

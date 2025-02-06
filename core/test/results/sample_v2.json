@@ -6021,8 +6021,55 @@
       },
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Transfer Size"
+          },
+          {
+            "key": "wastedMs",
+            "valueType": "timespanMs",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+            "totalBytes": 0,
+            "wastedMs": 581
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+            "totalBytes": 665,
+            "wastedMs": 581
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "totalBytes": 665,
+            "wastedMs": 581
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "totalBytes": 486,
+            "wastedMs": 581
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "totalBytes": 0,
+            "wastedMs": 581
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "totalBytes": 665,
+            "wastedMs": 581
+          }
+        ]
       },
       "guidanceLevel": 3
     },
@@ -9560,7 +9607,8 @@
         "audits[uses-text-compression].details.headings[0].label",
         "audits[uses-responsive-images].details.headings[1].label",
         "audits[efficient-animated-content].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label"
+        "audits[legacy-javascript].details.headings[0].label",
+        "audits[render-blocking-insight].details.headings[0].label"
       ],
       "core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -9739,7 +9787,8 @@
         "audits[render-blocking-resources].details.headings[1].label",
         "audits[unminified-javascript].details.headings[1].label",
         "audits[unused-javascript].details.headings[1].label",
-        "audits[uses-text-compression].details.headings[1].label"
+        "audits[uses-text-compression].details.headings[1].label",
+        "audits[render-blocking-insight].details.headings[1].label"
       ],
       "core/lib/i18n/i18n.js | totalResourceType": [
         "audits[resource-summary].details.items[0].label"
@@ -9932,7 +9981,8 @@
         "audits[uses-text-compression].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[3].label",
         "audits[efficient-animated-content].details.headings[2].label",
-        "audits[legacy-javascript].details.headings[2].label"
+        "audits[legacy-javascript].details.headings[2].label",
+        "audits[render-blocking-insight].details.headings[2].label"
       ],
       "core/audits/csp-xss.js | title": [
         "audits[csp-xss].title"
