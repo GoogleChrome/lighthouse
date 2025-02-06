@@ -45,6 +45,8 @@ export class DetailsRenderer {
         return this._renderFilmstrip(details);
       case 'list':
         return this._renderList(details);
+      case 'checklist':
+        return this._renderChecklist(details);
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
@@ -548,6 +550,25 @@ export class DetailsRenderer {
     });
 
     return listContainer;
+  }
+
+  /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.Checklist>} details
+   * @return {Element}
+   */
+  _renderChecklist(details) {
+    const container = this._dom.createElement('ul', 'lh-checklist');
+
+    Object.values(details.items).forEach(item => {
+      const element = this._dom.createChildOf(container, 'li', 'lh-checklist-item');
+      const iconClass = item.value ?
+        'lh-report-plain-icon--checklist-pass' :
+        'lh-report-plain-icon--checklist-fail';
+      this._dom.createChildOf(element, 'span', `lh-report-plain-icon ${iconClass}`)
+        .textContent = item.label;
+    });
+
+    return container;
   }
 
   /**

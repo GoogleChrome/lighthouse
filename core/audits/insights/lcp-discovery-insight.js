@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
-
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -10,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/LCPDiscov
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
+import {adaptInsightToAuditProduct} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js', UIStrings);
@@ -36,15 +34,12 @@ class LCPDiscoveryInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
     return adaptInsightToAuditProduct(artifacts, context, 'LCPDiscovery', (insight) => {
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-      ];
-      /** @type {LH.Audit.Details.Table['items']} */
-      const items = [
-      ];
-      return Audit.makeTableDetails(headings, items);
+      if (!insight.checklist) {
+        return;
+      }
+
+      return Audit.makeChecklistDetails(insight.checklist);
     });
   }
 }

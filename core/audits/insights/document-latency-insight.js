@@ -34,19 +34,12 @@ class DocumentLatencyInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
     return adaptInsightToAuditProduct(artifacts, context, 'DocumentLatency', (insight) => {
       if (!insight.data) {
         return;
       }
 
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-      ];
-      /** @type {LH.Audit.Details.Table['items']} */
-      const items = [
-      ];
-      return Audit.makeTableDetails(headings, items);
+      return Audit.makeChecklistDetails(insight.data.checklist);
     });
   }
 }

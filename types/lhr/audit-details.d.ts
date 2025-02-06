@@ -21,6 +21,7 @@ type Details =
   Details.List |
   Details.Opportunity |
   Details.Screenshot |
+  Details.Checklist |
   Details.Table;
 
 // Details namespace.
@@ -106,6 +107,11 @@ declare module Details {
     right: number;
     bottom: number;
     left: number;
+  }
+
+  interface Checklist extends BaseDetails {
+    type: 'checklist',
+    items: Record<string, {value: boolean, label: IcuMessage | string}>,
   }
 
   interface Table extends BaseDetails {
