@@ -34,14 +34,20 @@ class RenderBlockingInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
+    // TODO: show UIStrings.noRenderBlocking if nothing was blocking?
     return adaptInsightToAuditProduct(artifacts, context, 'RenderBlocking', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
+        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
+        {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
       ];
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = [
-      ];
+      const items = insight.renderBlockingRequests.map(request => ({
+        url: request.args.data.url,
+        totalBytes: request.args.data.encodedDataLength,
+        wastedMs: insight.requestIdToWastedMs?.get(request.args.data.requestId),
+      }));
       return Audit.makeTableDetails(headings, items);
     });
   }
