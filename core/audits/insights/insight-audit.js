@@ -52,11 +52,22 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
+  // This hack is to add metric adorners if an insight category links it to a metric,
+  // but doesn't output a metric savings for that metric.
+  let metricSavings = insight.metricSavings;
+  if (insight.category === 'INP' && !metricSavings?.INP) {
+    metricSavings = {...metricSavings, INP: /** @type {any} */ (0)};
+  } else if (insight.category === 'CLS' && !metricSavings?.CLS) {
+    metricSavings = {...metricSavings, CLS: /** @type {any} */ (0)};
+  } else if (insight.category === 'LCP' && !metricSavings?.LCP) {
+    metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
+  }
+
   return {
     scoreDisplayMode:
       insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,
     score: insight.shouldShow ? 0 : 1,
-    metricSavings: insight.metricSavings,
+    metricSavings,
     warnings: insight.warnings,
     details,
   };
