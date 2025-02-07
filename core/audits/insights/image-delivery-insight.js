@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
-
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -10,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ImageDeli
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
+import {adaptInsightToAuditProduct} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js', UIStrings);
@@ -36,14 +34,39 @@ class ImageDeliveryInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
     return adaptInsightToAuditProduct(artifacts, context, 'ImageDelivery', (insight) => {
+      if (!insight.optimizableImages.length) {
+        // TODO: show UIStrings.noOptimizableImages?
+        return;
+      }
+
+      const relatedEventsMap = insight.relatedEvents && !Array.isArray(insight.relatedEvents) ?
+        insight.relatedEvents :
+        null;
+
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
+        /* eslint-disable max-len */
+        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL), subItemsHeading: {key: 'reason', valueType: 'text'}},
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnResourceSize)},
+        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes), subItemsHeading: {key: 'wastedBytes', valueType: 'bytes'}},
+        /* eslint-enable max-len */
       ];
+
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = [
-      ];
+      const items = insight.optimizableImages.map(image => ({
+        url: image.request.args.data.url,
+        totalBytes: image.request.args.data.decodedBodyLength,
+        wastedBytes: image.byteSavings,
+        subItems: {
+          type: /** @type {const} */ ('subitems'),
+          items: (relatedEventsMap?.get(image.request) ?? []).map((reason, i) => ({
+            reason,
+            wastedBytes: image.optimizations[i].byteSavings,
+          })),
+        },
+      }));
+
       return Audit.makeTableDetails(headings, items);
     });
   }

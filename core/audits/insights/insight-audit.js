@@ -44,6 +44,14 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   }
 
   const insight = insights.model[insightName];
+  if (insight instanceof Error) {
+    return {
+      errorMessage: insight.message,
+      errorStack: insight.stack,
+      score: null,
+    };
+  }
+
   const details = createDetails(insight);
   if (!details || (details.type === 'table' && details.headings.length === 0)) {
     return {

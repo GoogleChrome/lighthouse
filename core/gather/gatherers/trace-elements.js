@@ -92,7 +92,7 @@ class TraceElements extends BaseGatherer {
     /**
      * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
      * @param {any} obj
-     * @param {(obj: Record<string, string>, key: string) => void} cb
+     * @param {(obj: Record<string, unknown>, key: string) => void} cb
      * @param {Set<object>} seen
      */
     function recursiveObjectEnumerate(obj, cb, seen) {

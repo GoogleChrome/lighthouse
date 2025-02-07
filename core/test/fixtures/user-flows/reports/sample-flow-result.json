@@ -3975,7 +3975,7 @@
               "type": "checklist",
               "items": {
                 "priorityHinted": {
-                  "label": "fetchpriority=high applied",
+                  "label": "fetchpriority=high should be applied",
                   "value": false
                 },
                 "requestDiscoverable": {
@@ -3994,8 +3994,48 @@
             "id": "lcp-phases-insight",
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "label",
+                  "valueType": "text",
+                  "label": "Phase"
+                },
+                {
+                  "key": "duration",
+                  "valueType": "ms",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "phase": "timeToFirstByte",
+                  "label": "Time to first byte",
+                  "duration": 145.333
+                },
+                {
+                  "phase": "resourceLoadDelay",
+                  "label": "Resource load delay",
+                  "duration": 24.97999999999999
+                },
+                {
+                  "phase": "resourceLoadDuration",
+                  "label": "Resource load duration",
+                  "duration": 63.870000000000005
+                },
+                {
+                  "phase": "elementRenderDelay",
+                  "label": "Element render delay",
+                  "duration": 3031.475
+                }
+              ]
+            },
             "guidanceLevel": 3
           },
           "long-critical-network-tree-insight": {
@@ -4026,8 +4066,103 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "entity",
+                  "valueType": "text",
+                  "label": "Third party",
+                  "subItemsHeading": {
+                    "key": "url",
+                    "valueType": "url"
+                  }
+                },
+                {
+                  "key": "transferSize",
+                  "granularity": 1,
+                  "valueType": "bytes",
+                  "label": "Transfer size",
+                  "subItemsHeading": {
+                    "key": "transferSize"
+                  }
+                },
+                {
+                  "key": "mainThreadTime",
+                  "granularity": 1,
+                  "valueType": "ms",
+                  "label": "Main thread time",
+                  "subItemsHeading": {
+                    "key": "mainThreadTime"
+                  }
+                }
+              ],
+              "items": [
+                {
+                  "entity": "Google Tag Manager",
+                  "transferSize": 112588,
+                  "mainThreadTime": 182,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.googletagmanager.com/gtag/js?id=G-RTW9M3W5HC",
+                        "mainThreadTime": 182,
+                        "transferSize": 112588
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": "Google Fonts",
+                  "transferSize": 16723,
+                  "mainThreadTime": 0,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://fonts.gstatic.com/s/poppins/v22/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
+                        "mainThreadTime": 0,
+                        "transferSize": 7927
+                      },
+                      {
+                        "url": "https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+                        "mainThreadTime": 0,
+                        "transferSize": 7875
+                      },
+                      {
+                        "url": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+                        "mainThreadTime": 0,
+                        "transferSize": 921
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": "Google Analytics",
+                  "transferSize": 0,
+                  "mainThreadTime": 0,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-RTW9M3W5HC&gtm=45je5230v9102781914za200&_p=1738719102855&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=102067808~102081485~102123608~102482432~102539968~102558064&cid=974257356.1738719103&ul=en-us&sr=412x823&uaa=&uab=64&uafvl=Chromium%3B134.0.6998.0%7CNot%253AA-Brand%3B24.0.0.0%7CGoogle%2520Chrome%3B134.0.6998.0&uamb=1&uam=moto%20g%20power%20(2022)&uap=Android&uapv=11.0&uaw=0&are=1&frm=0&pscdl=noapi&_s=1&sid=1738719103&sct=1&seg=0&dl=https%3A%2F%2Fwww.mikescerealshack.co%2F&dt=Search%20-%20Mike%27s%20Cereal%20Shack%3A%20The%20Office%20Search%20Engine&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=427",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      },
+                      {
+                        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-RTW9M3W5HC&gtm=45je5230v9102781914za200&_p=1738719102855&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=102067808~102081485~102123608~102482432~102539968~102558064&cid=974257356.1738719103&ul=en-us&sr=412x823&uaa=&uab=64&uafvl=Chromium%3B134.0.6998.0%7CNot%253AA-Brand%3B24.0.0.0%7CGoogle%2520Chrome%3B134.0.6998.0&uamb=1&uam=moto%20g%20power%20(2022)&uap=Android&uapv=11.0&uaw=0&are=1&frm=0&pscdl=noapi&_eu=AEA&_s=2&sid=1738719103&sct=1&seg=0&dl=https%3A%2F%2Fwww.mikescerealshack.co%2F&dt=Search%20-%20Mike%27s%20Cereal%20Shack%3A%20The%20Office%20Search%20Engine&en=scroll&epn.percent_scrolled=90&tfd=5436",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      }
+                    ]
+                  }
+                }
+              ],
+              "isEntityGrouped": true
+            },
             "guidanceLevel": 3
           },
           "viewport-insight": {
@@ -7604,7 +7739,8 @@
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
               "audits[user-timings].details.headings[3].label",
-              "audits[long-tasks].details.headings[2].label"
+              "audits[long-tasks].details.headings[2].label",
+              "audits[lcp-phases-insight].details.headings[1].label"
             ],
             "core/audits/critical-request-chains.js | title": [
               "audits[critical-request-chains].title"
@@ -8614,6 +8750,15 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": [
               "audits[document-latency-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": [
+              "audits[document-latency-insight].details.items.noRedirects.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": [
+              "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": [
+              "audits[document-latency-insight].details.items.usesCompression.label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": [
               "audits[dom-size-insight].title"
             ],
@@ -8665,11 +8810,35 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": [
               "audits[lcp-discovery-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
+              "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
+              "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
+              "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
               "audits[lcp-phases-insight].title"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": [
               "audits[lcp-phases-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": [
+              "audits[lcp-phases-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": [
+              "audits[lcp-phases-insight].details.items[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": [
+              "audits[lcp-phases-insight].details.items[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": [
+              "audits[lcp-phases-insight].details.items[2].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
+              "audits[lcp-phases-insight].details.items[3].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
               "audits[long-critical-network-tree-insight].title"
@@ -8694,6 +8863,15 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": [
               "audits[third-parties-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": [
+              "audits[third-parties-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": [
+              "audits[third-parties-insight].details.headings[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": [
+              "audits[third-parties-insight].details.headings[2].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
               "audits[viewport-insight].title"
@@ -11144,8 +11322,43 @@
             "id": "interaction-to-next-paint-insight",
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "INP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "label",
+                  "valueType": "text",
+                  "label": "Phase"
+                },
+                {
+                  "key": "duration",
+                  "valueType": "ms",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "phase": "inputDelay",
+                  "label": "Input delay",
+                  "duration": 5.949
+                },
+                {
+                  "phase": "processingDuration",
+                  "label": "Processing duration",
+                  "duration": 11.502
+                },
+                {
+                  "phase": "presentationDelay",
+                  "label": "Presentation delay",
+                  "duration": 23.568
+                }
+              ]
+            },
             "guidanceLevel": 3
           },
           "lcp-discovery-insight": {
@@ -11192,8 +11405,58 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "entity",
+                  "valueType": "text",
+                  "label": "Third party",
+                  "subItemsHeading": {
+                    "key": "url",
+                    "valueType": "url"
+                  }
+                },
+                {
+                  "key": "transferSize",
+                  "granularity": 1,
+                  "valueType": "bytes",
+                  "label": "Transfer size",
+                  "subItemsHeading": {
+                    "key": "transferSize"
+                  }
+                },
+                {
+                  "key": "mainThreadTime",
+                  "granularity": 1,
+                  "valueType": "ms",
+                  "label": "Main thread time",
+                  "subItemsHeading": {
+                    "key": "mainThreadTime"
+                  }
+                }
+              ],
+              "items": [
+                {
+                  "entity": "Google Tag Manager",
+                  "transferSize": 0,
+                  "mainThreadTime": 80,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.googletagmanager.com/gtag/js?id=G-RTW9M3W5HC",
+                        "mainThreadTime": 80,
+                        "transferSize": 0
+                      }
+                    ]
+                  }
+                }
+              ],
+              "isEntityGrouped": true
+            },
             "guidanceLevel": 3
           },
           "viewport-insight": {
@@ -12667,7 +12930,8 @@
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
               "audits[user-timings].details.headings[3].label",
-              "audits[long-tasks].details.headings[2].label"
+              "audits[long-tasks].details.headings[2].label",
+              "audits[interaction-to-next-paint-insight].details.headings[1].label"
             ],
             "core/audits/image-aspect-ratio.js | title": [
               "audits[image-aspect-ratio].title"
@@ -13068,6 +13332,18 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": [
               "audits[interaction-to-next-paint-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": [
+              "audits[interaction-to-next-paint-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": [
+              "audits[interaction-to-next-paint-insight].details.items[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": [
+              "audits[interaction-to-next-paint-insight].details.items[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": [
+              "audits[interaction-to-next-paint-insight].details.items[2].label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": [
               "audits[lcp-discovery-insight].title"
             ],
@@ -13103,6 +13379,15 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": [
               "audits[third-parties-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": [
+              "audits[third-parties-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": [
+              "audits[third-parties-insight].details.headings[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": [
+              "audits[third-parties-insight].details.headings[2].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
               "audits[viewport-insight].title"
@@ -22696,8 +22981,60 @@
             "id": "image-delivery-insight",
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0.5,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL",
+                  "subItemsHeading": {
+                    "key": "reason",
+                    "valueType": "text"
+                  }
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Resource Size"
+                },
+                {
+                  "key": "wastedBytes",
+                  "valueType": "bytes",
+                  "label": "Potential Savings",
+                  "subItemsHeading": {
+                    "key": "wastedBytes",
+                    "valueType": "bytes"
+                  }
+                }
+              ],
+              "items": [
+                {
+                  "url": "https://www.mikescerealshack.co/oscar-actually.jpg",
+                  "totalBytes": 122114,
+                  "wastedBytes": 91856,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size. (Est 31094)",
+                        "wastedBytes": 31094
+                      },
+                      {
+                        "reason": "This image file is larger than it needs to be (984x555) for its displayed dimensions (567x320). Use responsive images to reduce the image download size. (Est 81519)",
+                        "wastedBytes": 81519
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "guidanceLevel": 3
           },
           "interaction-to-next-paint-insight": {
@@ -22721,7 +23058,7 @@
               "type": "checklist",
               "items": {
                 "priorityHinted": {
-                  "label": "fetchpriority=high applied",
+                  "label": "fetchpriority=high should be applied",
                   "value": false
                 },
                 "requestDiscoverable": {
@@ -22740,8 +23077,48 @@
             "id": "lcp-phases-insight",
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "label",
+                  "valueType": "text",
+                  "label": "Phase"
+                },
+                {
+                  "key": "duration",
+                  "valueType": "ms",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "phase": "timeToFirstByte",
+                  "label": "Time to first byte",
+                  "duration": 24.795
+                },
+                {
+                  "phase": "resourceLoadDelay",
+                  "label": "Resource load delay",
+                  "duration": 159.486
+                },
+                {
+                  "phase": "resourceLoadDuration",
+                  "label": "Resource load duration",
+                  "duration": 291.039
+                },
+                {
+                  "phase": "elementRenderDelay",
+                  "label": "Element render delay",
+                  "duration": 21.466000000000008
+                }
+              ]
+            },
             "guidanceLevel": 3
           },
           "long-critical-network-tree-insight": {
@@ -22772,8 +23149,98 @@
             "id": "third-parties-insight",
             "title": "Third parties",
             "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 0,
+            "scoreDisplayMode": "numeric",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "entity",
+                  "valueType": "text",
+                  "label": "Third party",
+                  "subItemsHeading": {
+                    "key": "url",
+                    "valueType": "url"
+                  }
+                },
+                {
+                  "key": "transferSize",
+                  "granularity": 1,
+                  "valueType": "bytes",
+                  "label": "Transfer size",
+                  "subItemsHeading": {
+                    "key": "transferSize"
+                  }
+                },
+                {
+                  "key": "mainThreadTime",
+                  "granularity": 1,
+                  "valueType": "ms",
+                  "label": "Main thread time",
+                  "subItemsHeading": {
+                    "key": "mainThreadTime"
+                  }
+                }
+              ],
+              "items": [
+                {
+                  "entity": "Google Tag Manager",
+                  "transferSize": 0,
+                  "mainThreadTime": 705,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.googletagmanager.com/gtag/js?id=G-RTW9M3W5HC",
+                        "mainThreadTime": 705,
+                        "transferSize": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": "Google Fonts",
+                  "transferSize": 0,
+                  "mainThreadTime": 0,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      },
+                      {
+                        "url": "https://fonts.gstatic.com/s/poppins/v22/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      },
+                      {
+                        "url": "https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": "Google Analytics",
+                  "transferSize": 0,
+                  "mainThreadTime": 0,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-RTW9M3W5HC&gtm=45je5230v9102781914za200&_p=1738719121904&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=102067808~102081485~102123608~102482432~102539968~102558064&cid=974257356.1738719103&ul=en-us&sr=412x823&uaa=&uab=64&uafvl=Chromium%3B134.0.6998.0%7CNot%253AA-Brand%3B24.0.0.0%7CGoogle%2520Chrome%3B134.0.6998.0&uamb=1&uam=moto%20g%20power%20(2022)&uap=Android&uapv=11.0&uaw=0&are=1&frm=0&pscdl=noapi&_s=1&sid=1738719103&sct=1&seg=1&dl=https%3A%2F%2Fwww.mikescerealshack.co%2Fcorrections&dt=Corrections%20-%20Mike%27s%20Cereal%20Shack%3A%20The%20Office%20Search%20Engine&en=page_view&_ee=1&tfd=226",
+                        "mainThreadTime": 0,
+                        "transferSize": 0
+                      }
+                    ]
+                  }
+                }
+              ],
+              "isEntityGrouped": true
+            },
             "guidanceLevel": 3
           },
           "viewport-insight": {
@@ -26366,7 +26833,8 @@
               "audits[total-byte-weight].details.headings[0].label",
               "audits[modern-image-formats].details.headings[1].label",
               "audits[uses-responsive-images].details.headings[1].label",
-              "audits[legacy-javascript].details.headings[0].label"
+              "audits[legacy-javascript].details.headings[0].label",
+              "audits[image-delivery-insight].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
@@ -26407,7 +26875,8 @@
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
               "audits[user-timings].details.headings[3].label",
-              "audits[long-tasks].details.headings[2].label"
+              "audits[long-tasks].details.headings[2].label",
+              "audits[lcp-phases-insight].details.headings[1].label"
             ],
             "core/audits/critical-request-chains.js | title": [
               "audits[critical-request-chains].title"
@@ -27183,12 +27652,14 @@
             ],
             "core/lib/i18n/i18n.js | columnResourceSize": [
               "audits[modern-image-formats].details.headings[2].label",
-              "audits[uses-responsive-images].details.headings[2].label"
+              "audits[uses-responsive-images].details.headings[2].label",
+              "audits[image-delivery-insight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnWastedBytes": [
               "audits[modern-image-formats].details.headings[3].label",
               "audits[uses-responsive-images].details.headings[3].label",
-              "audits[legacy-javascript].details.headings[2].label"
+              "audits[legacy-javascript].details.headings[2].label",
+              "audits[image-delivery-insight].details.headings[2].label"
             ],
             "core/audits/byte-efficiency/uses-optimized-images.js | title": [
               "audits[uses-optimized-images].title"
@@ -27413,6 +27884,15 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": [
               "audits[document-latency-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": [
+              "audits[document-latency-insight].details.items.noRedirects.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": [
+              "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": [
+              "audits[document-latency-insight].details.items.usesCompression.label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": [
               "audits[dom-size-insight].title"
             ],
@@ -27452,6 +27932,24 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
               "audits[image-delivery-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": [
+              {
+                "values": {
+                  "PH1": 31094
+                },
+                "path": "audits[image-delivery-insight].details.items[0].subItems.items[0].reason"
+              }
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": [
+              {
+                "values": {
+                  "PH1": 81519,
+                  "PH2": "984x555",
+                  "PH3": "567x320"
+                },
+                "path": "audits[image-delivery-insight].details.items[0].subItems.items[1].reason"
+              }
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": [
               "audits[interaction-to-next-paint-insight].title"
             ],
@@ -27464,11 +27962,35 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": [
               "audits[lcp-discovery-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
+              "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
+              "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
+              "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
               "audits[lcp-phases-insight].title"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": [
               "audits[lcp-phases-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": [
+              "audits[lcp-phases-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": [
+              "audits[lcp-phases-insight].details.items[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": [
+              "audits[lcp-phases-insight].details.items[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": [
+              "audits[lcp-phases-insight].details.items[2].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
+              "audits[lcp-phases-insight].details.items[3].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
               "audits[long-critical-network-tree-insight].title"
@@ -27493,6 +28015,15 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": [
               "audits[third-parties-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": [
+              "audits[third-parties-insight].details.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": [
+              "audits[third-parties-insight].details.headings[1].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": [
+              "audits[third-parties-insight].details.headings[2].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
               "audits[viewport-insight].title"

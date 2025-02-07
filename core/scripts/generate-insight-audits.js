@@ -77,6 +77,8 @@ class ${insightName}Insight extends Audit {
     return adaptInsightToAuditProduct(artifacts, context, '${insightName}', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
+        /* eslint-disable max-len */
+        /* eslint-enable max-len */
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
