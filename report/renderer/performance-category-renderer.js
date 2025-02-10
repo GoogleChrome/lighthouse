@@ -203,14 +203,14 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const legacyAuditsSection =
       this.renderFilterableSection(category, groups, 'diagnostics', metricAudits);
-    legacyAuditsSection.classList.add('lh-perf-audits--legacy');
+    legacyAuditsSection?.classList.add('lh-perf-audits--legacy');
 
     const experimentalInsightsSection =
       this.renderFilterableSection(category, groups, 'insights', metricAudits);
-    experimentalInsightsSection.classList.add('lh-perf-audits--experimental', 'lh-hidden');
+    experimentalInsightsSection?.classList.add('lh-perf-audits--experimental', 'lh-hidden');
 
-    element.append(legacyAuditsSection);
-    element.append(experimentalInsightsSection);
+    if (legacyAuditsSection) element.append(legacyAuditsSection);
+    if (experimentalInsightsSection) element.append(experimentalInsightsSection);
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {
@@ -227,9 +227,11 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {string} groupName
    * @param {LH.ReportResult.AuditRef[]} metricAudits
-   * @return {Element}
+   * @return {Element|null}
    */
   renderFilterableSection(category, groups, groupName, metricAudits) {
+    if (!groups[groupName]) return null;
+
     const element = this.dom.createElement('div');
 
     // Diagnostics
