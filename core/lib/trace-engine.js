@@ -10,9 +10,11 @@ polyfillDOMRect();
 const TraceProcessor = TraceEngine.Processor.TraceProcessor;
 const TraceHandlers = TraceEngine.Handlers.ModelHandlers;
 const RootCauses = TraceEngine.RootCauses.RootCauses.RootCauses;
+const Insights = TraceEngine.Insights;
 
 export {
   TraceProcessor,
   TraceHandlers,
   RootCauses,
+  Insights,
 };

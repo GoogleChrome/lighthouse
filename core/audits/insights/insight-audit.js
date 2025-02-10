@@ -44,6 +44,14 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   }
 
   const insight = insights.model[insightName];
+  if (insight instanceof Error) {
+    return {
+      errorMessage: insight.message,
+      errorStack: insight.stack,
+      score: null,
+    };
+  }
+
   const details = createDetails(insight);
   if (!details || (details.type === 'table' && details.headings.length === 0)) {
     return {
@@ -63,10 +71,18 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
   }
 
+  let score = insight.shouldShow ? 0 : 1;
+  // TODO: change insight model to denote passing/failing/informative. Until then... hack it.
+  if (insightName === 'LCPPhases') {
+    score = metricSavings?.LCP ?? 0 >= 1000 ? 0 : 1;
+  } else if (insightName === 'InteractionToNextPaint') {
+    score = metricSavings?.INP ?? 0 >= 500 ? 0 : 1;
+  }
+
   return {
     scoreDisplayMode:
       insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,
-    score: insight.shouldShow ? 0 : 1,
+    score,
     metricSavings,
     warnings: insight.warnings,
     details,
@@ -93,7 +109,25 @@ function makeNodeItemForNodeId(traceElements, nodeId) {
   return Audit.makeNodeItem(node);
 }
 
+/**
+ * @param {LH.Artifacts.TraceElement[]} traceElements
+ * @param {number|null|undefined} nodeId
+ * @param {LH.IcuMessage|string} label
+ * @return {LH.Audit.Details.Table|undefined}
+ */
+function maybeMakeNodeElementTable(traceElements, nodeId, label) {
+  const node = makeNodeItemForNodeId(traceElements, nodeId);
+  if (!node) {
+    return;
+  }
+
+  return Audit.makeTableDetails([
+    {key: 'node', valueType: 'node', label},
+  ], [{node}]);
+}
+
 export {
   adaptInsightToAuditProduct,
   makeNodeItemForNodeId,
+  maybeMakeNodeElementTable,
 };

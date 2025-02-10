@@ -5853,21 +5853,15 @@
         "type": "checklist",
         "items": {
           "noRedirects": {
-            "label": {
-              "i18nId": "Avoids redirects"
-            },
+            "label": "Avoids redirects",
             "value": true
           },
           "serverResponseIsFast": {
-            "label": {
-              "i18nId": "Server responds quickly"
-            },
+            "label": "Server responds quickly",
             "value": true
           },
           "usesCompression": {
-            "label": {
-              "i18nId": "No compression applied"
-            },
+            "label": "No compression applied",
             "value": false
           }
         }
@@ -5951,8 +5945,126 @@
       "id": "image-delivery-insight",
       "title": "Improve image delivery",
       "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 0,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 50
+      },
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL",
+            "subItemsHeading": {
+              "key": "reason",
+              "valueType": "text"
+            }
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Resource Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings",
+            "subItemsHeading": {
+              "key": "wastedBytes",
+              "valueType": "bytes"
+            }
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "totalBytes": 934285,
+            "wastedBytes": 682028,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "Using video formats instead of GIFs can improve the download size of animated content. (Est 682028)",
+                  "wastedBytes": 682028
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1",
+            "totalBytes": 112710,
+            "wastedBytes": 111541,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x30). Use responsive images to reduce the image download size. (Est 111541)",
+                  "wastedBytes": 111541
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2",
+            "totalBytes": 112710,
+            "wastedBytes": 106476,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size. (Est 106476)",
+                  "wastedBytes": 106476
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2",
+            "totalBytes": 112710,
+            "wastedBytes": 106476,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size. (Est 106476)",
+                  "wastedBytes": 106476
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3",
+            "totalBytes": 112710,
+            "wastedBytes": 56604,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size. (Est 56604)",
+                  "wastedBytes": 56604
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg",
+            "totalBytes": 112710,
+            "wastedBytes": 56604,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size. (Est 56604)",
+                  "wastedBytes": 56604
+                }
+              ]
+            }
+          }
+        ]
+      },
       "guidanceLevel": 3
     },
     "interaction-to-next-paint-insight": {
@@ -5976,21 +6088,15 @@
         "type": "checklist",
         "items": {
           "priorityHinted": {
-            "label": {
-              "i18nId": "fetchpriority=high should be applied"
-            },
+            "label": "fetchpriority=high should be applied",
             "value": false
           },
           "requestDiscoverable": {
-            "label": {
-              "i18nId": "Request is discoverable in initial document"
-            },
+            "label": "Request is discoverable in initial document",
             "value": false
           },
           "eagerlyLoaded": {
-            "label": {
-              "i18nId": "lazy load not applied"
-            },
+            "label": "lazy load not applied",
             "value": true
           }
         }
@@ -6001,8 +6107,53 @@
       "id": "lcp-phases-insight",
       "title": "LCP by phase",
       "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "metricSavings": {
+        "LCP": 0
+      },
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Phase"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "phase": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 5.453
+              },
+              {
+                "phase": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 6783.663
+              },
+              {
+                "phase": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 4063.4230000000007
+              },
+              {
+                "phase": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 41.86499999999978
+              }
+            ]
+          }
+        ]
+      },
       "guidanceLevel": 3
     },
     "long-critical-network-tree-insight": {
@@ -9603,6 +9754,7 @@
         "audits[uses-responsive-images].details.headings[1].label",
         "audits[efficient-animated-content].details.headings[0].label",
         "audits[legacy-javascript].details.headings[0].label",
+        "audits[image-delivery-insight].details.headings[0].label",
         "audits[render-blocking-insight].details.headings[0].label"
       ],
       "core/lib/i18n/i18n.js | columnTimeSpent": [
@@ -9645,7 +9797,8 @@
       ],
       "core/lib/i18n/i18n.js | columnDuration": [
         "audits[user-timings].details.headings[3].label",
-        "audits[long-tasks].details.headings[2].label"
+        "audits[long-tasks].details.headings[2].label",
+        "audits[lcp-phases-insight].details.items[0].headings[1].label"
       ],
       "core/audits/critical-request-chains.js | title": [
         "audits[critical-request-chains].title"
@@ -9977,6 +10130,7 @@
         "audits[uses-responsive-images].details.headings[3].label",
         "audits[efficient-animated-content].details.headings[2].label",
         "audits[legacy-javascript].details.headings[2].label",
+        "audits[image-delivery-insight].details.headings[2].label",
         "audits[render-blocking-insight].details.headings[2].label"
       ],
       "core/audits/csp-xss.js | title": [
@@ -10549,7 +10703,8 @@
       "core/lib/i18n/i18n.js | columnResourceSize": [
         "audits[modern-image-formats].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[2].label",
-        "audits[efficient-animated-content].details.headings[1].label"
+        "audits[efficient-animated-content].details.headings[1].label",
+        "audits[image-delivery-insight].details.headings[1].label"
       ],
       "core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
@@ -10800,6 +10955,15 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": [
         "audits[document-latency-insight].description"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": [
+        "audits[document-latency-insight].details.items.noRedirects.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": [
+        "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": [
+        "audits[document-latency-insight].details.items.usesCompression.label"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": [
         "audits[dom-size-insight].title"
       ],
@@ -10839,6 +11003,56 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
         "audits[image-delivery-insight].description"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": [
+        {
+          "values": {
+            "PH1": 682028
+          },
+          "path": "audits[image-delivery-insight].details.items[0].subItems.items[0].reason"
+        }
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": [
+        {
+          "values": {
+            "PH1": 111541,
+            "PH2": "1024x678",
+            "PH3": "240x30"
+          },
+          "path": "audits[image-delivery-insight].details.items[1].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": 106476,
+            "PH2": "1024x678",
+            "PH3": "240x160"
+          },
+          "path": "audits[image-delivery-insight].details.items[2].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": 106476,
+            "PH2": "1024x678",
+            "PH3": "240x160"
+          },
+          "path": "audits[image-delivery-insight].details.items[3].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": 56604,
+            "PH2": "1024x678",
+            "PH3": "720x480"
+          },
+          "path": "audits[image-delivery-insight].details.items[4].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": 56604,
+            "PH2": "1024x678",
+            "PH3": "720x480"
+          },
+          "path": "audits[image-delivery-insight].details.items[5].subItems.items[0].reason"
+        }
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": [
         "audits[interaction-to-next-paint-insight].title"
       ],
@@ -10851,11 +11065,35 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": [
         "audits[lcp-discovery-insight].description"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
+        "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
+        "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
+        "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
         "audits[lcp-phases-insight].title"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": [
         "audits[lcp-phases-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": [
+        "audits[lcp-phases-insight].details.items[0].headings[0].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": [
+        "audits[lcp-phases-insight].details.items[0].items[0].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": [
+        "audits[lcp-phases-insight].details.items[0].items[1].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": [
+        "audits[lcp-phases-insight].details.items[0].items[2].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
+        "audits[lcp-phases-insight].details.items[0].items[3].label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
         "audits[long-critical-network-tree-insight].title"
