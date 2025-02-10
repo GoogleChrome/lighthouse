@@ -75,6 +75,8 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   // TODO: change insight model to denote passing/failing/informative. Until then... hack it.
   if (insightName === 'LCPPhases') {
     score = metricSavings?.LCP ?? 0 >= 1000 ? 0 : 1;
+  } else if (insightName === 'InteractionToNextPaint') {
+    score = metricSavings?.INP ?? 0 >= 500 ? 0 : 1;
   }
 
   return {
