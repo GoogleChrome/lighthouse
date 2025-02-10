@@ -101,7 +101,25 @@ function makeNodeItemForNodeId(traceElements, nodeId) {
   return Audit.makeNodeItem(node);
 }
 
+/**
+ * @param {LH.Artifacts.TraceElement[]} traceElements
+ * @param {number|null|undefined} nodeId
+ * @param {LH.IcuMessage|string} label
+ * @return {LH.Audit.Details.Table|undefined}
+ */
+function maybeMakeNodeElementTable(traceElements, nodeId, label) {
+  const node = makeNodeItemForNodeId(traceElements, nodeId);
+  if (!node) {
+    return;
+  }
+
+  return Audit.makeTableDetails([
+    {key: 'node', valueType: 'node', label},
+  ], [{node}]);
+}
+
 export {
   adaptInsightToAuditProduct,
   makeNodeItemForNodeId,
+  maybeMakeNodeElementTable,
 };
