@@ -201,16 +201,16 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.append(filmstripEl);
     }
 
-    const experimentalInsightsSection =
-      this.renderFilterableSection(category, groups, 'insights', metricAudits);
-    experimentalInsightsSection.classList.add('lh-perf-audits--experimental', 'lh-hidden');
-
     const legacyAuditsSection =
       this.renderFilterableSection(category, groups, 'diagnostics', metricAudits);
     legacyAuditsSection.classList.add('lh-perf-audits--legacy');
 
-    element.append(experimentalInsightsSection);
+    const experimentalInsightsSection =
+      this.renderFilterableSection(category, groups, 'insights', metricAudits);
+    experimentalInsightsSection.classList.add('lh-perf-audits--experimental', 'lh-hidden');
+
     element.append(legacyAuditsSection);
+    element.append(experimentalInsightsSection);
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {
