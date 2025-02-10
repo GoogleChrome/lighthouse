@@ -201,19 +201,40 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.append(filmstripEl);
     }
 
-    // Insights
-    const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
-    insightsGroupEl.classList.add('lh-audit-group--insights');
-    const allInsights = category.auditRefs
-      .filter(audit => audit.group === 'insights')
-      .map(auditRef => {
-        const auditEl = this.renderAudit(auditRef);
-        return {auditRef, auditEl};
-      });
+    const experimentalInsightsSection =
+      this.renderFilterableSection(category, groups, 'insights', metricAudits);
+    experimentalInsightsSection.classList.add('lh-perf-audits--experimental', 'lh-hidden');
+
+    const legacyAuditsSection =
+      this.renderFilterableSection(category, groups, 'diagnostics', metricAudits);
+    legacyAuditsSection.classList.add('lh-perf-audits--legacy');
+
+    element.append(experimentalInsightsSection);
+    element.append(legacyAuditsSection);
+
+    const isNavigationMode = !options || options?.gatherMode === 'navigation';
+    if (isNavigationMode && category.score !== null) {
+      const el = createGauge(this.dom);
+      updateGauge(this.dom, el, category);
+      this.dom.find('.lh-score__gauge', element).replaceWith(el);
+    }
+
+    return element;
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} groups
+   * @param {string} groupName
+   * @param {LH.ReportResult.AuditRef[]} metricAudits
+   * @return {Element}
+   */
+  renderFilterableSection(category, groups, groupName, metricAudits) {
+    const element = this.dom.createElement('div');
 
     // Diagnostics
     const allDiagnostics = category.auditRefs
-      .filter(audit => audit.group === 'diagnostics')
+      .filter(audit => audit.group === groupName)
       .map(auditRef => {
         const {overallImpact, overallLinearImpact} = this.overallImpact(auditRef, metricAudits);
         const guidanceLevel = auditRef.result.guidanceLevel || 1;
@@ -222,22 +243,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return {auditRef, auditEl, overallImpact, overallLinearImpact, guidanceLevel};
       });
 
-    const allFilterableAudits = [...allInsights, ...allDiagnostics];
-
     const diagnosticAudits = allDiagnostics
       .filter(audit => !ReportUtils.showAsPassed(audit.auditRef.result));
 
     const passedAudits = allDiagnostics
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const [diagnosticsGroupEl, diagnosticsFooterEl] = this.renderAuditGroup(groups['diagnostics']);
-    diagnosticsGroupEl.classList.add('lh-audit-group--diagnostics');
+    const [diagnosticsGroupEl, diagnosticsFooterEl] = this.renderAuditGroup(groups[groupName]);
+    diagnosticsGroupEl.classList.add(`lh-audit-group--${groupName}`);
 
     /**
      * @param {string} acronym
      */
     function refreshFilteredAudits(acronym) {
-      for (const audit of allFilterableAudits) {
+      for (const audit of allDiagnostics) {
         if (acronym === 'All') {
           audit.auditEl.hidden = false;
         } else {
@@ -278,21 +297,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return b.guidanceLevel - a.guidanceLevel;
       });
 
-      // TODO: Insights have their own sorting algorithm which differs from the Lighthouse specific
-      // algorithm above. We will eventually import that sorting logic into Lighthouse, but for now
-      // just do a basic sort by score.
-      allInsights.sort((a, b) => {
-        const scoreA = a.auditRef.result.score ?? 1;
-        const scoreB = b.auditRef.result.score ?? 1;
-        return scoreA - scoreB;
-      });
-
       for (const audit of diagnosticAudits) {
         diagnosticsGroupEl.insertBefore(audit.auditEl, diagnosticsFooterEl);
-      }
-
-      for (const audit of allInsights) {
-        insightsGroupEl.insertBefore(audit.auditEl, insightsFooterEl);
       }
     }
 
@@ -315,20 +321,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
-    const experimentalInsightsSection =
-      this.dom.createElement('div', 'lh-perf-audits--experimental');
-    experimentalInsightsSection.classList.add('lh-hidden');
-    element.append(experimentalInsightsSection);
-
-    experimentalInsightsSection.append(insightsGroupEl);
-    if (insightsFooterEl) {
-      experimentalInsightsSection.append(insightsFooterEl);
-    }
-
-    const legacyAuditsSection = this.dom.createElement('div', 'lh-perf-audits--legacy');
-    element.append(legacyAuditsSection);
     if (diagnosticAudits.length) {
-      legacyAuditsSection.append(diagnosticsGroupEl);
+      element.append(diagnosticsGroupEl);
     }
 
     if (!passedAudits.length) return element;
@@ -338,14 +332,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       groupDefinitions: groups,
     };
     const passedElem = this.renderClump('passed', clumpOpts);
-    legacyAuditsSection.append(passedElem);
-
-    const isNavigationMode = !options || options?.gatherMode === 'navigation';
-    if (isNavigationMode && category.score !== null) {
-      const el = createGauge(this.dom);
-      updateGauge(this.dom, el, category);
-      this.dom.find('.lh-score__gauge', element).replaceWith(el);
-    }
+    element.append(passedElem);
 
     return element;
   }
