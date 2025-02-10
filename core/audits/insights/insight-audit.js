@@ -71,10 +71,16 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
   }
 
+  let score = insight.shouldShow ? 0 : 1;
+  // TODO: change insight model to denote passing/failing/informative. Until then... hack it.
+  if (insightName === 'LCPPhases') {
+    score = metricSavings?.LCP ?? 0 >= 1000 ? 0 : 1;
+  }
+
   return {
     scoreDisplayMode:
       insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,
-    score: insight.shouldShow ? 0 : 1,
+    score,
     metricSavings,
     warnings: insight.warnings,
     details,

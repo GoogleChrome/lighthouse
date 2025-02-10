@@ -60,6 +60,8 @@ class ImageDeliveryInsight extends Audit {
         wastedBytes: image.byteSavings,
         subItems: {
           type: /** @type {const} */ ('subitems'),
+          // TODO: when strings update to remove number from "reason" uistrings, update this
+          // to use `image.optimizations.map(...)` and construct strings from the type.
           items: (relatedEventsMap?.get(image.request) ?? []).map((reason, i) => ({
             reason,
             wastedBytes: image.optimizations[i].byteSavings,
