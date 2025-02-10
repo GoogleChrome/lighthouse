@@ -28,14 +28,14 @@ class TraceEngineResult {
     ), {});
     if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
-    await this.localizeInsights(processor.insights);
+    this.localizeInsights(processor.insights);
     return {data: processor.parsedTrace, insights: processor.insights};
   }
 
   /**
    * @param {import('@paulirish/trace_engine/models/trace/insights/types.js').TraceInsightSets} insightSets
    */
-  static async localizeInsights(insightSets) {
+  static localizeInsights(insightSets) {
     /**
      * Execute `cb(traceEngineI18nObject)` on every i18n object, recursively. The cb return
      * value replaces traceEngineI18nObject.
@@ -85,11 +85,17 @@ class TraceEngineResult {
           continue;
         }
 
-        const module = `@paulirish/trace_engine/models/trace/insights/${name}.js`;
-        const {UIStrings} = await import(module);
+        /** @type {Record<string, string>} */
+        let traceEngineUIStrings;
+        if (name in TraceEngine.Insights.Models) {
+          const nameAsKey = /** @type {keyof typeof TraceEngine.Insights.Models} */ (name);
+          traceEngineUIStrings = TraceEngine.Insights.Models[nameAsKey].UIStrings;
+        } else {
+          throw new Error(`insight missing UIStrings: ${name}`);
+        }
 
-        const key = `node_modules/${module}`;
-        const str_ = i18n.createIcuMessageFn(key, UIStrings);
+        const key = `node_modules/@paulirish/trace_engine/models/trace/insights/${name}.js`;
+        const str_ = i18n.createIcuMessageFn(key, traceEngineUIStrings);
 
         // Pass `{i18nId: string, values?: {}}` through Lighthouse's i18n pipeline.
         // This is equivalent to if we directly did `str_(UIStrings.whatever, ...)`
