@@ -141,6 +141,17 @@ class Audit {
   }
 
   /**
+   * @param {LH.Audit.Details.Checklist['items']} items
+   * @return {LH.Audit.Details.Checklist}
+   */
+  static makeChecklistDetails(items) {
+    return {
+      type: 'checklist',
+      items,
+    };
+  }
+
+  /**
    * @param {LH.Audit.Details.Table['headings']} headings
    * @param {LH.Audit.Details.Table['items']} results
    * @param {TableOptions=} options

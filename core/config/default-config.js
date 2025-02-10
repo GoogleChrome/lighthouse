@@ -15,6 +15,8 @@ const UIStrings = {
   performanceCategoryTitle: 'Performance',
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
+  /** Title of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
+  insightGroupTitle: 'Insights',
   /** Title of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
   firstPaintImprovementsGroupTitle: 'First Paint Improvements',
   /** Description of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
@@ -308,10 +310,27 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/cls-culprits-insight',
+    'insights/document-latency-insight',
+    'insights/dom-size-insight',
+    'insights/font-display-insight',
+    'insights/forced-reflow-insight',
+    'insights/image-delivery-insight',
+    'insights/interaction-to-next-paint-insight',
+    'insights/lcp-discovery-insight',
+    'insights/lcp-phases-insight',
+    'insights/long-critical-network-tree-insight',
+    'insights/render-blocking-insight',
+    'insights/slow-css-selector-insight',
+    'insights/third-parties-insight',
+    'insights/viewport-insight',
   ],
   groups: {
     'metrics': {
       title: str_(UIStrings.metricGroupTitle),
+    },
+    'insights': {
+      title: str_(UIStrings.insightGroupTitle),
     },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
@@ -387,6 +406,22 @@ const defaultConfig = {
         {id: 'cumulative-layout-shift', weight: 25, group: 'metrics', acronym: 'CLS'},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
+
+        // Insight audits.
+        {id: 'cls-culprits-insight', weight: 0, group: 'insights'},
+        {id: 'document-latency-insight', weight: 0, group: 'insights'},
+        {id: 'dom-size-insight', weight: 0, group: 'insights'},
+        {id: 'font-display-insight', weight: 0, group: 'insights'},
+        {id: 'forced-reflow-insight', weight: 0, group: 'insights'},
+        {id: 'image-delivery-insight', weight: 0, group: 'insights'},
+        {id: 'interaction-to-next-paint-insight', weight: 0, group: 'insights'},
+        {id: 'lcp-discovery-insight', weight: 0, group: 'insights'},
+        {id: 'lcp-phases-insight', weight: 0, group: 'insights'},
+        {id: 'long-critical-network-tree-insight', weight: 0, group: 'insights'},
+        {id: 'render-blocking-insight', weight: 0, group: 'insights'},
+        {id: 'slow-css-selector-insight', weight: 0, group: 'insights'},
+        {id: 'third-parties-insight', weight: 0, group: 'insights'},
+        {id: 'viewport-insight', weight: 0, group: 'insights'},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'interactive', weight: 0, group: 'hidden', acronym: 'TTI'},

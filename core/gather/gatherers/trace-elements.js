@@ -66,6 +66,71 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {string|undefined} navigationId
+   * @return {Promise<Array<{nodeId: number}>>}
+   */
+  static async getTraceEngineElements(traceEngineResult, navigationId) {
+    // Can only resolve elements for the latest insight set, which should correspond
+    // to the current navigation id (if present). Can't resolve elements for pages
+    // that are gone.
+    const insightSet = [...traceEngineResult.insights.values()].at(-1);
+    if (!insightSet) {
+      return [];
+    }
+
+    if (navigationId) {
+      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+        return [];
+      }
+    } else {
+      if (insightSet.navigation) {
+        return [];
+      }
+    }
+
+    /**
+     * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
+     * @param {any} obj
+     * @param {(obj: Record<string, unknown>, key: string) => void} cb
+     * @param {Set<object>} seen
+     */
+    function recursiveObjectEnumerate(obj, cb, seen) {
+      if (seen.has(seen)) {
+        return;
+      }
+
+      seen.add(obj);
+
+      if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        Object.keys(obj).forEach(key => {
+          if (typeof obj[key] === 'object') {
+            recursiveObjectEnumerate(obj[key], cb, seen);
+          } else {
+            cb(obj, key);
+          }
+        });
+      } else if (Array.isArray(obj)) {
+        obj.forEach(item => {
+          if (typeof item === 'object' || Array.isArray(item)) {
+            recursiveObjectEnumerate(item, cb, seen);
+          }
+        });
+      }
+    }
+
+    /** @type {number[]} */
+    const nodeIds = [];
+    recursiveObjectEnumerate(insightSet.model, (obj, key) => {
+      if (typeof obj[key] === 'number' && (key === 'nodeId' || key === 'node_id')) {
+        nodeIds.push(obj[key]);
+      }
+    }, new Set());
+
+    return [...new Set(nodeIds)].map(id => ({nodeId: id}));
+  }
+
+  /**
    * We want to a single representative node to represent the shift, so let's pick
    * the one with the largest impact (size x distance moved).
    *
@@ -319,7 +384,10 @@ class TraceElements extends BaseGatherer {
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
+    const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
 
+    const traceEngineData = await TraceElements.getTraceEngineElements(
+      traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
       trace, traceEngineResult.data, rootCauses, context);
@@ -328,6 +396,7 @@ class TraceElements extends BaseGatherer {
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
+      ['trace-engine', traceEngineData],
       ['largest-contentful-paint', lcpNodeData ? [lcpNodeData] : []],
       ['layout-shift', shiftsData],
       ['animation', animatedElementData],
@@ -336,6 +405,7 @@ class TraceElements extends BaseGatherer {
 
     /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
     const callFunctionOnCache = new Map();
+    /** @type {LH.Artifacts.TraceElement[]} */
     const traceElements = [];
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
@@ -348,8 +418,8 @@ class TraceElements extends BaseGatherer {
 
         if (response?.result?.value) {
           traceElements.push({
-            traceEventType,
             ...response.result.value,
+            traceEventType,
             animations: backendNodeData[i].animations,
             nodeId: backendNodeId,
             type: backendNodeData[i].type,
