@@ -418,6 +418,8 @@ const UIStrings = {
   dropdownSaveGist: 'Save as Gist',
   /** Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes. */
   dropdownDarkTheme: 'Toggle Dark Theme',
+  /** Option in a dropdown menu that toggles the type of performance insights displayed. */
+  dropdownInsightsToggle: 'Toggle experimental insights',
   /** Option in a dropdown menu that opens the trace of the page without throttling. "Unthrottled" can be replaced with "Original". */
   dropdownViewUnthrottledTrace: 'View Unthrottled Trace',
 

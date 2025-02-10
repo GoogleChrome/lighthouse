@@ -202,19 +202,14 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Insights
-    const insightAudits = category.auditRefs.filter(audit => audit.group === 'insights');
-    if (insightAudits.length) {
-      const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
-      insightsGroupEl.classList.add('lh-audit-group--insights');
-      for (const audit of category.auditRefs.filter(audit => audit.group === 'insights')) {
-        const auditEl = this.renderAudit(audit);
-        insightsGroupEl.append(auditEl);
-      }
-      element.append(insightsGroupEl);
-      if (insightsFooterEl) {
-        element.append(insightsFooterEl);
-      }
-    }
+    const [insightsGroupEl, insightsFooterEl] = this.renderAuditGroup(groups['insights']);
+    insightsGroupEl.classList.add('lh-audit-group--insights');
+    const allInsights = category.auditRefs
+      .filter(audit => audit.group === 'insights')
+      .map(auditRef => {
+        const auditEl = this.renderAudit(auditRef);
+        return {auditRef, auditEl};
+      });
 
     // Diagnostics
     const allDiagnostics = category.auditRefs
@@ -226,6 +221,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
         return {auditRef, auditEl, overallImpact, overallLinearImpact, guidanceLevel};
       });
+
+    const allFilterableAudits = [...allInsights, ...allDiagnostics];
 
     const diagnosticAudits = allDiagnostics
       .filter(audit => !ReportUtils.showAsPassed(audit.auditRef.result));
@@ -240,7 +237,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
      * @param {string} acronym
      */
     function refreshFilteredAudits(acronym) {
-      for (const audit of allDiagnostics) {
+      for (const audit of allFilterableAudits) {
         if (acronym === 'All') {
           audit.auditEl.hidden = false;
         } else {
@@ -281,8 +278,21 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return b.guidanceLevel - a.guidanceLevel;
       });
 
+      // TODO: Insights have their own sorting algorithm which differs from the Lighthouse specific
+      // algorithm above. We will eventually import that sorting logic into Lighthouse, but for now
+      // just do a basic sort by score.
+      allInsights.sort((a, b) => {
+        const scoreA = a.auditRef.result.score ?? 1;
+        const scoreB = b.auditRef.result.score ?? 1;
+        return scoreA - scoreB;
+      });
+
       for (const audit of diagnosticAudits) {
         diagnosticsGroupEl.insertBefore(audit.auditEl, diagnosticsFooterEl);
+      }
+
+      for (const audit of allInsights) {
+        insightsGroupEl.insertBefore(audit.auditEl, insightsFooterEl);
       }
     }
 
@@ -305,8 +315,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
+    const experimentalInsightsSection =
+      this.dom.createElement('div', 'lh-perf-audits--experimental');
+    experimentalInsightsSection.classList.add('lh-hidden');
+    element.append(experimentalInsightsSection);
+
+    experimentalInsightsSection.append(insightsGroupEl);
+    if (insightsFooterEl) {
+      experimentalInsightsSection.append(insightsFooterEl);
+    }
+
+    const legacyAuditsSection = this.dom.createElement('div', 'lh-perf-audits--legacy');
+    element.append(legacyAuditsSection);
     if (diagnosticAudits.length) {
-      element.append(diagnosticsGroupEl);
+      legacyAuditsSection.append(diagnosticsGroupEl);
     }
 
     if (!passedAudits.length) return element;
@@ -316,7 +338,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       groupDefinitions: groups,
     };
     const passedElem = this.renderClump('passed', clumpOpts);
-    element.append(passedElem);
+    legacyAuditsSection.append(passedElem);
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {
