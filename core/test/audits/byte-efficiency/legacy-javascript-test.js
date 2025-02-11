@@ -97,28 +97,28 @@ describe('LegacyJavaScript audit', () => {
     ]);
     expect(result.items).toHaveLength(1);
     expect(result.items[0]).toMatchInlineSnapshot(`
+Object {
+  "subItems": Object {
+    "items": Array [
       Object {
-        "subItems": Object {
-          "items": Array [
-            Object {
-              "location": Object {
-                "column": 0,
-                "line": 0,
-                "original": undefined,
-                "type": "source-location",
-                "url": "https://www.googletagmanager.com/a.js",
-                "urlProvider": "network",
-              },
-              "signal": "String.prototype.repeat",
-            },
-          ],
-          "type": "subitems",
+        "location": Object {
+          "column": 0,
+          "line": 0,
+          "original": undefined,
+          "type": "source-location",
+          "url": "https://www.googletagmanager.com/a.js",
+          "urlProvider": "network",
         },
-        "totalBytes": 0,
-        "url": "https://www.googletagmanager.com/a.js",
-        "wastedBytes": 26896,
-      }
-    `);
+        "signal": "String.prototype.repeat",
+      },
+    ],
+    "type": "subitems",
+  },
+  "totalBytes": 0,
+  "url": "https://www.googletagmanager.com/a.js",
+  "wastedBytes": 27910,
+}
+`);
     expect(result.wastedBytesByUrl).toMatchInlineSnapshot(`Map {}`);
   });
 
@@ -132,10 +132,10 @@ describe('LegacyJavaScript audit', () => {
     expect(result.items).toHaveLength(1);
     expect(result.items[0].subItems.items[0].signal).toEqual('String.prototype.repeat');
     expect(result.wastedBytesByUrl).toMatchInlineSnapshot(`
-      Map {
-        "https://www.example.com/a.js" => 26896,
-      }
-    `);
+Map {
+  "https://www.example.com/a.js" => 27910,
+}
+`);
   });
 
   it('fails code with multiple legacy polyfills', async () => {
@@ -288,7 +288,7 @@ describe('LegacyJavaScript audit', () => {
         location: {line: 0, column: 0},
       },
     ]);
-    expect(result.items[0].wastedBytes).toBe(38062);
+    expect(result.items[0].wastedBytes).toBe(40412);
   });
 });
 
