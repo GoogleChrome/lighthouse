@@ -9,6 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import {execFileSync} from 'child_process';
+import assert from 'assert';
 
 import glob from 'glob';
 
@@ -117,11 +118,11 @@ async function createVariant(options) {
 
     legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: true});
     fs.writeFileSync(`${dir}/legacy-javascript.json`,
-      JSON.stringify(legacyJavascriptResults.items, null, 2));
+      JSON.stringify(legacyJavascriptResults, null, 2));
 
     legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: false});
     fs.writeFileSync(`${dir}/legacy-javascript-nomaps.json`,
-      JSON.stringify(legacyJavascriptResults.items, null, 2));
+      JSON.stringify(legacyJavascriptResults, null, 2));
   }
 }
 
@@ -134,7 +135,7 @@ async function createVariant(options) {
 function getLegacyJavascriptResults(code, map, {sourceMaps}) {
   // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
   // Much faster than running Lighthouse.
-  const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
+  const documentUrl = 'https://localhost/index.html'; // These URLs don't matter.
   const scriptUrl = 'https://localhost/main.bundle.min.js';
   const scriptId = '10001';
   const responseHeaders = [{name: 'Content-Encoding', value: 'gzip'}];
@@ -175,17 +176,26 @@ function makeSummary(legacyJavascriptFilename) {
   let totalSignals = 0;
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
-    /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */
-    const legacyJavascriptItems = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
+    /** @type {import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct} */
+    const legacyJavascript = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
+    const items = /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */(
+      legacyJavascript.items);
 
     const signals = [];
-    for (const item of legacyJavascriptItems) {
+    for (const item of items) {
       for (const subItem of item.subItems.items) {
         signals.push(subItem.signal);
       }
     }
     totalSignals += signals.length;
     variants.push({name: dir, signals: signals.join(', ')});
+
+    if (dir.includes('core-js') && !legacyJavascriptFilename.includes('nomaps')) {
+      const isCoreJs2Variant = dir.includes('core-js-2');
+      const detectedCoreJs2 = !!legacyJavascript.warnings?.length;
+      assert.equal(detectedCoreJs2, isCoreJs2Variant,
+        `detected core js version wrong for variant: ${dir}`);
+    }
   }
   return {
     totalSignals,
@@ -247,7 +257,7 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of ['2.6.12', '3.27.2']) {
+  for (const coreJsVersion of ['2.6.12', '3.40.0']) {
     const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);

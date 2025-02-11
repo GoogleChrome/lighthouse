@@ -39,7 +39,10 @@ const UIStrings = {
   // eslint-disable-next-line max-len
   // TODO: developer.chrome.com article. this codelab is good starting place: https://web.dev/articles/codelab-serve-modern-code
   /** Description of a Lighthouse audit that tells the user about old JavaScript that is no longer needed. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/articles/publish-modern-javascript)',
+  description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using [module/nomodule feature detection](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to serve modern JavaScript](https://web.dev/articles/codelab-serve-modern-code)',
+  /** Warning text that an outdated version of the library "core-js" was found, and the developer should upgrade. */
+  // eslint-disable-next-line max-len
+  detectedCoreJs2Warning: 'Version 2 of core-js was detected on the page. You should upgrade to version 3 for many performance improvements.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -231,7 +234,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       ['Reflect.preventExtensions', 'es6.reflect.prevent-extensions'],
       ['Reflect.setPrototypeOf', 'es6.reflect.set-prototype-of'],
       ['String.prototype.codePointAt', 'es6.string.code-point-at'],
-      ['String.fromCodePoint', 'es6.string.from-code-point'],
       ['String.raw', 'es6.string.raw'],
       ['String.prototype.repeat', 'es6.string.repeat'],
       ['Object.entries', 'es7.object.entries'],
@@ -321,11 +323,10 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    *
    * @param {CodePatternMatcher} matcher
    * @param {LH.Artifacts['Scripts']} scripts
-   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
    * @param {LH.Artifacts.Bundle[]} bundles
    * @return {Map<LH.Artifacts.Script, PatternMatchResult[]>}
    */
-  static detectAcrossScripts(matcher, scripts, networkRecords, bundles) {
+  static detectAcrossScripts(matcher, scripts, bundles) {
     /** @type {Map<LH.Artifacts.Script, PatternMatchResult[]>} */
     const scriptToMatchResults = new Map();
     const polyfillData = this.getPolyfillData();
@@ -426,7 +427,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const compressionRatioByUrl = new Map();
 
     const scriptToMatchResults =
-      this.detectAcrossScripts(matcher, artifacts.Scripts, networkRecords, bundles);
+      this.detectAcrossScripts(matcher, artifacts.Scripts, bundles);
     for (const [script, matches] of scriptToMatchResults.entries()) {
       const compressionRatio = estimateCompressionRatioForContent(
         compressionRatioByUrl, script.url, artifacts, networkRecords);
@@ -456,6 +457,16 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       items.push(item);
     }
 
+    const warnings = [];
+    for (const bundle of bundles) {
+      if (classifiedEntities.isFirstParty(bundle.script.url)) {
+        if (bundle.rawMap.sources.some(s => s.match(/node_modules\/core-js\/modules\/es[67]/))) {
+          warnings.push(str_(UIStrings.detectedCoreJs2Warning));
+          break;
+        }
+      }
+    }
+
     /** @type {Map<string, number>} */
     const wastedBytesByUrl = new Map();
     for (const item of items) {
@@ -478,6 +489,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       items,
       headings,
       wastedBytesByUrl,
+      warnings,
     };
   }
 }
