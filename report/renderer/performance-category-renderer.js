@@ -202,11 +202,11 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     const legacyAuditsSection =
-      this.renderFilterableSection(category, groups, 'diagnostics', metricAudits);
+      this.renderFilterableSection(category, groups, ['diagnostics'], metricAudits);
     legacyAuditsSection?.classList.add('lh-perf-audits--legacy');
 
     const experimentalInsightsSection =
-      this.renderFilterableSection(category, groups, 'insights', metricAudits);
+      this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
     experimentalInsightsSection?.classList.add('lh-perf-audits--experimental', 'lh-hidden');
 
     if (legacyAuditsSection) element.append(legacyAuditsSection);
@@ -225,18 +225,29 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
-   * @param {string} groupName
+   * @param {string[]} groupNames
    * @param {LH.ReportResult.AuditRef[]} metricAudits
    * @return {Element|null}
    */
-  renderFilterableSection(category, groups, groupName, metricAudits) {
-    if (!groups[groupName]) return null;
+  renderFilterableSection(category, groups, groupNames, metricAudits) {
+    if (groupNames.some(groupName => !groups[groupName])) return null;
 
     const element = this.dom.createElement('div');
 
+    /** @type {Set<string>} */
+    const replacedAuditIds = new Set();
+
+    const allGroupAudits =
+      category.auditRefs.filter(audit => audit.group && groupNames.includes(audit.group));
+    for (const auditRef of allGroupAudits) {
+      auditRef.result.replacesAudits?.forEach(replacedAuditId => {
+        replacedAuditIds.add(replacedAuditId);
+      });
+    }
+
     // Diagnostics
-    const allDiagnostics = category.auditRefs
-      .filter(audit => audit.group === groupName)
+    const allFilterableAudits = allGroupAudits
+      .filter(audit => !replacedAuditIds.has(audit.id))
       .map(auditRef => {
         const {overallImpact, overallLinearImpact} = this.overallImpact(auditRef, metricAudits);
         const guidanceLevel = auditRef.result.guidanceLevel || 1;
@@ -245,20 +256,25 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return {auditRef, auditEl, overallImpact, overallLinearImpact, guidanceLevel};
       });
 
-    const diagnosticAudits = allDiagnostics
+    const filterableAudits = allFilterableAudits
       .filter(audit => !ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const passedAudits = allDiagnostics
+    const passedAudits = allFilterableAudits
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const [diagnosticsGroupEl, diagnosticsFooterEl] = this.renderAuditGroup(groups[groupName]);
-    diagnosticsGroupEl.classList.add(`lh-audit-group--${groupName}`);
+    /** @type {Record<string, [Element, Element|null]|undefined>} */
+    const groupElsMap = {};
+    for (const groupName of groupNames) {
+      const groupEls = this.renderAuditGroup(groups[groupName]);
+      groupEls[0].classList.add(`lh-audit-group--${groupNames}`);
+      groupElsMap[groupName] = groupEls;
+    }
 
     /**
      * @param {string} acronym
      */
     function refreshFilteredAudits(acronym) {
-      for (const audit of allDiagnostics) {
+      for (const audit of allFilterableAudits) {
         if (acronym === 'All') {
           audit.auditEl.hidden = false;
         } else {
@@ -267,7 +283,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         }
       }
 
-      diagnosticAudits.sort((a, b) => {
+      filterableAudits.sort((a, b) => {
         // Performance diagnostics should only have score display modes of "informative" and "metricSavings"
         // If the score display mode is "metricSavings", the `score` will be a coarse approximation of the overall impact.
         // Therefore, it makes sense to sort audits by score first to ensure visual clarity with the score icons.
@@ -299,14 +315,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return b.guidanceLevel - a.guidanceLevel;
       });
 
-      for (const audit of diagnosticAudits) {
-        diagnosticsGroupEl.insertBefore(audit.auditEl, diagnosticsFooterEl);
+      for (const audit of filterableAudits) {
+        if (!audit.auditRef.group) continue;
+
+        const groupEls = groupElsMap[audit.auditRef.group];
+        if (!groupEls) continue;
+
+        const [groupEl, footerEl] = groupEls;
+        groupEl.insertBefore(audit.auditEl, footerEl);
       }
     }
 
     /** @type {Set<string>} */
     const filterableMetricAcronyms = new Set();
-    for (const audit of diagnosticAudits) {
+    for (const audit of filterableAudits) {
       const metricSavings = audit.auditRef.result.metricSavings || {};
       for (const [key, value] of Object.entries(metricSavings)) {
         if (typeof value === 'number') filterableMetricAcronyms.add(key);
@@ -323,8 +345,12 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
-    if (diagnosticAudits.length) {
-      element.append(diagnosticsGroupEl);
+    for (const groupName of groupNames) {
+      if (filterableAudits.some(auditRef => auditRef.auditRef.group === groupName)) {
+        const groupEls = groupElsMap[groupName];
+        if (!groupEls) continue;
+        element.append(groupEls[0]);
+      }
     }
 
     if (!passedAudits.length) return element;

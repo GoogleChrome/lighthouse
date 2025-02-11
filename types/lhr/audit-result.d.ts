@@ -76,4 +76,6 @@ export interface Result {
   };
   /** A number indicating how much guidance Lighthouse provides to solve the problem in this audit on a 1-3 scale. Higher means more guidance. */
   guidanceLevel?: number;
+  /** A list of audit ids that this audit replaces. Used to ensure the report does not render the audits in this list at the same time as the audit which contains the list. */
+  replacesAudits?: string[];
 }

@@ -25,6 +25,12 @@ class ImageDeliveryInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
+      replacesAudits: [
+        'modern-image-formats',
+        'uses-optimized-images',
+        'efficient-animated-content',
+        'uses-responsive-images',
+      ],
     };
   }
 
