@@ -266,7 +266,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const groupElsMap = {};
     for (const groupName of groupNames) {
       const groupEls = this.renderAuditGroup(groups[groupName]);
-      groupEls[0].classList.add(`lh-audit-group--${groupNames}`);
+      groupEls[0].classList.add(`lh-audit-group--${groupName}`);
       groupElsMap[groupName] = groupEls;
     }
 

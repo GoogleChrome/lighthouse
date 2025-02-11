@@ -3842,7 +3842,12 @@
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "layout-shifts",
+              "non-composited-animations",
+              "unsized-images"
+            ]
           },
           "document-latency-insight": {
             "id": "document-latency-insight",
@@ -3871,7 +3876,12 @@
                 }
               }
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "redirects",
+              "server-response-time",
+              "uses-text-compression"
+            ]
           },
           "dom-size-insight": {
             "id": "dom-size-insight",
@@ -3928,7 +3938,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "dom-size"
+            ]
           },
           "font-display-insight": {
             "id": "font-display-insight",
@@ -3936,7 +3949,10 @@
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "font-display"
+            ]
           },
           "forced-reflow-insight": {
             "id": "forced-reflow-insight",
@@ -3952,7 +3968,13 @@
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "modern-image-formats",
+              "uses-optimized-images",
+              "efficient-animated-content",
+              "uses-responsive-images"
+            ]
           },
           "interaction-to-next-paint-insight": {
             "id": "interaction-to-next-paint-insight",
@@ -3960,7 +3982,10 @@
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "work-during-interaction"
+            ]
           },
           "lcp-discovery-insight": {
             "id": "lcp-discovery-insight",
@@ -3988,7 +4013,11 @@
                 }
               }
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "prioritize-lcp-image",
+              "lcp-lazy-loaded"
+            ]
           },
           "lcp-phases-insight": {
             "id": "lcp-phases-insight",
@@ -4041,7 +4070,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "largest-contentful-paint-element"
+            ]
           },
           "long-critical-network-tree-insight": {
             "id": "long-critical-network-tree-insight",
@@ -4049,7 +4081,10 @@
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "critical-request-chains"
+            ]
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
@@ -4057,7 +4092,10 @@
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "render-blocking-resources"
+            ]
           },
           "slow-css-selector-insight": {
             "id": "slow-css-selector-insight",
@@ -4168,7 +4206,10 @@
               ],
               "isEntityGrouped": true
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "third-party-summary"
+            ]
           },
           "viewport-insight": {
             "id": "viewport-insight",
@@ -4192,7 +4233,10 @@
                 {}
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "viewport"
+            ]
           }
         },
         "configSettings": {
@@ -11233,7 +11277,12 @@
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "layout-shifts",
+              "non-composited-animations",
+              "unsized-images"
+            ]
           },
           "document-latency-insight": {
             "id": "document-latency-insight",
@@ -11241,7 +11290,12 @@
             "description": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "redirects",
+              "server-response-time",
+              "uses-text-compression"
+            ]
           },
           "dom-size-insight": {
             "id": "dom-size-insight",
@@ -11298,7 +11352,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "dom-size"
+            ]
           },
           "font-display-insight": {
             "id": "font-display-insight",
@@ -11306,7 +11363,10 @@
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "font-display"
+            ]
           },
           "forced-reflow-insight": {
             "id": "forced-reflow-insight",
@@ -11322,7 +11382,13 @@
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "modern-image-formats",
+              "uses-optimized-images",
+              "efficient-animated-content",
+              "uses-responsive-images"
+            ]
           },
           "interaction-to-next-paint-insight": {
             "id": "interaction-to-next-paint-insight",
@@ -11370,7 +11436,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "work-during-interaction"
+            ]
           },
           "lcp-discovery-insight": {
             "id": "lcp-discovery-insight",
@@ -11378,7 +11447,11 @@
             "description": "Optimize LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately, and [avoiding lazy-loading](https://web.dev/articles/lcp-lazy-loading)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "prioritize-lcp-image",
+              "lcp-lazy-loaded"
+            ]
           },
           "lcp-phases-insight": {
             "id": "lcp-phases-insight",
@@ -11386,7 +11459,10 @@
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "largest-contentful-paint-element"
+            ]
           },
           "long-critical-network-tree-insight": {
             "id": "long-critical-network-tree-insight",
@@ -11394,7 +11470,10 @@
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "critical-request-chains"
+            ]
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
@@ -11402,7 +11481,10 @@
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "render-blocking-resources"
+            ]
           },
           "slow-css-selector-insight": {
             "id": "slow-css-selector-insight",
@@ -11468,7 +11550,10 @@
               ],
               "isEntityGrouped": true
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "third-party-summary"
+            ]
           },
           "viewport-insight": {
             "id": "viewport-insight",
@@ -11492,7 +11577,10 @@
                 {}
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "viewport"
+            ]
           }
         },
         "configSettings": {
@@ -22886,7 +22974,12 @@
             "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "layout-shifts",
+              "non-composited-animations",
+              "unsized-images"
+            ]
           },
           "document-latency-insight": {
             "id": "document-latency-insight",
@@ -22915,7 +23008,12 @@
                 }
               }
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "redirects",
+              "server-response-time",
+              "uses-text-compression"
+            ]
           },
           "dom-size-insight": {
             "id": "dom-size-insight",
@@ -22972,7 +23070,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "dom-size"
+            ]
           },
           "font-display-insight": {
             "id": "font-display-insight",
@@ -22980,7 +23081,10 @@
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "font-display"
+            ]
           },
           "forced-reflow-insight": {
             "id": "forced-reflow-insight",
@@ -23048,7 +23152,13 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "modern-image-formats",
+              "uses-optimized-images",
+              "efficient-animated-content",
+              "uses-responsive-images"
+            ]
           },
           "interaction-to-next-paint-insight": {
             "id": "interaction-to-next-paint-insight",
@@ -23056,7 +23166,10 @@
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "work-during-interaction"
+            ]
           },
           "lcp-discovery-insight": {
             "id": "lcp-discovery-insight",
@@ -23084,7 +23197,11 @@
                 }
               }
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "prioritize-lcp-image",
+              "lcp-lazy-loaded"
+            ]
           },
           "lcp-phases-insight": {
             "id": "lcp-phases-insight",
@@ -23137,7 +23254,10 @@
                 }
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "largest-contentful-paint-element"
+            ]
           },
           "long-critical-network-tree-insight": {
             "id": "long-critical-network-tree-insight",
@@ -23145,7 +23265,10 @@
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "critical-request-chains"
+            ]
           },
           "render-blocking-insight": {
             "id": "render-blocking-insight",
@@ -23153,7 +23276,10 @@
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "render-blocking-resources"
+            ]
           },
           "slow-css-selector-insight": {
             "id": "slow-css-selector-insight",
@@ -23259,7 +23385,10 @@
               ],
               "isEntityGrouped": true
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "third-party-summary"
+            ]
           },
           "viewport-insight": {
             "id": "viewport-insight",
@@ -23283,7 +23412,10 @@
                 {}
               ]
             },
-            "guidanceLevel": 3
+            "guidanceLevel": 3,
+            "replacesAudits": [
+              "viewport"
+            ]
           }
         },
         "configSettings": {
