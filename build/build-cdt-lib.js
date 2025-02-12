@@ -33,6 +33,13 @@ const modifications = [
     template: [
       'const Common = require(\'../Common.js\');',
       'const Platform = require(\'../Platform.js\');',
+      `
+        const BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        const BASE64_CODES = new Uint8Array(123);
+        for (let index = 0; index < BASE64_CHARS.length; ++index) {
+          BASE64_CODES[BASE64_CHARS.charCodeAt(index)] = index;
+        }
+      `,
       '%sourceFilePrinted%',
       'module.exports = SourceMap;',
       'SourceMap.parseSourceMap = parseSourceMap;',
@@ -47,6 +54,10 @@ const modifications = [
       // Add some types.
       // eslint-disable-next-line max-len
       'mappings(): SourceMapEntry[] {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings(): SourceMapEntry[] {',
+      // Disable scopes. LH doesn't need this.
+      // eslint-disable-next-line max-len
+      'Root.Runtime.experiments.isEnabled(Root.Runtime.ExperimentName.USE_SOURCE_MAP_SCOPES)': 'false',
+      'Common.Base64.BASE64_CODES': 'BASE64_CODES',
     },
     classesToRemove: [],
     methodsToRemove: [
@@ -54,13 +65,43 @@ const modifications = [
       'compatibleForURL',
       'load',
       'reverseMapTextRanges',
+      'augmentWithScopes',
+      'parseBloombergScopes',
     ],
     variablesToRemove: [
       'Common',
       'Platform',
+      'SourceMapFunctionRanges_js_1',
+      'SourceMapScopes_js_1',
+      'SourceMapScopesInfo_js_1',
       'TextUtils',
     ],
   },
+  // {
+  //   input: 'node_modules/chrome-devtools-frontend/front_end/core/sdk/SourceMapScopesInfo.ts',
+  //   output: `${outDir}/SourceMapScopesInfo.js`,
+  //   template: '%sourceFilePrinted%',
+  //   rawCodeToReplace: {
+  //    'Protocol.Debugger.ScopeType.Local': '"local"',
+  //   },
+  //   classesToRemove: [],
+  //   methodsToRemove: [],
+  //   variablesToRemove: [],
+  // },
+  // {
+  //   input: 'node_modules/chrome-devtools-frontend/front_end/core/sdk/SourceMapScopeChainEntry.ts',
+  //   output: `${outDir}/SourceMapScopeChainEntry.js`,
+  //   template: '%sourceFilePrinted%',
+  //   rawCodeToReplace: {
+  //    'Protocol.Debugger.ScopeType.Local': '"local"',
+  //    'Protocol.Debugger.ScopeType.Global': '"global"',
+  //    'Protocol.Debugger.ScopeType.Closure': '"closure"',
+  //    'Protocol.Debugger.ScopeType.Block': '"block"',
+  //   },
+  //   classesToRemove: [],
+  //   methodsToRemove: [],
+  //   variablesToRemove: [],
+  // },
   {
     input: 'node_modules/chrome-devtools-frontend/front_end/core/common/ParsedURL.ts',
     output: `${outDir}/ParsedURL.js`,
