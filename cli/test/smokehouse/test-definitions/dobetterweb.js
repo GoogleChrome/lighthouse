@@ -459,6 +459,7 @@ const expectations = {
               // This issue only appears in the DevTools runner for some reason.
               // TODO: Investigate why this doesn't happen on the CLI runner.
               _runner: 'devtools',
+              _maxChromiumVersion: '134',
               reason: 'There were permission requests upon navigating away.',
               failureType: 'Pending browser support',
               subItems: {
