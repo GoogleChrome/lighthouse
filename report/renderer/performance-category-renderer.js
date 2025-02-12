@@ -207,10 +207,17 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const experimentalInsightsSection =
       this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
-    experimentalInsightsSection?.classList.add('lh-perf-audits--experimental', 'lh-hidden');
+    experimentalInsightsSection?.classList.add('lh-perf-audits--experimental');
+
+    // Many tests expect just one of these sections to be in the DOM at a given time.
+    // To prevent the hidden section from tripping up these tests, we will just remove the hidden
+    // section from the DOM and store it in memory.
+    // @ts-expect-error
+    legacyAuditsSection.__swapSection = experimentalInsightsSection;
+    // @ts-expect-error
+    experimentalInsightsSection.__swapSection = legacyAuditsSection;
 
     if (legacyAuditsSection) element.append(legacyAuditsSection);
-    if (experimentalInsightsSection) element.append(experimentalInsightsSection);
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {

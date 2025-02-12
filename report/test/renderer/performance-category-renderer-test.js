@@ -23,6 +23,17 @@ describe('PerfCategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
+  function swapLegacyAndExperimentalPerfInsights(rootEl) {
+    const insightsGroup = rootEl.querySelector('.lh-perf-audits--experimental');
+    const diagnosticsGroup = rootEl.querySelector('.lh-perf-audits--legacy');
+
+    const renderedGroup = insightsGroup || diagnosticsGroup;
+    if (renderedGroup && renderedGroup.__swapSection) {
+      renderedGroup.parentNode?.insertBefore(renderedGroup.__swapSection, insightsGroup);
+      renderedGroup.remove();
+    }
+  }
+
   before(() => {
     Globals.apply({
       providedStrings: {},
@@ -63,14 +74,10 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
     // - Metrics
-    // Insights view:
-    // - Insights
-    // - Diagnostics
-    // - Passed
     // Legacy view:
     // - Diagnostics
     // - Passed
-    assert.equal(sections.length, 6);
+    assert.equal(sections.length, 3);
   });
 
   it('renders the metrics', () => {
@@ -122,14 +129,10 @@ describe('PerfCategoryRenderer', () => {
     const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
     const metricSection = categoryDOM.querySelector('.lh-audit-group--metrics');
     assert.ok(!metricSection);
-    // Insights view:
-    // - Insights
-    // - Diagnostics
-    // - Passed
     // Legacy view:
     // - Diagnostics
     // - Passed
-    assert.equal(sections.length, 5);
+    assert.equal(sections.length, 2);
   });
 
   it('renders the metrics variance disclaimer as markdown', () => {
@@ -186,6 +189,7 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing insights', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
     const insightSection = categoryDOM.querySelector(
         '.lh-category .lh-audit-group.lh-audit-group--insights');
 
@@ -213,9 +217,9 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the passed insight audits with passed diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
     const passedSection =
       categoryDOM.querySelector('.lh-perf-audits--experimental .lh-clump--passed');
-
 
     const passedInsights = category.auditRefs.filter(audit =>
       audit.group === 'insights' &&

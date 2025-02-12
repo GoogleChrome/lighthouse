@@ -115,11 +115,16 @@ export class TopbarFeatures {
         break;
       }
       case 'toggle-insights': {
-        const insightsGroup = this._dom.find('.lh-perf-audits--experimental');
-        insightsGroup.classList.toggle('lh-hidden');
+        const insightsGroup = this._dom.maybeFind('.lh-perf-audits--experimental');
+        const diagnosticsGroup = this._dom.maybeFind('.lh-perf-audits--legacy');
 
-        const diagnosticsGroup = this._dom.find('.lh-perf-audits--legacy');
-        diagnosticsGroup.classList.toggle('lh-hidden');
+        const renderedGroup = insightsGroup || diagnosticsGroup;
+        // @ts-expect-error
+        if (renderedGroup && renderedGroup.__swapSection) {
+          // @ts-expect-error
+          renderedGroup.parentNode?.insertBefore(renderedGroup.__swapSection, insightsGroup);
+          renderedGroup.remove();
+        }
         break;
       }
       case 'view-unthrottled-trace': {

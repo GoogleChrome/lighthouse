@@ -474,8 +474,7 @@ describe('ReportUIFeatures', () => {
           function getRowIdentifiers() {
             return dom
               .findAll(
-                '.lh-perf-audits--legacy #unused-javascript tbody tr:not(.lh-row--hidden)',
-                container)
+                '#unused-javascript tbody tr:not(.lh-row--hidden)', container)
               .map(el => el.textContent);
           }
 
@@ -603,8 +602,7 @@ describe('ReportUIFeatures', () => {
           function getRowIdentifiers() {
             return dom
               .findAll(
-                '.lh-perf-audits--legacy #unused-javascript tbody tr:not(.lh-row--hidden)',
-                container)
+                '#unused-javascript tbody tr:not(.lh-row--hidden)', container)
               .map(el => el.textContent);
           }
 

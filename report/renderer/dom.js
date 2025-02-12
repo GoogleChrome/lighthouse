@@ -276,7 +276,7 @@ export class DOM {
    * @param {ParentNode} context
    * @return {ParseSelector<T> | null}
    */
-  maybeFind(query, context) {
+  maybeFind(query, context = this.rootEl ?? this._document) {
     const result = context.querySelector(query);
 
     // Because we control the report layout and templates, use the simpler
