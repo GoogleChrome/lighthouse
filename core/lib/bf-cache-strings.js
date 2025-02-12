@@ -98,7 +98,8 @@ const UIStrings = {
   /**
    * @description Description text for not restored reason HaveInnerContents.
    */
-  haveInnerContents: 'Pages that use portals are not currently eligible for back/forward cache.',
+  haveInnerContents:
+      'Pages that have certain kinds of embedded content (e.g. PDFs) are not currently eligible for back/forward cache.',
   /**
    * @description Description text for not restored reason TimeoutPuttingInCache.
    */
@@ -331,10 +332,6 @@ const UIStrings = {
    */
   pictureInPicture: 'Pages that use Picture-in-Picture are not currently eligible for back/forward cache.',
   /**
-   * @description Description text for not restored reason Portal.
-   */
-  portal: 'Pages that use portals are not currently eligible for back/forward cache.',
-  /**
    * @description Description text for not restored reason SpeechRecognizer.
    */
   speechRecognizer: 'Pages that use SpeechRecognizer are not currently eligible for back/forward cache.',
@@ -373,6 +370,11 @@ const UIStrings = {
    */
   injectedStyleSheet:
       'Pages that a `StyleSheet` is injected into by extensions are not currently eligible for back/forward cache.',
+  // TODO(tluk): Please provide meaningful description.
+  /**
+   * @description Description text for not restored reason ContentDiscarded.
+   */
+  contentDiscarded: 'Undefined',
   /**
    * @description Description text for not restored reason ContentSecurityHandler.
    */
@@ -380,7 +382,7 @@ const UIStrings = {
   /**
    * @description Description text for not restored reason NotMainFrame.
    */
-  contentWebAuthenticationAPI: 'Pages that use WebAuthentication API are not eligible for back/forward cache.',
+  contentWebAuthenticationAPI: 'Pages that use WebAuthetication API are not eligible for back/forward cache.',
   /**
    * @description Description text for not restored reason NotMainFrame.
    */
@@ -514,9 +516,10 @@ const UIStrings = {
    */
   keepaliveRequest: 'Back/forward cache is disabled due to a keepalive request.',
   /**
-   *  @description Empty string to roll protocol.
+   *  @description Description text for not restored reason JsNetworkRequestReceivedCacheControlNoStoreResource.
    */
-  authorizationHeader: 'Back/forward cache is disabled due to a keepalive request.',
+  jsNetworkRequestReceivedCacheControlNoStoreResource:
+      'Back/forward cache is disabled because some JavaScript network request received resource with `Cache-Control: no-store` header.',
   /**
    *  @description Description text for not restored reason IndexedDBEvent.
    */
@@ -526,149 +529,180 @@ const UIStrings = {
    */
   cookieDisabled:
       'Back/forward cache is disabled because cookies are disabled on a page that uses `Cache-Control: no-store`.',
+  /**
+   * @description Description text for not restored reason WebRTCSticky.
+   */
+  webRTCSticky: 'Back/forward cache is disabled because WebRTC has been used.',
+  /**
+   * @description Description text for not restored reason WebTransportSticky.
+   */
+  webTransportSticky: 'Back/forward cache is disabled because WebTransport has been used.',
+  /**
+   * @description Description text for not restored reason WebSocketSticky.
+   */
+  webSocketSticky: 'Back/forward cache is disabled because WebSocket has been used.',
+
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 
-/** @type {Record<string, {name: LH.IcuMessage} | undefined>} */
+/** @type {Record<string, {name: LH.IcuMessage|string} | undefined>} */
 const NotRestoredReasonDescription = {
-  'NotPrimaryMainFrame': {name: str_(UIStrings.notMainFrame)},
-  'BackForwardCacheDisabled': {name: str_(UIStrings.backForwardCacheDisabled)},
-  'RelatedActiveContentsExist': {name: str_(UIStrings.relatedActiveContentsExist)},
-  'HTTPStatusNotOK': {name: str_(UIStrings.HTTPStatusNotOK)},
-  'SchemeNotHTTPOrHTTPS': {name: str_(UIStrings.schemeNotHTTPOrHTTPS)},
-  'Loading': {name: str_(UIStrings.loading)},
-  'WasGrantedMediaAccess': {name: str_(UIStrings.wasGrantedMediaAccess)},
-  'HTTPMethodNotGET': {name: str_(UIStrings.HTTPMethodNotGET)},
-  'SubframeIsNavigating': {name: str_(UIStrings.subframeIsNavigating)},
-  'Timeout': {name: str_(UIStrings.timeout)},
-  'CacheLimit': {name: str_(UIStrings.cacheLimit)},
-  'JavaScriptExecution': {name: str_(UIStrings.JavaScriptExecution)},
-  'RendererProcessKilled': {name: str_(UIStrings.rendererProcessKilled)},
-  'RendererProcessCrashed': {name: str_(UIStrings.rendererProcessCrashed)},
-  'GrantedMediaStreamAccess': {name: str_(UIStrings.grantedMediaStreamAccess)},
-  'CacheFlushed': {name: str_(UIStrings.cacheFlushed)},
-  'ServiceWorkerVersionActivation': {name: str_(UIStrings.serviceWorkerVersionActivation)},
-  'SessionRestored': {name: str_(UIStrings.sessionRestored)},
-  'ServiceWorkerPostMessage': {name: str_(UIStrings.serviceWorkerPostMessage)},
-  'EnteredBackForwardCacheBeforeServiceWorkerHostAdded':
+  NotPrimaryMainFrame: {name: str_(UIStrings.notMainFrame)},
+  BackForwardCacheDisabled: {name: str_(UIStrings.backForwardCacheDisabled)},
+  RelatedActiveContentsExist: {name: str_(UIStrings.relatedActiveContentsExist)},
+  HTTPStatusNotOK: {name: str_(UIStrings.HTTPStatusNotOK)},
+  SchemeNotHTTPOrHTTPS: {name: str_(UIStrings.schemeNotHTTPOrHTTPS)},
+  Loading: {name: str_(UIStrings.loading)},
+  WasGrantedMediaAccess: {name: str_(UIStrings.wasGrantedMediaAccess)},
+  HTTPMethodNotGET: {name: str_(UIStrings.HTTPMethodNotGET)},
+  SubframeIsNavigating: {name: str_(UIStrings.subframeIsNavigating)},
+  Timeout: {name: str_(UIStrings.timeout)},
+  CacheLimit: {name: str_(UIStrings.cacheLimit)},
+  JavaScriptExecution: {name: str_(UIStrings.JavaScriptExecution)},
+  RendererProcessKilled: {name: str_(UIStrings.rendererProcessKilled)},
+  RendererProcessCrashed: {name: str_(UIStrings.rendererProcessCrashed)},
+  GrantedMediaStreamAccess: {name: str_(UIStrings.grantedMediaStreamAccess)},
+  CacheFlushed: {name: str_(UIStrings.cacheFlushed)},
+  ServiceWorkerVersionActivation: {name: str_(UIStrings.serviceWorkerVersionActivation)},
+  SessionRestored: {name: str_(UIStrings.sessionRestored)},
+  ServiceWorkerPostMessage: {name: str_(UIStrings.serviceWorkerPostMessage)},
+  EnteredBackForwardCacheBeforeServiceWorkerHostAdded:
       {name: str_(UIStrings.enteredBackForwardCacheBeforeServiceWorkerHostAdded)},
-  'ServiceWorkerClaim': {name: str_(UIStrings.serviceWorkerClaim)},
-  'HaveInnerContents': {name: str_(UIStrings.haveInnerContents)},
-  'TimeoutPuttingInCache': {name: str_(UIStrings.timeoutPuttingInCache)},
-  'BackForwardCacheDisabledByLowMemory': {name: str_(UIStrings.backForwardCacheDisabledByLowMemory)},
-  'BackForwardCacheDisabledByCommandLine': {name: str_(UIStrings.backForwardCacheDisabledByCommandLine)},
-  'NetworkRequestDatapipeDrainedAsBytesConsumer':
+  ServiceWorkerClaim: {name: str_(UIStrings.serviceWorkerClaim)},
+  HaveInnerContents: {name: str_(UIStrings.haveInnerContents)},
+  TimeoutPuttingInCache: {name: str_(UIStrings.timeoutPuttingInCache)},
+  BackForwardCacheDisabledByLowMemory: {name: str_(UIStrings.backForwardCacheDisabledByLowMemory)},
+  BackForwardCacheDisabledByCommandLine: {name: str_(UIStrings.backForwardCacheDisabledByCommandLine)},
+  NetworkRequestDatapipeDrainedAsBytesConsumer:
       {name: str_(UIStrings.networkRequestDatapipeDrainedAsBytesConsumer)},
-  'NetworkRequestRedirected': {name: str_(UIStrings.networkRequestRedirected)},
-  'NetworkRequestTimeout': {name: str_(UIStrings.networkRequestTimeout)},
-  'NetworkExceedsBufferLimit': {name: str_(UIStrings.networkExceedsBufferLimit)},
-  'NavigationCancelledWhileRestoring': {name: str_(UIStrings.navigationCancelledWhileRestoring)},
-  'BackForwardCacheDisabledForPrerender': {name: str_(UIStrings.backForwardCacheDisabledForPrerender)},
-  'UserAgentOverrideDiffers': {name: str_(UIStrings.userAgentOverrideDiffers)},
-  'ForegroundCacheLimit': {name: str_(UIStrings.foregroundCacheLimit)},
-  'BackForwardCacheDisabledForDelegate': {name: str_(UIStrings.backForwardCacheDisabledForDelegate)},
-  'UnloadHandlerExistsInMainFrame': {name: str_(UIStrings.unloadHandlerExistsInMainFrame)},
-  'UnloadHandlerExistsInSubFrame': {name: str_(UIStrings.unloadHandlerExistsInSubFrame)},
-  'ServiceWorkerUnregistration': {name: str_(UIStrings.serviceWorkerUnregistration)},
-  'NoResponseHead': {name: str_(UIStrings.noResponseHead)},
-  'CacheControlNoStore': {name: str_(UIStrings.cacheControlNoStore)},
-  'CacheControlNoStoreCookieModified': {name: str_(UIStrings.cacheControlNoStore)},
-  'CacheControlNoStoreHTTPOnlyCookieModified': {name: str_(UIStrings.cacheControlNoStore)},
-  'DisableForRenderFrameHostCalled': {name: str_(UIStrings.ineligibleAPI)},
-  'BlocklistedFeatures': {name: str_(UIStrings.ineligibleAPI)},
-  'SchedulerTrackedFeatureUsed': {name: str_(UIStrings.ineligibleAPI)},
-  'DomainNotAllowed': {name: str_(UIStrings.internalError)},
-  'ConflictingBrowsingInstance': {name: str_(UIStrings.internalError)},
-  'NotMostRecentNavigationEntry': {name: str_(UIStrings.internalError)},
-  'IgnoreEventAndEvict': {name: str_(UIStrings.internalError)},
-  'BrowsingInstanceNotSwapped': {name: str_(UIStrings.internalError)},
-  'ActivationNavigationsDisallowedForBug1234857': {name: str_(UIStrings.internalError)},
-  'Unknown': {name: str_(UIStrings.internalError)},
-  'RenderFrameHostReused_SameSite': {name: str_(UIStrings.internalError)},
-  'RenderFrameHostReused_CrossSite': {name: str_(UIStrings.internalError)},
-  'WebSocket': {name: str_(UIStrings.webSocket)},
-  'WebTransport': {name: str_(UIStrings.webTransport)},
-  'WebRTC': {name: str_(UIStrings.webRTC)},
-  'MainResourceHasCacheControlNoStore': {name: str_(UIStrings.mainResourceHasCacheControlNoStore)},
-  'MainResourceHasCacheControlNoCache': {name: str_(UIStrings.mainResourceHasCacheControlNoCache)},
-  'SubresourceHasCacheControlNoStore': {name: str_(UIStrings.subresourceHasCacheControlNoStore)},
-  'SubresourceHasCacheControlNoCache': {name: str_(UIStrings.subresourceHasCacheControlNoCache)},
-  'ContainsPlugins': {name: str_(UIStrings.containsPlugins)},
-  'DocumentLoaded': {name: str_(UIStrings.documentLoaded)},
-  'DedicatedWorkerOrWorklet': {name: str_(UIStrings.dedicatedWorkerOrWorklet)},
-  'OutstandingNetworkRequestOthers': {name: str_(UIStrings.outstandingNetworkRequestOthers)},
-  'OutstandingIndexedDBTransaction': {name: str_(UIStrings.outstandingIndexedDBTransaction)},
-  'RequestedNotificationsPermission': {name: str_(UIStrings.requestedNotificationsPermission)},
-  'RequestedMIDIPermission': {name: str_(UIStrings.requestedMIDIPermission)},
-  'RequestedAudioCapturePermission': {name: str_(UIStrings.requestedAudioCapturePermission)},
-  'RequestedVideoCapturePermission': {name: str_(UIStrings.requestedVideoCapturePermission)},
-  'RequestedBackForwardCacheBlockedSensors': {name: str_(UIStrings.requestedBackForwardCacheBlockedSensors)},
-  'RequestedBackgroundWorkPermission': {name: str_(UIStrings.requestedBackgroundWorkPermission)},
-  'BroadcastChannel': {name: str_(UIStrings.broadcastChannel)},
-  'IndexedDBConnection': {name: str_(UIStrings.indexedDBConnection)},
-  'WebXR': {name: str_(UIStrings.webXR)},
-  'SharedWorker': {name: str_(UIStrings.sharedWorker)},
-  'WebLocks': {name: str_(UIStrings.webLocks)},
-  'WebHID': {name: str_(UIStrings.webHID)},
-  'WebShare': {name: str_(UIStrings.webShare)},
-  'RequestedStorageAccessGrant': {name: str_(UIStrings.requestedStorageAccessGrant)},
-  'WebNfc': {name: str_(UIStrings.webNfc)},
-  'OutstandingNetworkRequestFetch': {name: str_(UIStrings.outstandingNetworkRequestFetch)},
-  'OutstandingNetworkRequestXHR': {name: str_(UIStrings.outstandingNetworkRequestXHR)},
-  'AppBanner': {name: str_(UIStrings.appBanner)},
-  'Printing': {name: str_(UIStrings.printing)},
-  'WebDatabase': {name: str_(UIStrings.webDatabase)},
-  'PictureInPicture': {name: str_(UIStrings.pictureInPicture)},
-  'Portal': {name: str_(UIStrings.portal)},
-  'SpeechRecognizer': {name: str_(UIStrings.speechRecognizer)},
-  'IdleManager': {name: str_(UIStrings.idleManager)},
-  'PaymentManager': {name: str_(UIStrings.paymentManager)},
-  'SpeechSynthesis': {name: str_(UIStrings.speechSynthesis)},
-  'KeyboardLock': {name: str_(UIStrings.keyboardLock)},
-  'WebOTPService': {name: str_(UIStrings.webOTPService)},
-  'OutstandingNetworkRequestDirectSocket': {name: str_(UIStrings.outstandingNetworkRequestDirectSocket)},
-  'InjectedJavascript': {name: str_(UIStrings.injectedJavascript)},
-  'InjectedStyleSheet': {name: str_(UIStrings.injectedStyleSheet)},
-  'Dummy': {name: str_(UIStrings.internalError)},
-  'ContentSecurityHandler': {name: str_(UIStrings.contentSecurityHandler)},
-  'ContentWebAuthenticationAPI': {name: str_(UIStrings.contentWebAuthenticationAPI)},
-  'ContentFileChooser': {name: str_(UIStrings.contentFileChooser)},
-  'ContentSerial': {name: str_(UIStrings.contentSerial)},
-  'ContentFileSystemAccess': {name: str_(UIStrings.contentFileSystemAccess)},
-  'ContentMediaDevicesDispatcherHost': {name: str_(UIStrings.contentMediaDevicesDispatcherHost)},
-  'ContentWebBluetooth': {name: str_(UIStrings.contentWebBluetooth)},
-  'ContentWebUSB': {name: str_(UIStrings.contentWebUSB)},
-  'ContentMediaSession': {name: str_(UIStrings.contentMediaSession)},
-  'ContentMediaSessionService': {name: str_(UIStrings.contentMediaSessionService)},
-  'ContentMediaPlay': {name: str_(UIStrings.contentMediaPlay)},
-  'ContentScreenReader': {name: str_(UIStrings.contentScreenReader)},
-  'EmbedderPopupBlockerTabHelper': {name: str_(UIStrings.embedderPopupBlockerTabHelper)},
-  'EmbedderSafeBrowsingTriggeredPopupBlocker':
+  NetworkRequestRedirected: {name: str_(UIStrings.networkRequestRedirected)},
+  NetworkRequestTimeout: {name: str_(UIStrings.networkRequestTimeout)},
+  NetworkExceedsBufferLimit: {name: str_(UIStrings.networkExceedsBufferLimit)},
+  NavigationCancelledWhileRestoring: {name: str_(UIStrings.navigationCancelledWhileRestoring)},
+  BackForwardCacheDisabledForPrerender: {name: str_(UIStrings.backForwardCacheDisabledForPrerender)},
+  UserAgentOverrideDiffers: {name: str_(UIStrings.userAgentOverrideDiffers)},
+  ForegroundCacheLimit: {name: str_(UIStrings.foregroundCacheLimit)},
+  BackForwardCacheDisabledForDelegate: {name: str_(UIStrings.backForwardCacheDisabledForDelegate)},
+  UnloadHandlerExistsInMainFrame: {name: str_(UIStrings.unloadHandlerExistsInMainFrame)},
+  UnloadHandlerExistsInSubFrame: {name: str_(UIStrings.unloadHandlerExistsInSubFrame)},
+  ServiceWorkerUnregistration: {name: str_(UIStrings.serviceWorkerUnregistration)},
+  NoResponseHead: {name: str_(UIStrings.noResponseHead)},
+  CacheControlNoStore: {name: str_(UIStrings.cacheControlNoStore)},
+  CacheControlNoStoreCookieModified: {name: str_(UIStrings.cacheControlNoStore)},
+  CacheControlNoStoreHTTPOnlyCookieModified: {name: str_(UIStrings.cacheControlNoStore)},
+  DisableForRenderFrameHostCalled: {name: str_(UIStrings.ineligibleAPI)},
+  BlocklistedFeatures: {name: str_(UIStrings.ineligibleAPI)},
+  SchedulerTrackedFeatureUsed: {name: str_(UIStrings.ineligibleAPI)},
+  DomainNotAllowed: {name: str_(UIStrings.internalError)},
+  ConflictingBrowsingInstance: {name: str_(UIStrings.internalError)},
+  NotMostRecentNavigationEntry: {name: str_(UIStrings.internalError)},
+  IgnoreEventAndEvict: {name: str_(UIStrings.internalError)},
+  BrowsingInstanceNotSwapped: {name: str_(UIStrings.internalError)},
+  ActivationNavigationsDisallowedForBug1234857: {name: str_(UIStrings.internalError)},
+  Unknown: {name: str_(UIStrings.internalError)},
+  RenderFrameHostReused_SameSite: {name: str_(UIStrings.internalError)},
+  RenderFrameHostReused_CrossSite: {name: str_(UIStrings.internalError)},
+  WebSocket: {name: str_(UIStrings.webSocket)},
+  WebTransport: {name: str_(UIStrings.webTransport)},
+  WebRTC: {name: str_(UIStrings.webRTC)},
+  MainResourceHasCacheControlNoStore: {name: str_(UIStrings.mainResourceHasCacheControlNoStore)},
+  MainResourceHasCacheControlNoCache: {name: str_(UIStrings.mainResourceHasCacheControlNoCache)},
+  SubresourceHasCacheControlNoStore: {name: str_(UIStrings.subresourceHasCacheControlNoStore)},
+  SubresourceHasCacheControlNoCache: {name: str_(UIStrings.subresourceHasCacheControlNoCache)},
+  ContainsPlugins: {name: str_(UIStrings.containsPlugins)},
+  DocumentLoaded: {name: str_(UIStrings.documentLoaded)},
+  DedicatedWorkerOrWorklet: {name: str_(UIStrings.dedicatedWorkerOrWorklet)},
+  OutstandingNetworkRequestOthers: {name: str_(UIStrings.outstandingNetworkRequestOthers)},
+  OutstandingIndexedDBTransaction: {name: str_(UIStrings.outstandingIndexedDBTransaction)},
+  RequestedNotificationsPermission: {name: str_(UIStrings.requestedNotificationsPermission)},
+  RequestedMIDIPermission: {name: str_(UIStrings.requestedMIDIPermission)},
+  RequestedAudioCapturePermission: {name: str_(UIStrings.requestedAudioCapturePermission)},
+  RequestedVideoCapturePermission: {name: str_(UIStrings.requestedVideoCapturePermission)},
+  RequestedBackForwardCacheBlockedSensors: {name: str_(UIStrings.requestedBackForwardCacheBlockedSensors)},
+  RequestedBackgroundWorkPermission: {name: str_(UIStrings.requestedBackgroundWorkPermission)},
+  BroadcastChannel: {name: str_(UIStrings.broadcastChannel)},
+  IndexedDBConnection: {name: str_(UIStrings.indexedDBConnection)},
+  WebXR: {name: str_(UIStrings.webXR)},
+  SharedWorker: {name: str_(UIStrings.sharedWorker)},
+  WebLocks: {name: str_(UIStrings.webLocks)},
+  WebHID: {name: str_(UIStrings.webHID)},
+  WebShare: {name: str_(UIStrings.webShare)},
+  RequestedStorageAccessGrant: {name: str_(UIStrings.requestedStorageAccessGrant)},
+  WebNfc: {name: str_(UIStrings.webNfc)},
+  OutstandingNetworkRequestFetch: {name: str_(UIStrings.outstandingNetworkRequestFetch)},
+  OutstandingNetworkRequestXHR: {name: str_(UIStrings.outstandingNetworkRequestXHR)},
+  AppBanner: {name: str_(UIStrings.appBanner)},
+  Printing: {name: str_(UIStrings.printing)},
+  WebDatabase: {name: str_(UIStrings.webDatabase)},
+  PictureInPicture: {name: str_(UIStrings.pictureInPicture)},
+  SpeechRecognizer: {name: str_(UIStrings.speechRecognizer)},
+  IdleManager: {name: str_(UIStrings.idleManager)},
+  PaymentManager: {name: str_(UIStrings.paymentManager)},
+  SpeechSynthesis: {name: str_(UIStrings.speechSynthesis)},
+  KeyboardLock: {name: str_(UIStrings.keyboardLock)},
+  WebOTPService: {name: str_(UIStrings.webOTPService)},
+  OutstandingNetworkRequestDirectSocket: {name: str_(UIStrings.outstandingNetworkRequestDirectSocket)},
+  InjectedJavascript: {name: str_(UIStrings.injectedJavascript)},
+  InjectedStyleSheet: {name: str_(UIStrings.injectedStyleSheet)},
+  Dummy: {name: str_(UIStrings.internalError)},
+  ContentDiscarded: {name: str_(UIStrings.contentDiscarded)},
+  ContentSecurityHandler: {name: str_(UIStrings.contentSecurityHandler)},
+  ContentWebAuthenticationAPI: {name: str_(UIStrings.contentWebAuthenticationAPI)},
+  ContentFileChooser: {name: str_(UIStrings.contentFileChooser)},
+  ContentSerial: {name: str_(UIStrings.contentSerial)},
+  ContentFileSystemAccess: {name: str_(UIStrings.contentFileSystemAccess)},
+  ContentMediaDevicesDispatcherHost: {name: str_(UIStrings.contentMediaDevicesDispatcherHost)},
+  ContentWebBluetooth: {name: str_(UIStrings.contentWebBluetooth)},
+  ContentWebUSB: {name: str_(UIStrings.contentWebUSB)},
+  ContentMediaSession: {name: str_(UIStrings.contentMediaSession)},
+  ContentMediaSessionService: {name: str_(UIStrings.contentMediaSessionService)},
+  ContentMediaPlay: {name: str_(UIStrings.contentMediaPlay)},
+  ContentScreenReader: {name: str_(UIStrings.contentScreenReader)},
+  EmbedderPopupBlockerTabHelper: {name: str_(UIStrings.embedderPopupBlockerTabHelper)},
+  EmbedderSafeBrowsingTriggeredPopupBlocker:
       {name: str_(UIStrings.embedderSafeBrowsingTriggeredPopupBlocker)},
-  'EmbedderSafeBrowsingThreatDetails': {name: str_(UIStrings.embedderSafeBrowsingThreatDetails)},
-  'EmbedderAppBannerManager': {name: str_(UIStrings.embedderAppBannerManager)},
-  'EmbedderDomDistillerViewerSource': {name: str_(UIStrings.embedderDomDistillerViewerSource)},
-  'EmbedderDomDistillerSelfDeletingRequestDelegate':
+  EmbedderSafeBrowsingThreatDetails: {name: str_(UIStrings.embedderSafeBrowsingThreatDetails)},
+  EmbedderAppBannerManager: {name: str_(UIStrings.embedderAppBannerManager)},
+  EmbedderDomDistillerViewerSource: {name: str_(UIStrings.embedderDomDistillerViewerSource)},
+  EmbedderDomDistillerSelfDeletingRequestDelegate:
       {name: str_(UIStrings.embedderDomDistillerSelfDeletingRequestDelegate)},
-  'EmbedderOomInterventionTabHelper': {name: str_(UIStrings.embedderOomInterventionTabHelper)},
-  'EmbedderOfflinePage': {name: str_(UIStrings.embedderOfflinePage)},
-  'EmbedderChromePasswordManagerClientBindCredentialManager':
+  EmbedderOomInterventionTabHelper: {name: str_(UIStrings.embedderOomInterventionTabHelper)},
+  EmbedderOfflinePage: {name: str_(UIStrings.embedderOfflinePage)},
+  EmbedderChromePasswordManagerClientBindCredentialManager:
       {name: str_(UIStrings.embedderChromePasswordManagerClientBindCredentialManager)},
-  'EmbedderPermissionRequestManager': {name: str_(UIStrings.embedderPermissionRequestManager)},
-  'EmbedderModalDialog': {name: str_(UIStrings.embedderModalDialog)},
-  'EmbedderExtensions': {name: str_(UIStrings.embedderExtensions)},
-  'EmbedderExtensionMessaging': {name: str_(UIStrings.embedderExtensionMessaging)},
-  'EmbedderExtensionMessagingForOpenPort': {name: str_(UIStrings.embedderExtensionMessagingForOpenPort)},
-  'EmbedderExtensionSentMessageToCachedFrame':
+  EmbedderPermissionRequestManager: {name: str_(UIStrings.embedderPermissionRequestManager)},
+  EmbedderModalDialog: {name: str_(UIStrings.embedderModalDialog)},
+  EmbedderExtensions: {name: str_(UIStrings.embedderExtensions)},
+  EmbedderExtensionMessaging: {name: str_(UIStrings.embedderExtensionMessaging)},
+  EmbedderExtensionMessagingForOpenPort: {name: str_(UIStrings.embedderExtensionMessagingForOpenPort)},
+  EmbedderExtensionSentMessageToCachedFrame:
       {name: str_(UIStrings.embedderExtensionSentMessageToCachedFrame)},
-  'ErrorDocument': {name: str_(UIStrings.errorDocument)},
-  'FencedFramesEmbedder': {name: str_(UIStrings.fencedFramesEmbedder)},
-  'KeepaliveRequest': {name: str_(UIStrings.keepaliveRequest)},
-  'AuthorizationHeader': {name: str_(UIStrings.authorizationHeader)},
-  'IndexedDBEvent': {name: str_(UIStrings.indexedDBEvent)},
-  'CookieDisabled': {name: str_(UIStrings.cookieDisabled)},
+  ErrorDocument: {name: str_(UIStrings.errorDocument)},
+  FencedFramesEmbedder: {name: str_(UIStrings.fencedFramesEmbedder)},
+  KeepaliveRequest: {name: str_(UIStrings.keepaliveRequest)},
+  JsNetworkRequestReceivedCacheControlNoStoreResource:
+      {name: str_(UIStrings.jsNetworkRequestReceivedCacheControlNoStoreResource)},
+  IndexedDBEvent: {name: str_(UIStrings.indexedDBEvent)},
+  CookieDisabled: {name: str_(UIStrings.cookieDisabled)},
+  WebRTCSticky: {name: str_(UIStrings.webRTCSticky)},
+  WebTransportSticky: {name: str_(UIStrings.webTransportSticky)},
+  WebSocketSticky: {name: str_(UIStrings.webSocketSticky)},
+  HTTPAuthRequired: {name: ('HTTPAuthRequired')},
+  CookieFlushed: {name: ('CookieFlushed')},
+  SmartCard: {name: ('SmartCard')},
+  LiveMediaStreamTrack: {name: ('LiveMediaStreamTrack')},
+  UnloadHandler: {name: ('UnloadHandler')},
+  ParserAborted: {name: ('ParserAborted')},
+  BroadcastChannelOnMessage: {name: ('BroadcastChannelOnMessage')},
+  RequestedByWebViewClient: {name: ('RequestedByWebViewClient')},
+  PostMessageByWebViewClient: {name: ('PostMessageByWebViewClient')},
+  WebViewSettingsChanged: {name: ('WebViewSettingsChanged')},
+  WebViewJavaScriptObjectChanged: {name: ('WebViewJavaScriptObjectChanged')},
+  WebViewMessageListenerInjected: {name: ('WebViewMessageListenerInjected')},
+  WebViewSafeBrowsingAllowlistChanged: {name: ('WebViewSafeBrowsingAllowlistChanged')},
+  WebViewDocumentStartJavascriptChanged: {name: ('WebViewDocumentStartJavascriptChanged')},
 };
 
 export {

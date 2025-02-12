@@ -1754,9 +1754,6 @@
   "core/lib/bf-cache-strings.js | appBanner": {
     "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."
   },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Back/forward cache is disabled due to a keepalive request."
-  },
   "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
     "message": "Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device."
   },
@@ -1787,6 +1784,9 @@
   "core/lib/bf-cache-strings.js | containsPlugins": {
     "message": "Pages containing plugins are not currently eligible for back/forward cache."
   },
+  "core/lib/bf-cache-strings.js | contentDiscarded": {
+    "message": "Undefined"
+  },
   "core/lib/bf-cache-strings.js | contentFileChooser": {
     "message": "Pages that use FileChooser API are not eligible for back/forward cache."
   },
@@ -1815,7 +1815,7 @@
     "message": "Pages that use Serial API are not eligible for back/forward cache."
   },
   "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Pages that use WebAuthentication API are not eligible for back/forward cache."
+    "message": "Pages that use WebAuthetication API are not eligible for back/forward cache."
   },
   "core/lib/bf-cache-strings.js | contentWebBluetooth": {
     "message": "Pages that use WebBluetooth API are not eligible for back/forward cache."
@@ -1893,7 +1893,7 @@
     "message": "Pages that have granted media stream access are not currently eligible for back/forward cache."
   },
   "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Pages that use portals are not currently eligible for back/forward cache."
+    "message": "Pages that have certain kinds of embedded content (e.g. PDFs) are not currently eligible for back/forward cache."
   },
   "core/lib/bf-cache-strings.js | idleManager": {
     "message": "Pages that use IdleManager are not currently eligible for back/forward cache."
@@ -1915,6 +1915,9 @@
   },
   "core/lib/bf-cache-strings.js | internalError": {
     "message": "Internal error."
+  },
+  "core/lib/bf-cache-strings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Back/forward cache is disabled because some JavaScript network request received resource with `Cache-Control: no-store` header."
   },
   "core/lib/bf-cache-strings.js | keepaliveRequest": {
     "message": "Back/forward cache is disabled due to a keepalive request."
@@ -1972,9 +1975,6 @@
   },
   "core/lib/bf-cache-strings.js | pictureInPicture": {
     "message": "Pages that use Picture-in-Picture are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Pages that use portals are not currently eligible for back/forward cache."
   },
   "core/lib/bf-cache-strings.js | printing": {
     "message": "Pages that show Printing UI are not currently eligible for back/forward cache."
@@ -2081,14 +2081,23 @@
   "core/lib/bf-cache-strings.js | webRTC": {
     "message": "Pages with WebRTC cannot enter back/forward cache."
   },
+  "core/lib/bf-cache-strings.js | webRTCSticky": {
+    "message": "Back/forward cache is disabled because WebRTC has been used."
+  },
   "core/lib/bf-cache-strings.js | webShare": {
     "message": "Pages that use WebShare are not currently eligible for back/forwad cache."
   },
   "core/lib/bf-cache-strings.js | webSocket": {
     "message": "Pages with WebSocket cannot enter back/forward cache."
   },
+  "core/lib/bf-cache-strings.js | webSocketSticky": {
+    "message": "Back/forward cache is disabled because WebSocket has been used."
+  },
   "core/lib/bf-cache-strings.js | webTransport": {
     "message": "Pages with WebTransport cannot enter back/forward cache."
+  },
+  "core/lib/bf-cache-strings.js | webTransportSticky": {
+    "message": "Back/forward cache is disabled because WebTransport has been used."
   },
   "core/lib/bf-cache-strings.js | webXR": {
     "message": "Pages that use WebXR are not currently eligible for back/forward cache."
@@ -2165,6 +2174,9 @@
   "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
     "message": "The `disableRemotePlayback` attribute should be used in order to disable the default Cast integration instead of using `-internal-media-controls-overlay-cast-button` selector."
   },
+  "core/lib/deprecations-strings.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS appearance value `slider-vertical` is not standardized and will be removed."
+  },
   "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
     "message": "Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
   },
@@ -2193,13 +2205,7 @@
     "message": "DOM Mutation Events, including `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, and `DOMCharacterDataModified` are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use `MutationObserver` instead."
   },
   "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Support for data: URLs in SVG <use> element is deprecated and it will be removed in the future."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Relaxing the same-origin policy by setting `document.domain` is deprecated, and will be disabled by default. To continue using this feature, please opt-out of origin-keyed agent clusters by sending an `Origin-Agent-Cluster: ?0` header along with the HTTP response for the document and frames. See https://developer.chrome.com/blog/immutable-document-domain/ for more details."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "The `Expect-CT` header is deprecated and will be removed. Chrome requires Certificate Transparency for all publicly trusted certificates issued after April 30, 2018."
+    "message": "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future."
   },
   "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
     "message": "`getCurrentPosition()` and `watchPosition()` no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
@@ -2233,9 +2239,6 @@
   },
   "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
     "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "The older, non-standardized `shadowroot` attribute is deprecated, and will *no longer function* in M119. Please use the new, standardized `shadowrootmode` attribute instead."
   },
   "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
     "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
@@ -2315,17 +2318,17 @@
   "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
     "message": "`speechSynthesis.speak()` without user activation is deprecated and will be removed."
   },
+  "core/lib/deprecations-strings.js | UnloadHandler": {
+    "message": "Unload event listeners are deprecated and will be removed."
+  },
   "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt into cross-origin isolation to continue using `SharedArrayBuffer`. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "core/lib/deprecations-strings.js | WebGPULimitMaxInterStageShaderComponents": {
+    "message": "The WebGPU limit `maxInterStageShaderComponents` is deprecated, instead use the WebGPU limit `maxInterStageShaderVariables`."
+  },
   "core/lib/deprecations-strings.js | WebSQL": {
     "message": "Web SQL is deprecated. Please use SQLite WebAssembly or Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "The permission descriptor `window-placement` is deprecated. Use `window-management` instead. For more help, check https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "The permission policy `window-placement` is deprecated. Use `window-management` instead. For more help, check https://bit.ly/window-placement-rename."
   },
   "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response json in `XMLHttpRequest`"
