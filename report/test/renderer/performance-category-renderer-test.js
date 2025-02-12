@@ -216,11 +216,19 @@ describe('PerfCategoryRenderer', () => {
     const passedSection =
       categoryDOM.querySelector('.lh-perf-audits--experimental .lh-clump--passed');
 
+
     const passedInsights = category.auditRefs.filter(audit =>
       audit.group === 'insights' &&
       ReportUtils.showAsPassed(audit.result));
+
+    const replacedIds = new Set();
+    for (const audit of category.auditRefs) {
+      audit.result.replacesAudits?.forEach(id => replacedIds.add(id));
+    }
+
     const passedDiagnostics = category.auditRefs.filter(audit =>
       audit.group === 'diagnostics' &&
+      !replacedIds.has(audit.id) &&
       ReportUtils.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedInsights.length + passedDiagnostics.length);
