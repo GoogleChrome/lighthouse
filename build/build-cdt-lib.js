@@ -77,31 +77,6 @@ const modifications = [
       'TextUtils',
     ],
   },
-  // {
-  //   input: 'node_modules/chrome-devtools-frontend/front_end/core/sdk/SourceMapScopesInfo.ts',
-  //   output: `${outDir}/SourceMapScopesInfo.js`,
-  //   template: '%sourceFilePrinted%',
-  //   rawCodeToReplace: {
-  //    'Protocol.Debugger.ScopeType.Local': '"local"',
-  //   },
-  //   classesToRemove: [],
-  //   methodsToRemove: [],
-  //   variablesToRemove: [],
-  // },
-  // {
-  //   input: 'node_modules/chrome-devtools-frontend/front_end/core/sdk/SourceMapScopeChainEntry.ts',
-  //   output: `${outDir}/SourceMapScopeChainEntry.js`,
-  //   template: '%sourceFilePrinted%',
-  //   rawCodeToReplace: {
-  //    'Protocol.Debugger.ScopeType.Local': '"local"',
-  //    'Protocol.Debugger.ScopeType.Global': '"global"',
-  //    'Protocol.Debugger.ScopeType.Closure': '"closure"',
-  //    'Protocol.Debugger.ScopeType.Block': '"block"',
-  //   },
-  //   classesToRemove: [],
-  //   methodsToRemove: [],
-  //   variablesToRemove: [],
-  // },
   {
     input: 'node_modules/chrome-devtools-frontend/front_end/core/common/ParsedURL.ts',
     output: `${outDir}/ParsedURL.js`,
