@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * @fileoverview This audit highlights JavaScript modules that appear to be duplicated across
+ * all resources, either within the same bundle or between different bundles.
+ */
+
 /** @typedef {import('./byte-efficiency-audit.js').ByteEfficiencyProduct} ByteEfficiencyProduct */
 /** @typedef {LH.Audit.ByteEfficiencyItem & {source: string, subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{url: string, sourceTransferBytes?: number}} SubItem */
@@ -104,11 +109,10 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
   }
 
   /**
-   * This audit highlights JavaScript modules that appear to be duplicated across all resources,
-   * either within the same bundle or between different bundles. Each details item returned is
-   * a module with subItems for each resource that includes it. The wastedBytes for the details
-   * item is the number of bytes occupied by the sum of all but the largest copy of the module.
-   * wastedBytesByUrl attributes the cost of the bytes to a specific resource, for use by lantern.
+   * Each details item returned is a module with subItems for each resource that
+   * includes it. The wastedBytes for the details item is the number of bytes
+   * occupied by the sum of all but the largest copy of the module. wastedBytesByUrl
+   * attributes the cost of the bytes to a specific resource, for use by lantern.
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context

@@ -76,7 +76,6 @@ const expectations = {
                   {signal: 'Reflect.preventExtensions'},
                   {signal: 'Reflect.setPrototypeOf'},
                   {signal: 'String.prototype.codePointAt'},
-                  {signal: 'String.fromCodePoint'},
                   {signal: 'String.raw'},
                   {signal: 'String.prototype.repeat'},
                   {signal: '@babel/plugin-transform-classes'},
