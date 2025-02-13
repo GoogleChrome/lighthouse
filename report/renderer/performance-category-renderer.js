@@ -205,6 +205,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       this.renderFilterableSection(category, groups, ['diagnostics'], metricAudits);
     legacyAuditsSection?.classList.add('lh-perf-audits--swappable', 'lh-perf-audits--legacy');
 
+    // This will combine insights with the subset of diagnostics that don't have a corresponding
+    // insight replacing them into a single group titled "Insights".
     const experimentalInsightsSection =
       this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
     experimentalInsightsSection?.classList.add(
