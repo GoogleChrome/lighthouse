@@ -187,14 +187,20 @@ describe('PerfCategoryRenderer', () => {
     const insightSection = categoryDOM.querySelector(
         '.lh-category .lh-audit-group.lh-audit-group--insights');
 
+    const replacedIds = new Set();
+    for (const audit of category.auditRefs) {
+      audit.result.replacesAudits?.forEach(id => replacedIds.add(id));
+    }
+
     const insightAuditIds = category.auditRefs.filter(audit => {
-      return audit.group === 'insights' &&
-        !ReportUtils.showAsPassed(audit.result);
-    }).map(audit => audit.id).sort();
+      return audit.group === 'insights' ||
+        (audit.group === 'diagnostics' && !replacedIds.has(audit.id));
+    })
+    .filter(audit => !ReportUtils.showAsPassed(audit.result))
+    .map(audit => audit.id).sort();
     assert.ok(insightAuditIds.length > 0);
 
     const insightElementIds = [...insightSection.querySelectorAll('.lh-audit')]
-      .filter(el => /-insight$/.test(el.id))
       .map(el => el.id).sort();
     assert.deepStrictEqual(insightElementIds, insightAuditIds);
   });
