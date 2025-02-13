@@ -115,15 +115,9 @@ export class TopbarFeatures {
         break;
       }
       case 'toggle-insights': {
-        const insightsGroup = this._dom.maybeFind('.lh-perf-audits--experimental');
-        const diagnosticsGroup = this._dom.maybeFind('.lh-perf-audits--legacy');
-
-        const renderedGroup = insightsGroup || diagnosticsGroup;
-        // @ts-expect-error
-        if (renderedGroup && renderedGroup.__swapSection) {
-          // @ts-expect-error
-          renderedGroup.parentNode?.insertBefore(renderedGroup.__swapSection, insightsGroup);
-          renderedGroup.remove();
+        const swappableSection = this._dom.maybeFind('.lh-perf-audits--swappable');
+        if (swappableSection) {
+          this._dom.swapSectionIfPossible(swappableSection);
         }
         break;
       }

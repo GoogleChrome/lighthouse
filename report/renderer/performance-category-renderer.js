@@ -203,26 +203,23 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const legacyAuditsSection =
       this.renderFilterableSection(category, groups, ['diagnostics'], metricAudits);
-    legacyAuditsSection?.classList.add('lh-perf-audits--legacy');
+    legacyAuditsSection?.classList.add('lh-perf-audits--swappable', 'lh-perf-audits--legacy');
 
     const experimentalInsightsSection =
       this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
-    experimentalInsightsSection?.classList.add('lh-perf-audits--experimental');
+    experimentalInsightsSection?.classList.add(
+      'lh-perf-audits--swappable', 'lh-perf-audits--experimental');
 
-    // Many tests expect just one of these sections to be in the DOM at a given time.
-    // To prevent the hidden section from tripping up these tests, we will just remove the hidden
-    // section from the DOM and store it in memory.
     if (legacyAuditsSection) {
-      // @ts-expect-error
-      legacyAuditsSection.__swapSection = experimentalInsightsSection;
-    }
+      element.append(legacyAuditsSection);
 
-    if (experimentalInsightsSection) {
-      // @ts-expect-error
-      experimentalInsightsSection.__swapSection = legacyAuditsSection;
+      // Many tests expect just one of these sections to be in the DOM at a given time.
+      // To prevent the hidden section from tripping up these tests, we will just remove the hidden
+      // section from the DOM and store it in memory.
+      if (experimentalInsightsSection) {
+        this.dom.registerSwappableSections(legacyAuditsSection, experimentalInsightsSection);
+      }
     }
-
-    if (legacyAuditsSection) element.append(legacyAuditsSection);
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {

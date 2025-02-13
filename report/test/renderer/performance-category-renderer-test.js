@@ -24,14 +24,8 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   function swapLegacyAndExperimentalPerfInsights(rootEl) {
-    const insightsGroup = rootEl.querySelector('.lh-perf-audits--experimental');
-    const diagnosticsGroup = rootEl.querySelector('.lh-perf-audits--legacy');
-
-    const renderedGroup = insightsGroup || diagnosticsGroup;
-    if (renderedGroup && renderedGroup.__swapSection) {
-      renderedGroup.parentNode?.insertBefore(renderedGroup.__swapSection, insightsGroup);
-      renderedGroup.remove();
-    }
+    const section = rootEl.querySelector('.lh-perf-audits--swappable');
+    renderer.dom.swapSectionIfPossible(section);
   }
 
   before(() => {
