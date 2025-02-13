@@ -25,6 +25,7 @@ class DOMSizeInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
+      replacesAudits: ['dom-size'],
     };
   }
 
