@@ -194,6 +194,7 @@ describe('PerfCategoryRenderer', () => {
     assert.ok(insightAuditIds.length > 0);
 
     const insightElementIds = [...insightSection.querySelectorAll('.lh-audit')]
+      .filter(el => /-insight$/.test(el.id))
       .map(el => el.id).sort();
     assert.deepStrictEqual(insightElementIds, insightAuditIds);
   });

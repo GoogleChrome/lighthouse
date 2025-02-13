@@ -271,13 +271,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const passedAudits = allFilterableAudits
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    /** @type {Record<string, [Element, Element|null]|undefined>} */
-    const groupElsMap = {};
-    for (const groupName of groupNames) {
-      const groupEls = this.renderAuditGroup(groups[groupName]);
-      groupEls[0].classList.add(`lh-audit-group--${groupName}`);
-      groupElsMap[groupName] = groupEls;
-    }
+    const [groupEl, footerEl] = this.renderAuditGroup(groups[groupNames[0]]);
+    groupEl.classList.add(`lh-audit-group--${groupNames[0]}`);
 
     /**
      * @param {string} acronym
@@ -325,12 +320,6 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       });
 
       for (const audit of filterableAudits) {
-        if (!audit.auditRef.group) continue;
-
-        const groupEls = groupElsMap[audit.auditRef.group];
-        if (!groupEls) continue;
-
-        const [groupEl, footerEl] = groupEls;
         groupEl.insertBefore(audit.auditEl, footerEl);
       }
     }
@@ -354,12 +343,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
-    for (const groupName of groupNames) {
-      if (filterableAudits.some(auditRef => auditRef.auditRef.group === groupName)) {
-        const groupEls = groupElsMap[groupName];
-        if (!groupEls) continue;
-        element.append(groupEls[0]);
-      }
+    if (filterableAudits.length) {
+      element.append(groupEl);
     }
 
     if (!passedAudits.length) return element;
