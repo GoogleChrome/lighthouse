@@ -225,6 +225,32 @@
   }
 }
 
+@container lh-container (max-width: 480px) {
+  .lh-vars {
+    --audit-group-margin-bottom: 20px;
+    --edge-gap-padding: var(--default-padding);
+    --env-name-min-width: 120px;
+    --gauge-circle-size-big: 96px;
+    --gauge-circle-size: 72px;
+    --gauge-label-font-size-big: 22px;
+    --gauge-label-font-size: 14px;
+    --gauge-label-line-height-big: 26px;
+    --gauge-label-line-height: 20px;
+    --gauge-percentage-font-size-big: 34px;
+    --gauge-percentage-font-size: 26px;
+    --gauge-wrapper-width: 112px;
+    --header-padding: 16px 0 16px 0;
+    --image-preview-size: 24px;
+    --plugin-icon-size: 75%;
+    --report-font-size: 14px;
+    --report-line-height: 20px;
+    --score-icon-margin-left: 2px;
+    --score-icon-size: 10px;
+    --topbar-height: 28px;
+    --topbar-logo-size: 20px;
+  }
+}
+
 .lh-vars.lh-devtools {
   --audit-explanation-line-height: 14px;
   --audit-group-margin-bottom: 20px;
@@ -369,6 +395,9 @@
       but they do not get any overflow:ellipsis treatment.
   */
   word-break: break-word;
+
+  container-name: lh-container;
+  container-type: inline-size;
 }
 
 .lh-audit-group a,
@@ -797,6 +826,31 @@
 
 
 @media screen and (max-width: 535px) {
+  .lh-metrics-container {
+    display: block;
+  }
+
+  .lh-metric {
+    border-bottom: none !important;
+  }
+  .lh-category:not(.lh--hoisted-meta) .lh-metric:nth-last-child(1) {
+    border-bottom: 1px solid var(--report-border-color-secondary) !important;
+  }
+
+  /* Change the grid to 3 columns for narrow viewport. */
+  .lh-metric__innerwrap {
+  /**
+   * Icon -- Metric Name -- Metric Value
+   */
+    grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
+  }
+  .lh-metric__value {
+    justify-self: end;
+    grid-column-start: unset;
+  }
+}
+
+@container lh-container (max-width: 535px) {
   .lh-metrics-container {
     display: block;
   }
@@ -1411,9 +1465,26 @@
   }
 }
 
+@container lh-container (max-width: 780px) {
+  .lh-category-header__finalscreenshot {
+    grid-template: 1fr 1fr / none
+  }
+  .lh-category-headercol--separator {
+    display: none;
+  }
+}
+
 
 /* 964 fits the min-width of the filmstrip */
 @media screen and (max-width: 964px) {
+  .lh-report {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* 964 fits the min-width of the filmstrip */
+@container lh-container (max-width: 964px) {
   .lh-report {
     margin-left: 0;
     width: 100%;
@@ -1701,6 +1772,13 @@
   }
 }
 
+@container lh-container (max-width: 780px) {
+  /* no black outline if we're not confident the entire table can be displayed within bounds */
+  .lh-expandable-details[open] {
+    animation: none;
+  }
+}
+
 .lh-expandable-details[open] summary, details.lh-clump > summary {
   border-bottom: 1px solid var(--report-border-color-secondary);
 }
@@ -1737,6 +1815,16 @@ details[open] .lh-clump-toggletext--hide { display: block;}
    45vw is chosen to be ~= width of the left column of metrics
 */
 @media screen and (max-width: 535px) {
+  .lh-tooltip {
+    min-width: 45vw;
+    padding: 3vw;
+  }
+}
+
+/* shrink tooltips to not be cutoff on left edge of narrow container
+   45vw is chosen to be ~= width of the left column of metrics
+*/
+@container lh-container (max-width: 535px) {
   .lh-tooltip {
     min-width: 45vw;
     padding: 3vw;
@@ -1881,7 +1969,21 @@ details[open] .lh-clump-toggletext--hide { display: block;}
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Change the grid for narrow container */
+@container lh-container (max-width: 640px) {
+  .lh-meta__items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media screen and (max-width: 535px) {
+  .lh-meta__items {
+    display: block;
+  }
+}
+
+@container lh-container (max-width: 535px) {
   .lh-meta__items {
     display: block;
   }
