@@ -548,6 +548,7 @@ declare module Artifacts {
     selectElementAccessibilityIssue: Crdp.Audits.SelectElementAccessibilityIssueDetails[];
     sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
     sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
+    sriMessageSignatureIssue: Crdp.Audits.SRIMessageSignatureIssueDetails[];
     stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
     federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
   }
