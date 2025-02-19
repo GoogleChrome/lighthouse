@@ -54,6 +54,7 @@ Array [
   "selectElementAccessibilityIssueDetails",
   "sharedArrayBufferIssueDetails",
   "sharedDictionaryIssueDetails",
+  "sriMessageSignatureIssueDetails",
   "stylesheetLoadingIssueDetails",
 ]
 `);

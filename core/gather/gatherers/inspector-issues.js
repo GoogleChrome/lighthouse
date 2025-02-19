@@ -84,6 +84,7 @@ class InspectorIssues extends BaseGatherer {
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       stylesheetLoadingIssue: [],
+      sriMessageSignatureIssue: [],
       federatedAuthUserInfoRequestIssue: [],
     };
     const keys = /** @type {Array<keyof LH.Artifacts['InspectorIssues']>} */(Object.keys(artifact));
