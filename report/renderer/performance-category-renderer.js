@@ -205,8 +205,6 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       this.renderFilterableSection(category, groups, ['diagnostics'], metricAudits);
     legacyAuditsSection?.classList.add('lh-perf-audits--swappable', 'lh-perf-audits--legacy');
 
-    // This will combine insights with the subset of diagnostics that don't have a corresponding
-    // insight replacing them into a single group titled "Insights".
     const experimentalInsightsSection =
       this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
     experimentalInsightsSection?.classList.add(
@@ -273,8 +271,13 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const passedAudits = allFilterableAudits
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const [groupEl, footerEl] = this.renderAuditGroup(groups[groupNames[0]]);
-    groupEl.classList.add(`lh-audit-group--${groupNames[0]}`);
+    /** @type {Record<string, [Element, Element|null]|undefined>} */
+    const groupElsMap = {};
+    for (const groupName of groupNames) {
+      const groupEls = this.renderAuditGroup(groups[groupName]);
+      groupEls[0].classList.add(`lh-audit-group--${groupName}`);
+      groupElsMap[groupName] = groupEls;
+    }
 
     /**
      * @param {string} acronym
@@ -322,6 +325,12 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       });
 
       for (const audit of filterableAudits) {
+        if (!audit.auditRef.group) continue;
+
+        const groupEls = groupElsMap[audit.auditRef.group];
+        if (!groupEls) continue;
+
+        const [groupEl, footerEl] = groupEls;
         groupEl.insertBefore(audit.auditEl, footerEl);
       }
     }
@@ -345,8 +354,12 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
-    if (filterableAudits.length) {
-      element.append(groupEl);
+    for (const groupName of groupNames) {
+      if (filterableAudits.some(auditRef => auditRef.auditRef.group === groupName)) {
+        const groupEls = groupElsMap[groupName];
+        if (!groupEls) continue;
+        element.append(groupEls[0]);
+      }
     }
 
     if (!passedAudits.length) return element;
