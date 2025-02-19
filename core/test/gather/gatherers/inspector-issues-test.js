@@ -254,6 +254,7 @@ describe('getArtifact', () => {
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       federatedAuthRequestIssue: [],
+      sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
     });
@@ -322,6 +323,7 @@ describe('getArtifact', () => {
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       federatedAuthRequestIssue: [],
+      sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
     });
