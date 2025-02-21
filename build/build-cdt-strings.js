@@ -96,10 +96,11 @@ ${extraCode}`.trimStart();
   const notRestoredReasonDescriptionDeclare =
     extract(input, 'const NotRestoredReasonDescription', '};', [
       [/i18nLazyString/g, 'str_'],
+      [/i18n\.i18n\.lockedLazyString/g, ''],
     ]);
 
   const extraCode = `
-/** @type {Record<string, {name: LH.IcuMessage} | undefined>} */
+/** @type {Record<string, {name: LH.IcuMessage|string} | undefined>} */
 ${notRestoredReasonDescriptionDeclare}
 
 export {

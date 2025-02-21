@@ -59,6 +59,7 @@ describe('JSBundles computed artifact', () => {
         "lineNumber": 0,
         "name": "bar",
         "sourceColumnNumber": 15,
+        "sourceIndex": 2,
         "sourceLineNumber": 3,
         "sourceURL": "src/foo.js",
       }
@@ -106,6 +107,7 @@ describe('JSBundles computed artifact', () => {
         "lineNumber": 0,
         "name": "bar",
         "sourceColumnNumber": 15,
+        "sourceIndex": 2,
         "sourceLineNumber": 3,
         "sourceURL": "src/foo.js",
       }
@@ -218,6 +220,7 @@ describe('JSBundles computed artifact', () => {
         "lineNumber": 0,
         "name": "workerResize",
         "sourceColumnNumber": 31,
+        "sourceIndex": 72,
         "sourceLineNumber": 119,
         "sourceURL": "webpack:///./src/components/compress/index.tsx",
       }
@@ -253,14 +256,7 @@ describe('JSBundles computed artifact', () => {
       map.mappings = 'blahblah blah';
       expect(await test()).toMatchInlineSnapshot(`
         Object {
-          "entry": SourceMapEntry {
-            "columnNumber": -13,
-            "lineNumber": 0,
-            "name": "r",
-            "sourceColumnNumber": -418,
-            "sourceLineNumber": -432,
-            "sourceURL": undefined,
-          },
+          "entry": null,
           "sizes": Object {
             "files": Object {},
             "totalBytes": 718,
@@ -280,6 +276,7 @@ describe('JSBundles computed artifact', () => {
             "lineNumber": 0,
             "name": "bar",
             "sourceColumnNumber": 15,
+            "sourceIndex": 2,
             "sourceLineNumber": 3,
             "sourceURL": "src/foo.js",
           },
@@ -300,6 +297,7 @@ describe('JSBundles computed artifact', () => {
             "lineNumber": 0,
             "name": "bar",
             "sourceColumnNumber": 15,
+            "sourceIndex": 2,
             "sourceLineNumber": 3,
             "sourceURL": "src/foo.js",
           },
@@ -320,6 +318,7 @@ describe('JSBundles computed artifact', () => {
             "lineNumber": 0,
             "name": undefined,
             "sourceColumnNumber": 15,
+            "sourceIndex": 2,
             "sourceLineNumber": 3,
             "sourceURL": "src/foo.js",
           },
@@ -351,6 +350,7 @@ describe('JSBundles computed artifact', () => {
             "lineNumber": 0,
             "name": undefined,
             "sourceColumnNumber": 18,
+            "sourceIndex": 2,
             "sourceLineNumber": 1,
             "sourceURL": "src/foo.js",
           },
