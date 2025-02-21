@@ -28,6 +28,8 @@ export class DOM {
     /** @type {HTMLElement} */
     // For legacy Report API users, this'll be undefined, but set in renderReport
     this.rootEl = rootEl;
+    /** @type {WeakMap<Element, Element>} */
+    this._swappableSections = new WeakMap();
   }
 
   /**
@@ -276,7 +278,7 @@ export class DOM {
    * @param {ParentNode} context
    * @return {ParseSelector<T> | null}
    */
-  maybeFind(query, context) {
+  maybeFind(query, context = this.rootEl ?? this._document) {
     const result = context.querySelector(query);
 
     // Because we control the report layout and templates, use the simpler
@@ -322,5 +324,28 @@ export class DOM {
     // cleanup.
     this._document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  }
+
+  /**
+   * @param {Element} section1
+   * @param {Element} section2
+   */
+  registerSwappableSections(section1, section2) {
+    this._swappableSections.set(section1, section2);
+    this._swappableSections.set(section2, section1);
+  }
+
+  /**
+   * @param {Element} section
+   */
+  swapSectionIfPossible(section) {
+    const newSection = this._swappableSections.get(section);
+    if (!newSection) return;
+
+    const parent = section.parentNode;
+    if (!parent) return;
+
+    parent.insertBefore(newSection, section);
+    section.remove();
   }
 }
