@@ -252,4 +252,350 @@ describe('Has inspector issues audit', () => {
       },
     });
   });
+
+  it('correctly displays Attribution Reporting issues', () => {
+    const attributionReportingIssues = [
+      {
+        violationType: 'PermissionPolicyDisabled',
+        request: {
+          url: 'www.attribution.com',
+        },
+      },
+      {
+        violationType: 'InvalidAttributionSourceIdEvent',
+      },
+    ];
+    issues.attributionReportingIssue.push(...attributionReportingIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Attribution reporting',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'www.attribution.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Client Hint Issues', () => {
+    const clientHintIssues = [
+      {
+        sourceCodeLocation: {
+          url: 'www.client.com/file.html',
+          lineNumber: 1,
+          columnNumber: 1,
+        },
+        clientHintIssueReason: 'MetaTagAllowListInvalidOrigin',
+      },
+    ];
+    issues.clientHintIssue.push(...clientHintIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Client hint incorrectly used',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'www.client.com/file.html, line 1',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays CORS Issues', () => {
+    const corsIssues = [
+      {
+        corsErrorStatus: {
+          corsError: 'DisallowedByMode',
+          failedParameter: 'something',
+        },
+        request: {
+          url: 'www.cors.com',
+        },
+      },
+      {
+        corsErrorStatus: {
+          corsError: 'InvalidResponse',
+          failedParameter: 'everything',
+        },
+      },
+    ];
+    issues.corsIssue.push(...corsIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'CORS Problems',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'www.cors.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Deprecation issues', () => {
+    const deprecationIssues = [
+      {
+        type: 'CookieWithTruncatingChar',
+        sourceCodeLocation: {
+          url: 'www.deprecated.com',
+          lineNumber: 1,
+          columnNumber: 1,
+        },
+      },
+    ];
+    issues.deprecationIssue.push(...deprecationIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Deprecated feature used',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'www.deprecated.com, line 1',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Federated Auth Request issues', () => {
+    const federatedAuthReqIssues = [
+      {federatedAuthRequestIssueReason: 'MetaTagAllowListInvalidOrigin'},
+    ];
+    issues.federatedAuthRequestIssue.push(...federatedAuthReqIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      URL: {
+        finalUrl: 'https://federated.com',
+      },
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Failed federated authentication request',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'https://federated.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Generic issues', () => {
+    const genericIssues = [
+      {errorType: 'CrossOriginPortalPostMessageError'},
+    ];
+    issues.genericIssue.push(...genericIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      URL: {
+        finalUrl: 'https://generic.com',
+      },
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Generic issue on the front end',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'https://generic.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Low Text Contrast issues', () => {
+    const lowTextContrastIssues = [
+      {
+        violatingNodeSelector: 'p',
+      },
+    ];
+    issues.lowTextContrastIssue.push(...lowTextContrastIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      URL: {
+        finalUrl: 'nocontrast.com',
+      },
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Low text contrast',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'nocontrast.com - p',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Navigator User Agent issues', () => {
+    const navigatorUserAgentIssues = [
+      {
+        url: 'navuseragent.com',
+        location: {
+          url: 'navuseragent.com',
+          lineNumber: 1,
+          columnNumber: 1,
+        },
+      },
+      {
+        url: 'navuseragent2.com',
+      },
+    ];
+    issues.navigatorUserAgentIssue.push(...navigatorUserAgentIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Using information not present in reduced user-agent strings',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'navuseragent.com, line 1',
+          },
+          {
+            url: 'navuseragent2.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Quirks Mode issues', () => {
+    const quirksModeIssues = [
+      {
+        url: 'quirky.com',
+      },
+    ];
+    issues.quirksModeIssue.push(...quirksModeIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Document renders in quirks mode',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'quirky.com',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays Shared Array Buffer issues', () => {
+    const sharedArrayBufferIssues = [
+      {
+        type: 'CreationIssue',
+        sourceCodeLocation: {
+          url: 'badbuffer.com',
+          lineNumber: 1,
+          columnNumber: 1,
+        },
+      },
+    ];
+    issues.sharedArrayBufferIssue.push(...sharedArrayBufferIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Shared Array Buffer not cross-origin isolated',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'badbuffer.com, line 1',
+          },
+        ],
+      },
+    });
+  });
+
+  it('correctly displays TWA Quality Enforcement issues', () => {
+    const twaQualityEnforcementIssues = [
+      {
+        url: 'badtwa.com',
+      },
+    ];
+    issues.twaQualityEnforcement.push(...twaQualityEnforcementIssues);
+
+    const auditResult = InspectorIssuesAudit.audit({
+      InspectorIssues: issues,
+    });
+    expect(auditResult.score).toBe(0);
+    expect(auditResult.details.items[0]).toMatchObject({
+      issueType: {
+        formattedDefault: 'Some TWA requirements not met',
+      },
+      subItems: {
+        type: 'subitems',
+        items: [
+          {
+            url: 'badtwa.com',
+          },
+        ],
+      },
+    });
+  });
 });
