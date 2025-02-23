@@ -28,20 +28,15 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
 }
 
 /**
- * Returns true if the script was created via our own calls
- * to Runtime.evaluate.
  * @param {LH.Crdp.Debugger.ScriptParsedEvent} script
  */
-function isLighthouseRuntimeEvaluateScript(script) {
-  // Scripts created by Runtime.evaluate that run on the main session/frame
-  // result in an empty string for the embedderName.
-  // Or, it means the script was dynamically created (eval, new Function, onload, ...)
-  if (!script.embedderName) return true;
-
-  // Otherwise, when running our own code inside other frames, the embedderName
-  // is set to the frame's url. In that case, we rely on the special sourceURL that
-  // we set.
-  return script.hasSourceURL && script.url === '_lighthouse-eval.js';
+function shouldIgnoreScript(script) {
+  return script.hasSourceURL && [
+    '_lighthouse-eval.js',
+    '__puppeteer_evaluation_script__',
+    'pptr://__puppeteer_evaluation_script__',
+    'pptr:internal',
+  ].includes(script.url);
 }
 
 /**
@@ -62,18 +57,37 @@ class Scripts extends BaseGatherer {
   /** @type {Array<string | undefined>} */
   _scriptContents = [];
 
+  /** @type {Array<string | undefined>} */
+  _scriptFrameUrls = [];
+
+  /** @type {Map<string, string>} */
+  _frameIdToUrl = new Map();
+
   constructor() {
     super();
+    this.onFrameNavigated = this.onFrameNavigated.bind(this);
     this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
   /**
-   * @param {LH.Crdp.Debugger.ScriptParsedEvent} params
+   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    */
-  onScriptParsed(params) {
-    if (!isLighthouseRuntimeEvaluateScript(params)) {
-      this._scriptParsedEvents.push(params);
+  onScriptParsed(event) {
+    if (!shouldIgnoreScript(event)) {
+      this._scriptParsedEvents.push(event);
+      this._scriptFrameUrls.push(
+        event.executionContextAuxData?.frameId ?
+          this._frameIdToUrl.get(event.executionContextAuxData?.frameId) :
+          undefined
+      );
     }
+  }
+
+  /**
+   * @param {LH.Crdp.Page.FrameNavigatedEvent} event
+   */
+  onFrameNavigated(event) {
+    this._frameIdToUrl.set(event.frame.id, event.frame.url);
   }
 
   /**
@@ -83,6 +97,8 @@ class Scripts extends BaseGatherer {
     const session = context.driver.defaultSession;
     session.on('Debugger.scriptParsed', this.onScriptParsed);
     await session.sendCommand('Debugger.enable');
+    await session.sendCommand('Page.enable');
+    session.on('Page.frameNavigated', this.onFrameNavigated);
   }
 
   /**
@@ -106,6 +122,8 @@ class Scripts extends BaseGatherer {
       formFactor === 'mobile' /* runInSeries */
     );
     await session.sendCommand('Debugger.disable');
+    await session.sendCommand('Page.disable');
+    session.off('Page.frameNavigated', this.onFrameNavigated);
   }
 
   async getArtifact() {
@@ -117,15 +135,43 @@ class Scripts extends BaseGatherer {
       // It's nice to display the user-provided value in Lighthouse, so we add a field 'name'
       // to make it clear this is for presentational purposes.
       // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
+      let name = event.url;
+      // embedderName is optional on the protocol because backends like Node may not set it.
+      // For our purposes, it is always set, although it may be an empty string for scripts
+      // compiled from a string at runtime. See following comments.
+      const url = event.embedderName || undefined;
+
+      // If an event.url (what we use as `name`) is empty, then the script was compiled from a string
+      // (or possibly is from the protocol, but we've filtered out those protocol Runtime.evaluate scripts
+      // by this point) via eval, setTimeout, etc.
+      //
+      // We can provide a more useful indicator of the source of the script by looking at the callFrame,
+      // but that may not be present (it is only the top-level call frame, no async stack frames). As a final
+      // fallback, we grab the frame url of the execution context at the time the script was parsed.
+      if (!url && !name) {
+        if (event.stackTrace?.callFrames.length) {
+          name = `<compiled from string in ${event.stackTrace.callFrames[0].url}>`;
+        } else if (this._scriptFrameUrls[i]) {
+          name = `<compiled from string in ${this._scriptFrameUrls[i]}>`;
+        } else {
+          name = '<compiled from string>';
+        }
+      } else if (url && !name) {
+        name = url;
+      }
+
       return {
-        name: event.url,
+        name,
         ...event,
-        // embedderName is optional on the protocol because backends like Node may not set it.
-        // For our purposes, it is always set. But just in case it isn't... fallback to the url.
-        url: event.embedderName || event.url,
+        url,
         content: this._scriptContents[i],
       };
-    });
+    })
+    // If we can't name a script or know its url, just ignore it.
+    .filter(script => script.name || script.url)
+    // This script comes from Chromium debugger internals.
+    // https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/inspector/thread_debugger.cc;l=522;drc=1f67b0dc03c0b4e45a922f7e1ef3a2b28640b673
+    .filter(script => script.content !== '(function(e) { console.log(e.type, e); })');
 
     return scripts;
   }

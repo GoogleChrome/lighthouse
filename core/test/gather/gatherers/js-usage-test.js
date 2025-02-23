@@ -62,32 +62,6 @@ Object {
 `);
   });
 
-  it('ignore coverage data with empty url', async () => {
-    const coverage = [{scriptId: '1', url: ''}];
-    const artifact = await runJsUsage({coverage});
-    expect(artifact).toMatchInlineSnapshot(`Object {}`);
-  });
-
-  it('ignore coverage if for empty url', async () => {
-    const coverage = [
-      {scriptId: '1', url: 'https://www.example.com'},
-      {scriptId: '2', url: ''},
-    ];
-    const scriptParsedEvents = [
-      {scriptId: '1', embedderName: ''},
-      {scriptId: '2', embedderName: 'https://www.example.com'},
-    ];
-    const artifact = await runJsUsage({coverage, scriptParsedEvents});
-    expect(artifact).toMatchInlineSnapshot(`
-Object {
-  "1": Object {
-    "scriptId": "1",
-    "url": "https://www.example.com",
-  },
-}
-`);
-  });
-
   it('does not have entry for script with no coverage data', async () => {
     const context = createMockContext();
     context.gatherMode = 'timespan';
