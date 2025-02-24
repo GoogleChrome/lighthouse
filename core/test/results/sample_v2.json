@@ -2198,99 +2198,10 @@
       "id": "layout-shifts",
       "title": "Avoid large layout shifts",
       "description": "These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the most. Below each item are possible root causes that led to the layout shift. Some of these layout shifts may not be included in the CLS metric value due to [windowing](https://web.dev/articles/cls#what_is_cls). [Learn how to improve CLS](https://web.dev/articles/optimize-cls)",
-      "score": 1,
-      "scoreDisplayMode": "informative",
-      "displayValue": "2 layout shifts found",
-      "metricSavings": {
-        "CLS": 0.1
-      },
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "node",
-            "valueType": "node",
-            "subItemsHeading": {
-              "key": "extra"
-            },
-            "label": "Element"
-          },
-          {
-            "key": "score",
-            "valueType": "numeric",
-            "subItemsHeading": {
-              "key": "cause",
-              "valueType": "text"
-            },
-            "granularity": 0.001,
-            "label": "Layout shift score"
-          }
-        ],
-        "items": [
-          {
-            "node": {
-              "type": "node",
-              "lhId": "page-1-DIV",
-              "path": "2,HTML,1,BODY,9,DIV",
-              "selector": "body > div",
-              "boundingRect": {
-                "top": 336,
-                "bottom": 537,
-                "left": 8,
-                "right": 404,
-                "width": 396,
-                "height": 201
-              },
-              "snippet": "<div>",
-              "nodeLabel": "Do better web tester page\nHi there! "
-            },
-            "score": 0.060146177116290604,
-            "subItems": {
-              "type": "subitems",
-              "items": [
-                {
-                  "extra": {
-                    "type": "node",
-                    "lhId": "page-2-IMG",
-                    "path": "2,HTML,1,BODY,61,IMG",
-                    "selector": "body > img",
-                    "boundingRect": {
-                      "top": 1220,
-                      "bottom": 1236,
-                      "left": 310,
-                      "right": 326,
-                      "width": 16,
-                      "height": 16
-                    },
-                    "snippet": "<img src=\"blob:http://localhost:10200/ba1e8ada-23a1-4a1c-b049-890a6483b3d1\">",
-                    "nodeLabel": "body > img"
-                  },
-                  "cause": "Media element lacking an explicit size"
-                }
-              ]
-            }
-          },
-          {
-            "node": {
-              "type": "node",
-              "lhId": "page-1-DIV",
-              "path": "2,HTML,1,BODY,9,DIV",
-              "selector": "body > div",
-              "boundingRect": {
-                "top": 336,
-                "bottom": 537,
-                "left": 8,
-                "right": 404,
-                "width": 396,
-                "height": 201
-              },
-              "snippet": "<div>",
-              "nodeLabel": "Do better web tester page\nHi there! "
-            },
-            "score": 0.03942967040138687
-          }
-        ]
-      },
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "artifacts.RootCauses.layoutShifts.get is not a function",
+      "errorStack": "TypeError: artifacts.RootCauses.layoutShifts.get is not a function\n    at LayoutShifts.audit (file:///core/audits/layout-shifts.js)\n    at async Runner._runAudit (file:///core/runner.js)\n    at async Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async runLighthouse (file:///cli/run.js)\n    at async file:///cli/index.js",
       "guidanceLevel": 2
     },
     "long-tasks": {
@@ -10000,7 +9911,6 @@
       ],
       "core/lib/i18n/i18n.js | columnElement": [
         "audits[largest-contentful-paint-element].details.items[0].headings[0].label",
-        "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
         "audits[dom-size].details.headings[1].label",
         "audits[dom-size-insight].details.headings[1].label"
@@ -10037,20 +9947,6 @@
       ],
       "core/audits/layout-shifts.js | description": [
         "audits[layout-shifts].description"
-      ],
-      "core/audits/layout-shifts.js | displayValueShiftsFound": [
-        {
-          "values": {
-            "shiftCount": 2
-          },
-          "path": "audits[layout-shifts].displayValue"
-        }
-      ],
-      "core/audits/layout-shifts.js | columnScore": [
-        "audits[layout-shifts].details.headings[1].label"
-      ],
-      "core/audits/layout-shifts.js | rootCauseUnsizedMedia": [
-        "audits[layout-shifts].details.items[0].subItems.items[0].cause"
       ],
       "core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"

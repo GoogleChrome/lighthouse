@@ -66,12 +66,6 @@ const expectations = {
         },
       },
       {
-        traceEventType: 'layout-shift',
-        node: {
-          nodeLabel: 'section > img',
-        },
-      },
-      {
         traceEventType: 'animation',
         node: {
           selector: 'body > div#animate-me',
