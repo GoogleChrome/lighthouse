@@ -47,7 +47,7 @@ class LayoutShifts extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
-      requiredArtifacts: ['traces', 'RootCauses', 'TraceElements'],
+      requiredArtifacts: ['traces', 'TraceElements'],
     };
   }
 
@@ -65,6 +65,16 @@ class LayoutShifts extends Audit {
     const traceElements = artifacts.TraceElements
       .filter(element => element.traceEventType === 'layout-shift');
 
+    /** @type {LH.Artifacts.TraceEngineRootCauses} */
+    const allRootCauses = {
+      layoutShifts: new Map(),
+    };
+    for (const insightSet of traceEngineResult.insights.values()) {
+      for (const [shift, reasons] of insightSet.model.CLSCulprits.shifts) {
+        allRootCauses.layoutShifts.set(shift, reasons);
+      }
+    }
+
     /** @type {Item[]} */
     const items = [];
     const layoutShiftEvents =
@@ -80,7 +90,7 @@ class LayoutShifts extends Audit {
       const biggestImpactElement = traceElements.find(t => t.nodeId === biggestImpactNodeId);
 
       // Turn root causes into sub-items.
-      const rootCauses = artifacts.RootCauses.layoutShifts.get(event);
+      const rootCauses = allRootCauses.layoutShifts.get(event);
       /** @type {SubItem[]} */
       const subItems = [];
       if (rootCauses) {

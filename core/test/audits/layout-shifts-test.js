@@ -55,7 +55,6 @@ describe('Performance: layout-shifts audit', () => {
           snippet: '<h1 class="test-class">',
         },
       }],
-      RootCauses: {layoutShifts: new Map()},
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {computedCache: new Map()});
@@ -109,7 +108,6 @@ describe('Performance: layout-shifts audit', () => {
     const artifacts = {
       traces: {defaultPass: trace},
       TraceElements: traceElements,
-      RootCauses: {layoutShifts: new Map()},
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {computedCache: new Map()});

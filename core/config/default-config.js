@@ -109,7 +109,6 @@ const defaultConfig = {
     // Artifacts which can be depended on come first.
     {id: 'DevtoolsLog', gatherer: 'devtools-log'},
     {id: 'Trace', gatherer: 'trace'},
-    {id: 'RootCauses', gatherer: 'root-causes'},
 
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'AnchorElements', gatherer: 'anchor-elements'},

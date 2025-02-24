@@ -23,7 +23,6 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {ExecutionContext} from '../driver/execution-context.js';
-import RootCauses from './root-causes.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
@@ -49,7 +48,7 @@ class TraceElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'Trace'|'RootCauses'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol, RootCauses: RootCauses.symbol},
+    dependencies: {Trace: Trace.symbol},
   };
 
   /** @type {Map<string, string>} */

@@ -10230,10 +10230,56 @@
             "id": "layout-shifts",
             "title": "Avoid large layout shifts",
             "description": "These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the most. Below each item are possible root causes that led to the layout shift. Some of these layout shifts may not be included in the CLS metric value due to [windowing](https://web.dev/articles/cls#what_is_cls). [Learn how to improve CLS](https://web.dev/articles/optimize-cls)",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "artifacts.RootCauses.layoutShifts.get is not a function",
-            "errorStack": "TypeError: artifacts.RootCauses.layoutShifts.get is not a function\n    at LayoutShifts.audit (file:///core/audits/layout-shifts.js)\n    at async Runner._runAudit (file:///core/runner.js)\n    at async Runner._runAudits (file:///core/runner.js)\n    at async Runner.audit (file:///core/runner.js)\n    at async auditGatherSteps (file:///core/user-flow.js)\n    at async Module.auditFlowArtifacts (file:///core/index.js)\n    at async generateFlowResult (file:///core/scripts/update-flow-fixtures.js)\n    at async file:///core/scripts/update-flow-fixtures.js",
+            "score": 0,
+            "scoreDisplayMode": "metricSavings",
+            "displayValue": "1 layout shift found",
+            "metricSavings": {
+              "CLS": 0.10200000000000001
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "extra"
+                  },
+                  "label": "Element"
+                },
+                {
+                  "key": "score",
+                  "valueType": "numeric",
+                  "subItemsHeading": {
+                    "key": "cause",
+                    "valueType": "text"
+                  },
+                  "granularity": 0.001,
+                  "label": "Layout shift score"
+                }
+              ],
+              "items": [
+                {
+                  "node": {
+                    "type": "node",
+                    "lhId": "page-1-FOOTER",
+                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,5,FOOTER",
+                    "selector": "body > div#__next > div.flex > footer.w-full",
+                    "boundingRect": {
+                      "top": 1580,
+                      "bottom": 1664,
+                      "left": 0,
+                      "right": 412,
+                      "width": 412,
+                      "height": 84
+                    },
+                    "snippet": "<footer class=\"w-full flex flex-row flex-wrap p-2 text-center text-gray-400 sm:text-left …\">",
+                    "nodeLabel": "Code © 2020-2021 Mike's Cereal Shack Authors\nContent © 2005-2013 NBCUniversal M…"
+                  },
+                  "score": 0.10206561360874848
+                }
+              ]
+            },
             "guidanceLevel": 2
           },
           "long-tasks": {
@@ -13054,6 +13100,21 @@
             "core/audits/layout-shifts.js | description": [
               "audits[layout-shifts].description"
             ],
+            "core/audits/layout-shifts.js | displayValueShiftsFound": [
+              {
+                "values": {
+                  "shiftCount": 1
+                },
+                "path": "audits[layout-shifts].displayValue"
+              }
+            ],
+            "core/lib/i18n/i18n.js | columnElement": [
+              "audits[layout-shifts].details.headings[0].label",
+              "audits[dom-size-insight].details.headings[1].label"
+            ],
+            "core/audits/layout-shifts.js | columnScore": [
+              "audits[layout-shifts].details.headings[1].label"
+            ],
             "core/audits/long-tasks.js | title": [
               "audits[long-tasks].title"
             ],
@@ -13248,9 +13309,6 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": [
               "audits[dom-size-insight].details.headings[0].label"
-            ],
-            "core/lib/i18n/i18n.js | columnElement": [
-              "audits[dom-size-insight].details.headings[1].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": [
               "audits[dom-size-insight].details.headings[2].label"
