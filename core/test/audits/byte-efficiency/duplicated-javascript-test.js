@@ -54,7 +54,6 @@ describe('DuplicatedJavascript computed artifact', () => {
     };
     const networkRecords = [{url: 'https://example.com', resourceType: 'Document'}];
     const results = await DuplicatedJavascript.audit_(artifacts, networkRecords, context);
-    console.log(JSON.stringify(results.items));
     expect({items: results.items, wastedBytesByUrl: results.wastedBytesByUrl})
       .toMatchInlineSnapshot(`
       Object {
