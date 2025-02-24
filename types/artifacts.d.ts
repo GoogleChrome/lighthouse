@@ -515,7 +515,7 @@ declare module Artifacts {
   }
 
   interface TraceEngineRootCauses {
-    layoutShifts: Record<number, LayoutShiftRootCausesData>;
+    layoutShifts: Map<TraceEngine.Types.Events.SyntheticLayoutShift, TraceEngine.Insights.Models.CLSCulprits.LayoutShiftRootCausesData>;
   }
 
   interface ViewportDimensions {

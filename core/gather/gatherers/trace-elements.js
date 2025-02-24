@@ -103,13 +103,23 @@ class TraceElements extends BaseGatherer {
       seen.add(obj);
 
       if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
-        Object.keys(obj).forEach(key => {
-          if (typeof obj[key] === 'object') {
-            recursiveObjectEnumerate(obj[key], cb, seen);
-          } else {
-            cb(obj, key);
+        if (obj instanceof Map) {
+          for (const [key, val] of obj) {
+            if (typeof val === 'object') {
+              recursiveObjectEnumerate(val, cb, seen);
+            } else {
+              cb(val, key);
+            }
           }
-        });
+        } else {
+          Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'object') {
+              recursiveObjectEnumerate(obj[key], cb, seen);
+            } else {
+              cb(obj[key], key);
+            }
+          });
+        }
       } else if (Array.isArray(obj)) {
         obj.forEach(item => {
           if (typeof item === 'object' || Array.isArray(item)) {
@@ -121,9 +131,10 @@ class TraceElements extends BaseGatherer {
 
     /** @type {number[]} */
     const nodeIds = [];
-    recursiveObjectEnumerate(insightSet.model, (obj, key) => {
-      if (typeof obj[key] === 'number' && (key === 'nodeId' || key === 'node_id')) {
-        nodeIds.push(obj[key]);
+    recursiveObjectEnumerate(insightSet.model, (val, key) => {
+      const keys = ['nodeId', 'node_id', 'unsizedImages'];
+      if (typeof val === 'number' && keys.includes(key)) {
+        nodeIds.push(val);
       }
     }, new Set());
 
@@ -210,14 +221,6 @@ class TraceElements extends BaseGatherer {
           this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event);
         if (biggestImpactedNodeId !== undefined) {
           nodeIds.push(biggestImpactedNodeId);
-        }
-
-        const index = layoutShiftEvents.indexOf(event);
-        const shiftRootCauses = rootCauses.layoutShifts[index];
-        if (shiftRootCauses) {
-          for (const cause of shiftRootCauses.unsizedMedia) {
-            nodeIds.push(cause.node.backendNodeId);
-          }
         }
 
         return nodeIds.map(nodeId => ({nodeId}));

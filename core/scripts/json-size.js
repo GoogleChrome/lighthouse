@@ -37,7 +37,8 @@ function printRow(key, keySize) {
 }
 
 const totalSize = size(object);
-const longestKeyLength = Math.max(...Object.keys(object).map(key => key.length));
+// const longestKeyLength = Math.max(...Object.keys(object).map(key => key.length));
+const longestKeyLength = 8;
 
 printRow('total', totalSize);
 Object.entries(object)
