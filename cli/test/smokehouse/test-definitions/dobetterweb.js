@@ -249,6 +249,13 @@ const expectations = {
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
             },
+            {
+              // Unload handlers were moved behind a permission policy in M135.
+              _minChromiumVersion: '135',
+              source: 'violation',
+              description: 'Permissions policy violation: unload is not allowed in this document.',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
+            },
           ],
         },
       },
@@ -321,7 +328,8 @@ const expectations = {
               subItems: undefined,
             },
             {
-              _minChromiumVersion: '121',
+              // Unload handlers were moved behind a permission policy in M135.
+              _maxChromiumVersion: '134',
               value: 'UnloadHandler',
               source: {
                 type: 'source-location',
@@ -426,8 +434,21 @@ const expectations = {
         details: {
           items: [
             {
+              // Unload handlers were moved behind a permission policy in M135.
+              _maxChromiumVersion: '134',
               reason: 'The page has an unload handler in the main frame.',
               failureType: 'Actionable',
+              subItems: {
+                items: [{
+                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                }],
+              },
+            },
+            {
+              // Unload handlers were moved behind a permission policy in M135.
+              _minChromiumVersion: '135',
+              reason: 'There were permission requests upon navigating away.',
+              failureType: 'Pending browser support',
               subItems: {
                 items: [{
                   frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -438,6 +459,7 @@ const expectations = {
               // This issue only appears in the DevTools runner for some reason.
               // TODO: Investigate why this doesn't happen on the CLI runner.
               _runner: 'devtools',
+              _maxChromiumVersion: '134',
               reason: 'There were permission requests upon navigating away.',
               failureType: 'Pending browser support',
               subItems: {

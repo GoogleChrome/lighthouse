@@ -6,7 +6,7 @@
 
 import {EventEmitter} from 'events';
 
-import {CdpCDPSession} from 'puppeteer-core/lib/cjs/puppeteer/cdp/CDPSession.js';
+import {CdpCDPSession} from 'puppeteer-core/lib/esm/puppeteer/cdp/CdpSession.js';
 
 import {ProtocolSession} from '../../gather/session.js';
 import {
