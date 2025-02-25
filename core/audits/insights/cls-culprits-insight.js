@@ -12,6 +12,8 @@ import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit
 import TraceElements from '../../gather/gatherers/trace-elements.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 
+const MAX_LAYOUT_SHIFTS_PER_CLUSTER = 5;
+
 /** @typedef {{extra?: LH.Audit.Details.NodeValue | LH.Audit.Details.UrlValue, cause: LH.IcuMessage}} SubItem */
 
 // eslint-disable-next-line max-len
@@ -100,7 +102,9 @@ class CLSCulpritsInsight extends Audit {
       const tables = insight.clusters.map(cluster => {
         const events =
           /** @type {import('../../lib/trace-engine.js').SaneSyntheticLayoutShift[]} */ (
-            cluster.events.filter(e => !!e.args.data));
+            cluster.events.filter(e => !!e.args.data)
+          ).sort((a, b) => b.args.data.weighted_score_delta - a.args.data.weighted_score_delta)
+          .slice(0, MAX_LAYOUT_SHIFTS_PER_CLUSTER);
         const impactByNodeId = CumulativeLayoutShift.getImpactByNodeId(events.map(e => ({
           impactedNodes: e.args.data.impacted_nodes,
           ts: e.ts,
