@@ -122,7 +122,7 @@ class CLSCulpritsInsight extends Audit {
             score: event.args.data?.weighted_score_delta,
             subItems: this.getCulpritSubItems(insight, event, artifacts.TraceElements),
           };
-        }).filter(item => !!item);
+        });
         items.unshift({
           node: {type: 'text', value: insightStr_(i18n.UIStrings.total)},
           score: cluster.clusterCumulativeScore,
