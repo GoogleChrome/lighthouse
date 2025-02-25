@@ -59,10 +59,8 @@ class CLSCulpritsInsight extends Audit {
     /** @type {SubItem[]} */
     const subItems = [];
     for (const backendNodeId of culprits.unsizedImages) {
-      const element = TraceElements.find(
-        t => t.traceEventType === 'trace-engine' && t.nodeId === backendNodeId);
       subItems.push({
-        extra: element ? Audit.makeNodeItem(element.node) : undefined,
+        extra: makeNodeItemForNodeId(TraceElements, backendNodeId),
         cause: insightStr_(InsightUIStrings.unsizedImages),
       });
     }
