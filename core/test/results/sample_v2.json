@@ -5812,8 +5812,54 @@
       "id": "cls-culprits-insight",
       "title": "Layout shift culprits",
       "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "metricSavings": {
+        "CLS": 0
+      },
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "node",
+                "valueType": "node",
+                "subItemsHeading": {
+                  "key": "extra"
+                },
+                "label": "Element"
+              },
+              {
+                "key": "score",
+                "valueType": "numeric",
+                "subItemsHeading": {
+                  "key": "cause",
+                  "valueType": "text"
+                },
+                "granularity": 0.001,
+                "label": "Layout shift score"
+              }
+            ],
+            "items": [
+              {
+                "node": {
+                  "type": "text",
+                  "value": "Total"
+                },
+                "score": 0.09957584751767748
+              },
+              {
+                "score": 0.03942967040138687
+              },
+              {
+                "score": 0.060146177116290604
+              }
+            ]
+          }
+        ]
+      },
       "guidanceLevel": 3,
       "replacesAudits": [
         "layout-shifts",
@@ -9959,8 +10005,9 @@
         "audits[uses-text-compression].details.headings[1].label",
         "audits[render-blocking-insight].details.headings[1].label"
       ],
-      "core/lib/i18n/i18n.js | totalResourceType": [
-        "audits[resource-summary].details.items[0].label"
+      "core/lib/i18n/i18n.js | total": [
+        "audits[resource-summary].details.items[0].label",
+        "audits[cls-culprits-insight].details.items[0].items[0].node.value"
       ],
       "core/lib/i18n/i18n.js | imageResourceType": [
         "audits[resource-summary].details.items[1].label"
@@ -10023,6 +10070,7 @@
         "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
         "audits[dom-size].details.headings[1].label",
+        "audits[cls-culprits-insight].details.items[0].headings[0].label",
         "audits[dom-size-insight].details.headings[1].label"
       ],
       "core/audits/largest-contentful-paint-element.js | columnPhase": [
@@ -10966,6 +11014,9 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": [
         "audits[cls-culprits-insight].description"
+      ],
+      "core/audits/insights/cls-culprits-insight.js | columnScore": [
+        "audits[cls-culprits-insight].details.items[0].headings[1].label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": [
         "audits[document-latency-insight].title"

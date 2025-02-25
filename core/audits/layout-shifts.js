@@ -79,7 +79,7 @@ class LayoutShifts extends Audit {
     const items = [];
     const layoutShiftEvents =
       /** @type {import('../lib/trace-engine.js').SaneSyntheticLayoutShift[]} */(
-        clusters.flatMap(c => c.events)
+        clusters.flatMap(c => c.events).filter(e => !!e.args.data)
       );
     const topLayoutShiftEvents = layoutShiftEvents
       .sort((a, b) => b.args.data.weighted_score_delta - a.args.data.weighted_score_delta)

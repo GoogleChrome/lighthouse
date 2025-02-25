@@ -232,6 +232,9 @@ export class DetailsRenderer {
         case 'numeric': {
           return this._renderNumeric(value);
         }
+        case 'text': {
+          return this._renderText(value.value);
+        }
         case 'source-location': {
           return this.renderSourceLocation(value);
         }
