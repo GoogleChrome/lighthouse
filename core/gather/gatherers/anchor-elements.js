@@ -54,6 +54,8 @@ function collectAnchorElements() {
         rel: node.rel,
         target: node.target,
         id: node.getAttribute('id') || '',
+        attributeNames: node.getAttributeNames(),
+        ariaCurrent: node.getAttribute('aria-current') || '',
         // @ts-expect-error - getNodeDetails put into scope via stringification
         node: getNodeDetails(node),
       };
@@ -68,6 +70,8 @@ function collectAnchorElements() {
       rel: '',
       target: node.target.baseVal || '',
       id: node.getAttribute('id') || '',
+      attributeNames: node.getAttributeNames(),
+      ariaCurrent: node.getAttribute('aria-current') || '',
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(node),
     };
