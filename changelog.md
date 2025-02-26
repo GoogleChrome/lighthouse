@@ -1,18 +1,21 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Daniil Vangonen @dvangonen
-Rene Schwietzke @rschwietzke
-Antti @hilja
-Johannes Homeier @homj
- <a name="12.4.0"></a>
+<a name="12.4.0"></a>
 # 12.4.0 (2025-02-26)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.3.0...v12.4.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 135](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Daniil Vangonen @dvangonen
+- Rene Schwietzke @rschwietzke
+- Antti @hilja
+- Johannes Homeier @homj
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
 
+* Several informative audits that were previously marked as informative under passing conditions will now be hidden in the passed audits section. ([#16315](https://github.com/GoogleChrome/lighthouse/pull/16315))
 
 ## New Audits
 
@@ -27,7 +30,6 @@ We expect this release to ship in the DevTools of [Chrome XX](https://chromiumda
 * inspector-issues: support SRI message signature issues ([#16345](https://github.com/GoogleChrome/lighthouse/pull/16345))
 * inspector-issues: add select element a11y issue to types ([#16298](https://github.com/GoogleChrome/lighthouse/pull/16298))
 * legacy-javascript: upgrade babel and core-js ([#16331](https://github.com/GoogleChrome/lighthouse/pull/16331))
-* performance: hide most audits under passing conditions ([#16315](https://github.com/GoogleChrome/lighthouse/pull/16315))
 * root-causes: grab from trace insights rather than use protocol ([#16352](https://github.com/GoogleChrome/lighthouse/pull/16352))
 * trace-engine: re-enable invalidations handler ([#16293](https://github.com/GoogleChrome/lighthouse/pull/16293))
 
