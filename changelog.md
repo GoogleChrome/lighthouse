@@ -15,7 +15,7 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 ## Notable Changes
 
-* Several informative audits that were previously marked as informative under passing conditions will now be hidden in the passed audits section. ([#16315](https://github.com/GoogleChrome/lighthouse/pull/16315))
+* Some performance audits are marked as informative under passing conditions rather than being hidden in the passed audits section. This release reduces the number of audits which have this behavior. ([#16315](https://github.com/GoogleChrome/lighthouse/pull/16315))
 
 ## New Audits
 
