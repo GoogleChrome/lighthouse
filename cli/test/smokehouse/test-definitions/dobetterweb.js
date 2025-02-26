@@ -322,7 +322,7 @@ const expectations = {
             },
             {
               _minChromiumVersion: '121',
-              value: 'UnloadHandler',
+              value: /Unload event listeners are deprecated and will be removed/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
