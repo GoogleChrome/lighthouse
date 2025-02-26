@@ -977,6 +977,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse ตรวจสอบค่า`font-display`ของต้นทาง {fontOrigin} โดยอัตโนมัติไม่ได้}other{Lighthouse ตรวจสอบค่า`font-display`ของต้นทาง {fontOrigin} โดยอัตโนมัติไม่ได้}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "คำสั่ง"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "ความรุนแรง"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "การติดตั้งใช้งานส่วนหัว HSTS ช่วยลดความเสี่ยงในการดาวน์เกรดการเชื่อมต่อ HTTP และการโจมตีแบบดักฟังได้อย่างมาก ขอแนะนําให้เปิดตัวทีละขั้น โดยเริ่มต้นด้วยค่า max-age ที่ต่ำ [ดูข้อมูลเพิ่มเติมเกี่ยวกับการใช้นโยบาย HSTS ที่รัดกุม](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "ไวยากรณ์ไม่ถูกต้อง"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` ต่ำเกินไป"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "ไม่พบส่วนหัว HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "ไม่มีคำสั่ง `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "ไม่พบคำสั่ง `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "ไม่พบคำสั่ง `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "ใช้นโยบาย HSTS ที่มีประสิทธิภาพ"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "สัดส่วนภาพ (ขนาดจริง)"
   },
@@ -1183,6 +1213,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "เอฟเฟกต์มีพารามิเตอร์การจับเวลาที่ไม่รองรับ"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "คำสั่ง"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "ความรุนแรง"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "สามารถใช้ Cross-Origin-Opener-Policy (COOP) เพื่อแยกหน้าต่างระดับบนสุดออกจากเอกสารอื่นๆ เช่น ป๊อปอัป [ดูข้อมูลเพิ่มเติมเกี่ยวกับการติดตั้งใช้งานส่วนหัว COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "ไวยากรณ์ไม่ถูกต้อง"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "ไม่พบส่วนหัว COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "รับรองว่าแยกต้นทางอย่างเหมาะสมด้วย COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "โหลดแบบอักษร `optional` ไว้ล่วงหน้าเพื่อให้ผู้เข้าชมครั้งแรกใช้ได้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับการโหลดแบบอักษรล่วงหน้า](https://web.dev/articles/preload-optional-fonts)"
@@ -2019,7 +2067,7 @@
     "message": "หน้าที่ใช้ WebXR ยังไม่มีสิทธิ์ใช้ฟีเจอร์ Back-Forward Cache ในขณะนี้"
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
-    "message": "ลองเพิ่ม URL ในรูปแบบ https: และ http: (ซึ่งเบราว์เซอร์ที่รองรับ `'strict-dynamic'` จะไม่สนใจ) เพื่อให้เข้ากันได้กับเบราว์เซอร์เวอร์ชันเก่ากว่า"
+    "message": "ลองเพิ่ม URL ในรูปแบบ https: และ http: (ซึ่งเบราว์เซอร์ที่รองรับ `'strict-dynamic'` จะไม่สนใจ) เพื่อให้เข้ากันได้แบบย้อนหลังกับเบราว์เซอร์เวอร์ชันเก่ากว่า"
   },
   "core/lib/csp-evaluator.js | deprecatedDisownOpener": {
     "message": "`disown-opener` เลิกใช้งานแล้วตั้งแต่ CSP3 โปรดใช้ส่วนหัว Cross-Origin-Opener-Policy แทน"
@@ -2073,7 +2121,7 @@
     "message": "`'unsafe-inline'` ทำให้รันสคริปต์ในหน้าเว็บและตัวจัดการเหตุการณ์ที่ไม่ปลอดภัยได้ ลองใช้ nonces หรือ hashes ของ CSP เพื่ออนุญาตสคริปต์แต่ละรายการ"
   },
   "core/lib/csp-evaluator.js | unsafeInlineFallback": {
-    "message": "ลองเพิ่ม `'unsafe-inline'` (ซึ่งเบราว์เซอร์ที่รองรับ nonces/hashes จะไม่สนใจ) เพื่อให้เข้ากันได้กับเบราว์เซอร์เวอร์ชันเก่ากว่า"
+    "message": "ลองเพิ่ม `'unsafe-inline'` (ซึ่งเบราว์เซอร์ที่รองรับ nonces/hashes จะไม่สนใจ) เพื่อให้เข้ากันได้แบบย้อนหลังกับเบราว์เซอร์เวอร์ชันเก่ากว่า"
   },
   "core/lib/deprecation-description.js | feature": {
     "message": "ดูรายละเอียดเพิ่มเติมที่หน้าสถานะฟีเจอร์"

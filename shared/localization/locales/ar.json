@@ -771,7 +771,7 @@
     "message": "تجنَّب سلاسل الطلبات المهمة"
   },
   "core/audits/csp-xss.js | columnDirective": {
-    "message": "أمر توجيهي"
+    "message": "التوجيه"
   },
   "core/audits/csp-xss.js | columnSeverity": {
     "message": "درجة الخطورة"
@@ -976,6 +976,36 @@
   },
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيمة `font-display` في الأصل التالي: {fontOrigin}.}zero{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}two{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصلَين التاليَين: {fontOrigin}.}few{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}many{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}other{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}}"
+  },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "التوجيه"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "يساهم تفعيل عنوان HSTS في تقليل خطر خفض مستوى اتصالات HTTP بشكل كبير مع منع محاولات التجسس على البيانات. يُنصح بتنفيذ الميزة على مراحل، بدءًا من قيمة منخفضة لتوجيه max-age. [مزيد من المعلومات عن استخدام سياسة HSTS قوية](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "بنية غير صالحة"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "قيمة توجيه `max-age` منخفضة جدًا"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "لم يتم العثور على عنوان HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "لم يتم العثور على توجيه `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "لم يتم العثور على توجيه `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "لم يتم العثور على توجيه `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "استخدام سياسة HSTS قوية"
   },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "نسبة العرض إلى الارتفاع (الفعلية)"
@@ -1183,6 +1213,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "يحتوي \"التأثير\" على مَعلَمات توقيت غير متوافقة"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "التوجيه"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "يمكن استخدام سياسة Cross-Origin-Opener-Policy (COOP) لعزل النافذة ذات المستوى الأعلى عن المستندات الأخرى، مثل النوافذ المنبثقة. [مزيد من المعلومات حول تفعيل عنوان COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "بنية غير صالحة"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "لم يتم العثور على عنوان COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "ضمان عزل النطاق بشكلٍ صحيح باستخدام سياسة COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "يجب تحميل الخطوط `optional` بشكل مسبق حتى يتسنى للزوار الجدد استخدامها. [مزيد من المعلومات عن التحميل المسبَق للخطوط](https://web.dev/articles/preload-optional-fonts)"
@@ -3120,7 +3168,7 @@
     "message": "يمكنك استخدام [مكون WordPress الإضافي لتحسين الصورة](https://wordpress.org/plugins/search/optimize+images/) الذي يضغط صورك مع المحافظة على الجودة."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": {
-    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://wordpress.org/support/article/media-library-screen/) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام أداة الصورة لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
+    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://wordpress.org/support/article/media-library-screen/) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام تطبيق الصورة المصغَّر لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "يمكنك تفعيل ضغط النص في إعداد خادم الويب."

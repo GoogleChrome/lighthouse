@@ -720,16 +720,16 @@
     "message": "Riduci il codice JavaScript inutilizzato"
   },
   "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "La memorizzazione nella cache per un lungo periodo di tempo può velocizzare le visite abituali alla tua pagina. [Scopri di più sui criteri efficaci relativi alla cache](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)."
+    "message": "La memorizzazione nella cache per un lungo periodo di tempo può velocizzare le visite abituali alla tua pagina. [Scopri di più sulle policy efficaci relative alla cache](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)."
   },
   "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{1 risorsa trovata}other{# risorse trovate}}"
   },
   "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Pubblica le risorse statiche con criteri della cache efficaci"
+    "message": "Pubblica le risorse statiche con policy della cache efficaci"
   },
   "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "Vengono usati criteri della cache efficaci per le risorse statiche"
+    "message": "Vengono usate policy della cache efficaci per le risorse statiche"
   },
   "core/audits/byte-efficiency/uses-optimized-images.js | description": {
     "message": "Le immagini ottimizzate vengono caricate più velocemente e consumano meno rete dati. [Scopri come codificare le immagini in modo efficiente](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
@@ -777,19 +777,19 @@
     "message": "Gravità"
   },
   "core/audits/csp-xss.js | description": {
-    "message": "Un Criterio di sicurezza del contenuto (CSP) efficace riduce notevolmente il rischio di attacchi cross-site scripting (XSS). [Scopri come utilizzare un CSP per evitare XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
+    "message": "Una Content Security Policy (CSP) efficace riduce notevolmente il rischio di attacchi cross-site scripting (XSS). [Scopri come utilizzare una CSP per evitare XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
   },
   "core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Sintassi"
   },
   "core/audits/csp-xss.js | metaTagMessage": {
-    "message": "La pagina contiene un criterio CSP definito in un tag `<meta>`. Potresti spostare il CSP in un'intestazione HTTP o definirne un altro rigoroso in un'intestazione HTTP."
+    "message": "La pagina contiene una policy CSP definita in un tag `<meta>`. Potresti spostare la policy CSP in un'intestazione HTTP o definirne un'altra rigorosa in un'intestazione HTTP."
   },
   "core/audits/csp-xss.js | noCsp": {
-    "message": "Nessun criterio CSP trovato in modalità di applicazione forzata"
+    "message": "Nessuna CSP trovata in modalità di applicazione forzata"
   },
   "core/audits/csp-xss.js | title": {
-    "message": "Assicurati che il criterio CSP sia efficace contro gli attacchi XSS (cross-site scripting)"
+    "message": "Assicurati che la CSP sia efficace contro gli attacchi XSS (cross-site scripting)"
   },
   "core/audits/deprecations.js | columnDeprecate": {
     "message": "Ritiro/avviso"
@@ -891,7 +891,7 @@
     "message": "Sono stati registrati degli errori nel riquadro `Issues` in Strumenti per sviluppatori di Chrome"
   },
   "core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
-    "message": "Bloccata dal criterio multiorigine"
+    "message": "Bloccata dalla policy multiorigine"
   },
   "core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
     "message": "Utilizzo intensivo delle risorse da parte degli annunci"
@@ -976,6 +976,36 @@
   },
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Impossibile controllare automaticamente in Lighthouse il valore `font-display` per l'origine {fontOrigin}.}other{Impossibile controllare automaticamente in Lighthouse i valori `font-display` per l'origine {fontOrigin}.}}"
+  },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Istruzione"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Gravità"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Il deployment dell'intestazione HSTS riduce in modo significativo il rischio di downgrade delle connessioni HTTP e di attacchi di intercettazione. È consigliabile un'implementazione graduale, partendo da un'età massima (max-age) bassa. [Scopri di più sull'utilizzo di una policy HSTS efficace.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Sintassi non valida"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "La durata di `max-age` è troppo bassa"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Nessuna intestazione HSTS trovata"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Nessuna istruzione `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Nessuna istruzione `preload` trovata"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Nessuna istruzione `includeSubDomains` trovata"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Utilizza una policy HSTS efficace"
   },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Proporzioni (effettive)"
@@ -1183,6 +1213,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "L'effetto ha parametri di timing non supportati"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Istruzione"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Gravità"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "La policy COOP (Cross-Origin-Opener-Policy) può essere utilizzata per isolare la finestra di primo livello da altri documenti, ad esempio i popup. [Scopri di più sul deployment dell'intestazione COOP](https://web.dev/articles/why-coop-coep#coop)."
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Sintassi non valida"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Nessuna intestazione COOP trovata"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Garantisci un isolamento origine corretto con COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Precarica caratteri `optional` per consentirne l'utilizzo ai visitatori alla prima visita. [Scopri di più sul precaricamento dei caratteri](https://web.dev/articles/preload-optional-fonts)"
@@ -2058,7 +2106,7 @@
     "message": "La destinazione di reporting è configurata soltanto tramite l'istruzione report-to. Questa istruzione è supportata soltanto nei browser basati su Chromium, pertanto è consigliato usare anche un'istruzione `report-uri`."
   },
   "core/lib/csp-evaluator.js | reportingDestinationMissing": {
-    "message": "Nessun criterio CSP configura una destinazione di reporting. In questo modo è difficile mantenere il criterio CSP nel tempo e monitorare eventuali interruzioni."
+    "message": "Nessuna CSP configura una destinazione di reporting. In questo modo è difficile mantenere la CSP nel tempo e monitorare eventuali interruzioni."
   },
   "core/lib/csp-evaluator.js | strictDynamic": {
     "message": "Spesso le liste consentite di host possono essere bypassate. Potresti usare hash o nonce CSP, insieme a `'strict-dynamic'` se necessario."
@@ -2106,7 +2154,7 @@
     "message": "I cookie che contengono un carattere `(0|r|n)` verranno rifiutati e non troncati."
   },
   "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Il rilascio del criterio della stessa origine impostando `document.domain` è deprecato e verrà disattivato per impostazione predefinita. Questo avviso di ritiro riguarda un accesso multiorigine che è stato attivato impostando `document.domain`."
+    "message": "Il rilascio della policy della stessa origine impostando `document.domain` è deprecato e verrà disattivato per impostazione predefinita. Questo avviso di ritiro riguarda un accesso multiorigine che è stato attivato impostando `document.domain`."
   },
   "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
     "message": "L'attivazione di window.alert da iframe multiorigine è stata ritirata e verrà rimossa in futuro."
@@ -2172,7 +2220,7 @@
     "message": "L'API `paymentManager.instruments` è deprecata. Utilizza l'installazione just-in-time per i gestori dei pagamenti."
   },
   "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "La tua chiamata `PaymentRequest` ha ignorato l'istruzione `connect-src` dei Criteri di sicurezza del contenuto (CSP). L'esclusione è stata ritirata. Aggiungi all'istruzione CSP `connect-src` l'identificatore del metodo di pagamento dall'API `PaymentRequest` (nel campo `supportedMethods`)."
+    "message": "La tua chiamata `PaymentRequest` ha ignorato l'istruzione `connect-src` di Content Security Policy (CSP). L'esclusione è stata ritirata. Aggiungi all'istruzione CSP `connect-src` l'identificatore del metodo di pagamento dall'API `PaymentRequest` (nel campo `supportedMethods`)."
   },
   "core/lib/deprecations-strings.js | PersistentQuotaType": {
     "message": "L'elemento `StorageType.persistent` è deprecato. Utilizza invece l'elemento `navigator.storage` standardizzato."
