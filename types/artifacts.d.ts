@@ -7,7 +7,6 @@
 import {Protocol as Crdp} from 'devtools-protocol/types/protocol.js';
 import * as TraceEngine from '@paulirish/trace_engine';
 import * as Lantern from '../core/lib/lantern/lantern.js';
-import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
 import {LighthouseError} from '../core/lib/lh-error.js';
@@ -515,7 +514,7 @@ declare module Artifacts {
   }
 
   interface TraceEngineRootCauses {
-    layoutShifts: Record<number, LayoutShiftRootCausesData>;
+    layoutShifts: Map<TraceEngine.Types.Events.SyntheticLayoutShift, TraceEngine.Insights.Models.CLSCulprits.LayoutShiftRootCausesData>;
   }
 
   interface ViewportDimensions {
@@ -541,12 +540,14 @@ declare module Artifacts {
     lowTextContrastIssue: Crdp.Audits.LowTextContrastIssueDetails[];
     mixedContentIssue: Crdp.Audits.MixedContentIssueDetails[];
     navigatorUserAgentIssue: Crdp.Audits.NavigatorUserAgentIssueDetails[];
+    partitioningBlobURLIssue: Crdp.Audits.PartitioningBlobURLIssueDetails[];
     propertyRuleIssue: Crdp.Audits.PropertyRuleIssueDetails[],
     quirksModeIssue: Crdp.Audits.QuirksModeIssueDetails[];
     cookieIssue: Crdp.Audits.CookieIssueDetails[];
     selectElementAccessibilityIssue: Crdp.Audits.SelectElementAccessibilityIssueDetails[];
     sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
     sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
+    sriMessageSignatureIssue: Crdp.Audits.SRIMessageSignatureIssueDetails[];
     stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
     federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
   }

@@ -25,6 +25,7 @@ class LCPDiscoveryInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
+      replacesAudits: ['prioritize-lcp-image', 'lcp-lazy-loaded'],
     };
   }
 

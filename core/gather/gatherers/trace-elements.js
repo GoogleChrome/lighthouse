@@ -23,7 +23,6 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {ExecutionContext} from '../driver/execution-context.js';
-import RootCauses from './root-causes.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
@@ -46,10 +45,10 @@ function getNodeDetailsData() {
 /* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'|'RootCauses'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol, RootCauses: RootCauses.symbol},
+    dependencies: {Trace: Trace.symbol},
   };
 
   /** @type {Map<string, string>} */
@@ -103,13 +102,23 @@ class TraceElements extends BaseGatherer {
       seen.add(obj);
 
       if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
-        Object.keys(obj).forEach(key => {
-          if (typeof obj[key] === 'object') {
-            recursiveObjectEnumerate(obj[key], cb, seen);
-          } else {
-            cb(obj, key);
+        if (obj instanceof Map) {
+          for (const [key, val] of obj) {
+            if (typeof val === 'object') {
+              recursiveObjectEnumerate(val, cb, seen);
+            } else {
+              cb(val, key);
+            }
           }
-        });
+        } else {
+          Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'object') {
+              recursiveObjectEnumerate(obj[key], cb, seen);
+            } else {
+              cb(obj[key], key);
+            }
+          });
+        }
       } else if (Array.isArray(obj)) {
         obj.forEach(item => {
           if (typeof item === 'object' || Array.isArray(item)) {
@@ -121,11 +130,17 @@ class TraceElements extends BaseGatherer {
 
     /** @type {number[]} */
     const nodeIds = [];
-    recursiveObjectEnumerate(insightSet.model, (obj, key) => {
-      if (typeof obj[key] === 'number' && (key === 'nodeId' || key === 'node_id')) {
-        nodeIds.push(obj[key]);
+    recursiveObjectEnumerate(insightSet.model, (val, key) => {
+      const keys = ['nodeId', 'node_id'];
+      if (typeof val === 'number' && keys.includes(key)) {
+        nodeIds.push(val);
       }
     }, new Set());
+
+    // TODO: would be better if unsizedImages was `Array<{nodeId}>`.
+    for (const shift of insightSet.model.CLSCulprits.shifts.values()) {
+      nodeIds.push(...shift.unsizedImages);
+    }
 
     return [...new Set(nodeIds)].map(id => ({nodeId: id}));
   }
@@ -210,14 +225,6 @@ class TraceElements extends BaseGatherer {
           this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event);
         if (biggestImpactedNodeId !== undefined) {
           nodeIds.push(biggestImpactedNodeId);
-        }
-
-        const index = layoutShiftEvents.indexOf(event);
-        const shiftRootCauses = rootCauses.layoutShifts[index];
-        if (shiftRootCauses) {
-          for (const cause of shiftRootCauses.unsizedMedia) {
-            nodeIds.push(cause.node.backendNodeId);
-          }
         }
 
         return nodeIds.map(nodeId => ({nodeId}));

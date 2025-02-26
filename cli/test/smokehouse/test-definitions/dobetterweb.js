@@ -321,7 +321,6 @@ const expectations = {
               subItems: undefined,
             },
             {
-              _minChromiumVersion: '121',
               value: /Unload event listeners are deprecated and will be removed/,
               source: {
                 type: 'source-location',

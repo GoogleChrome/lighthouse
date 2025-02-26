@@ -27,6 +27,7 @@ class LongCriticalNetworkTreeInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
+      replacesAudits: ['critical-request-chains'],
     };
   }
 

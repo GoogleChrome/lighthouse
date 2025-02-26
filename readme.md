@@ -414,6 +414,7 @@ Other awesome open source projects that use Lighthouse.
 * **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
 * **[cypress-audit](https://github.com/mfrachet/cypress-audit)** - Run Lighthouse and Pa11y audits directly in your E2E test suites.
 * **[laravel-lighthouse](https://github.com/adityadees/laravel-lighthouse)** - Google Lighthouse wrapper for laravel framework to run Google Lighthouse CLI with custom option and can automatically save result in your server directory.
+* **[Neodymium](https://github.com/Xceptance/neodymium/wiki/Accessibility)** - The Neodymium test automation framework integrates Lighthouse for accessibility and Web Vitals verification, allowing programmatic validation and assertion of all audit values.
 
 ## FAQ
 

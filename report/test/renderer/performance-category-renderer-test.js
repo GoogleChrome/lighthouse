@@ -23,6 +23,11 @@ describe('PerfCategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
+  function swapLegacyAndExperimentalPerfInsights(rootEl) {
+    const section = rootEl.querySelector('.lh-perf-audits--swappable');
+    renderer.dom.swapSectionIfPossible(section);
+  }
+
   before(() => {
     Globals.apply({
       providedStrings: {},
@@ -62,8 +67,11 @@ describe('PerfCategoryRenderer', () => {
   it('renders the sections', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
-    // Metrics, diagnostics, passed diagnostics, insights, passed insights
-    assert.equal(sections.length, 5);
+    // - Metrics
+    // Legacy view:
+    // - Diagnostics
+    // - Passed
+    assert.equal(sections.length, 3);
   });
 
   it('renders the metrics', () => {
@@ -115,8 +123,10 @@ describe('PerfCategoryRenderer', () => {
     const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
     const metricSection = categoryDOM.querySelector('.lh-audit-group--metrics');
     assert.ok(!metricSection);
-    // diagnostics, passed diagnostics, insights, passed insights
-    assert.equal(sections.length, 4);
+    // Legacy view:
+    // - Diagnostics
+    // - Passed
+    assert.equal(sections.length, 2);
   });
 
   it('renders the metrics variance disclaimer as markdown', () => {
@@ -173,6 +183,7 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing insights', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
     const insightSection = categoryDOM.querySelector(
         '.lh-category .lh-audit-group.lh-audit-group--insights');
 
@@ -198,16 +209,27 @@ describe('PerfCategoryRenderer', () => {
     assert.equal(passedElements.length, passedAudits.length);
   });
 
-  it('renders the passed insight audits', () => {
+  it('renders the passed insight audits with passed diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
     const passedSection =
       categoryDOM.querySelector('.lh-perf-audits--experimental .lh-clump--passed');
 
-    const passedAudits = category.auditRefs.filter(audit =>
+    const passedInsights = category.auditRefs.filter(audit =>
       audit.group === 'insights' &&
       ReportUtils.showAsPassed(audit.result));
+
+    const replacedIds = new Set();
+    for (const audit of category.auditRefs) {
+      audit.result.replacesAudits?.forEach(id => replacedIds.add(id));
+    }
+
+    const passedDiagnostics = category.auditRefs.filter(audit =>
+      audit.group === 'diagnostics' &&
+      !replacedIds.has(audit.id) &&
+      ReportUtils.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
-    assert.equal(passedElements.length, passedAudits.length);
+    assert.equal(passedElements.length, passedInsights.length + passedDiagnostics.length);
   });
 
   // Unsupported by perf cat renderer right now.

@@ -32,6 +32,7 @@ class ThirdPartiesInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'TraceElements'],
+      replacesAudits: ['third-party-summary'],
     };
   }
 
