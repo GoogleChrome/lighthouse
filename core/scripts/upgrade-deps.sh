@@ -25,6 +25,14 @@ yarn upgrade --latest \
     speedline-core \
     third-party-web \
 
+node -e "
+    const pkg = require('$LH_ROOT/package.json');
+    const ver = pkg.dependencies['devtools-protocol'].replace('^', '');
+    pkg.resolutions['puppeteer/**/devtools-protocol'] = ver;
+    pkg.resolutions['puppeteer-core/**/devtools-protocol'] = ver;
+    require('fs').writeFileSync('$LH_ROOT/package.json', JSON.stringify(pkg, null, 2) + '\n');
+"
+
 # Do some stuff that may update checked-in files.
 yarn build-all
 yarn update:sample-json
