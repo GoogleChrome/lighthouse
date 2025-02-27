@@ -310,7 +310,8 @@ const expectations = {
         details: {
           items: [
             {
-              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+              // For some reason CDT .json locale files strip out backticks. LH doesn't.
+              value: /Synchronous `?XMLHttpRequest`? on the main thread is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
