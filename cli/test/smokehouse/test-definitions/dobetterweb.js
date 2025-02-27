@@ -310,7 +310,7 @@ const expectations = {
         details: {
           items: [
             {
-              value: /Synchronous `XMLHttpRequest` on the main thread is deprecated/,
+              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
