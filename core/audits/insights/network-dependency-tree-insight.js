@@ -6,22 +6,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js';
+import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
-const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js', UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js', UIStrings);
 
-class LongCriticalNetworkTreeInsight extends Audit {
+class NetworkDependencyTreeInsight extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'long-critical-network-tree-insight',
+      id: 'network-dependency-tree-insight',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
@@ -38,7 +38,7 @@ class LongCriticalNetworkTreeInsight extends Audit {
    */
   static async audit(artifacts, context) {
     // TODO: implement.
-    return adaptInsightToAuditProduct(artifacts, context, 'LongCriticalNetworkTree', (insight) => {
+    return adaptInsightToAuditProduct(artifacts, context, 'NetworkDependencyTree', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
       ];
@@ -50,4 +50,4 @@ class LongCriticalNetworkTreeInsight extends Audit {
   }
 }
 
-export default LongCriticalNetworkTreeInsight;
+export default NetworkDependencyTreeInsight;

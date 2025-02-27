@@ -12,6 +12,7 @@ cd $LH_ROOT
 set -ex
 
 yarn upgrade --latest \
+    @paulirish/trace_engine \
     axe-core \
     chrome-devtools-frontend \
     chrome-launcher \

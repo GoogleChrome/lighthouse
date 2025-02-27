@@ -47,6 +47,8 @@ const ignoredPathComponents = [
   '**/.git/**',
   '**/scripts/**',
   '**/node_modules/!(lighthouse-stack-packs)/**', // ignore all node modules *except* stack packs
+  '**/core/lib/bf-cache-strings.js',
+  '**/core/lib/deprecations-strings.js',
   '**/core/lib/stack-packs.js',
   '**/test/**',
   '**/*-test.js',
@@ -742,16 +744,12 @@ function checkKnownFixedCollisions(strings) {
       'Name',
       'No $MARKDOWN_SNIPPET_0$ directive found',
       'No $MARKDOWN_SNIPPET_0$ directive found',
-      'Pages with an in-flight network request are not currently eligible for back/forward cache.',
-      'Pages with an in-flight network request are not currently eligible for back/forward cache.',
       'Potential Savings',
       'Potential Savings',
       'Severity',
       'Severity',
       'Severity',
       'Severity',
-      'The page was evicted from the cache to allow another page to be cached.',
-      'The page was evicted from the cache to allow another page to be cached.',
       'Total',
       'Total',
       'Use $MARKDOWN_SNIPPET_0$ to detect unused JavaScript code. $LINK_START_0$Learn more$LINK_END_0$',
@@ -791,8 +789,8 @@ function sortObject(obj) {
  */
 function injectTraceEngineStrings() {
   const traceEngineStringsDir = `${LH_ROOT}/node_modules/@paulirish/trace_engine/locales`;
-  const lhTraceStringsDir = `${LH_ROOT}/shared/localization/locales`;
-  for (const file of glob.sync(`${lhTraceStringsDir}/*.json`)) {
+  const lhStringsDir = `${LH_ROOT}/shared/localization/locales`;
+  for (const file of glob.sync(`${lhStringsDir}/*.json`)) {
     let name = path.basename(file);
     if (name.endsWith('.ctc.json')) {
       continue;
@@ -814,7 +812,19 @@ function injectTraceEngineStrings() {
     const traceEngineStrings = JSON.parse(fs.readFileSync(traceEnginePath, 'utf-8'));
     const strings = JSON.parse(fs.readFileSync(file, 'utf-8'));
     for (const [key, value] of Object.entries(traceEngineStrings)) {
-      strings[`node_modules/@paulirish/trace_engine/${key.replace('.ts', '.js')}`] = value;
+      const lhKey = `node_modules/@paulirish/trace_engine/${key.replace('.ts', '.js')}`;
+
+      // TODO: why is this so malformed?
+      if (['he.json', 'ru.json', 'ta.json'].includes(name) && lhKey === 'node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone') {
+        continue;
+      }
+
+      value.message = value.message
+        .replace(/\\\\/g, '')
+        .replace(`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`)
+        .replace(`{imageOrientation: ''from-image''}`, `\\\\{imageOrientation: ''from-image''\\\\}`)
+        .replace(`{imageOrientation: "from-image"}`, `\\\\{imageOrientation: "from-image"\\\\}`);
+      strings[lhKey] = value;
     }
 
     fs.writeFileSync(file, JSON.stringify(sortObject(strings), null, 2) + '\n');

@@ -930,7 +930,7 @@
         ],
         "items": [
           {
-            "value": "Synchronous `XMLHttpRequest` on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
             "source": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -6221,9 +6221,9 @@
         "largest-contentful-paint-element"
       ]
     },
-    "long-critical-network-tree-insight": {
-      "id": "long-critical-network-tree-insight",
-      "title": "Long critical network tree",
+    "network-dependency-tree-insight": {
+      "id": "network-dependency-tree-insight",
+      "title": "Network dependency tree",
       "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
@@ -6309,8 +6309,8 @@
     },
     "third-parties-insight": {
       "id": "third-parties-insight",
-      "title": "Third parties",
-      "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+      "title": "3rd parties",
+      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "guidanceLevel": 3,
@@ -6484,7 +6484,7 @@
           "group": "insights"
         },
         {
-          "id": "long-critical-network-tree-insight",
+          "id": "network-dependency-tree-insight",
           "weight": 0,
           "group": "insights"
         },
@@ -9528,7 +9528,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:long-critical-network-tree-insight",
+        "name": "lh:audit:network-dependency-tree-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9941,10 +9941,10 @@
       "core/audits/deprecations.js | columnDeprecate": [
         "audits.deprecations.details.headings[0].label"
       ],
-      "core/lib/deprecation-description.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": [
+      "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": [
         "audits.deprecations.details.items[0].value"
       ],
-      "core/lib/deprecation-description.js | UnloadHandler": [
+      "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": [
         "audits.deprecations.details.items[1].value"
       ],
       "core/lib/deprecation-description.js | feature": [
@@ -11019,7 +11019,7 @@
       "core/audits/bf-cache.js | failureTypeColumn": [
         "audits[bf-cache].details.headings[1].label"
       ],
-      "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": [
+      "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": [
         "audits[bf-cache].details.items[0].reason"
       ],
       "core/audits/bf-cache.js | actionableFailureType": [
@@ -11088,52 +11088,46 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
         "audits[image-delivery-insight].description"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": [
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": [
         {
           "values": {
-            "PH1": 682028
+            "PH1": "Using video formats instead of GIFs can improve the download size of animated content.",
+            "PH2": 682028
           },
           "path": "audits[image-delivery-insight].details.items[0].subItems.items[0].reason"
-        }
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": [
+        },
         {
           "values": {
-            "PH1": 111541,
-            "PH2": "1024x678",
-            "PH3": "240x30"
+            "PH1": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x30). Use responsive images to reduce the image download size.",
+            "PH2": 111541
           },
           "path": "audits[image-delivery-insight].details.items[1].subItems.items[0].reason"
         },
         {
           "values": {
-            "PH1": 106476,
-            "PH2": "1024x678",
-            "PH3": "240x160"
+            "PH1": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size.",
+            "PH2": 106476
           },
           "path": "audits[image-delivery-insight].details.items[2].subItems.items[0].reason"
         },
         {
           "values": {
-            "PH1": 106476,
-            "PH2": "1024x678",
-            "PH3": "240x160"
+            "PH1": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size.",
+            "PH2": 106476
           },
           "path": "audits[image-delivery-insight].details.items[3].subItems.items[0].reason"
         },
         {
           "values": {
-            "PH1": 56604,
-            "PH2": "1024x678",
-            "PH3": "720x480"
+            "PH1": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size.",
+            "PH2": 56604
           },
           "path": "audits[image-delivery-insight].details.items[4].subItems.items[0].reason"
         },
         {
           "values": {
-            "PH1": 56604,
-            "PH2": "1024x678",
-            "PH3": "720x480"
+            "PH1": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size.",
+            "PH2": 56604
           },
           "path": "audits[image-delivery-insight].details.items[5].subItems.items[0].reason"
         }
@@ -11180,11 +11174,11 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
         "audits[lcp-phases-insight].details.items[0].items[3].label"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
-        "audits[long-critical-network-tree-insight].title"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
+        "audits[network-dependency-tree-insight].title"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": [
-        "audits[long-critical-network-tree-insight].description"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
+        "audits[network-dependency-tree-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
         "audits[render-blocking-insight].title"
