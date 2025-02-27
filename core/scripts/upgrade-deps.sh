@@ -12,6 +12,7 @@ cd $LH_ROOT
 set -ex
 
 yarn upgrade --latest \
+    @paulirish/trace_engine \
     axe-core \
     chrome-devtools-frontend \
     chrome-launcher \
@@ -34,6 +35,7 @@ node -e "
 "
 
 # Do some stuff that may update checked-in files.
+yarn generate-insight-audits
 yarn build-all
 yarn update:sample-json
 yarn type-check

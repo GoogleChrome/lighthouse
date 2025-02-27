@@ -108,6 +108,10 @@ class TraceEngineResult {
                 // @ts-expect-error
                 values[key] = value.__i18nBytes;
                 // TODO: use an actual byte formatter. Right now, this shows the exact number of bytes.
+              } else if (value && typeof value === 'object' && 'i18nId' in value) {
+                // TODO: add support for str_ values to be IcuMessage.
+                // @ts-expect-error
+                values[key] = str_(value.i18nId, value.values).formattedDefault;
               }
             }
           }

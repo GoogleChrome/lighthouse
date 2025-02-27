@@ -3951,6 +3951,14 @@
               "dom-size"
             ]
           },
+          "duplicate-javascript-insight": {
+            "id": "duplicate-javascript-insight",
+            "title": "Duplicate JavaScript",
+            "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
+            "guidanceLevel": 3
+          },
           "font-display-insight": {
             "id": "font-display-insight",
             "title": "Font display",
@@ -4083,9 +4091,9 @@
               "largest-contentful-paint-element"
             ]
           },
-          "long-critical-network-tree-insight": {
-            "id": "long-critical-network-tree-insight",
-            "title": "Long critical network tree",
+          "network-dependency-tree-insight": {
+            "id": "network-dependency-tree-insight",
+            "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -4115,9 +4123,9 @@
           },
           "third-parties-insight": {
             "id": "third-parties-insight",
-            "title": "Third parties",
-            "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0,
+            "title": "3rd parties",
+            "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+            "score": 1,
             "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
@@ -4125,7 +4133,7 @@
                 {
                   "key": "entity",
                   "valueType": "text",
-                  "label": "Third party",
+                  "label": "3rd party",
                   "subItemsHeading": {
                     "key": "url",
                     "valueType": "url"
@@ -4355,6 +4363,11 @@
                 "group": "insights"
               },
               {
+                "id": "duplicate-javascript-insight",
+                "weight": 0,
+                "group": "insights"
+              },
+              {
                 "id": "font-display-insight",
                 "weight": 0,
                 "group": "insights"
@@ -4385,7 +4398,7 @@
                 "group": "insights"
               },
               {
-                "id": "long-critical-network-tree-insight",
+                "id": "network-dependency-tree-insight",
                 "weight": 0,
                 "group": "insights"
               },
@@ -7460,78 +7473,84 @@
             },
             {
               "startTime": 270,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicate-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 271,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 272,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 273,
-              "name": "lh:audit:interaction-to-next-paint-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 274,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:interaction-to-next-paint-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 275,
-              "name": "lh:audit:lcp-phases-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 276,
-              "name": "lh:audit:long-critical-network-tree-insight",
+              "name": "lh:audit:lcp-phases-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 277,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 278,
-              "name": "lh:audit:slow-css-selector-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 279,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:slow-css-selector-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 280,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 281,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 282,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 282
+          "total": 283
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -8838,6 +8857,12 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
               "audits[dom-size-insight].details.items[2].statistic"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | title": [
+              "audits[duplicate-javascript-insight].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | description": [
+              "audits[duplicate-javascript-insight].description"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
               "audits[font-display-insight].title"
             ],
@@ -8898,11 +8923,11 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
               "audits[lcp-phases-insight].details.items[0].items[3].label"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
-              "audits[long-critical-network-tree-insight].title"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
+              "audits[network-dependency-tree-insight].title"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": [
-              "audits[long-critical-network-tree-insight].description"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
+              "audits[network-dependency-tree-insight].description"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"
@@ -11409,6 +11434,14 @@
               "dom-size"
             ]
           },
+          "duplicate-javascript-insight": {
+            "id": "duplicate-javascript-insight",
+            "title": "Duplicate JavaScript",
+            "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
+            "guidanceLevel": 3
+          },
           "font-display-insight": {
             "id": "font-display-insight",
             "title": "Font display",
@@ -11516,9 +11549,9 @@
               "largest-contentful-paint-element"
             ]
           },
-          "long-critical-network-tree-insight": {
-            "id": "long-critical-network-tree-insight",
-            "title": "Long critical network tree",
+          "network-dependency-tree-insight": {
+            "id": "network-dependency-tree-insight",
+            "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -11548,9 +11581,9 @@
           },
           "third-parties-insight": {
             "id": "third-parties-insight",
-            "title": "Third parties",
-            "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0,
+            "title": "3rd parties",
+            "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+            "score": 1,
             "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
@@ -11558,7 +11591,7 @@
                 {
                   "key": "entity",
                   "valueType": "text",
-                  "label": "Third party",
+                  "label": "3rd party",
                   "subItemsHeading": {
                     "key": "url",
                     "valueType": "url"
@@ -11731,6 +11764,11 @@
                 "group": "insights"
               },
               {
+                "id": "duplicate-javascript-insight",
+                "weight": 0,
+                "group": "insights"
+              },
+              {
                 "id": "font-display-insight",
                 "weight": 0,
                 "group": "insights"
@@ -11761,7 +11799,7 @@
                 "group": "insights"
               },
               {
-                "id": "long-critical-network-tree-insight",
+                "id": "network-dependency-tree-insight",
                 "weight": 0,
                 "group": "insights"
               },
@@ -12864,78 +12902,84 @@
             },
             {
               "startTime": 104,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicate-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 105,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 106,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 107,
-              "name": "lh:audit:interaction-to-next-paint-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 108,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:interaction-to-next-paint-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 109,
-              "name": "lh:audit:lcp-phases-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 110,
-              "name": "lh:audit:long-critical-network-tree-insight",
+              "name": "lh:audit:lcp-phases-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 111,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 112,
-              "name": "lh:audit:slow-css-selector-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 113,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:slow-css-selector-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 114,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 115,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 116,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 116
+          "total": 117
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -13465,6 +13509,12 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
               "audits[dom-size-insight].details.items[2].statistic"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | title": [
+              "audits[duplicate-javascript-insight].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | description": [
+              "audits[duplicate-javascript-insight].description"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
               "audits[font-display-insight].title"
             ],
@@ -13513,11 +13563,11 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": [
               "audits[lcp-phases-insight].description"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
-              "audits[long-critical-network-tree-insight].title"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
+              "audits[network-dependency-tree-insight].title"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": [
-              "audits[long-critical-network-tree-insight].description"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
+              "audits[network-dependency-tree-insight].description"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"
@@ -23140,6 +23190,14 @@
               "dom-size"
             ]
           },
+          "duplicate-javascript-insight": {
+            "id": "duplicate-javascript-insight",
+            "title": "Duplicate JavaScript",
+            "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
+            "guidanceLevel": 3
+          },
           "font-display-insight": {
             "id": "font-display-insight",
             "title": "Font display",
@@ -23324,9 +23382,9 @@
               "largest-contentful-paint-element"
             ]
           },
-          "long-critical-network-tree-insight": {
-            "id": "long-critical-network-tree-insight",
-            "title": "Long critical network tree",
+          "network-dependency-tree-insight": {
+            "id": "network-dependency-tree-insight",
+            "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -23356,9 +23414,9 @@
           },
           "third-parties-insight": {
             "id": "third-parties-insight",
-            "title": "Third parties",
-            "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
-            "score": 0,
+            "title": "3rd parties",
+            "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+            "score": 1,
             "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
@@ -23366,7 +23424,7 @@
                 {
                   "key": "entity",
                   "valueType": "text",
-                  "label": "Third party",
+                  "label": "3rd party",
                   "subItemsHeading": {
                     "key": "url",
                     "valueType": "url"
@@ -23591,6 +23649,11 @@
                 "group": "insights"
               },
               {
+                "id": "duplicate-javascript-insight",
+                "weight": 0,
+                "group": "insights"
+              },
+              {
                 "id": "font-display-insight",
                 "weight": 0,
                 "group": "insights"
@@ -23621,7 +23684,7 @@
                 "group": "insights"
               },
               {
-                "id": "long-critical-network-tree-insight",
+                "id": "network-dependency-tree-insight",
                 "weight": 0,
                 "group": "insights"
               },
@@ -26753,78 +26816,84 @@
             },
             {
               "startTime": 269,
-              "name": "lh:audit:font-display-insight",
+              "name": "lh:audit:duplicate-javascript-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 270,
-              "name": "lh:audit:forced-reflow-insight",
+              "name": "lh:audit:font-display-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 271,
-              "name": "lh:audit:image-delivery-insight",
+              "name": "lh:audit:forced-reflow-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 272,
-              "name": "lh:audit:interaction-to-next-paint-insight",
+              "name": "lh:audit:image-delivery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 273,
-              "name": "lh:audit:lcp-discovery-insight",
+              "name": "lh:audit:interaction-to-next-paint-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 274,
-              "name": "lh:audit:lcp-phases-insight",
+              "name": "lh:audit:lcp-discovery-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 275,
-              "name": "lh:audit:long-critical-network-tree-insight",
+              "name": "lh:audit:lcp-phases-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 276,
-              "name": "lh:audit:render-blocking-insight",
+              "name": "lh:audit:network-dependency-tree-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 277,
-              "name": "lh:audit:slow-css-selector-insight",
+              "name": "lh:audit:render-blocking-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 278,
-              "name": "lh:audit:third-parties-insight",
+              "name": "lh:audit:slow-css-selector-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 279,
-              "name": "lh:audit:viewport-insight",
+              "name": "lh:audit:third-parties-insight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 280,
+              "name": "lh:audit:viewport-insight",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 281,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 281
+          "total": 282
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -28130,6 +28199,12 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
               "audits[dom-size-insight].details.items[2].statistic"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | title": [
+              "audits[duplicate-javascript-insight].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | description": [
+              "audits[duplicate-javascript-insight].description"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
               "audits[font-display-insight].title"
             ],
@@ -28148,20 +28223,18 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
               "audits[image-delivery-insight].description"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": [
+            "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": [
               {
                 "values": {
-                  "PH1": 31094
+                  "PH1": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                  "PH2": 31094
                 },
                 "path": "audits[image-delivery-insight].details.items[0].subItems.items[0].reason"
-              }
-            ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": [
+              },
               {
                 "values": {
-                  "PH1": 81519,
-                  "PH2": "984x555",
-                  "PH3": "567x320"
+                  "PH1": "This image file is larger than it needs to be (984x555) for its displayed dimensions (567x320). Use responsive images to reduce the image download size.",
+                  "PH2": 81519
                 },
                 "path": "audits[image-delivery-insight].details.items[0].subItems.items[1].reason"
               }
@@ -28208,11 +28281,11 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
               "audits[lcp-phases-insight].details.items[0].items[3].label"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
-              "audits[long-critical-network-tree-insight].title"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
+              "audits[network-dependency-tree-insight].title"
             ],
-            "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": [
-              "audits[long-critical-network-tree-insight].description"
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
+              "audits[network-dependency-tree-insight].description"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"

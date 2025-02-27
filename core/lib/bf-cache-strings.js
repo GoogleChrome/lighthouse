@@ -544,7 +544,7 @@ const UIStrings = {
 
 };
 
-const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js', UIStrings);
 
 
 /** @type {Record<string, {name: LH.IcuMessage|string} | undefined>} */
@@ -707,5 +707,4 @@ const NotRestoredReasonDescription = {
 
 export {
   NotRestoredReasonDescription,
-  UIStrings,
 };

@@ -25,7 +25,8 @@ const UIStrings = {
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
-const deprecationsStr_ = i18n.createIcuMessageFn(import.meta.url, DeprecationUIStrings);
+const deprecationsStr_ = i18n.createIcuMessageFn(
+  'node_modules/@paulirish/trace_engine/generated/Deprecation.js', DeprecationUIStrings);
 
 /**
  * @param {LH.Crdp.Audits.DeprecationIssueDetails} issueDetails
