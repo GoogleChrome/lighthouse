@@ -5971,6 +5971,14 @@
         "dom-size"
       ]
     },
+    "duplicate-javascript-insight": {
+      "id": "duplicate-javascript-insight",
+      "title": "Duplicate JavaScript",
+      "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 3
+    },
     "font-display-insight": {
       "id": "font-display-insight",
       "title": "Font display",
@@ -6450,6 +6458,11 @@
         },
         {
           "id": "dom-size-insight",
+          "weight": 0,
+          "group": "insights"
+        },
+        {
+          "id": "duplicate-javascript-insight",
           "weight": 0,
           "group": "insights"
         },
@@ -9492,6 +9505,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:duplicate-javascript-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:font-display-insight",
         "duration": 100,
         "entryType": "measure"
@@ -11069,6 +11088,12 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
         "audits[dom-size-insight].details.items[2].statistic"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | title": [
+        "audits[duplicate-javascript-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | description": [
+        "audits[duplicate-javascript-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
         "audits[font-display-insight].title"

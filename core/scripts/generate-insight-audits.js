@@ -26,6 +26,10 @@ function getAllInsightNames() {
  * @return {string}
  */
 function kebabize(str) {
+  if (str === 'DuplicateJavaScript') {
+    return 'duplicate-javascript';
+  }
+
   return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g,
     ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
 }
