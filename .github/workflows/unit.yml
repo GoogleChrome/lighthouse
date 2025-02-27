@@ -51,7 +51,7 @@ jobs:
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
-    - run: yarn update:sample-json
+    - run: yarn i18n:collect-strings
     - run: yarn reset-link
 
     # Since Ubuntu 23, dev builds of Chromium need this.
@@ -87,6 +87,8 @@ jobs:
     # Runs here because it needs the roundtrip proto.
     - name: yarn test-viewer
       run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
+
+    - run: git add -A && git diff --cached --exit-code
 
     - name: Upload failures
       if: failure()
