@@ -814,7 +814,7 @@ function injectTraceEngineStrings() {
     for (const [key, value] of Object.entries(traceEngineStrings)) {
       const lhKey = `node_modules/@paulirish/trace_engine/${key.replace('.ts', '.js')}`;
 
-      // TODO: why is this so malformed?
+      // TODO: why is this so malformed? see b/399706272
       if (['he.json', 'ru.json', 'ta.json'].includes(name) && lhKey === 'node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone') {
         continue;
       }
