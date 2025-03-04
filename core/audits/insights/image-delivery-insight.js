@@ -4,14 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings, ImageOptimizationType} from '@paulirish/trace_engine/models/trace/insights/ImageDelivery.js';
+import * as ImageDeliveryInsightModule from '@paulirish/trace_engine/models/trace/insights/ImageDelivery.js';
+import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ImageDelivery.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct} from './insight-audit.js';
+import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js', UIStrings);
+
+const getOptimizationMessage =
+  // @ts-expect-error TODO(cjamcl): update trace engine lib to modify types accordingly.
+  // right now return type of getOptimizationMessage is wrongly `string`.
+  TraceEngineResult.localizeFunction(str_, ImageDeliveryInsightModule.getOptimizationMessage);
 
 class ImageDeliveryInsight extends Audit {
   /**
@@ -32,33 +39,6 @@ class ImageDeliveryInsight extends Audit {
         'uses-responsive-images',
       ],
     };
-  }
-
-  /**
-   * Note: This function is a copy of the `getOptimizationMessage` function found in the imported
-   * module. We could re-use the output of that function but it's output is shimmed to a {i18nId, values} object
-   * which is not consistent with the TS return type.
-   *
-   * We also can't change the function to output the untranslated strings because the responsive
-   * size string has placeholders that need to be resolved here.
-   *
-   * @param {import('@paulirish/trace_engine/models/trace/insights/ImageDelivery.js').ImageOptimization} optimization
-   * @returns
-   */
-  static getOptimizationMessage(optimization) {
-    switch (optimization.type) {
-      case ImageOptimizationType.ADJUST_COMPRESSION:
-        return str_(UIStrings.useCompression);
-      case ImageOptimizationType.MODERN_FORMAT_OR_COMPRESSION:
-        return str_(UIStrings.useModernFormat);
-      case ImageOptimizationType.VIDEO_FORMAT:
-        return str_(UIStrings.useVideoFormat);
-      case ImageOptimizationType.RESPONSIVE_SIZE:
-        return str_(UIStrings.useResponsiveSize, {
-          PH1: `${optimization.fileDimensions.width}x${optimization.fileDimensions.height}`,
-          PH2: `${optimization.displayDimensions.width}x${optimization.displayDimensions.height}`,
-        });
-    }
   }
 
   /**
@@ -90,7 +70,7 @@ class ImageDeliveryInsight extends Audit {
         subItems: {
           type: /** @type {const} */ ('subitems'),
           items: image.optimizations.map(optimization => ({
-            reason: this.getOptimizationMessage(optimization),
+            reason: getOptimizationMessage(optimization),
             wastedBytes: optimization.byteSavings,
           })),
         },
