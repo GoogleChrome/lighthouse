@@ -63,7 +63,8 @@ async function internalRun(url, tmpPath, config, logger, options) {
     `-G=${artifactsDirectory}`,
     `-A=${artifactsDirectory}`,
     '--port=0',
-    '--quiet',
+    // '--verbose',
+    `--chrome-flags="--enable-features='RenderDocument:level/all-frames'"`,
   ];
 
   if (headless) args.push('--chrome-flags="--headless=new"');
@@ -76,10 +77,10 @@ async function internalRun(url, tmpPath, config, logger, options) {
   }
 
   const command = 'node';
-  const env = {...process.env, NODE_ENV: 'test'};
+  const env = {...process.env, 'NODE_ENV': 'test'}; // 'DEBUG': '*'};
   logger.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
 
-  const cp = spawn(command, args, {env});
+  const cp = spawn(command, args, {env, stdio: 'pipe'});
   cp.stdout.on('data', data => logger.log(`[STDOUT] ${data.toString().trim()}`));
   cp.stderr.on('data', data => logger.log(`[STDERR] ${data.toString().trim()}`));
   /** @type {Promise<number|null>} */
