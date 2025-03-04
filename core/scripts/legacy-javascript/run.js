@@ -263,22 +263,29 @@ async function main() {
     installCoreJs(coreJsVersion);
 
     const moduleOptions = [
-      {esmodules: false, bugfixes: false},
-      // Output: https://gist.github.com/connorjclark/515d05094ffd1fc038894a77156bf226
-      {esmodules: true, bugfixes: false},
-      {esmodules: true, bugfixes: true},
+      {baseline: false, bugfixes: false},
+      {baseline: true, bugfixes: false},
+      {baseline: true, bugfixes: true},
     ];
-    for (const {esmodules, bugfixes} of moduleOptions) {
+    for (const {baseline, bugfixes} of moduleOptions) {
       await createVariant({
-        group: `core-js-${major}-preset-env-esmodules`,
-        name: String(esmodules) + (bugfixes ? '_and_bugfixes' : ''),
+        group: `core-js-${major}-preset-env`,
+        name: `baseline_${baseline}_bugfixes_${bugfixes}`,
         code: `require('core-js');\n${mainCode}`,
         babelrc: {
           presets: [
             [
               '@babel/preset-env',
               {
-                targets: {esmodules},
+                targets: baseline ? [
+                  'chrome >0 and last 2.5 years',
+                  'edge >0 and last 2.5 years',
+                  'safari >0 and last 2.5 years',
+                  'firefox >0 and last 2.5 years',
+                  'and_chr >0 and last 2.5 years',
+                  'and_ff >0 and last 2.5 years',
+                  'ios >0 and last 2.5 years',
+                ] : undefined,
                 useBuiltIns: 'entry',
                 corejs: major,
                 bugfixes,

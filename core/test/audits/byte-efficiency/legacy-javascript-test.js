@@ -293,15 +293,15 @@ Map {
 });
 
 describe('LegacyJavaScript signals', () => {
-  it('expect babel-preset-env = true variant to not have any signals', () => {
+  it('expect baseline variants to not have any signals', () => {
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
       const signalSummary =
         readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
       const expectedMissingSignals = [
-        'core-js-2-preset-env-esmodules/true',
-        'core-js-3-preset-env-esmodules/true',
-        'core-js-2-preset-env-esmodules/true-and-bugfixes',
-        'core-js-3-preset-env-esmodules/true-and-bugfixes',
+        'core-js-2-preset-env/baseline-true-bugfixes-false',
+        'core-js-2-preset-env/baseline-true-bugfixes-true',
+        'core-js-3-preset-env/baseline-true-bugfixes-false',
+        'core-js-3-preset-env/baseline-true-bugfixes-true',
       ];
       for (const expectedVariant of expectedMissingSignals) {
         expect(signalSummary.variantsMissingSignals).toContain(expectedVariant);

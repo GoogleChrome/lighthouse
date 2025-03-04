@@ -5,8 +5,8 @@
  */
 
 /**
- * @fileoverview Identifies polyfills and transforms that should not be present if using module/nomodule pattern.
- * @see https://docs.google.com/document/d/1ItjJwAd6e0Ts6yMbvh8TN3BBh_sAd58rYE1whnpuxaA/edit Design document
+ * @fileoverview Identifies polyfills and transforms that should not be present if needing to support only Baseline browsers.
+ * @see https://docs.google.com/document/d/1ItjJwAd6e0Ts6yMbvh8TN3BBh_sAd58rYE1whnpuxaA/edit Design document (old, based on module/nomodule pattern)
  * @see https://docs.google.com/spreadsheets/d/1z28Au8wo8-c2UsM2lDVEOJcI3jOkb2c951xEBqzBKCc/edit?usp=sharing Legacy babel transforms / polyfills
  * ./core/scripts/legacy-javascript - verification tool.
  */
@@ -39,7 +39,7 @@ const UIStrings = {
   // eslint-disable-next-line max-len
   // TODO: developer.chrome.com article. this codelab is good starting place: https://web.dev/articles/codelab-serve-modern-code
   /** Description of a Lighthouse audit that tells the user about old JavaScript that is no longer needed. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using [module/nomodule feature detection](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to serve modern JavaScript](https://web.dev/articles/codelab-serve-modern-code)',
+  description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)',
   /** Warning text that an outdated version of the library "core-js" was found, and the developer should upgrade. */
   // eslint-disable-next-line max-len
   detectedCoreJs2Warning: 'Version 2 of core-js was detected on the page. You should upgrade to version 3 for many performance improvements.',
