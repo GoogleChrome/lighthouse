@@ -94,6 +94,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const script = artifacts.Scripts.find(s => s.scriptId === scriptId);
       if (!script) continue; // This should never happen.
 
+      // Ignore eval scripts.
+      if (!script.url) continue;
+
       const bundle = bundles.find(b => b.script.scriptId === scriptId);
       const unusedJsSummary =
         await UnusedJavascriptSummary.request({scriptId, scriptCoverage, bundle}, context);
