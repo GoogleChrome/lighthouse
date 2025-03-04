@@ -216,7 +216,7 @@ class PrioritizeLcpImage extends Audit {
     }
 
     const wastedMs = lcpTimingsBefore.endTime -
-      Math.max(lcpTimingsAfter.endTime, maxDependencyEndTime);
+      Math.max(lcpTimingsAfter.endTime, maxDependencyEndTime > lcpTimingsBefore.endTime ? lcpTimingsBefore.endTime : maxDependencyEndTime);
 
     return {
       wastedMs,
