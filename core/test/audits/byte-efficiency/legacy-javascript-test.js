@@ -178,7 +178,7 @@ Map {
       'String.raw = function() {}',
       // es-shims (object.entries)
       'no(Object,{entries:r},{entries:function',
-      'no(Array.prototype,{find:r},{find:function',
+      'no(Array.prototype,{findLast:r},{findLast:function',
       // Currently are no polyfills that declare a class. Maybe in the future.
       // 'Object.defineProperty(window, \'WeakMap\', function() {})',
       // 'WeakMap = function() {}',
@@ -220,7 +220,7 @@ Map {
 
   it('uses source maps to identify polyfills', async () => {
     const map = {
-      sources: ['node_modules/blah/blah/es6.string.repeat.js'],
+      sources: ['node_modules/blah/blah/es.string.repeat.js'],
       mappings: 'blah',
     };
     const script = {code: 'blah blah', url: 'https://www.example.com/0.js', map};
@@ -260,8 +260,8 @@ Map {
     const map = {
       sources: [
         'node_modules/focus-visible/dist/focus-visible.js',
-        'node_modules/array.prototype.find/index.js',
-        'node_modules/object.entries/index.js',
+        'node_modules/esnext.array.find-last/index.js',
+        'node_modules/es.object.entries/index.js',
       ],
       mappings: 'blah',
     };
@@ -273,39 +273,79 @@ Map {
     const result = await getResult([script]);
 
     expect(result.items).toHaveLength(1);
-    expect(result.items[0].subItems.items).toHaveLength(3);
     expect(result.items[0].subItems.items).toMatchObject([
       {
         signal: 'focus-visible',
         location: {line: 0, column: 0},
       },
       {
-        signal: 'Array.prototype.find',
-        location: {line: 0, column: 0},
-      },
-      {
         signal: 'Object.entries',
         location: {line: 0, column: 0},
       },
+      {
+        signal: 'Array.prototype.findLast',
+        location: {line: 0, column: 0},
+      },
     ]);
-    expect(result.items[0].wastedBytes).toBe(40412);
+    expect(result.items[0].subItems.items).toHaveLength(3);
+    expect(result.items[0].wastedBytes).toBe(36422);
   });
 });
 
 describe('LegacyJavaScript signals', () => {
-  it('expect baseline variants to not have any signals', () => {
+  describe('expect baseline variants to not have any signals', () => {
+    const expectedMissingSignals = [
+      'core-js-3-preset-env/baseline-true-bugfixes-false',
+      'core-js-3-preset-env/baseline-true-bugfixes-true',
+    ];
+
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
-      const signalSummary =
-        readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
-      const expectedMissingSignals = [
-        'core-js-2-preset-env/baseline-true-bugfixes-false',
-        'core-js-2-preset-env/baseline-true-bugfixes-true',
-        'core-js-3-preset-env/baseline-true-bugfixes-false',
-        'core-js-3-preset-env/baseline-true-bugfixes-true',
-      ];
-      for (const expectedVariant of expectedMissingSignals) {
-        expect(signalSummary.variantsMissingSignals).toContain(expectedVariant);
-      }
+      it(summaryFilename, () => {
+        const signalSummary =
+          readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
+        const failingVariants = [];
+        for (const expectedVariant of expectedMissingSignals) {
+          const variant = signalSummary.variants.find(v => v.dir === expectedVariant);
+          if (variant.signals.length) {
+            failingVariants.push(variant);
+          }
+        }
+
+        if (failingVariants.length) {
+          throw new Error([
+            'Expected the following variants to have no signals:',
+            '',
+            ...failingVariants.map(v => `${v.name} (got: ${v.signals})`),
+          ].join('\n'));
+        }
+      });
+    }
+  });
+
+  describe('expect only-polyfill/only-plugin variants to detect the target signal', () => {
+    for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
+      it(summaryFilename, () => {
+        const signalSummary = readJson(`core/scripts/legacy-javascript/${summaryFilename}`);
+        const failingVariants = [];
+
+        const polyfillVariants = signalSummary.variants
+          .filter(v => v.group.endsWith('only-polyfill'));
+        for (const variant of polyfillVariants) {
+          if (!variant.signals.includes(variant.name)) {
+            failingVariants.push(`${variant.group}/${variant.name}`);
+          }
+        }
+        expect(failingVariants).toHaveLength(0);
+
+        const transformVariants = signalSummary.variants
+          .filter(v => v.group === 'only-plugin');
+        for (const variant of transformVariants) {
+          if (!variant.signals.includes(variant.name)) {
+            failingVariants.push(`${variant.group}/${variant.name}`);
+          }
+        }
+        expect(failingVariants).toHaveLength(0);
+      });
     }
   });
 });

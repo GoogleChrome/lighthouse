@@ -73,6 +73,7 @@ async function createVariant(options) {
 
   if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
     fs.mkdirSync(dir, {recursive: true});
+    fs.writeFileSync(`${dir}/variant.json`, JSON.stringify({group, name}, null, 2));
     fs.writeFileSync(`${dir}/package.json`, JSON.stringify({type: 'commonjs'}));
     fs.writeFileSync(`${dir}/main.js`, code);
     fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
@@ -176,6 +177,7 @@ function makeSummary(legacyJavascriptFilename) {
   let totalSignals = 0;
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
+    const {group, name} = readJson(`${VARIANT_DIR}/${dir}/variant.json`);
     /** @type {import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct} */
     const legacyJavascript = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
     const items = /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */(
@@ -188,7 +190,7 @@ function makeSummary(legacyJavascriptFilename) {
       }
     }
     totalSignals += signals.length;
-    variants.push({name: dir, signals: signals.join(', ')});
+    variants.push({group, name, dir, signals});
 
     if (dir.includes('core-js') && !legacyJavascriptFilename.includes('nomaps')) {
       const isCoreJs2Variant = dir.includes('core-js-2');
@@ -199,7 +201,7 @@ function makeSummary(legacyJavascriptFilename) {
   }
   return {
     totalSignals,
-    variantsMissingSignals: variants.filter(v => !v.signals).map(v => v.name),
+    variantsMissingSignals: variants.filter(v => v.signals.length === 0).map(v => v.name),
     variants,
   };
 }
@@ -242,22 +244,18 @@ function makeRequireCodeForPolyfill(module) {
 }
 
 async function main() {
-  const pluginGroups = [
-    ...plugins.map(plugin => [plugin]),
-    ['@babel/plugin-transform-regenerator', '@babel/transform-async-to-generator'],
-  ];
-  for (const pluginGroup of pluginGroups) {
+  for (const plugin of plugins) {
     await createVariant({
       group: 'only-plugin',
-      name: pluginGroup.join('_'),
+      name: plugin,
       code: mainCode,
       babelrc: {
-        plugins: pluginGroup,
+        plugins: [plugin],
       },
     });
   }
 
-  for (const coreJsVersion of ['2.6.12', '3.40.0']) {
+  for (const coreJsVersion of ['3.40.0']) {
     const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);
@@ -298,17 +296,15 @@ async function main() {
     }
 
     for (const polyfill of polyfills) {
-      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
       await createVariant({
         group: `core-js-${major}-only-polyfill`,
-        name: module,
-        code: makeRequireCodeForPolyfill(module),
+        name: polyfill.name,
+        code: makeRequireCodeForPolyfill(polyfill.coreJs3Module),
       });
     }
 
     const allPolyfillCode = polyfills.map(polyfill => {
-      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
-      return makeRequireCodeForPolyfill(module);
+      return makeRequireCodeForPolyfill(polyfill.coreJs3Module);
     }).join('\n');
     await createVariant({
       group: 'all-legacy-polyfills',

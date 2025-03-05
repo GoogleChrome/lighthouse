@@ -1,0 +1,304 @@
+/**
+ * @fileoverview - Used to generate which polyfills to check for in LegacyJavaScript audit.
+ *
+ * Produces a list of polyfills that a Baseline-targeting babel config should not include.
+ * In addition to listing the corejs module, also assigns a "name" that distinguishes between
+ * a instance property polyfill (Array.protoype.at) and a static property (Array.from). This
+ * is necessary for the regexp generation in the audit.
+ *
+ * Result is written to core/audits/byte-efficiency/polyfill-module-data.json
+ */
+
+import fs from 'fs';
+
+import coreJsCompat from 'core-js-compat';
+
+import {LH_ROOT} from '../../../shared/root.js';
+
+/**
+ * @typedef {Array<{name: string, modules: string[], corejs?: boolean}>} PolyfillModuleData
+*/
+
+/**
+ * @param {string} str
+ */
+function kebabCaseToCamelCase(str) {
+  return /** @type {LH.Util.KebabToCamelCase<S>} */ (
+    str.replace(/(-\w)/g, m => m[1].toUpperCase())
+  );
+}
+
+const polyfillsNotNeededForBaseline = coreJsCompat({
+  targets: [
+    'chrome >0 and last 2.5 years',
+    'edge >0 and last 2.5 years',
+    'safari >0 and last 2.5 years',
+    'firefox >0 and last 2.5 years',
+    'and_chr >0 and last 2.5 years',
+    'and_ff >0 and last 2.5 years',
+    'ios >0 and last 2.5 years',
+  ],
+  modules: 'core-js/actual',
+  inverse: true,
+});
+
+// Note: if you want to explore more:
+// - see https://github.com/zloirock/core-js/blob/master/packages/core-js-compat/src/data.mjs
+// - remove `inverse: true` above and log `polyfillsNotNeededForBaseline.targets`
+
+console.log('num polyfills to check for:', polyfillsNotNeededForBaseline.list.length);
+
+const modulesToSkip = [
+  // Deprecated.
+  'es.string.anchor',
+  'es.string.big',
+  'es.string.blink',
+  'es.string.bold',
+  'es.string.fixed',
+  'es.string.fontcolor',
+  'es.string.fontsize',
+  'es.string.italics',
+  'es.string.small',
+  'es.string.strike',
+  'es.string.sub',
+  'es.string.sup',
+
+  // Skip some tricky stuff. Would be good to reduce this array.
+  'es.symbol',
+  'es.symbol.description',
+  'es.symbol.async-iterator',
+  'es.symbol.has-instance',
+  'es.symbol.is-concat-spreadable',
+  'es.symbol.iterator',
+  'es.symbol.match',
+  'es.symbol.match-all',
+  'es.symbol.replace',
+  'es.symbol.search',
+  'es.symbol.species',
+  'es.symbol.split',
+  'es.symbol.to-primitive',
+  'es.symbol.to-string-tag',
+  'es.symbol.unscopables',
+  'es.error.to-string',
+  'es.aggregate-error',
+  'es.aggregate-error.cause',
+  'es.array.at',
+  'es.array.concat',
+  'es.array.copy-within',
+  'es.array.every',
+  'es.array.fill',
+  'es.array.filter',
+  'es.array.find',
+  'es.array.find-index',
+  'es.array.find-last',
+  'es.array.find-last-index',
+  'es.array.flat',
+  'es.array.flat-map',
+  'es.array.from',
+  'es.array.includes',
+  'es.array.index-of',
+  'es.array.is-array',
+  'es.array.iterator',
+  'es.array.join',
+  'es.array.last-index-of',
+  'es.array.map',
+  'es.array.of',
+  'es.array.reduce',
+  'es.array.reduce-right',
+  'es.array.reverse',
+  'es.array.slice',
+  'es.array.some',
+  'es.array.sort',
+  'es.array.species',
+  'es.array.splice',
+  'es.array.unscopables.flat',
+  'es.array.unscopables.flat-map',
+  'es.array.unshift',
+  'es.array-buffer.constructor',
+  'es.array-buffer.is-view',
+  'es.array-buffer.slice',
+  'es.data-view',
+  'es.date.get-year',
+  'es.date.now',
+  'es.date.set-year',
+  'es.date.to-gmt-string',
+  'es.date.to-iso-string',
+  'es.date.to-json',
+  'es.date.to-primitive',
+  'es.date.to-string',
+  'es.escape',
+  'es.function.bind',
+  'es.function.has-instance',
+  'es.function.name',
+  'es.global-this',
+  'es.json.stringify',
+  'es.json.to-string-tag',
+  'es.map',
+  'es.math.to-string-tag',
+  'es.number.constructor',
+  'es.number.epsilon',
+  'es.number.is-finite',
+  'es.number.is-integer',
+  'es.number.is-nan',
+  'es.number.is-safe-integer',
+  'es.number.max-safe-integer',
+  'es.number.min-safe-integer',
+  'es.number.parse-float',
+  'es.number.parse-int',
+  'es.number.to-exponential',
+  'es.number.to-fixed',
+  'es.number.to-precision',
+  'es.object.define-getter',
+  'es.object.define-properties',
+  'es.object.define-property',
+  'es.object.define-setter',
+  'es.object.get-own-property-names',
+  'es.object.lookup-getter',
+  'es.object.lookup-setter',
+  'es.object.proto',
+  'es.object.to-string',
+  'es.parse-float',
+  'es.parse-int',
+  'es.promise',
+  'es.promise.all-settled',
+  'es.promise.any',
+  'es.promise.finally',
+  'es.reflect.define-property',
+  'es.reflect.to-string-tag',
+  'es.regexp.constructor',
+  'es.regexp.dot-all',
+  'es.regexp.exec',
+  'es.regexp.sticky',
+  'es.regexp.test',
+  'es.regexp.to-string',
+  'es.set',
+  'es.string.at-alternative',
+  'es.string.iterator',
+  'es.string.match',
+  'es.string.match-all',
+  'es.string.replace',
+  'es.string.replace-all',
+  'es.string.search',
+  'es.string.split',
+  'es.typed-array.float32-array',
+  'es.typed-array.float64-array',
+  'es.typed-array.int8-array',
+  'es.typed-array.int16-array',
+  'es.typed-array.int32-array',
+  'es.typed-array.uint8-array',
+  'es.typed-array.uint8-clamped-array',
+  'es.typed-array.uint16-array',
+  'es.typed-array.uint32-array',
+  'es.typed-array.at',
+  'es.typed-array.copy-within',
+  'es.typed-array.every',
+  'es.typed-array.fill',
+  'es.typed-array.filter',
+  'es.typed-array.find',
+  'es.typed-array.find-index',
+  'es.typed-array.find-last',
+  'es.typed-array.find-last-index',
+  'es.typed-array.for-each',
+  'es.typed-array.from',
+  'es.typed-array.includes',
+  'es.typed-array.index-of',
+  'es.typed-array.iterator',
+  'es.typed-array.join',
+  'es.typed-array.last-index-of',
+  'es.typed-array.map',
+  'es.typed-array.of',
+  'es.typed-array.reduce',
+  'es.typed-array.reduce-right',
+  'es.typed-array.reverse',
+  'es.typed-array.set',
+  'es.typed-array.slice',
+  'es.typed-array.some',
+  'es.typed-array.sort',
+  'es.typed-array.subarray',
+  'es.typed-array.to-locale-string',
+  'es.typed-array.to-string',
+  'es.unescape',
+  'es.weak-map',
+  'es.weak-set',
+  'esnext.aggregate-error',
+  'esnext.global-this',
+  'esnext.promise.all-settled',
+  'esnext.promise.any',
+  'esnext.string.match-all',
+  'esnext.string.replace-all',
+  'esnext.typed-array.at',
+  'esnext.typed-array.find-last',
+  'esnext.typed-array.find-last-index',
+  'web.atob',
+  'web.btoa',
+  'web.dom-collections.for-each',
+  'web.dom-collections.iterator',
+  'web.dom-exception.constructor',
+  'web.dom-exception.to-string-tag',
+  'web.queue-microtask',
+  'web.self',
+  'web.timers',
+  'web.url',
+  'web.url.to-json',
+  'web.url-search-params',
+];
+
+const unneededSkips = modulesToSkip.filter(m => !polyfillsNotNeededForBaseline.list.includes(m));
+if (unneededSkips.length) {
+  console.error('Remove these skipped modules:');
+  console.error(unneededSkips);
+  process.exit(1);
+}
+
+/** @type {PolyfillModuleData} */
+const data = [
+  {name: 'focus-visible', modules: ['focus-visible']},
+  {name: 'Error.prototype.cause', modules: ['es.error.cause']},
+];
+
+for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
+  // Skip if manualy defined above already.
+  if (data.some(d => d.modules.includes(polyfillModuleName))) {
+    continue;
+  }
+
+  if (modulesToSkip.includes(polyfillModuleName)) {
+    console.log(`skipping: ${polyfillModuleName}`);
+    continue;
+  }
+
+  const parts = polyfillModuleName.split('.').slice(1);
+
+  let className = parts[0][0].toUpperCase() + parts[0].slice(1);
+  if (parts[0] === 'json') className = 'JSON';
+  if (parts[0] === 'typed-array') className = 'TypedArray';
+  if (parts[0] === 'url') className = 'URL';
+
+  let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : null;
+  if (parts[1] === 'to-json') prop = 'toJSON';
+
+  if (parts.length === 1) {
+    // TODO: handle things like es.set. ctrl+f "Currently are no polyfills that declare a class. Maybe in the future."
+  } else {
+    // @ts-expect-error
+    const maybeClassSymbol = global[className];
+
+    try {
+      const instance = maybeClassSymbol();
+      if (instance[prop] !== undefined) {
+        // eslint-disable-next-line max-len
+        data.push({name: `${className}.prototype.${prop}`, modules: [polyfillModuleName], corejs: true});
+        continue;
+      }
+    } catch {}
+
+    if (maybeClassSymbol && Object.hasOwn(maybeClassSymbol, prop)) {
+      data.push({name: `${className}.${prop}`, modules: [polyfillModuleName], corejs: true});
+    } else {
+      throw new Error(polyfillModuleName);
+    }
+  }
+}
+
+fs.writeFileSync(`${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`,
+  JSON.stringify(data, null, 2));
