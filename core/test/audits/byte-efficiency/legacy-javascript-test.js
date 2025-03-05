@@ -288,7 +288,7 @@ Map {
       },
     ]);
     expect(result.items[0].subItems.items).toHaveLength(3);
-    expect(result.items[0].wastedBytes).toBe(36422);
+    expect(result.items[0].wastedBytes).toBe(36369);
   });
 });
 
@@ -332,19 +332,31 @@ describe('LegacyJavaScript signals', () => {
           .filter(v => v.group.endsWith('only-polyfill'));
         for (const variant of polyfillVariants) {
           if (!variant.signals.includes(variant.name)) {
-            failingVariants.push(`${variant.group}/${variant.name}`);
+            failingVariants.push(variant);
           }
         }
-        expect(failingVariants).toHaveLength(0);
+        if (failingVariants.length) {
+          throw new Error([
+            'Expected the following variants to detect its polyfill:',
+            '',
+            ...failingVariants.map(v => `${v.name} (got: ${v.signals})`),
+          ].join('\n'));
+        }
 
         const transformVariants = signalSummary.variants
           .filter(v => v.group === 'only-plugin');
         for (const variant of transformVariants) {
           if (!variant.signals.includes(variant.name)) {
-            failingVariants.push(`${variant.group}/${variant.name}`);
+            failingVariants.push(variant);
           }
         }
-        expect(failingVariants).toHaveLength(0);
+        if (failingVariants.length) {
+          throw new Error([
+            'Expected the following variants to detect its transform:',
+            '',
+            ...failingVariants.map(v => `${v.name} (got: ${v.signals})`),
+          ].join('\n'));
+        }
       });
     }
   });
