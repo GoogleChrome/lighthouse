@@ -51,6 +51,7 @@ function runCommand(command, args) {
 function installCoreJs(version) {
   runCommand('yarn', [
     'add',
+    '-D',
     `core-js@${version}`,
   ]);
 }
