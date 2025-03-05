@@ -174,7 +174,6 @@ Map {
       'String.prototype["repeat"] = function() {}',
       'Object.defineProperty(String.prototype, "repeat", function() {})',
       'Object.defineProperty(String.prototype, "repeat", function() {})',
-      '$export($export.S,"Object",{values:function values(t){return i(t)}})',
       'String.raw = function() {}',
       // es-shims (object.entries)
       'no(Object,{entries:r},{entries:function',

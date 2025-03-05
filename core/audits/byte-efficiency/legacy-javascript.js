@@ -176,10 +176,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       // TODO: perhaps this is the wrong place to check for a CDN polyfill. Remove?
       // expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
 
-      // core-js@2 minified pattern.
-      // $export($export.S,"Date",{now:function
-      expression += `|\\$export\\([^,]+,${qt(objectWithoutPrototype)},{${property}:`;
-
       // core-js@3 minified pattern.
       // {target:"Array",proto:true},{fill:fill
       // {target:"Array",proto:true,forced:!HAS_SPECIES_SUPPORT||!USES_TO_LENGTH},{filter:
