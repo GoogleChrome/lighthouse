@@ -23,9 +23,7 @@ import {LH_ROOT} from '../../../shared/root.js';
  * @param {string} str
  */
 function kebabCaseToCamelCase(str) {
-  return /** @type {LH.Util.KebabToCamelCase<S>} */ (
-    str.replace(/(-\w)/g, m => m[1].toUpperCase())
-  );
+  return str.replace(/(-\w)/g, m => m[1].toUpperCase());
 }
 
 const polyfillsNotNeededForBaseline = coreJsCompat({
@@ -274,11 +272,11 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
   if (parts[0] === 'typed-array') className = 'TypedArray';
   if (parts[0] === 'url') className = 'URL';
 
-  let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : null;
+  let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : '';
   if (parts[1] === 'to-json') prop = 'toJSON';
 
   if (parts.length === 1) {
-    // TODO: handle things like es.set. ctrl+f "Currently are no polyfills that declare a class. Maybe in the future."
+    // TODO: handle class polyfills like es.set. ctrl+f "Currently are no polyfills that declare a class. Maybe in the future."
   } else {
     // @ts-expect-error
     const maybeClassSymbol = global[className];
