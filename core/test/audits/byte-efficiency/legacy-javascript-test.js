@@ -178,11 +178,11 @@ Map {
       // es-shims (object.entries)
       'no(Object,{entries:r},{entries:function',
       'no(Array.prototype,{findLast:r},{findLast:function',
-      // Currently are no polyfills that declare a class. Maybe in the future.
-      // 'Object.defineProperty(window, \'WeakMap\', function() {})',
-      // 'WeakMap = function() {}',
-      // 'window.WeakMap = function() {}',
-      // 'function WeakMap() {}',
+      // Class polyfills.
+      'Object.defineProperty(window, \'WeakSet\', function() {})',
+      'WeakSet = function() {}',
+      'window.WeakSet = function() {}',
+      'function WeakSet() {}',
     ];
     const variants = createVariants(codeSnippets);
     const scripts = variants.map((code, i) => {
@@ -287,7 +287,7 @@ Map {
       },
     ]);
     expect(result.items[0].subItems.items).toHaveLength(3);
-    expect(result.items[0].wastedBytes).toBe(36369);
+    expect(result.items[0].wastedBytes).toBe(36422);
   });
 });
 

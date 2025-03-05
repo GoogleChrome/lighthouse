@@ -6,6 +6,8 @@
 # SPDX-License-Identifier: Apache-2.0
 ##
 
+set -ex
+
 yarn
 yarn upgrade --latest core-js core-js-compat caniuse-lite
 node create-polyfill-module-data.js

@@ -196,7 +196,6 @@ const modulesToSkip = [
   'es.typed-array.to-string',
   'es.unescape',
   'es.weak-map',
-  'es.weak-set',
   'esnext.aggregate-error',
   'esnext.global-this',
   'esnext.typed-array.at',
@@ -242,7 +241,8 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
 
   const parts = polyfillModuleName.split('.').slice(1);
 
-  let className = parts[0][0].toUpperCase() + parts[0].slice(1);
+  let className = kebabCaseToCamelCase(parts[0]);
+  className = className[0].toUpperCase() + className.slice(1);
   if (parts[0] === 'json') className = 'JSON';
   if (parts[0] === 'typed-array') className = 'TypedArray';
   if (parts[0] === 'url') className = 'URL';
@@ -250,12 +250,16 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
   let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : '';
   if (parts[1] === 'to-json') prop = 'toJSON';
 
-  if (parts.length === 1) {
-    // TODO: handle class polyfills like es.set. ctrl+f "Currently are no polyfills that declare a class. Maybe in the future."
-  } else {
-    // @ts-expect-error
-    const maybeClassSymbol = global[className];
+  // @ts-expect-error
+  const maybeClassSymbol = global[className];
 
+  if (parts.length === 1) {
+    if (!maybeClassSymbol) {
+      throw new Error(polyfillModuleName);
+    }
+
+    data.push({name: className, modules: [polyfillModuleName], corejs: true});
+  } else {
     try {
       const instance = maybeClassSymbol();
       if (instance[prop] !== undefined) {
