@@ -7,7 +7,7 @@
 ##
 
 yarn
-yarn upgrade --latest core-js caniuse-lite
+yarn upgrade --latest core-js core-js-compat caniuse-lite
 node create-polyfill-module-data.js
 node run.js # needed for next step
 node create-polyfill-size-estimation.js
