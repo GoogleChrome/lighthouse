@@ -31,7 +31,7 @@ const expectations = {
           items: [
             {
               url: 'http://localhost:10200/legacy-javascript.js',
-              wastedBytes: '134000 +/- 2000',
+              wastedBytes: '127000 +/- 2000',
               subItems: {
                 items: [
                   {signal: 'Object.getOwnPropertyDescriptor'},
@@ -115,7 +115,6 @@ const expectations = {
                   {signal: 'String.prototype.trimEnd'},
                   {signal: 'String.prototype.trimStart'},
                   {signal: 'String.prototype.trim'},
-                  {signal: 'WeakSet'},
                   {signal: 'Promise.any'},
                   {signal: 'String.prototype.replaceAll'},
                   {signal: '@babel/plugin-transform-classes'},

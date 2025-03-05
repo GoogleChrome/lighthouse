@@ -181,8 +181,10 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       // {target:"Array",proto:true,forced:!HAS_SPECIES_SUPPORT||!USES_TO_LENGTH},{filter:
       expression += `|{target:${qt(objectWithoutPrototype)}\\S*},{${property}:`;
     } else {
-      // WeakSet, etc.
-      expression += `|function ${property}\\(`;
+      // Map, Set, WeakSet, etc.
+      // collection("Map",
+      // Currently not used. See create-polyfill-module-data.js
+      // expression += `|collection\\(${qt(property)},`;
     }
 
     return expression;

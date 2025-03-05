@@ -175,14 +175,18 @@ Map {
       'Object.defineProperty(String.prototype, "repeat", function() {})',
       'Object.defineProperty(String.prototype, "repeat", function() {})',
       'String.raw = function() {}',
+
       // es-shims (object.entries)
       'no(Object,{entries:r},{entries:function',
       'no(Array.prototype,{findLast:r},{findLast:function',
+
       // Class polyfills.
-      'Object.defineProperty(window, \'WeakSet\', function() {})',
-      'WeakSet = function() {}',
-      'window.WeakSet = function() {}',
-      'function WeakSet() {}',
+      // Currently not used. See create-polyfill-module-data.js
+      // 'Object.defineProperty(window, \'WeakSet\', function() {})',
+      // 'WeakSet = function() {}',
+      // 'window.WeakSet = function() {}',
+      // Collection polyfills.
+      // 'collection("WeakSet",(function(init){return',
     ];
     const variants = createVariants(codeSnippets);
     const scripts = variants.map((code, i) => {

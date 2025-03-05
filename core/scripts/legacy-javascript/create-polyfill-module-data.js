@@ -66,6 +66,14 @@ const modulesToSkip = [
   'es.string.sub',
   'es.string.sup',
 
+  // Internals of core-js@3 currently emit the code for these polyfills even if not needed
+  // by the target environment.
+  // Example: https://github.com/zloirock/core-js/blob/2da152ff2b23d483be6e2e30e4fcb93582bd9be7/packages/core-js/internals/composite-key.js#L2-L3
+  'es.map',
+  'es.set',
+  'es.weak-map',
+  'es.weak-set',
+
   // Skip some tricky stuff. Would be good to reduce this array.
   'es.symbol',
   'es.symbol.description',
@@ -113,7 +121,6 @@ const modulesToSkip = [
   'es.global-this',
   'es.json.stringify',
   'es.json.to-string-tag',
-  'es.map',
   'es.math.to-string-tag',
   'es.number.constructor',
   'es.number.epsilon',
@@ -150,7 +157,6 @@ const modulesToSkip = [
   'es.regexp.sticky',
   'es.regexp.test',
   'es.regexp.to-string',
-  'es.set',
   'es.string.at-alternative',
   'es.string.iterator',
   'es.string.match',
@@ -195,7 +201,6 @@ const modulesToSkip = [
   'es.typed-array.to-locale-string',
   'es.typed-array.to-string',
   'es.unescape',
-  'es.weak-map',
   'esnext.aggregate-error',
   'esnext.global-this',
   'esnext.typed-array.at',
