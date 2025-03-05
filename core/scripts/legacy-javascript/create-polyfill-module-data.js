@@ -1,4 +1,9 @@
 /**
+ * @license Copyright 2025 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/**
  * @fileoverview - Used to generate which polyfills to check for in LegacyJavaScript audit.
  *
  * Produces a list of polyfills that a Baseline-targeting babel config should not include.
