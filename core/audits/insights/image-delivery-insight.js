@@ -16,8 +16,6 @@ import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js', UIStrings);
 
 const getOptimizationMessage =
-  // @ts-expect-error TODO(cjamcl): update trace engine lib to modify types accordingly.
-  // right now return type of getOptimizationMessage is wrongly `string`.
   TraceEngineResult.localizeFunction(str_, ImageDeliveryInsightModule.getOptimizationMessage);
 
 class ImageDeliveryInsight extends Audit {
