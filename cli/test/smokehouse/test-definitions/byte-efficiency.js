@@ -270,6 +270,9 @@ const expectations = {
         },
       },
       'image-delivery-insight': {
+        // Necessary image data added in M136
+        // https://chromium-review.googlesource.com/c/chromium/src/+/6319773
+        _minChromiumVersion: '136',
         details: {
           items: [
             {
