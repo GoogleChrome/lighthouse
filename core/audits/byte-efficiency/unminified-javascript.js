@@ -80,7 +80,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     const items = [];
     const warnings = [];
     for (const script of artifacts.Scripts) {
-      if (!script.content) continue;
+      if (!script.content || !script.url) continue;
 
       const networkRecord = getRequestForScript(networkRecords, script);
 
