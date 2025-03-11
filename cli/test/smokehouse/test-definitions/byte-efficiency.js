@@ -30,6 +30,7 @@ const config = {
       // unsized-images is not a byte-efficiency audit but can easily leverage the variety of images present in
       // byte-efficiency tests & thus makes sense to test together.
       'unsized-images',
+      'image-delivery-insight',
     ],
     throttlingMethod: 'devtools',
   },
@@ -265,6 +266,54 @@ const expectations = {
           items: [
             {url: /lighthouse-320x212-poor\.jpg/},
             {url: /lighthouse-320x212-poor\.jpg\?cssauto/},
+          ],
+        },
+      },
+      'image-delivery-insight': {
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/byte-efficiency/lighthouse-1024x680.jpg',
+              subItems: {
+                items: [
+                  {reason: /This image file is larger than it needs to be/},
+                ],
+              },
+            },
+            // TODO: Flag 0x0 images in the image delivery insight.
+            // {
+            //   url: 'http://localhost:10200/byte-efficiency/lighthouse-2048x1356.webp?size0',
+            //   subItems: {
+            //     items: [
+            //       {reason: /This image file is larger than it needs to be/},
+            //     ],
+            //   },
+            // },
+            {
+              url: 'http://localhost:10200/byte-efficiency/lighthouse-480x320.jpg',
+              subItems: {
+                items: [
+                  {reason: /This image file is larger than it needs to be/},
+                ],
+              },
+            },
+            {
+              url: 'http://localhost:10200/byte-efficiency/lighthouse-480x320.jpg?attributesized',
+              subItems: {
+                items: [
+                  {reason: /This image file is larger than it needs to be/},
+                ],
+              },
+            },
+            // TODO: This image only has a paint event sometimes.
+            // {
+            //   url: 'http://localhost:10200/byte-efficiency/lighthouse-480x320.jpg',
+            //   subItems: {
+            //     items: [
+            //       {reason: /This image file is larger than it needs to be/},
+            //     ],
+            //   },
+            // },
           ],
         },
       },
