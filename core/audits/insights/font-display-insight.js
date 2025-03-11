@@ -42,7 +42,7 @@ class FontDisplayInsight extends Audit {
         {key: 'wastedMs', valueType: 'ms', label: str_(i18n.UIStrings.columnWastedMs)},
       ];
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = insight.fonts.filter(font => font.wastedTime > 0).map(font => ({
+      const items = insight.fonts.map(font => ({
         url: font.request.args.data.url,
         wastedMs: font.wastedTime,
       }));
