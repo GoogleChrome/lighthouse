@@ -305,15 +305,14 @@ const expectations = {
                 ],
               },
             },
-            // TODO: This image only has a paint event sometimes.
-            // {
-            //   url: 'http://localhost:10200/byte-efficiency/lighthouse-480x320.jpg',
-            //   subItems: {
-            //     items: [
-            //       {reason: /This image file is larger than it needs to be/},
-            //     ],
-            //   },
-            // },
+            {
+              url: 'http://localhost:10200/byte-efficiency/lighthouse-480x320.jpg',
+              subItems: {
+                items: [
+                  {reason: /This image file is larger than it needs to be/},
+                ],
+              },
+            },
           ],
         },
       },
