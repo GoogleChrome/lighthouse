@@ -181,9 +181,11 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       // {target:"Array",proto:true,forced:!HAS_SPECIES_SUPPORT||!USES_TO_LENGTH},{filter:
       expression += `|{target:${qt(objectWithoutPrototype)}\\S*},{${property}:`;
     } else {
-      // Map, Set, WeakSet, etc.
+      // Detect polyfills for new classes: Map, Set, WeakSet, etc.
+      // TODO: so far, no class polyfills are enabled for detection.
+      // See `modulesToSkip` in create-polyfill-module-data.js
+
       // collection("Map",
-      // Currently not used. See create-polyfill-module-data.js
       // expression += `|collection\\(${qt(property)},`;
     }
 

@@ -74,6 +74,9 @@ const modulesToSkip = [
   'es.weak-map',
   'es.weak-set',
 
+  // Haven't worked out how to detect polyfils for new classes yet.
+  'es.promise',
+
   // Skip some tricky stuff. Would be good to reduce this array.
   'es.symbol',
   'es.symbol.description',
@@ -146,7 +149,6 @@ const modulesToSkip = [
   'es.object.to-string',
   'es.parse-float',
   'es.parse-int',
-  'es.promise',
   'es.promise.all-settled',
   'es.promise.finally',
   'es.reflect.define-property',
@@ -229,7 +231,11 @@ if (unneededSkips.length) {
 
 /** @type {PolyfillModuleData} */
 const data = [
+  // These don't match the automated patterns that add most things.
+
+  // This doesn't have a JS api.
   {name: 'focus-visible', modules: ['focus-visible']},
+  // Must pass a value to Error ctor to see this property.
   {name: 'Error.prototype.cause', modules: ['es.error.cause']},
 ];
 
@@ -249,32 +255,32 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
   let className = kebabCaseToCamelCase(parts[0]);
   className = className[0].toUpperCase() + className.slice(1);
   if (parts[0] === 'json') className = 'JSON';
-  if (parts[0] === 'typed-array') className = 'TypedArray';
   if (parts[0] === 'url') className = 'URL';
 
   let prop = parts.length > 1 ? kebabCaseToCamelCase(parts[1]) : '';
   if (parts[1] === 'to-json') prop = 'toJSON';
 
   // @ts-expect-error
-  const maybeClassSymbol = global[className];
+  const maybeGlobal = global[className];
 
   if (parts.length === 1) {
-    if (!maybeClassSymbol) {
+    if (!maybeGlobal) {
       throw new Error(polyfillModuleName);
     }
 
     data.push({name: className, modules: [polyfillModuleName], corejs: true});
   } else {
     try {
-      const instance = maybeClassSymbol();
+      const instance = maybeGlobal();
       if (instance[prop] !== undefined) {
         // eslint-disable-next-line max-len
         data.push({name: `${className}.prototype.${prop}`, modules: [polyfillModuleName], corejs: true});
         continue;
       }
-    } catch {}
+    } catch {} // example polyfill that can't be constructed: es.math.acosh (Math.acosh). handled below.
 
-    if (maybeClassSymbol && Object.hasOwn(maybeClassSymbol, prop)) {
+    // Should be a global then. Look for a property on it.
+    if (maybeGlobal && Object.hasOwn(maybeGlobal, prop)) {
       data.push({name: `${className}.${prop}`, modules: [polyfillModuleName], corejs: true});
     } else {
       throw new Error(polyfillModuleName);
