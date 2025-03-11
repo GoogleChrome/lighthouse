@@ -614,5 +614,31 @@ describe('Config Filtering', () => {
         artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
       });
     });
+
+    it('should not allow to pass an empty array to onlyAudits', () => {
+      resolvedConfig = {
+        ...resolvedConfig,
+      };
+      expect(() => {
+        filters.filterConfigByExplicitFilters(resolvedConfig, {
+          onlyAudits: [],
+          onlyCategories: null,
+          skipAudits: null,
+        });
+      }).toThrow('onlyAudits cannot be an empty array.');
+    });
+
+    it('should not allow to pass an empty array to onlyCategories', () => {
+      resolvedConfig = {
+        ...resolvedConfig,
+      };
+      expect(() => {
+        filters.filterConfigByExplicitFilters(resolvedConfig, {
+          onlyAudits: null,
+          onlyCategories: [],
+          skipAudits: null,
+        });
+      }).toThrow('onlyCategories cannot be an empty array.');
+    });
   });
 });
