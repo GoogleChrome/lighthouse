@@ -126,7 +126,7 @@ class CriticalRequestChains {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}} data
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
@@ -139,5 +139,5 @@ class CriticalRequestChains {
 }
 
 const CriticalRequestChainsComputed =
-  makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+  makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace', 'settings']);
 export {CriticalRequestChainsComputed as CriticalRequestChains};

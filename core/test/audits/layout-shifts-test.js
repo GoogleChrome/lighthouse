@@ -57,7 +57,10 @@ describe('Performance: layout-shifts audit', () => {
       }],
     };
 
-    const auditResult = await LayoutShiftsAudit.audit(artifacts, {computedCache: new Map()});
+    const auditResult = await LayoutShiftsAudit.audit(artifacts, {
+      computedCache: new Map(),
+      settings: {},
+    });
     expect(auditResult.score).toEqual(0);
     expect(auditResult.displayValue).toBeDisplayString('2 layout shifts found');
     expect(auditResult.metricSavings).toEqual({CLS: 0.4});
@@ -110,7 +113,10 @@ describe('Performance: layout-shifts audit', () => {
       TraceElements: traceElements,
     };
 
-    const auditResult = await LayoutShiftsAudit.audit(artifacts, {computedCache: new Map()});
+    const auditResult = await LayoutShiftsAudit.audit(artifacts, {
+      computedCache: new Map(),
+      settings: {},
+    });
     expect(auditResult.score).toEqual(0);
     expect(auditResult.notApplicable).toEqual(false);
     expect(auditResult.displayValue).toBeDisplayString('4 layout shifts found');

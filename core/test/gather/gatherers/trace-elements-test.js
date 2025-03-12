@@ -259,8 +259,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const result = await gatherer.getArtifact({
       driver,
       dependencies: {Trace: trace, RootCauses},
-      computedCache: new Map()}
-    );
+      computedCache: new Map(),
+      settings: {},
+    });
     const sorted = result.sort((a, b) => a.nodeId - b.nodeId);
 
     expect(sorted).toEqual([
@@ -342,6 +343,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       driver,
       dependencies: {Trace: animationTrace, RootCauses},
       computedCache: new Map(),
+      settings: {},
     });
 
     const animationTraceElements = result.filter(el => el.traceEventType === 'animation');
@@ -423,6 +425,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       driver,
       dependencies: {Trace: trace, RootCauses},
       computedCache: new Map(),
+      settings: {},
     });
 
     expect(result).toEqual([
@@ -487,6 +490,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
       gatherMode: 'timespan',
       dependencies: {Trace: trace, RootCauses},
       computedCache: new Map(),
+      settings: {},
     });
 
     expect(result).toEqual([

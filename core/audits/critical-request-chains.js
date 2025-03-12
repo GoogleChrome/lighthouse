@@ -168,10 +168,11 @@ class CriticalRequestChains extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const settings = context.settings;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const chains = await ComputedChains.request({devtoolsLog, trace, URL}, context);
+    const chains = await ComputedChains.request({settings, devtoolsLog, trace, URL}, context);
     let chainCount = 0;
     /**
      * @param {LH.Audit.Details.SimpleCriticalRequestNode} node

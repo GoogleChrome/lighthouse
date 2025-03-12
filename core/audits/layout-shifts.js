@@ -57,8 +57,9 @@ class LayoutShifts extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const settings = context.settings;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const traceEngineResult = await TraceEngineResult.request({trace}, context);
+    const traceEngineResult = await TraceEngineResult.request({trace, settings}, context);
     const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
     const {cumulativeLayoutShift: clsSavings, impactByNodeId} =
       await CumulativeLayoutShiftComputed.request(trace, context);

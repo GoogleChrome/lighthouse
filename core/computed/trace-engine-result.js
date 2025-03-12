@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
 import * as i18n from '../lib/i18n/i18n.js';
 import * as TraceEngine from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
@@ -16,16 +18,36 @@ import * as LH from '../../types/lh.js';
  */
 class TraceEngineResult {
   /**
+   * @param {LH.Audit.Context['settings']} settings
    * @param {LH.TraceEvent[]} traceEvents
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
-  static async runTraceEngine(traceEvents) {
+  static async runTraceEngine(settings, traceEvents) {
     const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
+
+    const lanternSettings = {};
+    if (settings.throttlingMethod) lanternSettings.throttlingMethod = settings.throttlingMethod;
+    if (settings.throttling) lanternSettings.throttling = settings.throttling;
+    if (settings.precomputedLanternData) {
+      lanternSettings.precomputedLanternData = settings.precomputedLanternData;
+    }
 
     // eslint-disable-next-line max-len
     await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
       traceEvents
-    ), {});
+    ), {
+      logger: {
+        start(id) {
+          const logId = `lh:computed:TraceEngineResult:${id}`;
+          log.time({msg: `Trace Engine ${id}`, id: logId});
+        },
+        end(id) {
+          const logId = `lh:computed:TraceEngineResult:${id}`;
+          log.timeEnd({msg: `Trace Engine ${id}`, id: logId});
+        },
+      },
+      lanternSettings,
+    });
     if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
     this.localizeInsights(processor.insights);
@@ -177,7 +199,7 @@ class TraceEngineResult {
   }
 
   /**
-   * @param {{trace: LH.Trace}} data
+   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
@@ -207,10 +229,10 @@ class TraceEngineResult {
       }
     }
 
-    const result = await TraceEngineResult.runTraceEngine(traceEvents);
+    const result = await TraceEngineResult.runTraceEngine(data.settings, traceEvents);
     return result;
   }
 }
 
-const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, ['trace']);
+const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, ['trace', 'settings']);
 export {TraceEngineResultComputed as TraceEngineResult};

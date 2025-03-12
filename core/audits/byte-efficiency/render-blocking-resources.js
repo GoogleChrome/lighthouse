@@ -122,13 +122,14 @@ class RenderBlockingResources extends Audit {
    * @return {Promise<{fcpWastedMs: number, lcpWastedMs: number, results: Array<{url: string, totalBytes: number, wastedMs: number}>}>}
    */
   static async computeResults(artifacts, context) {
+    const settings = context.settings;
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const simulatorData = {devtoolsLog, settings: context.settings};
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
-    const navInsights = await NavigationInsights.request(trace, context);
+    const navInsights = await NavigationInsights.request({trace, settings}, context);
 
     const renderBlocking = navInsights.model.RenderBlocking;
     if (renderBlocking instanceof Error) throw renderBlocking;

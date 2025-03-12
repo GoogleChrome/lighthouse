@@ -386,7 +386,8 @@ class TraceElements extends BaseGatherer {
     const session = context.driver.defaultSession;
 
     const trace = context.dependencies.Trace;
-    const traceEngineResult = await TraceEngineResult.request({trace}, context);
+    const settings = context.settings;
+    const traceEngineResult = await TraceEngineResult.request({trace, settings}, context);
     const rootCauses = context.dependencies.RootCauses;
 
     const processedTrace = await ProcessedTrace.request(trace, context);

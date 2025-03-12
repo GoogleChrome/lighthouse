@@ -192,7 +192,8 @@ class LongTasks extends Audit {
       taskTimingsByEvent = new Map();
 
       const simulatorOptions = {devtoolsLog, settings: context.settings};
-      const pageGraph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, context);
+      const pageGraph =
+        await PageDependencyGraph.request({settings, trace, devtoolsLog, URL}, context);
       const simulator = await LoadSimulator.request(simulatorOptions, context);
       const simulation = await simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
       for (const [node, timing] of simulation.nodeTimings.entries()) {
