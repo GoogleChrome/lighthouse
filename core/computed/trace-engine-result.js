@@ -18,11 +18,11 @@ import * as LH from '../../types/lh.js';
  */
 class TraceEngineResult {
   /**
-   * @param {LH.Audit.Context['settings']} settings
    * @param {LH.TraceEvent[]} traceEvents
+   * @param {LH.Audit.Context['settings']} settings
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
-  static async runTraceEngine(settings, traceEvents) {
+  static async runTraceEngine(traceEvents, settings) {
     const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
 
     const lanternSettings = {};
@@ -229,7 +229,7 @@ class TraceEngineResult {
       }
     }
 
-    const result = await TraceEngineResult.runTraceEngine(data.settings, traceEvents);
+    const result = await TraceEngineResult.runTraceEngine(traceEvents, data.settings);
     return result;
   }
 }
