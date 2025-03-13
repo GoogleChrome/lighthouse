@@ -127,6 +127,7 @@ describe('Navigation', function() {
       'html-has-lang',
       'render-blocking-resources',
       'meta-description',
+      'render-blocking-insight',
     ]);
 
     const viewTraceButton = await $textContent('View Trace', reportEl);
