@@ -114,8 +114,12 @@ class ScriptTreemapDataAudit extends Audit {
      */
     function collapseAll(node) {
       while (node.children && node.children.length === 1) {
-        node.name += '/' + node.children[0].name;
-        node.children = node.children[0].children;
+        const child = node.children[0];
+        node.name += '/' + child.name;
+        if (child.duplicatedNormalizedModuleName) {
+          node.duplicatedNormalizedModuleName = child.duplicatedNormalizedModuleName;
+        }
+        node.children = child.children;
       }
 
       if (node.children) {

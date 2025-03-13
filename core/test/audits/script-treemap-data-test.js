@@ -127,12 +127,12 @@ describe('ScriptTreemapData audit', () => {
     });
 
     it('has nodes', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`70077`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73749`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
 
     it('finds duplicates', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`70077`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73749`);
       // @ts-ignore all these children exist.
       const leafNode = treemapData.nodes[0].
         children[0].
