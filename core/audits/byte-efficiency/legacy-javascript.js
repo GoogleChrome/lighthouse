@@ -11,8 +11,8 @@
  * ./core/scripts/legacy-javascript - verification tool.
  */
 
-/** @typedef {{name: string, expression: string, estimateBytes?: (result: PatternMatchResult) => number}} Pattern */
-/** @typedef {{name: string, line: number, column: number, count: number}} PatternMatchResult */
+/** @typedef {{name: string, expression: string, estimateBytes?: (content: string) => number}} Pattern */
+/** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
 /** @typedef {import('./byte-efficiency-audit.js').ByteEfficiencyProduct} ByteEfficiencyProduct */
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
@@ -55,7 +55,8 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * Takes a list of patterns (consisting of a name identifier and a RegExp expression string)
- * and returns match results with line / column information for a given code input.
+ * and via `match` returns match results with line / column information for a given code input.
+ * Only returns the first match per pattern given.
  */
 class CodePatternMatcher {
   /**
@@ -99,8 +100,6 @@ class CodePatternMatcher {
       const pattern = this.patterns[patternExpressionMatches.findIndex(Boolean)];
 
       if (seen.has(pattern)) {
-        const existingMatch = matches.find(m => m.name === pattern.name);
-        if (existingMatch) existingMatch.count += 1;
         continue;
       }
       seen.add(pattern);
@@ -109,7 +108,6 @@ class CodePatternMatcher {
         name: pattern.name,
         line,
         column: result.index - lineBeginsAtIndex,
-        count: 1,
       });
     }
 
@@ -229,23 +227,75 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    * @return {Pattern[]}
    */
   static getTransformPatterns() {
+    /**
+     * @param {string} content
+     * @param {RegExp|string} pattern
+     * @return {number}
+     */
+    const count = (content, pattern) => {
+      // Split is slightly faster than match.
+      if (typeof pattern === 'string') {
+        return content.split(pattern).length;
+      }
+
+      return (content.match(pattern) ?? []).length;
+    };
+
+    // For expression: prefer a string that is found in the transform runtime support code (those won't ever be minified).
+
     return [
+      /**
+       * @babel/plugin-transform-classes
+       * input:
+
+          class MyTestClass {
+            log() {
+              console.log(1);
+            }
+          };
+
+       * output:
+
+          function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+          function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+          function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+          function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+          function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+          let MyTestClass = function () {
+            function MyTestClass() {
+              _classCallCheck(this, MyTestClass);
+            }
+            return _createClass(MyTestClass, [{
+              key: "log",
+              value: function log() {
+                console.log(1);
+              }
+            }]);
+          }();
+       */
       {
         name: '@babel/plugin-transform-classes',
         expression: 'Cannot call a class as a function',
-        estimateBytes: result => 150 + result.count * '_classCallCheck()'.length,
+        estimateBytes: content => {
+          return 1000 + (count(content, '_classCallCheck') - 1) * '_classCallCheck()'.length;
+        },
       },
       {
         name: '@babel/plugin-transform-regenerator',
-        expression: /regeneratorRuntime\(?\)?\.a?wrap/.source,
+        expression: 'Generator is already running|regeneratorRuntime',
         // Example of this transform: https://gist.github.com/connorjclark/af8bccfff377ac44efc104a79bc75da2
         // `regeneratorRuntime.awrap` is generated for every usage of `await`, and adds ~80 bytes each.
-        estimateBytes: result => result.count * 80,
+        estimateBytes: content => {
+          return count(content, /regeneratorRuntime\(?\)?\.a?wrap/g) * 80;
+        },
       },
       {
         name: '@babel/plugin-transform-spread',
-        expression: /\.apply\(void 0,\s?_toConsumableArray/.source,
-        estimateBytes: result => 1169 + result.count * '_toConsumableArray()'.length,
+        expression: 'Invalid attempt to spread non-iterable instance',
+        estimateBytes: content => {
+          const per = '_toConsumableArray()'.length;
+          return 1169 + count(content, /\.apply\(void 0,\s?_toConsumableArray/g) * per;
+        },
       },
     ];
   }
@@ -283,9 +333,9 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
           const mapping = bundle.map.mappings().find(m => m.sourceURL === source);
           if (mapping) {
-            matches.push({name, line: mapping.lineNumber, column: mapping.columnNumber, count: 1});
+            matches.push({name, line: mapping.lineNumber, column: mapping.columnNumber});
           } else {
-            matches.push({name, line: 0, column: 0, count: 1});
+            matches.push({name, line: 0, column: 0});
           }
         }
       }
@@ -298,10 +348,11 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   }
 
   /**
+   * @param {LH.Artifacts.Script} script
    * @param {PatternMatchResult[]} matches
    * @return {number}
    */
-  static estimateWastedBytes(matches) {
+  static estimateWastedBytes(script, matches) {
     // Split up results based on polyfill / transform. Only transforms start with @.
     const polyfillResults = matches.filter(m => !m.name.startsWith('@'));
     const transformResults = matches.filter(m => m.name.startsWith('@'));
@@ -325,8 +376,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
     for (const result of transformResults) {
       const pattern = this.getTransformPatterns().find(p => p.name === result.name);
-      if (!pattern || !pattern.estimateBytes) continue;
-      estimatedWastedBytesFromTransforms += pattern.estimateBytes(result);
+      if (!pattern || !pattern.estimateBytes || !script.content) continue;
+      estimatedWastedBytesFromTransforms += pattern.estimateBytes(script.content);
     }
 
     const estimatedWastedBytes =
@@ -363,7 +414,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     for (const [script, matches] of scriptToMatchResults.entries()) {
       const compressionRatio = estimateCompressionRatioForContent(
         compressionRatioByUrl, script.url, artifacts, networkRecords);
-      const wastedBytes = Math.round(this.estimateWastedBytes(matches) * compressionRatio);
+      const wastedBytes = Math.round(this.estimateWastedBytes(script, matches) * compressionRatio);
       /** @type {typeof items[number]} */
       const item = {
         url: script.url,
