@@ -235,7 +235,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const count = (content, pattern) => {
       // Split is slightly faster than match.
       if (typeof pattern === 'string') {
-        return content.split(pattern).length;
+        return content.split(pattern).length - 1;
       }
 
       return (content.match(pattern) ?? []).length;
@@ -244,35 +244,34 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     // For expression: prefer a string that is found in the transform runtime support code (those won't ever be minified).
 
     return [
-      /**
-       * @babel/plugin-transform-classes
-       * input:
-
-          class MyTestClass {
-            log() {
-              console.log(1);
-            }
-          };
-
-       * output:
-
-          function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-          function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-          function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-          function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-          function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-          let MyTestClass = function () {
-            function MyTestClass() {
-              _classCallCheck(this, MyTestClass);
-            }
-            return _createClass(MyTestClass, [{
-              key: "log",
-              value: function log() {
-                console.log(1);
-              }
-            }]);
-          }();
-       */
+      // @babel/plugin-transform-classes
+      //
+      // input:
+      //
+      // class MyTestClass {
+      //   log() {
+      //     console.log(1);
+      //   }
+      // };
+      //
+      // output:
+      //
+      // function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+      // function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+      // function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+      // function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+      // function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+      // let MyTestClass = function () {
+      //   function MyTestClass() {
+      //     _classCallCheck(this, MyTestClass);
+      //   }
+      //   return _createClass(MyTestClass, [{
+      //     key: "log",
+      //     value: function log() {
+      //       console.log(1);
+      //     }
+      //   }]);
+      // }();
       {
         name: '@babel/plugin-transform-classes',
         expression: 'Cannot call a class as a function',
