@@ -116,6 +116,8 @@ async function processVariant(options) {
       fs.writeFileSync(`${dir}/babel-stderr.txt`, babelOutputBuffer.stderr.toString());
     }
 
+    // browserify
+
     // Transform any require statements (like for core-js) into a big bundle.
     await runCommand('yarn', [
       'browserify',
@@ -132,6 +134,23 @@ async function processVariant(options) {
       '-o', `${dir}/main.bundle.browserify.min.js`,
       '--source-map', 'content="inline",url="main.bundle.browserify.min.js.map"',
     ]);
+
+    // esbuild
+    await runCommand('yarn', [
+      'esbuild',
+      `${dir}/main.transpiled.js`,
+      `--outfile=${dir}/main.bundle.esbuild.js`,
+      '--bundle',
+      '--sourcemap',
+    ]);
+    await runCommand('yarn', [
+      'esbuild',
+      `${dir}/main.transpiled.js`,
+      `--outfile=${dir}/main.bundle.esbuild.min.js`,
+      '--bundle',
+      '--sourcemap',
+      '--minify',
+    ]);
   }
 
   if (STAGE === 'audit' || STAGE === 'all') {
@@ -141,6 +160,8 @@ async function processVariant(options) {
     const bundles = [
       'main.bundle.browserify.js',
       'main.bundle.browserify.min.js',
+      'main.bundle.esbuild.js',
+      'main.bundle.esbuild.min.js',
     ];
     for (const bundle of bundles) {
       const code = fs.readFileSync(`${dir}/${bundle}`, 'utf-8');

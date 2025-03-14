@@ -190,7 +190,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
     // Un-minified code may have module names.
     // core-js/modules/es.object.is-frozen
-    expression += `|core-js/modules/${coreJs3Module}"`;
+    expression += `|core-js/modules/${coreJs3Module}(?:\\.js)?"`;
 
     return expression;
   }
