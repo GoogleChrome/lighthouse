@@ -16,6 +16,7 @@ class LocalConsole {
    * @param {string} str
    */
   log(str) {
+    console.log('#', str);
     this._log += str + '\n';
   }
 
