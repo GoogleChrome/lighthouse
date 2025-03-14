@@ -134,8 +134,9 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   /**
    * @param {string?} object
    * @param {string} property
+   * @param {string} coreJs3Module
    */
-  static buildPolyfillExpression(object, property) {
+  static buildPolyfillExpression(object, property, coreJs3Module) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
 
@@ -187,6 +188,10 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       // expression += `|collection\\(${qt(property)},`;
     }
 
+    // Un-minified code may have module names.
+    // core-js/modules/es.object.is-frozen
+    expression += `|core-js/modules/${coreJs3Module}"`;
+
     return expression;
   }
 
@@ -210,13 +215,13 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     /** @type {Pattern[]} */
     const patterns = [];
 
-    for (const {name} of this.getCoreJsPolyfillData()) {
+    for (const {name, coreJs3Module} of this.getCoreJsPolyfillData()) {
       const parts = name.split('.');
       const object = parts.length > 1 ? parts.slice(0, parts.length - 1).join('.') : null;
       const property = parts[parts.length - 1];
       patterns.push({
         name,
-        expression: this.buildPolyfillExpression(object, property),
+        expression: this.buildPolyfillExpression(object, property, coreJs3Module),
       });
     }
 

@@ -38,6 +38,8 @@ const mainCode = fs.readFileSync(`${scriptDir}/main.js`, 'utf-8');
 const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
 const polyfills = LegacyJavascript.getCoreJsPolyfillData();
 
+/** @typedef {Array<{bundle: string, results: import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct}>} SummaryFile */
+
 /**
  * @param {string} command
  * @param {string[]} args
@@ -99,6 +101,7 @@ async function processVariant(options) {
     fs.writeFileSync(`${dir}/index.html`,
       `<title>${name}</title><script src=main.bundle.min.js></script><p>${name}</p>`);
 
+    // Apply code transforms and inject require statements for polyfills.
     // Note: No babelrc will make babel a glorified `cp`.
     const babelOutputBuffer = await runCommand('yarn', [
       'babel',
@@ -117,7 +120,7 @@ async function processVariant(options) {
     await runCommand('yarn', [
       'browserify',
       `${dir}/main.transpiled.js`,
-      '-o', `${dir}/main.bundle.js`,
+      '-o', `${dir}/main.bundle.browserify.js`,
       '--debug', // source maps
       '--full-paths=false',
     ]);
@@ -125,35 +128,50 @@ async function processVariant(options) {
     // Minify.
     await runCommand('yarn', [
       'terser',
-      `${dir}/main.bundle.js`,
-      '-o', `${dir}/main.bundle.min.js`,
-      '--source-map', 'content="inline",url="main.bundle.min.js.map"',
+      `${dir}/main.bundle.browserify.js`,
+      '-o', `${dir}/main.bundle.browserify.min.js`,
+      '--source-map', 'content="inline",url="main.bundle.browserify.min.js.map"',
     ]);
   }
 
   if (STAGE === 'audit' || STAGE === 'all') {
-    const code = fs.readFileSync(`${dir}/main.bundle.min.js`, 'utf-8');
-    const map = JSON.parse(fs.readFileSync(`${dir}/main.bundle.min.js.map`, 'utf-8'));
+    const legacyJavascriptWithMapResults = [];
+    const legacyJavascriptWithoutMapResults = [];
 
-    let legacyJavascriptResults;
+    const bundles = [
+      'main.bundle.browserify.js',
+      'main.bundle.browserify.min.js',
+    ];
+    for (const bundle of bundles) {
+      const code = fs.readFileSync(`${dir}/${bundle}`, 'utf-8');
 
-    legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: true});
+      if (fs.existsSync(`${dir}/${bundle}.map`)) {
+        const map = JSON.parse(fs.readFileSync(`${dir}/${bundle}.map`, 'utf-8'));
+        legacyJavascriptWithMapResults.push({
+          bundle,
+          results: await getLegacyJavascriptResults(code, map),
+        });
+      }
+
+      legacyJavascriptWithoutMapResults.push({
+        bundle,
+        results: await getLegacyJavascriptResults(code, null),
+      });
+    }
+
     fs.writeFileSync(`${dir}/legacy-javascript.json`,
-      JSON.stringify(legacyJavascriptResults, null, 2));
-
-    legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: false});
+      JSON.stringify(legacyJavascriptWithMapResults, null, 2));
     fs.writeFileSync(`${dir}/legacy-javascript-nomaps.json`,
-      JSON.stringify(legacyJavascriptResults, null, 2));
+      JSON.stringify(legacyJavascriptWithoutMapResults, null, 2));
   }
 }
 
 /**
  * @param {string} code
- * @param {LH.Artifacts.RawSourceMap} map
- * @param {{sourceMaps: boolean}} _
+ * @param {LH.Artifacts.RawSourceMap|null} map
  * @return {Promise<import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct>}
  */
-function getLegacyJavascriptResults(code, map, {sourceMaps}) {
+function getLegacyJavascriptResults(code, map) {
   // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
   // Much faster than running Lighthouse.
   const documentUrl = 'https://localhost/index.html'; // These URLs don't matter.
@@ -183,7 +201,7 @@ function getLegacyJavascriptResults(code, map, {sourceMaps}) {
     ],
     SourceMaps: [],
   };
-  if (sourceMaps) artifacts.SourceMaps = [{scriptId, scriptUrl, map}];
+  if (map) artifacts.SourceMaps = [{scriptId, scriptUrl, map}];
   // @ts-expect-error: partial Artifacts.
   return LegacyJavascript.audit_(artifacts, networkRecords, {
     computedCache: new Map(),
@@ -198,30 +216,37 @@ function makeSummary(legacyJavascriptFilename) {
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
     const {group, name} = readJson(`${VARIANT_DIR}/${dir}/variant.json`);
-    /** @type {import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct} */
-    const legacyJavascript = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
-    const items = /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */(
-      legacyJavascript.items);
+    /** @type {SummaryFile} */
+    const summary = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
 
-    const signals = [];
-    for (const item of items) {
-      for (const subItem of item.subItems.items) {
-        signals.push(subItem.signal);
+    for (const {bundle, results} of summary) {
+      const items =
+        /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */ (
+          results.items);
+
+      const signals = [];
+      for (const item of items) {
+        for (const subItem of item.subItems.items) {
+          signals.push(subItem.signal);
+        }
+      }
+      totalSignals += signals.length;
+      variants.push({group, name, bundle, dir, signals});
+
+      if (dir.includes('core-js') && !legacyJavascriptFilename.includes('nomaps')) {
+        const isCoreJs2Variant = dir.includes('core-js-2');
+        const detectedCoreJs2 = !!results.warnings?.length;
+        assert.equal(detectedCoreJs2, isCoreJs2Variant,
+          `detected core js version wrong for variant: ${dir}`);
       }
     }
-    totalSignals += signals.length;
-    variants.push({group, name, dir, signals});
-
-    if (dir.includes('core-js') && !legacyJavascriptFilename.includes('nomaps')) {
-      const isCoreJs2Variant = dir.includes('core-js-2');
-      const detectedCoreJs2 = !!legacyJavascript.warnings?.length;
-      assert.equal(detectedCoreJs2, isCoreJs2Variant,
-        `detected core js version wrong for variant: ${dir}`);
-    }
   }
+
   return {
     totalSignals,
-    variantsMissingSignals: variants.filter(v => v.signals.length === 0).map(v => v.name),
+    variantsMissingSignals: [
+      ...new Set(variants.filter(v => v.signals.length === 0).map(v => v.name)),
+    ],
     variants,
   };
 }
@@ -233,9 +258,9 @@ function createSummarySizes() {
     lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
 
     const variants = [];
-    for (const variantBundle of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `)) {
-      const size = fs.readFileSync(variantBundle).length;
-      variants.push({name: path.relative(variantGroupFolder, variantBundle), size});
+    for (const bundle of glob.sync(`${variantGroupFolder}/**/main.bundle.browserify.min.js`)) {
+      const size = fs.readFileSync(bundle).length;
+      variants.push({name: path.relative(variantGroupFolder, bundle), size});
     }
 
     const maxNumberChars = Math.ceil(Math.max(...variants.map(v => Math.log10(v.size))));

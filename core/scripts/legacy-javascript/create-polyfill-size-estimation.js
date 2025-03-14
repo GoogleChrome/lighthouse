@@ -56,7 +56,7 @@ function getPolyfillDependencies() {
   for (const {name} of LegacyJavascript.getCoreJsPolyfillData()) {
     const folder = name.replace(/[^a-zA-Z0-9]+/g, '-');
     const bundleMapPath =
-      `${VARIANT_DIR}/core-js-3-only-polyfill/${folder}/main.bundle.min.js.map`;
+      `${VARIANT_DIR}/core-js-3-only-polyfill/${folder}/main.bundle.browserify.min.js.map`;
     /** @type {LH.Artifacts.RawSourceMap} */
     const bundleMap = JSON.parse(fs.readFileSync(bundleMapPath, 'utf-8'));
     polyfillDependencies.set(name, bundleMap.sources.filter(s => s.startsWith('node_modules')));
@@ -80,8 +80,8 @@ async function main() {
     polyfillDependencies.set(name, modulesCommonFlattened);
   }
 
-  const bundlePath =
-    `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.min.js`;
+  // eslint-disable-next-line max-len
+  const bundlePath = `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.browserify.min.js`;
   const bundleContents = fs.readFileSync(bundlePath, 'utf-8');
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
   /** @type {Pick<LH.Artifacts, 'Scripts'|'SourceMaps'>} */
