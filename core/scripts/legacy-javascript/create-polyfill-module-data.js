@@ -288,5 +288,19 @@ for (const polyfillModuleName of polyfillsNotNeededForBaseline.list) {
   }
 }
 
+// Not sure why core-js emits multiple polyfills for the same thing.
+// Ex: esnext.promise.any and es.promise.any, esnext.string.match-all and es.string.match-all.
+// Combine these into a single entry.
+for (const entry of [...data]) {
+  const module = entry.modules[0];
+  if (!module.startsWith('esnext')) continue;
+
+  const otherEntry = data.find(e => e !== entry && e.name === entry.name);
+  if (!otherEntry) continue;
+
+  otherEntry.modules.push(...entry.modules);
+  data.splice(data.indexOf(entry), 1);
+}
+
 fs.writeFileSync(`${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`,
   JSON.stringify(data, null, 2));

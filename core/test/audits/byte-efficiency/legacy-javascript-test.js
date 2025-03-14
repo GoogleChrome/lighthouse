@@ -282,16 +282,16 @@ Map {
         location: {line: 0, column: 0},
       },
       {
-        signal: 'Object.entries',
+        signal: 'Array.prototype.findLast',
         location: {line: 0, column: 0},
       },
       {
-        signal: 'Array.prototype.findLast',
+        signal: 'Object.entries',
         location: {line: 0, column: 0},
       },
     ]);
     expect(result.items[0].subItems.items).toHaveLength(3);
-    expect(result.items[0].wastedBytes).toBe(36422);
+    expect(result.items[0].wastedBytes).toBe(36369);
   });
 });
 
