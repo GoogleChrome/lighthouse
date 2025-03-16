@@ -318,7 +318,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const polyfillData = this.getPolyfillModuleData();
 
     for (const script of Object.values(scripts)) {
-      if (!script.content) continue;
+      if (!script.content || !script.url) continue;
 
       // Start with pattern matching against the downloaded script.
       const matches = matcher.match(script.content);
@@ -416,6 +416,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const scriptToMatchResults =
       this.detectAcrossScripts(matcher, artifacts.Scripts, bundles);
     for (const [script, matches] of scriptToMatchResults.entries()) {
+      if (!script.url) continue;
+
       const compressionRatio = estimateCompressionRatioForContent(
         compressionRatioByUrl, script.url, artifacts, networkRecords);
       const wastedBytes = Math.round(this.estimateWastedBytes(script, matches) * compressionRatio);
