@@ -46,6 +46,8 @@ describe('PerfCategoryRenderer', () => {
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
     category = sampleResults.categories.performance;
+
+    // Enable experimental insights in the config.
     category.auditRefs.forEach(a => {
       if (a.id.match(/-insight$/)) {
         a.group = 'insights';
