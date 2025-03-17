@@ -10,15 +10,14 @@ import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import {execFile} from 'child_process';
-import assert from 'assert';
 
 import glob from 'glob';
 
 import {makeHash} from './hash.js';
-import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
-import {networkRecordsToDevtoolsLog} from '../../test/network-records-to-devtools-log.js';
+import SDK from '../../lib/cdt/SDK.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
+import {detectLegacyJavaScript, getCoreJsPolyfillData, getTransformPatterns} from '../../lib/legacy-javascript.js';
 
 const execFileAsync = util.promisify(execFile);
 
@@ -35,10 +34,10 @@ const STAGE = process.env.STAGE || 'all';
 
 const mainCode = fs.readFileSync(`${scriptDir}/main.js`, 'utf-8');
 
-const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
-const polyfills = LegacyJavascript.getCoreJsPolyfillData();
+const plugins = getTransformPatterns().map(pattern => pattern.name);
+const polyfills = getCoreJsPolyfillData();
 
-/** @typedef {Array<{bundle: string, results: import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct}>} SummaryFile */
+/** @typedef {Array<{bundle: string, result: import('../../lib/legacy-javascript.js').Result}>} SummaryFile */
 
 /**
  * @param {string} command
@@ -196,13 +195,13 @@ async function processVariant(options) {
         const map = JSON.parse(fs.readFileSync(`${dir}/${bundle}.map`, 'utf-8'));
         legacyJavascriptWithMapResults.push({
           bundle,
-          results: await getLegacyJavascriptResults(code, map),
+          result: detectLegacyJavaScript(code, new SDK.SourceMap('', '', map)),
         });
       }
 
       legacyJavascriptWithoutMapResults.push({
         bundle,
-        results: await getLegacyJavascriptResults(code, null),
+        result: detectLegacyJavaScript(code, null),
       });
     }
 
@@ -211,48 +210,6 @@ async function processVariant(options) {
     fs.writeFileSync(`${dir}/legacy-javascript-nomaps.json`,
       JSON.stringify(legacyJavascriptWithoutMapResults, null, 2));
   }
-}
-
-/**
- * @param {string} code
- * @param {LH.Artifacts.RawSourceMap|null} map
- * @return {Promise<import('../../audits/byte-efficiency/byte-efficiency-audit.js').ByteEfficiencyProduct>}
- */
-function getLegacyJavascriptResults(code, map) {
-  // Instead of running Lighthouse, use LegacyJavascript directly. Requires some setup.
-  // Much faster than running Lighthouse.
-  const documentUrl = 'https://localhost/index.html'; // These URLs don't matter.
-  const scriptUrl = 'https://localhost/main.bundle.min.js';
-  const scriptId = '10001';
-  const responseHeaders = [{name: 'Content-Encoding', value: 'gzip'}];
-  const networkRecords = [
-    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {const} */ ('Document'),
-      responseHeaders},
-    {url: scriptUrl, requestId: '1000.2', responseHeaders},
-  ];
-  const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
-
-  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'Scripts'|'SourceMaps'>} */
-  const artifacts = {
-    URL: {
-      requestedUrl: documentUrl,
-      mainDocumentUrl: documentUrl,
-      finalDisplayedUrl: documentUrl,
-    },
-    devtoolsLogs: {
-      [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
-    },
-    Scripts: [
-      // @ts-expect-error - partial Script excluding unused properties
-      {scriptId, url: scriptUrl, content: code},
-    ],
-    SourceMaps: [],
-  };
-  if (map) artifacts.SourceMaps = [{scriptId, scriptUrl, map}];
-  // @ts-expect-error: partial Artifacts.
-  return LegacyJavascript.audit_(artifacts, networkRecords, {
-    computedCache: new Map(),
-  });
 }
 
 /**
@@ -266,26 +223,10 @@ function makeSummary(legacyJavascriptFilename) {
     /** @type {SummaryFile} */
     const summary = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
 
-    for (const {bundle, results} of summary) {
-      const items =
-        /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */ (
-          results.items);
-
-      const signals = [];
-      for (const item of items) {
-        for (const subItem of item.subItems.items) {
-          signals.push(subItem.signal);
-        }
-      }
+    for (const {bundle, result} of summary) {
+      const signals = result.matches.map(m => m.name);
       totalSignals += signals.length;
       variants.push({group, name, bundle, dir, signals});
-
-      if (dir.includes('core-js') && !legacyJavascriptFilename.includes('nomaps')) {
-        const isCoreJs2Variant = dir.includes('core-js-2');
-        const detectedCoreJs2 = !!results.warnings?.length;
-        assert.equal(detectedCoreJs2, isCoreJs2Variant,
-          `detected core js version wrong for variant: ${dir}`);
-      }
     }
   }
 

@@ -31,7 +31,7 @@ node run.js
 
 `summary-sizes.json` - lists the size of each minified variant. Useful for understanding how many bytes each polyfill / transform adds.
 
-Additional validation happens in `core/test/audits/byte-efficiency/legacy-javascript-test.js`.
+Additional validation happens in `core/test/lib/legacy-javascript-test.js`.
 
 ## Interpreting Results
 

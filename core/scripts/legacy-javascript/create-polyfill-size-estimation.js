@@ -29,9 +29,9 @@ import fs from 'fs';
 import prettyJSONStringify from 'pretty-json-stringify';
 
 import {makeHash} from './hash.js';
-import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import {LH_ROOT} from '../../../shared/root.js';
+import {getCoreJsPolyfillData} from '../../lib/legacy-javascript.js';
 
 const hash = makeHash();
 const VARIANT_DIR = `${LH_ROOT}/core/scripts/legacy-javascript/variants/${hash}`;
@@ -53,7 +53,7 @@ function getPolyfillDependencies() {
   /** @type {Map<string, string[]>} */
   const polyfillDependencies = new Map();
 
-  for (const {name} of LegacyJavascript.getCoreJsPolyfillData()) {
+  for (const {name} of getCoreJsPolyfillData()) {
     const folder = name.replace(/[^a-zA-Z0-9]+/g, '-');
     const bundleMapPath =
       `${VARIANT_DIR}/core-js-3-only-polyfill/${folder}/main.bundle.browserify.min.js.map`;

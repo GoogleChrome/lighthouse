@@ -18,6 +18,7 @@ export function makeHash() {
     .update(fs.readFileSync(`${scriptDir}/run.js`, 'utf8'))
     .update(fs.readFileSync(`${scriptDir}/main.js`, 'utf8'))
     /* eslint-disable max-len */
+    .update(fs.readFileSync(`${LH_ROOT}/core/lib/legacy-javascript.js`, 'utf8'))
     .update(fs.readFileSync(`${LH_ROOT}/core/audits/byte-efficiency/legacy-javascript.js`, 'utf8'))
     .update(fs.readFileSync(`${LH_ROOT}/core/audits/byte-efficiency/polyfill-graph-data.json`, 'utf8'))
     .update(fs.readFileSync(`${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`, 'utf8'))
