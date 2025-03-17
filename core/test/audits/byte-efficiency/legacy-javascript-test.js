@@ -147,8 +147,8 @@ Map {
     ]);
     expect(result.items).toHaveLength(1);
     expect(result.items[0].subItems.items).toMatchObject([
-      {signal: 'String.prototype.repeat'},
       {signal: 'Array.prototype.forEach'},
+      {signal: 'String.prototype.repeat'},
     ]);
   });
 
@@ -278,15 +278,15 @@ Map {
     expect(result.items).toHaveLength(1);
     expect(result.items[0].subItems.items).toMatchObject([
       {
-        signal: 'focus-visible',
-        location: {line: 0, column: 0},
-      },
-      {
         signal: 'Array.prototype.findLast',
         location: {line: 0, column: 0},
       },
       {
         signal: 'Object.entries',
+        location: {line: 0, column: 0},
+      },
+      {
+        signal: 'focus-visible',
         location: {line: 0, column: 0},
       },
     ]);

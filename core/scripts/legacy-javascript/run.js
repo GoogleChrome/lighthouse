@@ -151,6 +151,30 @@ async function processVariant(options) {
       '--sourcemap',
       '--minify',
     ]);
+
+    // rollup
+    await runCommand('yarn', [
+      'rollup',
+      `${dir}/main.transpiled.js`,
+      '--file',
+      `${dir}/main.bundle.rollup.js`,
+      '--format',
+      'iife',
+      '--plugin', '@rollup/plugin-commonjs',
+      '--sourcemap',
+    ]);
+    await runCommand('yarn', [
+      'rollup',
+      `${dir}/main.transpiled.js`,
+      '--file',
+      `${dir}/main.bundle.rollup.min.js`,
+      '--format',
+      'iife',
+      '--plugin', '@rollup/plugin-commonjs',
+      '--plugin', '@rollup/plugin-terser',
+      '--sourcemap',
+      '--minify',
+    ]);
   }
 
   if (STAGE === 'audit' || STAGE === 'all') {
@@ -162,6 +186,8 @@ async function processVariant(options) {
       'main.bundle.browserify.min.js',
       'main.bundle.esbuild.js',
       'main.bundle.esbuild.min.js',
+      'main.bundle.rollup.js',
+      'main.bundle.rollup.min.js',
     ];
     for (const bundle of bundles) {
       const code = fs.readFileSync(`${dir}/${bundle}`, 'utf-8');

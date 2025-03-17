@@ -139,6 +139,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   static buildPolyfillExpression(object, property, coreJs3Module) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
+    const kebabCaseToCamelCase = (/** @type {string} */ str) =>
+      str.replace(/(-\w)/g, m => m[1].toUpperCase());
 
     let expression = '';
 
@@ -178,7 +180,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       // core-js@3 minified pattern.
       // {target:"Array",proto:true},{fill:fill
       // {target:"Array",proto:true,forced:!HAS_SPECIES_SUPPORT||!USES_TO_LENGTH},{filter:
-      expression += `|{target:${qt(objectWithoutPrototype)}\\S*},{${property}:`;
+      expression += `|{target:${qt(objectWithoutPrototype)}[^;]*},{${property}:`;
     } else {
       // Detect polyfills for new classes: Map, Set, WeakSet, etc.
       // TODO: so far, no class polyfills are enabled for detection.
@@ -191,6 +193,11 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     // Un-minified code may have module names.
     // core-js/modules/es.object.is-frozen
     expression += `|core-js/modules/${coreJs3Module}(?:\\.js)?"`;
+    // rollup unminified output for commonjs modules.
+    // ex: es.reflect.own-keys -> function requireEs_reflect_ownKeys ()
+    let rollupSlug = kebabCaseToCamelCase(coreJs3Module).replaceAll('.', '_');
+    rollupSlug = rollupSlug[0].toUpperCase() + rollupSlug.slice(1);
+    expression += `|require${rollupSlug} \\(`;
 
     return expression;
   }
@@ -432,7 +439,9 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       };
 
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
-      for (const match of matches) {
+      const matchesSorted =
+        matches.sort((a, b) => a.name > b.name ? 1 : a.name === b.name ? 0 : -1);
+      for (const match of matchesSorted) {
         const {name, line, column} = match;
         /** @type {SubItem} */
         const subItem = {

@@ -66,6 +66,21 @@ const modulesToSkip = [
   'es.string.sub',
   'es.string.sup',
 
+  // Problematic detection for minified rollup due to inlining some code.
+  // ex:
+  //   var WEBKIT_BUG = requireStringPadWebkitBug();
+  //   $({ target: 'String', proto: true, forced: WEBKIT_BUG }, {
+  //     padStart: function padStart(maxLength) {
+  //       return $padStart(this, maxLength, arguments.length > 1 ? arguments[1] : undefined);
+  //     }
+  //   });
+  // minifies to:
+  //   {target:"String",proto:!0,forced:function(){if(Ft)return Ct;Ft=1;var r=hr();return Ct=/Version\/10(?:\.\d+){1,2}(?: [\w./]+)?(?: Mobile\/\w+)? Safari\//.test(r)}()},{padStart:function(r){return n(this,r,arguments.length>1?arguments[1]:void 0)}}),o}kt||(kt=1,Wt())}();
+  //                                              ^^^^ hard to skip via regex
+  'es.reflect.set',
+  'es.string.pad-end',
+  'es.string.pad-start',
+
   // Internals of core-js@3 currently emit the code for these polyfills even if not needed
   // by the target environment.
   // Example: https://github.com/zloirock/core-js/blob/2da152ff2b23d483be6e2e30e4fcb93582bd9be7/packages/core-js/internals/composite-key.js#L2-L3
