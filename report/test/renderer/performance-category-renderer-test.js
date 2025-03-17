@@ -46,6 +46,11 @@ describe('PerfCategoryRenderer', () => {
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
     category = sampleResults.categories.performance;
+    category.auditRefs.forEach(a => {
+      if (a.id.match(/-insight$/)) {
+        a.group = 'insights';
+      }
+    });
   });
 
   after(() => {
