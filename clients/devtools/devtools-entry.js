@@ -21,6 +21,25 @@ import thirdPartyWeb from '../../core/lib/third-party-web.js';
 /** @type {BufferConstructor} */
 globalThis.Buffer = Buffer;
 
+// TODO: Remove this when insights aren't hidden by default
+const insightAuditIds = [
+  'cls-culprits-insight',
+  'document-latency-insight',
+  'dom-size-insight',
+  'duplicate-javascript-insight',
+  'font-display-insight',
+  'forced-reflow-insight',
+  'image-delivery-insight',
+  'interaction-to-next-paint-insight',
+  'lcp-discovery-insight',
+  'lcp-phases-insight',
+  'network-dependency-tree-insight',
+  'render-blocking-insight',
+  'slow-css-selector-insight',
+  'third-parties-insight',
+  'viewport-insight',
+];
+
 /**
  * Returns a config, which runs only certain categories.
  * Varies the config to use based on device.
@@ -49,6 +68,13 @@ function createConfig(categoryIDs, device) {
   return {
     extends: 'lighthouse:default',
     settings,
+    categories: {
+      // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
+      // config is awkward - easier to omit the property here. Will defer to default config.
+      'performance': {
+        auditRefs: insightAuditIds.map(id => ({id, weight: 0, group: 'insights'})),
+      },
+    },
   };
 }
 
