@@ -74,10 +74,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
     for (const script of artifacts.Scripts) {
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
-      console.time('detectLegacyJavaScript');
       const {matches, estimatedByteSavings} =
         detectLegacyJavaScript(script.content ?? '', bundle?.map ?? null);
-      console.timeEnd('detectLegacyJavaScript');
       if (matches.length === 0) continue;
 
       const compressionRatio = estimateCompressionRatioForContent(
