@@ -105,8 +105,6 @@ class CodePatternMatcher {
 function buildPolyfillExpression(object, property, coreJs3Module) {
   const qt = (/** @type {string} */ token) =>
     `['"]${token}['"]`; // don't worry about matching string delims
-  const kebabCaseToCamelCase = (/** @type {string} */ str) =>
-    str.replace(/(-\w)/g, m => m[1].toUpperCase());
 
   let expression = '';
 
@@ -158,12 +156,7 @@ function buildPolyfillExpression(object, property, coreJs3Module) {
 
   // Un-minified code may have module names.
   // core-js/modules/es.object.is-frozen
-  expression += `|core-js/modules/${coreJs3Module}(?:\\.js)?"`;
-  // rollup unminified output for commonjs modules.
-  // ex: es.reflect.own-keys -> function requireEs_reflect_ownKeys ()
-  let rollupSlug = kebabCaseToCamelCase(coreJs3Module).replaceAll('.', '_');
-  rollupSlug = rollupSlug[0].toUpperCase() + rollupSlug.slice(1);
-  expression += `|require${rollupSlug} \\(`;
+  expression += `|${coreJs3Module.replaceAll('.', '\\.')}(?:\\.js)?"`;
 
   return expression;
 }

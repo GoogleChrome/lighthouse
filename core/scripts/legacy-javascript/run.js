@@ -185,7 +185,9 @@ async function processVariant(options) {
       'main.bundle.browserify.min.js',
       'main.bundle.esbuild.js',
       'main.bundle.esbuild.min.js',
-      'main.bundle.rollup.js',
+      // This could be detected, but it too greatly hurts performance.
+      // See: https://github.com/GoogleChrome/lighthouse/pull/16394
+      // 'main.bundle.rollup.js',
       'main.bundle.rollup.min.js',
     ];
     for (const bundle of bundles) {
