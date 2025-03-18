@@ -11,7 +11,7 @@
  * a instance property polyfill (Array.protoype.at) and a static property (Array.from). This
  * is necessary for the regexp generation in the audit.
  *
- * Result is written to core/audits/byte-efficiency/polyfill-module-data.json
+ * Result is written to core/lib/legacy-javascript/polyfill-module-data.json
  */
 
 import fs from 'fs';
@@ -317,5 +317,5 @@ for (const entry of [...data]) {
   data.splice(data.indexOf(entry), 1);
 }
 
-fs.writeFileSync(`${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`,
+fs.writeFileSync(`${LH_ROOT}/core/lib/legacy-javascript/polyfill-module-data.json`,
   JSON.stringify(data, null, 2));

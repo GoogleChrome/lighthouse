@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {detectLegacyJavaScript} from '../../lib/legacy-javascript.js';
+import {detectLegacyJavaScript} from '../../lib/legacy-javascript/legacy-javascript.js';
 import SDK from '../../lib/cdt/SDK.js';
 import {readJson} from '../test-utils.js';
 
 /**
  * @param {Array<{code: string, map?: LH.Artifacts.RawSourceMap}>} scripts
- * @return {import('../../lib/legacy-javascript.js').Result[]}
+ * @return {import('../../lib/legacy-javascript/legacy-javascript.js').Result[]}
  */
 const getResults = scripts => {
   return scripts.map(script => {

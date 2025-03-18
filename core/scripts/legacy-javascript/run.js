@@ -17,7 +17,7 @@ import {makeHash} from './hash.js';
 import SDK from '../../lib/cdt/SDK.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
-import {detectLegacyJavaScript, getCoreJsPolyfillData, getTransformPatterns} from '../../lib/legacy-javascript.js';
+import {detectLegacyJavaScript, getCoreJsPolyfillData, getTransformPatterns} from '../../lib/legacy-javascript/legacy-javascript.js';
 
 const execFileAsync = util.promisify(execFile);
 
@@ -37,7 +37,7 @@ const mainCode = fs.readFileSync(`${scriptDir}/main.js`, 'utf-8');
 const plugins = getTransformPatterns().map(pattern => pattern.name);
 const polyfills = getCoreJsPolyfillData();
 
-/** @typedef {Array<{bundle: string, result: import('../../lib/legacy-javascript.js').Result}>} SummaryFile */
+/** @typedef {Array<{bundle: string, result: import('../../lib/legacy-javascript/legacy-javascript.js').Result}>} SummaryFile */
 
 /**
  * @param {string} command

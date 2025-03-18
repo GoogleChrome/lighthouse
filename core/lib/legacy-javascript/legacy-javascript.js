@@ -17,18 +17,18 @@
 
 import fs from 'fs';
 
-import {LH_ROOT} from '../../shared/root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const polyfillModuleDataJson = fs.readFileSync(
-  `${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`, 'utf-8');
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-module-data.json`, 'utf-8');
 
-/** @type {import('../scripts/legacy-javascript/create-polyfill-module-data.js').PolyfillModuleData} */
+/** @type {import('../../scripts/legacy-javascript/create-polyfill-module-data.js').PolyfillModuleData} */
 const polyfillModuleData = JSON.parse(polyfillModuleDataJson);
 
 const graphJson = fs.readFileSync(
-  `${LH_ROOT}/core/audits/byte-efficiency/polyfill-graph-data.json`, 'utf-8');
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`, 'utf-8');
 
-/** @type {import('../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
+/** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
 const graph = JSON.parse(graphJson);
 
 /**
@@ -318,7 +318,7 @@ const matcher = new CodePatternMatcher([
 
 /**
  * @param {string} content
- * @param {import('../lib/cdt/generated/SourceMap.js')|null} map
+ * @param {import('../cdt/generated/SourceMap.js')|null} map
  * @return {Result}
  */
 function detectLegacyJavaScript(content, map) {
