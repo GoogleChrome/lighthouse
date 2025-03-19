@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
+
 /**
  * @license
  * Copyright 2025 Google LLC
