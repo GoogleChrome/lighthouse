@@ -19,7 +19,8 @@ async function getInsightSet(artifacts, context) {
   const settings = context.settings;
   const trace = artifacts.traces[Audit.DEFAULT_PASS];
   const processedTrace = await ProcessedTrace.request(trace, context);
-  const traceEngineResult = await TraceEngineResult.request({trace, settings}, context);
+  const SourceMaps = artifacts.SourceMaps;
+  const traceEngineResult = await TraceEngineResult.request({trace, settings, SourceMaps}, context);
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const key = navigationId ?? NO_NAVIGATION;

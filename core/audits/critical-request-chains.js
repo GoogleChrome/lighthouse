@@ -38,7 +38,7 @@ class CriticalRequestChains extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       supportedModes: ['navigation'],
       guidanceLevel: 1,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'SourceMaps'],
     };
   }
 
@@ -171,8 +171,9 @@ class CriticalRequestChains extends Audit {
     const settings = context.settings;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const URL = artifacts.URL;
-    const chains = await ComputedChains.request({settings, devtoolsLog, trace, URL}, context);
+    const {URL, SourceMaps} = artifacts;
+    const chains =
+      await ComputedChains.request({settings, devtoolsLog, trace, URL, SourceMaps}, context);
     let chainCount = 0;
     /**
      * @param {LH.Audit.Details.SimpleCriticalRequestNode} node

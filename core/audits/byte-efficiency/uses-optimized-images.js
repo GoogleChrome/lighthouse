@@ -37,7 +37,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
       requiredArtifacts: ['OptimizedImages', 'ImageElements', 'GatherContext', 'devtoolsLogs',
-        'traces', 'URL'],
+        'traces', 'URL', 'SourceMaps'],
     };
   }
 

@@ -36,7 +36,7 @@ class LargestContentfulPaintLazyLoaded extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       requiredArtifacts: ['TraceElements', 'ViewportDimensions', 'ImageElements',
-        'traces', 'devtoolsLogs', 'GatherContext', 'URL'],
+        'traces', 'devtoolsLogs', 'GatherContext', 'URL', 'SourceMaps'],
     };
   }
 

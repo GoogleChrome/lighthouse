@@ -58,7 +58,7 @@ class UsesHTTP2Audit extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       supportedModes: ['timespan', 'navigation'],
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'GatherContext'],
+      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'GatherContext', 'SourceMaps'],
     };
   }
 

@@ -55,6 +55,7 @@ describe('Performance: layout-shifts audit', () => {
           snippet: '<h1 class="test-class">',
         },
       }],
+      SourceMaps: [],
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {
@@ -111,6 +112,7 @@ describe('Performance: layout-shifts audit', () => {
     const artifacts = {
       traces: {defaultPass: trace},
       TraceElements: traceElements,
+      SourceMaps: [],
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {

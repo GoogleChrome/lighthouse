@@ -112,7 +112,8 @@ class RenderBlockingResources extends Audit {
       // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
       // of CSSUsage
       requiredArtifacts:
-        ['URL', 'traces', 'devtoolsLogs', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks'],
+        // eslint-disable-next-line max-len
+        ['URL', 'traces', 'devtoolsLogs', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks', 'SourceMaps'],
     };
   }
 
@@ -126,10 +127,11 @@ class RenderBlockingResources extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const SourceMaps = artifacts.SourceMaps;
     const simulatorData = {devtoolsLog, settings: context.settings};
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
-    const navInsights = await NavigationInsights.request({trace, settings}, context);
+    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
 
     const renderBlocking = navInsights.model.RenderBlocking;
     if (renderBlocking instanceof Error) throw renderBlocking;
@@ -141,7 +143,7 @@ class RenderBlockingResources extends Audit {
     };
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, simulator,
-      settings: metricSettings, URL: artifacts.URL};
+      settings: metricSettings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
 
     // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
     const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */

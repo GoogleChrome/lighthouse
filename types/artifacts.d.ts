@@ -569,6 +569,7 @@ declare module Artifacts {
     gatherContext: Artifacts['GatherContext'];
     simulator?: Gatherer.Simulation.Simulator;
     URL: Artifacts['URL'];
+    SourceMaps: Artifacts['SourceMaps'];
   }
 
   interface MetricComputationData extends MetricComputationDataInput {

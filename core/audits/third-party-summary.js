@@ -67,7 +67,7 @@ class ThirdPartySummary extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 1,
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 

@@ -30,6 +30,7 @@ describe('Render blocking resources audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       Stacks: [],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
@@ -61,6 +62,7 @@ describe('Render blocking resources audit', () => {
         traces: {defaultPass: lrTrace},
         devtoolsLogs: {defaultPass: lrDevtoolsLog},
         Stacks: [],
+        SourceMaps: [],
       };
 
       const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
@@ -98,6 +100,7 @@ describe('Render blocking resources audit', () => {
       traces: {defaultPass: textLcpTrace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       Stacks: [],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
@@ -121,6 +124,7 @@ describe('Render blocking resources audit', () => {
           npm: 'https://www.npmjs.com/org/ampproject',
         },
       ],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};

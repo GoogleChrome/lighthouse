@@ -48,7 +48,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
       requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext',
-        'devtoolsLogs', 'traces', 'URL'],
+        'devtoolsLogs', 'traces', 'URL', 'SourceMaps'],
     };
   }
 

@@ -27,7 +27,7 @@ class TotalBlockingTime extends Audit {
       title: str_(i18n.UIStrings.totalBlockingTimeMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'SourceMaps'],
     };
   }
 
@@ -89,7 +89,7 @@ class TotalBlockingTime extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
     const metricComputationData = {trace, devtoolsLog, gatherContext,
-      settings: context.settings, URL: artifacts.URL};
+      settings: context.settings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
     if (
       gatherContext.gatherMode === 'timespan' &&
       context.settings.throttlingMethod === 'simulate'
