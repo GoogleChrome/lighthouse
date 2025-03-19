@@ -92,9 +92,9 @@ class ForcedReflowInsight extends Audit {
    */
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'ForcedReflow', (insight) => {
-      let list = [this.makeBottomUpTable(insight)];
+      const list = [this.makeBottomUpTable(insight)];
       if (insight.topLevelFunctionCallData) {
-        list = [this.makeTopFunctionTable(insight.topLevelFunctionCallData), ...list];
+        list.unshift(this.makeTopFunctionTable(insight.topLevelFunctionCallData));
       }
       return Audit.makeListDetails(list);
     });
