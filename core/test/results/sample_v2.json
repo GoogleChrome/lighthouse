@@ -5981,9 +5981,9 @@
         "dom-size"
       ]
     },
-    "duplicate-javascript-insight": {
-      "id": "duplicate-javascript-insight",
-      "title": "Duplicate JavaScript",
+    "duplicated-javascript-insight": {
+      "id": "duplicated-javascript-insight",
+      "title": "Duplicated JavaScript",
       "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
@@ -6004,8 +6004,18 @@
       "id": "forced-reflow-insight",
       "title": "Forced reflow",
       "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [],
+            "items": []
+          }
+        ]
+      },
       "guidanceLevel": 3
     },
     "image-delivery-insight": {
@@ -6350,6 +6360,14 @@
         "third-party-summary"
       ]
     },
+    "use-cache-insight": {
+      "id": "use-cache-insight",
+      "title": "Use efficient cache lifetimes",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 3
+    },
     "viewport-insight": {
       "id": "viewport-insight",
       "title": "Optimize viewport for mobile",
@@ -6486,7 +6504,7 @@
           "group": "hidden"
         },
         {
-          "id": "duplicate-javascript-insight",
+          "id": "duplicated-javascript-insight",
           "weight": 0,
           "group": "hidden"
         },
@@ -6537,6 +6555,11 @@
         },
         {
           "id": "third-parties-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "use-cache-insight",
           "weight": 0,
           "group": "hidden"
         },
@@ -8881,7 +8904,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:insights:DuplicateJavaScript",
+        "name": "lh:computed:TraceEngineResult:insights:DuplicatedJavaScript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8942,6 +8965,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:TraceEngineResult:insights:ThirdParties",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:UseCache",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9847,7 +9876,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:duplicate-javascript-insight",
+        "name": "lh:audit:duplicated-javascript-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9908,6 +9937,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-parties-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:use-cache-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -11431,11 +11466,11 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
         "audits[dom-size-insight].details.items[2].statistic"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | title": [
-        "audits[duplicate-javascript-insight].title"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": [
+        "audits[duplicated-javascript-insight].title"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicateJavaScript.js | description": [
-        "audits[duplicate-javascript-insight].description"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": [
+        "audits[duplicated-javascript-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
         "audits[font-display-insight].title"
@@ -11567,6 +11602,12 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": [
         "audits[third-parties-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js | title": [
+        "audits[use-cache-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js | description": [
+        "audits[use-cache-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
         "audits[viewport-insight].title"
