@@ -32,7 +32,9 @@ class TimingSummary {
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
   static async summarize(trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, context) {
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
+    const metricComputationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
+
     /**
      * @template TArtifacts
      * @template TReturn

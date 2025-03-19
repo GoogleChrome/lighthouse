@@ -36,6 +36,7 @@ function mockData(networkRecords) {
       finalDisplayedUrl: mainDocumentUrl,
     },
     gatherContext: {gatherMode: 'navigation'},
+    simulator: null,
   };
 }
 
@@ -99,6 +100,7 @@ describe('LCPBreakdown', () => {
       devtoolsLog: imageLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(imageLcpDevtoolsLog),
       gatherContext: {gatherMode: 'navigation'},
+      simulator: null,
     };
 
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
@@ -115,6 +117,7 @@ describe('LCPBreakdown', () => {
       devtoolsLog: textLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(textLcpDevtoolsLog),
       gatherContext: {gatherMode: 'navigation'},
+      simulator: null,
     };
 
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});

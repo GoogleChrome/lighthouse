@@ -49,7 +49,8 @@ class PredictivePerf extends Audit {
     const {URL, SourceMaps} = artifacts;
     /** @type {LH.Config.Settings} */
     const settings = JSON.parse(JSON.stringify(defaultSettings)); // Use default settings.
-    const computationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
+    const computationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const fcp = await LanternFirstContentfulPaint.request(computationData, context);
     const tti = await LanternInteractive.request(computationData, context);
     const si = await LanternSpeedIndex.request(computationData, context);

@@ -59,6 +59,7 @@ describe('TBTImpactTasks', () => {
         SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
     });
 
@@ -247,6 +248,7 @@ describe('TBTImpactTasks', () => {
         SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
@@ -297,6 +299,7 @@ describe('TBTImpactTasks', () => {
         SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);

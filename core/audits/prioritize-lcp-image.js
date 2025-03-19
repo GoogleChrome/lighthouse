@@ -240,7 +240,8 @@ class PrioritizeLcpImage extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[PrioritizeLcpImage.DEFAULT_PASS];
     const {URL, SourceMaps} = artifacts;
     const settings = context.settings;
-    const metricData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
+    const metricData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 

@@ -20,7 +20,7 @@ async function getComputationDataParamsFromDevtoolsLog(data, context) {
     throw new Error(`Lantern metrics can only be computed on navigations`);
   }
 
-  const graph = await PageDependencyGraph.request(data, context);
+  const graph = await PageDependencyGraph.request({...data, fromTrace: false}, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 

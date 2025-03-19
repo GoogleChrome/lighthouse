@@ -6,7 +6,7 @@
 
 import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
@@ -15,6 +15,7 @@ const defaultOptions = LCPAudit.defaultOptions;
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
+    URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     GatherContext: {gatherMode: 'navigation'},
     traces: {[LCPAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},

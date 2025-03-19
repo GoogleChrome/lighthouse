@@ -6,7 +6,7 @@
 
 import {minifyDevtoolsLog} from '../../lib/minify-devtoolslog.js';
 import MetricsAudit from '../../audits/metrics.js';
-import {readJson} from '../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const trace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -17,6 +17,7 @@ describe('minify-devtoolslog', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details: {items: [before]}} = await MetricsAudit.audit(artifacts, context);

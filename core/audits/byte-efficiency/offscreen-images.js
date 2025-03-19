@@ -199,7 +199,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const unfilteredResults = Array.from(resultsMap.values());
     // get the interactive time or fallback to getting the end of trace time
     try {
-      const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
+      const metricComputationData =
+        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
       const interactive = await Interactive.request(metricComputationData, context);
 
       // use interactive to generate items

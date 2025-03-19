@@ -8,7 +8,7 @@ import assert from 'assert/strict';
 
 import Interactive from '../../../audits/metrics/interactive.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const acceptableTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const acceptableDevToolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -42,6 +42,7 @@ describe('Performance: interactive audit', () => {
       devtoolsLogs: {
         [Interactive.DEFAULT_PASS]: acceptableDevToolsLog,
       },
+      URL: getURLArtifactFromDevtoolsLog(acceptableDevToolsLog),
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -61,6 +62,7 @@ describe('Performance: interactive audit', () => {
       devtoolsLogs: {
         [Interactive.DEFAULT_PASS]: redirectDevToolsLog,
       },
+      URL: getURLArtifactFromDevtoolsLog(redirectDevToolsLog),
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

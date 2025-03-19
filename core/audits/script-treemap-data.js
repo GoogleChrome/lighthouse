@@ -178,7 +178,7 @@ class ScriptTreemapDataAudit extends Audit {
       if (script.scriptLanguage !== 'JavaScript') continue;
 
       const name = script.url;
-      const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
+      const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId) ?? null;
       const scriptCoverage = /** @type {LH.Artifacts['JsUsage'][string] | undefined} */
         (artifacts.JsUsage[script.scriptId]);
       const unusedJavascriptSummary = scriptCoverage ?

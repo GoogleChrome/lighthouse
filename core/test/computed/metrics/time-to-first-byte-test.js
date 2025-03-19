@@ -30,6 +30,7 @@ function mockData(networkRecords) {
       finalDisplayedUrl: mainDocumentUrl,
     },
     gatherContext: {gatherMode: 'navigation'},
+    simulator: null,
   };
 }
 
@@ -76,6 +77,7 @@ describe('Metrics: TTFB', () => {
       devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       gatherContext: {gatherMode: 'navigation'},
+      simulator: null,
     };
 
     const context = {settings: data.settings, computedCache: new Map()};

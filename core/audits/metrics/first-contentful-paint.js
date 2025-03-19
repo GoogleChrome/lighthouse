@@ -65,7 +65,9 @@ class FirstContentfulPaint extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
     const metricComputationData = {trace, devtoolsLog, gatherContext,
-      settings: context.settings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
+      settings: context.settings, URL: artifacts.URL,
+      SourceMaps: artifacts.SourceMaps, simulator: null,
+    };
     const metricResult = await ComputedFcp.request(metricComputationData, context);
     const options = context.options[context.settings.formFactor];
 

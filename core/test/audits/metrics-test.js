@@ -138,7 +138,9 @@ describe('Performance: metrics', () => {
   });
 
   it('leaves CLS undefined in an old trace without weighted scores', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(lcpAllFramesDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,

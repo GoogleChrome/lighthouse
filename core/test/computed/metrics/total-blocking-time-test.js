@@ -21,7 +21,7 @@ describe('Metrics: TotalBlockingTime', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
+      {trace, devtoolsLog, gatherContext, settings, URL, simulator: null},
       context
     );
 
@@ -42,7 +42,7 @@ describe('Metrics: TotalBlockingTime', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
-      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL},
+      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL, simulator: null},
       context
     );
     expect(result.timing).toBeCloseTo(400, 1);

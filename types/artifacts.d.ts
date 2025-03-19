@@ -567,7 +567,7 @@ declare module Artifacts {
     trace: Trace;
     settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: Gatherer.Simulation.Simulator;
+    simulator: Gatherer.Simulation.Simulator | null;
     URL: Artifacts['URL'];
     SourceMaps: Artifacts['SourceMaps'];
   }

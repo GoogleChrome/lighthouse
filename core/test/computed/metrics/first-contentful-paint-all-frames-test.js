@@ -6,7 +6,7 @@
 
 import {FirstContentfulPaintAllFrames} from '../../../computed/metrics/first-contentful-paint-all-frames.js'; // eslint-disable-line max-len
 import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
@@ -18,7 +18,8 @@ describe('Metrics: FCP all frames', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = FirstContentfulPaintAllFrames.request(
-      {trace, devtoolsLog, gatherContext, settings},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
       context
     );
 
@@ -31,11 +32,13 @@ describe('Metrics: FCP all frames', () => {
     const context = {settings, computedCache: new Map()};
 
     const result = await FirstContentfulPaintAllFrames.request(
-      {trace, devtoolsLog, gatherContext, settings},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
       context
     );
     const mainFrameResult = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
       context
     );
 

@@ -8,7 +8,7 @@ import assert from 'assert/strict';
 
 import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -44,6 +44,7 @@ describe('Performance: first-contentful-paint audit', () => {
       devtoolsLogs: {
         [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -61,6 +62,7 @@ describe('Performance: first-contentful-paint audit', () => {
       devtoolsLogs: {
         [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
       },
+      URL: getURLArtifactFromDevtoolsLog(frameDevtoolsLog),
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

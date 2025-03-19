@@ -93,7 +93,8 @@ class Redirects extends Audit {
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
+    const metricComputationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
 
     /** @type {Map<string, LH.Gatherer.Simulation.NodeTiming>} */

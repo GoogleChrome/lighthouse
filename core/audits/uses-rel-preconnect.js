@@ -124,8 +124,8 @@ class UsesRelPreconnectAudit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
-    const settings = context.settings;
     const {URL, SourceMaps} = artifacts;
+    const settings = context.settings;
 
     let maxWastedLcp = 0;
     let maxWastedFcp = 0;
@@ -138,7 +138,8 @@ class UsesRelPreconnectAudit extends Audit {
         MainResource.request({devtoolsLog, URL}, context),
         LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(trace, context),
-        PageDependencyGraph.request({settings, trace, devtoolsLog, URL, SourceMaps}, context),
+        PageDependencyGraph.request(
+          {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();

@@ -13,7 +13,7 @@ import {TraceEngineResult} from './trace-engine-result.js';
 
 class PageDependencyGraph {
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], fromTrace?: boolean}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], fromTrace: boolean}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Gatherer.Simulation.GraphNode>}
    */
