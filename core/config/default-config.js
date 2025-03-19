@@ -312,7 +312,7 @@ const defaultConfig = {
     'insights/cls-culprits-insight',
     'insights/document-latency-insight',
     'insights/dom-size-insight',
-    'insights/duplicate-javascript-insight',
+    'insights/duplicated-javascript-insight',
     'insights/font-display-insight',
     'insights/forced-reflow-insight',
     'insights/image-delivery-insight',
@@ -323,6 +323,7 @@ const defaultConfig = {
     'insights/render-blocking-insight',
     'insights/slow-css-selector-insight',
     'insights/third-parties-insight',
+    'insights/use-cache-insight',
     'insights/viewport-insight',
   ],
   groups: {
@@ -411,7 +412,7 @@ const defaultConfig = {
         {id: 'cls-culprits-insight', weight: 0, group: 'hidden'},
         {id: 'document-latency-insight', weight: 0, group: 'hidden'},
         {id: 'dom-size-insight', weight: 0, group: 'hidden'},
-        {id: 'duplicate-javascript-insight', weight: 0, group: 'hidden'},
+        {id: 'duplicated-javascript-insight', weight: 0, group: 'hidden'},
         {id: 'font-display-insight', weight: 0, group: 'hidden'},
         {id: 'forced-reflow-insight', weight: 0, group: 'hidden'},
         {id: 'image-delivery-insight', weight: 0, group: 'hidden'},
@@ -422,6 +423,7 @@ const defaultConfig = {
         {id: 'render-blocking-insight', weight: 0, group: 'hidden'},
         {id: 'slow-css-selector-insight', weight: 0, group: 'hidden'},
         {id: 'third-parties-insight', weight: 0, group: 'hidden'},
+        {id: 'use-cache-insight', weight: 0, group: 'hidden'},
         {id: 'viewport-insight', weight: 0, group: 'hidden'},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.

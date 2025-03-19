@@ -26,8 +26,8 @@ function getAllInsightNames() {
  * @return {string}
  */
 function kebabize(str) {
-  if (str === 'DuplicateJavaScript') {
-    return 'duplicate-javascript';
+  if (str === 'DuplicatedJavaScript') {
+    return 'duplicated-javascript';
   }
 
   return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g,

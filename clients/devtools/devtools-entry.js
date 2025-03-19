@@ -26,7 +26,7 @@ const insightAuditIds = [
   'cls-culprits-insight',
   'document-latency-insight',
   'dom-size-insight',
-  'duplicate-javascript-insight',
+  'duplicated-javascript-insight',
   'font-display-insight',
   'forced-reflow-insight',
   'image-delivery-insight',
@@ -37,6 +37,7 @@ const insightAuditIds = [
   'render-blocking-insight',
   'slow-css-selector-insight',
   'third-parties-insight',
+  'use-cache-insight',
   'viewport-insight',
 ];
 
