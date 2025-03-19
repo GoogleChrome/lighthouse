@@ -45,7 +45,6 @@ function makeComputedArtifact(computableArtifact, keys) {
         } else {
           // For now, simply log in production.
           log.error(`lh:computed:${computedName}`, err);
-          continue;
         }
       }
     }
