@@ -50,7 +50,8 @@ class LargestContentfulPaintElement extends Audit {
       guidanceLevel: 1,
       supportedModes: ['navigation'],
       requiredArtifacts:
-        ['traces', 'TraceElements', 'devtoolsLogs', 'GatherContext', 'settings', 'URL'],
+        ['traces', 'TraceElements', 'devtoolsLogs', 'GatherContext', 'settings', 'URL',
+          'SourceMaps'],
     };
   }
 
@@ -123,7 +124,7 @@ class LargestContentfulPaintElement extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
     const metricComputationData = {trace, devtoolsLog, gatherContext,
-      settings: context.settings, URL: artifacts.URL};
+      settings: context.settings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
 
     const elementTable = this.makeElementTable(artifacts);
     if (!elementTable) {

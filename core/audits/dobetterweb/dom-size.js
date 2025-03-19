@@ -56,7 +56,7 @@ class DOMSize extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
       requiredArtifacts: ['DOMStats', 'URL', 'GatherContext'],
-      __internalOptionalArtifacts: ['traces', 'devtoolsLogs'],
+      __internalOptionalArtifacts: ['traces', 'devtoolsLogs', 'SourceMaps'],
     };
   }
 

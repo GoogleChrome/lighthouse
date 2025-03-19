@@ -35,7 +35,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
       requiredArtifacts:
-        ['Stylesheets', 'CSSUsage', 'URL', 'devtoolsLogs', 'traces', 'GatherContext'],
+        ['Stylesheets', 'CSSUsage', 'URL', 'devtoolsLogs', 'traces', 'GatherContext', 'SourceMaps'],
     };
   }
 

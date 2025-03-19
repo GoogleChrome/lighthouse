@@ -37,7 +37,7 @@ class ModernImageFormats extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs', 'traces', 'URL', 'GatherContext',
-        'ImageElements'],
+        'ImageElements', 'SourceMaps'],
     };
   }
 

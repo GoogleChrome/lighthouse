@@ -17,18 +17,18 @@
 
 import fs from 'fs';
 
-import {LH_ROOT} from '../../shared/root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const polyfillModuleDataJson = fs.readFileSync(
-  `${LH_ROOT}/core/audits/byte-efficiency/polyfill-module-data.json`, 'utf-8');
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-module-data.json`, 'utf-8');
 
-/** @type {import('../scripts/legacy-javascript/create-polyfill-module-data.js').PolyfillModuleData} */
+/** @type {import('../../scripts/legacy-javascript/create-polyfill-module-data.js').PolyfillModuleData} */
 const polyfillModuleData = JSON.parse(polyfillModuleDataJson);
 
 const graphJson = fs.readFileSync(
-  `${LH_ROOT}/core/audits/byte-efficiency/polyfill-graph-data.json`, 'utf-8');
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`, 'utf-8');
 
-/** @type {import('../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
+/** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
 const graph = JSON.parse(graphJson);
 
 /**
@@ -105,8 +105,6 @@ class CodePatternMatcher {
 function buildPolyfillExpression(object, property, coreJs3Module) {
   const qt = (/** @type {string} */ token) =>
     `['"]${token}['"]`; // don't worry about matching string delims
-  const kebabCaseToCamelCase = (/** @type {string} */ str) =>
-    str.replace(/(-\w)/g, m => m[1].toUpperCase());
 
   let expression = '';
 
@@ -158,12 +156,7 @@ function buildPolyfillExpression(object, property, coreJs3Module) {
 
   // Un-minified code may have module names.
   // core-js/modules/es.object.is-frozen
-  expression += `|core-js/modules/${coreJs3Module}(?:\\.js)?"`;
-  // rollup unminified output for commonjs modules.
-  // ex: es.reflect.own-keys -> function requireEs_reflect_ownKeys ()
-  let rollupSlug = kebabCaseToCamelCase(coreJs3Module).replaceAll('.', '_');
-  rollupSlug = rollupSlug[0].toUpperCase() + rollupSlug.slice(1);
-  expression += `|require${rollupSlug} \\(`;
+  expression += `|${coreJs3Module.replaceAll('.', '\\.')}(?:\\.js)?"`;
 
   return expression;
 }
@@ -318,7 +311,7 @@ const matcher = new CodePatternMatcher([
 
 /**
  * @param {string} content
- * @param {import('../lib/cdt/generated/SourceMap.js')|null} map
+ * @param {import('../cdt/generated/SourceMap.js')|null} map
  * @return {Result}
  */
 function detectLegacyJavaScript(content, map) {

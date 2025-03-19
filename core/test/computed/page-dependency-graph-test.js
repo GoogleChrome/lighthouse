@@ -21,6 +21,7 @@ describe('PageDependencyGraph computed artifact', () => {
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
+        SourceMaps: [],
       }, context);
       assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
       const dependents = output.getDependents();

@@ -21,7 +21,7 @@ import {EntityClassification} from '../../computed/entity-classification.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {estimateCompressionRatioForContent} from '../../lib/script-helpers.js';
-import {detectLegacyJavaScript} from '../../lib/legacy-javascript.js';
+import {detectLegacyJavaScript} from '../../lib/legacy-javascript/legacy-javascript.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */

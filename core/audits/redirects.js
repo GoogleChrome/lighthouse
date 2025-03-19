@@ -31,7 +31,7 @@ class Redirects extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['navigation'],
       guidanceLevel: 2,
-      requiredArtifacts: ['URL', 'GatherContext', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['URL', 'GatherContext', 'devtoolsLogs', 'traces', 'SourceMaps'],
     };
   }
 
@@ -87,12 +87,13 @@ class Redirects extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
+    const {URL, SourceMaps} = artifacts;
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
 
     /** @type {Map<string, LH.Gatherer.Simulation.NodeTiming>} */

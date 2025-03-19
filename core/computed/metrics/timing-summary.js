@@ -27,11 +27,12 @@ class TimingSummary {
      * @param {LH.Artifacts['GatherContext']} gatherContext
      * @param {LH.Util.ImmutableObject<LH.Config.Settings>} settings
      * @param {LH.Artifacts['URL']} URL
+     * @param {LH.Artifacts['SourceMaps']} SourceMaps
      * @param {LH.Artifacts.ComputedContext} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
-  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, context) {
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
+  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, context) {
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps};
     /**
      * @template TArtifacts
      * @template TReturn
@@ -135,7 +136,7 @@ class TimingSummary {
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Util.ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL']}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Util.ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
@@ -146,6 +147,7 @@ class TimingSummary {
       data.gatherContext,
       data.settings,
       data.URL,
+      data.SourceMaps,
       context
     );
   }
@@ -153,6 +155,6 @@ class TimingSummary {
 
 const TimingSummaryComputed = makeComputedArtifact(
   TimingSummary,
-  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL', 'SourceMaps']
 );
 export {TimingSummaryComputed as TimingSummary};

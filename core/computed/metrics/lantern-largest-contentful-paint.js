@@ -34,6 +34,6 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
 
 const LanternLargestContentfulPaintComputed = makeComputedArtifact(
   LanternLargestContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternLargestContentfulPaintComputed as LanternLargestContentfulPaint};

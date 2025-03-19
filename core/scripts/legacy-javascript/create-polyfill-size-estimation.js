@@ -31,11 +31,11 @@ import prettyJSONStringify from 'pretty-json-stringify';
 import {makeHash} from './hash.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import {LH_ROOT} from '../../../shared/root.js';
-import {getCoreJsPolyfillData} from '../../lib/legacy-javascript.js';
+import {getCoreJsPolyfillData} from '../../lib/legacy-javascript/legacy-javascript.js';
 
 const hash = makeHash();
 const VARIANT_DIR = `${LH_ROOT}/core/scripts/legacy-javascript/variants/${hash}`;
-const OUTPUT_PATH = `${LH_ROOT}/core/audits/byte-efficiency/polyfill-graph-data.json`;
+const OUTPUT_PATH = `${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`;
 const COMMON_MODULE = 'commonCoreJs';
 
 /**

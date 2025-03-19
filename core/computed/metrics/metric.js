@@ -34,6 +34,7 @@ class Metric {
       gatherContext: data.gatherContext,
       settings: data.settings,
       URL: data.URL,
+      SourceMaps: data.SourceMaps,
     };
   }
 

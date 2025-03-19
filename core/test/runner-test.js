@@ -694,6 +694,8 @@ describe('Runner', () => {
         {id: 'DevtoolsLog', gatherer: 'devtools-log'},
         {id: 'traces', gatherer: 'trace-compat'},
         {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
+        {id: 'Scripts', gatherer: 'scripts'},
+        {id: 'SourceMaps', gatherer: 'source-maps'},
       ],
     });
 

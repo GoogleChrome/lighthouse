@@ -24,6 +24,7 @@ import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {ExecutionContext} from '../driver/execution-context.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
+import SourceMaps from './source-maps.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
 
@@ -45,10 +46,10 @@ function getNodeDetailsData() {
 /* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol},
+    dependencies: {Trace: Trace.symbol, SourceMaps: SourceMaps.symbol},
   };
 
   /** @type {Map<string, string>} */
@@ -379,15 +380,17 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.Context<'Trace'|'RootCauses'>} context
+   * @param {LH.Gatherer.Context<'Trace'|'RootCauses'|'SourceMaps'>} context
    * @return {Promise<LH.Artifacts.TraceElement[]>}
    */
   async getArtifact(context) {
     const session = context.driver.defaultSession;
 
     const trace = context.dependencies.Trace;
+    const SourceMaps = context.dependencies.SourceMaps;
     const settings = context.settings;
-    const traceEngineResult = await TraceEngineResult.request({trace, settings}, context);
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
     const rootCauses = context.dependencies.RootCauses;
 
     const processedTrace = await ProcessedTrace.request(trace, context);

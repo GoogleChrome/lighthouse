@@ -14,13 +14,14 @@ import {TraceEngineResult} from './trace-engine-result.js';
  */
 class NavigationInsights {
   /**
-    * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
+    * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps']}} data
     * @param {LH.Artifacts.ComputedContext} context
    */
   static async compute_(data, context) {
-    const {trace, settings} = data;
+    const {trace, settings, SourceMaps} = data;
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const traceEngineResult = await TraceEngineResult.request({trace, settings}, context);
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
 
     const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
     if (!navigationId) throw new Error('No navigationId found');
@@ -32,5 +33,6 @@ class NavigationInsights {
   }
 }
 
-const NavigationInsightsComputed = makeComputedArtifact(NavigationInsights, ['trace', 'settings']);
+const NavigationInsightsComputed =
+  makeComputedArtifact(NavigationInsights, ['trace', 'settings', 'SourceMaps']);
 export {NavigationInsightsComputed as NavigationInsights};

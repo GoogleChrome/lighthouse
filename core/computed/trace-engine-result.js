@@ -11,6 +11,7 @@ import * as TraceEngine from '../lib/trace-engine.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {CumulativeLayoutShift} from './metrics/cumulative-layout-shift.js';
 import {ProcessedTrace} from './processed-trace.js';
+import SDK from '../lib/cdt/SDK.js';
 import * as LH from '../../types/lh.js';
 
 /**
@@ -20,9 +21,10 @@ class TraceEngineResult {
   /**
    * @param {LH.TraceEvent[]} traceEvents
    * @param {LH.Audit.Context['settings']} settings
+   * @param {LH.Artifacts['SourceMaps']} SourceMaps
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
-  static async runTraceEngine(traceEvents, settings) {
+  static async runTraceEngine(traceEvents, settings, SourceMaps) {
     const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
 
     const lanternSettings = {};
@@ -47,6 +49,16 @@ class TraceEngineResult {
         },
       },
       lanternSettings,
+      async resolveSourceMap(params) {
+        const sourceMap = SourceMaps.find(sm => sm.scriptId === params.scriptId);
+        if (!sourceMap) {
+          return null;
+        }
+
+        const compiledUrl = sourceMap.scriptUrl || 'compiled.js';
+        const mapUrl = sourceMap.sourceMapUrl || 'compiled.js.map';
+        return new SDK.SourceMap(compiledUrl, mapUrl, sourceMap.map);
+      },
     });
     if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
@@ -199,7 +211,7 @@ class TraceEngineResult {
   }
 
   /**
-   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
+   * @param {{trace: LH.Trace, settings: LH.Audit.Context['settings'], SourceMaps: LH.Artifacts['SourceMaps']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
@@ -229,10 +241,12 @@ class TraceEngineResult {
       }
     }
 
-    const result = await TraceEngineResult.runTraceEngine(traceEvents, data.settings);
+    const result =
+      await TraceEngineResult.runTraceEngine(traceEvents, data.settings, data.SourceMaps);
     return result;
   }
 }
 
-const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, ['trace', 'settings']);
+const TraceEngineResultComputed =
+  makeComputedArtifact(TraceEngineResult, ['trace', 'settings', 'SourceMaps']);
 export {TraceEngineResultComputed as TraceEngineResult};

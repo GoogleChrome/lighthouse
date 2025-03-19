@@ -56,6 +56,7 @@ describe('TBTImpactTasks', () => {
           mainDocumentUrl,
           finalDisplayedUrl: mainDocumentUrl,
         },
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
       };
@@ -243,6 +244,7 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
       };
@@ -292,6 +294,7 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
       };
