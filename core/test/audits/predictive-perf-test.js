@@ -26,6 +26,7 @@ describe('Performance: predictive performance audit', () => {
       devtoolsLogs: {
         [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
       },
+      SourceMaps: [],
     };
     const context = {computedCache: new Map(), settings: {locale: 'en'}};
 

@@ -73,6 +73,7 @@ describe('Max Potential FID', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const context = {
       settings: {throttlingMethod: 'devtools'},
@@ -136,6 +137,7 @@ describe('Max Potential FID', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const context = {
       settings: {throttlingMethod: 'devtools'},

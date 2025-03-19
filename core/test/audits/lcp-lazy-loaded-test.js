@@ -79,6 +79,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -145,6 +146,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

@@ -83,6 +83,7 @@ const mockArtifacts = (chainNetworkRecords) => {
       mainDocumentUrl: finalDisplayedUrl,
       finalDisplayedUrl,
     },
+    SourceMaps: [],
   };
 };
 
@@ -116,6 +117,7 @@ describe('Performance: critical-request-chains audit', () => {
         mainDocumentUrl: 'https://www.reddit.com/r/nba',
         finalDisplayedUrl: 'https://www.reddit.com/r/nba',
       },
+      SourceMaps: [],
     };
     const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(output => {

@@ -160,6 +160,7 @@ describe('Performance: Redirects audit', () => {
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 

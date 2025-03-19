@@ -258,7 +258,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses},
+      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -341,7 +341,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: animationTrace, RootCauses},
+      dependencies: {Trace: animationTrace, RootCauses, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -423,7 +423,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses},
+      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -488,7 +488,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const result = await gatherer.getArtifact({
       driver,
       gatherMode: 'timespan',
-      dependencies: {Trace: trace, RootCauses},
+      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });

@@ -18,6 +18,7 @@ describe('minify-devtoolslog', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      SourceMaps: [],
     };
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details: {items: [before]}} = await MetricsAudit.audit(artifacts, context);

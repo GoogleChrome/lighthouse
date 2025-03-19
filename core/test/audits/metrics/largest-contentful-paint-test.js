@@ -20,6 +20,7 @@ function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
     traces: {[LCPAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},
     HostUserAgent,
+    SourceMaps: [],
   };
 }
 

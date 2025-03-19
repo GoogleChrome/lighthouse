@@ -39,6 +39,7 @@ describe('Performance: prioritize-lcp-image audit', () => {
           type: 'image',
         },
       ],
+      SourceMaps: [],
     };
   };
 

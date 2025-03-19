@@ -30,6 +30,7 @@ function buildArtifacts(networkRecords) {
     devtoolsLogs: {defaultPass: devtoolsLog},
     traces: {defaultPass: trace},
     GatherContext: {gatherMode: 'navigation'},
+    SourceMaps: [],
   };
 }
 

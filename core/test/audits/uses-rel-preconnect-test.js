@@ -39,6 +39,7 @@ function buildArtifacts(networkRecords, fcpTs) {
     },
     devtoolsLogs: {defaultPass: devtoolsLog},
     traces: {defaultPass: trace},
+    SourceMaps: [],
   };
 }
 

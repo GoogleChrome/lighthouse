@@ -41,6 +41,7 @@ describe('Performance: uses-rel-preload audit', () => {
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 
@@ -338,6 +339,7 @@ describe('Performance: uses-rel-preload audit', () => {
       devtoolsLogs: {
         [UsesRelPreload.DEFAULT_PASS]: pwaDevtoolsLog,
       },
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'provided'};

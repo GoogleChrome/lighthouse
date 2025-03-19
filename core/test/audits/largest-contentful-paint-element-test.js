@@ -98,6 +98,7 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const context = {settings: artifacts.settings, computedCache: new Map()};

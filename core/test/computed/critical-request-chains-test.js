@@ -64,7 +64,7 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, r
   const context = {computedCache: new Map()};
   const criticalChains =
     await CriticalRequestChains.request(
-      {URL, trace, devtoolsLog, settings: {}, simulator: null}, context);
+      {URL, trace, devtoolsLog, settings: {}, SourceMaps: [], simulator: null}, context);
 
   replaceChain(criticalChains, networkRecords);
   return {
@@ -95,8 +95,9 @@ describe('CriticalRequestChain computed artifact', () => {
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
     const context = {computedCache: new Map()};
-    const chains =
-      await CriticalRequestChains.request({trace, devtoolsLog, URL, settings: {}}, context);
+    const chains = await CriticalRequestChains.request(
+      {trace, devtoolsLog, URL, SourceMaps: [], settings: {}},
+      context);
     simplifyChain(chains);
 
     expect(chains).toEqual({

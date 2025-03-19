@@ -82,6 +82,7 @@ describe('Byte efficiency base audit', () => {
       },
       settings: JSON.parse(JSON.stringify(defaultSettings)),
       simulator: null,
+      SourceMaps: [],
     };
 
     simulator = new Lantern.Simulation.Simulator({});
@@ -228,7 +229,7 @@ describe('Byte efficiency base audit', () => {
       },
       simulator,
       // eslint-disable-next-line max-len
-      {trace, devtoolsLog, URL, gatherContext: {gatherMode: 'navigation'}, settings, simulator: null},
+      {trace, devtoolsLog, URL, gatherContext: {gatherMode: 'navigation'}, settings, SourceMaps: [], simulator: null},
       {computedCache: new Map()}
     );
 
@@ -250,6 +251,7 @@ describe('Byte efficiency base audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      SourceMaps: [],
     };
     const computedCache = new Map();
 

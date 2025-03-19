@@ -19,7 +19,7 @@ describe('Metrics: FCP all frames', () => {
     const context = {settings, computedCache: new Map()};
     const resultPromise = FirstContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
       context
     );
 
@@ -33,12 +33,12 @@ describe('Metrics: FCP all frames', () => {
 
     const result = await FirstContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
       context
     );
     const mainFrameResult = await FirstContentfulPaint.request(
       // eslint-disable-next-line max-len
-      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), simulator: null},
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
       context
     );
 

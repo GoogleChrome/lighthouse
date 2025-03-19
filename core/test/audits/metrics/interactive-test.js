@@ -43,6 +43,7 @@ describe('Performance: interactive audit', () => {
         [Interactive.DEFAULT_PASS]: acceptableDevToolsLog,
       },
       URL: getURLArtifactFromDevtoolsLog(acceptableDevToolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -63,6 +64,7 @@ describe('Performance: interactive audit', () => {
         [Interactive.DEFAULT_PASS]: redirectDevToolsLog,
       },
       URL: getURLArtifactFromDevtoolsLog(redirectDevToolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

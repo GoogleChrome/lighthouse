@@ -89,6 +89,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: generateTraceWithLongTasks({count: 0})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toHaveLength(0);
@@ -104,6 +105,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: generateTraceWithLongTasks({count: 4})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toMatchObject([
@@ -135,6 +137,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const result = await LongTasks.audit(artifacts, context);
@@ -160,6 +163,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25, networkRecords})},
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const context = {
       computedCache: new Map(),
@@ -196,6 +200,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toMatchObject([
@@ -226,6 +231,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const result = await LongTasks.audit(artifacts, context);
@@ -259,6 +265,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const result = await LongTasks.audit(artifacts, context);
 
@@ -292,6 +299,7 @@ describe('Long tasks audit', () => {
       traces: {defaultPass: redirectTrace},
       devtoolsLogs: {defaultPass: redirectDevtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
     const result = await LongTasks.audit(artifacts, context);
 

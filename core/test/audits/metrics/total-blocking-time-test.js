@@ -21,6 +21,7 @@ function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
     URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+    SourceMaps: [],
   };
 }
 

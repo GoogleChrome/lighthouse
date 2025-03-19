@@ -45,6 +45,7 @@ describe('Performance: first-contentful-paint audit', () => {
         [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -63,6 +64,7 @@ describe('Performance: first-contentful-paint audit', () => {
         [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
       },
       URL: getURLArtifactFromDevtoolsLog(frameDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

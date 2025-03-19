@@ -469,6 +469,7 @@ describe('OffscreenImages audit', () => {
         mainDocumentUrl: recordA.url,
         finalDisplayedUrl: recordA.url,
       },
+      SourceMaps: [],
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -538,6 +539,7 @@ describe('OffscreenImages audit', () => {
         mainDocumentUrl: recordA.url,
         finalDisplayedUrl: recordA.url,
       },
+      SourceMaps: [],
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -575,12 +577,15 @@ describe('OffscreenImages audit', () => {
         }),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000, networkRecords})},
-      devtoolsLogs: {},
+      devtoolsLogs: {defaultPass: null},
+      URL: null,
+      SourceMaps: [],
     };
 
     try {
       await UnusedImages.audit_(artifacts, networkRecords, context);
     } catch (err) {
+      console.log(err.message);
       assert.ok(err.message.includes('Did not provide necessary metric computation data'));
       return;
     }

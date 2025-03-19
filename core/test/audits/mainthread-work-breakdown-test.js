@@ -60,6 +60,7 @@ describe('Performance: page execution timings audit', () => {
       devtoolsLogs: {defaultPass: acceptableDevtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const output = await PageExecutionTimings.audit(artifacts, context);
@@ -76,6 +77,7 @@ describe('Performance: page execution timings audit', () => {
       devtoolsLogs: {defaultPass: acceptableDevtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     context.settings.throttlingMethod = 'simulate';
@@ -106,6 +108,7 @@ describe('Performance: page execution timings audit', () => {
       devtoolsLogs: {defaultPass: siteWithRedirectDevtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(siteWithRedirectDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     context.settings.throttlingMethod = 'provided';

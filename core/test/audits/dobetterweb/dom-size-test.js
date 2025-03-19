@@ -45,6 +45,7 @@ describe('DOMSize audit', () => {
       },
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      SourceMaps: [],
     };
     context = {
       options,

@@ -20,6 +20,7 @@ describe('Third party summary', () => {
       traces: {defaultPass: trace},
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -40,6 +41,7 @@ describe('Third party summary', () => {
       traces: {defaultPass: trace},
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -64,6 +66,7 @@ describe('Third party summary', () => {
         finalDisplayedUrl: 'http://localhost:65178/animation.html',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -99,6 +102,7 @@ describe('Third party summary', () => {
         mainDocumentUrl: 'http://example.com',
         finalDisplayedUrl: 'http://example.com',
       },
+      SourceMaps: [],
     };
     const facebookArtifacts = {
       devtoolsLogs: {
@@ -122,6 +126,7 @@ describe('Third party summary', () => {
         mainDocumentUrl: 'http://facebook.com',
         finalDisplayedUrl: 'http://facebook.com',
       },
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

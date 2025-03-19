@@ -39,6 +39,7 @@ describe('Performance: speed-index audit', () => {
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

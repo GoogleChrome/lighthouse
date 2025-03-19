@@ -56,6 +56,7 @@ describe('Third party facades audit', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -116,6 +117,7 @@ describe('Third party facades audit', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -197,6 +199,7 @@ describe('Third party facades audit', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -253,6 +256,7 @@ describe('Third party facades audit', () => {
         finalDisplayedUrl: 'https://intercomcdn.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -272,6 +276,7 @@ describe('Third party facades audit', () => {
       traces: {defaultPass: pwaTrace},
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -294,6 +299,7 @@ describe('Third party facades audit', () => {
         finalDisplayedUrl: 'http://localhost:65178/animation.html',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -312,6 +318,7 @@ describe('Third party facades audit', () => {
       traces: {defaultPass: videoEmbedsTrace},
       URL: getURLArtifactFromDevtoolsLog(videoEmbedsDevtolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -460,6 +467,7 @@ Array [
       traces: {defaultPass: blockingWidgetTrace},
       URL: getURLArtifactFromDevtoolsLog(blockingWidgetDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

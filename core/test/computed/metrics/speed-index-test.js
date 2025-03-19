@@ -19,8 +19,8 @@ describe('Metrics: Speed Index', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result =
-      await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL, simulator: null},
+    const result = await SpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
         context);
 
     expect({
@@ -54,6 +54,7 @@ Object {
         devtoolsLog: devtoolsLog1msLayout,
         settings,
         URL,
+        SourceMaps: [],
         simulator: null,
       },
       context
@@ -76,9 +77,9 @@ Object {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result =
-      await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL, simulator: null},
-        context);
+    const result = await SpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      context);
 
     await expect(result).toMatchInlineSnapshot(`
 Object {
@@ -93,7 +94,8 @@ Object {
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result =
-      await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL, simulator: null},
+      await SpeedIndex.request(
+        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
         context);
 
     await expect(result).toMatchInlineSnapshot(`
