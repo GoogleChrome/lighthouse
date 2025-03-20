@@ -32,6 +32,7 @@ async function run() {
     devtoolsLogs,
     GatherContext: {gatherMode: 'navigation'},
     URL,
+    SourceMaps: [],
   };
 
   // @ts-expect-error - We don't need the full artifacts or context.
