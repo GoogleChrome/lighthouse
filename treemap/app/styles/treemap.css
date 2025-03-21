@@ -11,7 +11,8 @@
   --color-gray-900: #212121;
 
   --control-background-color: #e7f1fe;
-  --text-color-secondary: var(--color-gray-600);
+  --text-color-secondary: #474747;
+
   --text-color: var(--color-gray-900);
   --text-color-active: #2a67ce;
   --text-color-active-secondary: #4484f3c7;
@@ -42,6 +43,11 @@ body {
 
 .lh-text-dim {
   color: var(--text-color-secondary);
+  font-weight: 400;
+}
+
+.lh-text-bold {
+  font-weight: 500;
 }
 
 .lh-main {
@@ -96,11 +102,12 @@ body {
 .lh-header__logotitle {
   display: flex;
   align-items: center;
+  font-size: 16px;
 }
 
 .lh-topbar__logo {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   user-select: none;
   flex: none;
 }
@@ -211,6 +218,10 @@ header {
   outline: 2px solid black;
 }
 
+.lh-treemap--view-mode--all .webtreemap-node {
+  border: none;
+}
+
 .lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
   position: absolute;
   top: 0;
@@ -232,6 +243,9 @@ header {
   font-size: 12px;
   text-align: center;
   word-break: break-word;
+}
+.webtreemap-caption span {
+  margin: 0 2px;
 }
 
 /* Copied from viewer.css */
