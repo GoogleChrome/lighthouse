@@ -124,19 +124,42 @@ class TreemapViewer {
     this.treemap;
     /*  eslint-enable no-unused-expressions */
 
-    this.createHeader();
+    const urlEl = dom.find('a.lh-header--url');
+    urlEl.textContent = this.documentUrl.toString();
+    urlEl.href = this.documentUrl.toString();
+
+    this.viewModeSelector = this.createViewModeSelector();
+    this.bundleSelector = this.createBundleSelector();
     this.toggleTable(window.innerWidth >= 600);
     this.initListeners();
     this.setSelector({type: 'group', value: 'scripts'});
     this.render();
   }
 
-  createHeader() {
-    const urlEl = dom.find('a.lh-header--url');
-    urlEl.textContent = this.documentUrl.toString();
-    urlEl.href = this.documentUrl.toString();
+  createViewModeSelector() {
+    const viewModeSelectorEl = dom.find('select.view-mode-selector');
+    viewModeSelectorEl.textContent = ''; // Clear just in case document was saved with Ctrl+S.
 
-    this.createBundleSelector();
+    viewModeSelectorEl.addEventListener('change', () => {
+      const index = Number(viewModeSelectorEl.value);
+      const viewMode = this.viewModes[index];
+      this.setViewMode(viewMode);
+      this.render();
+    });
+
+    return viewModeSelectorEl;
+  }
+
+  updateViewModeSelector() {
+    this.viewModeSelector.textContent = '';
+    for (const [i, viewMode] of this.viewModes.entries()) {
+      const optionEl = dom.createChildOf(this.viewModeSelector, 'option');
+      optionEl.value = String(i);
+      optionEl.textContent = `${viewMode.label} (${viewMode.subLabel})`;
+      optionEl.disabled = !viewMode.enabled;
+    }
+    this.viewModeSelector.selectedIndex =
+      this.viewModes.findIndex(mode => mode.id === this.currentViewMode.id) ?? 0;
   }
 
   createBundleSelector() {
@@ -193,6 +216,7 @@ class TreemapViewer {
 
     treemapEl.addEventListener('click', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
@@ -211,6 +235,7 @@ class TreemapViewer {
 
     treemapEl.addEventListener('mouseover', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
@@ -219,6 +244,7 @@ class TreemapViewer {
 
     treemapEl.addEventListener('mouseout', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
@@ -245,6 +271,13 @@ class TreemapViewer {
 
     const toggleTableBtn = dom.find('.lh-button--toggle-table');
     toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable(), options);
+  }
+
+  applyActiveViewModeClass() {
+    for (const viewMode of this.viewModes) {
+      const isMatch = viewMode.id === this.currentViewMode.id;
+      this.el.classList.toggle(`lh-treemap--view-mode--${viewMode.id}`, isMatch);
+    }
   }
 
   /**
@@ -412,7 +445,7 @@ class TreemapViewer {
     if (rootChanged) {
       this.nodeToPathMap = new Map();
       TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
-      renderViewModeButtons(this.viewModes);
+      this.updateViewModeSelector();
 
       TreemapUtil.walk(this.currentTreemapRoot, node => {
         // webtreemap will store `dom` on the data to speed up operations.
@@ -440,7 +473,9 @@ class TreemapViewer {
 
     if (rootChanged || viewChanged) {
       this.updateColors();
-      applyActiveClass(this.currentViewMode.id, this.el);
+      this.applyActiveViewModeClass();
+      dom.find('.lh-header--url-bytes').textContent =
+        TreemapUtil.i18n.formatBytesWithBestUnit(this.currentTreemapRoot.resourceBytes);
     }
 
     this.previousRenderState = {
@@ -661,56 +696,6 @@ class TreemapViewer {
         node.dom.style.setProperty('--pctUnused', `${pctUnused}%`);
       }
     });
-  }
-}
-
-/**
- * @param {LH.Treemap.ViewMode[]} viewModes
- */
-function renderViewModeButtons(viewModes) {
-  /**
-   * @param {LH.Treemap.ViewMode} viewMode
-   */
-  function render(viewMode) {
-    const viewModeEl = dom.createChildOf(viewModesEl, 'div', 'view-mode');
-    if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
-    viewModeEl.id = `view-mode--${viewMode.id}`;
-
-    const inputEl = dom.createChildOf(viewModeEl, 'input', 'view-mode__button');
-    inputEl.id = `view-mode--${viewMode.id}__label`;
-    inputEl.type = 'radio';
-    inputEl.name = 'view-mode';
-    inputEl.disabled = !viewMode.enabled;
-
-    const labelEl = dom.createChildOf(viewModeEl, 'label');
-    labelEl.htmlFor = inputEl.id;
-    dom.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
-    dom.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
-      ` (${viewMode.subLabel})`;
-
-    inputEl.addEventListener('click', () => {
-      treemapViewer.setViewMode(viewMode);
-      treemapViewer.render();
-    });
-  }
-
-  const viewModesEl = dom.find('.lh-modes');
-  viewModesEl.textContent = '';
-  viewModes.forEach(render);
-}
-
-/**
- * @param {string} currentViewModeId
- * @param {HTMLElement} el
- */
-function applyActiveClass(currentViewModeId, el) {
-  const viewModesEl = dom.find('.lh-modes');
-  for (const viewModeEl of viewModesEl.querySelectorAll('.view-mode')) {
-    if (!(viewModeEl instanceof HTMLElement)) continue;
-
-    const isMatch = viewModeEl.id === `view-mode--${currentViewModeId}`;
-    viewModeEl.classList.toggle('view-mode--active', isMatch);
-    el.classList.toggle(`lh-treemap--${viewModeEl.id}`, isMatch);
   }
 }
 

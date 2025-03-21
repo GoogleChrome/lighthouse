@@ -47,26 +47,35 @@ body {
 .lh-main {
   display: grid;
   height: 100vh;
-  grid-template-rows: 0.1fr 1fr 0fr;
+  grid-template-rows: auto 1fr 0fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   transition: grid-template-rows 0.2s;
   animation: 0.7s curtain cubic-bezier(0.86, 0, 0.07, 1) 0.4s both;
 }
 .lh-main--show-table {
-  grid-template-rows: 0.1fr 1fr 0.3fr;
+  grid-template-rows: auto 1fr 0.3fr;
 }
 
-/* TODO: BEM is backwards here and many other places */
-.lh-header--section {
+.lh-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
-.lh-header--section:nth-of-type(2) {
-  font-size: 20px;
+.lh-header > div {
+  flex: 1;
 }
+.lh-header > div:first-child {
+  margin-right: auto;
+}
+.lh-header > div:last-child {
+  margin-left: auto;
+}
+
+.lh-header__url {
+  text-align: center;
+}
+
 .lh-header--url {
   font-weight: bold;
   text-decoration: none;
@@ -78,21 +87,15 @@ body {
   display: flex;
   justify-content: flex-end;
 }
-
-.lh-logotitle {
-  display: flex;
-  align-items: center;
-}
-
-.bundle-selector {
-  flex: 1;
+.lh-header__inputs select {
+  width: 10vw;
   padding: 2px;
   margin: 2px;
 }
 
-.bundle-selector {
-  width: 50%;
-  padding: 2px;
+.lh-header__logotitle {
+  display: flex;
+  align-items: center;
 }
 
 .lh-topbar__logo {
@@ -100,10 +103,6 @@ body {
   height: 24px;
   user-select: none;
   flex: none;
-}
-
-.lh-modes {
-  display: flex;
 }
 
 .lh-treemap {
