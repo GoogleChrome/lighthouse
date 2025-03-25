@@ -1,3 +1,59 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.5.0"></a>
+# 12.5.0 (2025-03-25)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.4.0...v12.5.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* enable enhanced traces, pass source maps to trace engine ([#16396](https://github.com/GoogleChrome/lighthouse/pull/16396))
+* pass lantern settings to trace engine and add logging ([#16377](https://github.com/GoogleChrome/lighthouse/pull/16377))
+* adapt trace engine i18n functions to LH i18n model ([#16365](https://github.com/GoogleChrome/lighthouse/pull/16365))
+* computed-artifacts: disallow undefined properties ([#16397](https://github.com/GoogleChrome/lighthouse/pull/16397))
+* duplicated-javascript: increase threshold from 1 to 10 KiB ([#16368](https://github.com/GoogleChrome/lighthouse/pull/16368))
+* image-delivery-insight: use strings without savings ([#16364](https://github.com/GoogleChrome/lighthouse/pull/16364))
+* insights: implement `use-cache-insight` ([#16401](https://github.com/GoogleChrome/lighthouse/pull/16401))
+* insights: upgrade and implement forced reflow ([#16395](https://github.com/GoogleChrome/lighthouse/pull/16395))
+* insights: move to hidden group by default ([#16391](https://github.com/GoogleChrome/lighthouse/pull/16391))
+* insights: implement font display insight ([#16369](https://github.com/GoogleChrome/lighthouse/pull/16369))
+* legacy-javascript: rework/revert some unminified bundle detection ([#16394](https://github.com/GoogleChrome/lighthouse/pull/16394))
+* legacy-javascript: support rollup bundles ([#16389](https://github.com/GoogleChrome/lighthouse/pull/16389))
+* legacy-javascript: support esbuild bundles ([#16385](https://github.com/GoogleChrome/lighthouse/pull/16385))
+* legacy-javascript: support unminified code ([#16384](https://github.com/GoogleChrome/lighthouse/pull/16384))
+* legacy-javascript: improve transform detection ([#16381](https://github.com/GoogleChrome/lighthouse/pull/16381))
+* legacy-javascript: update to target Baseline ([#16366](https://github.com/GoogleChrome/lighthouse/pull/16366))
+* script-treemap-data: keep duplicate info when collapsing nodes ([#16379](https://github.com/GoogleChrome/lighthouse/pull/16379))
+
+## Deps
+
+* upgrade deps ([#16408](https://github.com/GoogleChrome/lighthouse/pull/16408))
+* upgrade trace_engine to 0.0.47 ([#16376](https://github.com/GoogleChrome/lighthouse/pull/16376))
+* upgrade trace_engine, reuse cdt bf-cache/deprecation strings ([#16362](https://github.com/GoogleChrome/lighthouse/pull/16362))
+
+## I18n
+
+* import ([#16409](https://github.com/GoogleChrome/lighthouse/pull/16409))
+
+## Tests
+
+* fix local mocha tests not properly setting isUnderTest ([#16399](https://github.com/GoogleChrome/lighthouse/pull/16399))
+* fix i18n format in Node 20.19 ([#16398](https://github.com/GoogleChrome/lighthouse/pull/16398))
+* trace-engine: fix expectations ([#16380](https://github.com/GoogleChrome/lighthouse/pull/16380))
+
+## Misc
+
+* move support files to core/lib/legacy-javascript ([#16393](https://github.com/GoogleChrome/lighthouse/pull/16393))
+* extract legacy javascript detection to core/lib ([#16392](https://github.com/GoogleChrome/lighthouse/pull/16392))
+* build: use current year for bundle license copyright header ([#16375](https://github.com/GoogleChrome/lighthouse/pull/16375))
+* treemap: restructure header to match new design ([#16402](https://github.com/GoogleChrome/lighthouse/pull/16402))
+
 <a name="12.4.0"></a>
 # 12.4.0 (2025-02-26)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.3.0...v12.4.0)
