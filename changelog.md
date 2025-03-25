@@ -1,15 +1,12 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-
- <a name="12.5.0"></a>
+<a name="12.5.0"></a>
 # 12.5.0 (2025-03-25)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.4.0...v12.5.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 136](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
 
+* `legacy-javascript` has been updated to target Baseline instead of esmodules for determining what code is considered "legacy" ([#16366](https://github.com/GoogleChrome/lighthouse/pull/16366)).
 
 ## Core
 
@@ -28,7 +25,6 @@ We expect this release to ship in the DevTools of [Chrome XX](https://chromiumda
 * legacy-javascript: support esbuild bundles ([#16385](https://github.com/GoogleChrome/lighthouse/pull/16385))
 * legacy-javascript: support unminified code ([#16384](https://github.com/GoogleChrome/lighthouse/pull/16384))
 * legacy-javascript: improve transform detection ([#16381](https://github.com/GoogleChrome/lighthouse/pull/16381))
-* legacy-javascript: update to target Baseline ([#16366](https://github.com/GoogleChrome/lighthouse/pull/16366))
 * script-treemap-data: keep duplicate info when collapsing nodes ([#16379](https://github.com/GoogleChrome/lighthouse/pull/16379))
 
 ## Deps
