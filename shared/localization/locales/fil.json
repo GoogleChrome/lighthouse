@@ -660,7 +660,10 @@
     "message": "Gumamit ng mga format ng video para sa animated na content"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Para sa iyong naka-bundle na JavaScript, gumamit ng modernong diskarte sa deployment ng script gamit ang pag-detect ng feature na module/nomodule para mabawasan ang dami ng code na ipinapadala sa mga modernong browser, habang pinapanatili ang suporta para sa mga legacy na browser. [Alamin kung paano gamitin ang modernong JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Pag-isipang baguhin ang iyong proseso ng pagbuo sa JavaScript para hindi ma-transpile ang mga [Baseline](https://web.dev/baseline) na feature, maliban kung alam mong dapat mong masuportahan ang mga legacy na browser. [Matutunan kung bakit puwedeng mag-deploy ang karamihan ng mga site ng ES6+ na code nang hindi nagta-transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na-detect ang bersyon 2 ng core-js sa page. Dapat kang mag-upgrade sa bersyon 3 para sa maraming pagpapahusay sa performance."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Iwasan ang paghahatid ng legacy na JavaScript sa mga modernong browser"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "I-enable ang compression ng text"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Kalalaan"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Ang header ng `X-Frame-Options` (XFO) o direktiba ng `frame-ancestors` sa kontrol sa header ng `Content-Security-Policy` (CSP) kung saan puwedeng mag-embed ng page. Puwedeng i-mitigate ng mga ito ang mga clickjacking attack sa pamamagitan ng pag-block sa ilan sa o lahat ng site sa pag-embed sa page. [Matuto pa tungkol sa pag-mitigate sa clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Walang nakitang patakaran sa kontrol ng frame"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "I-mitigate ang clickjacking gamit ang XFO o CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Ipinapakita sa iyo ng Mga Chain ng Mahahalagang Kahilingan kung anong mga resource ang nilo-load nang may mataas na priyoridad. Pag-isipang paikliin ang mga chain, paliitin ang mga dina-download na resource, o ipagpaliban ang pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page. [Alamin kung paano iwasan ang pagsusunod-sunod ng mahahalagang kahilingan](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Nagpapakita ng mga larawang may naaangkop na resolution"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Score ng pagbabago sa layout"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Pinapayagan"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Mga Pagpapahusay sa First Paint"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Mga Insight"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mga Sukatan"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Kabuuan"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "I-toggle ang Madilim na Tema"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "I-toggle ang mga pang-eksperimentong insight"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Pinalawak ang Pag-print"

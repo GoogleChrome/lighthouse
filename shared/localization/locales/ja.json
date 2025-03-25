@@ -660,7 +660,10 @@
     "message": "アニメーション コンテンツでの動画フォーマットの使用"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。バンドルされた JavaScript の場合、モジュールあり / モジュールなしの機能検出を使用する最新スクリプトの導入戦略を採用することにより、従来のブラウザに対するサポートを維持しながら、最新ブラウザに送るコード量を減らすことができます。[最新の JavaScript の使用方法の詳細](https://web.dev/articles/publish-modern-javascript)"
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/baseline) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "ページで core-js のバージョン 2 が検出されました。パフォーマンスのさまざまな改善を適用するには、バージョン 3 にアップグレードする必要があります。"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "テキスト圧縮の有効化"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options`（XFO）ヘッダーまたは `Content-Security-Policy`（CSP）ヘッダーの `frame-ancestors` ディレクティブは、ページを埋め込むことができる場所を制御します。これらを使用して、一部またはすべてのサイトでページの埋め込みをブロックすることで、クリックジャッキング攻撃を軽減できます。[クリックジャッキングを軽減する方法について](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "フレーム制御ポリシーが見つかりません"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO または CSP を使用してクリックジャッキングを軽減する"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "下のクリティカル リクエスト チェーンでは、高い優先度で読み込まれたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどの手段を行って、ページの読み込み速度を改善することをご検討ください。[重要なリクエストのチェーンを回避する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "画像が適切な解像度で表示されています"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "レイアウト シフトのスコア"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "許可"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "これは、Interaction to Next Paint の測定時に行われるスレッド ブロッキング処理です。[Interaction to Next Paint 指標の詳細](https://web.dev/articles/inp)"
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "イベント「{interactionType}」に費やした時間（{timeInMs, number, milliseconds} ミリ秒）"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "イベント ターゲット"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint の改善点"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "インサイト"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指標"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三者"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "合計"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "指定されたページは HTML ではありません（MIME タイプ {mimeType} として配信されています）。"
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "このバージョンの Chrome は古すぎて「{featureName}」に対応していません。すべての結果を表示するには最新バージョンを使用してください。"
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "リクエストしたページを Lighthouse で正確に読み込めませんでした。正しい URL でテストを行い、すべてのリクエストに対してサーバーからの応答が適切であることを確認してください。"
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "ダークモードの切り替え"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "試験運用版のインサイトを切り替える"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "完全版を印刷"

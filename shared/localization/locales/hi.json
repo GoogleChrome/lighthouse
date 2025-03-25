@@ -660,7 +660,10 @@
     "message": "ऐनिमेट की गई सामग्री के लिए वीडियो फ़ॉर्मेट का इस्तेमाल करें"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "पॉलीफ़िल और ट्रांसफ़ॉर्म की मदद से, लेगसी ब्राउज़र पर JavaScript की नई सुविधाएं इस्तेमाल की जा सकती हैं. हालांकि, मॉडर्न ब्राउज़र के लिए इनमें से कई सुविधाओं की ज़रूरत नहीं होती. बंडल किए गए JavaScript के लिए, मॉडर्न स्क्रिप्ट डिप्लॉयमेंट रणनीति अपनाएं. इसके लिए, मॉड्यूल/नोमॉड्यूल सुविधा वाले पहचान टूल का इस्तेमाल करें. इससे मॉडर्न ब्राउज़र पर भेजे जाने वाले कोड की संख्या कम करने और लेगसी ब्राउज़र को चालू रखने में मदद मिलती है. [नया JavaScript इस्तेमाल करने का तरीका जानें](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "पेज पर core-js के वर्शन 2 का पता चला. बेहतर परफ़ॉर्मेंस के लिए, आपको वर्शन 3 पर अपग्रेड करना चाहिए."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "पुरानी JavaScript को नए ब्राउज़र में खोलने से बचें"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "लेख कंप्रेशन चालू करें"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "गंभीरता"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`Content-Security-Policy` (सीएसपी) हेडर में मौजूद `X-Frame-Options` (एक्सएफ़ओ) हेडर या `frame-ancestors` डायरेक्टिव से, यह कंट्रोल किया जाता है कि किसी पेज को कहां एम्बेड किया जा सकता है. ये कुछ या सभी साइटों को पेज एम्बेड करने से रोक सकते हैं. इससे, क्लिकजैकिंग वाले हमलों को कम किया जा सकता है. [क्लिकजैकिंग वाले हमलों को कम करने के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "फ़्रेम कंट्रोल से जुड़ी कोई नीति नहीं मिली"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "एक्सएफ़ओ या सीएसपी की मदद से, क्लिकजैकिंग वाले हमलों को कम करें"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "नीचे दी गई अहम अनुरोध चेन बताती हैं कि किन संसाधनों को ज़्यादा प्राथमिकता से लोड किया गया है. चेन का और डाउनलोड किए गए रिसॉर्स का साइज़ कम करें या गैर-ज़रूरी रिसॉर्स को फ़िलहाल डाउनलोड न करें. इससे पेज लोड होने की प्रोसेस को बेहतर बनाया जा सकता है. [अहम अनुरोधों की चेन बनाने से बचने का तरीका जानें](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "पेज पर दिख रही इमेज का रिज़ॉल्यूशन ठीक है"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "लेआउट शिफ़्ट स्कोर"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "अनुमति है"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "पहले पेंट के सुधार"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "अहम जानकारी"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "मेट्रिक"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "तीसरा पक्ष"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "कुल"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "गहरे रंग वाली थीम को टॉगल करें"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "एक्सपेरिमेंटल इनसाइट को टॉगल करें"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "प्रिंट को बड़ा किया गया"

@@ -660,7 +660,10 @@
     "message": "استخدام تنسيقات الفيديو لمحتوى الصور المتحركة"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "تساعد الرموز البرمجية polyfills وtransforms المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. وبالنسبة إلى حِزم JavaScript، يمكنك استخدام استراتيجية حديثة لنشر النصوص البرمجية باستخدام ميزة الكشف عن الميزات \"module/nomodule\" لتقليل عدد الرموز البرمجية التي يتم نقلها إلى المتصفّحات الحديثة مع استمرار التوافق مع المتصفّحات القديمة. تعرَّف على [كيفية استخدام لغة JavaScript الحديثة](https://web.dev/articles/publish-modern-javascript)."
+    "message": "تساعد الرموز البرمجية polyfills وtransforms المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية إنشاء رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/baseline)، إلّا في حال ضرورة دعم المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "تم رصد الإصدار 2 من core-js على الصفحة. ويجب الترقية إلى الإصدار 3 للحصول على العديد من التحسينات على مستوى الأداء."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "تجنُّب عرض ميزات JavaScript القديمة في المتصفحات الحديثة"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "تفعيل ضغط النص"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "يظهر لك أدناه عنوان ‎`X-Frame-Options` (XFO) أو توجيه `frame-ancestors` في عنصر التحكّم في عنوان ‎`Content-Security-Policy` (CSP) حيث يمكن تضمين صفحة. ويمكن أن يحد هذان العنصران من خطر هجمات clickjacking من خلال منع بعض أو كل المواقع الإلكترونية من تضمين الصفحة. [مزيد من المعلومات حول الحدّ من هجمات clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "لم يتم العثور على سياسة التحكّم في الإطار"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "الحدّ من هجمات clickjacking باستخدام XFO أو CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "توضّح لك \"سلاسل الطلبات المُهمّة\" أدناه الموارد التي تم تحميلها بأولوية عالية. ويمكنك تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة. تعرَّف على [كيفية تجنُّب تسلسل الطلبات المُهمّة](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "يتم عرض الصور بدقة مناسبة"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "نتيجة متغيّرات التصميم"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "مسموح به"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "يشير هذا إلى إجراء حظر سلسلة التعليمات الذي يحدث أثناء قياس \"مدة عرض الاستجابة لتفاعل المستخدم\". [مزيد من المعلومات حول مقياس \"مدة عرض الاستجابة لتفاعل المستخدم\"](https://web.dev/articles/inp)"
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "تم استغراق {timeInMs, number, milliseconds} ملي ثانية لإكمال الحدث \"{interactionType}\"."
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "هدف الحدث"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "تحسينات العرض الأول"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "الإحصاءات"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "المقاييس"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "الجهة الخارجية"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "الإجمالي"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "الصفحة المقدّمة غير متوفّرة بتنسيق HTML (يتم عرضها كصفحة من النوع MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "هذا الإصدار من Chrome قديم جدًا وغير متوافق مع \"{featureName}\". يجب استخدام إصدار أحدث للاطّلاع على النتائج الكاملة."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "لم يتمكّن Lighthouse من تحميل الصفحة المطلوبة بشكل موثوق. يمكنك التأكُّد من اختبار عنوان URL الصحيح وأن الخادم يستجيب بشكل صحيح لجميع الطلبات."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "تبديل المظهر الداكن"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "تفعيل الإحصاءات التجريبية أو إيقافها"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "توسيع مدى الطباعة"

@@ -593,6 +593,9 @@
   "core/audits/autocomplete.js | warningInvalid": {
     "message": "`autocomplete`-token(s): {token} is ongeldig in {snippet}"
   },
+  "core/audits/autocomplete.js | warningOrder": {
+    "message": "Check de volgorde van tokens: '{tokens}' in {snippet}"
+  },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Oplosbaar"
   },
@@ -657,7 +660,10 @@
     "message": "Gebruik video-indelingen voor content met animaties"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Volg voor je gebundelde JavaScript een implementatiestrategie voor moderne scripts op basis van module/nomodule-detectie. Dan beperk je namelijk de hoeveelheid code die naar moderne browsers wordt gestuurd, terwijl oudere browsers ondersteund blijven. [Meer informatie over hoe je modern JavaScript gebruikt](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Overweeg om je JavaScript-buildproces aan te passen zodat [Baseline](https://web.dev/baseline)-functies niet worden getranspileerd, tenzij je weet dat je verouderde browsers moet ondersteunen. [Meer informatie over waarom de meeste sites ES6+-code kunnen implementeren zonder transpileren](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Versie 2 van core-js is gevonden op de pagina. Upgrade naar versie 3 voor veel prestatieverbeteringen."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Voorkomen dat verouderde JavaScript wordt geleverd aan moderne browsers"
@@ -757,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Zet tekstcompressie aan"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Ernst"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "De koptekst `X-Frame-Options` (XFO) of de instructie `frame-ancestors` in de koptekst `Content-Security-Policy` (CSP) bepalen waar een pagina kan worden ingesloten. Hiermee kun je de gevolgen van clickjacking-aanvallen verminderen door te voorkomen dat sommige of alle sites de pagina insluiten. [Meer informatie over hoe je de gevolgen van clickjacking kunt beperken](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Geen framebeheerbeleid gevonden"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "De gevolgen van clickjacking beperken met XFO of CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "De onderstaande ketens met kritieke verzoeken laten zien welke bronnen met een hoge prioriteit worden geladen. Overweeg de lengte van ketens te verkleinen, de downloadgrootte van bronnen te beperken of het downloaden van onnodige bronnen uit te stellen om de laadtijd van de pagina te verbeteren. [Meer informatie over hoe je ketens van kritieke verzoeken voorkomt](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1036,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Levert afbeeldingen met de juiste resolutie"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Score voor indelingsverschuiving"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Toegestaan"
@@ -1655,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Verbeteringen voor eerste weergave"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Inzichten"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Statistieken"
   },
@@ -1915,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Derden"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Totaal"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3460,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Donker thema aan-/uitzetten"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Experimentele inzichten aan-/uitzetten"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Afdrukvenster uitvouwen"

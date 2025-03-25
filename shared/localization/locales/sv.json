@@ -660,7 +660,10 @@
     "message": "Använd videoformat för animationer"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem behövs dock inte för moderna webbläsare. Om du har JavaScript-paket kan du använda en modern strategi för skriptimplementering där registrering av funktioner med eller utan moduler används för att minska mängden kod som skickas till moderna webbläsare, samtidigt som stöd för äldre webbläsare finns kvar. [Läs mer om hur du använder modern JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Version 2 av core-js hittades på sidan. Du bör uppgradera till version 3 för att få prestandaförbättringar."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Undvik att skicka äldre JavaScript till moderna webbläsare"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktivera textkomprimering"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Allvarlighetsgrad"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Sidhuvudet `X-Frame-Options` (XFO) eller direktivet `frame-ancestors` i sidhuvudet`Content-Security-Policy` (CSP) styr var en sida kan bäddas in. De kan minska risken för clickjacking-attacker genom att blockera vissa eller alla webbplatser från att bädda in sidan. [Läs mer om hur du skyddar dig mot clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Ingen ramkontrollpolicy hittades"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Förhindra clickjacking med XFO eller CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Kedjorna av kritiska förfrågningar nedan visar vilka resurser som läses in med hög prioritet. Se om du kan förbättra sidhämtningstiden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser. [Läs mer om hur du undviker att kedja kritiska förfrågningar](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Bilder visas med lämplig upplösning"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Resultat för layoutförskjutning"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Tillåts"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Förbättringar av första skärmuppritningen"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Insikter"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mätvärden"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tredje part"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Totalt"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Aktivera och inaktivera mörkt tema"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Aktivera/inaktivera experimentella insikter"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Skriv ut utökad"

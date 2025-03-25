@@ -660,7 +660,10 @@
     "message": "Brug videoformater til animeret indhold"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill-koder og transformeringer gør det muligt for browsere at anvende nye JavaScript-funktioner. Mange af dem er dog ikke nødvendige til moderne browsere. Hvis du har JavaScript-pakker, skal du bruge en strategi til implementering af moderne scripts, der anvender registrering af funktioner med eller uden moduler til at reducere mængden af kode, som sendes til moderne browsere, men som samtidig bevarer understøttelsen af forældede browsere. [Få flere oplysninger om, hvordan du bruger moderne JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Version 2 af core-js blev registreret på siden. Du bør opgradere til version 3 for at få flere effektivitetsforbedringer."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Undgå at vise forældet JavaScript i moderne browsere"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktivér tekstkomprimering"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Omfang"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Headeren `X-Frame-Options` (XFO) eller direktivet `frame-ancestors` i headeren`Content-Security-Policy` (CSP) styrer, hvor en side kan indlejres. De kan mindske risikoen for clickjacking-angreb ved at blokere indlejring af siden for nogle eller alle websites. [Få flere oplysninger om, hvordan du mindsker risikoen for clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Der blev ikke fundet nogen politik for styring af rammer"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Beskyt mod clickjacking med XFO eller CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Kæderne med kritiske anmodninger nedenfor viser dig, hvilke ressourcer der indlæses med høj prioritet. Overvej at reducere kædernes længde, så ressourcernes downloadstørrelse bliver mindre, eller at udskyde download af unødvendige ressourcer, så sideindlæsningen forbedres. [Få oplysninger om, hvordan du undgår at sammenkæde kritiske anmodninger](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Viser billeder med en passende opløsning"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Resultat for layoutskift"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Tilladt"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Dette er trådblokeringopgaver, der sker under interaktionen indtil målingen af næste visning (Interaction to Next Paint). [Få flere oplysninger om metric'en Interaction to Next Paint](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms blev brugt på hændelsen \"{interactionType}\""
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Hændelsesmål"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Forbedringer af første udfyldning"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Indsigt"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrics"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tredjepart"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "I alt"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Den angivne side er ikke HTML (vises som MIME-typen {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Denne version af Chrome er for gammel til at understøtte \"{featureName}\". Brug en nyere version for at se alle resultater."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse kunne ikke indlæse den side, du anmodede om. Sørg for at teste den rigtige webadresse, og tjek, at serveren svarer korrekt på alle anmodninger."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Slå Mørkt tema til/fra"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Slå eksperimentel indsigt til/fra"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Udskriften blev udvidet"

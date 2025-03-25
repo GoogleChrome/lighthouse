@@ -660,7 +660,10 @@
     "message": "యానిమేటెడ్ కంటెంట్ కోసం వీడియో ఫార్మాట్‌లను ఉపయోగించండి"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. బండిల్ చేయబడిన మీ JavaScript కోసం, లెగసీ బ్రౌజర్‌లకు సపోర్ట్‌ను కొనసాగిస్తూనే, ఆధునిక బ్రౌజర్‌లకు పంపబడే కోడ్ సైజును తగ్గించడానికి మాడ్యూల్/నోమాడ్యూల్ ఫీచర్ గుర్తింపును ఉపయోగించి ఆధునిక స్క్రిప్ట్ అమలు వ్యూహాన్ని అనుసరించండి. [ఆధునిక JavaScriptను ఉపయోగించడం ఎలాగో తెలుసుకోండి](https://web.dev/articles/publish-modern-javascript)"
+    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. మీరు లెగసీ బ్రౌజర్‌లకు సపోర్ట్ ఇవ్వాలని మీకు తెలిస్తే తప్ప, [బేస్‌లైన్](https://web.dev/baseline) ఫీచర్‌లను ట్రాన్స్‌పైల్ చేయకుండా మీ జావాస్క్రిప్ట్ బిల్డ్ ప్రాసెస్‌ను సవరించడాన్ని పరిగణించండి. [చాలా సైట్‌లు ట్రాన్స్‌పైలింగ్ లేకుండా ES6+ కోడ్‌ను ఎందుకు అమలు చేయగలవో తెలుసుకోండి](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "పేజీలో core-js తాలూకు వెర్షన్ 2 కనుగొనబడింది. పలు పనితీరు మెరుగుదలల కోసం మీరు వెర్షన్ 3కు అప్‌గ్రేడ్ చేయాలి."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "లెగసీ JavaScriptను మోడ్రన్ బ్రౌజర్‌లకు అందించడం మానివేయండి"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "వచనం కుదింపును ప్రారంభించండి"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "తీవ్రత"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`Content-Security-Policy` (CSP) హెడర్ కంట్రోల్‌లోని `X-Frame-Options` (XFO) హెడర్ లేదా `frame-ancestors` డైరెక్టివ్, ఇక్కడ పేజీని పొందుపరచవచ్చు. ఇవి కొన్ని లేదా అన్ని సైట్‌లను పేజీని పొందుపరచకుండా నిరోధించడం ద్వారా క్లిక్‌జాకింగ్ అటాక్‌లను తగ్గించగలవు. [క్లిక్‌జాకింగ్‌ను తగ్గించడం గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "ఫ్రేమ్ కంట్రోల్ పాలసీ ఏదీ కనుగొనబడలేదు"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO లేదా CSP తో క్లిక్‌జాకింగ్‌ను తగ్గించండి"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "కింద పేర్కొన్న అతి ముఖ్యమైన రిక్వెస్ట్ చెయిన్‌లు ఏ రిసోర్స్‌లు అధిక ప్రాధాన్యతతో లోడ్ అయ్యాయో మీకు చూపిస్తాయి. పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి పరిశీలించండి. [అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను ఎలా నివారించాలో తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "తగిన రిజల్యూషన్‌తో ఇమేజ్‌లను అందిస్తుంది"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "లేఅవుట్ షిఫ్ట్ స్కోర్"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "అనుమతించబడింది"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "మొదటి పెయింట్ మెరుగుదలలు"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "గణాంకాలు"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "గణాంకాలు"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "మూడవ పక్షం"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "మొత్తం"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "ముదురు రంగు థీమ్‌ను టోగుల్ చేయి"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "ప్రయోగాత్మక గణాంకాలను టోగుల్ చేయండి"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "ప్రింట్ విస్తరించబడింది"

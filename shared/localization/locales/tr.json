@@ -660,7 +660,10 @@
     "message": "Animasyonlu içerik için video biçimleri kullanın"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Çoklu dolgular ve dönüşümler, eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Eski tarayıcılara verilen desteği sürdürürken, modern tarayıcılara gönderilen kod miktarını azaltmak üzere modüllü/modülsüz özellik algılamayı kullanarak JavaScript paketiniz için modern bir komut dosyası dağıtım stratejisi kullanın. [Modern JavaScript'i nasıl kullanacağınızı öğrenin](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Sayfada core-js'nin 2. sürümü algılandı. Birçok performans iyileştirmesi için 3. sürüme geçmenizi öneririz."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Modern tarayıcılara eski JavaScript sunmaktan kaçının"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Metin sıkıştırmayı etkinleştirin"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Önem derecesi"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) başlığı veya `Content-Security-Policy` (CSP) başlığındaki `frame-ancestors` yönergesi bir sayfanın yerleştirilebileceği yeri kontrol eder. Bunlar, bazı sitelerin veya tüm sitelerin sayfayı yerleştirmesini engelleyerek clickjacking saldırılarını azaltabilir. [Clickjacking saldırılarını önleme hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Çerçeve denetimi politikası bulunamadı"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO veya CSP ile clickjacking'i azaltma"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Aşağıdaki Kritik İstek Zincirleri, hangi kaynakların yüksek öncelikle yüklendiğini göstermektedir. Sayfa yüklemesini iyileştirmek için zincir uzunluğunu azaltma, kaynakların indirme boyutunu küçültme veya gereksiz kaynakların indirilmesini erteleme seçeneğini değerlendirin. [Birbirini takip eden kritik istekleri nasıl önleyeceğinizi öğrenin](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Çözünürlüğü uygun olan resimleri sunar"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Düzen kayması puanı"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "İzin verildi"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "İlk Boya İyileştirmeleri"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Analizler"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrikler"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Üçüncü taraf"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Toplam"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Koyu Temayı aç/kapat"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Deneysel analizleri aç/kapat"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Yazdırma Genişletmesi"

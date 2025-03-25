@@ -660,7 +660,10 @@
     "message": "יש להשתמש בפורמטים של וידאו כדי להציג תוכן אנימציה"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים מדור קודם להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כשפורסים סקריפטים בחבילת JavaScript, מומלץ לעשות זאת בשיטה מודרנית שכוללת זיהוי של תכונות עם או בלי מודולים. שיטה כזו מאפשרת לצמצם את כמות הקוד שנשלחת לדפדפנים מתקדמים, מבלי לוותר על התמיכה בדפדפנים מדור קודם. [איך להשתמש ב-JavaScript בשיטה מודרנית](https://web.dev/articles/publish-modern-javascript)"
+    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים מדור קודם להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כדאי לשקול לשנות את תהליך ה-build של JavaScript כדי לא להמיר [תכונות בסיסיות](https://web.dev/baseline), אלא אם ידוע לך שנדרשת תמיכה בדפדפנים מדור קודם. [למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "זוהתה בדף גרסה 2 של core-js. כדאי לשדרג לגרסה 3 כדי ליהנות משיפורים רבים בביצועים."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "יש להימנע משימוש ב-JavaScript מדור קודם בדפדפנים מודרניים"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "יש להפעיל דחיסת טקסט"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "מידת החומרה"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "הכותרת `X-Frame-Options` (XFO) או ההוראה `frame-ancestors` בכותרת `Content-Security-Policy` (CSP) קובעות היכן אפשר להטמיע דף. אפשר להשתמש בהן כדי להפחית את הסיכונים למתקפות Clickjacking על ידי חסימת האפשרות להטמיע את הדף בחלק מהאתרים או בכולם. [מידע נוסף על צמצום מתקפות clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "לא נמצאה מדיניות של בקרת מסגרת"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "צמצום מתקפות clickjacking באמצעות XFO או CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "בקטע 'שרשראות בקשה קריטיות' שבהמשך מוצגים המשאבים שנטענים עם עדיפות גבוהה. כדי לשפר את מהירות טעינת הדף, מומלץ לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים. [כאן מוסבר איך להימנע משרשור של בקשות קריטיות](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "מציג תמונות עם רזולוציה מתאימה"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "הציון של שינוי הפריסה"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "הכתובת אושרה"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "שיפורים בעיבוד ראשון"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "תובנות"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "ערכים"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "צד שלישי"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "סה\"כ"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3460,6 +3484,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "מעבר לעיצוב כהה"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "הפעלה או השבתה של תובנות ניסיוניות"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "פרטי הדפסה מורחבים"

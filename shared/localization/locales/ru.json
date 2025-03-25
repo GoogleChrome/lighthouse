@@ -660,7 +660,10 @@
     "message": "Используйте видеоформаты для анимированного контента"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Полифилы и преобразования позволяют работать с новыми возможностями JavaScript в устаревших браузерах. Однако для современных браузеров большинство из них не требуется. Используйте новую стратегию развертывания скриптов в пакетах JavaScript. Обнаружение модульных и немодульных функций сократит объем кода в современных браузерах и обеспечит поддержку устаревших браузеров. Подробнее о том, [как использовать новую стратегию работы с JavaScript](https://web.dev/articles/publish-modern-javascript)…"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "На странице была обнаружена библиотека core-js версии 2. Для улучшения производительности обновите ее до версии 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Не отправляйте устаревший код JavaScript в современные браузеры"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Включите сжатие текста"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Уровень серьезности"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Заголовок `X-Frame-Options` (XFO) или директива `frame-ancestors` в заголовке `Content-Security-Policy` (CSP) указывает, куда можно встроить страницу. Таким образом можно защититься от кликджекинга, запретив сайтам встраивать страницы. Подробнее о [защите от кликджекинга](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)…"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Правило управления фреймом отсутствует"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Защита от кликджекинга с использованием заголовка XFO или CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Приведенные ниже цепочки критических запросов показывают, какие ресурсы загружаются с высоким приоритетом. Чтобы ускорить загрузку страниц, рекомендуем сократить длину цепочек, уменьшить размер скачиваемых ресурсов или отложить скачивание ненужных ресурсов. Подробнее о том, [как предотвращать образование цепочек критических запросов](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)…"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Изображения показываются в нужном разрешении"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Показатель смещения макета"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Разрешено"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Уменьшение времени загрузки контента"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Статистика"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показатели"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Сторонний"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Всего"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3460,6 +3484,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Включить/выключить тёмную тему"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Показать или скрыть экспериментальные данные"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Печать полного отчета"

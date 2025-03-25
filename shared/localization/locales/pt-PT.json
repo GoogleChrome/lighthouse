@@ -660,7 +660,10 @@
     "message": "Utilize formatos de vídeo para conteúdo animado"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Os polyfills e as transformações permitem que os navegadores antigos usem novas funcionalidades de JavaScript. No entanto, muitos não são necessários para os navegadores modernos. Para o seu JavaScript integrado, adote uma estratégia de implementação de scripts moderna através da deteção da funcionalidade module/nomodule para reduzir a quantidade de código enviado para os navegadores modernos, mantendo, ao mesmo tempo, a compatibilidade com os navegadores antigos. [Saiba como usar o JavaScript moderno](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "A versão 2 do core-js foi detetada na página. Deve atualizar para a versão 3 para receber várias melhorias de desempenho."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Evite a publicação do JavaScript antigo em navegadores modernos"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ative a compressão de texto"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Gravidade"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "O cabeçalho `X-Frame-Options` (XFO) ou a diretiva `frame-ancestors` no cabeçalho `Content-Security-Policy` (CSP) controlam onde uma página pode ser incorporada. Estes podem mitigar ataques de clickjacking bloqueando a capacidade de alguns ou todos os sites incorporarem a página. [Saiba como mitigar o clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Não foi encontrada nenhuma política de controlo de frames"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitigue o clickjacking com XFO ou CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "As Cadeias de pedidos críticos abaixo apresentam os recursos que são carregados com uma prioridade elevada. Considere reduzir o tamanho das cadeias, reduzir o tamanho de transferência dos recursos ou adiar a transferência de recursos desnecessários para melhorar o carregamento de página. [Saiba como evitar encadear pedidos críticos](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Publica imagens com a resolução adequada"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Pontuação da mudança de esquema"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Permitido"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Melhorias no primeiro preenchimento"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Estatísticas"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Métricas"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Terceiros"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Ativar/desativar tema escuro"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Ativar/desativar estatísticas experimentais"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Imprimir com expansão"

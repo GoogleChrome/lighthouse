@@ -660,7 +660,10 @@
     "message": "Uporabite oblike zapisa videoposnetkov za animirano vsebino"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Elementi »polyfill« in »transform« starejšim brskalnikom omogočajo uporabo novih funkcij JavaScripta. Pri sodobnih brskalnikih pa številni niso potrebni. Za JavaScript v svežnju uporabite sodobno strategijo uvajanja skriptov z zaznavanjem funkcij modulov/nemodulov, da zmanjšate količino kode, poslane sodobnim brskalnikom, hkrati pa ohranite podporo za starejše brskalnike. [Preberite več o uporabi sodobnega JavaScripta](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na strani je bila zaznana različica 2 knjižnice core-js. Nadgradite na različico 3, če želite izkoristiti številne izboljšave učinkovitosti delovanja."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Izogibajte se prikazovanju starejšega JavaScripta v sodobnih brskalnikih"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Omogočite stiskanje besedila"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Resnost"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Glava `X-Frame-Options` (XFO) direktive `frame-ancestors` v kontrolniku glave `Content-Security-Policy` (CSP), kjer je mogoče vdelati stran. S tem lahko zmanjšate število napadov s clickjackingom tako, da nekaterim ali vsem spletnim mestom preprečite vdelavo strani. [Preberite več o omejevanju clickjackinga](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Ni pravilnika za nadzor okvirov"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Omejevanje clickjackinga z XFO-jem ali CSP-jem"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Verige kritičnih zahtev spodaj vam prikazujejo, katera sredstva so naložena z visoko prednostjo. Razmislite o skrajšanju verig, zmanjšanju velikosti sredstev ali odlaganju prenosa nepotrebnih sredstev zaradi izboljšanja nalaganja strani. [Preberite, kako se izognete veriženju nujnih zahtev](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Prikaže slike z ustrezno ločljivostjo"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Rezultat spremembe postavitve"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Dovoljeno"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Izboljšave prvega barvanja"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Vpogledi"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Meritve"
   },
@@ -1919,11 +1940,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Drugi ponudniki"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Skupaj"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Skupno"
+    "message": "Skupaj"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Pri snemanju sledi ob nalaganju strani je prišlo do napake. Znova zaženite Lighthouse. ({errorCode})"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Preklop temne teme"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Preklop preizkusnih vpogledov"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Tiskanje razširjenega poročila"

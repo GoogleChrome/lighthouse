@@ -660,7 +660,10 @@
     "message": "Користите видео формате за анимирани садржај"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Полифили и трансформације омогућавају да старе верзије прегледача користе нове функције JavaScript-а. Међутим, многи нису неопходни за модерне прегледаче. За JavaScript пакете користите модерну стратегију примене скрипте помоћу откривања функција модулом/без модула да бисте смањили количину кода који се шаље модерним прегледачима, притом задржавајући подршку за старе верзије прегледача. [Сазнајте како се користи модерни JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Полифили и трансформације омогућавају да старе верзије прегледача користе нове функције JavaScript-а. Међутим, многи нису неопходни за модерне прегледаче. Размислите о томе да модификујете процес прављења JavaScript-а тако да не транспајлира [референтни](https://web.dev/baseline) скуп функција, осим ако знате да мора да подржава застареле прегледаче. [Сазнајте зашто већина сајтова може да користи ES6+ кôд без транспајлирања](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Верзија 2 core-js-а је откривена на овој страници. Треба да надоградите на верзију 3 због бројних побољшања учинка."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Избегавајте приказивање застарелог JavaScript-а модерним прегледачима"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Омогућите компресију текста"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Озбиљност"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) заглавље или `frame-ancestors` директива у контроли `Content-Security-Policy` (CSP) заглавља где може да се угради страница. То може да ублажи clickjacking нападе тако што блокира уграђивање странице на неким или свим сајтовима. [Сазнајте више о ублажавању clickjacking напада](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Није пронађена ниједна смерница за контролу оквира"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Ублажите clickjacking уз XFO или CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Ланци веома важних захтева у наставку вам приказују који ресурси се учитавају са високим приоритетом. Препоручујемо вам да смањите дужину ланаца, да смањите величину преузимања за ресурсе или да одложите преузимање ресурса који нису неопходни ради бржег учитавања странице. [Сазнајте како да избегнете прављење ланаца критичних захтева](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Приказује слике са одговарајућом резолуцијом"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Резултат промене распореда"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Дозвољен"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Побољшања првог приказивања"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Увид"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показатељи"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Независни ресурси"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Укупно"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Укључи/искључи тамну тему"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Укључите или искључите експерименталне увиде"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Прошири дијалог за штампање"

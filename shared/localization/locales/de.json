@@ -660,7 +660,10 @@
     "message": "Videoformate für animierte Inhalte verwenden"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Dank Polyfills und Transformationen können veraltete Browser die neuen JavaScript-Funktionen nutzen. Bei modernen Browsern hingegen sind viele davon nicht erforderlich. Für dein JavaScript-Bundle solltest du eine moderne Skriptimplementierungsstrategie unter Verwendung der module/nomodule-Funktionserkennung einsetzen. So kannst du einerseits den an moderne Browser übermittelten Code auf das Nötige reduzieren und gleichzeitig veraltete Browser bestmöglich unterstützen. [Informationen zur Verwendung modernen JavaScripts](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Auf der Seite wurde Version 2 von core-js erkannt. Ein Upgrade auf Version 3 bietet viele Leistungsverbesserungen."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Verhindern, dass in modernen Browsern veraltetes JavaScript bereitgestellt wird"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Textkomprimierung aktivieren"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Schweregrad"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Der `X-Frame-Options`-Header (XFO) oder die `frame-ancestors`-Anweisung im `Content-Security-Policy`-Header (CSP) steuern, wo eine Seite eingebettet werden kann. Wenn das Einbetten der Seite auf einigen oder allen Websites blockiert wird, können dadurch Clickjacking-Angriffe abgeschwächt werden. [Weitere Informationen](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Keine Richtlinie zur Kontrolle von Frames gefunden"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Clickjacking mit XFO oder CSP abschwächen"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "In den unten aufgeführten Ketten kritischer Anfragen kannst du sehen, welche Ressourcen mit einer hohen Priorität geladen werden. Versuche, die Ketten zu kürzen, die Downloadgröße von Ressourcen zu reduzieren oder das Herunterladen unnötiger Ressourcen zurückzustellen, um den Seitenaufbau zu beschleunigen. [Informationen dazu, wie sich das Verketten kritischer Anfragen vermeiden lässt.](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Stellt Bilder mit angemessener Auflösung bereit"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Layout-Shift-Ergebnis"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Zugelassen"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Dies sind die Aufgaben zur Blockierung des Threads, die beim Erfassen des Messwerts „Interaction to Next Paint“ ausgeführt werden. [Weitere Informationen zum Messwert „Interaction to Next Paint“.](https://web.dev/articles/inp)"
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms für {interactionType}-Ereignis benötigt"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Ereignisziel"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Verbesserungen beim Zeichnen der ersten Inhalte"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Statistiken"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Messwerte"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Drittanbieter"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Gesamt"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Die bereitgestellte Seite ist nicht vom Typ HTML (als MIME-Typ {mimeType} bereitgestellt)."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Diese Version von Chrome ist zu alt, um \"{featureName}\" zu unterstützen. Verwende eine neuere Version, um vollständige Ergebnisse anzusehen."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Die von dir angeforderte Seite konnte von Lighthouse nicht zuverlässig geladen werden. Überprüfe, ob du die richtige URL testest und der Server auf alle Anfragen angemessen reagiert."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Auf dunkles Design umschalten"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Experimentelle Statistiken ein-/ausschalten"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Erweiterten Bericht drucken"

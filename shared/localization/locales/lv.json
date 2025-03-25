@@ -660,7 +660,10 @@
     "message": "Izmantojiet video failu formātus animētam saturam"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Funkcionalitāšu un pārveidošanas kodi ļauj mantotos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. JavaScript pakai pielāgojiet modernu skripta izvietošanas stratēģiju, izmantojot moduļa/bez moduļa funkcijas noteikšanu, lai samazinātu uz moderniem pārlūkiem nosūtīta koda apjomu, vienlaikus nodrošinot atbalstu mantotiem pārlūkiem. [Uzziniet, kā izmantot modernu JavaScript](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Lapā tika konstatēta core-js 2. versija. Jums ir jāveic jaunināšana uz 3. versiju, lai iegūtu daudzus veiktspējas uzlabojumus."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Novērsiet mantotā JavaScript koda izmantošanu modernos pārlūkos"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Iespējojiet teksta saspiešanu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Nozīmīgums"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) galvene vai `frame-ancestors` direktīva `Content-Security-Policy` (CSP) galvenē nosaka, kur var iegult lapu. Tās var mazināt “clickjacking” uzbrukumus, liedzot dažām vai visām vietnēm iegult lapu. [Uzziniet vairāk par “clickjacking” uzbrukumu novēršanu](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Netika atrasta ietvara kontroles politika"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Maziniet “clickjacking” uzbrukumus, izmantojot XFO vai CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Rādītājs “Kritisko pieprasījumu ķēdes” tālāk parāda, kuri resursi ir ielādēti ar augstāko prioritāti. Lai uzlabotu lapas ielādi, ieteicams samazināt ķēžu garumu, samazināt resursu lejupielādes apjomu vai atlikt nevajadzīgo resursu lejupielādi. [Uzziniet, kā izvairīties no kritisku pieprasījumu ķēdēm](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Attēli tiek rādīti piemērotā izšķirtspējā"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Izkārtojuma nobīdes rādītājs"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Atļauts"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Tas ir pavediena bloķēšanas darbs laikā, kad notiek Interaction to Next Paint mērīšana. [Uzziniet vairāk par rādītāju “Interaction to Next Paint”](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms tika patērēts notikumam “{interactionType}”"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Notikuma mērķis"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Pirmā satura atveidojuma uzlabojumi"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Ieskati"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrikas"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Trešā puse"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Kopā"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Norādītā lapa nav valodā HTML (tā tiek rādīta MIME veidā {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Šī Chrome versija ir pārāk veca, lai atbalstītu funkciju {featureName}. Lai skatītu visus rezultātus, izmantojiet jaunāku versiju."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse nevarēja droši ielādēt jūsu pieprasīto lapu. Pārliecinieties, ka testējat pareizo URL un serveris pareizi reaģē uz visiem pieprasījumiem."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Pārslēgt tumšo motīvu"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Pārslēgt eksperimentālos ieskatus"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Drukājamā kopija izvērsta"

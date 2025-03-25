@@ -660,7 +660,10 @@
     "message": "Folosește formate video pentru conținut animat"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfillurile și transformările fac posibilă folosirea noilor funcții JavaScript în browserele vechi. Însă pentru browserele moderne, majoritatea nu sunt necesare. Pentru grupul tău JavaScript, adoptă o strategie modernă de implementare a scriptului, care folosește detectarea funcțiilor module / nomodule, pentru a reduce volumul de cod transferat în browserele moderne și a menține totodată compatibilitatea cu browserele vechi. [Află cum să folosești JavaScript modern](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "A fost detectată versiunea 2 de core-js în pagină. Pentru mai multe îmbunătățiri ale performanței, ar trebui să faci upgrade la versiunea 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nu folosi o versiune veche de JavaScript în browsere moderne"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Activează comprimarea textului"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Severitate"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Antetul `X-Frame-Options` (XFO) sau directiva `frame-ancestors` din antetul `Content-Security-Policy` (CSP) controlează unde poate fi încorporată o pagină. Acestea pot atenua atacurile de tip clickjacking prin blocarea unor site-uri sau a tuturor site-urilor de la încorporarea paginii. [Află mai multe despre atenuarea atacurilor de tip clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nu s-a găsit nicio politică de control al cadrelor"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Redu clickjackingul cu XFO sau CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Lanțurile de solicitări esențiale de mai jos îți arată ce resurse sunt încărcate cu prioritate ridicată. Poți să reduci lungimea lanțurilor, să reduci dimensiunea de descărcare a resurselor sau să amâni descărcarea de resurse inutile pentru a îmbunătăți încărcarea paginilor. [Află cum să eviți legarea solicitărilor critice](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Difuzează imagini cu rezoluția corectă"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Scorul pentru schimbarea aspectului"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Permisă"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Îmbunătățirile pentru prima redare"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Statistici"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Valori"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Terță parte"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Activează/dezactivează Tema întunecată"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Comută statisticile experimentale"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Printează în formă extinsă"

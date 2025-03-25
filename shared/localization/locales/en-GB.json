@@ -590,6 +590,12 @@
   "core/audits/autocomplete.js | title": {
     "message": "`<input>` elements correctly use `autocomplete`"
   },
+  "core/audits/autocomplete.js | warningInvalid": {
+    "message": "`autocomplete` token(s): '{token}' is invalid in {snippet}"
+  },
+  "core/audits/autocomplete.js | warningOrder": {
+    "message": "Review order of tokens: '{tokens}' in {snippet}"
+  },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "Actionable"
   },
@@ -654,7 +660,10 @@
     "message": "Use video formats for animated content"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code delivered to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Version 2 of core-js was detected on the page. You should upgrade to version 3 for many performance improvements."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Avoid serving legacy JavaScript to modern browsers"
@@ -754,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Enable text compression"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Severity"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "The `X-Frame-Options` (XFO) header or the `frame-ancestors` directive in the `Content-Security-Policy` (CSP) header control where a page can be embedded. These can mitigate clickjacking attacks by blocking some or all sites from embedding the page. [Learn more about mitigating clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "No frame control policy found"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitigate clickjacking with XFO or CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "The critical request chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources or deferring the download of unnecessary resources to improve page load. [Learn how to avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1033,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Layout shift score"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Allowed"
@@ -1490,6 +1514,9 @@
   "core/audits/user-timings.js | title": {
     "message": "User Timing marks and measures"
   },
+  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
+    "message": "A `<link rel=preconnect>` was found for '{securityOrigin}' but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
+  },
   "core/audits/uses-rel-preconnect.js | description": {
     "message": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)."
   },
@@ -1498,6 +1525,12 @@
   },
   "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
     "message": "More than two `<link rel=preconnect>` connections were found. These should be used sparingly and only to the most important origins."
+  },
+  "core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "A `<link rel=preconnect>` was found for '{securityOrigin}' but was not used by the browser. Only use `preconnect` for important origins that the page will certainly request."
+  },
+  "core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "A preload `<link>` was found for '{preloadURL}' but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
   },
   "core/audits/uses-rel-preload.js | description": {
     "message": "Consider using `<link rel=preload>` to prioritise fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
@@ -1537,6 +1570,9 @@
   },
   "core/audits/work-during-interaction.js | description": {
     "message": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/articles/inp)."
+  },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms spent on event ‘{interactionType}’"
   },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Event target"
@@ -1639,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint Improvements"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Insights"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrics"
@@ -1900,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3445,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Toggle Dark theme"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Toggle experimental insights"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Print expanded"

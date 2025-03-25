@@ -660,7 +660,10 @@
     "message": "ใช้รูปแบบวิดีโอสำหรับเนื้อหาภาพเคลื่อนไหว"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "โพลีฟิลล์และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์ที่ทันสมัย สำหรับ JavaScript แบบแพ็กเกจ ให้ใช้กลยุทธ์การทำให้สคริปต์สมัยใหม่ใช้งานได้โดยใช้การตรวจหาฟีเจอร์โมดูล/ไม่มีโมดูลเพื่อลดจำนวนโค้ดที่ส่งไปยังเบราว์เซอร์ที่ทันสมัย ขณะที่ยังรองรับเบราว์เซอร์เดิมอยู่ [ดูวิธีใช้ JavaScript ที่ทันสมัย](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfill และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์ที่ทันสมัย ลองแก้ไขกระบวนการบิลด์ JavaScript เพื่อไม่ให้ทำการ Transpile ฟีเจอร์ [Baseline](https://web.dev/baseline) เว้นแต่คุณจะรู้ว่าต้องรองรับเบราว์เซอร์เดิม [ดูสาเหตุที่เว็บไซต์ส่วนใหญ่สามารถติดตั้งใช้งานโค้ด ES6+ ได้โดยไม่ต้องทำการ Transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "ตรวจพบ core-js เวอร์ชัน 2 ในหน้า คุณควรอัปเกรดเป็นเวอร์ชัน 3 เพื่อปรับปรุงประสิทธิภาพหลายด้าน"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "หลีกเลี่ยงการแสดง JavaScript ในเบราว์เซอร์สมัยใหม่"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "เปิดใช้การบีบอัดข้อความ"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "ความรุนแรง"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "ส่วนหัว `X-Frame-Options` (XFO) หรือคําสั่ง `frame-ancestors` ในส่วนควบคุมส่วนหัว `Content-Security-Policy` (CSP) ซึ่งสามารถฝังหน้าเว็บได้ วิธีการเหล่านี้ลดการโจมตีแบบ Clickjacking ได้โดยบล็อกบางเว็บไซต์หรือทุกเว็บไซต์ไม่ให้ฝังหน้าเว็บ [ดูข้อมูลเพิ่มเติมเกี่ยวกับการลดการโจมตีแบบ Clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "ไม่พบนโยบายการควบคุมเฟรม"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "ป้องกัน Clickjacking ด้วย XFO หรือ CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "ห่วงโซ่คำขอที่สำคัญด้านล่างแสดงให้เห็นทรัพยากรที่โหลดโดยมีลำดับความสำคัญสูง พิจารณาลดความยาวของห่วงโซ่ ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ [ดูวิธีหลีกเลี่ยงการเชนคำขอที่สำคัญ](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "แสดงรูปภาพที่มีความละเอียดเหมาะสม"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "คะแนนการเปลี่ยนเลย์เอาต์"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "อนุญาต"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "การปรับปรุงการแสดงผลครั้งแรก"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "ข้อมูลเชิงลึก"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "เมตริก"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "บุคคลที่สาม"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "รวม"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "เปิด/ปิดธีมมืด"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "เปิด/ปิดข้อมูลเชิงลึกเวอร์ชันทดลอง"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "ขยายข้อมูลการพิมพ์"

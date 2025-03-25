@@ -660,7 +660,10 @@
     "message": "Użyj formatów wideo dla animacji"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Elementy polyfill i przekształcenia umożliwiają obsługę nowych funkcji JavaScript przez starsze przeglądarki. Jednak nowoczesne przeglądarki nie potrzebują wielu takich elementów. W przypadku pakietów JavaScript zastosuj nowoczesną strategię wdrażania skryptów opartą na wykrywaniu ich atrybutów „module” i „nomodule”. Pozwala to ograniczyć ilość kodu przesyłanego do nowoczesnych przeglądarek i jednocześnie umożliwia obsługę przeglądarek starszych. [Jak używać nowoczesnego kodu JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stronie wykryto wersję 2 biblioteki core-js. Przejście na wersję 3 pozwoli Ci skorzystać z wielu ulepszeń."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Unikaj wyświetlania starszych skryptów JavaScript w nowoczesnych przeglądarkach"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Włącz kompresję tekstu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Waga"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Nagłówek `X-Frame-Options` (XFO) lub dyrektywa `frame-ancestors` w nagłówku `Content-Security-Policy` (CSP) określają, gdzie można umieścić stronę. Mogą one ograniczyć ataki typu clickjacking, blokując możliwość umieszczenia strony w niektórych lub wszystkich witrynach. [Więcej informacji o zmniejszaniu ryzyka ataku typu clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nie znaleziono zasad kontroli ramki"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Ogranicz ataki typu clickjacking za pomocą XFO lub CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Poniższe łańcuchy żądań krytycznych pokazują zasoby ładowane z wysokim priorytetem. Aby przyspieszyć ładowanie strony, możesz skrócić łańcuchy, zmniejszyć rozmiar pobieranych zasobów lub opóźnić pobieranie zasobów, które nie są niezbędne. [Jak unikać łańcuchów żądań krytycznych](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Wyświetla obrazy w odpowiedniej rozdzielczości"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Wynik przesunięcia układu"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Dozwolony"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Jest to zadanie blokowania wątku, które miało miejsce podczas pomiaru czasu od interakcji do kolejnego wyrenderowania. [Więcej informacji o czasie od interakcji do kolejnego wyrenderowania](https://web.dev/articles/inp)"
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms na zdarzenie „{interactionType}”"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Cel zdarzenia"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Ulepszenia pierwszego renderowania"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Statystyki"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Dane"
@@ -1916,11 +1940,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Zewnętrzne"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Łącznie"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Razem"
+    "message": "Łącznie"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Podczas rejestrowania śladu wczytywania strony wystąpił błąd. Uruchom Lighthouse ponownie. ({errorCode})"
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Podana strona nie ma formatu HTML (jest wyświetlana jako typ MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ta wersja Chrome jest przestarzała i nie obsługuje wartości „{featureName}”. Aby zobaczyć wszystkie wyniki, użyj nowszej wersji."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Narzędziu Lighthouse nie udało się całkowicie wczytać żądanej strony. Upewnij się, że testujesz właściwy URL, a serwer poprawnie odpowiada na wszystkie żądania."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Przełącz ciemny motyw"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Przełącz statystyki eksperymentalne"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Drukuj rozwinięty"

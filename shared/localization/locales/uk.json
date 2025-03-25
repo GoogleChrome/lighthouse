@@ -660,7 +660,10 @@
     "message": "Використовуйте формати відео для анімованого вмісту"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Поліфіли та перетворення дають змогу застарілим веб-переглядачам використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних веб-переглядачів. Для пакетів JavaScript прийміть сучасну стратегію введення скрипту в дію за допомогою виявлення модульних/немодульних функцій, щоб зменшити обсяг коду, який надсилається сучасним веб-переглядачам зі збереженням підтримки застарілих. [Дізнайтесь, як використовувати сучасний код JavaScript.](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "На сторінці виявлено версію 2 core-js. Щоб підвищити продуктивність, перейдіть на версію 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Не показуйте застарілі елементи JavaScript у сучасних веб-переглядачах"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Увімкніть стиснення тексту"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Заголовок `X-Frame-Options` (XFO) або директива `frame-ancestors` у заголовку `Content-Security-Policy` (CSP) указує на те, куди можна вбудовувати сторінку. Ці заголовки допомагають зменшити ризик атак типу clickjacking, блокуючи вбудовування сторінки на деяких або всіх сайтах. [Докладніше про запобігання атакам типу clickjacking.](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Не знайдено правила керування фреймом"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Зменште ризик атак типу clickjacking за допомогою XFO або CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Ланцюжки важливих запитів нижче показують, які ресурси мають високий пріоритет. Щоб пришвидшити завантаження сторінки, зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. [Дізнайтесь, як не створювати ланцюжки критичних запитів.](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Показує зображення з правильною роздільною здатністю"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Показник зміщення макета"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Дозволено"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Покращення першого відображення"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Статистика"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показники"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Сторонні"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Усього"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Увімкнути або вимкнути темну тему"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Увімкнути або вимкнути експериментальну статистику"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Розгорнути вікно друку"

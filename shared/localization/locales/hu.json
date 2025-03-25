@@ -660,7 +660,10 @@
     "message": "Használjon videoformátumot az animált tartalmakhoz"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "A polifill és az átalakítás lehetővé teszi, hogy a régi böngészők is használhassák az újabb JavaScript-funkciókat. A modern böngészők esetében azonban sok polifill és átalakítás szükségtelen. Használjon modern szkripttelepítő módszert csomagolt JavaScript-kódjaihoz, amely észleli a module/nomodule utasításokat. Így kevesebb kódot küld a modern böngészőknek, mégis megtarthatja a régi böngészők támogatását. [További információ a modern JavaScript használatáról](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "A core-js 2-es verzióját észlelte a rendszer az oldalon. A teljesítményt érintő számos fejlesztés miatt érdemes váltani a 3-as verzióra."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Kerülje régi JavaScript megjelenítését a modern böngészőkben"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Engedélyezze a szövegtömörítést"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Súlyosság"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "A(z) `Content-Security-Policy` (CSP) fejlécvezérlőben szereplő `X-Frame-Options` (XFO) fejléc vagy `frame-ancestors` utasítás, ahová beágyazható egy oldal. A segítségükkel mérsékelhetők a kattintáseltérítő támadások, mivel megakadályozzák, hogy egyes webhelyek vagy az összes webhely beágyazza az oldalt. [További információ a kattintás eltérítés kockázatának mérsékléséről](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nem található keretvezérlési irányelv"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Az XFO vagy a CSP használatával csökkentheti a kattintáseltérítés kockázatát"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Az alábbi kritikus kérésláncok megjelenítik, hogy milyen források töltődnek be magas prioritással. Az oldalbetöltés javítása érdekében fontolja meg a láncok hosszának csökkentését, a letöltött források méretének csökkentését vagy a felesleges források letöltésének késleltetését. [További információ a kritikus kérések láncba rendezésének elkerüléséről](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "A képek megjelenítése megfelelő felbontásban történik"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Elrendezésmozgás pontszáma"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Engedélyezve"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Ez az a szálblokkoló tevékenység, amely Az interakciótól a következő vizuális válaszig eltelt idő során fordul elő. [További információ Az interakciótól a következő vizuális válaszig eltelt idő mutatóról](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms az „{interactionType}” eseményen"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Eseménycél"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Az első leképezést érintő fejlesztések"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Statisztika"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mutatók"
@@ -1916,11 +1940,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Harmadik féltől származó"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Összesen"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Összes"
+    "message": "Összesen"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Hiba történt az oldalbetöltés nyomának rögzítése során. Futtassa újra a Lighthouse szolgáltatást. ({errorCode})"
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "A megadott oldal nem HTML formátumú ({mimeType} MIME-típusként jelent meg)."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ez a Chrome-verzió túl régi a(z) „{featureName}” támogatásához. A teljes eredmények megtekintéséhez használjon újabb verziót."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "A Lighthouse nem tudta megfelelően betölteni a kért oldalt. Győződjön meg arról, hogy a helyes URL-t teszteli, és a szerver megfelelően válaszol az összes kérelemre."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Sötét téma be-/kikapcsolása"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Kísérleti statisztikák be- vagy kikapcsolása"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Teljes jelentés nyomtatása"

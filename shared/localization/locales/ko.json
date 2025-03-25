@@ -590,6 +590,12 @@
   "core/audits/autocomplete.js | title": {
     "message": "`<input>` 구성요소가 `autocomplete`를 올바르게 사용함"
   },
+  "core/audits/autocomplete.js | warningInvalid": {
+    "message": "`autocomplete` 토큰: {snippet}에서 '{token}' 이름이 유효하지 않습니다."
+  },
+  "core/audits/autocomplete.js | warningOrder": {
+    "message": "{snippet}에서 '{tokens}' 토큰의 순서를 검토하세요."
+  },
   "core/audits/bf-cache.js | actionableFailureType": {
     "message": "조치 실행 가능"
   },
@@ -654,7 +660,10 @@
     "message": "애니메이션 콘텐츠에 동영상 형식 사용하기"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 및 변환을 통해 레거시 브라우저에서 새로운 자바스크립트 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 번들로 포함된 자바스크립트의 경우, module/nomodule 기능 감지를 사용하는 최신 스크립트 배포 전략을 채택하여 최신 브라우저에 적용되는 코드를 줄이고 레거시 브라우저 지원을 유지할 수 있습니다. [최신 자바스크립트 사용 방법 알아보기](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "페이지에서 core-js 버전 2가 감지되었습니다. 다양한 성능 개선사항을 적용하려면 버전 3으로 업그레이드해야 합니다."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "레거시 JavaScript를 최신 브라우저에 제공하지 않기"
@@ -754,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "텍스트 압축 사용"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`Content-Security-Policy`(CSP) 헤더의 `frame-ancestors` 지시어 또는 `X-Frame-Options`(XFO) 헤더는 페이지를 삽입할 수 있는 위치를 제어합니다. 이렇게 하면 일부 또는 모든 사이트에서 페이지를 삽입하는 것을 차단하여 clickjacking 공격을 완화할 수 있습니다. [clickjacking 완화 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "프레임 제어 정책을 찾을 수 없습니다."
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO 또는 CSP로 clickjacking 완화"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "다음의 크리티컬 요청 체인은 로드 시 우선순위가 높은 리소스를 보여줍니다. 체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 높이는 것이 좋습니다. [크리티컬 요청 체이닝을 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1033,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "이미지가 적절한 해상도로 제공됨"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "레이아웃 변경 점수"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "허용됨"
@@ -1490,6 +1514,9 @@
   "core/audits/user-timings.js | title": {
     "message": "사용자 타이밍 표시 및 측정 값"
   },
+  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
+    "message": "'{securityOrigin}'에 `<link rel=preconnect>` 링크가 있으나 브라우저에서 사용되지 않았습니다. `crossorigin` 속성을 올바르게 사용하고 있는지 확인하세요."
+  },
   "core/audits/uses-rel-preconnect.js | description": {
     "message": "`preconnect` 또는 `dns-prefetch` 리소스 힌트를 추가하여 중요한 서드 파티 원본에 대한 조기 연결을 수립하는 것이 좋습니다. [필수 원본에 사전 연결하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)"
   },
@@ -1498,6 +1525,12 @@
   },
   "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
     "message": "`<link rel=preconnect>` 연결이 3개 이상 발견되었습니다. 사전 연결 링크는 가장 중요한 원본에 한해 조금만 사용해야 합니다."
+  },
+  "core/audits/uses-rel-preconnect.js | unusedWarning": {
+    "message": "'{securityOrigin}'에 `<link rel=preconnect>` 링크가 있으나 브라우저에서 사용되지 않았습니다. 페이지에서 확실하게 요청하는 중요 출처에만 `preconnect`를 사용합니다."
+  },
+  "core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "'{preloadURL}'에 미리 로드된 `<link>` 링크가 있으나 브라우저에서 사용되지 않았습니다. `crossorigin` 속성을 올바르게 사용하고 있는지 확인하세요."
   },
   "core/audits/uses-rel-preload.js | description": {
     "message": "`<link rel=preload>`를 사용하여 현재 요청되는 리소스를 나중에 페이지 로드에 가져올 때 우선순위를 정하는 것이 좋습니다. [중요한 요청을 미리 로드하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)"
@@ -1642,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "최초 페인트 개선"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "인사이트"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "측정항목"
@@ -1903,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "타사"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "합계"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3448,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "어두운 테마 전환"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "실험용 인사이트 전환"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "인쇄 확장됨"

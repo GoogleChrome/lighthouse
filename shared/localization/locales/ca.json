@@ -660,7 +660,10 @@
     "message": "Utilitza formats de vídeo per al contingut animat"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Els polyfills i les transformacions permeten als navegadors heretats fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Per al teu JavaScript empaquetat, adopta una estratègia de desenvolupament de scripts moderna utilitzant la detecció de la funció mòdul / no mòdul per reduir la quantitat de codi enviat als navegadors moderns, mantenint al mateix temps la compatibilitat amb els navegadors heretats. [Informació sobre com pots utilitzar el JavaScript modern](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "S'ha detectat la versió 2 de core-js a la pàgina. L'has d'actualitzar a la versió 3 per obtenir moltes millores de rendiment."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Evita utilitzar JavaScript heretat als navegadors moderns"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Activa la compressió de text"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Gravetat"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "La capçalera `X-Frame-Options` (XFO) o la directiva `frame-ancestors` a la capçalera `Content-Security-Policy` (CSP) controlen on es pot inserir una pàgina. Poden mitigar els atacs de segrest de clics impedint que alguns llocs web, o tots, insereixin la pàgina. [Obtén més informació sobre com pots mitigar el segrest de clics](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "No s'ha trobat cap política de control de marcs"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitiga el segrest de clics amb XFO o CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Les cadenes de sol·licituds essencials de sota et mostren quins recursos es carreguen amb prioritat alta. Et recomanem que escurcis les cadenes, redueixis la mida de baixada dels recursos o ajornis la baixada de recursos innecessaris per millorar la càrrega de les pàgines. [Obtén informació sobre com pots evitar encadenar sol·licituds essencials](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Utilitza imatges amb una resolució adequada"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Puntuació del canvi de disseny"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Permès"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Aquest és el treball de bloqueig de fils que es produeix durant el mesurament de la interacció amb la renderització següent. [Obtén més informació sobre la mètrica Interacció amb la renderització següent](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "S'han dedicat {timeInMs, number, milliseconds} ms a l'esdeveniment \"{interactionType}\""
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Objectiu de l'esdeveniment"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Millores de la primera renderització"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Estadístiques"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mètriques"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tercers"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "La pàgina proporcionada no és HTML (s'ha publicat com a tipus MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Aquesta versió de Chrome és massa antiga per admetre \"{featureName}\". Utilitza una versió més recent per veure els resultats complets."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse no ha pogut carregar de manera fiable la pàgina que has sol·licitat. Assegura't que estiguis fent la prova de l'URL correcte i que el servidor estigui responent correctament a totes les sol·licituds."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Commuta el tema fosc"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Commuta les estadístiques experimentals"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Imprimeix desplegat"

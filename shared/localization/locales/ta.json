@@ -660,7 +660,10 @@
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கங்களுக்கு வீடியோ வடிவமைப்புகளைப் பயன்படுத்தவும்"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "புதிய JavaScript அம்சங்களைப் பழைய உலாவிகள் பயன்படுத்த பாலிஃபில்களும் ட்ரான்ஸ்ஃபார்ம்களும் உதவுகின்றன. எனினும் நவீன உலாவிகளுக்கு இவற்றுள் பல தேவைப்படுவதில்லை. தொகுக்கப்பட்ட JavaScriptடிற்கு பழைய உலாவிகளுக்கான ஆதரவைத் தக்க வைக்கும் அதே நேரத்தில், நவீன உலாவிகளுக்கு மாற்றப்படும் குறியீடுகளைக் குறைக்க மாடியூல்/நோமாடியூல் அம்சக் கண்டறிதலைப் பயன்படுத்தி நவீன ஸ்கிரிப்ட் பயன்படுத்துதல் உத்தியைப் பயன்படுத்துங்கள். [நவீன JavaScriptடைப் பயன்படுத்துவது எப்படி என அறிக](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "இந்தப் பக்கத்தில் core-js 2ம் பதிப்பு கண்டறியப்பட்டுள்ளது. இன்னும் கூடுதல் செயல்திறன் மேம்பாடுகளுக்கு 3ம் பதிப்புக்கு மேம்படுத்த வேண்டும்."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "நவீன உலாவிகளில் லெகஸி JavaScript சேவை வழங்குவதைத் தவிர்த்தல்"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "உரைச் சுருக்கத்தை இயக்கவும்"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "தீவிரத்தன்மை"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "ஒரு பக்கத்தை எங்கு உட்பொதிக்கலாம் என்பதை `X-Frame-Options` (XFO) தலைப்பு மற்றும் `Content-Security-Policy` (CSP) தலைப்பில் உள்ள `frame-ancestors` டைரெக்டிவ் கட்டுப்படுத்துகின்றன. பக்கத்தை உட்பொதிக்க விடாமல் சில தளங்களையோ எல்லாவற்றையுமோ தடுத்து, clickjacking தாக்குதல்களை இவை கட்டுப்படுத்தலாம். [clickjackingகைக் கட்டுப்படுத்துவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "ஃபிரேம் கட்டுப்பாட்டுக் கொள்கை எதுவுமில்லை"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO அல்லது CSP மூலம் clickjackingகைக் கட்டுப்படுத்துதல்"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "கீழே இருக்கும் 'முக்கியக் கோரிக்கை வரிசைகள்' எந்தெந்த ஆதாரங்கள் அதிக முன்னுரிமையுடன் ஏற்றப்படுகின்றன என்பதைக் காட்டுகின்றன. பக்கம் ஏற்றப்படுவதன் வேகத்தை அதிகரிக்க, வரிசைகளின் நீளத்தைக் குறைத்தல், ஆதாரங்களின் பதிவிறக்க அளவைக் குறைத்தல், தேவையற்ற ஆதாரங்களைப் பதிவிறக்குவதைத் தவிர்த்தல் போன்றவற்றை முயற்சி செய்யவும். [முக்கியக் கோரிக்கைகள் தேங்குவதைத் தவிர்ப்பது எப்படி என அறிக](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "பொருத்தமான தெளிவுத்திறனைக் கொண்ட படங்களை வழங்குதல்"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "லே-அவுட் ஷிஃப்ட் ஸ்கோர்"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "அனுமதிக்கப்பட்டது"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "முதல் தோற்ற மேம்பாடுகள்"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "புள்ளிவிவரங்கள்"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "அளவீடுகள்"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "மூன்றாம் தரப்பு"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "மொத்தம்"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3460,6 +3484,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "டார்க் தீம் நிலைமாற்று"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "புள்ளிவிவர வகையை மாற்றும்"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "விரிக்கப்பட்ட பிரிண்ட்"

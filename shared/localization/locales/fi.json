@@ -660,7 +660,10 @@
     "message": "Jakele animaatiosisältöä videomuodossa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Käytä JavaScript-paketissasi nykyaikaista käyttöönottostrategiaa, jossa havaitaan moduuli/ei-moduuli-ominaisuus, minkä avulla vähennetään nykyaikaisiin selaimiin lähetetyn koodin määrää mutta säilytetään silti vanhojen selaimien tuki. [Lue lisää modernin JavaScriptin käyttämisestä](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Sivulla havaittiin core-js:n versio 2. Päivitä versioon 3, niin saat käyttöösi useita suorituskyvyn parannuksia."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Vältä vanhan JavaScriptin näyttämistä nykyaikaisilla selaimilla"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ota tekstin pakkaus käyttöön"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Vakavuus"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) ‑otsikko tai `frame-ancestors`-sääntö `Content-Security-Policy` (CSP) ‑otsikossa määrittävät, mihin sivu voidaan upottaa. Ne voivat vähentää clickjacking-hyökkäyksiä estämällä joidenkin tai kaikkien sivustojen sivun upottamisen. [Lue lisää clickjacking-hyökkäysten torjumisesta](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Kehyksen hallintaa koskevaa käytäntöä ei löydy"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Pienennä clickjackauksen riskiä XFO:lla tai CSP:llä"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Alla olevat kriittiset pyyntöketjut kertovat, minkä resurssien lataaminen priorisoidaan. Suosittelemme parantamaan sivun latausaikaa lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista. [Lue, miten voit välttää kriittisten pyyntöjen ketjuttamisen](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Näyttää kuvat sopivalla resoluutiolla"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Asettelun muutospisteet"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Sallittu"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Tämä on säikeiden esto, joka tapahtuu Interaktiosta seuraavaan renderöintiin ‐mittauksen aikana. [Lue lisää Interaktiosta seuraavaan renderöintiin ‐mittarista](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms käytetty tapahtumassa \"{interactionType}\""
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Tapahtuman kohde"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Ensimmäistä renderöintiä koskevat parannusehdotukset"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Tilastot"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Tiedot"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Kolmas osapuoli"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Yhteensä"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Sivu ei ole HTML-muodossa (MIME-tyyppi on {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Tämä Chrome-versio ei tue ominaisuutta ({featureName}). Käytä uudempaa versiota, jotta näet tulokset kokonaisuudessaan."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse ei pystynyt lataamaan pyytämääsi sivua luotettavasti. Varmista, että testaat oikeaa URL-osoitetta ja että palvelin vastaa kunnolla kaikkiin pyyntöihin."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Tumma teema päälle/pois"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Kokeellisia vinkkejä päälle/pois"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Laajennettu tulostus"

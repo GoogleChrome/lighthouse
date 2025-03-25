@@ -660,7 +660,10 @@
     "message": "Naudokite vaizdo įrašo formatus animuotam turiniui pateikti"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Naudojant kodus ir transformacijas pasenusiose naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Į grupę įtrauktai „JavaScript“ pritaikykite modernią scenarijaus diegimo strategiją naudodami modulio ir (arba) ne modulio funkcijos aptikimą, kad sumažintumėte į modernias naršykles siunčiamo kodo kiekį, išlaikydami pasenusių naršyklių palaikymą. [Sužinokite, kaip naudoti modernią „JavaScript“](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Naudojant kodus ir transformacijas pasenusiose naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Apsvarstykite galimybę pakeisti „JavaScript“ kompiliavimo procesą, kad nebūtų transpiliuojamos [pagrindinės](https://web.dev/baseline) funkcijos, nebent žinote, kad turite palaikyti pasenusias naršykles. [Sužinokite, kodėl dauguma svetainių gali diegti ES6+ kodą be transpiliavimo](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Puslapyje aptikta 2 „core-js“ versija. Turėtumėte atnaujinti į 3 versiją, kad galėtumėte naudotis daugybe našumo patobulinimų."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Neteikite pasenusios „JavaScript“ modernioms naršyklėms"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Įgalinkite teksto glaudinimą"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Svarba"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Antraštė „`X-Frame-Options`“ (XFO) arba direktyva „`frame-ancestors`“ antraštėje „`Content-Security-Policy`“ (CSP), kur galima įterpti puslapį. Tai gali sušvelninti paspaudimų perėmimo atakas, neleidžiant kai kurioms arba visoms svetainėms įterpti puslapio. [Sužinokite daugiau apie paspaudimų perėmimo rizikos sušvelninimą](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Sistemos valdymo politika nerasta"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Paspaudimų perėmimo rizikos sušvelninimas naudojant XFO arba CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Toliau pateiktose svarbiausių užklausų grandinėse nurodoma, kurie ištekliai įkelti nurodant aukštą prioritetą. Kad puslapio įkėlimas būtų sklandesnis, apsvarstykite galimybę sutrumpinti grandines, sumažinti atsisiunčiamų išteklių dydį arba atidėti nebūtinų išteklių atsisiuntimą. [Sužinokite, kaip išvengti svarbiausių užklausų grandinių](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Teikiami tinkamos raiškos vaizdai"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Išdėstymo poslinkio rezultatas"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Leidžiama"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Tai yra grupių blokavimas, atliekamas įvertinant laiką nuo sąveikos iki kito žymėjimo. [Sužinokite daugiau apie laiką nuo sąveikos iki kito žymėjimo](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "Įvykis „{interactionType}“ truko {timeInMs, number, milliseconds} ms"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Įvykio tikslas"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Pirmojo parodymo patobulinimai"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Įžvalgos"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrika"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Trečioji šalis"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Iš viso"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Pateiktas puslapis nėra HTML (pateiktas kaip MIME tipas {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ši „Chrome“ versija yra per sena ir nepalaiko „{featureName}“. Jei norite peržiūrėti visus rezultatus, naudokite naujesnę versiją."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "„Lighthouse“ nepavyko patikimai įkelti puslapio, kurio užklausą pateikėte. Įsitikinkite, kad testuojate tinkamą URL ir kad serveris tinkamai atsako į visas užklausas."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Perjungti Tamsiąją temą"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Perjungti eksperimentines įžvalgas"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Išskleista spausdintinė kopija"

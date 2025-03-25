@@ -660,7 +660,10 @@
     "message": "Pro animovaný obsah používejte formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Doplňující kódy polyfill a transformace umožňují starším prohlížečům používat nové funkce JavaScriptu. Moderní prohlížeče ale řadu z nich nepotřebují. U svých balíčků JavaScriptu použijte moderní strategii nasazení skriptu pomocí detekce module/nomodule, abyste omezili množství kódu přenášeného do moderních prohlížečů, a přitom zachovali podporu pro starší prohlížeče. [Jak používat moderní JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stránce byla zjištěna verze 2 knihovny core-js. Pro mnoho vylepšení výkonu byste měli upgradovat na verzi 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nepoužívejte v moderních prohlížečích zastaralý JavaScript"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Zapněte kompresi textu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Závažnost"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Záhlaví `X-Frame-Options` (XFO) nebo direktiva `frame-ancestors` v záhlaví `Content-Security-Policy` (CSP) určují, kam lze stránku vložit. Lze tak zmírnit riziko clickjackingových útoků zakázáním vkládání stránky na některé nebo všechny weby. [Další informace o zmírnění rizika clickjackingu](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nebyly nalezeny žádné zásady vkládání do rámců"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Zmírněte riziko clickjackingu pomocí záhlaví XFO nebo CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Řetězce kritických požadavků níže ukazují, které zdroje se načítají s vysokou prioritou. Zvažte, zda byste načítání stránky nemohli vylepšit tím, že řetězce zkrátíte, zmenšíte zdroje nebo odložíte stahování zdrojů, které nejsou nezbytné. [Jak předejít zřetězení kritických požadavků](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Zobrazuje obrázky se správným rozlišením"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Skóre změny rozvržení"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Povoleno"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Toto je činnost blokující vlákno, k níž dochází během měření doby od interakce k dalšímu vykreslení. [Další informace o metrice Doba od interakce k dalšímu vykreslení](https://web.dev/articles/inp)"
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "Na událost {interactionType} byla vynaložena doba {timeInMs, number, milliseconds} ms"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Cíl události"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Vylepšení prvního vykreslení"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Statistiky"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metriky"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Třetí strana"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Celkem"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Poskytnutá stránka není ve formátu HTML (byla dodána s typem MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Tato verze Chromu je příliš stará a funkci {featureName} nepodporuje. Pokud chcete zobrazit úplné výsledky, použijte novější verzi."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Nástroji Lighthouse se požadovanou stránku nepodařilo spolehlivě načíst. Zkontrolujte, zda testujete správnou adresu URL a zda server správně odpovídá na všechny požadavky."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Přepnout tmavý motiv"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Přepnout experimentální statistiky"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Vytisknout úplný přehled"

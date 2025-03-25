@@ -660,7 +660,10 @@
     "message": "Gunakan format video untuk konten animasi"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill dan transformasi memungkinkan browser lama menggunakan fitur JavaScript yang baru. Namun, banyak di antara fitur tersebut yang tidak diperlukan browser modern. Untuk paket JavaScript Anda, terapkan strategi deployment skrip modern menggunakan deteksi fitur modul/nomodule untuk mengurangi jumlah kode yang dikirimkan ke browser modern, sambil terus menyediakan dukungan untuk browser lama. [Pelajari cara menggunakan JavaScript modern](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Versi 2 dari core-js terdeteksi di halaman. Anda harus mengupgrade ke versi 3 untuk mendapatkan berbagai peningkatan performa."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Hindari penayangan JavaScript lama di browser modern"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktifkan kompresi teks"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Keparahan"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Header `X-Frame-Options` (XFO) atau perintah `frame-ancestors` dalam header `Content-Security-Policy` (CSP) mengontrol tempat halaman dapat disematkan. Hal ini dapat mengurangi serangan clickjacking dengan memblokir beberapa atau semua situs agar tidak menyematkan halaman. [Pelajari lebih lanjut cara mengurangi clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Tidak ditemukan kebijakan kontrol bingkai"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitigasi clickjacking dengan XFO atau CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Rantai Permintaan Penting di bawah menampilkan resource apa saja yang dimuat dengan prioritas tinggi. Sebaiknya kurangi panjang rantai, kurangi ukuran download resource, atau tunda download resource yang tidak penting untuk mempercepat pemuatan halaman. [Pelajari cara menghindari rantai permintaan penting](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Menampilkan gambar dengan resolusi yang sesuai"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Skor pergeseran tata letak"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Diizinkan"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Penyempurnaan First Paint"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Insight"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrik"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Pihak ketiga"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Tombol Tema Gelap"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Aktifkan/nonaktifkan insight eksperimental"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Cetak Lengkap"

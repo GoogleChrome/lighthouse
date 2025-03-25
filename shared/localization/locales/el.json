@@ -660,7 +660,10 @@
     "message": "Χρήση μορφών βίντεο για περιεχόμενο κινούμενων εικόνων"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Για JavaScript σε πακέτο, υιοθετήστε μια σύγχρονη στρατηγική ανάπτυξης σεναρίων χρησιμοποιώντας εντοπισμό λειτουργίας module/nomodule για μείωση του όγκου κώδικα που αποστέλλεται σε σύγχρονα προγράμματα περιήγησης, διατηρώντας την υποστήριξη για προγράμματα περιήγησης παλαιού τύπου. [Μάθετε πώς να χρησιμοποιείτε τη σύγχρονη JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Εξετάστε το ενδεχόμενο να τροποποιήσετε τη διαδικασία κατασκευής JavaScript, ώστε να μην μετατρέπονται οι λειτουργίες [Baseline](https://web.dev/baseline), εκτός εάν γνωρίζετε ότι πρέπει να υποστηρίζετε τα προγράμματα περιήγησης παλαιού τύπου. [Μάθετε γιατί οι περισσότεροι ιστότοποι μπορούν να αναπτύξουν κώδικα ES6+ χωρίς μετατροπή](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Εντοπίστηκε στη σελίδα η έκδοση 2 του core-js. Για πολλές βελτιώσεις απόδοσης, θα πρέπει να αναβαθμίσετε στην έκδοση 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Αποφύγετε την προβολή JavaScript παλαιού τύπου σε σύγχρονα προγράμματα περιήγησης"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ενεργοποίηση συμπίεσης κειμένου"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Σοβαρότητα"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Η κεφαλίδα `X-Frame-Options` (XFO) ή η οδηγία `frame-ancestors` στο στοιχείο ελέγχου κεφαλίδας `Content-Security-Policy` (CSP) όπου μπορεί να ενσωματωθεί μια σελίδα. Μπορούν να μετριάσουν τις επιθέσεις click-jacking, εμποδίζοντας ορισμένους ή όλους τους ιστοτόπους να ενσωματώσουν τη σελίδα. [Μάθετε περισσότερα σχετικά με τον μετριασμό των επιθέσεων click-jacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Δεν βρέθηκε πολιτική ελέγχου πλαισίου"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Μετριάστε τις επιθέσεις click-jacking με XFO ή CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Στις ακόλουθες αλυσίδες κρίσιμων αιτημάτων φαίνεται ποιοι πόροι φορτώνονται με υψηλή προτεραιότητα. Για τη βελτίωση της φόρτωσης των σελίδων, εξετάστε το ενδεχόμενο μείωσης του μεγέθους των αλυσίδων, μείωσης του μεγέθους λήψης πόρων ή καθυστέρησης λήψης των μη απαραίτητων πόρων. [Μάθετε πώς μπορείτε να αποφύγετε τη συσσώρευση κρίσιμων αιτημάτων](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Προβάλλει εικόνες με κατάλληλη ανάλυση"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Βαθμολογία αλλαγής διάταξης"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Επιτρέπεται"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Αυτή είναι η εργασία αποκλεισμού νημάτων που πραγματοποιείται κατά τη μέτρηση Interaction to Next Paint. [Μάθετε περισσότερα σχετικά με τη μέτρηση Interaction to Next Paint](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "Δαπανήθηκαν {timeInMs, number, milliseconds} ms στο συμβάν {interactionType}."
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Στόχος συμβάντος"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Βελτιώσεις πρώτης μορφής"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Insight"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Μετρήσεις"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Τρίτο μέρος"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Σύνολο"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Η σελίδα που καταχωρίσατε δεν είναι HTML (προβάλλεται ως τύπος MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Αυτή η έκδοση του Chrome είναι πολύ παλιά για να υποστηρίζει τη λειτουργία {featureName}. Χρησιμοποιήστε μια νεότερη έκδοση για να δείτε τα πλήρη αποτελέσματα."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Το Lighthouse δεν ήταν δυνατό να φορτώσει με αξιοπιστία τη σελίδα που ζητήσατε. Βεβαιωθείτε ότι ελέγχετε το σωστό URL και ότι ο διακομιστής ανταποκρίνεται σωστά σε όλα τα αιτήματα."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Εναλλαγή σκούρου θέματος"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Εναλλαγή πειραματικών insight"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Πλήρης εκτύπωση"

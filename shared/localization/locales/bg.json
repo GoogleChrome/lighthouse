@@ -660,7 +660,10 @@
     "message": "Използвайте видеоформати за анимираното съдържание"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Полифиловете и трансформациите дават възможност на старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. За JavaScript пакета си използвайте актуална стратегия за внедряване на скриптове посредством откриване на функции за модулни/немодулни скриптове, за да намалите количеството код, изпращан до новите браузъри, и същевременно да запазите поддръжката за старите такива. [Научете как да използвате съвременен JavaScript](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "На страницата бе открита версия 2 на core-js. Трябва да надстроите до версия 3 за много подобрения в ефективността."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Избягвайте показването на остарял JavaScript в съвременни браузъри"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Активирайте компресирането на текста"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Сериозност"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Заглавката `X-Frame-Options` (XFO) или директивата `frame-ancestors` в заглавката `Content-Security-Policy` (CSP) контролират къде може да бъде вградена дадена страница. Те могат да намалят риска от атаки с clickjacking, като блокират вграждането на страницата за някои или всички сайтове. [Научете повече за намаляването на риска от clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Не е намерено правило за контрол на рамките"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Намалете риска от clickjacking с XFO или CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Веригите от критични заявки по-долу ви показват кои ресурси се зареждат с висок приоритет. За да ускорите зареждането на страницата, препоръчваме да скъсите веригите, да намалите размера за изтегляне на ресурсите или да отложите изтеглянето на ненужните от тях. [Научете как да избягвате верижните последователности от критични заявки](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Изображенията се показват с подходяща разделителна способност"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Резултат за структурната промяна"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Разрешено"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "Това са блокиращите нишката операции, извършвани в периода между взаимодействието и следващото изобразяване. [Научете повече за показателя „Изобразяване след взаимодействие“](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "Събитието {interactionType} отне {timeInMs, number, milliseconds} мсек"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Цел на събитието"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Подобрения, свързани с първото изобразяване"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Статистика"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показатели"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Трети страни"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Общо"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Предоставената страница не е в HTML формат (дефинирана от тип MIME {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Тази версия на Chrome е твърде стара и не поддържа „{featureName}“. Използвайте по-нова, за да видите пълните резултати."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse не успя надеждно да зареди заявената от вас страница. Уверете се, че тествате точния URL адрес и че сървърът отговаря правилно на всички заявки."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Превключване на тъмната тема"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Превключване на експерименталната статистика"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Отпечатване на пълен отчет"

@@ -660,7 +660,10 @@
     "message": "使用视频格式提供动画内容"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，其中的很多函数对现代浏览器而言并不是必需的。对于捆绑的 JavaScript，请采用现代脚本部署策略，以便利用 module/nomodule 功能检测机制来减少传送到现代浏览器的代码量，同时保留对旧版浏览器的支持。[了解如何使用现代 JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，很多功能对现代浏览器而言并不是必需的。请考虑修改 JavaScript 构建流程，以便不转译 [Baseline](https://web.dev/baseline) 功能，除非您知道必须支持旧版浏览器。[了解为什么大多数网站可以部署 ES6+ 代码而无需转译](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "在网页上检测到 core-js 的版本 2。您应该升级到版本 3，以获取诸多性能改进。"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "应避免向新型浏览器提供旧版 JavaScript"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "启用文本压缩"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) 标头或 `Content-Security-Policy` (CSP) 标头中的 `frame-ancestors` 指令控制网页可嵌入的位置。这些设置可以阻止部分或全部网站嵌入网页，从而缓解点击劫持攻击。[详细了解如何缓解点击劫持](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)。"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "未找到任何框架控制政策"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "使用 XFO 或 CSP 缓解点击劫持问题"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "下面的关键请求链显示了以高优先级加载的资源。建议缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。[了解如何避免链接关键请求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)。"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "所提供的图片都采用了合适的分辨率"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "布局偏移分数"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "允许"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "改进首次绘制"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "数据分析"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指标"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "总计"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "开启/关闭深色主题"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "切换实验性数据分析"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "展开打印对话框"

@@ -660,7 +660,10 @@
     "message": "Sử dụng các định dạng video cho nội dung động"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Đối với JavaScript trong gói của bạn, hãy áp dụng chiến lược triển khai tập lệnh hiện đại bằng cách dùng cơ chế phát hiện tính năng theo mô-đun/không theo mô-đun để giảm số lượng mã gửi đến trình duyệt hiện đại trong khi vẫn tiếp tục hỗ trợ cho trình duyệt cũ. [Tìm hiểu cách sử dụng JavaScript hiện đại](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/baseline), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Phát hiện phiên bản 2 của core-js trên trang này. Bạn nên nâng cấp lên phiên bản 3 để sử dụng nhiều cải tiến về hiệu suất."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Tránh phân phối JavaScript cũ tới các trình duyệt hiện đại"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Bật tính năng nén văn bản"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Mức độ nghiêm trọng"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Tiêu đề `X-Frame-Options` (XFO) hoặc lệnh `frame-ancestors` trong tiêu đề `Content-Security-Policy` (CSP) kiểm soát nơi có thể nhúng trang. Những tính năng này có thể giảm thiểu các cuộc tấn công clickjacking bằng cách chặn một số hoặc tất cả trang web nhúng trang đó. [Tìm hiểu thêm về cách giảm thiểu các cuộc tấn công clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Không tìm thấy chính sách kiểm soát khung"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Giảm thiểu các cuộc tấn công clickjacking bằng XFO hoặc CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Các Chuỗi yêu cầu quan trọng dưới đây cho bạn biết những tài nguyên được tải ở mức độ ưu tiên cao. Hãy cân nhắc giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang. [Tìm hiểu cách tránh tạo chuỗi yêu cầu quan trọng](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Phân phối hình ảnh có độ phân giải phù hợp"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Điểm số về mức thay đổi bố cục"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Được phép"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Các thao tác để cải thiện thời gian hiển thị hình ảnh đầu tiên"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Thông tin chi tiết"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Các chỉ số"
   },
@@ -1919,11 +1940,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Bên thứ ba"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Tổng"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Tổng"
+    "message": "Tổng"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Đã xảy ra lỗi khi ghi dấu vết quá trình tải trang của bạn. Vui lòng chạy lại Lighthouse. ({errorCode})"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Bật/tắt Giao diện tối"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Bật/tắt thông tin chi tiết về thử nghiệm"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Mở rộng trong hộp thoại in"

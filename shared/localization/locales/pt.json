@@ -660,7 +660,10 @@
     "message": "Use formatos de vídeo para conteúdo animado"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills e transformações permitem que navegadores legados usem novos recursos do JavaScript. No entanto, muitos não são necessários para navegadores modernos. Para seu JavaScript empacotado, adote uma estratégia moderna de implantação de scripts, usando detecção de recursos por módulo/sem módulo para reduzir o total de códigos enviados a navegadores modernos e, ao mesmo tempo, manter a compatibilidade com navegadores legados. [Aprenda a usar o JavaScript moderno](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "A versão 2 do core-js foi detectada na página. Faça upgrade para a versão 3 e tenha acesso a muitas melhorias de desempenho."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Evitar a exibição de JavaScript legado em navegadores modernos"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ative a compactação de texto"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Gravidade"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "O cabeçalho `X-Frame-Options` (XFO) ou a diretiva `frame-ancestors` no cabeçalho `Content-Security-Policy` (CSP) controla onde uma página pode ser incorporada. Isso pode reduzir os ataques de clickjacking, bloqueando alguns ou todos os sites que incorporam a página. [Saiba mais sobre como reduzir o clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nenhuma política de controle de frame foi encontrada"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitigar clickjacking com XFO ou CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "As cadeias de solicitação críticas abaixo mostram quais recursos são carregados com prioridade alta. Diminua o tamanho das cadeias, reduza o tamanho do download de recursos ou adie o download de recursos desnecessários para melhorar o carregamento de página. [Aprenda a evitar encadeamento de solicitações críticas](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Exibe imagens em resolução adequada"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Pontuação da troca de layout"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Permitido"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Melhorias da first paint"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Insights"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Métricas"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Terceiros"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Alternar tema escuro"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Ativar/desativar insights experimentais"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Caixa de diálogo de impressão expandida"

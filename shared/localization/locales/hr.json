@@ -660,7 +660,10 @@
     "message": "Upotrebljavajte formate videozapisa za animirani sadržaj"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Kodovi polyfill i transform omogućuju starim preglednicima da upotrebljavaju nove značajke JavaScripta. Međutim, mnogi nisu potrebni za moderne preglednike. Za svoj skupni JavaScript usvojite modernu strategiju implementacije skripte upotrebom otkrivanja značajke modula/nemodula kako bi se smanjila količina koda koji se šalje modernim preglednicima, uz istodobno zadržavanje podrške za stare preglednike. [Saznajte kako upotrebljavati moderni JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Kodovi polyfill i transform omogućuju starim preglednicima da upotrebljavaju nove značajke JavaScripta. Međutim, mnogi nisu potrebni za moderne preglednike. Razmislite o izmjeni procesa izrade JavaScripta kako ne bi transpilirao značajke [Baseline](https://web.dev/baseline), osim ako znate da morate podržavati naslijeđene preglednike. [Saznajte zašto većina web-lokacija može implementirati ES6+ kôd bez transpiliranja](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stranici je otkrivena verzija 2 core-js-a. Trebali biste nadograditi na verziju 3 za brojna poboljšanja izvedbe."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Izbjegavajte posluživanje starog JavaScripta u modernim preglednicima"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Omogućite sažimanje teksta"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Ozbiljnost"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Zaglavlje `X-Frame-Options` (XFO) ili direktiva `frame-ancestors` u kontroli za zaglavlje `Content-Security-Policy` (CSP) gdje se stranica može ugraditi. To može ublažiti clickjacking tako da se blokira ugrađivanje stranice na nekim ili svim web-lokacijama. [Saznajte više o ublažavanju clickjackinga](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nije pronađeno pravilo za kontrolu za okvir"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Ublažavanje clickjackinga pomoću XFO-a ili CSP-a"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Lanci kritičkih zahtjeva u nastavku prikazuju koji se resursi učitavaju s visokim prioritetom. Savjetujemo vam da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni kako biste poboljšali učitavanje stranice. [Saznajte kako izbjeći lančano povezivanje kritičnih zahtjeva](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Poslužuje slike s odgovarajućom razlučivošću"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Pokazatelj pomaka izgleda"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Dopušteno"
@@ -1553,6 +1571,9 @@
   "core/audits/work-during-interaction.js | description": {
     "message": "To je rad na blokiranju niti koji se događa tijekom mjerenja interakcije do sljedećeg renderiranja. [Saznajte više o mjernom podatku Interakcija do sljedećeg renderiranja](https://web.dev/articles/inp)."
   },
+  "core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms potrošeno na događaj {interactionType}"
+  },
   "core/audits/work-during-interaction.js | eventTarget": {
     "message": "Cilj događaja"
   },
@@ -1654,6 +1675,9 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Poboljšanja prvog bojenja"
+  },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Uvidi"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mjerni podaci"
@@ -1916,6 +1940,9 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Treća strana"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Ukupno"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
@@ -1951,6 +1978,9 @@
   },
   "core/lib/lh-error.js | notHtml": {
     "message": "Navedena stranica nije HTML (poslužuje se kao vrsta MIME-a {mimeType})."
+  },
+  "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": {
+    "message": "Ova je verzija Chromea prestara da bi podržavala \"{featureName}\". Upotrijebite noviju verziju da biste vidjeli potpune rezultate."
   },
   "core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse nije mogao pouzdano učitati stranicu koju ste zatražili. Provjerite testirate li ispravan URL i odgovara li poslužitelj pravilno na sve zahtjeve."
@@ -3457,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Prebacivanje na Tamnu temu"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Uključivanje/isključivanje eksperimentalnih uvida"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Ispiši prošireno"

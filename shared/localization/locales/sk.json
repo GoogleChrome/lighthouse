@@ -660,7 +660,10 @@
     "message": "Pre animovaný obsah použite formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Viacnásobné vyplnenia a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Adoptujte pre svoj zabalený JavaScript modernejšiu stratégiu nasadzovania skriptov využívajúcu detekciu modulových a nemodulových funkcií a zredukujte tak množstvo kódu dodávaného do moderných prehliadačov, pričom zachováte podporu starých prehliadačov. [Ako používať moderný JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stránke bola zistená 2. verzia knižnice core-js. Ak chcete získať množstvo zlepšení výkonu, mali by ste inovovať na 3. verziu."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nezobrazujte starý JavaScript v moderných prehliadačoch"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Povoľte kompresiu textu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Hlavička `X-Frame-Options` (XFO) alebo direktíva `frame-ancestors` v ovládaní hlavičky `Content-Security-Policy` (PZO), kam možno vložiť stránku. Môže to zmierniť clickjackingové útoky tým, že bude niektorým alebo všetkým webom zablokované vloženie stránky. [Ďalšie informácie o zmierňovaní rizika clickjackingu](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nenašli sa žiadne pravidlá kontroly rámu"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Implementujte XFO alebo PZO a zmiernite tak riziko clickjackingu"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Reťazce podstatných žiadostí uvedené nižšie znázorňujú, ktoré zdroje sú načítané s vysokou prioritou. Zvážte skrátenie dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky. [Ako sa vyhnúť reťazeniu kľúčových žiadostí](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Zobrazuje obrázky v príslušnom rozlíšení"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Skóre posunu rozloženia"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Povolené"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Vylepšenia prvého vyfarbenia"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "Štatistiky"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metriky"
   },
@@ -1919,11 +1940,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tretia strana"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Celkove"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Celkovo"
+    "message": "Celkove"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Pri zaznamenávaní stopy načítania stránky sa vyskytol problém. Znova spustite Lighthouse. ({errorCode})"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Prepnúť tmavý motív"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "Prepnúť experimentálne štatistiky"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Vytlačiť rozbalené"

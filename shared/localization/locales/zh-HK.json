@@ -660,7 +660,10 @@
     "message": "使用影片格式的動畫內容"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 和轉換可讓舊版瀏覽器使用新版 JavaScript 的功能。不過，有很多 Polyfill 和轉換都不是新型瀏覽器的必要項目。請使用模組/非模組的功能偵測，為 JavaScript 套件採用新型的指令碼部署策略，以減少送往新型瀏覽器的程式碼數量，同時保留對舊版瀏覽器的支援。[瞭解如何使用新型的 JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "系統偵測到網頁採用 core-js 第 2 版。第 3 版大幅提升效能，請務必升級。"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "避免向新型瀏覽器提供舊版 JavaScript"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "啟用文字壓縮"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "嚴重程度"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) 標題或 `Content-Security-Policy` (CSP) 標題中的 `frame-ancestors` 指令控制可嵌入網頁的位置，使用這些做法可禁止部分或所有網站嵌入網頁，有助緩解點擊劫持攻擊。[進一步瞭解如何防範劫持攻擊](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)。"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "找不到任何頁框控制政策"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "使用 XFO 或 CSP 防範點擊劫持攻擊"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "下方的「關鍵要求鏈結」顯示以高優先次序發佈的資源。為了提高頁面載入速度，建議您縮短鏈結長度，縮減下載資源的大小，或延遲下載不必要資源。[瞭解如何避免鏈結關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)。"
@@ -1039,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "提供的圖片解像度適當"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "版面配置轉移分數"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "允許"
@@ -1658,6 +1676,9 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "首次繪製改進"
   },
+  "core/config/default-config.js | insightGroupTitle": {
+    "message": "分析資料"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "數據"
   },
@@ -1918,6 +1939,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "總計"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -3463,6 +3487,9 @@
   },
   "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "切換至深色主題背景"
+  },
+  "report/renderer/report-utils.js | dropdownInsightsToggle": {
+    "message": "切換實驗性分析資料"
   },
   "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "已展開列印"
