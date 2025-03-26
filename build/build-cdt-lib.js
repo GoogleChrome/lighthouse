@@ -58,6 +58,12 @@ const modifications = [
       // eslint-disable-next-line max-len
       'Root.Runtime.experiments.isEnabled(Root.Runtime.ExperimentName.USE_SOURCE_MAP_SCOPES)': 'false',
       'Common.Base64.BASE64_CODES': 'BASE64_CODES',
+      '* Implements Source Map V3 model.': [
+        '* @param {string} compiledURL',
+        '* @param {string} sourceMappingURL',
+        '* @param {object} payload',
+        '* Implements Source Map V3 model.',
+      ].join('\n   '),
     },
     classesToRemove: [],
     methodsToRemove: [

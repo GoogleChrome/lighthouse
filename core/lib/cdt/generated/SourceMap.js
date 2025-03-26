@@ -104,6 +104,9 @@ class SourceMap {
     #sourceInfoByURL = new Map();
     #scopesInfo = null;
     /**
+     * @param {string} compiledURL
+     * @param {string} sourceMappingURL
+     * @param {object} payload
      * Implements Source Map V3 model. See https://github.com/google/closure-compiler/wiki/Source-Maps
      * for format description.
      */

@@ -51,7 +51,7 @@ class TraceEngineResult {
       lanternSettings,
       async resolveSourceMap(params) {
         const sourceMap = SourceMaps.find(sm => sm.scriptId === params.scriptId);
-        if (!sourceMap) {
+        if (!sourceMap || !sourceMap.map) {
           return null;
         }
 
