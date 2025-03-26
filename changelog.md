@@ -1,3 +1,20 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.5.1"></a>
+# 12.5.1 (2025-03-26)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.0...v12.5.1)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* trace-engine-result: exclude failed source maps ([#16412](https://github.com/GoogleChrome/lighthouse/pull/16412))
+
 <a name="12.5.0"></a>
 # 12.5.0 (2025-03-25)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.4.0...v12.5.0)
