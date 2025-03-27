@@ -28,7 +28,7 @@ jobs:
     - name: Use Node.js 18.20
       uses: actions/setup-node@v4
       with:
-        node-version: 18.20
+        node-version: '18.20'
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -94,7 +94,7 @@ jobs:
     - name: Use Node.js 18.20
       uses: actions/setup-node@v4
       with:
-        node-version: 18.20
+        node-version: '18.20'
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
@@ -144,7 +144,7 @@ jobs:
     - name: Use Node.js 18.20
       uses: actions/setup-node@v4
       with:
-        node-version: 18.20
+        node-version: '18.20'
 
     - name: Load build artifacts
       id: devtools-build-artifacts
