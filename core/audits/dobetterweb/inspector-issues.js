@@ -28,10 +28,32 @@ const UIStrings = {
   /* eslint-enable max-len */
   /** Table column header for the types of problems observed in a website, like security or network errors. */
   columnIssueType: 'Issue type',
-  /** The type of an Issue in Chrome DevTools when a resource is blocked due to the website's cross-origin policy. */
+  /** Issue when a resource is blocked due to the website's cross-origin policy. */
   issueTypeBlockedByResponse: 'Blocked by cross-origin policy',
-  /** The type of an Issue in Chrome DevTools when a site has large ads that use up a lot of the browser's resources. */
+  /** Issue when a site has large ads that use up a lot of the browser's resources. */
   issueTypeHeavyAds: 'Heavy resource usage by ads',
+  /** Issue around "Attribution Reporting API" usage. */
+  issueTypeAttributionReporting: 'Attribution reporting',
+  /** Issue when a client hint is incorrectly used. */
+  issueTypeClientHint: 'Client hint incorrectly used',
+  /** Issue related to CORS. */
+  issueTypeCors: 'CORS Problems',
+  /** Issue when a deprecated feature is used. */
+  issueTypeDeprecated: 'Deprecated feature used',
+  /** Issue when federated authentication request fails. */
+  issueTypeFederatedAuthRequest: 'Failed federated authentication request',
+  /** The type of an issue in Chrome DevTools when some generic problem happens. */
+  issueTypeGeneric: 'Generic issue on the front end',
+  /** Issue when the text doesn't have enough contrast. */
+  issueTypeLowTextContrast: 'Low text contrast',
+  /** Issue related to the reduction of information in user-agent strings. */
+  issueTypeNavigatorUserAgent: 'Using information not present in reduced user-agent strings',
+  /** Issue related to the document rendering in quirks mode. */
+  issueTypeQuirksMode: 'Document renders in quirks mode',
+  /** Issue related to a shared array buffer not being used in context a that is cross-origin isolated. */
+  issueTypeSharedArrayBuffer: 'Shared Array Buffer not cross-origin isolated',
+  /** Issue related to not meeting the requirements as a TWA. */
+  issueTypeTwaQualityEnforcement: 'Some TWA requirements not met',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -85,11 +107,7 @@ class IssuesPanelEntries extends Audit {
       issueType: 'Cookie',
       subItems: {
         type: 'subitems',
-        items: Array.from(requestUrls).map(url => {
-          return {
-            url,
-          };
-        }),
+        items: Array.from(requestUrls).map(url => ({url})),
       },
     };
   }
@@ -110,11 +128,7 @@ class IssuesPanelEntries extends Audit {
       issueType: str_(UIStrings.issueTypeBlockedByResponse),
       subItems: {
         type: 'subitems',
-        items: Array.from(requestUrls).map(url => {
-          return {
-            url,
-          };
-        }),
+        items: Array.from(requestUrls).map(url => ({url})),
       },
     };
   }
@@ -126,7 +140,7 @@ class IssuesPanelEntries extends Audit {
   static getContentSecurityPolicyRow(cspIssues) {
     const requestUrls = new Set();
     for (const issue of cspIssues) {
-      const requestUrl = issue.blockedURL;
+      const requestUrl = issue?.blockedURL;
       if (requestUrl) {
         requestUrls.add(requestUrl);
       }
@@ -135,11 +149,214 @@ class IssuesPanelEntries extends Audit {
       issueType: 'Content security policy',
       subItems: {
         type: 'subitems',
-        items: Array.from(requestUrls).map(url => {
-          return {
-            url,
-          };
-        }),
+        items: Array.from(requestUrls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.AttributionReportingIssueDetails>} attributionReportingIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getAttributionReportingRow(attributionReportingIssues) {
+    const requestUrls = new Set();
+    for (const issue of attributionReportingIssues) {
+      const requestUrl = issue.request?.url;
+      if (requestUrl) {
+        requestUrls.add(requestUrl);
+      }
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeAttributionReporting),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(requestUrls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.ClientHintIssueDetails>} clientHintIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getClientHintRow(clientHintIssues) {
+    const urls = new Set();
+    for (const issue of clientHintIssues) {
+      const url = issue.sourceCodeLocation.url;
+      const lineNumber = issue.sourceCodeLocation.lineNumber;
+      urls.add(`${url}, line ${lineNumber}`);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeClientHint),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.CorsIssueDetails>} corsIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getCorsRow(corsIssues) {
+    const requestUrls = new Set();
+    for (const issue of corsIssues) {
+      const requestUrl = issue.request?.url;
+      if (requestUrl) {
+        requestUrls.add(requestUrl);
+      }
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeCors),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(requestUrls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.DeprecationIssueDetails>} deprecationIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getDeprecationRow(deprecationIssues) {
+    const urls = new Set();
+    for (const issue of deprecationIssues) {
+      const url = issue.sourceCodeLocation.url;
+      const lineNumber = issue.sourceCodeLocation.lineNumber;
+      urls.add(`${url}, line ${lineNumber}`);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeDeprecated),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.FederatedAuthRequestIssueDetails>} _federatedAuthReqIssues
+   * @param {string} url The url of the current page.
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getFederatedAuthRequestRow(_federatedAuthReqIssues, url) {
+    return {
+      issueType: str_(UIStrings.issueTypeFederatedAuthRequest),
+      subItems: {
+        type: 'subitems',
+        items: [{url: url}],
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.GenericIssueDetails>} _genericIssues
+   * @param {string} url The url of the current page.
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getGenericRow(_genericIssues, url) {
+    return {
+      issueType: str_(UIStrings.issueTypeGeneric),
+      subItems: {
+        type: 'subitems',
+        items: [{url: url}],
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.LowTextContrastIssueDetails>} lowTextContrastIssues
+   * @param {string} url The url of the current page.
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getLowTextContrastRow(lowTextContrastIssues, url) {
+    const urls = new Set();
+    for (const issue of lowTextContrastIssues) {
+      urls.add(`${url} - ${issue.violatingNodeSelector}`);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeLowTextContrast),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.NavigatorUserAgentIssueDetails>} navigatorUserAgentIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getNavigatorUserAgentRow(navigatorUserAgentIssues) {
+    const urls = new Set();
+    for (const issue of navigatorUserAgentIssues) {
+      const url = issue.url;
+      const lineNumber = issue.location?.lineNumber;
+      urls.add(`${url}${lineNumber ? `, line ${lineNumber}` : ''}`);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeNavigatorUserAgent),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.QuirksModeIssueDetails>} quirksModeIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getQuirksModeRow(quirksModeIssues) {
+    const urls = new Set();
+    for (const issue of quirksModeIssues) {
+      urls.add(issue.url);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeQuirksMode),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.SharedArrayBufferIssueDetails>} sharedArrayBufferIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getSharedArrayBufferRow(sharedArrayBufferIssues) {
+    const urls = new Set();
+    for (const issue of sharedArrayBufferIssues) {
+      const url = issue.sourceCodeLocation.url;
+      const lineNumber = issue.sourceCodeLocation.lineNumber;
+      urls.add(`${url}, line ${lineNumber}`);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeSharedArrayBuffer),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
+      },
+    };
+  }
+
+  /**
+   * @param {Array<LH.Crdp.Audits.TrustedWebActivityIssueDetails>} twaQualityEnforcementIssues
+   * @return {LH.Audit.Details.TableItem}
+   */
+  static getTwaQualityEnforcementRow(twaQualityEnforcementIssues) {
+    const urls = new Set();
+    for (const issue of twaQualityEnforcementIssues) {
+      urls.add(issue.url);
+    }
+    return {
+      issueType: str_(UIStrings.issueTypeTwaQualityEnforcement),
+      subItems: {
+        type: 'subitems',
+        items: Array.from(urls).map(url => ({url})),
       },
     };
   }
@@ -179,6 +396,40 @@ class IssuesPanelEntries extends Audit {
     });
     if (cspIssues.length) {
       items.push(this.getContentSecurityPolicyRow(cspIssues));
+    }
+    if (issues.attributionReportingIssue.length) {
+      items.push(this.getAttributionReportingRow(issues.attributionReportingIssue));
+    }
+    if (issues.clientHintIssue.length) {
+      items.push(this.getClientHintRow(issues.clientHintIssue));
+    }
+    if (issues.corsIssue.length) {
+      items.push(this.getCorsRow(issues.corsIssue));
+    }
+    if (issues.deprecationIssue.length) {
+      items.push(this.getDeprecationRow(issues.deprecationIssue));
+    }
+    if (issues.federatedAuthRequestIssue.length) {
+      items.push(this.getFederatedAuthRequestRow(issues.federatedAuthRequestIssue,
+        artifacts.URL.finalUrl));
+    }
+    if (issues.genericIssue.length) {
+      items.push(this.getGenericRow(issues.genericIssue, artifacts.URL.finalUrl));
+    }
+    if (issues.lowTextContrastIssue.length) {
+      items.push(this.getLowTextContrastRow(issues.lowTextContrastIssue, artifacts.URL.finalUrl));
+    }
+    if (issues.navigatorUserAgentIssue.length) {
+      items.push(this.getNavigatorUserAgentRow(issues.navigatorUserAgentIssue));
+    }
+    if (issues.quirksModeIssue.length) {
+      items.push(this.getQuirksModeRow(issues.quirksModeIssue));
+    }
+    if (issues.sharedArrayBufferIssue.length) {
+      items.push(this.getSharedArrayBufferRow(issues.sharedArrayBufferIssue));
+    }
+    if (issues.twaQualityEnforcement.length) {
+      items.push(this.getTwaQualityEnforcementRow(issues.twaQualityEnforcement));
     }
     return {
       score: items.length > 0 ? 0 : 1,
