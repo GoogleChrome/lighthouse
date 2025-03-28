@@ -345,6 +345,13 @@ export class DOM {
     const parent = section.parentNode;
     if (!parent) return;
 
+    // LH Report enforces that only the first instance of a component will include the styles.
+    // If these single-instance happen to be in `section` then they could be lost once `section` is
+    // removed from the DOM.
+    // Therefore we need to transfer any styles that only exist in `section` into `newSection`.
+    const stylesToTransfer = section.querySelectorAll('style');
+    newSection.append(...stylesToTransfer);
+
     parent.insertBefore(newSection, section);
     section.remove();
   }

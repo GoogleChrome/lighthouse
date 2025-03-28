@@ -50,6 +50,7 @@ export class DetailsRenderer {
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
+      case 'network-tree':
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, details, this);
 

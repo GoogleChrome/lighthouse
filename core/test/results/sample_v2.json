@@ -6267,9 +6267,99 @@
       "id": "network-dependency-tree-insight",
       "title": "Network dependency tree",
       "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3,
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "metricSavings": {
+        "LCP": 0
+      },
+      "details": {
+        "type": "network-tree",
+        "chains": {
+          "62CEDB8B1F6190031188277D9F158FEB": {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "navStartToEndTime": 657,
+            "transferSize": 18011,
+            "children": {
+              "26694.2": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+                "navStartToEndTime": 1158,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.3": {
+                "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+                "navStartToEndTime": 1167,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.4": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+                "navStartToEndTime": 2795,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.8": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+                "navStartToEndTime": 3614,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.11": {
+                "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+                "navStartToEndTime": 1229,
+                "transferSize": 700,
+                "children": {}
+              },
+              "26694.14": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+                "navStartToEndTime": 4177,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.17": {
+                "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+                "navStartToEndTime": 6753,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.24": {
+                "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                "navStartToEndTime": 6627,
+                "transferSize": 166576,
+                "children": {}
+              },
+              "26694.44": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+                "navStartToEndTime": 7969,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.15": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+                "navStartToEndTime": 1738,
+                "transferSize": 486,
+                "children": {}
+              },
+              "26694.16": {
+                "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+                "navStartToEndTime": 1801,
+                "transferSize": 247,
+                "children": {}
+              },
+              "26694.45": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                "navStartToEndTime": 7882,
+                "transferSize": 18011,
+                "children": {}
+              }
+            }
+          }
+        },
+        "longestChain": {
+          "duration": 7969
+        }
+      },
+      "guidanceLevel": 1,
       "replacesAudits": [
         "critical-request-chains"
       ]

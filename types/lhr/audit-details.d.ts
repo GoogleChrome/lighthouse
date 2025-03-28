@@ -15,6 +15,7 @@ interface BaseDetails {
 
 type Details =
   Details.CriticalRequestChain |
+  Details.NetworkTree |
   Details.DebugData |
   Details.TreemapData |
   Details.Filmstrip |
@@ -26,9 +27,29 @@ type Details =
 
 // Details namespace.
 declare module Details {
+  type NetworkNode = {
+    [id: string]: {
+      url: string;
+      /** In ms */
+      navStartToEndTime: number;
+      transferSize: number;
+      children?: NetworkNode;
+    }
+  };
+
+  interface NetworkTree extends BaseDetails {
+    type: 'network-tree';
+    longestChain: {
+      /** In ms */
+      duration: number;
+    };
+    chains: NetworkNode;
+  }
+
   interface CriticalRequestChain extends BaseDetails {
     type: 'criticalrequestchain';
     longestChain: {
+      /** In ms */
       duration: number;
       length: number;
       transferSize: number;
@@ -40,8 +61,11 @@ declare module Details {
     [id: string]: {
       request: {
         url: string;
+        /** In seconds */
         startTime: number;
+        /** In seconds */
         endTime: number;
+        /** In seconds */
         responseReceivedTime: number;
         transferSize: number;
       };
