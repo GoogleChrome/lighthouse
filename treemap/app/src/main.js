@@ -133,6 +133,8 @@ class TreemapViewer {
     this.toggleTable(window.innerWidth >= 600);
     this.initListeners();
     this.setSelector({type: 'group', value: 'scripts'});
+    dom.find('.lh-header--url-bytes').textContent =
+      TreemapUtil.i18n.formatBytesWithBestUnit(this.currentTreemapRoot.resourceBytes);
     this.render();
   }
 
@@ -468,14 +470,28 @@ class TreemapViewer {
       this.treemap.render(this.el);
       dom.find('.webtreemap-node').classList.add('webtreemap-node--root');
 
+      // For the "All" selector, delete the root node caption since it duplicates the
+      // information in the header.
+      if (this.selector.type === 'group') {
+        dom.find('.webtreemap-caption', this.el).remove();
+      }
+
+      // Format the captions.
+      // The webtreemap `caption` option can only return strings, but we need to
+      // style portions of the caption differently.
+      for (const el of dom.findAll('.webtreemap-caption', this.el)) {
+        const parts = (el.textContent || '').split(' · ', 2);
+        el.textContent = '';
+        dom.createChildOf(el, 'span', 'lh-text-bold').textContent = parts[0];
+        dom.createChildOf(el, 'span', 'lh-text-dim').textContent = parts[1];
+      }
+
       this.createTable();
     }
 
     if (rootChanged || viewChanged) {
       this.updateColors();
       this.applyActiveViewModeClass();
-      dom.find('.lh-header--url-bytes').textContent =
-        TreemapUtil.i18n.formatBytesWithBestUnit(this.currentTreemapRoot.resourceBytes);
     }
 
     this.previousRenderState = {
@@ -658,28 +674,34 @@ class TreemapViewer {
 
   /**
    * @param {number} hue
+   * @param {number|null} depth
    */
-  getColorFromHue(hue) {
-    return TreemapUtil.hsl(hue, 60, 90);
+  getColorFromHue(hue, depth = null) {
+    if (depth === null) {
+      return TreemapUtil.hsl(hue, 60, 90);
+    }
+
+    return TreemapUtil.hsl(hue, 20 + depth * 5, 90 - depth * 5);
   }
 
   updateColors() {
-    TreemapUtil.walk(this.currentTreemapRoot, node => {
+    TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
+      if (!node.dom) return;
+
       // Color a depth one node and all children the same color.
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
       const hue = depthOneNode &&
         this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
-      const depthOneNodeColor = hue !== undefined ? this.getColorFromHue(hue) : 'white';
-
-      if (!node.dom) return;
 
       let backgroundColor;
       if (this.currentViewMode.highlights) {
         // A view can set nodes to highlight. If so, don't color anything else.
-        const path = this.nodeToPathMap.get(node);
-        const highlight = path && this.currentViewMode.highlights
+        const highlight = this.currentViewMode.highlights
           .find(highlight => TreemapUtil.pathsAreEqual(path, highlight.path));
         if (highlight) {
+          const depthOneNodeColor = hue !== undefined ?
+            this.getColorFromHue(hue, null) :
+            'white';
           backgroundColor = highlight.color || depthOneNodeColor;
         } else {
           backgroundColor = 'white';
@@ -688,6 +710,9 @@ class TreemapViewer {
         return;
       }
 
+      const depthOneNodeColor = hue !== undefined ?
+        this.getColorFromHue(hue, path.length) :
+        'white';
       node.dom.style.backgroundColor = depthOneNodeColor;
 
       // Shade the element to communicate coverage.
