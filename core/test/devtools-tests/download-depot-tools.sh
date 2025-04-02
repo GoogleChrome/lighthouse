@@ -21,5 +21,4 @@ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git "$DEP
 echo  "$DEPOT_TOOLS_PATH"
 ls "$DEPOT_TOOLS_PATH"
 
-echo  "$DEPOT_TOOLS_PATH/python3"
-ls "$DEPOT_TOOLS_PATH/python3"
+echo  "$DEPOT_TOOLS_PATH/python-bin"
