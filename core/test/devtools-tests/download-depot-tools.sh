@@ -22,3 +22,4 @@ echo  "$DEPOT_TOOLS_PATH"
 ls "$DEPOT_TOOLS_PATH"
 
 echo  "$DEPOT_TOOLS_PATH/python-bin"
+ls "$DEPOT_TOOLS_PATH/python-bin"
