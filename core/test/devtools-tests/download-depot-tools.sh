@@ -18,8 +18,5 @@ fi
 
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git "$DEPOT_TOOLS_PATH"
 
-echo  "$DEPOT_TOOLS_PATH"
-ls "$DEPOT_TOOLS_PATH"
-
-echo  "$DEPOT_TOOLS_PATH/python-bin"
-ls "$DEPOT_TOOLS_PATH/python-bin"
+cd "$DEPOT_TOOLS_PATH"
+bash update_depot_tools
