@@ -107,6 +107,8 @@ class TreemapViewer {
       } catch {}
     }
 
+    this.initialViewModeId = options.initialView;
+
     /* eslint-disable no-unused-expressions */
     /** @type {LH.Treemap.Node} */
     this.currentTreemapRoot;
@@ -427,7 +429,8 @@ class TreemapViewer {
     const currentViewModeIsDisabled = this.currentViewMode &&
       this.viewModes.find(v => v.id === this.currentViewMode.id && !v.enabled);
     if (!this.currentViewMode || currentViewModeIsDisabled) {
-      this.currentViewMode = this.viewModes[0];
+      this.currentViewMode =
+        this.viewModes.find(v => v.id === this.initialViewModeId && v.enabled) ?? this.viewModes[0];
     }
   }
 
