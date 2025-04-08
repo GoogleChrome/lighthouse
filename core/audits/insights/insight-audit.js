@@ -73,20 +73,19 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
   }
 
-  let score = 1;
-  if (insight.state === 'fail') {
-    score = 0;
-  } else if (insightName === 'LCPPhases') {
-    // TODO: change these insights to denote passing/failing/informative. Until then... hack it.
-    score = metricSavings?.LCP ?? 0 >= 1000 ? 0 : 1;
-  } else if (insightName === 'InteractionToNextPaint') {
-    // TODO: change these insights to denote passing/failing/informative. Until then... hack it.
-    score = metricSavings?.INP ?? 0 >= 500 ? 0 : 1;
+  let score;
+  let scoreDisplayMode;
+  if (insight.state === 'fail' || insight.state === 'pass') {
+    score = insight.state === 'fail' ? 0 : 1;
+    scoreDisplayMode =
+      insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC;
+  } else {
+    score = null;
+    scoreDisplayMode = Audit.SCORING_MODES.INFORMATIVE;
   }
 
   return {
-    scoreDisplayMode:
-      insight.metricSavings ? Audit.SCORING_MODES.METRIC_SAVINGS : Audit.SCORING_MODES.NUMERIC,
+    scoreDisplayMode,
     score,
     metricSavings,
     warnings: insight.warnings,
