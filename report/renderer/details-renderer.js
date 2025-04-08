@@ -547,6 +547,11 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
+      if (item.type === 'node') {
+        listContainer.append(this.renderNode(item));
+        return;
+      }
+
       const listItem = this.render(item);
       if (!listItem) return;
       listContainer.append(listItem);

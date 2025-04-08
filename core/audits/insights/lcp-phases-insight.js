@@ -8,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/LCPPhases
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, maybeMakeNodeElementTable} from './insight-audit.js';
+import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js', UIStrings);
@@ -74,11 +74,8 @@ class LCPPhasesInsight extends Audit {
       }
 
       return Audit.makeListDetails([
-        maybeMakeNodeElementTable(
-          artifacts.TraceElements,
-          insight.lcpEvent?.args.data?.nodeId,
-          str_(i18n.UIStrings.columnElement)),
         LCPPhasesInsight.makePhaseTable(insight.phases),
+        makeNodeItemForNodeId(artifacts.TraceElements, insight.lcpEvent?.args.data?.nodeId),
       ].filter(table => table !== undefined));
     });
   }

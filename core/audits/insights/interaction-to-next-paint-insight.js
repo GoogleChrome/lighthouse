@@ -8,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/Interacti
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, maybeMakeNodeElementTable} from './insight-audit.js';
+import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js', UIStrings);
@@ -58,11 +58,8 @@ class InteractionToNextPaintInsight extends Audit {
       ];
 
       return Audit.makeListDetails([
-        maybeMakeNodeElementTable(
-          artifacts.TraceElements,
-          event.args.data.beginEvent.args.data.nodeId,
-          str_(i18n.UIStrings.columnElement)),
         Audit.makeTableDetails(headings, items),
+        makeNodeItemForNodeId(artifacts.TraceElements, event.args.data.beginEvent.args.data.nodeId),
       ].filter(table => !!table));
     });
   }
