@@ -19,7 +19,8 @@ declare module Treemap {
       configSettings: {
         locale: Locale;
       }
-    }
+    },
+    initialView?: ViewMode['id'],
   }
 
   type NodePath = string[];

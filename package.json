@@ -10,20 +10,21 @@
     "smokehouse": "./cli/test/smokehouse/frontends/smokehouse-bin.js"
   },
   "engines": {
-    "node": ">=18.16"
+    "node": ">=18.20"
   },
   "scripts": {
     "prepack": "yarn build-report --standalone --flow --esm && yarn build-types",
     "postpack": "yarn clean-types",
     "build-all": "npm-run-posix-or-windows build-all:task",
-    "build-all:task": "yarn build-report && yarn build-cdt-strings && yarn build-devtools && concurrently 'yarn build-extension' 'yarn build-lr' 'yarn build-viewer' 'yarn build-treemap' 'yarn build-smokehouse-bundle' && yarn build-pack",
-    "build-all:task:windows": "yarn build-report && yarn build-cdt-strings && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-treemap && yarn build-smokehouse-bundle",
+    "build-all:task": "yarn build-report && yarn build-cdt-strings && yarn build-devtools && concurrently 'yarn build-extension' 'yarn build-lr' 'yarn build-viewer' 'yarn build-treemap' 'yarn build-smokehouse-bundle' 'yarn build-legacy-javascript' && yarn build-pack",
+    "build-all:task:windows": "yarn build-report && yarn build-cdt-strings && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-treemap && yarn build-smokehouse-bundle && yarn build-legacy-javascript",
     "build-cdt-lib": "node ./build/build-cdt-lib.js",
     "build-cdt-strings": "node ./build/build-cdt-strings.js",
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
     "build-extension-chrome": "node ./build/build-extension.js chrome",
     "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "build-legacy-javascript": "node ./build/build-legacy-javascript.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node --max-old-space-size=4096 ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
@@ -126,7 +127,6 @@
     "@types/resize-observer-browser": "^0.1.1",
     "@types/resolve": "^1.20.2",
     "@types/semver": "^5.5.0",
-    "@types/tabulator-tables": "^4.9.1",
     "@types/ws": "^7.0.0",
     "@types/yargs": "^17.0.8",
     "@types/yargs-parser": "^20.2.1",
@@ -176,7 +176,6 @@
     "rollup": "^2.52.7",
     "rollup-plugin-polyfill-node": "^0.12.0",
     "source-map-support": "^0.5.21",
-    "tabulator-tables": "^4.9.3",
     "terser": "^5.18.2",
     "testdouble": "^3.18.0",
     "typed-query-selector": "^2.11.2",

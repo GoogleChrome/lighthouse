@@ -246,8 +246,19 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     /** @type {Set<string>} */
     const replacedAuditIds = new Set();
 
+    /**
+     * This exists to temporarily allow showing insights - which are in the hidden
+     * group by default - when using the insights toggle.
+     * See https://github.com/GoogleChrome/lighthouse/pull/16418 for motivation.
+     *
+     * @param {LH.ReportResult.AuditRef} auditRef
+     */
+    const getGroup = (auditRef) => {
+      return auditRef.id.endsWith('-insight') ? 'insights' : auditRef.group ?? '';
+    };
+
     const allGroupAudits =
-      category.auditRefs.filter(audit => audit.group && groupNames.includes(audit.group));
+      category.auditRefs.filter(audit => groupNames.includes(getGroup(audit)));
     for (const auditRef of allGroupAudits) {
       auditRef.result.replacesAudits?.forEach(replacedAuditId => {
         replacedAuditIds.add(replacedAuditId);
@@ -327,7 +338,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       for (const audit of filterableAudits) {
         if (!audit.auditRef.group) continue;
 
-        const groupEls = groupElsMap[audit.auditRef.group];
+        const groupEls = groupElsMap[getGroup(audit.auditRef)];
         if (!groupEls) continue;
 
         const [groupEl, footerEl] = groupEls;
@@ -355,7 +366,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     refreshFilteredAudits('All');
 
     for (const groupName of groupNames) {
-      if (filterableAudits.some(auditRef => auditRef.auditRef.group === groupName)) {
+      if (filterableAudits.some(audit => getGroup(audit.auditRef) === groupName)) {
         const groupEls = groupElsMap[groupName];
         if (!groupEls) continue;
         element.append(groupEls[0]);
