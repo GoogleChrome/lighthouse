@@ -297,7 +297,7 @@ describe('Runner', () => {
         {resolvedConfig: auditConfig, computedCache: new Map()});
 
       // Messages are now localized and formatted.
-      expect(lhr.runWarnings[0]).toBe('Potential savings of 2 KiB');
+      expect(lhr.runWarnings[0]).toBe('Est savings of 2 KiB');
       expect(lhr.audits['dummy-audit']).toMatchObject({
         scoreDisplayMode: 'error',
         // eslint-disable-next-line max-len

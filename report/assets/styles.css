@@ -105,8 +105,8 @@
   --plugin-icon-size: 65%;
   --report-background-color: #fff;
   --report-border-color-secondary: #ebebeb;
-  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --report-font-family-monospace: monospace, 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console';
+  --report-font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
   --report-font-size: 14px;
   --report-font-size-secondary: 12px;
   --report-icon-size: var(--score-icon-background-size);
@@ -278,8 +278,6 @@
   --header-padding: 16px 0 16px 0;
   --screenshot-overlay-background: transparent;
   --plugin-icon-size: 75%;
-  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   --report-font-size: 12px;
   --report-line-height: 20px;
   --score-icon-margin-left: 2px;
@@ -392,8 +390,8 @@
 
   With that sorted, the next challenge is appropriate column sizing and text wrapping inside our
   .lh-details tables. Even more fun.
-    * We don't want table headers ("Potential Savings (ms)") to wrap or their column values, but
-    we'd be happy for the URL column to wrap if the URLs are particularly long.
+    * We don't want table headers ("Est Savings (ms)") to wrap or their column values, but
+      we'd be happy for the URL column to wrap if the URLs are particularly long.
     * We want the narrow columns to remain narrow, providing the most column width for URL
     * We don't want the table to extend past 100% width.
     * Long URLs in the URL column can wrap. Util.getURLDisplayName maxes them out at 64 characters,
@@ -1611,7 +1609,10 @@
 }
 
 .lh-row--group ~ [data-entity]:not(.lh-row--group) ~ .lh-sub-item-row td:first-child {
-  padding-left: 40px;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 1px solid #A8C7FA;
+  display: block;
 }
 
 .lh-row--even {
@@ -1679,6 +1680,26 @@
 .lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
   width: 12%;
+}
+
+/** Tweak styling for tables in insight audits. */
+.lh-audit[id$="-insight"] .lh-table {
+  border: none;
+}
+
+.lh-audit[id$="-insight"] .lh-table thead th {
+  font-weight: bold;
+  color: unset;
+}
+
+.lh-audit[id$="-insight"] .lh-table th,
+.lh-audit[id$="-insight"] .lh-table td {
+  padding: calc(var(--default-padding) / 2);
+}
+
+.lh-audit[id$="-insight"] .lh-table .lh-row--even,
+.lh-audit[id$="-insight"] .lh-table tr:not(.lh-row--group):hover {
+  background-color: unset;
 }
 
 .lh-text__url-host {
