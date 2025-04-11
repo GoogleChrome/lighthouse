@@ -4103,21 +4103,26 @@
               "LCP": 0
             },
             "details": {
-              "type": "checklist",
-              "items": {
-                "priorityHinted": {
-                  "label": "fetchpriority=high should be applied",
-                  "value": false
-                },
-                "requestDiscoverable": {
-                  "label": "Request is discoverable in initial document",
-                  "value": true
-                },
-                "eagerlyLoaded": {
-                  "label": "lazy load not applied",
-                  "value": true
+              "type": "list",
+              "items": [
+                {
+                  "type": "checklist",
+                  "items": {
+                    "priorityHinted": {
+                      "label": "fetchpriority=high should be applied",
+                      "value": false
+                    },
+                    "requestDiscoverable": {
+                      "label": "Request is discoverable in initial document",
+                      "value": true
+                    },
+                    "eagerlyLoaded": {
+                      "label": "lazy load not applied",
+                      "value": true
+                    }
+                  }
                 }
-              }
+              ]
             },
             "guidanceLevel": 3,
             "replacesAudits": [
@@ -4130,7 +4135,7 @@
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "metricSavings": {
               "LCP": 0
             },
@@ -4185,9 +4190,27 @@
             "id": "network-dependency-tree-insight",
             "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3,
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "network-tree",
+              "chains": {
+                "9E726BF73EE3F17B3D0E9C4779BDDEF7": {
+                  "url": "https://www.mikescerealshack.co/",
+                  "navStartToEndTime": 173,
+                  "transferSize": 3632,
+                  "isLongest": true,
+                  "children": {}
+                }
+              },
+              "longestChain": {
+                "duration": 173
+              }
+            },
+            "guidanceLevel": 1,
             "replacesAudits": [
               "critical-request-chains"
             ]
@@ -4216,7 +4239,7 @@
             "title": "3rd parties",
             "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "details": {
               "type": "table",
               "headings": [
@@ -9324,13 +9347,13 @@
               "audits[lcp-discovery-insight].description"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
-              "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+              "audits[lcp-discovery-insight].details.items[0].items.priorityHinted.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
-              "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+              "audits[lcp-discovery-insight].details.items[0].items.requestDiscoverable.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
-              "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+              "audits[lcp-discovery-insight].details.items[0].items.eagerlyLoaded.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
               "audits[lcp-phases-insight].title"
@@ -11949,7 +11972,7 @@
             "title": "INP by phase",
             "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "metricSavings": {
               "INP": 0
             },
@@ -12022,9 +12045,19 @@
             "id": "network-dependency-tree-insight",
             "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3,
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "network-tree",
+              "chains": {},
+              "longestChain": {
+                "duration": 0
+              }
+            },
+            "guidanceLevel": 1,
             "replacesAudits": [
               "critical-request-chains"
             ]
@@ -12053,7 +12086,7 @@
             "title": "3rd parties",
             "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "details": {
               "type": "table",
               "headings": [
@@ -24290,21 +24323,26 @@
               "LCP": 0
             },
             "details": {
-              "type": "checklist",
-              "items": {
-                "priorityHinted": {
-                  "label": "fetchpriority=high should be applied",
-                  "value": false
-                },
-                "requestDiscoverable": {
-                  "label": "Request is discoverable in initial document",
-                  "value": true
-                },
-                "eagerlyLoaded": {
-                  "label": "lazy load not applied",
-                  "value": true
+              "type": "list",
+              "items": [
+                {
+                  "type": "checklist",
+                  "items": {
+                    "priorityHinted": {
+                      "label": "fetchpriority=high should be applied",
+                      "value": false
+                    },
+                    "requestDiscoverable": {
+                      "label": "Request is discoverable in initial document",
+                      "value": true
+                    },
+                    "eagerlyLoaded": {
+                      "label": "lazy load not applied",
+                      "value": true
+                    }
+                  }
                 }
-              }
+              ]
             },
             "guidanceLevel": 3,
             "replacesAudits": [
@@ -24317,7 +24355,7 @@
             "title": "LCP by phase",
             "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "metricSavings": {
               "LCP": 0
             },
@@ -24372,9 +24410,27 @@
             "id": "network-dependency-tree-insight",
             "title": "Network dependency tree",
             "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
-            "guidanceLevel": 3,
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "network-tree",
+              "chains": {
+                "95864F7341656C3DA17C13B7DF249E7F": {
+                  "url": "https://www.mikescerealshack.co/corrections",
+                  "navStartToEndTime": 185,
+                  "transferSize": 3612,
+                  "isLongest": true,
+                  "children": {}
+                }
+              },
+              "longestChain": {
+                "duration": 185
+              }
+            },
+            "guidanceLevel": 1,
             "replacesAudits": [
               "critical-request-chains"
             ]
@@ -24403,7 +24459,7 @@
             "title": "3rd parties",
             "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
             "score": 1,
-            "scoreDisplayMode": "numeric",
+            "scoreDisplayMode": "informative",
             "details": {
               "type": "table",
               "headings": [
@@ -29574,13 +29630,13 @@
               "audits[lcp-discovery-insight].description"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
-              "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+              "audits[lcp-discovery-insight].details.items[0].items.priorityHinted.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
-              "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+              "audits[lcp-discovery-insight].details.items[0].items.requestDiscoverable.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
-              "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+              "audits[lcp-discovery-insight].details.items[0].items.eagerlyLoaded.label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
               "audits[lcp-phases-insight].title"

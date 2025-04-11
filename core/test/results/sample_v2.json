@@ -5833,7 +5833,7 @@
       "title": "Layout shift culprits",
       "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
       "score": 1,
-      "scoreDisplayMode": "numeric",
+      "scoreDisplayMode": "informative",
       "metricSavings": {
         "CLS": 0
       },
@@ -6185,21 +6185,26 @@
         "LCP": 0
       },
       "details": {
-        "type": "checklist",
-        "items": {
-          "priorityHinted": {
-            "label": "fetchpriority=high should be applied",
-            "value": false
-          },
-          "requestDiscoverable": {
-            "label": "Request is discoverable in initial document",
-            "value": false
-          },
-          "eagerlyLoaded": {
-            "label": "lazy load not applied",
-            "value": true
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high should be applied",
+                "value": false
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": false
+              },
+              "eagerlyLoaded": {
+                "label": "lazy load not applied",
+                "value": true
+              }
+            }
           }
-        }
+        ]
       },
       "guidanceLevel": 3,
       "replacesAudits": [
@@ -6212,7 +6217,7 @@
       "title": "LCP by phase",
       "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
       "score": 1,
-      "scoreDisplayMode": "numeric",
+      "scoreDisplayMode": "informative",
       "metricSavings": {
         "LCP": 0
       },
@@ -6267,9 +6272,101 @@
       "id": "network-dependency-tree-insight",
       "title": "Network dependency tree",
       "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3,
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "metricSavings": {
+        "LCP": 0
+      },
+      "details": {
+        "type": "network-tree",
+        "chains": {
+          "62CEDB8B1F6190031188277D9F158FEB": {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "navStartToEndTime": 657,
+            "transferSize": 18011,
+            "isLongest": true,
+            "children": {
+              "26694.2": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+                "navStartToEndTime": 1158,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.3": {
+                "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+                "navStartToEndTime": 1167,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.4": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+                "navStartToEndTime": 2795,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.8": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+                "navStartToEndTime": 3614,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.11": {
+                "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+                "navStartToEndTime": 1229,
+                "transferSize": 700,
+                "children": {}
+              },
+              "26694.14": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+                "navStartToEndTime": 4177,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.17": {
+                "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+                "navStartToEndTime": 6753,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.24": {
+                "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                "navStartToEndTime": 6627,
+                "transferSize": 166576,
+                "children": {}
+              },
+              "26694.44": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+                "navStartToEndTime": 7969,
+                "transferSize": 665,
+                "isLongest": true,
+                "children": {}
+              },
+              "26694.15": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+                "navStartToEndTime": 1738,
+                "transferSize": 486,
+                "children": {}
+              },
+              "26694.16": {
+                "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+                "navStartToEndTime": 1801,
+                "transferSize": 247,
+                "children": {}
+              },
+              "26694.45": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                "navStartToEndTime": 7882,
+                "transferSize": 18011,
+                "children": {}
+              }
+            }
+          }
+        },
+        "longestChain": {
+          "duration": 7969
+        }
+      },
+      "guidanceLevel": 1,
       "replacesAudits": [
         "critical-request-chains"
       ]
@@ -11690,13 +11787,13 @@
         "audits[lcp-discovery-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
-        "audits[lcp-discovery-insight].details.items.priorityHinted.label"
+        "audits[lcp-discovery-insight].details.items[0].items.priorityHinted.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
-        "audits[lcp-discovery-insight].details.items.requestDiscoverable.label"
+        "audits[lcp-discovery-insight].details.items[0].items.requestDiscoverable.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
-        "audits[lcp-discovery-insight].details.items.eagerlyLoaded.label"
+        "audits[lcp-discovery-insight].details.items[0].items.eagerlyLoaded.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
         "audits[lcp-phases-insight].title"

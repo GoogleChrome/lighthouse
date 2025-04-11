@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
-
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -10,7 +8,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/NetworkDe
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
+import {adaptInsightToAuditProduct} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
 const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js', UIStrings);
@@ -25,10 +23,33 @@ class NetworkDependencyTreeInsight extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements', 'SourceMaps'],
+      guidanceLevel: 1,
+      requiredArtifacts: ['traces', 'SourceMaps'],
       replacesAudits: ['critical-request-chains'],
     };
+  }
+
+  /**
+   * @param {import('@paulirish/trace_engine').Insights.Models.NetworkDependencyTree.CriticalRequestNode[]} nodes
+   * @return {LH.Audit.Details.NetworkNode}
+   */
+  static traceEngineNodesToDetailsNodes(nodes) {
+    /** @type {LH.Audit.Details.NetworkNode} */
+    const simpleRequestNode = {};
+
+    for (const node of nodes) {
+      const {request} = node;
+
+      simpleRequestNode[request.args.data.requestId] = {
+        url: request.args.data.url,
+        navStartToEndTime: Math.round(node.timeFromInitialRequest / 1000),
+        transferSize: request.args.data.encodedDataLength,
+        isLongest: node.isLongest,
+        children: this.traceEngineNodesToDetailsNodes(node.children),
+      };
+    }
+
+    return simpleRequestNode;
   }
 
   /**
@@ -37,15 +58,16 @@ class NetworkDependencyTreeInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
     return adaptInsightToAuditProduct(artifacts, context, 'NetworkDependencyTree', (insight) => {
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-      ];
-      /** @type {LH.Audit.Details.Table['items']} */
-      const items = [
-      ];
-      return Audit.makeTableDetails(headings, items);
+      const chains = this.traceEngineNodesToDetailsNodes(insight.rootNodes);
+
+      return {
+        type: 'network-tree',
+        chains,
+        longestChain: {
+          duration: Math.round(insight.maxTime / 1000),
+        },
+      };
     });
   }
 }

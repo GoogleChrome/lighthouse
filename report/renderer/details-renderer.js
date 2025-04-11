@@ -50,6 +50,7 @@ export class DetailsRenderer {
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
+      case 'network-tree':
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, details, this);
 
@@ -547,6 +548,11 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
+      if (item.type === 'node') {
+        listContainer.append(this.renderNode(item));
+        return;
+      }
+
       const listItem = this.render(item);
       if (!listItem) return;
       listContainer.append(listItem);
