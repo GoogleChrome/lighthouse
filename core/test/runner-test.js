@@ -265,7 +265,7 @@ describe('Runner', () => {
       // Artifacts are still localizable.
       const artifacts = assetSaver.loadArtifacts(resolvedPath);
       expect(artifacts.LighthouseRunWarnings[0]).not.toBe('string');
-      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Potential savings of 2 KiB');
+      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Est savings of 2 KiB');
       expect(artifacts.WarningAndErrorGatherer).toMatchObject({
         name: 'LighthouseError',
         code: 'UNSUPPORTED_OLD_CHROME',
