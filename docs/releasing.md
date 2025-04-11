@@ -39,6 +39,7 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 In general, Lighthouse should be using the latest version of its critical dependencies. These are listed in the following script. It's ok to not be on the very latest, use your judgement.
 
 ```sh
+# first, ask Paul to publish chrome-devtools-frontend
 bash core/scripts/upgrade-deps.sh
 ```
 
