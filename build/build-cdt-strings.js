@@ -77,6 +77,9 @@ ${extraCode}`.trimStart();
       ['export interface DeprecationDescriptor {', ''],
       ['  milestone?: number;', ''],
       ['  chromeStatusFeature?: number;\n}', ''],
+      [' as const', ''],
+      ['// This file is auto-generated, do not edit manually.', ''],
+      ['// Re-generate with: npm run generate-protocol-resources', ''],
       // Some patterns are supported in DevTools UIStrings, but not ours.
       [/\\\\/g, ''],
       [`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`],
@@ -93,7 +96,9 @@ ${extraCode}`.trimStart();
 
   const input = fs.readFileSync(inFile, 'utf-8');
 
-  const uiStringsDeclare = extract(input, 'const UIStrings', '};');
+  const uiStringsDeclare = extract(input, 'const UIStrings', '} as const;', [
+    [' as const', ''],
+  ]);
   const notRestoredReasonDescriptionDeclare =
     extract(input, 'const NotRestoredReasonDescription', '};', [
       [/i18nLazyString/g, 'str_'],
