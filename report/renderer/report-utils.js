@@ -67,13 +67,15 @@ class ReportUtils {
 
         // attach the stackpacks to the auditRef object
         if (clone.stackPacks) {
+          const ids = [auditRef.id, ...auditRef.result.replacesAudits ?? []];
           clone.stackPacks.forEach(pack => {
-            if (pack.descriptions[auditRef.id]) {
+            const id = ids.find(id => pack.descriptions[id]);
+            if (id && pack.descriptions[id]) {
               auditRef.stackPacks = auditRef.stackPacks || [];
               auditRef.stackPacks.push({
                 title: pack.title,
                 iconDataURL: pack.iconDataURL,
-                description: pack.descriptions[auditRef.id],
+                description: pack.descriptions[id],
               });
             }
           });
