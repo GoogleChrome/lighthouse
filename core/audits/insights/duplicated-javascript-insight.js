@@ -25,8 +25,10 @@ class DuplicatedJavaScriptInsight extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      guidanceLevel: 3, // TODO: confirm/change.
+      guidanceLevel: 2,
       requiredArtifacts: ['traces', 'TraceElements', 'SourceMaps'],
+      // TODO: enable when implemented.
+      // replacesAudits: ['duplicated-javascript'],
     };
   }
 
