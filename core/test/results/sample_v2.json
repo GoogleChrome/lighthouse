@@ -5828,6 +5828,152 @@
       },
       "guidanceLevel": 4
     },
+    "cache-insight": {
+      "id": "cache-insight",
+      "title": "Use efficient cache lifetimes",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
+      "score": 0,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 3250
+      },
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "Request"
+          },
+          {
+            "key": "cacheLifetimeMs",
+            "valueType": "ms",
+            "label": "Cache TTL",
+            "displayUnit": "duration"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Transfer Size",
+            "displayUnit": "kb",
+            "granularity": 1
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 934513
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 166576
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 24848
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?async",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 24848
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 700
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 486
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/empty.css",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 233
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "cacheLifetimeMs": 0,
+            "totalBytes": 247
+          }
+        ],
+        "sortedBy": [
+          "totalBytes"
+        ],
+        "skipSumming": [
+          "cacheLifetimeMs"
+        ]
+      },
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "uses-long-cache-ttl"
+      ]
+    },
     "cls-culprits-insight": {
       "id": "cls-culprits-insight",
       "title": "Layout shift culprits",
@@ -6268,6 +6414,22 @@
         "largest-contentful-paint-element"
       ]
     },
+    "legacy-javascript-insight": {
+      "id": "legacy-javascript-insight",
+      "title": "Legacy JavaScript",
+      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 2
+    },
+    "modern-http-insight": {
+      "id": "modern-http-insight",
+      "title": "Modern HTTP",
+      "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 3
+    },
     "network-dependency-tree-insight": {
       "id": "network-dependency-tree-insight",
       "title": "Network dependency tree",
@@ -6457,152 +6619,6 @@
         "third-party-summary"
       ]
     },
-    "use-cache-insight": {
-      "id": "use-cache-insight",
-      "title": "Use efficient cache lifetimes",
-      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
-      "score": 0,
-      "scoreDisplayMode": "metricSavings",
-      "metricSavings": {
-        "FCP": 0,
-        "LCP": 3250
-      },
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "Request"
-          },
-          {
-            "key": "cacheLifetimeMs",
-            "valueType": "ms",
-            "label": "Cache TTL",
-            "displayUnit": "duration"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Transfer Size",
-            "displayUnit": "kb",
-            "granularity": 1
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 934513
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 166576
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 112939
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 24848
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?async",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 24848
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 700
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 665
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 486
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/empty.css",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 233
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "cacheLifetimeMs": 0,
-            "totalBytes": 247
-          }
-        ],
-        "sortedBy": [
-          "totalBytes"
-        ],
-        "skipSumming": [
-          "cacheLifetimeMs"
-        ]
-      },
-      "guidanceLevel": 3,
-      "replacesAudits": [
-        "uses-long-cache-ttl"
-      ]
-    },
     "viewport-insight": {
       "id": "viewport-insight",
       "title": "Optimize viewport for mobile",
@@ -6724,6 +6740,11 @@
           "acronym": "SI"
         },
         {
+          "id": "cache-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
           "id": "cls-culprits-insight",
           "weight": 0,
           "group": "hidden"
@@ -6774,6 +6795,16 @@
           "group": "hidden"
         },
         {
+          "id": "legacy-javascript-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "modern-http-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
           "id": "network-dependency-tree-insight",
           "weight": 0,
           "group": "hidden"
@@ -6790,11 +6821,6 @@
         },
         {
           "id": "third-parties-insight",
-          "weight": 0,
-          "group": "hidden"
-        },
-        {
-          "id": "use-cache-insight",
           "weight": 0,
           "group": "hidden"
         },
@@ -9079,12 +9105,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:parse:ServerTimings:finalize",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:TraceEngineResult:parse:UserInteractions:finalize",
         "duration": 100,
         "entryType": "measure"
@@ -9122,6 +9142,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:TraceEngineResult:insights:CLSCulprits",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:Cache",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9181,6 +9207,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:LegacyJavaScript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:ModernHTTP",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:TraceEngineResult:insights:NetworkDependencyTree",
         "duration": 100,
         "entryType": "measure"
@@ -9200,12 +9238,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:TraceEngineResult:insights:ThirdParties",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:insights:UseCache",
         "duration": 100,
         "entryType": "measure"
       },
@@ -10093,6 +10125,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:cache-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:cls-culprits-insight",
         "duration": 100,
         "entryType": "measure"
@@ -10153,6 +10191,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:legacy-javascript-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:modern-http-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:network-dependency-tree-insight",
         "duration": 100,
         "entryType": "measure"
@@ -10172,12 +10222,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-parties-insight",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:use-cache-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -10650,8 +10694,8 @@
         "audits[unminified-javascript].details.headings[1].label",
         "audits[unused-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label",
-        "audits[render-blocking-insight].details.headings[1].label",
-        "audits[use-cache-insight].details.headings[2].label"
+        "audits[cache-insight].details.headings[2].label",
+        "audits[render-blocking-insight].details.headings[1].label"
       ],
       "core/lib/i18n/i18n.js | total": [
         "audits[resource-summary].details.items[0].label",
@@ -11313,7 +11357,7 @@
       ],
       "core/lib/i18n/i18n.js | columnCacheTTL": [
         "audits[uses-long-cache-ttl].details.headings[1].label",
-        "audits[use-cache-insight].details.headings[1].label"
+        "audits[cache-insight].details.headings[1].label"
       ],
       "core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
@@ -11658,6 +11702,15 @@
       "core/audits/bf-cache.js | actionableFailureType": [
         "audits[bf-cache].details.items[0].failureType"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": [
+        "audits[cache-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": [
+        "audits[cache-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": [
+        "audits[cache-insight].details.headings[0].label"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": [
         "audits[cls-culprits-insight].title"
       ],
@@ -11816,6 +11869,18 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
         "audits[lcp-phases-insight].details.items[0].items[3].label"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": [
+        "audits[legacy-javascript-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": [
+        "audits[legacy-javascript-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": [
+        "audits[modern-http-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": [
+        "audits[modern-http-insight].description"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
         "audits[network-dependency-tree-insight].title"
       ],
@@ -11839,15 +11904,6 @@
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": [
         "audits[third-parties-insight].description"
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js | title": [
-        "audits[use-cache-insight].title"
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js | description": [
-        "audits[use-cache-insight].description"
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js | requestColumn": [
-        "audits[use-cache-insight].details.headings[0].label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": [
         "audits[viewport-insight].title"

@@ -25,6 +25,7 @@ class CacheInsight extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['traces', 'SourceMaps'],
+      replacesAudits: ['uses-long-cache-ttl'],
     };
   }
 
@@ -38,16 +39,24 @@ class CacheInsight extends Audit {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         /* eslint-disable max-len */
-        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-        {key: 'ttl', valueType: 'ms', displayUnit: 'duration', label: str_(UIStrings.cacheTTL)},
+        {key: 'url', valueType: 'url', label: str_(UIStrings.requestColumn)},
+        {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(UIStrings.cacheTTL), displayUnit: 'duration'},
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
         /* eslint-enable max-len */
       ];
       // TODO: this should be sorting in the model.
       const values = insight.requests.sort((a, b) =>
         b.request.args.data.decodedBodyLength - a.request.args.data.decodedBodyLength);
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = values.map(v => ({url: v.request.args.data.url, ttl: v.ttl * 1000}));
-      return Audit.makeTableDetails(headings, items);
+      const items = values.map(value => ({
+        url: value.request.args.data.url,
+        cacheLifetimeMs: value.ttl * 1000,
+        totalBytes: value.request.args.data.encodedDataLength,
+      }));
+      return Audit.makeTableDetails(headings, items, {
+        sortedBy: ['totalBytes'],
+        skipSumming: ['cacheLifetimeMs'],
+      });
     });
   }
 }
