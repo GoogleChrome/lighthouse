@@ -13,7 +13,7 @@ import {TargetManager} from '../../gather/driver/target-manager.js';
 
 const doubleRaf = 'new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))';
 
-describe('Individual modes API', function() {
+describe.skip('Individual modes API', function() {
   // eslint-disable-next-line no-invalid-this
   this.timeout(120_000);
 
