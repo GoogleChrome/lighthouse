@@ -85,7 +85,7 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderMilliseconds(details) {
-    let value;
+    let value; // TEST
     if (details.displayUnit === 'duration') {
       value = Globals.i18n.formatDuration(details.value);
     } else {
