@@ -23,6 +23,7 @@ globalThis.Buffer = Buffer;
 
 // TODO: Remove this when insights aren't hidden by default
 const insightAuditIds = [
+  'cache-insight',
   'cls-culprits-insight',
   'document-latency-insight',
   'dom-size-insight',
@@ -33,11 +34,12 @@ const insightAuditIds = [
   'interaction-to-next-paint-insight',
   'lcp-discovery-insight',
   'lcp-phases-insight',
+  'legacy-javascript-insight',
+  'modern-http-insight',
   'network-dependency-tree-insight',
   'render-blocking-insight',
   'slow-css-selector-insight',
   'third-parties-insight',
-  'use-cache-insight',
   'viewport-insight',
 ];
 

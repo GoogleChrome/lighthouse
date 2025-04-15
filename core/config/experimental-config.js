@@ -27,6 +27,7 @@ const config = {
 
         // TODO: Remove this when insights aren't hidden by default
         // Insight audits.
+        {id: 'cache-insight', weight: 0, group: 'insights'},
         {id: 'cls-culprits-insight', weight: 0, group: 'insights'},
         {id: 'document-latency-insight', weight: 0, group: 'insights'},
         {id: 'dom-size-insight', weight: 0, group: 'insights'},
@@ -37,11 +38,12 @@ const config = {
         {id: 'interaction-to-next-paint-insight', weight: 0, group: 'insights'},
         {id: 'lcp-discovery-insight', weight: 0, group: 'insights'},
         {id: 'lcp-phases-insight', weight: 0, group: 'insights'},
+        {id: 'legacy-javascript-insight', weight: 0, group: 'insights'},
+        {id: 'modern-http-insight', weight: 0, group: 'insights'},
         {id: 'network-dependency-tree-insight', weight: 0, group: 'insights'},
         {id: 'render-blocking-insight', weight: 0, group: 'insights'},
         {id: 'slow-css-selector-insight', weight: 0, group: 'insights'},
         {id: 'third-parties-insight', weight: 0, group: 'insights'},
-        {id: 'use-cache-insight', weight: 0, group: 'insights'},
         {id: 'viewport-insight', weight: 0, group: 'insights'},
       ],
     },
