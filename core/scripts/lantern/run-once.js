@@ -19,17 +19,15 @@ if (process.argv.length !== 4) throw new Error('Usage $0 <trace file> <devtools 
 
 async function run() {
   const tracePath = path.resolve(process.cwd(), process.argv[2]);
-  const traces = {defaultPass: readJson(tracePath)};
-  const devtoolsLogs = {defaultPass: readJson(path.resolve(process.cwd(), process.argv[3]))};
+  const trace = readJson(tracePath);
+  const devtoolsLog = readJson(path.resolve(process.cwd(), process.argv[3]));
   const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
 
-  const trace = traces.defaultPass;
-  const devtoolsLog = devtoolsLogs.defaultPass;
   const URL = await DocumentUrls.request({trace, devtoolsLog}, context);
 
   const artifacts = {
-    traces,
-    devtoolsLogs,
+    Trace: trace,
+    DevtoolsLog: devtoolsLog,
     GatherContext: {gatherMode: 'navigation'},
     URL,
     SourceMaps: [],

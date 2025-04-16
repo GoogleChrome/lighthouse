@@ -263,7 +263,7 @@ async function saveArtifacts(artifacts, basePath, options = {}) {
   }
 
   // `devtoolsLogs` and `traces` are duplicate compat artifacts.
-  // We don't need to save them twice, so extract them here.
+  // We don't need to save them twice, so extract them here. TODO(v13): remove
   const {
     // eslint-disable-next-line no-unused-vars
     traces,
