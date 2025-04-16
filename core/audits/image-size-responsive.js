@@ -249,7 +249,8 @@ class ImageSizeResponsive extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'devtoolsLogs'],
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions'],
+      __internalOptionalArtifacts: ['DevtoolsLog'],
     };
   }
 
@@ -263,16 +264,21 @@ class ImageSizeResponsive extends Audit {
 
     // Prepare ImageElementRecord map for retrieving the real mimeType
     // Derived from ./is-on-https.js and ./byte-efficiency/uses-responsive-images.js
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
-    const images = await ImageRecords.request({
-      ImageElements: artifacts.ImageElements,
-      networkRecords,
-    }, context);
-
     /** @type {Map<string, LH.Artifacts.ImageElementRecord>} */
     const imageRecordsByURL = new Map();
-    images.forEach(img => imageRecordsByURL.set(img.src, img));
+    const DevtoolsLog = artifacts.DevtoolsLog;
+
+    if (DevtoolsLog) {
+      // https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#using-network-requests
+      // if DevtoolsLog is provided, use it to fetch image networkRecords
+      // else the empty imageRecordsByURL map will satisfy isCandidate with an undefined image and fallback to the original logic
+      const networkRecords = await NetworkRecords.request(DevtoolsLog, context);
+      const images = await ImageRecords.request({
+        ImageElements: artifacts.ImageElements,
+        networkRecords,
+      }, context);
+      images.forEach(img => imageRecordsByURL.set(img.src, img));
+    }
 
     const results = Array
       .from(artifacts.ImageElements)
