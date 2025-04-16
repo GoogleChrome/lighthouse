@@ -309,6 +309,7 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/cache-insight',
     'insights/cls-culprits-insight',
     'insights/document-latency-insight',
     'insights/dom-size-insight',
@@ -319,11 +320,12 @@ const defaultConfig = {
     'insights/interaction-to-next-paint-insight',
     'insights/lcp-discovery-insight',
     'insights/lcp-phases-insight',
+    'insights/legacy-javascript-insight',
+    'insights/modern-http-insight',
     'insights/network-dependency-tree-insight',
     'insights/render-blocking-insight',
     'insights/slow-css-selector-insight',
     'insights/third-parties-insight',
-    'insights/use-cache-insight',
     'insights/viewport-insight',
   ],
   groups: {
@@ -409,6 +411,7 @@ const defaultConfig = {
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
 
         // Insight audits.
+        {id: 'cache-insight', weight: 0, group: 'hidden'},
         {id: 'cls-culprits-insight', weight: 0, group: 'hidden'},
         {id: 'document-latency-insight', weight: 0, group: 'hidden'},
         {id: 'dom-size-insight', weight: 0, group: 'hidden'},
@@ -419,11 +422,12 @@ const defaultConfig = {
         {id: 'interaction-to-next-paint-insight', weight: 0, group: 'hidden'},
         {id: 'lcp-discovery-insight', weight: 0, group: 'hidden'},
         {id: 'lcp-phases-insight', weight: 0, group: 'hidden'},
+        {id: 'legacy-javascript-insight', weight: 0, group: 'hidden'},
+        {id: 'modern-http-insight', weight: 0, group: 'hidden'},
         {id: 'network-dependency-tree-insight', weight: 0, group: 'hidden'},
         {id: 'render-blocking-insight', weight: 0, group: 'hidden'},
         {id: 'slow-css-selector-insight', weight: 0, group: 'hidden'},
         {id: 'third-parties-insight', weight: 0, group: 'hidden'},
-        {id: 'use-cache-insight', weight: 0, group: 'hidden'},
         {id: 'viewport-insight', weight: 0, group: 'hidden'},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.

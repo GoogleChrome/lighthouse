@@ -4,22 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/UseCache.js';
+import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/Cache.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
-const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/UseCache.js', UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js', UIStrings);
 
-class UseCacheInsight extends Audit {
+class CacheInsight extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'use-cache-insight',
+      id: 'cache-insight',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
@@ -35,7 +35,7 @@ class UseCacheInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    return adaptInsightToAuditProduct(artifacts, context, 'UseCache', (insight) => {
+    return adaptInsightToAuditProduct(artifacts, context, 'Cache', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         /* eslint-disable max-len */
@@ -44,11 +44,14 @@ class UseCacheInsight extends Audit {
         {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
         /* eslint-enable max-len */
       ];
+      // TODO: this should be sorting in the model.
+      const values = insight.requests.sort((a, b) =>
+        b.request.args.data.decodedBodyLength - a.request.args.data.decodedBodyLength);
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = insight.requests.map(request => ({
-        url: request.request.args.data.url,
-        cacheLifetimeMs: request.ttl * 1000,
-        totalBytes: request.request.args.data.encodedDataLength,
+      const items = values.map(value => ({
+        url: value.request.args.data.url,
+        cacheLifetimeMs: value.ttl * 1000,
+        totalBytes: value.request.args.data.encodedDataLength,
       }));
       return Audit.makeTableDetails(headings, items, {
         sortedBy: ['totalBytes'],
@@ -58,4 +61,4 @@ class UseCacheInsight extends Audit {
   }
 }
 
-export default UseCacheInsight;
+export default CacheInsight;

@@ -2210,8 +2210,14 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() більше не працює з незахищеними джерелами. Щоб користуватися цією функцією, перенесіть свій додаток на захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Знайдено тег <h1> у тегах <article>, <aside>, <nav> або <section>. Розмір шрифту не вказано. Незабаром розмір цього заголовка буде змінено у вебпереглядачі. Щоб дізнатися більше, перегляньте цю сторінку: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate не підтримується. Натомість використовуйте RTCPeerConnectionIceErrorEvent.address або RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Цей формат запиту navigator.credentials.get() для цифрових облікових даних більше не підтримується. Оновіть свій виклик, щоб використовувати новий формат."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Джерело продавця й довільні дані події Service Worker canmakepayment не підтримуються. Їх буде вилучено: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2363,6 +2369,24 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
     "message": "Кластер із найвищим показником зміщення макета"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL кешу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Якщо зберігати кеш за тривалий період часу, сторінки можуть завантажуватися швидше під час повторних відвідувань. [Докладніше.](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Немає запитів із неефективними правилами кешування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "Ще {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Використовуйте ефективні значення TTL кешу"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Через велике дерево DOM обчислення стилів і перекомпонування макетів може тривати довше, що впливає на адаптивність сторінки. Крім того, у такому разі використовується більше пам’яті. [Дізнайтесь, як уникнути надмірного розміру DOM.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
   },
@@ -2420,6 +2444,18 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
     "message": "Завантаження без стиснення"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Повторювані байти"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Видаліть великі копії модулів JavaScript із пакетів, щоб зменшити кількість непотрібних байтів під час мережевої активності."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Повторювані джерела JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Щоб текст завжди був видимим, змініть значення властивості [font-display](https://developer.chrome.com/blog/font-display) на swap або optional. Щоб зменшити зміщення макета, можна додатково оптимізувати swap за допомогою [перевизначення показників шрифту](https://developer.chrome.com/blog/font-fallbacks)."
   },
@@ -2446,6 +2482,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
     "message": "Загальний час перекомпонування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "Не визначено"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Зменшення часу завантаження зображень може прискорити візуалізацію сторінки й покращити показник LCP. [Докладніше про оптимізацію розміру зображень.](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2557,6 +2596,33 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "Показник LCP за етапами"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Скрипт"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Заощаджені байти"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Поліфіли й перетворення дають застарілим вебпереглядачам змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/articles/baseline-and-polyfills), якщо вам не потрібно підтримувати застарілі вебпереглядачі. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Застарілі функції JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "Протоколи HTTP/2 й HTTP/3 мають низку переваг над HTTP/1.1, наприклад мультиплексування. [Докладніше про використання сучасного протоколу HTTP.](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Не було запитів із використанням протоколу HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Протокол"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Сучасний протокол HTTP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Щоб уникнути утворення ланцюжків критичних запитів](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. Це допоможе пришвидшити завантаження сторінки."

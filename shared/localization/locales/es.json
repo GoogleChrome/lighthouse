@@ -2210,8 +2210,14 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() ya no funciona en orígenes no seguros. Para usar esta función, deberías plantearte cambiar tu aplicación a un origen seguro, como HTTPS. Consulta https://goo.gle/chrome-insecure-origins para obtener más información."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Se ha encontrado una etiqueta <h1> dentro de una etiqueta <article>, <aside>, <nav> o <section> que no tiene un tamaño de fuente especificado. El tamaño de este texto de encabezado cambiará en este navegador en un futuro próximo. Consulta https://developer.mozilla.org/es-ES/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 para obtener más información."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate está obsoleto. Usa RTCPeerConnectionIceErrorEvent.address o RTCPeerConnectionIceErrorEvent.port en su lugar."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Este formato de la solicitud navigator.credentials.get() de credenciales digitales está obsoleto. Actualiza la llamada para usar el nuevo formato."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "El origen del comerciante y los datos arbitrarios del evento de service worker de canmakepayment han quedado obsoletos y se eliminarán: topOrigin, paymentRequestOrigin, methodData y modifiers."
@@ -2363,6 +2369,24 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
     "message": "Peor clúster de cambios de diseño"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL de caché"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Una duración en caché más larga puede aumentar el número de visitas repetidas a tu página. [Más información](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "No hay solicitudes con políticas de caché ineficientes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} más"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Solicitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Usar tiempos de vida de caché eficientes"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un DOM de gran tamaño puede aumentar la duración de los cálculos de estilo y redistribución del diseño, lo que afecta a la capacidad de respuesta de la página. Un DOM de gran tamaño también aumenta el uso de memoria. [Consulta cómo evitar un tamaño de DOM excesivo](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
@@ -2420,6 +2444,18 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
     "message": "Descarga sin comprimir"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Bytes duplicados"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Fuente"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Quita los módulos de JavaScript grandes y duplicados de los paquetes para reducir el número de bytes innecesarios que consume la actividad de red."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "JavaScript duplicado"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Te recomendamos asignar el valor swap o optional a [font-display](https://developer.chrome.com/blog/font-display) para asegurarte de que el texto se vea de forma coherente. swap se puede optimizar aún más para mitigar los cambios de diseño con [anulaciones de métricas de fuente](https://developer.chrome.com/blog/font-fallbacks)."
   },
@@ -2447,6 +2483,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
     "message": "Tiempo total de redistribución"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "Sin asignación"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Si se reduce el tiempo de descarga de las imágenes, se puede mejorar el tiempo de carga percibido de la página y el LCP. [Más información sobre la optimización del tamaño de las imágenes](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
   },
@@ -2460,7 +2499,7 @@
     "message": "Optimizar tamaño de archivo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
-    "message": "Otros {PH1}"
+    "message": "{PH1} más"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Mejorar la entrega de imágenes"
@@ -2557,6 +2596,33 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP por fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Secuencia de comandos"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Bytes desperdiciados"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Los polyfills y los transforms permiten que los navegadores antiguos utilicen las nuevas funciones de JavaScript. Sin embargo, muchos de estos polyfills y transforms no son necesarios para los navegadores modernos. Te recomendamos que modifiques tu proceso de compilación de JavaScript para que no transpile las funciones de [Baseline](https://web.dev/articles/baseline-and-polyfills), a menos que sepas que debes admitir navegadores antiguos. [Descubre por qué la mayoría de los sitios pueden implementar código ES6+ sin transpilación](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "JavaScript antiguo"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 y HTTP/3 ofrecen muchas ventajas con respecto a HTTP/1.1, como multiplexing. [Más información sobre el uso de HTTP moderno](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Ninguna solicitud ha usado HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocolo"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Solicitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "HTTP moderno"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Evita encadenar solicitudes críticas](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) reduciendo la longitud de las cadenas, disminuyendo el tamaño de los recursos o posponiendo la descarga de recursos innecesarios para mejorar la carga de la página."

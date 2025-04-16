@@ -28,6 +28,8 @@ const exclusions = {
     'byte-efficiency', 'byte-gzip', 'perf-preload',
     // Disabled because a renderer crash also breaks devtools frontend
     'crash',
+    // Disabled because is timing out.
+    'oopif-scripts',
   ],
 };
 
