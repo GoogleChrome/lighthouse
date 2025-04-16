@@ -266,13 +266,12 @@ class ImageSizeResponsive extends Audit {
     // Derived from ./is-on-https.js and ./byte-efficiency/uses-responsive-images.js
     /** @type {Map<string, LH.Artifacts.ImageElementRecord>} */
     const imageRecordsByURL = new Map();
-    const DevtoolsLog = artifacts.DevtoolsLog;
 
-    if (DevtoolsLog) {
+    if (artifacts.DevtoolsLog) {
       // https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#using-network-requests
       // if DevtoolsLog is provided, use it to fetch image networkRecords
       // else the empty imageRecordsByURL map will satisfy isCandidate with an undefined image and fallback to the original logic
-      const networkRecords = await NetworkRecords.request(DevtoolsLog, context);
+      const networkRecords = await NetworkRecords.request(artifacts.DevtoolsLog, context);
       const images = await ImageRecords.request({
         ImageElements: artifacts.ImageElements,
         networkRecords,
