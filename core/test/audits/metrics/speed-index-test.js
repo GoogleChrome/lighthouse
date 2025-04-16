@@ -36,8 +36,8 @@ describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: pwaTrace},
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       SourceMaps: [],
     };

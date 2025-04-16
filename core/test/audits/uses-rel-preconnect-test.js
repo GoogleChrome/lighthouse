@@ -37,8 +37,8 @@ function buildArtifacts(networkRecords, fcpTs) {
       mainDocumentUrl: mainResource.url,
       finalDisplayedUrl: mainResource.url,
     },
-    devtoolsLogs: {defaultPass: devtoolsLog},
-    traces: {defaultPass: trace},
+    DevtoolsLog: devtoolsLog,
+    Trace: trace,
     SourceMaps: [],
   };
 }

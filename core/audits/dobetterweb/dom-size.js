@@ -56,7 +56,7 @@ class DOMSize extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
       requiredArtifacts: ['DOMStats', 'URL', 'GatherContext'],
-      __internalOptionalArtifacts: ['traces', 'devtoolsLogs', 'SourceMaps'],
+      __internalOptionalArtifacts: ['Trace', 'DevtoolsLog', 'SourceMaps'],
     };
   }
 
@@ -82,14 +82,14 @@ class DOMSize extends Audit {
 
     // We still want to surface this audit in snapshot mode, but since we don't compute TBT
     // the impact should always be undefined.
-    const {GatherContext, devtoolsLogs, traces} = artifacts;
+    const {GatherContext, DevtoolsLog, Trace} = artifacts;
     if (GatherContext.gatherMode !== 'navigation') {
       return undefined;
     }
 
     // Since the artifacts are optional, it's still possible for them to be missing in navigation mode.
     // Navigation mode does compute TBT so we should surface a numerical savings of 0.
-    if (!devtoolsLogs?.[Audit.DEFAULT_PASS] || !traces?.[Audit.DEFAULT_PASS]) {
+    if (!DevtoolsLog || !Trace) {
       return 0;
     }
 

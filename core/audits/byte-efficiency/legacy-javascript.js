@@ -15,7 +15,6 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
-import {Audit} from '../audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {EntityClassification} from '../../computed/entity-classification.js';
 import {JSBundles} from '../../computed/js-bundles.js';
@@ -48,7 +47,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
       guidanceLevel: 2,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'Scripts', 'SourceMaps',
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'Scripts', 'SourceMaps',
         'GatherContext', 'URL'],
     };
   }
@@ -60,7 +59,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
 

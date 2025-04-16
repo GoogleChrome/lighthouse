@@ -43,8 +43,8 @@ describe('DOMSize audit', () => {
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       SourceMaps: [],
     };
     context = {
@@ -75,8 +75,8 @@ describe('DOMSize audit', () => {
   });
 
   it('works if missing trace/dtlog in navigation mode', async () => {
-    artifacts.devtoolsLogs = undefined;
-    artifacts.traces = undefined;
+    artifacts.DevtoolsLog = undefined;
+    artifacts.Trace = undefined;
     const auditResult = await DOMSize.audit(artifacts, context);
     expect(auditResult.score).toEqual(0.43);
     expect(auditResult.metricSavings).toEqual({TBT: 0});
@@ -84,7 +84,7 @@ describe('DOMSize audit', () => {
 
   it('works if tbt impact throws an error', async () => {
     // Empty array will cause an error.
-    artifacts.traces.defaultPass = [];
+    artifacts.Trace.traceEvents = [];
 
     const auditResult = await DOMSize.audit(artifacts, context);
     expect(auditResult.score).toEqual(0.43);

@@ -44,7 +44,7 @@ describe('Performance: layout-shifts audit', () => {
     });
 
     const artifacts = {
-      traces: {defaultPass: trace},
+      Trace: trace,
       TraceElements: [{
         traceEventType: 'layout-shift',
         nodeId: 1,
@@ -110,7 +110,7 @@ describe('Performance: layout-shifts audit', () => {
     }
 
     const artifacts = {
-      traces: {defaultPass: trace},
+      Trace: trace,
       TraceElements: traceElements,
       SourceMaps: [],
     };

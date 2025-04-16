@@ -113,7 +113,7 @@ class RenderBlockingResources extends Audit {
       // of CSSUsage
       requiredArtifacts:
         // eslint-disable-next-line max-len
-        ['URL', 'traces', 'devtoolsLogs', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks', 'SourceMaps'],
+        ['URL', 'Trace', 'DevtoolsLog', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks', 'SourceMaps'],
     };
   }
 
@@ -125,8 +125,8 @@ class RenderBlockingResources extends Audit {
   static async computeResults(artifacts, context) {
     const settings = context.settings;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const SourceMaps = artifacts.SourceMaps;
     const simulatorData = {devtoolsLog, settings: context.settings};
     const simulator = await LoadSimulator.request(simulatorData, context);
@@ -263,7 +263,7 @@ class RenderBlockingResources extends Audit {
       const unusedCssItems = await UnusedCSS.request({
         Stylesheets: artifacts.Stylesheets,
         CSSUsage: artifacts.CSSUsage,
-        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+        devtoolsLog: artifacts.DevtoolsLog,
       }, context);
       for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);

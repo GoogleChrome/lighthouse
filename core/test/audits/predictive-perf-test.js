@@ -20,12 +20,8 @@ describe('Performance: predictive performance audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(acceptableDevToolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [PredictivePerf.DEFAULT_PASS]: acceptableTrace,
-      },
-      devtoolsLogs: {
-        [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
-      },
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevToolsLog,
       SourceMaps: [],
     };
     const context = {computedCache: new Map(), settings: {locale: 'en'}};

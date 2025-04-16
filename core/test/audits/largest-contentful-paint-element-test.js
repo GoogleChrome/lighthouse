@@ -82,16 +82,12 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         type: 'text',
       }],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 8000,
-          networkRecords,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+        networkRecords,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {
         requestedUrl,
         mainDocumentUrl,
@@ -130,15 +126,11 @@ describe('Performance: largest-contentful-paint-element audit', () => {
     const artifacts = {
       TraceElements: [],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 4500,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(mockNetworkRecords()),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 4500,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(mockNetworkRecords()),
       URL: {
         requestedUrl,
         mainDocumentUrl,
@@ -170,15 +162,11 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         type: 'text',
       }],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 8000,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: [],
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+      }),
+      DevtoolsLog: [],
       URL: {
         requestedUrl,
         mainDocumentUrl,

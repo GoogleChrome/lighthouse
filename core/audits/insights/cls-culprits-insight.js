@@ -39,7 +39,7 @@ class CLSCulpritsInsight extends Audit {
       failureTitle: insightStr_(InsightUIStrings.title),
       description: insightStr_(InsightUIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
       replacesAudits: ['layout-shifts', 'non-composited-animations', 'unsized-images'],
     };
   }

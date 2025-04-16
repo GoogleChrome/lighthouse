@@ -14,19 +14,17 @@ it('marked N/A if no violations found', async () => {
       mainDocumentUrl: 'https://example.com',
       finalDisplayedUrl: 'https://example.com',
     },
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `max-age=63072000; includeSubDomains; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=63072000; includeSubDomains; preload`,
+          },
+        ],
+      },
+    ]),
   };
   const results = await HasHsts.audit(artifacts, {computedCache: new Map()});
   expect(results.details.items).toHaveLength(0);
@@ -35,19 +33,17 @@ it('marked N/A if no violations found', async () => {
 
 it('max-age missing, but other directives present', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `includeSubDomains; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `includeSubDomains; preload`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -69,19 +65,17 @@ it('max-age missing, but other directives present', async () => {
 
 it('max-age too low, but other directives present', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `max-age=1337; includeSubDomains; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=1337; includeSubDomains; preload`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -103,19 +97,17 @@ it('max-age too low, but other directives present', async () => {
 
 it('includeSubDomains missing, but other directives present', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `max-age=63072000; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=63072000; preload`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -137,19 +129,17 @@ it('includeSubDomains missing, but other directives present', async () => {
 
 it('preload missing, but other directives present', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `max-age=63072000; includeSubDomains`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=63072000; includeSubDomains`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -171,19 +161,17 @@ it('preload missing, but other directives present', async () => {
 
 it('No HSTS header found', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Foo-Header',
-              value: `max-age=63072000; includeSubDomains; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Foo-Header',
+            value: `max-age=63072000; includeSubDomains; preload`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -205,20 +193,18 @@ it('No HSTS header found', async () => {
 
 it('Messed up directive, but other actual HSTS directives present.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value:
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value:
                   `max-age=63072000; fooDirective; includeSubDomains; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -240,19 +226,17 @@ it('Messed up directive, but other actual HSTS directives present.', async () =>
 
 it('Messed up directive and one more directive missing.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Strict-Transport-Security',
-              value: `max-age=63072000; fooDirective; preload`,
-            },
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Strict-Transport-Security',
+            value: `max-age=63072000; fooDirective; preload`,
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -286,19 +270,17 @@ describe('getRawHsts', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Strict-Transport-Security',
-                value: `max-age=63072000; includeSubDomains; preload`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Strict-Transport-Security',
+              value: `max-age=63072000; includeSubDomains; preload`,
+            },
+          ],
+        },
+      ]),
     };
     const hstsHeaders =
       await HasHsts.getRawHsts(artifacts, {computedCache: new Map()});
@@ -316,19 +298,17 @@ describe('getRawHsts', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Strict-Transport-Security',
-                value: ``,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Strict-Transport-Security',
+              value: ``,
+            },
+          ],
+        },
+      ]),
     };
     const hstsHeaders =
       await HasHsts.getRawHsts(artifacts, {computedCache: new Map()});
@@ -344,19 +324,17 @@ describe('getRawHsts', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Strict-Transport-Security',
-                value: '   \t',
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Strict-Transport-Security',
+              value: '   \t',
+            },
+          ],
+        },
+      ]),
     };
     const hstsHeaders =
       await HasHsts.getRawHsts(artifacts, {computedCache: new Map()});

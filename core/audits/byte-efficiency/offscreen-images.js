@@ -51,8 +51,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['navigation'],
       guidanceLevel: 2,
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'devtoolsLogs',
-        'traces', 'URL', 'SourceMaps'],
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'DevtoolsLog',
+        'Trace', 'URL', 'SourceMaps'],
     };
   }
 
@@ -167,8 +167,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const images = artifacts.ImageElements;
     const viewportDimensions = artifacts.ViewportDimensions;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
 
     /** @type {string[]} */
     const warnings = [];

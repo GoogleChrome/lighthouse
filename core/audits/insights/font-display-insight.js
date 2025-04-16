@@ -24,7 +24,7 @@ class FontDisplayInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
       replacesAudits: ['font-display'],
     };
   }

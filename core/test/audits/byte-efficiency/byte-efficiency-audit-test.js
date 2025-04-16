@@ -248,8 +248,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       SourceMaps: [],
     };
@@ -282,8 +282,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
@@ -306,8 +306,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: []},
+      Trace: trace,
+      DevtoolsLog: [],
       URL: {},
     };
     const computedCache = new Map();
@@ -333,8 +333,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();

@@ -44,7 +44,7 @@ class UsesRelPreloadAudit extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL', 'SourceMaps'],
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'URL', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -213,8 +213,8 @@ class UsesRelPreloadAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings;
-    const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const {URL, SourceMaps} = artifacts;
     const simulatorOptions = {devtoolsLog, settings: context.settings};
 

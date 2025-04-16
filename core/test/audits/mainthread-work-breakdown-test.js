@@ -56,8 +56,8 @@ describe('Performance: page execution timings audit', () => {
 
   it('should compute the correct pageExecutionTiming values for the trace', async () => {
     const artifacts = {
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevtoolsLog},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -73,8 +73,8 @@ describe('Performance: page execution timings audit', () => {
 
   it('should compute the correct values when simulated', async () => {
     const artifacts = {
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevtoolsLog},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -104,8 +104,8 @@ describe('Performance: page execution timings audit', () => {
 
   it('should compute the correct values for the redirect trace', async () => {
     const artifacts = {
-      traces: {defaultPass: siteWithRedirectTrace},
-      devtoolsLogs: {defaultPass: siteWithRedirectDevtoolsLog},
+      Trace: siteWithRedirectTrace,
+      DevtoolsLog: siteWithRedirectDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(siteWithRedirectDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -134,11 +134,11 @@ Object {
   it('should compute the correct values for the load trace (legacy)', async () => {
     assert(loadTraceOld.find(e => e.name === 'TracingStartedInPage'));
     const artifacts = {
-      traces: {defaultPass: {traceEvents: loadTraceOld}},
+      Trace: {traceEvents: loadTraceOld},
       GatherContext: {gatherMode: 'navigation'},
       // `loadTraceOld` doesn't have a DT log
       // These are just standard values that cause an error.
-      devtoolsLogs: {defaultPass: []},
+      DevtoolsLog: [],
       URL: {
         requestedUrl: 'https://example.com/',
         mainDocumentUrl: 'https://example.com/',
@@ -165,8 +165,8 @@ Object {
   it('should compute the correct values for the load trace', async () => {
     assert(loadTrace.traceEvents.find(e => e.name === 'TracingStartedInBrowser'));
     const artifacts = {
-      traces: {defaultPass: loadTrace},
-      devtoolsLogs: {defaultPass: loadDevtoolsLog},
+      Trace: loadTrace,
+      DevtoolsLog: loadDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(loadDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
     };
@@ -192,11 +192,11 @@ Object {
   it('should get no data when no events are present', () => {
     const mainDocumentUrl = 'https://example.com';
     const artifacts = {
-      traces: {defaultPass: createTestTrace({frameUrl: mainDocumentUrl})},
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([{
+      Trace: createTestTrace({frameUrl: mainDocumentUrl}),
+      DevtoolsLog: networkRecordsToDevtoolsLog([{
         url: mainDocumentUrl,
         priority: 'High',
-      }])},
+      }]),
       URL: {
         requestedUrl: mainDocumentUrl,
         mainDocumentUrl,

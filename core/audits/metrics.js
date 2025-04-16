@@ -26,7 +26,7 @@ class Metrics extends Audit {
       title: 'Metrics',
       description: 'Collects all available metrics.',
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'SourceMaps'],
     };
   }
 
@@ -38,8 +38,8 @@ class Metrics extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const {URL, SourceMaps} = artifacts;
     const summary = await TimingSummary
       .request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps}, context);

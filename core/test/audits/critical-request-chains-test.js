@@ -72,12 +72,8 @@ const mockArtifacts = (chainNetworkRecords) => {
   const finalDisplayedUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
 
   return {
-    traces: {
-      [CriticalRequestChains.DEFAULT_PASS]: trace,
-    },
-    devtoolsLogs: {
-      [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
-    },
+    Trace: trace,
+    DevtoolsLog: devtoolsLog,
     URL: {
       requestedUrl: finalDisplayedUrl,
       mainDocumentUrl: finalDisplayedUrl,
@@ -110,8 +106,8 @@ describe('Performance: critical-request-chains audit', () => {
 
   it('calculates the correct chain result for a real devtools log', () => {
     const artifacts = {
-      traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
-      devtoolsLogs: {defaultPass: redditDevtoolsLog},
+      Trace: createTestTrace({topLevelTasks: [{ts: 0}]}),
+      DevtoolsLog: redditDevtoolsLog,
       URL: {
         requestedUrl: 'https://www.reddit.com/r/nba',
         mainDocumentUrl: 'https://www.reddit.com/r/nba',

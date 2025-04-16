@@ -46,7 +46,7 @@ class MainThreadWorkBreakdown extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -84,7 +84,7 @@ class MainThreadWorkBreakdown extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const trace = artifacts.traces[MainThreadWorkBreakdown.DEFAULT_PASS];
+    const trace = artifacts.Trace;
 
     let tbtSavings = 0;
     try {

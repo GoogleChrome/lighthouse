@@ -70,8 +70,8 @@ describe('Max Potential FID', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([{url: frameUrl}]);
     const artifacts = {
       URL: {finalDisplayedUrl: frameUrl},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -134,8 +134,8 @@ describe('Max Potential FID', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([{url: frameUrl}]);
     const artifacts = {
       URL: {finalDisplayedUrl: frameUrl},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };

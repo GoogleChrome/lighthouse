@@ -38,7 +38,7 @@ class PrioritizeLcpImage extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 4,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'TraceElements',
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'TraceElements',
         'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
@@ -236,8 +236,8 @@ class PrioritizeLcpImage extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[PrioritizeLcpImage.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[PrioritizeLcpImage.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const {URL, SourceMaps} = artifacts;
     const settings = context.settings;
     const metricData =

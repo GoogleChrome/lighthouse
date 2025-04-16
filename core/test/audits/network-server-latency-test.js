@@ -11,7 +11,7 @@ const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.d
 
 describe('Network Server Latency audit', () => {
   it('should work', async () => {
-    const artifacts = {devtoolsLogs: {defaultPass: acceptableDevToolsLog}};
+    const artifacts = {DevtoolsLog: acceptableDevToolsLog};
     const result = await ServerLatency.audit(artifacts, {computedCache: new Map()});
     result.details.items.forEach(
       item => (item.serverResponseTime = Math.round(item.serverResponseTime * 100) / 100)
@@ -36,7 +36,7 @@ describe('Network Server Latency audit', () => {
   });
 
   it('should return n/a if no network records', async () => {
-    const artifacts = {devtoolsLogs: {defaultPass: []}};
+    const artifacts = {DevtoolsLog: []};
     const result = await ServerLatency.audit(artifacts, {computedCache: new Map()});
 
     expect(result).toEqual({

@@ -24,7 +24,7 @@ const getResult = scripts => {
   const artifacts = {
     GatherContext: {gatherMode: 'navigation'},
     URL: {finalDisplayedUrl: mainDocumentUrl, requestedUrl: mainDocumentUrl},
-    devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+    DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     Scripts: scripts.map(({url, code}, index) => {
       return {
         scriptId: String(index),

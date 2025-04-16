@@ -36,12 +36,8 @@ describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [Interactive.DEFAULT_PASS]: acceptableTrace,
-      },
-      devtoolsLogs: {
-        [Interactive.DEFAULT_PASS]: acceptableDevToolsLog,
-      },
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevToolsLog,
       URL: getURLArtifactFromDevtoolsLog(acceptableDevToolsLog),
       SourceMaps: [],
     };
@@ -57,12 +53,8 @@ describe('Performance: interactive audit', () => {
   it('should compute interactive on pages with redirect', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [Interactive.DEFAULT_PASS]: redirectTrace,
-      },
-      devtoolsLogs: {
-        [Interactive.DEFAULT_PASS]: redirectDevToolsLog,
-      },
+      Trace: redirectTrace,
+      DevtoolsLog: redirectDevToolsLog,
       URL: getURLArtifactFromDevtoolsLog(redirectDevToolsLog),
       SourceMaps: [],
     };

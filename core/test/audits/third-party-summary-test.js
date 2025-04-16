@@ -16,8 +16,8 @@ const noThirdPartyDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoo
 describe('Third party summary', () => {
   it('surface the discovered third parties', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: devtoolsLog},
-      traces: {defaultPass: trace},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -37,8 +37,8 @@ describe('Third party summary', () => {
 
   it('account for simulated throttling', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: devtoolsLog},
-      traces: {defaultPass: trace},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -58,8 +58,8 @@ describe('Third party summary', () => {
 
   it('be not applicable when no third parties are present', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: noThirdPartyDevtoolsLog},
-      traces: {defaultPass: noThirdPartyTrace},
+      DevtoolsLog: noThirdPartyDevtoolsLog,
+      Trace: noThirdPartyTrace,
       URL: {
         requestedUrl: 'http://localhost:65178/animation.html',
         mainDocumentUrl: 'http://localhost:65178/animation.html',
@@ -81,21 +81,19 @@ describe('Third party summary', () => {
 
   it('does not return third party entity that matches main resource entity', async () => {
     const externalArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
-      },
-      traces: {defaultPass: trace},
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://example.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
         requestedUrl: 'http://example.com',
@@ -105,21 +103,19 @@ describe('Third party summary', () => {
       SourceMaps: [],
     };
     const facebookArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://facebook.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
-      },
-      traces: {defaultPass: trace},
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://facebook.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
         requestedUrl: 'http://facebook.com',

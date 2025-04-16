@@ -27,8 +27,8 @@ function buildArtifacts(networkRecords) {
       mainDocumentUrl: frameUrl,
       finalDisplayedUrl: frameUrl,
     },
-    devtoolsLogs: {defaultPass: devtoolsLog},
-    traces: {defaultPass: trace},
+    DevtoolsLog: devtoolsLog,
+    Trace: trace,
     GatherContext: {gatherMode: 'navigation'},
     SourceMaps: [],
   };

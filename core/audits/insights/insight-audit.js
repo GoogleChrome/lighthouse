@@ -17,7 +17,7 @@ import {Audit} from '../audit.js';
  */
 async function getInsightSet(artifacts, context) {
   const settings = context.settings;
-  const trace = artifacts.traces[Audit.DEFAULT_PASS];
+  const trace = artifacts.Trace;
   const processedTrace = await ProcessedTrace.request(trace, context);
   const SourceMaps = artifacts.SourceMaps;
   const traceEngineResult = await TraceEngineResult.request({trace, settings, SourceMaps}, context);

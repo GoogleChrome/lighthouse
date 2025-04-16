@@ -53,7 +53,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'SourceMaps', 'Scripts',
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'SourceMaps', 'Scripts',
         'GatherContext', 'URL'],
     };
   }

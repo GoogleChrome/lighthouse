@@ -48,7 +48,7 @@ describe('ScriptTreemapData audit', () => {
       const artifacts = {
         URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
         JsUsage: {[usage.scriptId]: usage},
-        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
         SourceMaps: [{scriptId: 'squoosh', scriptUrl, map}],
         Scripts: [
           {scriptId: 'squoosh', url: scriptUrl, content},
@@ -108,7 +108,7 @@ describe('ScriptTreemapData audit', () => {
         URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
         // Audit should still work even without usage data.
         JsUsage: {},
-        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
         SourceMaps: [
           {scriptId: '1', scriptUrl: scriptUrl1, map},
           {scriptId: '2', scriptUrl: scriptUrl2, map},

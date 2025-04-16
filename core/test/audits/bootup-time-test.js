@@ -19,8 +19,8 @@ describe('Performance: bootup-time audit', () => {
 
   it('should compute the correct BootupTime values', () => {
     const artifacts = Object.assign({
-      traces: {[BootupTime.DEFAULT_PASS]: acceptableTrace},
-      devtoolsLogs: {[BootupTime.DEFAULT_PASS]: acceptableDevtoolsLogs},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLogs,
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLogs),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
@@ -80,8 +80,8 @@ Array [
 
   it('should compute the correct values when simulated', async () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevtoolsLogs},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLogs,
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLogs),
       GatherContext: {gatherMode: 'navigation'},
     });
@@ -163,8 +163,8 @@ Array [
 
   it('should get no data when no events are present', () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: errorTrace},
-      devtoolsLogs: {defaultPass: []},
+      Trace: errorTrace,
+      DevtoolsLog: [],
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',

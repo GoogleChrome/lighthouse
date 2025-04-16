@@ -24,7 +24,7 @@ class NetworkDependencyTreeInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 1,
-      requiredArtifacts: ['traces', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'SourceMaps'],
       replacesAudits: ['critical-request-chains'],
     };
   }

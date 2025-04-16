@@ -27,7 +27,7 @@ class LargestContentfulPaint extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['HostUserAgent', 'traces', 'devtoolsLogs', 'GatherContext', 'URL',
+      requiredArtifacts: ['HostUserAgent', 'Trace', 'DevtoolsLog', 'GatherContext', 'URL',
         'SourceMaps'],
     };
   }
@@ -70,8 +70,8 @@ class LargestContentfulPaint extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
     const metricComputationData = {
       trace, devtoolsLog, gatherContext,

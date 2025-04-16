@@ -27,8 +27,8 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [],
       SourceMaps: [],
     };
@@ -59,8 +59,8 @@ describe('Render blocking resources audit', () => {
       const artifacts = {
         URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
         GatherContext: {gatherMode: 'navigation'},
-        traces: {defaultPass: lrTrace},
-        devtoolsLogs: {defaultPass: lrDevtoolsLog},
+        Trace: lrTrace,
+        DevtoolsLog: lrDevtoolsLog,
         Stacks: [],
         SourceMaps: [],
       };
@@ -97,8 +97,8 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: textLcpTrace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: textLcpTrace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [],
       SourceMaps: [],
     };
@@ -113,8 +113,8 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [
         {
           detector: 'js',

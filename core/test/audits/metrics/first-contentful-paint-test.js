@@ -38,12 +38,8 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       SourceMaps: [],
     };
@@ -57,12 +53,8 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates a modern trace correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: frameTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
-      },
+      Trace: frameTrace,
+      DevtoolsLog: frameDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(frameDevtoolsLog),
       SourceMaps: [],
     };

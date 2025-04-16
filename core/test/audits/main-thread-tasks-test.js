@@ -11,7 +11,7 @@ const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', 
 
 describe('Main thread tasks audit', () => {
   it('should work', async () => {
-    const artifacts = {traces: {defaultPass: acceptableTrace}};
+    const artifacts = {Trace: acceptableTrace};
     const result = await MainThreadTasks.audit(artifacts, {computedCache: new Map()});
     expect(result.details.items).toHaveLength(39);
 

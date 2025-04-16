@@ -68,7 +68,7 @@ class LongTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
       guidanceLevel: 1,
     };
   }
@@ -177,9 +177,9 @@ class LongTasks extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings || {};
     const {URL, SourceMaps} = artifacts;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const tasks = await MainThreadTasks.request(trace, context);
-    const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);

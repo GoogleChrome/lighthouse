@@ -31,7 +31,7 @@ class ScriptTreemapDataAudit extends Audit {
       title: 'Script Treemap Data',
       description: 'Used for treemap app',
       requiredArtifacts:
-        ['traces', 'devtoolsLogs', 'SourceMaps', 'Scripts', 'JsUsage', 'URL', 'SourceMaps'],
+        ['Trace', 'DevtoolsLog', 'SourceMaps', 'Scripts', 'JsUsage', 'URL', 'SourceMaps'],
     };
   }
 

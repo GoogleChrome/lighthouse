@@ -15,8 +15,8 @@ describe('minify-devtoolslog', () => {
   it('has identical metrics to unminified', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       SourceMaps: [],
     };
@@ -25,7 +25,7 @@ describe('minify-devtoolslog', () => {
     const beforeSize = JSON.stringify(devtoolsLog).length;
 
     const minifiedDevtoolsLog = minifyDevtoolsLog(devtoolsLog);
-    artifacts.devtoolsLogs.defaultPass = minifiedDevtoolsLog;
+    artifacts.DevtoolsLog = minifiedDevtoolsLog;
     context.computedCache.clear(); // not strictly necessary, but we'll be safe
     const {details: {items: [after]}} = await MetricsAudit.audit(artifacts, context);
     const afterSize = JSON.stringify(minifiedDevtoolsLog).length;

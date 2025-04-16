@@ -422,12 +422,11 @@ describe('Runner', () => {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
-          // requires traces[Audit.DEFAULT_PASS]
+          // requires Trace
           'user-timings',
         ],
         artifacts: [
           {id: 'Trace', gatherer: 'trace'},
-          {id: 'traces', gatherer: 'trace-compat'},
         ],
       });
 
@@ -435,7 +434,7 @@ describe('Runner', () => {
       const auditResult = results.lhr.audits['user-timings'];
       assert.strictEqual(auditResult.score, null);
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-      assert.ok(auditResult.errorMessage.includes('traces'));
+      assert.ok(auditResult.errorMessage.includes('Trace'));
     });
 
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
@@ -444,12 +443,11 @@ describe('Runner', () => {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
-          // requires devtoolsLogs[Audit.DEFAULT_PASS]
+          // requires DevtoolsLog
           'is-on-https',
         ],
         artifacts: [
           {id: 'DevtoolsLog', gatherer: 'devtools-log'},
-          {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
           {id: 'InspectorIssues', gatherer: 'inspector-issues'},
         ],
       });
@@ -458,7 +456,7 @@ describe('Runner', () => {
       const auditResult = results.lhr.audits['is-on-https'];
       assert.strictEqual(auditResult.score, null);
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-      assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
+      assert.strictEqual(auditResult.errorMessage, 'Required DevtoolsLog gatherer did not run.');
     });
 
     it('outputs an error audit result when missing a required artifact', async () => {

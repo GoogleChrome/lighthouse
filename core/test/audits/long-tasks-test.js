@@ -86,8 +86,8 @@ describe('Long tasks audit', () => {
   it('should pass and be non-applicable if there are no long tasks', async () => {
     const artifacts = {
       URL,
-      traces: {defaultPass: generateTraceWithLongTasks({count: 0})},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: generateTraceWithLongTasks({count: 0}),
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -102,8 +102,8 @@ describe('Long tasks audit', () => {
   it('should return a list of long tasks with duration >= 50 ms', async () => {
     const artifacts = {
       URL,
-      traces: {defaultPass: generateTraceWithLongTasks({count: 4})},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: generateTraceWithLongTasks({count: 4}),
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -134,8 +134,8 @@ describe('Long tasks audit', () => {
     });
     const artifacts = {
       URL,
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -160,8 +160,8 @@ describe('Long tasks audit', () => {
 
     const artifacts = {
       URL,
-      traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25, networkRecords})},
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      Trace: generateTraceWithLongTasks({count: 4, duration: 25, networkRecords}),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -197,8 +197,8 @@ describe('Long tasks audit', () => {
     const trace = generateTraceWithLongTasks({count: 1, duration: 300, withChildTasks: true});
     const artifacts = {
       URL,
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -228,8 +228,8 @@ describe('Long tasks audit', () => {
     });
     const artifacts = {
       URL,
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -262,8 +262,8 @@ describe('Long tasks audit', () => {
     const trace = generateTraceWithLongTasks({count: 1, duration: 300, withChildTasks: true});
     const artifacts = {
       URL,
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };
@@ -296,8 +296,8 @@ describe('Long tasks audit', () => {
   it('should find long tasks from a real trace', async () => {
     const artifacts = {
       URL,
-      traces: {defaultPass: redirectTrace},
-      devtoolsLogs: {defaultPass: redirectDevtoolsLog},
+      Trace: redirectTrace,
+      DevtoolsLog: redirectDevtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
     };

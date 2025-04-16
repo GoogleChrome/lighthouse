@@ -30,7 +30,7 @@ class NetworkServerLatency extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['DevtoolsLog'],
     };
   }
 
@@ -40,7 +40,7 @@ class NetworkServerLatency extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const records = await NetworkRecords.request(devtoolsLog, context);
     if (!records.length) {
       return {

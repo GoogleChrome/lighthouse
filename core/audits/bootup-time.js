@@ -49,7 +49,7 @@ class BootupTime extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -100,8 +100,8 @@ class BootupTime extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?

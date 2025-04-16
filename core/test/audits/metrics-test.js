@@ -37,12 +37,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -59,12 +55,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -81,12 +73,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: lcpTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: lcpDevtoolsLog,
-      },
+      Trace: lcpTrace,
+      DevtoolsLog: lcpDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -103,12 +91,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
-      },
+      Trace: lcpAllFramesTrace,
+      DevtoolsLog: lcpAllFramesDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -125,12 +109,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: lcpImageTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: lcpImageDevtoolsLog,
-      },
+      Trace: lcpImageTrace,
+      DevtoolsLog: lcpImageDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -147,12 +127,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
-      },
+      Trace: lcpAllFramesTrace,
+      DevtoolsLog: lcpAllFramesDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -172,12 +148,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: clsAllFramesDevtoolsLog,
-      },
+      Trace: clsAllFramesTrace,
+      DevtoolsLog: clsAllFramesDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -198,12 +170,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
     };
 
@@ -222,12 +190,8 @@ describe('Performance: metrics', () => {
     const artifacts = {
       URL,
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: jumpyClsTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: jumpyClsDevtoolsLog,
-      },
+      Trace: jumpyClsTrace,
+      DevtoolsLog: jumpyClsDevtoolsLog,
       SourceMaps: [],
     };
 

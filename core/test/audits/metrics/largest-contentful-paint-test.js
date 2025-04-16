@@ -17,8 +17,8 @@ function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
     URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     GatherContext: {gatherMode: 'navigation'},
-    traces: {[LCPAudit.DEFAULT_PASS]: trace},
-    devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},
+    Trace: trace,
+    DevtoolsLog: devtoolsLog,
     HostUserAgent,
     SourceMaps: [],
   };
