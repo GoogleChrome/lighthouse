@@ -41,18 +41,18 @@ class ThirdPartiesInsight extends Audit {
    * @param {import('@paulirish/trace_engine/models/trace/insights/ThirdParties.js').ThirdPartiesInsightModel} insight
    * @return {Array<URLSummary>}
    */
-  static makeSubItems(entity, insight) {
-    const urls = [...insight.urlsByEntity.get(entity) ?? []];
-    return urls
-      .map(url => ({
-        url,
-        mainThreadTime: 0,
-        transferSize: 0,
-        ...insight.summaryByUrl.get(url),
-      }))
-      // Sort by main thread time first, then transfer size to break ties.
-      .sort((a, b) => (b.mainThreadTime - a.mainThreadTime) || (b.transferSize - a.transferSize));
-  }
+  // static makeSubItems(entity, insight) {
+  //   const urls = [...insight.urlsByEntity.get(entity) ?? []];
+  //   return urls
+  //     .map(url => ({
+  //       url,
+  //       mainThreadTime: 0,
+  //       transferSize: 0,
+  //       ...insight.summaryByUrl.get(url),
+  //     }))
+  //     // Sort by main thread time first, then transfer size to break ties.
+  //     .sort((a, b) => (b.mainThreadTime - a.mainThreadTime) || (b.transferSize - a.transferSize));
+  // }
 
   /**
    * @param {LH.Artifacts} artifacts
@@ -61,8 +61,9 @@ class ThirdPartiesInsight extends Audit {
    */
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'ThirdParties', (insight) => {
-      const thirdPartyEntities = [...insight.summaryByEntity.entries()]
-        .filter((([entity, _]) => entity !== insight.firstPartyEntity));
+      const thirdPartySummaries = insight.summaries
+        .filter(summary => summary.entity !== insight.firstPartyEntity || null)
+        .sort((a, b) => b.mainThreadTime - a.mainThreadTime);
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
@@ -73,15 +74,18 @@ class ThirdPartiesInsight extends Audit {
         /* eslint-enable max-len */
       ];
       /** @type {LH.Audit.Details.Table['items']} */
-      const items = thirdPartyEntities.map(([entity, summary]) => ({
-        entity: entity.name,
-        transferSize: summary.transferSize,
-        mainThreadTime: summary.mainThreadTime,
-        subItems: {
-          type: /** @type {const} */ ('subitems'),
-          items: ThirdPartiesInsight.makeSubItems(entity, insight),
-        },
-      }));
+      const items = thirdPartySummaries.map((summary) => {
+        return {
+          entity: summary.entity.name,
+          transferSize: summary.transferSize,
+          mainThreadTime: summary.mainThreadTime,
+          // TODO: fix this! we lost all the data ... https://chromium-review.googlesource.com/c/devtools/devtools-frontend/+/6341914
+          // subItems: {
+          //   type: /** @type {const} */ ('subitems'),
+          //   items: ThirdPartiesInsight.makeSubItems(summary.entity, insight),
+          // },
+        };
+      });
       return Audit.makeTableDetails(headings, items, {isEntityGrouped: true});
     });
   }
