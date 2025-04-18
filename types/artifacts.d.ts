@@ -137,8 +137,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
-  /** The result of calling the shared trace engine root cause analysis. */
-  RootCauses: Artifacts.TraceEngineRootCauses;
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */

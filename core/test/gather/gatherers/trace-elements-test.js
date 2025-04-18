@@ -11,8 +11,6 @@ import {createMockDriver} from '../mock-driver.js';
 
 const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json.gz', import.meta);
 
-const RootCauses = {layoutShifts: {}};
-
 function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) { // eslint-disable-line camelcase
   return {
     name: 'LayoutShift',
@@ -258,7 +256,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
+      dependencies: {Trace: trace, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -341,7 +339,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: animationTrace, RootCauses, SourceMaps: []},
+      dependencies: {Trace: animationTrace, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -423,7 +421,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
+      dependencies: {Trace: trace, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });
@@ -488,7 +486,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const result = await gatherer.getArtifact({
       driver,
       gatherMode: 'timespan',
-      dependencies: {Trace: trace, RootCauses, SourceMaps: []},
+      dependencies: {Trace: trace, SourceMaps: []},
       computedCache: new Map(),
       settings: {},
     });

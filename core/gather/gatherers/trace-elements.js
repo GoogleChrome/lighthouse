@@ -204,11 +204,10 @@ class TraceElements extends BaseGatherer {
    *
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.TraceEngineResult['data']} traceEngineResult
-   * @param {LH.Artifacts.TraceEngineRootCauses} rootCauses
    * @param {LH.Gatherer.Context} context
    * @return {Promise<Array<{nodeId: number}>>}
    */
-  static async getTopLayoutShifts(trace, traceEngineResult, rootCauses, context) {
+  static async getTopLayoutShifts(trace, traceEngineResult, context) {
     const {impactByNodeId} = await CumulativeLayoutShift.request(trace, context);
     const clusters = traceEngineResult.LayoutShifts.clusters ?? [];
     const layoutShiftEvents =
@@ -380,7 +379,7 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.Context<'Trace'|'RootCauses'|'SourceMaps'>} context
+   * @param {LH.Gatherer.Context<'Trace'|'SourceMaps'>} context
    * @return {Promise<LH.Artifacts.TraceElement[]>}
    */
   async getArtifact(context) {
@@ -391,7 +390,6 @@ class TraceElements extends BaseGatherer {
     const settings = context.settings;
     const traceEngineResult =
       await TraceEngineResult.request({trace, settings, SourceMaps}, context);
-    const rootCauses = context.dependencies.RootCauses;
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
@@ -401,7 +399,7 @@ class TraceElements extends BaseGatherer {
       traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
-      trace, traceEngineResult.data, rootCauses, context);
+      trace, traceEngineResult.data, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
