@@ -56,9 +56,6 @@ class Trace extends BaseGatherer {
       'disabled-by-default-devtools.timeline.frame',
       'latencyInfo',
 
-      // For CLS root causes.
-      'disabled-by-default-devtools.timeline.invalidationTracking',
-
       // Enhanced traces.
       'disabled-by-default-devtools.target-rundown',
       'disabled-by-default-devtools.v8-source-rundown-sources',
