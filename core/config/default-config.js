@@ -16,7 +16,9 @@ const UIStrings = {
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
   /** Title of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
-  insightGroupTitle: 'Insights',
+  insightsGroupTitle: 'Insights',
+  /** Description of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
+  insightsGroupDescription: 'These insights are also available in the Chrome DevTools Performance Panel - [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information.',
   /** Title of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
   firstPaintImprovementsGroupTitle: 'First Paint Improvements',
   /** Description of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
@@ -333,7 +335,8 @@ const defaultConfig = {
       title: str_(UIStrings.metricGroupTitle),
     },
     'insights': {
-      title: str_(UIStrings.insightGroupTitle),
+      title: str_(UIStrings.insightsGroupTitle),
+      description: str_(UIStrings.insightsGroupDescription),
     },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
