@@ -73,6 +73,8 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
   }
 
+  // TODO: add estimatedByteSavings to insight model. LH has always shown this as transfer size bytes.
+
   let score;
   let scoreDisplayMode;
   if (insight.state === 'fail' || insight.state === 'pass') {
