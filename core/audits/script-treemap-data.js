@@ -271,7 +271,9 @@ class ScriptTreemapDataAudit extends Audit {
 
         const networkRecord = getRequestForScript(networkRecords, script);
         if (networkRecord) {
-          node.encodedBytes = networkRecord.transferSize;
+          const bodyTransferSize =
+            networkRecord.transferSize - networkRecord.responseHeadersTransferSize;
+          node.encodedBytes = bodyTransferSize;
         }
       }
     }
@@ -282,7 +284,8 @@ class ScriptTreemapDataAudit extends Audit {
       const record = networkRecords.find(r => r.frameId === frameId);
       if (record) {
         const inlineScriptsPct = node.resourceBytes / record.resourceSize;
-        node.encodedBytes = Math.floor(record.transferSize * inlineScriptsPct);
+        const bodyTransferSize = record.transferSize - record.responseHeadersTransferSize;
+        node.encodedBytes = Math.floor(bodyTransferSize * inlineScriptsPct);
       }
     }
 
