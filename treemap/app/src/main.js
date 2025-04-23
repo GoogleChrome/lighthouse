@@ -871,8 +871,13 @@ class LighthouseTreemap {
       return json;
     }
 
+    let initialView;
+    if (typeof json.initialView === 'string') {
+      initialView = json.initialView;
+    }
+
     // json was exactly a LHR, or a PSI result object aka {lighthouseResult}
-    return {lhr};
+    return {lhr, initialView};
   }
 
   /**
