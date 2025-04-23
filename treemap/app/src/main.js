@@ -865,14 +865,8 @@ class LighthouseTreemap {
       throw new Error('provided Lighthouse result is missing audit: `script-treemap-data`');
     }
 
-    if (lhr === json.lhr) {
-      // Special case: file was {lhr: ...} and potentially has other properties.
-      // LH.Treemap.Options only has `lhr` currently, but may have more in the future.
-      return json;
-    }
-
     let initialView;
-    if (typeof json.initialView === 'string') {
+    if (json && typeof json === 'object' && typeof json.initialView === 'string') {
       initialView = json.initialView;
     }
 
@@ -987,7 +981,7 @@ async function main() {
     const options = app.coerceToOptions(json);
     app.init(options);
   } else if (params.lhr) {
-    const options = app.coerceToOptions(params.lhr);
+    const options = app.coerceToOptions(params);
     app.init(options);
   } else if (params.gist) {
     const json = await app._github.getGistFileContentAsJson(params.gist || '');
