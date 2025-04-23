@@ -17,6 +17,8 @@ const UIStrings = {
   tableColumnName: 'Name',
   /** Label for column giving the size of a file in bytes. */
   resourceBytesLabel: 'Resource bytes',
+  /** Label for column giving the size of a file in bytes. */
+  transferBytesLabel: 'Transfer bytes',
   /** Label for a value associated with how many bytes of a script are not executed. */
   unusedBytesLabel: 'Unused bytes',
   /** Label for a value associated with how many bytes of a script are duplicated. */
