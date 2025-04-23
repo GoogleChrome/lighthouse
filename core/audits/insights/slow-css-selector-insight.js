@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */ // TODO: remove once implemented.
 
+// TODO: currently disabled via core/scripts/generate-insight-audits.js. Ignore for now.
+
 /**
  * @license
  * Copyright 2025 Google LLC

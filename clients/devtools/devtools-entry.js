@@ -38,7 +38,6 @@ const insightAuditIds = [
   'modern-http-insight',
   'network-dependency-tree-insight',
   'render-blocking-insight',
-  'slow-css-selector-insight',
   'third-parties-insight',
   'viewport-insight',
 ];

@@ -105,6 +105,9 @@ const insightNames = getAllInsightNames();
 const allAuditIds = [];
 for (const insightName of insightNames) {
   const auditId = `${kebabize(insightName)}-insight`;
+  // For now, skip, b/c this needs an extra trace category on, which is slow, and we'd
+  // have to build a way to opt-in to running it.
+  if (auditId === 'slow-css-selector-insight') continue;
   allAuditIds.push(auditId);
 
   const outputFile = `${LH_ROOT}/core/audits/insights/${auditId}.js`;

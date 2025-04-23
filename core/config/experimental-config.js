@@ -42,7 +42,6 @@ const config = {
         {id: 'modern-http-insight', weight: 0, group: 'insights'},
         {id: 'network-dependency-tree-insight', weight: 0, group: 'insights'},
         {id: 'render-blocking-insight', weight: 0, group: 'insights'},
-        {id: 'slow-css-selector-insight', weight: 0, group: 'insights'},
         {id: 'third-parties-insight', weight: 0, group: 'insights'},
         {id: 'viewport-insight', weight: 0, group: 'insights'},
       ],

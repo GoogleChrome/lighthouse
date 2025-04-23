@@ -326,7 +326,6 @@ const defaultConfig = {
     'insights/modern-http-insight',
     'insights/network-dependency-tree-insight',
     'insights/render-blocking-insight',
-    'insights/slow-css-selector-insight',
     'insights/third-parties-insight',
     'insights/viewport-insight',
   ],
@@ -429,7 +428,6 @@ const defaultConfig = {
         {id: 'modern-http-insight', weight: 0, group: 'hidden'},
         {id: 'network-dependency-tree-insight', weight: 0, group: 'hidden'},
         {id: 'render-blocking-insight', weight: 0, group: 'hidden'},
-        {id: 'slow-css-selector-insight', weight: 0, group: 'hidden'},
         {id: 'third-parties-insight', weight: 0, group: 'hidden'},
         {id: 'viewport-insight', weight: 0, group: 'hidden'},
 
