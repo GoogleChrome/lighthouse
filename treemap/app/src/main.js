@@ -870,7 +870,6 @@ class LighthouseTreemap {
       initialView = json.initialView;
     }
 
-    // json was exactly a LHR, or a PSI result object aka {lighthouseResult}
     return {lhr, initialView};
   }
 
