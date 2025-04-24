@@ -281,7 +281,8 @@ class ScriptTreemapDataAudit extends Audit {
     // For the HTML nodes, set encodedBytes to be the size of all the inline
     // scripts multiplied by the average compression ratio of the HTML document.
     for (const [frameId, node] of htmlNodesByFrameId) {
-      const record = networkRecords.find(r => r.frameId === frameId);
+      const record =
+        networkRecords.find(r => r.resourceType === 'Document' && r.frameId === frameId);
       if (record) {
         const inlineScriptsPct = node.resourceBytes / record.resourceSize;
         const bodyTransferSize = record.transferSize - record.responseHeadersTransferSize;
