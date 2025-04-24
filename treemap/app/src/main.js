@@ -46,7 +46,10 @@ class TreemapViewer {
       throw new Error('missing script-treemap-data');
     }
 
-    this.showTransferSize = scriptTreemapData.nodes.some(node => node.encodedBytes);
+    // Since ~Apr 2025, script-treemap-data contains transfer size data. If present,
+    // the app displays all byte sizes in terms of transfer size. Otherwise, resource
+    // size is used.
+    this.showTransferSize = scriptTreemapData.nodes.every(node => node.encodedBytes !== undefined);
     /** @type {'encodedBytes'|'resourceBytes'} */
     this.defaultPartitionBy = this.showTransferSize ? 'encodedBytes' : 'resourceBytes';
 
