@@ -274,6 +274,8 @@ class ScriptTreemapDataAudit extends Audit {
           const bodyTransferSize =
             networkRecord.transferSize - networkRecord.responseHeadersTransferSize;
           node.encodedBytes = bodyTransferSize;
+        } else {
+          node.encodedBytes = node.resourceBytes;
         }
       }
     }
@@ -287,6 +289,8 @@ class ScriptTreemapDataAudit extends Audit {
         const inlineScriptsPct = node.resourceBytes / record.resourceSize;
         const bodyTransferSize = record.transferSize - record.responseHeadersTransferSize;
         node.encodedBytes = Math.floor(bodyTransferSize * inlineScriptsPct);
+      } else {
+        node.encodedBytes = node.resourceBytes;
       }
     }
 
