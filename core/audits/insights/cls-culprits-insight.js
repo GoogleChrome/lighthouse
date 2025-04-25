@@ -58,9 +58,9 @@ class CLSCulpritsInsight extends Audit {
 
     /** @type {SubItem[]} */
     const subItems = [];
-    for (const backendNodeId of culprits.unsizedImages) {
+    for (const unsizedImage of culprits.unsizedImages) {
       subItems.push({
-        extra: makeNodeItemForNodeId(TraceElements, backendNodeId),
+        extra: makeNodeItemForNodeId(TraceElements, unsizedImage.backendNodeId),
         cause: insightStr_(InsightUIStrings.unsizedImages),
       });
     }

@@ -97,9 +97,9 @@ class LayoutShifts extends Audit {
       /** @type {SubItem[]} */
       const subItems = [];
       if (rootCauses) {
-        for (const backendNodeId of rootCauses.unsizedImages) {
+        for (const unsizedImage of rootCauses.unsizedImages) {
           const element = artifacts.TraceElements.find(
-            t => t.traceEventType === 'trace-engine' && t.nodeId === backendNodeId);
+            t => t.traceEventType === 'trace-engine' && t.nodeId === unsizedImage.backendNodeId);
           subItems.push({
             extra: element ? Audit.makeNodeItem(element.node) : undefined,
             cause: str_(UIStrings.rootCauseUnsizedMedia),
