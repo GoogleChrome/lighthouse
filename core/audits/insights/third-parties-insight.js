@@ -5,6 +5,7 @@
  */
 
 import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ThirdParties.js';
+import {summarizeByURL} from '@paulirish/trace_engine/models/trace/extras/ThirdParties.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -38,21 +39,20 @@ class ThirdPartiesInsight extends Audit {
 
   /**
    * @param {LH.Artifacts.Entity} entity
-   * @param {import('@paulirish/trace_engine/models/trace/insights/ThirdParties.js').ThirdPartiesInsightModel} insight
-   * @return {Array<URLSummary>}
+   * @param {import('@paulirish/trace_engine/models/trace/extras/ThirdParties.js').URLSummary[]} urlSummaries
+   * @return {URLSummary[]}
    */
-  // static makeSubItems(entity, insight) {
-  //   const urls = [...insight.urlsByEntity.get(entity) ?? []];
-  //   return urls
-  //     .map(url => ({
-  //       url,
-  //       mainThreadTime: 0,
-  //       transferSize: 0,
-  //       ...insight.summaryByUrl.get(url),
-  //     }))
-  //     // Sort by main thread time first, then transfer size to break ties.
-  //     .sort((a, b) => (b.mainThreadTime - a.mainThreadTime) || (b.transferSize - a.transferSize));
-  // }
+  static makeSubItems(entity, urlSummaries) {
+    urlSummaries = urlSummaries.filter(s => s.entity === entity);
+    return urlSummaries.filter(s => s.entity === entity)
+      .map(s => ({
+        url: s.url,
+        mainThreadTime: s.mainThreadTime,
+        transferSize: s.transferSize,
+      }))
+      // Sort by main thread time first, then transfer size to break ties.
+      .sort((a, b) => (b.mainThreadTime - a.mainThreadTime) || (b.transferSize - a.transferSize));
+  }
 
   /**
    * @param {LH.Artifacts} artifacts
@@ -60,8 +60,10 @@ class ThirdPartiesInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    return adaptInsightToAuditProduct(artifacts, context, 'ThirdParties', (insight) => {
-      const thirdPartySummaries = insight.summaries
+    return adaptInsightToAuditProduct(artifacts, context, 'ThirdParties', (insight, extras) => {
+      const urlSummaries = summarizeByURL(extras.parsedTrace, extras.insights.bounds);
+
+      const thirdPartySummaries = insight.entitySummaries
         .filter(summary => summary.entity !== insight.firstPartyEntity || null)
         .sort((a, b) => b.mainThreadTime - a.mainThreadTime);
 
@@ -77,13 +79,12 @@ class ThirdPartiesInsight extends Audit {
       const items = thirdPartySummaries.map((summary) => {
         return {
           entity: summary.entity.name,
-          transferSize: summary.transferSize,
           mainThreadTime: summary.mainThreadTime,
-          // TODO: fix this! we lost all the data ... https://chromium-review.googlesource.com/c/devtools/devtools-frontend/+/6341914
-          // subItems: {
-          //   type: /** @type {const} */ ('subitems'),
-          //   items: ThirdPartiesInsight.makeSubItems(summary.entity, insight),
-          // },
+          transferSize: summary.transferSize,
+          subItems: {
+            type: /** @type {const} */ ('subitems'),
+            items: ThirdPartiesInsight.makeSubItems(summary.entity, urlSummaries),
+          },
         };
       });
       return Audit.makeTableDetails(headings, items, {isEntityGrouped: true});

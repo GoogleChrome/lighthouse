@@ -59,7 +59,6 @@ class LegacyJavaScriptInsight extends Audit {
         /** @type {Item} */
         const item = {
           url: script.url ?? '',
-          // TODO: need to apply compressionRatio to match expectation that these values are transfer size...
           wastedBytes: result.estimatedByteSavings,
           subItems: {
             type: 'subitems',

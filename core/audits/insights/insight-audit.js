@@ -13,7 +13,7 @@ import {Audit} from '../audit.js';
 /**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
- * @return {Promise<import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined>}
+ * @return {Promise<{insights: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined, parsedTrace: LH.Artifacts.TraceEngineResult['data']}>}
  */
 async function getInsightSet(artifacts, context) {
   const settings = context.settings;
@@ -24,20 +24,27 @@ async function getInsightSet(artifacts, context) {
 
   const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
   const key = navigationId ?? NO_NAVIGATION;
+  const insights = traceEngineResult.insights.get(key);
 
-  return traceEngineResult.insights.get(key);
+  return {insights, parsedTrace: traceEngineResult.data};
 }
+
+/**
+ * @typedef CreateDetailsExtras
+ * @property {import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet} insights
+ * @property {LH.Artifacts.TraceEngineResult['data']} parsedTrace
+ */
 
 /**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
  * @param {T} insightName
- * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T]) => LH.Audit.Details|undefined} createDetails
+ * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => LH.Audit.Details|undefined} createDetails
  * @template {keyof import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModelsType} T
  * @return {Promise<LH.Audit.Product>}
  */
 async function adaptInsightToAuditProduct(artifacts, context, insightName, createDetails) {
-  const insights = await getInsightSet(artifacts, context);
+  const {insights, parsedTrace} = await getInsightSet(artifacts, context);
   if (!insights) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
@@ -54,7 +61,10 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
-  const details = createDetails(insight);
+  const details = createDetails(insight, {
+    parsedTrace,
+    insights,
+  });
   if (!details || (details.type === 'table' && details.headings.length === 0)) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
