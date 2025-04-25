@@ -171,7 +171,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     } catch {
       return this._memoryInsightToggleState;
     }
-    return 'INSIGHTS';
+    return 'AUDITS';
   }
 
 
