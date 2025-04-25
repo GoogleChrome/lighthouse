@@ -15,16 +15,12 @@ import {createGauge, updateGauge} from './explodey-gauge.js';
 const LOCAL_STORAGE_INSIGHTS_KEY = '__lh__insights_audits_toggle_state';
 
 /**
- * @typedef {('AUDITS'|'INSIGHTS')} InsightsExperimentState
+ * @typedef {('DEFAULT'|'AUDITS'|'INSIGHTS')} InsightsExperimentState
  */
 
-const DEFAULT_INSIGHTS_EXPERIMENT_STATE = 'AUDITS';
-
 export class PerformanceCategoryRenderer extends CategoryRenderer {
-  // Used as a fallback if localStorage isn't available. Less good as it only
-  // persists for the current page load, but better than nothing.
   /** @type InsightsExperimentState*/
-  _memoryInsightToggleState = DEFAULT_INSIGHTS_EXPERIMENT_STATE;
+  _memoryInsightToggleState = 'DEFAULT';
 
   /**
    * @param {LH.ReportResult.AuditRef} audit
@@ -158,11 +154,19 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
   }
 
-
   /**
    * @returns {InsightsExperimentState}
   **/
   _getInsightToggleState() {
+    let state = this._getRawInsightToggleState();
+    if (state === 'DEFAULT') state = 'AUDITS';
+    return state;
+  }
+
+  /**
+   * @returns {InsightsExperimentState}
+  **/
+  _getRawInsightToggleState() {
     try {
       const fromStorage = window.localStorage.getItem(LOCAL_STORAGE_INSIGHTS_KEY);
       if (fromStorage === 'AUDITS' || fromStorage === 'INSIGHTS') {
@@ -171,9 +175,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     } catch {
       return this._memoryInsightToggleState;
     }
-    return 'AUDITS';
+    return 'DEFAULT';
   }
-
 
   /**
    * @param {HTMLButtonElement} button
@@ -208,6 +211,10 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       }
       const currentState = this._getInsightToggleState();
       const newState = currentState === 'AUDITS' ? 'INSIGHTS' : 'AUDITS';
+      this.dom.fireEventOn('lh-analytics', this.dom.document(), {
+        name: 'toggle_insights',
+        data: {newState},
+      });
       this._persistInsightToggleToStorage(newState);
       this._setInsightToggleButtonText(button);
     });
@@ -314,6 +321,12 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         }
       });
     }
+
+    // Log the initial state.
+    this.dom.fireEventOn('lh-analytics', this.dom.document(), {
+      name: 'initial_insights_state',
+      data: {state: this._getRawInsightToggleState()},
+    });
 
     const isNavigationMode = !options || options?.gatherMode === 'navigation';
     if (isNavigationMode && category.score !== null) {

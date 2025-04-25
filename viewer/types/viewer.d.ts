@@ -7,6 +7,7 @@
 import {ReportGenerator as _ReportGenerator} from '../../report/generator/report-generator.js';
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
+import 'gtag.js';
 import 'google.analytics';
 
 // Import for needed DOM type augmentation.
