@@ -14,7 +14,18 @@ import {createGauge, updateGauge} from './explodey-gauge.js';
 
 const LOCAL_STORAGE_INSIGHTS_KEY = '__lh__insights_audits_toggle_state';
 
+/**
+ * @typedef {('AUDITS'|'INSIGHTS')} InsightsExperimentState
+ */
+
+const DEFAULT_INSIGHTS_EXPERIMENT_STATE = 'AUDITS';
+
 export class PerformanceCategoryRenderer extends CategoryRenderer {
+  // Used as a fallback if localStorage isn't available. Less good as it only
+  // persists for the current page load, but better than nothing.
+  /** @type InsightsExperimentState*/
+  _memoryInsightToggleState = DEFAULT_INSIGHTS_EXPERIMENT_STATE;
+
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @return {!Element}
@@ -137,22 +148,29 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
-   * @param {'AUDITS'|'INSIGHTS'} newState
+   * @param {InsightsExperimentState} newState
   **/
   _persistInsightToggleToStorage(newState) {
-    window.localStorage.setItem(LOCAL_STORAGE_INSIGHTS_KEY, newState);
+    try {
+      window.localStorage.setItem(LOCAL_STORAGE_INSIGHTS_KEY, newState);
+    } finally {
+      this._memoryInsightToggleState = newState;
+    }
   }
 
 
   /**
-   * @returns {'AUDITS'|'INSIGHTS'}
+   * @returns {InsightsExperimentState}
   **/
   _getInsightToggleState() {
-    const fromStorage = window.localStorage.getItem(LOCAL_STORAGE_INSIGHTS_KEY);
-    if (fromStorage === 'AUDITS' || fromStorage === 'INSIGHTS') {
-      return fromStorage;
+    try {
+      const fromStorage = window.localStorage.getItem(LOCAL_STORAGE_INSIGHTS_KEY);
+      if (fromStorage === 'AUDITS' || fromStorage === 'INSIGHTS') {
+        return fromStorage;
+      }
+    } catch {
+      return this._memoryInsightToggleState;
     }
-    // The default state if you have not toggled yet is to have audits visible.
     return 'AUDITS';
   }
 
@@ -252,7 +270,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       textSpan.appendChild(part);
     }
 
-    const buttonClasses = 'lh-button';
+    const buttonClasses = 'lh-button lh-button-insight-toggle';
     const button = this.dom.createChildOf(container, 'button', buttonClasses);
     this._setInsightToggleButtonText(button);
 
