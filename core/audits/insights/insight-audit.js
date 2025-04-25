@@ -9,6 +9,9 @@ import {NO_NAVIGATION} from '@paulirish/trace_engine/models/trace/types/TraceEve
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+
+const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
 /**
  * @param {LH.Artifacts} artifacts
@@ -83,7 +86,12 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     metricSavings = {...metricSavings, LCP: /** @type {any} */ (0)};
   }
 
-  // TODO: add estimatedByteSavings to insight model. LH has always shown this as transfer size bytes.
+  // TODO: consider adding a `estimatedSavingsText` to InsightModel, which can capture
+  // the exact i18n string used by RPP; and include the same est. timing savings.
+  let displayValue;
+  if (insight.wastedBytes) {
+    displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: insight.wastedBytes});
+  }
 
   let score;
   let scoreDisplayMode;
@@ -101,6 +109,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     score,
     metricSavings,
     warnings: insight.warnings,
+    displayValue,
     details,
   };
 }

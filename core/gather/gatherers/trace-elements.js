@@ -132,15 +132,15 @@ class TraceElements extends BaseGatherer {
     /** @type {number[]} */
     const nodeIds = [];
     recursiveObjectEnumerate(insightSet.model, (val, key) => {
-      const keys = ['nodeId', 'node_id'];
+      const keys = ['nodeId', 'node_id', 'backendNodeId'];
       if (typeof val === 'number' && keys.includes(key)) {
         nodeIds.push(val);
       }
     }, new Set());
 
-    // TODO: would be better if unsizedImages was `Array<{nodeId}>`.
+    // TODO: handle digging into Map in recursiveObjectEnumerate.
     for (const shift of insightSet.model.CLSCulprits.shifts.values()) {
-      nodeIds.push(...shift.unsizedImages);
+      nodeIds.push(...shift.unsizedImages.map(s => s.backendNodeId));
     }
 
     return [...new Set(nodeIds)].map(id => ({nodeId: id}));

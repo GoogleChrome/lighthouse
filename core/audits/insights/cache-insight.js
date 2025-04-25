@@ -41,20 +41,19 @@ class CacheInsight extends Audit {
         /* eslint-disable max-len */
         {key: 'url', valueType: 'url', label: str_(UIStrings.requestColumn)},
         {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(UIStrings.cacheTTL), displayUnit: 'duration'},
-        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
+        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
         /* eslint-enable max-len */
       ];
-      // TODO: this should be sorting in the model.
-      const values = insight.requests.sort((a, b) =>
-        b.request.args.data.decodedBodyLength - a.request.args.data.decodedBodyLength);
+      // TODO: this should be the sorting in the model (instead it sorts by transfer size...)
+      const values = insight.requests.sort((a, b) => b.wastedBytes - a.wastedBytes);
       /** @type {LH.Audit.Details.Table['items']} */
       const items = values.map(value => ({
         url: value.request.args.data.url,
         cacheLifetimeMs: value.ttl * 1000,
-        totalBytes: value.request.args.data.encodedDataLength,
+        wastedBytes: value.wastedBytes,
       }));
       return Audit.makeTableDetails(headings, items, {
-        sortedBy: ['totalBytes'],
+        sortedBy: ['wastedBytes'],
         skipSumming: ['cacheLifetimeMs'],
       });
     });
