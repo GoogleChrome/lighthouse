@@ -237,7 +237,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const feedbackLink = this.dom.createElement('a');
     feedbackLink.innerText = 'your feedback';
-    feedbackLink.href = 'TODO';
+    feedbackLink.href = 'https://github.com/GoogleChrome/lighthouse/discussions/16462';
     const textParts = [
       this.dom.createTextNode('Later this year insights will replace audits. Let us know '),
       feedbackLink,
