@@ -197,6 +197,7 @@ describe('Navigation', function() {
       'server-response-time',
       'render-blocking-resources',
       'render-blocking-insight',
+      'document-latency-insight',
       'max-potential-fid',
     ];
 
