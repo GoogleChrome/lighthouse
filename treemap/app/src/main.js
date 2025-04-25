@@ -20,8 +20,7 @@ import {DOM} from '../../../report/renderer/dom.js';
 
 const dom = new DOM(document, document.documentElement);
 
-const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
-const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
+const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024 * 0.5;
 
 const logEl = document.querySelector('div#lh-log');
 if (!logEl) {
@@ -47,6 +46,13 @@ class TreemapViewer {
       throw new Error('missing script-treemap-data');
     }
 
+    // Since ~Apr 2025, script-treemap-data contains transfer size data. If present,
+    // the app displays all byte sizes in terms of transfer size. Otherwise, resource
+    // size is used.
+    this.showTransferSize = scriptTreemapData.nodes.every(node => node.encodedBytes !== undefined);
+    /** @type {'encodedBytes'|'resourceBytes'} */
+    this.defaultPartitionBy = this.showTransferSize ? 'encodedBytes' : 'resourceBytes';
+
     /** @type {{[group: string]: LH.Treemap.Node[]}} */
     this.depthOneNodesByGroup = {
       scripts: scriptTreemapData.nodes,
@@ -67,6 +73,14 @@ class TreemapViewer {
 
     /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
     this.nodeToPathMap = new WeakMap();
+
+    /**
+     * Used to store the size and unused bytes of each node, multiplied by
+     * compression ratio depending on the state of `this.showTransferSize`.
+     * Used to avoid mutating the input data.
+     * @type {WeakMap<LH.Treemap.Node, {size: number, resourceBytes: number, encodedBytes?: number, unusedBytes?: number}>}
+     */
+    this.nodeToSizesMap = new WeakMap();
 
     // Priority breakdown:
     // 1) `mainDocumentUrl`: This is what we want post-10.0 for navigation reports.
@@ -125,8 +139,12 @@ class TreemapViewer {
     this.toggleTable(window.innerWidth >= 600);
     this.initListeners();
     this.setSelector({type: 'group', value: 'scripts'});
-    dom.find('.lh-header--url-bytes').textContent =
-      TreemapUtil.i18n.formatBytesWithBestUnit(this.currentTreemapRoot.resourceBytes);
+    const rootBytesEl = dom.find('span.lh-header--url-bytes');
+    rootBytesEl.textContent =
+      TreemapUtil.i18n.formatBytesWithBestUnit(this.getNodeSizes(this.currentTreemapRoot).size);
+    rootBytesEl.title = this.showTransferSize ?
+      TreemapUtil.strings.transferBytesLabel :
+      TreemapUtil.strings.resourceBytesLabel;
     this.render();
   }
 
@@ -284,23 +302,28 @@ class TreemapViewer {
     return {
       name: this.documentUrl.toString(),
       resourceBytes: children.reduce((acc, cur) => cur.resourceBytes + acc, 0),
+      encodedBytes: children.reduce((acc, cur) => (cur.encodedBytes ?? 0) + acc, 0),
       unusedBytes: children.reduce((acc, cur) => (cur.unusedBytes || 0) + acc, 0),
       children,
     };
   }
 
   createViewModes() {
+    const rootSize = this.getNodeSizes(this.currentTreemapRoot).size;
+    const app = this;
+
     /**
      * @param {LH.Treemap.Node} root
      * @return {LH.Treemap.ViewMode|undefined}
      */
     function createUnusedBytesViewMode(root) {
-      if (root.unusedBytes === undefined) return;
+      const sizes = app.getNodeSizes(root);
+      if (sizes.unusedBytes === undefined) return;
 
       return {
         id: 'unused-bytes',
         label: TreemapUtil.strings.unusedBytesLabel,
-        subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(root.unusedBytes),
+        subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(sizes.unusedBytes),
         enabled: true,
       };
     }
@@ -333,7 +356,7 @@ class TreemapViewer {
 
         const bytes = [];
         for (const {node} of nodesWithSameModuleName) {
-          bytes.push(node.resourceBytes);
+          bytes.push(this.getNodeSizes(node).size);
         }
 
         // Sum all but the largest copy.
@@ -353,9 +376,6 @@ class TreemapViewer {
 
       let enabled = true;
       if (highlights.length === 0) enabled = false;
-      if (potentialByteSavings / root.resourceBytes < DUPLICATED_MODULES_IGNORE_ROOT_RATIO) {
-        enabled = false;
-      }
 
       return {
         id: 'duplicate-modules',
@@ -373,8 +393,7 @@ class TreemapViewer {
     viewModes.push({
       id: 'all',
       label: TreemapUtil.strings.allLabel,
-      subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(
-        this.currentTreemapRoot.resourceBytes),
+      subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(rootSize),
       enabled: true,
     });
 
@@ -443,6 +462,8 @@ class TreemapViewer {
       TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
       this.updateViewModeSelector();
 
+      // Setup the partitioning.
+      const partitionBy = this.currentViewMode.partitionBy ?? this.defaultPartitionBy;
       TreemapUtil.walk(this.currentTreemapRoot, node => {
         // webtreemap will store `dom` on the data to speed up operations.
         // However, when we change the underlying data representation, we need to delete
@@ -450,8 +471,16 @@ class TreemapViewer {
         // for example, switching between "All JavaScript" and a specific bundle.
         delete node.dom;
 
-        // @ts-ignore: webtreemap uses `size` to partition the treemap.
-        node.size = node[this.currentViewMode.partitionBy || 'resourceBytes'] || 0;
+        const sizes = this.getNodeSizes(node);
+        let size = 0;
+        if (partitionBy === 'encodedBytes' || partitionBy === 'resourceBytes') {
+          size = sizes.size;
+        } else {
+          size = node[partitionBy] ?? 0;
+        }
+
+        // @ts-expect-error: webtreemap uses `size` to partition the treemap.
+        node.size = size;
       });
       webtreemap.sort(this.currentTreemapRoot);
 
@@ -497,7 +526,7 @@ class TreemapViewer {
     const tableEl = dom.find('.lh-table');
     tableEl.textContent = '';
 
-    /** @type {Array<{node: NodeWithElement, name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
+    /** @type {Array<{node: NodeWithElement, name: string, bundleNode?: LH.Treemap.Node, size: number, unusedBytes?: number}>} */
     const data = [];
     TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
       if (node.children) return;
@@ -519,12 +548,13 @@ class TreemapViewer {
         }
       }
 
+      const sizes = this.getNodeSizes(node);
       data.push({
         node,
         name,
         bundleNode,
-        resourceBytes: node.resourceBytes,
-        unusedBytes: node.unusedBytes,
+        size: sizes.size,
+        unusedBytes: sizes.unusedBytes,
       });
     });
 
@@ -540,13 +570,13 @@ class TreemapViewer {
     const makeCoverageTooltip = (row) => {
       if (!row.unusedBytes) return '';
 
-      const percent = row.unusedBytes / row.resourceBytes;
+      const percent = row.unusedBytes / row.size;
       return `${TreemapUtil.i18n.formatPercent(percent)} bytes unused`;
     };
 
     let cachedMaxSize = 0;
 
-    const sortByKey = this.currentViewMode.id === 'unused-bytes' ? 'unusedBytes' : 'resourceBytes';
+    const sortByKey = this.currentViewMode.id === 'unused-bytes' ? 'unusedBytes' : 'size';
     data.sort((a, b) => {
       return (b[sortByKey] ?? 0) - (a[sortByKey] ?? 0);
     });
@@ -554,7 +584,9 @@ class TreemapViewer {
     const headerEl = dom.createChildOf(tableEl, 'div', 'lh-table-header');
     dom.createChildOf(headerEl, 'div').textContent = TreemapUtil.strings.tableColumnName;
 
-    let bytesColumnLabel = TreemapUtil.strings.resourceBytesLabel;
+    let bytesColumnLabel = this.showTransferSize ?
+      TreemapUtil.strings.transferBytesLabel :
+      TreemapUtil.strings.resourceBytesLabel;
     if (this.currentViewMode.id === 'unused-bytes') {
       bytesColumnLabel = TreemapUtil.strings.unusedBytesLabel;
     } else if (this.currentViewMode.id === 'duplicate-modules') {
@@ -578,9 +610,9 @@ class TreemapViewer {
 
       for (const [dupeName, rows] of dataByDupeModule) {
         const duplicateBytes = rows
-          .sort((a, b) => b.resourceBytes - a.resourceBytes)
+          .sort((a, b) => b.size - a.size)
           .slice(1)
-          .reduce((acc, cur) => acc + cur.resourceBytes, 0);
+          .reduce((acc, cur) => acc + cur.size, 0);
 
         const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row');
 
@@ -602,8 +634,8 @@ class TreemapViewer {
           if (row === rows[0]) {
             cell2.textContent = '--';
           } else {
-            cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(row.resourceBytes);
-            cell2.title = TreemapUtil.i18n.formatBytes(row.resourceBytes);
+            cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(row.size);
+            cell2.title = TreemapUtil.i18n.formatBytes(row.size);
           }
         }
 
@@ -623,18 +655,18 @@ class TreemapViewer {
 
       const bytes = this.currentViewMode.id === 'unused-bytes' ?
         row.unusedBytes ?? 0 :
-        row.resourceBytes;
+        row.size;
       const cell2 = dom.createChildOf(rowEl, 'div');
       cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(bytes);
       cell2.title = TreemapUtil.i18n.formatBytes(bytes);
 
       if (this.currentViewMode.id === 'unused-bytes') {
-        cachedMaxSize = cachedMaxSize || Math.max(...data.map(node => node.resourceBytes));
+        cachedMaxSize = cachedMaxSize || Math.max(...data.map(node => node.size));
 
         const el = dom.createChildOf(tableEl, 'div', 'lh-coverage-bar');
         el.title = makeCoverageTooltip(row);
         el.style.setProperty('--max', String(cachedMaxSize));
-        el.style.setProperty('--used', String(row.resourceBytes - bytes));
+        el.style.setProperty('--used', String(row.size - bytes));
         el.style.setProperty('--unused', String(row.unusedBytes));
 
         dom.createChildOf(el, 'div', 'lh-coverage-bar--used');
@@ -667,13 +699,15 @@ class TreemapViewer {
    * @param {LH.Treemap.Node} node
    */
   makeCaption(node) {
-    const partitionBy = this.currentViewMode.partitionBy || 'resourceBytes';
+    const partitionBy = this.currentViewMode.partitionBy || this.defaultPartitionBy;
     const partitionByStr = {
       resourceBytes: TreemapUtil.strings.resourceBytesLabel,
+      encodedBytes: TreemapUtil.strings.transferBytesLabel,
       unusedBytes: TreemapUtil.strings.unusedBytesLabel,
     }[partitionBy];
-    const bytes = node[partitionBy];
-    const total = this.currentTreemapRoot[partitionBy];
+
+    const bytes = this.getNodeSizes(node)[partitionBy];
+    const total = this.getNodeSizes(this.currentTreemapRoot)[partitionBy];
 
     const parts = [
       TreemapUtil.elide(node.name || '', 60),
@@ -742,6 +776,74 @@ class TreemapViewer {
         node.dom.style.setProperty('--pctUnused', `${pctUnused}%`);
       }
     });
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   */
+  getNodeCompressionRatio(node) {
+    if (node.encodedBytes) {
+      return node.encodedBytes / node.resourceBytes;
+    }
+
+    const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
+    if (depthOneNode?.encodedBytes) {
+      return depthOneNode.encodedBytes / depthOneNode.resourceBytes;
+    }
+
+    return 1;
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   * @param {number} compressionRatio
+   */
+  getNodeDisplaySize(node, compressionRatio) {
+    if (!this.showTransferSize) {
+      return node.resourceBytes;
+    }
+
+    if (node.encodedBytes !== undefined) {
+      return node.encodedBytes;
+    }
+
+    return node.resourceBytes * compressionRatio;
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   * @param {number} compressionRatio
+   */
+  getNodeUnusedBytes(node, compressionRatio) {
+    if (node.unusedBytes === undefined) {
+      return;
+    }
+
+    if (!this.showTransferSize) {
+      return node.unusedBytes;
+    }
+
+    return node.unusedBytes * compressionRatio;
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   */
+  getNodeSizes(node) {
+    let sizes = this.nodeToSizesMap.get(node);
+
+    if (!sizes) {
+      const compressionRatio = this.getNodeCompressionRatio(node);
+      sizes = {
+        size: this.getNodeDisplaySize(node, compressionRatio) ?? 0,
+        resourceBytes: node.resourceBytes,
+        encodedBytes: node.encodedBytes,
+        unusedBytes: this.getNodeUnusedBytes(node, compressionRatio),
+      };
+      this.nodeToSizesMap.set(node, sizes);
+    }
+
+    return sizes;
   }
 }
 

@@ -24,7 +24,7 @@ const ScriptTreemapData = {
  * @param {LH.Crdp.Network.ResourceType} resourceType
  */
 function generateRecord(url, resourceSize, resourceType) {
-  return {url, resourceSize, resourceType};
+  return {url, resourceSize, transferSize: resourceSize * 0.6, resourceType};
 }
 
 describe('ScriptTreemapData audit', () => {
@@ -65,26 +65,28 @@ describe('ScriptTreemapData audit', () => {
 
     it('has nodes', () => {
       expect(treemapData.nodes.find((s) => s.name === 'https://sqoosh.app/no-map-or-usage.js')).
-        toMatchInlineSnapshot(`
-        Object {
-          "name": "https://sqoosh.app/no-map-or-usage.js",
-          "resourceBytes": 5,
-          "unusedBytes": undefined,
-        }
-      `);
+toMatchInlineSnapshot(`
+Object {
+  "encodedBytes": 3,
+  "name": "https://sqoosh.app/no-map-or-usage.js",
+  "resourceBytes": 5,
+  "unusedBytes": undefined,
+}
+`);
 
       const bundleNode = treemapData.nodes.find(s => s.name === 'https://squoosh.app/main-app.js');
       // @ts-expect-error
       const unmapped = bundleNode.children.find(m => m.name === '(unmapped)');
       expect(unmapped).toMatchInlineSnapshot(`
-        Object {
-          "name": "(unmapped)",
-          "resourceBytes": 10061,
-          "unusedBytes": 3760,
-        }
-      `);
+Object {
+  "encodedBytes": undefined,
+  "name": "(unmapped)",
+  "resourceBytes": 10061,
+  "unusedBytes": 3760,
+}
+`);
 
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6673`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6724`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
   });
@@ -127,12 +129,12 @@ describe('ScriptTreemapData audit', () => {
     });
 
     it('has nodes', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73749`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73797`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
 
     it('finds duplicates', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73749`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73797`);
       // @ts-ignore all these children exist.
       const leafNode = treemapData.nodes[0].
         children[0].
