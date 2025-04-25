@@ -481,6 +481,13 @@ const UIStrings = {
   openInANewTabTooltip: 'Open in a new tab',
   /** Generic category name for all resources that could not be attributed to a 1st or 3rd party entity. */
   unattributable: 'Unattributable',
+
+  /** Notice about upcoming planned changes to Lighthouse, to replace most performance audits with a new set of "insight" audits. */
+  insightsNotice: 'Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462).',
+  /** Text for a button to try out "Performance insight audits", a new set of performance advice that will replace performance audits. */
+  tryInsights: 'Try insights',
+  /** Text for a button for going back to normal "Performance audits", instead of using the new set of performance insight audits that will replace performance audits. */
+  goBackToAudits: 'Go back to audits',
 };
 
 export {
