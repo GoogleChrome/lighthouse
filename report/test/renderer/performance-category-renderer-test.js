@@ -38,6 +38,7 @@ describe('PerfCategoryRenderer', () => {
     const window = new jsdom.JSDOM().window;
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
+    global.CustomEvent = window.CustomEvent;
 
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
