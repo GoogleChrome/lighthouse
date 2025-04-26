@@ -299,7 +299,7 @@ export class LighthouseReportViewer {
     }
 
     if (window.gtag) {
-      window.gtag('event', 'report', {type: 'view'});
+      window.gtag('event', 'view');
     }
   }
 

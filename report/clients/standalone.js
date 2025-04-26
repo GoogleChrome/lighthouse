@@ -31,7 +31,7 @@ function __initLighthouseReport__() {
 
     if ('gtag' in window) {
       // @ts-expect-error
-      window.gtag('custom_event', ce.detail.name, ce.detail.data ?? {});
+      window.gtag('event', ce.detail.name, ce.detail.data ?? {});
     }
   });
 
