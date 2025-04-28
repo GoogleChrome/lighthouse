@@ -1,3 +1,70 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Jack Franklin @jackfranklin
+Rob Kodey @rkodey
+Clément Barbaza @cba85
+ <a name="12.6.0"></a>
+# 12.6.0 (2025-04-28)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.1...v12.6.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* disable invalidationTracking trace event to prevent crash ([#16451](https://github.com/GoogleChrome/lighthouse/pull/16451))
+* migrate audits from devtoolsLogs/traces to DevtoolsLog/Trace ([#16448](https://github.com/GoogleChrome/lighthouse/pull/16448))
+* modify scoreDisplayMode for insight audits to match Perf panel ([#16432](https://github.com/GoogleChrome/lighthouse/pull/16432))
+* use `with` import attributes for legacy-javascript, bump to node 18.20 ([#16415](https://github.com/GoogleChrome/lighthouse/pull/16415))
+* image-size-responsive: use real mimeType to exclude svg ([#16443](https://github.com/GoogleChrome/lighthouse/pull/16443))
+* insights: drop slow-css-selector-insight for now ([#16457](https://github.com/GoogleChrome/lighthouse/pull/16457))
+* insights: implement `duplicated-javascript-insight` ([#16456](https://github.com/GoogleChrome/lighthouse/pull/16456))
+* insights: add prominent toggle banner to report ([#16461](https://github.com/GoogleChrome/lighthouse/pull/16461))
+* insights: implement `network-dependency-tree` insight ([#16407](https://github.com/GoogleChrome/lighthouse/pull/16407))
+* optimized-images: ignore internal encoding errors ([#16444](https://github.com/GoogleChrome/lighthouse/pull/16444))
+* preload-fonts: add Stylesheets to required artifacts ([#16421](https://github.com/GoogleChrome/lighthouse/pull/16421))
+* stacks: correctly identify angular ([#16439](https://github.com/GoogleChrome/lighthouse/pull/16439))
+* third-party-cookies: update description ([#16464](https://github.com/GoogleChrome/lighthouse/pull/16464))
+* tracehouse: fixup parent tasks when fudging endTime ([#16420](https://github.com/GoogleChrome/lighthouse/pull/16420))
+
+## Report
+
+* add analytics hook for insights state ([#16466](https://github.com/GoogleChrome/lighthouse/pull/16466))
+* adjust insights notice banner, localize strings ([#16463](https://github.com/GoogleChrome/lighthouse/pull/16463))
+* add insights group description ([#16455](https://github.com/GoogleChrome/lighthouse/pull/16455))
+* associate insight audits with stack packs ([#16440](https://github.com/GoogleChrome/lighthouse/pull/16440))
+* tweak style of insight tables; use system font ([#16434](https://github.com/GoogleChrome/lighthouse/pull/16434))
+* support node inside list detail, use in insight audits ([#16433](https://github.com/GoogleChrome/lighthouse/pull/16433))
+* display insights when using toggle, even if hidden ([#16431](https://github.com/GoogleChrome/lighthouse/pull/16431))
+
+## Deps
+
+* upgrade trace_engine to 0.0.52 ([#16465](https://github.com/GoogleChrome/lighthouse/pull/16465))
+* upgrade trace_engine to 0.0.51 ([#16447](https://github.com/GoogleChrome/lighthouse/pull/16447))
+* upgrade deps ([#16438](https://github.com/GoogleChrome/lighthouse/pull/16438))
+* upgrade typescript to 5.8.2 ([#16414](https://github.com/GoogleChrome/lighthouse/pull/16414))
+
+## Docs
+
+* fix "standalone-template.html" broken link in report README ([#16429](https://github.com/GoogleChrome/lighthouse/pull/16429))
+
+## Tests
+
+* disable oopif-scripts smoke for devtools runner ([#16446](https://github.com/GoogleChrome/lighthouse/pull/16446))
+
+## Misc
+
+* prepare core/lib/legacy-javascript to be published to npm ([#16416](https://github.com/GoogleChrome/lighthouse/pull/16416))
+* treemap: represent sizes using transfer size ([#16460](https://github.com/GoogleChrome/lighthouse/pull/16460))
+* treemap: parse options properly from hash params ([#16459](https://github.com/GoogleChrome/lighthouse/pull/16459))
+* treemap: update coerceOptions to grab initialView ([#16458](https://github.com/GoogleChrome/lighthouse/pull/16458))
+* treemap: move table to right, remove Tabulator ([#16428](https://github.com/GoogleChrome/lighthouse/pull/16428))
+* treemap: set initial view mode from options ([#16427](https://github.com/GoogleChrome/lighthouse/pull/16427))
+* treemap: vary colors within bundle, update fonts ([#16403](https://github.com/GoogleChrome/lighthouse/pull/16403))
+
 <a name="12.5.1"></a>
 # 12.5.1 (2025-03-26)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.0...v12.5.1)
