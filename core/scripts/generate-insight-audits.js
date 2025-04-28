@@ -155,13 +155,3 @@ allAuditIds.sort();
 
   fs.writeFileSync(experimentalConfigPath, experimentalConfigText);
 }
-
-{
-  const devtoolsEntryPath = `${LH_ROOT}/clients/devtools/devtools-entry.js`;
-  let devtoolsEntryText = fs.readFileSync(devtoolsEntryPath, 'utf-8');
-
-  const auditRefListCode = allAuditIds.map(id => `  '${id}',`).join('\n');
-  devtoolsEntryText = insert(devtoolsEntryText, 'insightAuditIds = [\n', '\n]', auditRefListCode);
-
-  fs.writeFileSync(devtoolsEntryPath, devtoolsEntryText);
-}
