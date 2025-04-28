@@ -124,7 +124,7 @@ class TreemapViewer {
     this.viewModes;
     /** @type {RenderState=} */
     this.previousRenderState;
-    /** @type {WeakMap<HTMLElement, NodeWithElement>} */
+    /** @type {WeakMap<HTMLElement, NodeWithElement|NodeWithElement[]>} */
     this.tableRowToNodeMap = new WeakMap();
     /** @type {WebTreeMap} */
     this.treemap;
@@ -270,16 +270,20 @@ class TreemapViewer {
       const el = target.closest('.lh-table-row');
       if (!(el instanceof HTMLElement)) return;
 
-      const node = this.tableRowToNodeMap.get(el);
-      if (!node || !node.dom) return;
+      const nodes = this.tableRowToNodeMap.get(el);
+      if (!nodes) return;
 
-      // TODO: make this bi-directional.
-      node.dom.classList.add('webtreemap-node--hover');
-      el.addEventListener('mouseout', () => {
-        for (const hoverEl of treemapEl.querySelectorAll('.webtreemap-node--hover')) {
-          hoverEl.classList.remove('webtreemap-node--hover');
-        }
-      }, {once: true});
+      for (const node of Array.isArray(nodes) ? nodes : [nodes]) {
+        if (!node.dom) continue;
+
+        // TODO: make this bi-directional.
+        node.dom.classList.add('webtreemap-node--hover');
+        el.addEventListener('mouseout', () => {
+          for (const hoverEl of treemapEl.querySelectorAll('.webtreemap-node--hover')) {
+            hoverEl.classList.remove('webtreemap-node--hover');
+          }
+        }, {once: true});
+      }
     }, options);
 
     const toggleTableBtn = dom.find('.lh-button--toggle-table');
@@ -638,6 +642,8 @@ class TreemapViewer {
             cell2.title = TreemapUtil.i18n.formatBytes(row.size);
           }
         }
+
+        this.tableRowToNodeMap.set(rowEl, rows.map(row => row.node));
 
         dom.createChildOf(tableEl, 'div', 'lh-table-separator');
       }
