@@ -1,16 +1,20 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Jack Franklin @jackfranklin
-Rob Kodey @rkodey
-Clément Barbaza @cba85
- <a name="12.6.0"></a>
+<a name="12.6.0"></a>
 # 12.6.0 (2025-04-28)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.1...v12.6.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 137](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a few days.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+Jack Franklin @jackfranklin
+Rob Kodey @rkodey
+Clément Barbaza @cba85
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
+
+The Performance category in the Lighthouse report now has an option to toggle "insights" - read more [here](https://github.com/GoogleChrome/lighthouse/discussions/16462).
 
 
 ## Core
