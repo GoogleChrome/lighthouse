@@ -40,7 +40,14 @@ class DocumentLatencyInsight extends Audit {
         return;
       }
 
-      return Audit.makeChecklistDetails(insight.data.checklist);
+      const details = Audit.makeChecklistDetails(insight.data.checklist);
+      details.debugData = {
+        type: 'debugdata',
+        redirectDuration: insight.data.redirectDuration,
+        serverResponseTime: insight.data.serverResponseTime,
+        uncompressedResponseBytes: insight.data.uncompressedResponseBytes,
+      };
+      return details;
     });
   }
 }

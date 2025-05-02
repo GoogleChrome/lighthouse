@@ -75,6 +75,13 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
+  if (insight.wastedBytes !== undefined) {
+    if (!details.debugData) {
+      details.debugData = {type: 'debugdata'};
+    }
+    details.debugData.wastedBytes = insight.wastedBytes;
+  }
+
   // This hack is to add metric adorners if an insight category links it to a metric,
   // but doesn't output a metric savings for that metric.
   let metricSavings = insight.metricSavings;

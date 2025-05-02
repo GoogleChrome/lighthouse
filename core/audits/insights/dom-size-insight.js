@@ -77,7 +77,15 @@ class DOMSizeInsight extends Audit {
           },
         },
       ];
-      return Audit.makeTableDetails(headings, items);
+
+      const details = Audit.makeTableDetails(headings, items);
+      details.debugData = {
+        type: 'debugdata',
+        totalElements,
+        maxChildren: maxChildren.numChildren,
+        maxDepth: maxDepth.depth,
+      };
+      return details;
     });
   }
 }
