@@ -52,6 +52,8 @@ class TreemapViewer {
     this.showTransferSize = scriptTreemapData.nodes.every(node => node.encodedBytes !== undefined);
     /** @type {'encodedBytes'|'resourceBytes'} */
     this.defaultPartitionBy = this.showTransferSize ? 'encodedBytes' : 'resourceBytes';
+    // DevTools RPP doesn't have unused bytes in the info it sends.
+    this.showUnusedBytes = scriptTreemapData.nodes.some(node => node.unusedBytes !== undefined);
 
     /** @type {{[group: string]: LH.Treemap.Node[]}} */
     this.depthOneNodesByGroup = {
@@ -321,6 +323,8 @@ class TreemapViewer {
      * @return {LH.Treemap.ViewMode|undefined}
      */
     function createUnusedBytesViewMode(root) {
+      if (!app.showUnusedBytes) return;
+
       const sizes = app.getNodeSizes(root);
       if (sizes.unusedBytes === undefined) return;
 
