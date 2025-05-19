@@ -11,7 +11,7 @@ const acceptableTrace = readJson('../fixtures/artifacts/paul/trace.json', import
 const acceptableDevToolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Performance: predictive performance audit', () => {
-  // TODO(15841): investigate failures
+  // TODO(15841): investigate failures. A "Preflight" request exists in devtools log, but not in trace.
   if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
     return;
   }

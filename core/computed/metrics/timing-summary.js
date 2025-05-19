@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
 import {ProcessedTrace} from '../processed-trace.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {Speedline} from '../speedline.js';
@@ -43,7 +45,10 @@ class TimingSummary {
      * @return {Promise<TReturn|undefined>}
      */
     const requestOrUndefined = (Artifact, artifact) => {
-      return Artifact.request(artifact, context).catch(_ => undefined);
+      return Artifact.request(artifact, context).catch(err => {
+        log.error('lh:computed:TimingSummary', err);
+        return undefined;
+      });
     };
 
     /* eslint-disable max-len */

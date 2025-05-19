@@ -15,8 +15,8 @@ const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', im
 const pwaDevtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const lcpTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
 const lcpDevtoolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
-const lcpImageTrace = readJson('../fixtures/traces/amp-m86.trace.json', import.meta);
-const lcpImageDevtoolsLog = readJson('../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
+const lcpImageTrace = readJson('../fixtures/artifacts/paul/trace.json', import.meta);
+const lcpImageDevtoolsLog = readJson('../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 const lcpAllFramesTrace = readJson('../fixtures/traces/frame-metrics-m89.json', import.meta);
 const lcpAllFramesDevtoolsLog = readJson('../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
 const clsAllFramesTrace = readJson('../fixtures/traces/frame-metrics-m90.json', import.meta);
@@ -27,11 +27,6 @@ const jumpyClsDevtoolsLog = readJson('../fixtures/traces/jumpy-cls-m90.devtoolsl
 const settings = JSON.parse(JSON.stringify(defaultSettings));
 
 describe('Performance: metrics', () => {
-  // TODO(15841): investigate failures
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   it('evaluates valid input correctly', async () => {
     const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);
     const artifacts = {
@@ -69,6 +64,11 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with lcp) correctly', async () => {
+    // TODO(15841): investigate failures. "interactive" is different.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
     const artifacts = {
       URL,
@@ -105,6 +105,11 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with image lcp) correctly', async () => {
+    // TODO(15841): investigate failures. "interactive" is different.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const URL = getURLArtifactFromDevtoolsLog(lcpImageDevtoolsLog);
     const artifacts = {
       URL,

@@ -36,6 +36,10 @@ class PageDependencyGraph {
       return graph;
     }
 
+    // TODO: currently the trace version has no requests that failed, or requests that have "Preflight".
+    //       so the following gets the devtools log version _closer_ to the exact same results as the trace.
+    // const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest).filter(r => !r.failed && r.resourceType !== 'Preflight');
+
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
     return Lantern.Graph.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }

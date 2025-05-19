@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import PageExecutionTimings from '../../audits/mainthread-work-breakdown.js';
+import MainThreadWorkBreakdown from '../../audits/mainthread-work-breakdown.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {defaultSettings} from '../../config/constants.js';
@@ -20,7 +20,7 @@ const loadTraceOld = readJson('../fixtures/traces/load.json', import.meta);
 const loadTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
 const loadDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 
-const options = PageExecutionTimings.defaultOptions;
+const options = MainThreadWorkBreakdown.defaultOptions;
 
 const acceptableTraceExpectations = {
   garbageCollection: 64,
@@ -63,7 +63,7 @@ describe('Performance: page execution timings audit', () => {
       SourceMaps: [],
     };
 
-    const output = await PageExecutionTimings.audit(artifacts, context);
+    const output = await MainThreadWorkBreakdown.audit(artifacts, context);
     assert.deepStrictEqual(keyOutput(output), acceptableTraceExpectations);
     assert.equal(Math.round(output.numericValue), 5052);
     assert.equal(output.details.items.length, 7);
@@ -82,7 +82,7 @@ describe('Performance: page execution timings audit', () => {
 
     context.settings.throttlingMethod = 'simulate';
     context.settings.throttling.cpuSlowdownMultiplier = 3;
-    const output = await PageExecutionTimings.audit(artifacts, context);
+    const output = await MainThreadWorkBreakdown.audit(artifacts, context);
 
     const keyedOutput = keyOutput(output);
     for (const key of Object.keys(acceptableTraceExpectations)) {
@@ -94,8 +94,8 @@ describe('Performance: page execution timings audit', () => {
     assert.equal(Math.round(output.numericValue), 15157);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0);
-    // TODO(15841): investigate difference
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      // TODO(15841): difference is b/c TE is filtering out failed requests. Fix upstream.
       expect(output.metricSavings.TBT).toBeCloseTo(1714.5, 0.1);
     } else {
       expect(output.metricSavings.TBT).toBeCloseTo(1710.5, 0.1);
@@ -113,7 +113,7 @@ describe('Performance: page execution timings audit', () => {
 
     context.settings.throttlingMethod = 'provided';
 
-    const output = await PageExecutionTimings.audit(artifacts, context);
+    const output = await MainThreadWorkBreakdown.audit(artifacts, context);
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
   "garbageCollection": 11,
@@ -146,7 +146,7 @@ Object {
       },
     };
 
-    const output = await PageExecutionTimings.audit(artifacts, context);
+    const output = await MainThreadWorkBreakdown.audit(artifacts, context);
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
   "garbageCollection": 3,
@@ -173,7 +173,7 @@ Object {
 
     context.settings.throttlingMethod = 'simulate';
 
-    const output = await PageExecutionTimings.audit(artifacts, context);
+    const output = await MainThreadWorkBreakdown.audit(artifacts, context);
     expect(keyOutput(output)).toMatchInlineSnapshot(`
 Object {
   "other": 405,
@@ -205,7 +205,7 @@ Object {
       GatherContext: {gatherMode: 'navigation'},
     };
 
-    return PageExecutionTimings.audit(artifacts, context).then(output => {
+    return MainThreadWorkBreakdown.audit(artifacts, context).then(output => {
       assert.equal(output.details.items.length, 0);
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.numericValue), 0);
