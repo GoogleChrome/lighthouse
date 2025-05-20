@@ -71,7 +71,7 @@ class Doctype extends Audit {
 
     /** @type {LH.Crdp.Audits.QuirksModeIssueDetails[]} */
     let quirksModeIssues = [];
-    if (trace && artifacts.InspectorIssues) {
+    if (trace && artifacts.InspectorIssues?.quirksModeIssue) {
       const processedTrace = await ProcessedTrace.request(trace, context);
       const mainFrameId = processedTrace.mainFrameInfo.frameId;
       quirksModeIssues =
