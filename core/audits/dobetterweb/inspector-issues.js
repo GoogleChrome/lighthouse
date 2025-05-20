@@ -160,24 +160,24 @@ class IssuesPanelEntries extends Audit {
     /** @type LH.Audit.Details.TableItem[] */
     const items = [];
 
-    if (issues.mixedContentIssue.length) {
+    if (issues.mixedContentIssue?.length) {
       items.push(this.getMixedContentRow(issues.mixedContentIssue));
     }
-    if (issues.cookieIssue.length) {
+    if (issues.cookieIssue?.length) {
       items.push(this.getCookieRow(issues.cookieIssue));
     }
-    if (issues.blockedByResponseIssue.length) {
+    if (issues.blockedByResponseIssue?.length) {
       items.push(this.getBlockedByResponseRow(issues.blockedByResponseIssue));
     }
-    if (issues.heavyAdIssue.length) {
+    if (issues.heavyAdIssue?.length) {
       items.push({issueType: str_(UIStrings.issueTypeHeavyAds)});
     }
-    const cspIssues = issues.contentSecurityPolicyIssue.filter(issue => {
+    const cspIssues = issues.contentSecurityPolicyIssue?.filter(issue => {
       // kTrustedTypesSinkViolation and kTrustedTypesPolicyViolation aren't currently supported by the Issues panel
       return issue.contentSecurityPolicyViolationType !== 'kTrustedTypesSinkViolation' &&
         issue.contentSecurityPolicyViolationType !== 'kTrustedTypesPolicyViolation';
     });
-    if (cspIssues.length) {
+    if (cspIssues?.length) {
       items.push(this.getContentSecurityPolicyRow(cspIssues));
     }
     return {

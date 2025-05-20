@@ -523,32 +523,15 @@ declare module Artifacts {
     devicePixelRatio: number;
   }
 
-  interface InspectorIssues {
-    attributionReportingIssue: Crdp.Audits.AttributionReportingIssueDetails[];
-    blockedByResponseIssue: Crdp.Audits.BlockedByResponseIssueDetails[];
-    bounceTrackingIssue: Crdp.Audits.BounceTrackingIssueDetails[];
-    clientHintIssue: Crdp.Audits.ClientHintIssueDetails[];
-    contentSecurityPolicyIssue: Crdp.Audits.ContentSecurityPolicyIssueDetails[];
-    cookieDeprecationMetadataIssue: Crdp.Audits.CookieDeprecationMetadataIssueDetails[],
-    corsIssue: Crdp.Audits.CorsIssueDetails[];
-    deprecationIssue: Crdp.Audits.DeprecationIssueDetails[];
-    federatedAuthRequestIssue: Crdp.Audits.FederatedAuthRequestIssueDetails[],
-    genericIssue: Crdp.Audits.GenericIssueDetails[];
-    heavyAdIssue: Crdp.Audits.HeavyAdIssueDetails[];
-    lowTextContrastIssue: Crdp.Audits.LowTextContrastIssueDetails[];
-    mixedContentIssue: Crdp.Audits.MixedContentIssueDetails[];
-    navigatorUserAgentIssue: Crdp.Audits.NavigatorUserAgentIssueDetails[];
-    partitioningBlobURLIssue: Crdp.Audits.PartitioningBlobURLIssueDetails[];
-    propertyRuleIssue: Crdp.Audits.PropertyRuleIssueDetails[],
-    quirksModeIssue: Crdp.Audits.QuirksModeIssueDetails[];
-    cookieIssue: Crdp.Audits.CookieIssueDetails[];
-    selectElementAccessibilityIssue: Crdp.Audits.SelectElementAccessibilityIssueDetails[];
-    sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
-    sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
-    sriMessageSignatureIssue: Crdp.Audits.SRIMessageSignatureIssueDetails[];
-    stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
-    federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
-  }
+  type Replace<T extends string, S extends string, D extends string,
+    A extends string = ""> = T extends `${infer L}${S}${infer R}` ?
+    Replace<R, S, D, `${A}${L}${D}`> : `${A}${T}`;
+
+  export type InspectorIssuesKeyToArtifactKey<T extends string> = Replace<T, 'Details', ''>;
+
+  export type InspectorIssues = {
+    [x in keyof Crdp.Audits.InspectorIssueDetails as InspectorIssuesKeyToArtifactKey<x>]: Array<Exclude<Crdp.Audits.InspectorIssueDetails[x], undefined>>
+  };
 
   // Computed artifact types below.
   type CriticalRequestNode = {
