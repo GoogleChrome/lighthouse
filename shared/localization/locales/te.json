@@ -2171,6 +2171,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "రిసోర్స్ రిక్వెస్ట్‌లు వేటి URLలు అయితే, తీసివేయబడిన వైట్‌స్పేస్ \\(n|r|t) అక్షరాలను, (<) అక్షరాలు కంటే తక్కువ ఉన్న వాటి రెండింటి కలయికను కలిగి ఉన్నాయో, అవి బ్లాక్ చేయబడ్డాయి. ఈ రిసోర్స్‌లను లోడ్ చేయడానికి, దయచేసి ఎలిమెంట్ లక్షణం విలువలు వంటి స్థలాల నుండి కొత్తలైన్‌లను తీసివేయండి, అంత కంటే తక్కువ అక్షరాలను ఎన్‌కోడ్ చేయండి."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "ISO-2022-JP క్యారెక్టర్‌ల సెట్‌ను ఆటోమేటిక్‌గా గుర్తించే ఫీచర్ నిలిపివేయబడింది, సమీప భవిష్యత్తులో ఇది డిజేబుల్ అవుతుంది. దయచేసి కంటెంట్ రకం హెడర్‌లో లేదా మెటా ట్యాగ్ (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)‌ను ఉపయోగించి క్యారెక్టర్‌ల సెట్‌ను పేర్కొనండి."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() విస్మరించబడింది, బదులుగా ప్రామాణిక APIని ఉపయోగించండి: నావిగేషన్ సమయం 2."
   },
@@ -2411,20 +2414,11 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "మీ మొదటి నెట్‌వర్క్ రిక్వెస్ట్ చాలా ముఖ్యమైనది.  మళ్లింపు‌లను నివారించడం, సర్వర్ ప్రతిస్పందన వేగంగా ఉండేలా చూసుకోవడం, అలాగే టెక్స్ట్ కంప్రెషన్‌ను ఎనేబుల్ చేయడం ద్వారా దాని ల్యాగ్‌ను తగ్గించండి."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
-    "message": "డాక్యుమెంట్ మల్లింపు లింక్‌లను కలిగి ఉంది"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "సర్వర్ నెమ్మదిగా స్పందించింది"
-  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "కంప్రెషన్ ఏదీ వర్తించబడలేదు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "మళ్లింపులను నివారిస్తుంది"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "సర్వర్ త్వరగా స్పందిస్తుంది"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "టెక్స్ట్ కంప్రెషన్‌ను వర్తింపజేస్తుంది"
@@ -2465,6 +2459,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
     "message": "వృధా అయిన సమయం"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(అజ్ఞాతం)"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "సాధారణంగా లేఅవుట్ జామెట్రీని చదివే చాలా APIలు, స్టయిల్, లేఅవుట్‌ను కాలిక్యులేట్ చేయడానికి స్క్రిప్ట్ ఎగ్జిక్యూషన్‌ను పాజ్ చేయమని రెండరింగ్ ఇంజిన్‌ను ఫోర్స్ చేస్తాయి. [ఫోర్స్ చేయబడిన రీఫ్లో](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)‌ను, దాని ఉపశమనాల గురించి మరింత తెలుసుకోండి."
   },
@@ -2481,7 +2478,7 @@
     "message": "మొత్తం రీఫ్లోకు పట్టిన సమయం"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
-    "message": "ఆపాదించని"
+    "message": "[unattributed]"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "ఇమేజ్‌ల డౌన్‌లోడ్ సమయాన్ని తగ్గించడం ద్వారా పేజీ, LCP లోడ్ సమయాన్ని మెరుగుపరచవచ్చు. [ఇమేజ్ సైజ్‌ను ఆప్టిమైజ్ చేయడం గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"

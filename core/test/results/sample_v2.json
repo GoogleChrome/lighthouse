@@ -6061,7 +6061,7 @@
             "value": true
           },
           "serverResponseIsFast": {
-            "label": "Server responds quickly",
+            "label": "Server responds quickly (observed 568 ms) ",
             "value": true
           },
           "usesCompression": {
@@ -6199,7 +6199,7 @@
       "displayValue": "Est savings of 1,107 KiB",
       "metricSavings": {
         "FCP": 0,
-        "LCP": 2100
+        "LCP": 1950
       },
       "details": {
         "type": "table",
@@ -6448,7 +6448,7 @@
     "legacy-javascript-insight": {
       "id": "legacy-javascript-insight",
       "title": "Legacy JavaScript",
-      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
+      "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "guidanceLevel": 2
@@ -6567,7 +6567,7 @@
     "render-blocking-insight": {
       "id": "render-blocking-insight",
       "title": "Render blocking requests",
-      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
+      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
       "score": 0.5,
       "scoreDisplayMode": "metricSavings",
       "metricSavings": {
@@ -6634,7 +6634,7 @@
     "third-parties-insight": {
       "id": "third-parties-insight",
       "title": "3rd parties",
-      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) to prioritize your page's content.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "guidanceLevel": 3,
@@ -9136,13 +9136,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:parse:Warnings:finalize",
+        "name": "lh:computed:TraceEngineResult:parse:Workers:finalize",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:TraceEngineResult:parse:Workers:finalize",
+        "name": "lh:computed:TraceEngineResult:parse:Warnings:finalize",
         "duration": 100,
         "entryType": "measure"
       },
@@ -11763,7 +11763,12 @@
         "audits[document-latency-insight].details.items.noRedirects.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": [
-        "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+        {
+          "values": {
+            "PH1": "568 ms"
+          },
+          "path": "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+        }
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": [
         "audits[document-latency-insight].details.items.usesCompression.label"
