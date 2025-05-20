@@ -87,6 +87,7 @@ class InspectorIssues extends BaseGatherer {
       stylesheetLoadingIssue: [],
       sriMessageSignatureIssue: [],
       federatedAuthUserInfoRequestIssue: [],
+      userReidentificationIssue: [],
     };
 
     for (const issue of this._issues) {
