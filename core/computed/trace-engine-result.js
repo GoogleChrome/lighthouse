@@ -97,6 +97,9 @@ class TraceEngineResult {
         if (value && typeof value === 'object' && '__i18nBytes' in value) {
           values[key] = value.__i18nBytes;
           // TODO: use an actual byte formatter. Right now, this shows the exact number of bytes.
+        } else if (value && typeof value === 'object' && '__i18nMillis' in value) {
+          values[key] = `${value.__i18nMillis} ms`;
+          // TODO: use an actual time formatter.
         } else if (value && typeof value === 'object' && 'i18nId' in value) {
           // TODO: add support for str_ values to be IcuMessage. For now, we translate it here.
           // This means that locale swapping won't work for this portion of the IcuMessage.
@@ -172,6 +175,10 @@ class TraceEngineResult {
             // @ts-expect-error
             values[key] = value.__i18nBytes;
             // TODO: use an actual byte formatter. Right now, this shows the exact number of bytes.
+          } else if (value && typeof value === 'object' && '__i18nMillis' in value) {
+            // @ts-expect-error
+            values[key] = `${value.__i18nMillis} ms`;
+            // TODO: use an actual time formatter.
           } else if (value && typeof value === 'object' && 'i18nId' in value) {
             // TODO: add support for str_ values to be IcuMessage.
             // @ts-expect-error
