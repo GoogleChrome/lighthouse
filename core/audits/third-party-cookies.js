@@ -68,7 +68,7 @@ class ThirdPartyCookies extends Audit {
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const items = [];
-    for (const issue of artifacts.InspectorIssues.cookieIssue) {
+    for (const issue of artifacts.InspectorIssues.cookieIssue ?? []) {
       const isPhaseoutWarn = issue.cookieWarningReasons.includes('WarnThirdPartyPhaseout');
       const isPhaseoutExclude = issue.cookieExclusionReasons.includes('ExcludeThirdPartyPhaseout');
       if (!isPhaseoutWarn && !isPhaseoutExclude) continue;
