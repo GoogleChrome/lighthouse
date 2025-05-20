@@ -257,6 +257,7 @@ describe('getArtifact', () => {
       sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
+      userReidentificationIssue: [],
     });
   });
 
@@ -326,6 +327,7 @@ describe('getArtifact', () => {
       sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
+      userReidentificationIssue: [],
     });
   });
 });
