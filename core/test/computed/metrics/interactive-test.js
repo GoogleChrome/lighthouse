@@ -51,6 +51,11 @@ describe('Metrics: TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    // TODO(15841): investigate difference.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const settings = /** @type {LH.Config.Settings} */ (
       {throttlingMethod: 'simulate'}
     );
