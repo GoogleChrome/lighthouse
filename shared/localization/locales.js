@@ -35,6 +35,7 @@ import enXA from './locales/en-XA.json' with { type: 'json'};
 import enXL from './locales/en-XL.json' with { type: 'json'};
 import es from './locales/es.json' with { type: 'json'};
 import es419 from './locales/es-419.json' with { type: 'json'};
+import faIR from './locales/fa-IR.json' with { type: 'json'};
 import fi from './locales/fi.json' with { type: 'json'};
 import fil from './locales/fil.json' with { type: 'json'};
 import fr from './locales/fr.json' with { type: 'json'};
@@ -124,6 +125,7 @@ const locales = {
   'es-UY': es419,
   'es-VE': es419,
 
+  'fa-IR': faIR,
   'fi': fi,
   'fil': fil,
   'fr': fr, // fr-CH identical, so it falls back into fr
