@@ -41,6 +41,7 @@ async function buildSampleReports() {
     'english': lhr,
     'espanol': swapLocale(lhr, 'es').lhr,
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
+    'persian': swapLocale(lhr, 'fa-IR').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
     'single-category': tweakLhrForPsi(lhr),
