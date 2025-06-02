@@ -90,6 +90,10 @@ export class GithubApi {
    * @return {Promise<LH.Result>}
    */
   getGistFileContentAsJson(id) {
+    if (!/^[a-f0-9]{5,}$/.test(id)) {
+      throw new Error('Invalid gist ID format');
+    }
+
     logger.log('Fetching report from GitHub...', false);
 
     return this._auth.getAccessTokenIfLoggedIn().then(accessToken => {
