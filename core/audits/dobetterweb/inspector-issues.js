@@ -172,13 +172,8 @@ class IssuesPanelEntries extends Audit {
     if (issues.heavyAdIssue?.length) {
       items.push({issueType: str_(UIStrings.issueTypeHeavyAds)});
     }
-    const cspIssues = issues.contentSecurityPolicyIssue?.filter(issue => {
-      // kTrustedTypesSinkViolation and kTrustedTypesPolicyViolation aren't currently supported by the Issues panel
-      return issue.contentSecurityPolicyViolationType !== 'kTrustedTypesSinkViolation' &&
-        issue.contentSecurityPolicyViolationType !== 'kTrustedTypesPolicyViolation';
-    });
-    if (cspIssues?.length) {
-      items.push(this.getContentSecurityPolicyRow(cspIssues));
+    if (issues.contentSecurityPolicyIssue?.length) {
+      items.push(this.getContentSecurityPolicyRow(issues.contentSecurityPolicyIssue));
     }
     return {
       score: items.length > 0 ? 0 : 1,
