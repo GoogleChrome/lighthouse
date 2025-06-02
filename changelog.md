@@ -1,15 +1,14 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Ian Kerins @isker
- <a name="12.6.1"></a>
+<a name="12.6.1"></a>
 # 12.6.1 (2025-06-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.0...v12.6.1)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 139](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a couple days.
 
-## Notable Changes
-~~ TODO: Move notable changes here ~~
+## New contributors
 
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+Ian Kerins @isker
 
 ## Core
 
