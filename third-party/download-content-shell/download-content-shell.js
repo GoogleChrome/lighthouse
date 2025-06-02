@@ -154,7 +154,7 @@ function extractContentShell(contentShellZipPath) {
   console.log(`Extracting content shell zip: ${contentShellZipPath}`);
   const src = contentShellZipPath;
   const dest = path.resolve(path.dirname(src), 'out');
-  shell(`unzip ${src} -d ${dest}`);
+  shell('unzip', [src, '-d', dest]);
   fs.unlinkSync(src);
   const originalDirPath = path.resolve(dest, 'content-shell');
   const newDirPath = path.resolve(dest, TARGET);
