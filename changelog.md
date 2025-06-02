@@ -1,3 +1,49 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Ian Kerins @isker
+ <a name="12.6.1"></a>
+# 12.6.1 (2025-06-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.0...v12.6.1)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* emulation: bump chrome UA to m136 ([#16489](https://github.com/GoogleChrome/lighthouse/pull/16489))
+* insights: add a bunch of debugData ([#16472](https://github.com/GoogleChrome/lighthouse/pull/16472))
+* inspector-issues: remove trusted types csp issue filter ([#16514](https://github.com/GoogleChrome/lighthouse/pull/16514))
+* inspector-issues: add userReidentificationIssue to artifact ([#16497](https://github.com/GoogleChrome/lighthouse/pull/16497))
+
+## Report
+
+* remove innerHTML usage from insights announce icon ([#16469](https://github.com/GoogleChrome/lighthouse/pull/16469))
+
+## Deps
+
+* upgrade deps ([#16515](https://github.com/GoogleChrome/lighthouse/pull/16515))
+* upgrade trace_engine to 0.0.53 ([#16496](https://github.com/GoogleChrome/lighthouse/pull/16496))
+* bump chrome-launcher to 1.2.0 ([#16479](https://github.com/GoogleChrome/lighthouse/pull/16479))
+
+## Clients
+
+* lr: disable modern-http-insight ([#16471](https://github.com/GoogleChrome/lighthouse/pull/16471))
+
+## Tests
+
+* fix some lantern test failures ([#16498](https://github.com/GoogleChrome/lighthouse/pull/16498))
+* use newer trace in metrics test ([#16492](https://github.com/GoogleChrome/lighthouse/pull/16492))
+
+## Misc
+
+* import i18n messages as JSON modules ([#16500](https://github.com/GoogleChrome/lighthouse/pull/16500))
+* scripts: add bytes-in-trace script ([#16477](https://github.com/GoogleChrome/lighthouse/pull/16477))
+* treemap: hide unused-bytes view mode when missing data ([#16478](https://github.com/GoogleChrome/lighthouse/pull/16478))
+* treemap: highlight many nodes on hover in duplicate modules table ([#16470](https://github.com/GoogleChrome/lighthouse/pull/16470))
+
 <a name="12.6.0"></a>
 # 12.6.0 (2025-04-28)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.1...v12.6.0)
