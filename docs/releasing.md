@@ -43,16 +43,6 @@ In general, Lighthouse should be using the latest version of its critical depend
 bash core/scripts/upgrade-deps.sh
 ```
 
-1. https://github.com/GoogleChrome/lighthouse-stack-packs
-1. `puppeteer` and `puppeteer-core`
-1. `third-party-web`
-1. `axe-core`
-1. `js-library-detector`
-1. `chrome-launcher`
-1. `chrome-devtools-frontend`
-1. `devtools-protocol`
-1. `csp_evaluator`
-
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
