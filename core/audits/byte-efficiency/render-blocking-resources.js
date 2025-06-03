@@ -291,7 +291,7 @@ class RenderBlockingResources extends Audit {
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
-      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnDuration)},
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results,
