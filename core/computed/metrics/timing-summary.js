@@ -21,6 +21,7 @@ import {TotalBlockingTime} from './total-blocking-time.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {TimeToFirstByte} from './time-to-first-byte.js';
 import {LCPBreakdown} from './lcp-breakdown.js';
+import {isUnderTest} from '../../lib/lh-env.js';
 
 class TimingSummary {
   /**
@@ -46,7 +47,9 @@ class TimingSummary {
      */
     const requestOrUndefined = (Artifact, artifact) => {
       return Artifact.request(artifact, context).catch(err => {
-        log.error('lh:computed:TimingSummary', err);
+        if (isUnderTest) {
+          log.error('lh:computed:TimingSummary', err);
+        }
         return undefined;
       });
     };
