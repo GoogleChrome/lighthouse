@@ -462,10 +462,14 @@ vs
       // eslint-disable-next-line max-len
       if (isError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
+        // Prefer the stack trace closest to the error.
+        const stack =
+          /** @type {any} */ (possibleErrorArtifact.cause)?.stack ?? possibleErrorArtifact.stack;
 
         return {
           code: possibleErrorArtifact.code,
           message: errorMessage,
+          errorStack: stack,
         };
       }
     }
