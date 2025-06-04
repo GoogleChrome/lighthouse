@@ -152,49 +152,19 @@ class TraceElements extends BaseGatherer {
    *
    * @param {LH.Artifacts.TraceImpactedNode[]} impactedNodes
    * @param {Map<number, number>} impactByNodeId
-   * @param {import('../../lib/trace-engine.js').SaneSyntheticLayoutShift} event Only for debugging
    * @return {number|undefined}
    */
-  static getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event) {
-    try {
-      let biggestImpactNodeId;
-      let biggestImpactNodeScore = Number.NEGATIVE_INFINITY;
-      for (const node of impactedNodes) {
-        const impactScore = impactByNodeId.get(node.node_id);
-        if (impactScore !== undefined && impactScore > biggestImpactNodeScore) {
-          biggestImpactNodeId = node.node_id;
-          biggestImpactNodeScore = impactScore;
-        }
+  static getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId) {
+    let biggestImpactNodeId;
+    let biggestImpactNodeScore = Number.NEGATIVE_INFINITY;
+    for (const node of impactedNodes) {
+      const impactScore = impactByNodeId.get(node.node_id);
+      if (impactScore !== undefined && impactScore > biggestImpactNodeScore) {
+        biggestImpactNodeId = node.node_id;
+        biggestImpactNodeScore = impactScore;
       }
-      return biggestImpactNodeId;
-    } catch (err) {
-      // See https://github.com/GoogleChrome/lighthouse/issues/15870
-      // `impactedNodes` should always be an array here, but it can randomly be something else for
-      // currently unknown reasons. This exception handling will help us identify what
-      // `impactedNodes` really is and also prevent the error from being fatal.
-
-      // It's possible `impactedNodes` is not JSON serializable, so let's add more supplemental
-      // fields just in case.
-      const impactedNodesType = typeof impactedNodes;
-      const impactedNodesClassName = impactedNodes?.constructor?.name;
-
-      let impactedNodesJson;
-      let eventJson;
-      try {
-        impactedNodesJson = JSON.parse(JSON.stringify(impactedNodes));
-        eventJson = JSON.parse(JSON.stringify(event));
-      } catch {}
-
-      Sentry.captureException(err, {
-        extra: {
-          impactedNodes: impactedNodesJson,
-          event: eventJson,
-          impactedNodesType,
-          impactedNodesClassName,
-        },
-      });
-      return;
     }
+    return biggestImpactNodeId;
   }
 
   /**
@@ -222,7 +192,7 @@ class TraceElements extends BaseGatherer {
         const nodeIds = [];
         const impactedNodes = event.args.data.impacted_nodes || [];
         const biggestImpactedNodeId =
-          this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event);
+          this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId);
         if (biggestImpactedNodeId !== undefined) {
           nodeIds.push(biggestImpactedNodeId);
         }

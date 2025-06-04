@@ -312,10 +312,8 @@ class Runner {
         if (!isEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
           throw new Error(
             `Cannot change settings between gathering and auditing…
-Difference found at: \`${k}\`
-    ${normalizedGatherSettings[k]}
-vs
-    ${normalizedAuditSettings[k]}`);
+Difference found at: \`${k}\`: ${JSON.stringify(normalizedGatherSettings[k], null, 2)}
+vs: ${JSON.stringify(normalizedAuditSettings[k], null, 2)}`);
         }
       }
 

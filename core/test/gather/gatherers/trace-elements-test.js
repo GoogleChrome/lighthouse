@@ -72,15 +72,6 @@ function makeLCPTraceEvent(nodeId) {
   };
 }
 
-describe('Trace Elements gatherer - GetTopLayoutShifts', () => {
-  describe('getBiggestImpactForShiftEvent', () => {
-    it('is non fatal if impactedNodes is not iterable', () => {
-      const result = TraceElementsGatherer.getBiggestImpactNodeForShiftEvent(1, new Map());
-      expect(result).toBeUndefined();
-    });
-  });
-});
-
 describe('Trace Elements gatherer - Animated Elements', () => {
   it('gets animated node ids with non-composited animations', async () => {
     const traceEvents = [

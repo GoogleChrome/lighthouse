@@ -114,7 +114,7 @@ class CLSCulpritsInsight extends Audit {
         /** @type {LH.Audit.Details.Table['items']} */
         const items = events.map(event => {
           const biggestImpactNodeId = TraceElements.getBiggestImpactNodeForShiftEvent(
-            event.args.data.impacted_nodes || [], impactByNodeId, event);
+            event.args.data.impacted_nodes || [], impactByNodeId);
           return {
             node: makeNodeItemForNodeId(artifacts.TraceElements, biggestImpactNodeId),
             score: event.args.data?.weighted_score_delta,

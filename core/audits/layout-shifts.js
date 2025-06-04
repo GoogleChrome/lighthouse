@@ -89,7 +89,7 @@ class LayoutShifts extends Audit {
       .slice(0, MAX_LAYOUT_SHIFTS);
     for (const event of topLayoutShiftEvents) {
       const biggestImpactNodeId = TraceElements.getBiggestImpactNodeForShiftEvent(
-        event.args.data.impacted_nodes || [], impactByNodeId, event);
+        event.args.data.impacted_nodes || [], impactByNodeId);
       const biggestImpactElement = traceElements.find(t => t.nodeId === biggestImpactNodeId);
 
       // Turn root causes into sub-items.
