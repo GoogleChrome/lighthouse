@@ -46,6 +46,8 @@ interface Result {
     message: string;
     /** Error stack from any fatal error. */
     errorStack?: string;
+    /** Artifact the threw the fatal error. */
+    artifactKey?: string;
   };
   /** The User-Agent string of the browser used run Lighthouse for these results. */
   userAgent: string;

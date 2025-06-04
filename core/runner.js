@@ -451,12 +451,13 @@ vs
    * @return {LH.RawIcu<LH.Result['runtimeError']>|undefined}
    */
   static getArtifactRuntimeError(artifacts) {
+    /** @type {Array<[string, LighthouseError|object]>} */
     const possibleErrorArtifacts = [
-      artifacts.PageLoadError, // Preferentially use `PageLoadError`, if it exists.
-      ...Object.values(artifacts), // Otherwise check amongst all artifacts.
+      ['PageLoadError', artifacts.PageLoadError], // Preferentially use `PageLoadError`, if it exists.
+      ...Object.entries(artifacts), // Otherwise check amongst all artifacts.
     ];
 
-    for (const possibleErrorArtifact of possibleErrorArtifacts) {
+    for (const [artifactKey, possibleErrorArtifact] of possibleErrorArtifacts) {
       const isError = possibleErrorArtifact instanceof LighthouseError;
 
       // eslint-disable-next-line max-len
@@ -470,6 +471,7 @@ vs
           code: possibleErrorArtifact.code,
           message: errorMessage,
           errorStack: stack,
+          artifactKey,
         };
       }
     }
