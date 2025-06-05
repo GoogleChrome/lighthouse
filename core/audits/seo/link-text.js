@@ -178,11 +178,19 @@ class LinkText extends Audit {
         }
 
         const searchTerm = link.text.trim().toLowerCase();
-
-        if (searchTerm && link.textLang) {
-          const lang = link.textLang.split('-')[0];
-          if (nonDescriptiveLinkTexts[lang] && nonDescriptiveLinkTexts[lang].has(searchTerm)) {
-            return true;
+        if (searchTerm) {
+          // Use language if detected, otherwise look at everything.
+          if (link.textLang) {
+            const lang = link.textLang.split('-')[0];
+            if (nonDescriptiveLinkTexts[lang] && nonDescriptiveLinkTexts[lang].has(searchTerm)) {
+              return true;
+            }
+          } else {
+            for (const texts of Object.values(nonDescriptiveLinkTexts)) {
+              if (texts.has(searchTerm)) {
+                return true;
+              }
+            }
           }
         }
 

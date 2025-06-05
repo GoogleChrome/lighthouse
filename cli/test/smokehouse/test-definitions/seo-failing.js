@@ -66,11 +66,11 @@ const expectations = {
         displayValue: '5 links found',
         details: {
           items: [
-            {'text': 'click this', 'textLang': 'en'},
-            {'text': 'click this', 'textLang': 'en'},
-            {'text': 'CLICK THIS', 'textLang': 'en'},
-            {'text': 'klicke hier', 'textLang': 'de'},
-            {'text': 'click this', 'textLang': 'en'},
+            {text: 'click this', textLang: undefined},
+            {text: 'click this', textLang: undefined},
+            {text: 'CLICK THIS', textLang: undefined},
+            {text: 'klicke hier', textLang: 'de'},
+            {text: 'click this', textLang: undefined},
           ],
         },
       },

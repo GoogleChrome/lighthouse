@@ -43,7 +43,7 @@ function collectAnchorElements() {
    * @return {string|null}
    */
   function getLangOfInnerText(node) {
-    let curNodeLang = node.closest('[lang]')?.getAttribute('lang') ?? '';
+    let curNodeLang = node.closest('[lang]')?.getAttribute('lang') ?? null;
 
     // If we find multiple languages within this element, return null.
     for (const child of node.querySelectorAll('*')) {
@@ -78,6 +78,8 @@ function collectAnchorElements() {
   const documentHasSingleLang = langElements.length === 1 &&
     (langElements[0].nodeName === 'BODY' || langElements[0].nodeName === 'HTML');
   const singleLang = documentHasSingleLang ? langElements[0].getAttribute('lang') : null;
+
+  // TODO: consider Content-Language.
 
   return anchorElements.map(node => {
     if (node instanceof HTMLAnchorElement) {
