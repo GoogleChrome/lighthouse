@@ -16,7 +16,7 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 /**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
- * @return {Promise<{insights: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined, parsedTrace: LH.Artifacts.TraceEngineResult['data']}>}
+ * @return {Promise<{insights: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined, parsedTrace: LH.Artifacts.TraceEngineResult['parsedTrace']}>}
  */
 async function getInsightSet(artifacts, context) {
   const settings = context.settings;
@@ -29,13 +29,13 @@ async function getInsightSet(artifacts, context) {
   const key = navigationId ?? NO_NAVIGATION;
   const insights = traceEngineResult.insights.get(key);
 
-  return {insights, parsedTrace: traceEngineResult.data};
+  return {insights, parsedTrace: traceEngineResult.parsedTrace};
 }
 
 /**
  * @typedef CreateDetailsExtras
  * @property {import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet} insights
- * @property {LH.Artifacts.TraceEngineResult['data']} parsedTrace
+ * @property {LH.Artifacts.TraceEngineResult['parsedTrace']} parsedTrace
  */
 
 /**
