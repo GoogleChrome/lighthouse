@@ -46,7 +46,7 @@ describe('SEO: link text audit', () => {
     assert.equal(auditResult.details.items[4].text, invalidLinkDeDe.text);
   });
 
-  it('ignores non descriptive link texts with unknown language', () => {
+  it('considers all non descriptive link texts with unknown language', () => {
     const artifacts = {
       URL: {
         finalDisplayedUrl: 'https://example.com/page.html',
@@ -60,8 +60,8 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.score, 1);
-    assert.equal(auditResult.details.items.length, 0);
+    assert.equal(auditResult.score, 0);
+    assert.equal(auditResult.details.items.length, 3);
   });
 
   it('ignores links pointing to the main document', () => {
