@@ -25,10 +25,11 @@ const expectations = {
     audits: {
       'link-text': {
         score: 0,
-        displayValue: '14 links found',
+        displayValue: '15 links found',
         details: {
           'items': [
             {'text': 'Start', 'textLang': 'en-US'},
+            {'text': 'click here', 'textLang': undefined},
             {'text': 'here', 'textLang': 'en'},
             {'text': 'here', 'textLang': 'en'},
             {'text': 'here', 'textLang': 'en'},

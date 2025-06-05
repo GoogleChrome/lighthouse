@@ -43,7 +43,7 @@ function collectAnchorElements() {
    * @return {string|null}
    */
   function getLangOfInnerText(node) {
-    let curNodeLang = node.closest('[lang]')?.getAttribute('lang') ?? null;
+    let curNodeLang = null;
 
     // If we find multiple languages within this element, return null.
     for (const child of node.querySelectorAll('*')) {
@@ -62,7 +62,7 @@ function collectAnchorElements() {
       }
     }
 
-    return curNodeLang;
+    return curNodeLang ?? node.closest('[lang]')?.getAttribute('lang') ?? null;
   }
 
   /** @type {Array<HTMLAnchorElement|SVGAElement>} */
