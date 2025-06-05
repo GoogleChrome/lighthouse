@@ -19,15 +19,11 @@ const expectations = {
             _includes: [
               {
                 node: {selector: 'body > div#blue'},
-                subItems: {items: [{cause: /font/, extra: {value: /Regular\.ttf/}}]},
+                subItems: {items: [
+                  {cause: /Media/, extra: {selector: 'body > img'}},
+                  {cause: /font/, extra: {value: /Regular\.ttf/}},
+                ]},
               },
-              // iframe root causes are disabled due to performance issues
-              // https://github.com/GoogleChrome/lighthouse/issues/15869
-              // {
-              //   node: {selector: 'body > div#blue'},
-              //   // TODO: We can't get nodes from non-main frames yet. See runRootCauseAnalysis.
-              //   subItems: {items: [{cause: /iframe/, extra: undefined}]},
-              // },
               {
                 node: {selector: 'body > div#blue'},
                 subItems: {items: [{cause: /Media/, extra: {selector: 'body > img'}}]},

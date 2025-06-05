@@ -38,7 +38,8 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
-      requiredArtifacts: ['ResponseCompression', 'GatherContext', 'devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['ResponseCompression', 'GatherContext', 'DevtoolsLog', 'Trace', 'URL',
+        'SourceMaps'],
     };
   }
 

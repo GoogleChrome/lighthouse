@@ -660,7 +660,10 @@
     "message": "Utilisez des formats vidéo pour le contenu animé"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Les polyfills et les transformations permettent aux anciens navigateurs d'utiliser les nouvelles fonctionnalités JavaScript. Dans la majorité des cas cependant, ils ne sont pas nécessaires aux navigateurs récents. Adoptez une stratégie de déploiement de script récente pour votre groupe JavaScript : utilisez la détection de fonctionnalité module/nomodule pour réduire la quantité de code envoyée aux navigateurs récents tout en continuant de prendre en charge les plus anciens. [Découvrez comment utiliser le code JavaScript récent.](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "La version 2 de core-js a été détectée sur la page. Vous devriez passer à la version 3 pour profiter de nombreuses améliorations de performances."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Évitez d'utiliser de l'ancien code JavaScript dans les navigateurs récents"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Activez la compression de texte"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Gravité"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "L'en-tête `X-Frame-Options` (XFO) ou la directive `frame-ancestors` dans l'en-tête `Content-Security-Policy` (CSP) contrôlent où une page peut être intégrée. Ils peuvent limiter les attaques de clickjacking en bloquant l'intégration de la page sur certains ou tous les sites. [En savoir plus sur la prévention du clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Aucune règle de contrôle du frame trouvée"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Limiter le clickjacking avec XFO ou CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Les chaînes de demandes critiques ci-dessous vous montrent quelles ressources sont chargées avec une priorité élevée. Envisagez de réduire la longueur des chaînes et la taille de téléchargement des ressources ou de reporter le téléchargement de ressources inutiles afin d'améliorer le chargement des pages. [Découvrez comment éviter de créer des chaînes de demandes critiques.](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse n'a pas pu vérifier automatiquement la valeur `font-display` pour l'origine {fontOrigin}.}one{Lighthouse n'a pas pu vérifier automatiquement la valeur `font-display` pour l'origine {fontOrigin}.}other{Lighthouse n'a pas pu vérifier automatiquement les valeurs `font-display` pour l'origine {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Directive"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Gravité"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Le déploiement de l'en-tête HSTS réduit considérablement le risque d'attaques par écoute et par rétrogradation en connexion HTTP. Nous vous recommandons un déploiement par étapes, en commençant par un max-age faible. [En savoir plus sur l'utilisation d'une règle HSTS efficace](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Syntaxe non valide"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` est trop faible"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Aucun en-tête HSTS trouvé"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Aucune directive `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Aucune directive `preload` trouvée"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Aucune directive `includeSubDomains` trouvée"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Utiliser une règle HSTS efficace"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Format (image réelle)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Images diffusées dans la résolution appropriée"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Score de décalage de mise en page"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Autorisée"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "iFrame injecté"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Une requête réseau tardive a ajusté la mise en page"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Élément multimédia sans taille explicite"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "L'effet comporte des paramètres de minutage non compatibles"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Directive"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Gravité"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "La règle COOP (Cross-Origin-Opener-Policy) peut être utilisée pour séparer la fenêtre de premier niveau des autres documents, comme les pop-ups. [En savoir plus sur le déploiement de l'en-tête COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Syntaxe non valide"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Aucun en-tête COOP détecté"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Assurez l'isolation appropriée de l'origine avec COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Préchargez les polices `optional` pour que les nouveaux visiteurs puissent les utiliser. [En savoir plus sur le préchargement des polices](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Une navigation sur les pages a été détectée pendant l'exécution. Il est déconseillé d'utiliser le mode période pour auditer la navigation sur les pages. Utilisez le mode de navigation pour auditer la navigation sur les pages afin d'améliorer l'attribution tierce et la détection des threads principaux."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Seules les pages chargées via une demande GET sont éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Seules les pages dont le code d'état est 2XX peuvent être mises en cache."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome a détecté une tentative d'exécuter JavaScript alors que la page se trouve dans le cache."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Les pages qui ont demandé une AppBanner ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Le cache amélioré est désactivé en raison d'une requête de message keepalive."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Le cache amélioré est désactivé dans chrome://flags. Accédez à chrome://flags/#back-forward-cache pour l'activer en local sur cet appareil."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "La ligne de commande a désactivé le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Le cache amélioré est désactivé en raison d'une mémoire insuffisante."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Le délégué n'accepte pas le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Le cache amélioré est désactivé pour le prérendu."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "La page ne peut pas être mise en cache, car elle contient une instance BroadcastChannel avec des écouteurs inscrits."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Les pages qui contiennent l'en-tête cache-control:no-store ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Le cache a été effacé volontairement."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "La page a été exclue du cache afin de laisser la place à une autre."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Les pages contenant des plug-ins ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Les pages qui utilisent l'API FileChooser ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Les pages qui utilisent l'API File System Access ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Les pages qui utilisent Media Device Dispatcher ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "La page a été quittée alors qu'un lecteur multimédia s'exécutait."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Les pages qui utilisent l'API MediaSession et définissent un état de lecture ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Les pages qui utilisent l'API MediaSession et définissent des gestionnaires d'action ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Le cache amélioré est désactivé en raison du lecteur d'écran."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Les pages qui utilisent SecurityHandler ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Les pages qui utilisent l'API Serial ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Les pages qui utilisent l'API WebAuthentication ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Les pages qui utilisent l'API WebBluetooth ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Les pages qui utilisent l'API WebUSB ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Le cache amélioré est désactivé, car les cookies sont désactivés sur une page qui utilise `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Les pages qui utilisent un worker ou un worklet dédié ne sont pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "La page a été quittée avant que le document soit entièrement chargé."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "La page a été quittée alors qu'une bannière d'appli était présente."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "La page a été quittée alors que le Gestionnaire de mots de passe Chrome était présent."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "La page a été quittée alors que la distillation DOM était en cours."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "La page a été quittée alors que DOM Distiller Viewer était présent."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Le cache amélioré est désactivé en raison d'extensions utilisant une API d'envoi de messages."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Les extensions à connexion longue durée doivent fermer la connexion avant d'accéder au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Des extensions à connexion longue durée ont tenté d'envoyer des messages aux frames dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Le cache amélioré est désactivé en raison des extensions."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "La page a été quittée alors qu'une boîte de dialogue modale pour renvoyer un formulaire ou indiquer un mot de passe http, par exemple, était affichée pour cette page."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "La page a été quittée alors que la page hors connexion était affichée."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "La page a été quittée alors que la barre d'intervention pour mémoire insuffisante était présente."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "La page a été quittée alors que des demandes d'autorisation étaient en cours."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "La page a été quittée alors que le bloqueur de pop-up était présent."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "La page a été quittée alors que les détails de la navigation sécurisée étaient affichés."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "La navigation sécurisée a considéré cette page comme abusive et a bloqué le pop-up."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Un service worker a été activé alors que la page se trouvait dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Le cache amélioré est désactivé à cause d'une erreur liée au document."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Les pages qui utilisent FencedFrames ne peuvent pas être stockées dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "La page a été exclue du cache afin de laisser la place à une autre."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Les pages sur lesquelles l'accès au flux multimédia est autorisé ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Les pages qui utilisent des portails ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Les pages qui utilisent IdleManager ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Les pages avec une connexion IndexedDB active ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Le cache amélioré est désactivé en raison d'un événement IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Des API non éligibles ont été utilisées."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Les pages dans lesquelles des extensions injectent un `JavaScript` ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Les pages dans lesquelles des extensions injectent une `StyleSheet` ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Erreur interne."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Le cache amélioré est désactivé en raison d'une requête de message keepalive."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Les pages qui utilisent le verrouillage du clavier ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "La page a été quittée avant d'être entièrement chargée."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Les pages dont la ressource principale contient \"cache-control:no-cache\" ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Les pages dont la ressource principale contient cache-control:no-store ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "La navigation a été annulée avant que la page puisse être restaurée à partir du cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "La page a été exclue du cache, car une connexion réseau active a reçu trop de données. Chrome limite la quantité de données qu'une page mise en cache peut recevoir."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Les pages ayant une requête fetch() ou XHR en cours ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "La page a été exclue du cache amélioré, car une requête réseau active impliquait une redirection."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "La page a été exclue du cache, car une connexion réseau est restée trop longtemps ouverte. Chrome limite la durée pendant laquelle une page mise en cache peut recevoir des données."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Les pages sans en-tête de réponse valide ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "La navigation a eu lieu dans un frame autre que le principal."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "La page avec des transactions DB indexées en cours n'est actuellement pas éligible au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Les pages ayant une requête réseau en cours ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Les pages avec une requête réseau fetch() en cours ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Les pages ayant une requête réseau en cours ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Les pages ayant une requête réseau XHR en cours ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Les pages qui utilisent PaymentManager ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Les pages qui utilisent le Picture-in-picture ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Les pages qui utilisent des portails ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Les pages qui affichent l'UI d'impression ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Soit la page a été ouverte avec `window.open()` (et un autre onglet comprend une référence à celle-ci), soit elle a ouvert une fenêtre."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Le processus de rendu de la page située dans le cache amélioré a planté."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Le processus de rendu de la page située dans le cache amélioré a été interrompu."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Les pages qui ont demandé des autorisations pour des captures audio ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Les pages qui ont demandé des autorisations pour des capteurs ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Les pages qui ont demandé une synchronisation en arrière-plan ou des autorisations d'extraction ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Les pages qui ont demandé des autorisations MIDI ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Les pages qui ont demandé des autorisations pour des notifications ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Les pages qui ont demandé à accéder à l'espace de stockage ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Les pages qui ont demandé des autorisations pour des captures vidéo ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Seules les pages dont le schéma d'URL est HTTP/HTTPS peuvent être mises en cache."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "La page a été revendiquée par un service worker alors qu'elle se trouve dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Un service worker a tenté d'envoyer une propriété `MessageEvent` à la page située dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker a été désinscrit alors qu'une page se trouvait dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "La page a été exclue du cache amélioré, car un service worker a été activé."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome a redémarré et effacé les entrées du cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Les pages qui utilisent SharedWorker ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Les pages qui utilisent SpeechRecognizer ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Les pages qui utilisent SpeechSynthesis ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Une navigation a démarré sur un iFrame de la page, mais ne s'est pas terminée."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Les pages dont la sous-ressource contient cache-control:no-cache ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Les pages dont la sous-ressource contient cache-control:no-store ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "La page a dépassé la durée maximale autorisée dans le cache amélioré et a expiré."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Le délai d'enregistrement de la page dans le cache amélioré a été dépassé (probablement en raison de gestionnaires pagehide de longue durée)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Le frame principal de l'image contient un gestionnaire unload."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Le sous-frame de l'image contient un gestionnaire unload."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Le navigateur a modifié l'en-tête de forçage user-agent."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Les pages qui ont autorisé l'enregistrement audio ou vidéo ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Les pages qui utilisent WebDatabase ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Les pages qui utilisent WebHID ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Les pages qui utilisent WebLocks ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Les pages qui utilisent WebNfc ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Les pages qui utilisent WebOTPService ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Les pages avec WebRTC ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Les pages qui utilisent WebShare ne sont actuellement pas éligibles au cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Les pages avec WebSocket ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Les pages avec WebTransport ne peuvent pas être incluses dans le cache amélioré."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Les pages qui utilisent WebXR ne sont actuellement pas éligibles au cache amélioré."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Envisagez d'ajouter les schémas d'URL https: et http: (ignorés par les navigateurs prenant en charge `'strict-dynamic'`) pour assurer la rétrocompatibilité avec les anciens navigateurs."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Fonctionnalité obsolète utilisée"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "L'autorisation ne sera pas couverte par le caractère générique (*) dans la gestion `Access-Control-Allow-Headers` de CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Pour désactiver l'intégration Cast par défaut, utilisez l'attribut `disableRemotePlayback` plutôt que le sélecteur `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Les requêtes de ressources dont les URL contiennent à la fois des espaces blancs `(n|r|t)` et des signes \"strictement inférieur à\" (`<`) supprimés sont bloquées. Veuillez supprimer les nouvelles lignes et encoder les symboles \"strictement inférieur à\" depuis des emplacements tels que des valeurs d'attribut d'élément pour pouvoir charger ces ressources."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` est obsolète. Utilisez l'API normalisée à la place : Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` est obsolète. Veuillez utiliser l'API normalisée à la place : Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` est obsolète. Veuillez utiliser l'API normalisée à la place : `nextHopProtocol` dans Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Les cookies contenant un caractère `(0|r|n)` ne seront pas tronqués, mais refusés."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "La possibilité de contourner la règle d'origine commune en définissant `document.domain` est obsolète et sera désactivée par défaut. Cet avertissement concerne l'accès multi-origine activé en définissant `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "La possibilité de déclencher window.alert depuis des iFrames multi-origines est obsolète et sera supprimée."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "La possibilité de déclencher window.confirm depuis des iFrames multi-origines est obsolète et sera supprimée."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Les événements de mutation DOM, y compris `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` et `DOMCharacterDataModified`, sont obsolètes (https://w3c.github.io/uievents/#legacy-event-types) et seront supprimés. Veuillez utiliser `MutationObserver` à la place."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "La compatibilité avec les URL \"data\" dans l'élément SVG <use> est obsolète et sera supprimée à l'avenir."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "La possibilité de contourner la règle d'origine commune en définissant `document.domain` est obsolète et sera désactivée par défaut. Pour continuer à utiliser cette fonctionnalité, veuillez désactiver les clusters d'agents selon l'origine en envoyant un en-tête `Origin-Agent-Cluster: ?0` avec la réponse HTTP pour le document et les frames. Pour en savoir plus, consultez https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "L'en-tête `Expect-CT` est obsolète et sera supprimé. Chrome exige la transparence des certificats pour tous les certificats reconnus publiquement émis après le 30 avril 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` et `watchPosition()` ne fonctionnent plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre appli, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` et `watchPosition()` sont obsolètes pour les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre appli, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` ne fonctionne plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre appli, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` est obsolète. Veuillez utiliser `RTCPeerConnectionIceErrorEvent.address` ou `RTCPeerConnectionIceErrorEvent.port` à la place."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Le point de départ du marchand et les données arbitraires provenant de l'événement service worker `canmakepayment` sont obsolètes et seront supprimés : `topOrigin`, `paymentRequestOrigin`, `methodData` et `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Le site Web a demandé une sous-ressource auprès d'un réseau auquel il pouvait uniquement accéder en raison de la position privilégiée de ses utilisateurs sur le réseau. Ces requêtes exposent les serveurs et les appareils non publics à Internet, ce qui augmente le risque d'attaque par falsification des requêtes intersites (CSRF) et/ou les fuites d'informations. Pour réduire ces risques, Chrome n'accepte plus les requêtes auprès de sous-ressources non publiques émises depuis des contextes non sécurisés et va commencer à les bloquer."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Le champ `dailyUpdateUrl` de `InterestGroups` transmis à `joinAdInterestGroup()` a été renommé `updateUrl` pour refléter plus précisément son comportement."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS ne peut pas être chargé depuis des URL `file:`, sauf si elles se terminent par une extension de fichier `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "La possibilité d'utiliser `SourceBuffer.abort()` pour annuler la suppression de la plage asynchrone par `remove()` est obsolète, en raison d'une modification de la spécification. Sa prise en charge sera supprimée prochainement. Écoutez plutôt l'événement `updateend`. `abort()` sert uniquement à annuler l'ajout d'un contenu multimédia asynchrone ou à réinitialiser l'état de l'analyseur."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "La possibilité de régler `MediaSource.duration` à une valeur inférieure au code temporel de présentation le plus élevé de n'importe quel frame codé en mémoire tampon est obsolète en raison d'une modification de la spécification. La possibilité de supprimer implicitement des contenus multimédias tronqués en mémoire tampon sera supprimée prochainement. À la place, vous devriez exécuter `remove(newDuration, oldDuration)` de manière explicite sur tous les `sourceBuffers`, où `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI demandera une autorisation d'utilisation, même si le SysEx n'est pas spécifié dans les `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "L'ancien attribut `shadowroot` non standardisé est obsolète et ne *fonctionnera plus* dans la version M119. Veuillez plutôt utiliser le nouvel attribut standardisé `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "L'API Notification ne peut plus être utilisée depuis des origines non sécurisées. Vous devriez envisager d'utiliser une origine sûre pour votre appli, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "L'autorisation pour l'API Notification ne peut plus être demandée depuis un iFrame multi-origine. À la place, vous devriez envisager de demander l'autorisation depuis un frame de haut niveau ou d'ouvrir une nouvelle fenêtre."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "L'option `imageOrientation: 'none'` dans createImageBitmap est obsolète. Veuillez plutôt utiliser createImageBitmap avec l'option \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Votre partenaire négocie une version obsolète de (D)TLS. Contactez-le pour qu'il corrige ce problème."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Si vous spécifiez `overflow: visible` sur \"img\", \"video\" et \"canvas\", ces tags risquent de générer du contenu visuel en dehors des limites de l'élément. Voir https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Abandon de `paymentManager.instruments`. Veuillez utiliser l'installation \"juste à temps\" pour les gestionnaires de paiement."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Votre appel `PaymentRequest` a contourné la directive CSP (Content-Security-Policy) `connect-src`. Ce contournement est obsolète. Veuillez ajouter l'identifiant du mode de paiement de l'API `PaymentRequest` (dans le champ `supportedMethods`) à la directive CSP `connect-src`."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Abandon de `StorageType.persistent`. Veuillez plutôt utiliser la version normalisée `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "L'élément `<source src>` avec un parent `<picture>` n'est pas valide et est donc ignoré. Veuillez utiliser `<source srcset>` à la place."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame est spécifique au fournisseur. Veuillez plutôt utiliser la méthode standard cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame est spécifique au fournisseur. Veuillez plutôt utiliser la méthode standard requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen est obsolète. Veuillez plutôt utiliser Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() est obsolète. Veuillez plutôt utiliser Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() est obsolète. Veuillez plutôt utiliser Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() est obsolète. Veuillez plutôt utiliser Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() est obsolète. Veuillez plutôt utiliser Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen est obsolète. Veuillez plutôt utiliser Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Nous abandonnons l'API `chrome.privacy.websites.privacySandboxEnabled`, bien qu'elle reste active pour assurer la rétrocompatibilité jusqu'à la version M113. Veuillez plutôt utiliser `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` et `chrome.privacy.websites.adMeasurementEnabled`. Consultez https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "La contrainte `DtlsSrtpKeyAgreement` a été supprimée. Vous avez spécifié une valeur `false` pour cette contrainte, ce qui est interprété comme une tentative d'utiliser la méthode `SDES key negotiation`, qui a été supprimée. Cette fonctionnalité a été supprimée. À la place, utilisez un service compatible avec `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "La contrainte `DtlsSrtpKeyAgreement` a été supprimée. Vous avez spécifié une valeur `true` pour cette contrainte, qui est sans effet. Vous pouvez toutefois la supprimer pour plus de clarté."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "La méthode getStats() basée sur le rappel est obsolète et sera supprimée. Utilisez plutôt la méthode getStats() conforme aux spécifications."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() est obsolète. Veuillez plutôt utiliser Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Les requêtes de sous-ressources dont les URL contiennent des identifiants intégrés (`https://user:pass@host/`, par exemple) sont bloquées."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "L'option `rtcpMuxPolicy` est obsolète et sera supprimée."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` nécessite une isolation multi-origine. Pour en savoir plus, consultez https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "La fonctionnalité `speechSynthesis.speak()` sans activation de l'utilisateur est obsolète et sera supprimée."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Les extensions doivent activer l'isolation multi-origine pour pouvoir continuer à utiliser `SharedArrayBuffer`. Consultez https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL est obsolète. Veuillez utiliser SQLite WebAssembly ou Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Le descripteur d'autorisation `window-placement` est obsolète. Utilisez `window-management` à la place. Pour obtenir de l'aide, consultez https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "La règle d'autorisation `window-placement` est obsolète. Utilisez `window-management` à la place. Pour obtenir de l'aide, consultez https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Les réponses json n'acceptent pas l'encodage UTF-16 dans `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "La requête `XMLHttpRequest` synchrone sur le thread principal a été abandonnée en raison de son impact négatif sur l'expérience de l'utilisateur final. Si vous avez besoin d'aide, consultez https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` est obsolète. Veuillez utiliser `isSessionSupported()` et vérifier la valeur booléenne résolue à la place."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Durée de blocage du thread principal"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tiers"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Rapport sur le flux d'utilisateurs Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "L'autorisation ne sera pas couverte par le caractère générique (*) dans la gestion Access-Control-Allow-Headers de CORS."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Pour désactiver l'intégration Cast par défaut, utilisez l'attribut disableRemotePlayback plutôt que le sélecteur -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "La valeur d'apparence CSS slider-vertical n'est pas standardisée et sera supprimée."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Les requêtes de ressources dont les URL contiennent à la fois des espaces blancs \\(n|r|t) et des signes \"strictement inférieur à\" (<) supprimés sont bloquées. Veuillez supprimer les nouvelles lignes et encoder les symboles \"strictement inférieur à\" depuis des emplacements tels que des valeurs d'attribut d'élément pour pouvoir charger ces ressources."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "La détection automatique du jeu de caractères ISO-2022-JP est obsolète et sera désactivée prochainement. Veuillez spécifier le jeu de caractères dans l'en-tête \"Type de contenu\" ou à l'aide d'une balise Meta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() est obsolète. Utilisez l'API normalisée à la place : Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() est obsolète. Veuillez utiliser l'API normalisée à la place : Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() est obsolète. Veuillez utiliser l'API normalisée à la place : nextHopProtocol dans Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Les cookies contenant un caractère \\(0|r|n) ne seront pas tronqués, mais refusés."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "La possibilité de contourner la règle d'origine commune en définissant document.domain est obsolète et sera désactivée par défaut. Cet avertissement concerne l'accès multi-origine activé en définissant document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "La possibilité de déclencher window.alert depuis des iFrames multi-origines est obsolète et sera supprimée."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "La possibilité de déclencher window.confirm depuis des iFrames multi-origines est obsolète et sera supprimée."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Les événements de mutation DOM, y compris DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument et DOMCharacterDataModified, sont obsolètes (https://w3c.github.io/uievents/#legacy-event-types) et seront supprimés. Veuillez utiliser MutationObserver à la place."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "La prise en charge des URL \"data\" dans SVGUseElement est obsolète et sera supprimée à l'avenir."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() et watchPosition() ne fonctionnent plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre application, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() et watchPosition() sont obsolètes pour les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre application, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() ne fonctionne plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre application, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Une balise <h1> a été trouvée dans un élément <article>, <aside>, <nav> ou <section> qui ne comporte pas de taille de police spécifiée. La taille de ce titre sera prochainement modifiée dans ce navigateur. Pour en savoir plus, consultez https://developer.mozilla.org/fr-FR/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate est obsolète. Veuillez utiliser RTCPeerConnectionIceErrorEvent.address ou RTCPeerConnectionIceErrorEvent.port à la place."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Ce format de demande navigator.credentials.get() pour les identifiants numériques est obsolète. Veuillez mettre à jour votre appel de façon à utiliser le nouveau format."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Le point de départ du marchand et les données arbitraires provenant de l'événement service worker canmakepayment sont obsolètes et seront supprimés : topOrigin, paymentRequestOrigin, methodData et modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Le site Web a demandé une sous-ressource auprès d'un réseau auquel il pouvait uniquement accéder en raison de la position privilégiée de ses utilisateurs sur le réseau. Ces requêtes exposent les serveurs et les appareils non publics à Internet, ce qui augmente le risque d'attaque par falsification des requêtes intersites (CSRF) et/ou les fuites d'informations. Pour réduire ces risques, Chrome n'accepte plus les requêtes auprès de sous-ressources non publiques émises depuis des contextes non sécurisés et va commencer à les bloquer."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Le champ dailyUpdateUrl de InterestGroups transmis à joinAdInterestGroup() a été renommé updateUrl pour refléter plus précisément son comportement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator est obsolète. Veuillez utiliser Intl.Segmenter à la place."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS ne peut pas être chargé depuis des URL file:, sauf si elles se terminent par une extension de fichier .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "La possibilité d'utiliser SourceBuffer.abort() pour annuler la suppression de la plage asynchrone par remove() est obsolète, en raison d'une modification de la spécification. Sa prise en charge sera supprimée prochainement. Écoutez plutôt l'événement updateend. abort() sert uniquement à annuler l'ajout d'un contenu multimédia asynchrone ou à réinitialiser l'état de l'analyseur."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "La possibilité de régler MediaSource.duration à une valeur inférieure au code temporel de présentation le plus élevé de n'importe quel frame codé en mémoire tampon est obsolète en raison d'une modification de la spécification. La possibilité de supprimer implicitement des contenus multimédias tronqués en mémoire tampon sera supprimée prochainement. À la place, vous devriez exécuter remove(newDuration, oldDuration) de manière explicite sur tous les sourceBuffers, où newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI demandera une autorisation d'utilisation, même si le SysEx n'est pas spécifié dans les MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "L'API Notification ne peut plus être utilisée depuis des origines non sécurisées. Vous devriez envisager d'utiliser une origine sûre pour votre application, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "L'autorisation pour l'API Notification ne peut plus être demandée depuis un iFrame multi-origine. À la place, vous devriez envisager de demander l'autorisation depuis un frame de haut niveau ou d'ouvrir une nouvelle fenêtre."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "L'option imageOrientation: 'none' dans createImageBitmap est obsolète. Veuillez plutôt utiliser createImageBitmap avec l'option \"\\\\{imageOrientation: 'from-image'\\\\}\"."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Votre partenaire négocie une version obsolète de (D)TLS. Contactez-le pour qu'il corrige ce problème."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Si vous spécifiez overflow: visible sur \"img\", \"video\" et \"canvas\", ces tags risquent de générer du contenu visuel en dehors des limites de l'élément. Voir https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments est obsolète. Veuillez utiliser l'installation \"juste-à-temps\" pour les gestionnaires de paiement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Votre appel PaymentRequest a contourné la directive CSP (Content-Security-Policy) connect-src. Ce contournement est obsolète. Veuillez ajouter l'identifiant du mode de paiement de l'API PaymentRequest (dans le champ supportedMethods) à la directive CSP connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent est obsolète. Veuillez plutôt utiliser la version normalisée navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "L'élément <source src> avec un parent <picture> n'est pas valide et est donc ignoré. Veuillez utiliser l'attribut <source srcset> à la place."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame est spécifique au fournisseur. Veuillez plutôt utiliser la méthode standard cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame est spécifique au fournisseur. Veuillez plutôt utiliser la méthode standard requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen est obsolète. Veuillez plutôt utiliser Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() est obsolète. Veuillez plutôt utiliser Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() est obsolète. Veuillez plutôt utiliser Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() est obsolète. Veuillez plutôt utiliser Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() est obsolète. Veuillez plutôt utiliser Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen est obsolète. Veuillez plutôt utiliser Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Nous abandonnons l'API chrome.privacy.websites.privacySandboxEnabled, bien qu'elle reste active pour assurer la rétrocompatibilité jusqu'à la version M113. Veuillez plutôt utiliser chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled et chrome.privacy.websites.adMeasurementEnabled. Consultez https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "La contrainte DtlsSrtpKeyAgreement a été supprimée. Vous avez spécifié une valeur false pour cette contrainte, ce qui est interprété comme une tentative d'utiliser la méthode SDES key negotiation, qui a été supprimée. Cette fonctionnalité a été supprimée. À la place, utilisez un service compatible avec DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "La contrainte DtlsSrtpKeyAgreement a été supprimée. Vous avez spécifié une valeur true pour cette contrainte, qui est sans effet. Vous pouvez toutefois la supprimer pour plus de clarté."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "La méthode getStats() basée sur le rappel est obsolète et sera supprimée. Utilisez plutôt la méthode getStats() conforme aux spécifications."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() est obsolète. Veuillez plutôt utiliser Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Les requêtes de sous-ressources dont les URL contiennent des identifiants intégrés (https://user:pass@host/, par exemple) sont bloquées."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "L'option rtcpMuxPolicy est obsolète et sera supprimée."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer nécessite une isolation multi-origine. Pour en savoir plus, consultez https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "La fonctionnalité speechSynthesis.speak() sans activation de l'utilisateur est obsolète et sera supprimée."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Les écouteurs d'événements de déchargement sont obsolètes et seront supprimés."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Les extensions doivent activer l'isolation multi-origine pour pouvoir continuer à utiliser SharedArrayBuffer. Consultez https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "Les réponses json n'acceptent pas l'encodage UTF-16 dans XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "La requête XMLHttpRequest synchrone sur le thread principal est obsolète en raison de son impact négatif sur l'expérience de l'utilisateur final. Si vous avez besoin d'aide, consultez https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animation"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Les décalages de mise en page se produisent lorsque des éléments se déplacent sans aucune interaction de l'utilisateur. [Étudiez les causes des décalages de mise en page](https://web.dev/articles/optimize-cls), comme l'ajout ou la suppression d'éléments, ou le changement de polices lors du chargement de la page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Demande de police"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "iFrame injecté"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Cluster de décalage de mise en page à {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Impossible de détecter les causes des décalages de mise en page"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Aucun décalage de mise en page"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Causes des décalages de mise en page"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Principales causes des décalages de mise en page"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Images non redimensionnées"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Pire cluster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Pire cluster de décalage de mise en page"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Cache de la valeur TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Une longue durée de mise en cache peut accélérer les visites répétées sur votre page. [En savoir plus](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Aucune requête avec des règles inefficaces liées au cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} autres"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Requête"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Utiliser des durées de mise en cache efficaces"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Un grand DOM peut allonger la durée des calculs de style et des ajustements de la mise en page, ce qui impacte la réactivité de la page. Un grand DOM sollicite davantage la mémoire. [Découvrez comment éviter une taille de DOM excessive.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Élément"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "La plupart des enfants"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Profondeur DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistique"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "Optimiser la taille du DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Nombre total d'éléments"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Valeur"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Votre première requête réseau est la plus importante.  Réduisez sa latence en évitant les redirections, en assurant une réponse rapide du serveur et en activant la compression de texte."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Aucune compression appliquée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Pas de redirections"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Applique la compression de texte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Redirections"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Temps de réponse du serveur"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Latence de la demande de document"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Téléchargement non compressé"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Octets en double"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Source"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Supprimez les modules JavaScript volumineux et en double de vos groupes pour réduire les débits d'octets superflus sur le réseau."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "JavaScript en double"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Envisagez de définir [font-display](https://developer.chrome.com/blog/font-display) sur swap ou optional pour vous assurer que le texte est toujours visible. swap peut être encore optimisé pour atténuer les décalages de mise en page avec des [remplacements de métriques de police](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Police"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Affichage de la police"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Temps perdu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonyme)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "De nombreuses API, qui lisent généralement la géométrie de la mise en page, forcent le moteur de rendu à suspendre l'exécution du script afin de calculer le style et la mise en page. En savoir plus sur l'[ajustement de la mise en page forcé](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) et les stratégies d'atténuation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Trace de la pile"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Ajustement forcé de la mise en page"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Appel de fonction le plus fréquent"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Temps total d'ajustement de la mise en page"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[non attribué]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Réduire le temps de téléchargement des images peut améliorer le temps de chargement perçu de la page et le LCP. [En savoir plus sur l'optimisation de la taille des images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (environ {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Aucune image optimisable"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimiser la taille du fichier"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} autres"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Améliorer l'affichage des images"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Augmenter le taux de compression de l'image pourrait réduire sa taille de téléchargement."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Vous pourriez réduire la taille de téléchargement de cette image en utilisant un format d'image moderne (WebP, AVIF) ou en augmentant le taux de compression de l'image."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Compte tenu de ses dimensions affichées ({PH2}), ce fichier image est plus volumineux que nécessaire ({PH1}). Utilisez des images responsives pour réduire la taille de téléchargement de l'image."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Utiliser des formats vidéo plutôt que des GIF peut réduire la taille de téléchargement du contenu animé."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Commencez par étudier la phase la plus longue. [Les délais peuvent être réduits au maximum.](https://web.dev/articles/optimize-inp#optimize_interactions) Pour réduire la durée de traitement, [optimisez les coûts du thread principal](https://web.dev/articles/optimize-long-tasks), souvent JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Durée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Délai de réponse à l'entrée utilisateur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Aucune interaction détectée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Délai de présentation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Durée de traitement"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP par phase"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimisez le LCP en rendant l'image LCP [visible](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) immédiatement à partir du code HTML et en [évitant le chargement différé](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high appliqué"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high doit être appliqué"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "chargement différé non appliqué"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Image LCP chargée {PH1} après le premier point de départ."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Aucun LCP détecté"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Aucune ressource LCP détectée, car le LCP n'est pas une image"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "La demande est visible dans le document initial"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Détection de la requête LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Chaque [phase comporte des stratégies d'amélioration spécifiques](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idéalement, la plupart du temps LCP devrait être consacré au chargement des ressources et non aux délais."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Durée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Délai d'affichage de l'élément"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75e centile réel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Aucun LCP détecté"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Délai de chargement de la ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Durée de chargement de la ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP par phase"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Script"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Octets perdus"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Les polyfills et les transformations permettent aux anciens navigateurs d'utiliser les nouvelles fonctionnalités JavaScript. Dans la majorité des cas cependant, ils ne sont pas nécessaires aux navigateurs récents. Envisagez de modifier votre processus de compilation JavaScript pour ne pas transpiler les fonctionnalités [Baseline](https://web.dev/articles/baseline-and-polyfills), sauf si vous savez que vous devez prendre en charge les anciens navigateurs. [Découvrez pourquoi la plupart des sites peuvent déployer du code ES6+ sans transpiler.](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Ancien JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 et HTTP/3 offrent de nombreux avantages par rapport à HTTP/1.1, comme le multiplexage. [En savoir plus sur l'utilisation de protocole HTTP récent](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Aucune requête n'a utilisé HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocole"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Requête"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "HTTP récent"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Évitez les chaînes de requêtes critiques](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) en réduisant la longueur des chaînes ou la taille de téléchargement des ressources, ou en reportant le téléchargement de ressources inutiles, afin d'améliorer le chargement des pages."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Latence maximale du chemin critique :"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Aucune tâche de rendu impactée par les dépendances réseau"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Arborescence du réseau"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Évitez les chaînes de requêtes critiques en réduisant la longueur des chaînes ou la taille de téléchargement des ressources, ou en reportant le téléchargement de ressources inutiles, afin d'améliorer le chargement des pages."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Les requêtes bloquent le rendu initial de la page, ce qui peut causer un retard LCP. [Le report ou l'intégration](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) de ces requêtes réseau peut les écarter du chemin critique."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Durée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Aucune requête de blocage de l'affichage pour cette navigation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Requête"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Requêtes de blocage de l'affichage"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Si les coûts de recalcul du style restent élevés, vous pouvez les réduire en [optimisant les sélecteurs](https://developer.chrome.com/docs/devtools/performance/selector-stats) pour lesquels le temps écoulé et le pourcentage à chemin lent sont élevés. Des sélecteurs plus simples et moins nombreux, ainsi qu'un DOM plus petit et superficiel réduiront tous les coûts de mise en correspondance."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Temps écoulé"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Aucune donnée de sélecteur CSS trouvée. Vous devez activer les statistiques du sélecteur CSS dans les paramètres du panneau \"Performances\"."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Tentatives de correspondance"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Nombre de correspondances"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Coûts des sélecteurs CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Principaux sélecteurs"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Total"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Temps d'exécution sur le thread principal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Tiers"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Taille de transfert"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Le code tiers peut affecter considérablement les performances de chargement. [Réduisez et différez le chargement du code tiers](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) pour donner la priorité au contenu de votre page."
+    "message": "Le code tiers peut affecter considérablement les performances de chargement des pages. [Réduisez et différez le chargement du code tiers](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) pour donner la priorité au contenu de votre page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Aucun contenu tiers trouvé"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Tiers"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "La fenêtre d'affichage de la page n'est pas optimisée pour les mobiles. Les interactions tactiles peuvent donc être [retardées jusqu'à 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "Les interactions tactiles peuvent être [retardées jusqu'à 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) si la fenêtre d'affichage n'est pas optimisée pour les mobiles."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Fenêtre d'affichage non optimisée pour les mobiles"
+    "message": "Optimiser la fenêtre d'affichage pour les mobiles"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Seules les pages chargées via une demande GET sont éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Seules les pages dont le code d'état est 2XX peuvent être mises en cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome a détecté une tentative d'exécuter JavaScript alors que la page se trouve dans le cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Les pages qui ont demandé une AppBanner ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Le cache amélioré est désactivé dans chrome://flags. Accédez à chrome://flags/#back-forward-cache pour l'activer en local sur cet appareil."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "La ligne de commande a désactivé le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Le cache amélioré est désactivé en raison d'une mémoire insuffisante."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Le délégué n'accepte pas le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Le cache amélioré est désactivé pour le prérendu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "La page ne peut pas être mise en cache, car elle contient une instance BroadcastChannel avec des écouteurs inscrits."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Les pages qui contiennent l'en-tête cache-control:no-store ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Le cache a été effacé volontairement."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "La page a été exclue du cache afin de laisser la place à une autre."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Les pages contenant des plug-ins ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Non défini"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Les pages qui utilisent l'API FileChooser ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Les pages qui utilisent l'API File System Access ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Les pages qui utilisent Media Device Dispatcher ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "La page a été quittée alors qu'un lecteur multimédia s'exécutait."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Les pages qui utilisent l'API MediaSession et définissent un état de lecture ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Les pages qui utilisent l'API MediaSession et définissent des gestionnaires d'action ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Le cache amélioré est désactivé en raison du lecteur d'écran."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Les pages qui utilisent SecurityHandler ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Les pages qui utilisent l'API Serial ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Les pages qui utilisent l'API WebAuthentication ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Les pages qui utilisent l'API WebBluetooth ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Les pages qui utilisent l'API WebUSB ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Le cache amélioré est désactivé, car les cookies sont désactivés sur une page qui utilise Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Les pages qui utilisent un worker ou un worklet dédié ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "La page a été quittée avant que le document soit entièrement chargé."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "La page a été quittée alors qu'une bannière d'appli était présente."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "La page a été quittée alors que le Gestionnaire de mots de passe Chrome était présent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "La page a été quittée alors que la distillation DOM était en cours."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "La page a été quittée alors que DOM Distiller Viewer était présent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Le cache amélioré est désactivé en raison d'extensions utilisant une API d'envoi de messages."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Les extensions à connexion longue durée doivent fermer la connexion avant d'accéder au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Des extensions à connexion longue durée ont tenté d'envoyer des messages aux frames dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Le cache amélioré est désactivé en raison des extensions."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "La page a été quittée alors qu'une boîte de dialogue modale pour renvoyer un formulaire ou indiquer un mot de passe http, par exemple, était affichée pour cette page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "La page a été quittée alors que la page hors connexion était affichée."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "La page a été quittée alors que la barre d'intervention pour mémoire insuffisante était présente."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "La page a été quittée alors qu'il y avait des demandes d'autorisation."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "La page a été quittée alors que le bloqueur de pop-up était présent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "La page a été quittée alors que les détails de la navigation sécurisée étaient affichés."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "La navigation sécurisée a considéré cette page comme abusive et a bloqué le pop-up."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Un service worker a été activé alors que la page se trouvait dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Le cache amélioré est désactivé à cause d'une erreur liée au document"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Les pages qui utilisent FencedFrames ne peuvent pas être stockées dans bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "La page a été exclue du cache afin de laisser la place à une autre."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Les pages sur lesquelles l'accès au flux multimédia est autorisé ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Les pages contenant certains types de contenus intégrés (par exemple, des PDF) ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Les pages qui utilisent IdleManager ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Les pages avec une connexion IndexedDB active ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Le cache amélioré est désactivé en raison d'un événement IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Des API non éligibles ont été utilisées."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Les pages dans lesquelles des extensions injectent une JavaScript ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Les pages dans lesquelles des extensions injectent une StyleSheet ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Erreur interne."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Le cache amélioré est désactivé, car une requête réseau JavaScript a reçu une ressource avec l'en-tête Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Le cache amélioré est désactivé en raison d'une requête de message keepalive."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Les pages qui utilisent le verrouillage du clavier ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "La page a été quittée avant d'être entièrement chargée."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Les pages dont la ressource principale contient cache-control:no-cache ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Les pages dont la ressource principale contient cache-control:no-store ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "La navigation a été annulée avant que la page puisse être restaurée à partir du cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "La page a été exclue du cache, car une connexion réseau active a reçu trop de données. Chrome limite la quantité de données qu'une page mise en cache peut recevoir."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Les pages ayant une requête fetch() ou XHR en cours ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "La page a été exclue du cache amélioré, car une requête réseau active impliquait une redirection."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "La page a été exclue du cache, car elle est restée ouverte à une connexion réseau trop longtemps. Chrome limite la durée pendant laquelle une page mise en cache peut recevoir des données."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Les pages dépourvues d'un en-tête de réponse valide ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "La navigation a eu lieu dans un frame autre que le principal."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "La page avec des transactions DB indexées en cours n'est actuellement pas éligible au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Les pages ayant une requête réseau en cours ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Les pages avec une requête réseau fetch() en cours ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Les pages ayant une requête réseau en cours ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Les pages ayant une requête réseau XHR en cours ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Les pages qui utilisent PaymentManager ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Les pages qui utilisent le Picture-in-picture ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Les pages qui affichent l'UI d'impression ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Soit la page a été ouverte avec window.open() (et un autre onglet comprend une référence à celle-ci), soit elle a ouvert une fenêtre."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Le processus de rendu de la page située dans le cache amélioré a planté."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Le processus de rendu de la page située dans le cache amélioré a été interrompu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Les pages qui ont demandé des autorisations pour des captures audio ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Les pages qui ont demandé des autorisations pour des capteurs ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Les pages qui ont demandé une synchronisation en arrière-plan ou des autorisations d'extraction ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Les pages qui ont demandé des autorisations MIDI ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Les pages qui ont demandé des autorisations pour des notifications ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Les pages qui ont demandé à accéder à l'espace de stockage ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Les pages qui ont demandé des autorisations pour des captures vidéo ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Seules les pages dont le schéma d'URL est HTTP/HTTPS peuvent être mises en cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "La page a été revendiquée par un service worker alors qu'elle se trouve dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Un service worker a tenté d'envoyer une propriété MessageEvent à la page située dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker a été désinscrit alors qu'une page se trouvait dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "La page a été exclue du cache amélioré, car un service worker a été activé."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome a redémarré et effacé les entrées du cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Les pages qui utilisent SharedWorker ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Les pages qui utilisent SpeechRecognizer ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Les pages qui utilisent SpeechSynthesis ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Une navigation a démarré sur un iFrame de la page, mais ne s'est pas terminée."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Les pages dont la sous-ressource contient cache-control:no-cache ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Les pages dont la sous-ressource contient cache-control:no-store ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "La page a dépassé la durée maximale autorisée dans le cache amélioré et a expiré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Le délai d'enregistrement de la page dans le cache amélioré a été dépassé (probablement en raison de gestionnaires pagehide de longue durée)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Le frame principal de l'image contient un gestionnaire unload."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Le sous-frame de l'image contient un gestionnaire unload."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Le navigateur a modifié l'en-tête de forçage user-agent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Les pages qui ont autorisé l'enregistrement audio ou vidéo ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Les pages qui utilisent WebDatabase ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Les pages qui utilisent WebHID ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Les pages qui utilisent WebLocks ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Les pages qui utilisent WebNfc ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Les pages qui utilisent WebOTPService ne sont actuellement pas éligibles à bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Les pages avec WebRTC ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Le cache amélioré est désactivé, car WebRTC a été utilisé."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Les pages qui utilisent WebShare ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Les pages avec WebSocket ne peuvent pas être incluses dans le cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Le cache amélioré est désactivé, car WebSocket a été utilisé."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Les pages avec WebTransport ne sont pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Le cache amélioré est désactivé, car WebTransport a été utilisé."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Les pages qui utilisent WebXR ne sont actuellement pas éligibles au cache amélioré."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Pour le contenu animé, utilisez [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) afin que le processeur soit sollicité le moins possible lorsque le contenu se situe hors écran."
@@ -2718,55 +3093,55 @@
     "message": "Envisagez d'utiliser l'outil `BreakpointObserver` du kit de développement de composants pour gérer les points d'arrêt de l'image. [En savoir plus](https://material.angular.io/cdk/layout/overview)"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your `GIF` to a service which will make it available to embed as an HTML5 video."
+    "message": "Envisagez d'importer votre `GIF` dans un service qui permettra de l'intégrer en tant que vidéo HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
     "message": "Envisagez de configurer les [formats d'image WebP avec un style de conversion d'image](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles) sur votre site."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Consider configuring lazy load images in `Drupal`. The field formatters for images support `lazy` or `eager`."
+    "message": "Envisagez de configurer le chargement différé des images dans `Drupal`. Les outils de mise en forme de champ pour les images acceptent `lazy` ou `eager`."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | prioritize-lcp-image": {
-    "message": "If the LCP element is dynamically added to the page, you should optimize the image in order to improve LCP. [Learn more](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)."
+    "message": "Si l'élément LCP est ajouté de façon dynamique à la page, optimisez l'image pour améliorer le LCP. [En savoir plus](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | redirects": {
-    "message": "Redirects introduce additional delays before the page can be loaded. If the [Redirect](https://www.drupal.org/project/redirect) module is installed, review if unnecessary redirects can be removed. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
+    "message": "Les redirections entraînent des retards supplémentaires avant que la page ne puisse être chargée. Si le module [Redirect](https://www.drupal.org/project/redirect) est installé, vérifiez si vous pouvez supprimer des redirections inutiles. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/redirects)"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using [a module](https://www.drupal.org/project/critical_css) to inline critical CSS and JavaScript, and use the defer attribute for non-critical CSS or JavaScript."
+    "message": "Envisagez d'utiliser un [module](https://www.drupal.org/project/critical_css) pour intégrer le code CSS et JavaScript critique, et utilisez l'attribut \"defer\" pour le code CSS ou JavaScript non critique."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
-    "message": "Offload traffic with one or more `Drupal` caching modules such as `Internal Page Cache`, `Internal Dynamic Page Cache`, and `BigPipe`. Couple these with a CDN to further improve response time. Your hosting servers should make use of PHP OPcache. Consider using memory-caching such as Redis or Memcached to reduce database query times. Lastly use performant themes, modules, and faster servers to lower server response time."
+    "message": "Déchargez le trafic avec un ou plusieurs modules de mise en cache `Drupal` tels que `Internal Page Cache`, `Internal Dynamic Page Cache` et `BigPipe`. Associez-les à un CDN pour améliorer le délai de réponse. Vos serveurs d'hébergement doivent exploiter PHP OPcache. Envisagez d'utiliser la mise en cache de la mémoire (avec Redis ou Memcached, par exemple) pour réduire les temps d'interrogation des bases de données. Enfin, utilisez des thèmes et des modules performants, ainsi que des serveurs plus rapides, pour réduire le temps de réponse du serveur."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) to reduce the size of images loaded on your page. If you are using `Views` to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Vous pouvez également envisager d'utiliser [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) pour réduire la taille des images chargées sur votre page. Si vous utilisez `Views` pour afficher plusieurs éléments de contenu sur une même page, envisagez d'implémenter la pagination pour limiter le nombre d'éléments de contenu affichés sur une page."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page."
+    "message": "Assurez-vous que vous avez activé l'option \"Regrouper les fichiers CSS\" sur la page Administration > Configuration > Développement."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page."
+    "message": "Assurez-vous que vous avez activé l'option \"Regrouper les fichiers JavaScript\" sur la page Administration > Configuration > Développement."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed `Drupal` libraries to the relevant page or component in a page. See the [`Drupal` documentation](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your `Drupal` site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only attach a stylesheet library if it is actually used on the page."
+    "message": "Envisagez de supprimer les règles CSS inutilisées et d'associer uniquement les bibliothèques `Drupal` nécessaires à la page ou au composant de page concernés. Pour en savoir plus, consultez la [documentation`Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Pour déterminer quelles bibliothèques associées ajoutent des CSS superflus, essayez d'exécuter la [couverture de code](https://developer.chrome.com/docs/devtools/coverage) dans les outils pour les développeurs Chrome. Lorsque le regroupement de CSS est désactivé sur votre site `Drupal`, vous pouvez identifier le thème ou le module qui en est responsable à partir de l'URL de la feuille de style. Recherchez les thèmes ou les modules pour lesquels un grand nombre de feuilles de style présentent beaucoup d'éléments en rouge dans la couverture de code. Un thème ou un module ne doit associer une bibliothèque de feuilles de style que si elle est effectivement utilisée sur la page."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScript assets and only attach the needed `Drupal` libraries to the relevant page or component in a page. See the [Drupal documentation](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your `Drupal` site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only attach a script library if it is actually used on the page."
+    "message": "Envisagez de supprimer les éléments JavaScript inutilisés et d'associer uniquement les bibliothèques `Drupal` nécessaires à la page ou au composant de page concernés. Pour en savoir plus, consultez la [documentation Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Pour déterminer quelles bibliothèques associées ajoutent des scripts JavaScript superflus, exécutez une [couverture de code](https://developer.chrome.com/docs/devtools/coverage) dans les outils pour les développeurs Chrome. Lorsque l'agrégation JavaScript est désactivée sur votre site `Drupal`, vous pouvez identifier le thème ou le module responsable à partir de l'URL du script. Recherchez les thèmes ou les modules pour lesquels un grand nombre de scripts présentent beaucoup d'éléments en rouge dans la couverture de code. Un thème ou un module ne doit associer une bibliothèque de scripts que si elle est effectivement utilisée sur la page."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [`Drupal` cache and optimizing for performance](https://www.drupal.org/docs/8/api/cache-api/cache-api)."
+    "message": "Définissez le paramètre \"Âge maximum du navigateur et du proxy cache\" sur la page Administration > Configuration > Développement. En savoir plus sur le [cache `Drupal` et l'optimisation des performances](https://www.drupal.org/docs/8/api/cache-api/cache-api)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) provided from `Drupal` for all images rendered on the site."
+    "message": "Vous pouvez envisager d'utiliser [un module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search) qui optimise et réduit automatiquement la taille des images importées sur le site sans perdre en qualité. Assurez-vous également que vous utilisez le module natif [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) fourni par `Drupal` pour toutes les images affichées sur le site."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "`Preconnect` or `dns-prefetch` resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Il est possible d'ajouter des indices de ressources `Preconnect` ou `dns-prefetch` en installant et en configurant un [module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search) qui fournit une fonction pour les indices de ressources user-agent."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) provided from `Drupal`. Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
+    "message": "Assurez-vous que vous utilisez le module natif [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) fourni par `Drupal`. Utilisez Responsive Image Styles lors de l'affichage des champs d'image par l'intermédiaire des modes Vue, des vues ou des images importés via l'éditeur WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-text-compression": {
-    "message": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. Consider using a CDN that natively supports this, or configure the web server to perform this operation. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "Les ressources textuelles doivent être diffusées compressées (Gzip, Deflate ou Brotli) pour réduire le nombre total d'octets du réseau. Envisagez d'utiliser un CDN qui prend en charge cette fonctionnalité de manière native ou de configurer le serveur Web pour effectuer cette opération. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
     "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Optimize Fonts` pour utiliser automatiquement la fonction CSS `font-display` afin que le texte soit visible par les utilisateurs pendant le chargement des polices Web."
@@ -3096,7 +3471,7 @@
     "message": "Divers plug-ins WordPress peuvent vous aider à [aligner des éléments critiques](https://wordpress.org/plugins/search/critical+css/) ou à [différer le chargement des ressources moins importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Gardez en tête qu'à cause des optimisations fournies par ces plug-ins, certaines fonctionnalités de votre thème ou de vos plug-ins peuvent cesser de fonctionner. Vous devrez donc probablement modifier le code."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
-    "message": "Choose a lightweight theme (ideally a block theme) and implement full-page caching or a static site solution. Disable unnecessary plugins to minimize server overhead. Consider upgrading your hosting to managed or dedicated service."
+    "message": "Choisissez un thème léger (idéalement un thème basé sur des blocs) et implémentez la mise en cache de la page entière ou une solution de site statique. Désactivez les plug-ins inutiles pour réduire les frais généraux de serveur. Envisagez de passer à un service d'hébergement géré ou dédié."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Vous pouvez envisager d'afficher des extraits dans vos listes d'articles (par exemple en utilisant la balise \"more\"), de réduire le nombre d'articles affichés dans une page donnée, de répartir vos articles longs sur plusieurs pages ou d'utiliser un plug-in qui charge de façon différée les commentaires."

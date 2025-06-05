@@ -23,8 +23,8 @@ import {LighthouseError} from '../../lib/lh-error.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {ExecutionContext} from '../driver/execution-context.js';
-import RootCauses from './root-causes.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
+import SourceMaps from './source-maps.js';
 
 /** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
 
@@ -46,10 +46,10 @@ function getNodeDetailsData() {
 /* c8 ignore stop */
 
 class TraceElements extends BaseGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'|'RootCauses'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol, RootCauses: RootCauses.symbol},
+    dependencies: {Trace: Trace.symbol, SourceMaps: SourceMaps.symbol},
   };
 
   /** @type {Map<string, string>} */
@@ -66,54 +66,105 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {string|undefined} navigationId
+   * @return {Promise<Array<{nodeId: number}>>}
+   */
+  static async getTraceEngineElements(traceEngineResult, navigationId) {
+    // Can only resolve elements for the latest insight set, which should correspond
+    // to the current navigation id (if present). Can't resolve elements for pages
+    // that are gone.
+    const insightSet = [...traceEngineResult.insights.values()].at(-1);
+    if (!insightSet) {
+      return [];
+    }
+
+    if (navigationId) {
+      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+        return [];
+      }
+    } else {
+      if (insightSet.navigation) {
+        return [];
+      }
+    }
+
+    /**
+     * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
+     * @param {any} obj
+     * @param {(obj: Record<string, unknown>, key: string) => void} cb
+     * @param {Set<object>} seen
+     */
+    function recursiveObjectEnumerate(obj, cb, seen) {
+      if (seen.has(seen)) {
+        return;
+      }
+
+      seen.add(obj);
+
+      if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        if (obj instanceof Map) {
+          for (const [key, val] of obj) {
+            if (typeof val === 'object') {
+              recursiveObjectEnumerate(val, cb, seen);
+            } else {
+              cb(val, key);
+            }
+          }
+        } else {
+          Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'object') {
+              recursiveObjectEnumerate(obj[key], cb, seen);
+            } else {
+              cb(obj[key], key);
+            }
+          });
+        }
+      } else if (Array.isArray(obj)) {
+        obj.forEach(item => {
+          if (typeof item === 'object' || Array.isArray(item)) {
+            recursiveObjectEnumerate(item, cb, seen);
+          }
+        });
+      }
+    }
+
+    /** @type {number[]} */
+    const nodeIds = [];
+    recursiveObjectEnumerate(insightSet.model, (val, key) => {
+      const keys = ['nodeId', 'node_id', 'backendNodeId'];
+      if (typeof val === 'number' && keys.includes(key)) {
+        nodeIds.push(val);
+      }
+    }, new Set());
+
+    // TODO: handle digging into Map in recursiveObjectEnumerate.
+    for (const shift of insightSet.model.CLSCulprits.shifts.values()) {
+      nodeIds.push(...shift.unsizedImages.map(s => s.backendNodeId));
+    }
+
+    return [...new Set(nodeIds)].map(id => ({nodeId: id}));
+  }
+
+  /**
    * We want to a single representative node to represent the shift, so let's pick
    * the one with the largest impact (size x distance moved).
    *
    * @param {LH.Artifacts.TraceImpactedNode[]} impactedNodes
    * @param {Map<number, number>} impactByNodeId
-   * @param {import('../../lib/trace-engine.js').SaneSyntheticLayoutShift} event Only for debugging
    * @return {number|undefined}
    */
-  static getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event) {
-    try {
-      let biggestImpactNodeId;
-      let biggestImpactNodeScore = Number.NEGATIVE_INFINITY;
-      for (const node of impactedNodes) {
-        const impactScore = impactByNodeId.get(node.node_id);
-        if (impactScore !== undefined && impactScore > biggestImpactNodeScore) {
-          biggestImpactNodeId = node.node_id;
-          biggestImpactNodeScore = impactScore;
-        }
+  static getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId) {
+    let biggestImpactNodeId;
+    let biggestImpactNodeScore = Number.NEGATIVE_INFINITY;
+    for (const node of impactedNodes) {
+      const impactScore = impactByNodeId.get(node.node_id);
+      if (impactScore !== undefined && impactScore > biggestImpactNodeScore) {
+        biggestImpactNodeId = node.node_id;
+        biggestImpactNodeScore = impactScore;
       }
-      return biggestImpactNodeId;
-    } catch (err) {
-      // See https://github.com/GoogleChrome/lighthouse/issues/15870
-      // `impactedNodes` should always be an array here, but it can randomly be something else for
-      // currently unknown reasons. This exception handling will help us identify what
-      // `impactedNodes` really is and also prevent the error from being fatal.
-
-      // It's possible `impactedNodes` is not JSON serializable, so let's add more supplemental
-      // fields just in case.
-      const impactedNodesType = typeof impactedNodes;
-      const impactedNodesClassName = impactedNodes?.constructor?.name;
-
-      let impactedNodesJson;
-      let eventJson;
-      try {
-        impactedNodesJson = JSON.parse(JSON.stringify(impactedNodes));
-        eventJson = JSON.parse(JSON.stringify(event));
-      } catch {}
-
-      Sentry.captureException(err, {
-        extra: {
-          impactedNodes: impactedNodesJson,
-          event: eventJson,
-          impactedNodesType,
-          impactedNodesClassName,
-        },
-      });
-      return;
     }
+    return biggestImpactNodeId;
   }
 
   /**
@@ -123,11 +174,10 @@ class TraceElements extends BaseGatherer {
    *
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.TraceEngineResult['parsedTrace']} traceEngineResult
-   * @param {LH.Artifacts.TraceEngineRootCauses} rootCauses
    * @param {LH.Gatherer.Context} context
    * @return {Promise<Array<{nodeId: number}>>}
    */
-  static async getTopLayoutShifts(trace, traceEngineResult, rootCauses, context) {
+  static async getTopLayoutShifts(trace, traceEngineResult, context) {
     const {impactByNodeId} = await CumulativeLayoutShift.request(trace, context);
     const clusters = traceEngineResult.LayoutShifts.clusters ?? [];
     const layoutShiftEvents =
@@ -142,17 +192,9 @@ class TraceElements extends BaseGatherer {
         const nodeIds = [];
         const impactedNodes = event.args.data.impacted_nodes || [];
         const biggestImpactedNodeId =
-          this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId, event);
+          this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId);
         if (biggestImpactedNodeId !== undefined) {
           nodeIds.push(biggestImpactedNodeId);
-        }
-
-        const index = layoutShiftEvents.indexOf(event);
-        const shiftRootCauses = rootCauses.layoutShifts[index];
-        if (shiftRootCauses) {
-          for (const cause of shiftRootCauses.unsizedMedia) {
-            nodeIds.push(cause.node.backendNodeId);
-          }
         }
 
         return nodeIds.map(nodeId => ({nodeId}));
@@ -307,27 +349,33 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.Context<'Trace'|'RootCauses'>} context
+   * @param {LH.Gatherer.Context<'Trace'|'SourceMaps'>} context
    * @return {Promise<LH.Artifacts.TraceElement[]>}
    */
   async getArtifact(context) {
     const session = context.driver.defaultSession;
 
     const trace = context.dependencies.Trace;
-    const traceEngineResult = await TraceEngineResult.request({trace}, context);
-    const rootCauses = context.dependencies.RootCauses;
+    const SourceMaps = context.dependencies.SourceMaps;
+    const settings = context.settings;
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
+    const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
 
+    const traceEngineData = await TraceElements.getTraceEngineElements(
+      traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
-      trace, traceEngineResult.parsedTrace, rootCauses, context);
+      trace, traceEngineResult.parsedTrace, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
+      ['trace-engine', traceEngineData],
       ['largest-contentful-paint', lcpNodeData ? [lcpNodeData] : []],
       ['layout-shift', shiftsData],
       ['animation', animatedElementData],
@@ -336,6 +384,7 @@ class TraceElements extends BaseGatherer {
 
     /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
     const callFunctionOnCache = new Map();
+    /** @type {LH.Artifacts.TraceElement[]} */
     const traceElements = [];
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
@@ -348,8 +397,8 @@ class TraceElements extends BaseGatherer {
 
         if (response?.result?.value) {
           traceElements.push({
-            traceEventType,
             ...response.result.value,
+            traceEventType,
             animations: backendNodeData[i].animations,
             nodeId: backendNodeId,
             type: backendNodeData[i].type,

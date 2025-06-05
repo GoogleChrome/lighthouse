@@ -660,7 +660,10 @@
     "message": "استخدام تنسيقات الفيديو لمحتوى الصور المتحركة"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "تساعد الرموز البرمجية polyfills وtransforms المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. وبالنسبة إلى حِزم JavaScript، يمكنك استخدام استراتيجية حديثة لنشر النصوص البرمجية باستخدام ميزة الكشف عن الميزات \"module/nomodule\" لتقليل عدد الرموز البرمجية التي يتم نقلها إلى المتصفّحات الحديثة مع استمرار التوافق مع المتصفّحات القديمة. تعرَّف على [كيفية استخدام لغة JavaScript الحديثة](https://web.dev/articles/publish-modern-javascript)."
+    "message": "تساعد الرموز البرمجية polyfills وtransforms المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية إنشاء رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/baseline)، إلّا في حال ضرورة دعم المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "تم رصد الإصدار 2 من core-js على الصفحة. ويجب الترقية إلى الإصدار 3 للحصول على العديد من التحسينات على مستوى الأداء."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "تجنُّب عرض ميزات JavaScript القديمة في المتصفحات الحديثة"
@@ -761,6 +764,18 @@
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "تفعيل ضغط النص"
   },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "يظهر لك أدناه عنوان ‎`X-Frame-Options` (XFO) أو توجيه `frame-ancestors` في عنصر التحكّم في عنوان ‎`Content-Security-Policy` (CSP) حيث يمكن تضمين صفحة. ويمكن أن يحد هذان العنصران من خطر هجمات clickjacking من خلال منع بعض أو كل المواقع الإلكترونية من تضمين الصفحة. [مزيد من المعلومات حول الحدّ من هجمات clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "لم يتم العثور على سياسة التحكّم في الإطار"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "الحدّ من هجمات clickjacking باستخدام XFO أو CSP"
+  },
   "core/audits/critical-request-chains.js | description": {
     "message": "توضّح لك \"سلاسل الطلبات المُهمّة\" أدناه الموارد التي تم تحميلها بأولوية عالية. ويمكنك تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة. تعرَّف على [كيفية تجنُّب تسلسل الطلبات المُهمّة](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
   },
@@ -771,7 +786,7 @@
     "message": "تجنَّب سلاسل الطلبات المهمة"
   },
   "core/audits/csp-xss.js | columnDirective": {
-    "message": "أمر توجيهي"
+    "message": "التوجيه"
   },
   "core/audits/csp-xss.js | columnSeverity": {
     "message": "درجة الخطورة"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيمة `font-display` في الأصل التالي: {fontOrigin}.}zero{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}two{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصلَين التاليَين: {fontOrigin}.}few{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}many{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}other{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "التوجيه"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "يساهم تفعيل عنوان HSTS في تقليل خطر خفض مستوى اتصالات HTTP بشكل كبير مع منع محاولات التجسس على البيانات. يُنصح بتنفيذ الميزة على مراحل، بدءًا من قيمة منخفضة لتوجيه max-age. [مزيد من المعلومات عن استخدام سياسة HSTS قوية](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "بنية غير صالحة"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "قيمة توجيه `max-age` منخفضة جدًا"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "لم يتم العثور على عنوان HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "لم يتم العثور على توجيه `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "لم يتم العثور على توجيه `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "لم يتم العثور على توجيه `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "استخدام سياسة HSTS قوية"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "نسبة العرض إلى الارتفاع (الفعلية)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "يتم عرض الصور بدقة مناسبة"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "نتيجة متغيّرات التصميم"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "مسموح به"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "إطار iframe الذي تم إدخاله"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "أدَّى طلب الشبكة المتأخّر إلى تعديل تصميم الصفحة."
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "لم يتم تحديد حجم واضح لعنصر الوسائط."
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "يحتوي \"التأثير\" على مَعلَمات توقيت غير متوافقة"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "التوجيه"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "يمكن استخدام سياسة Cross-Origin-Opener-Policy (COOP) لعزل النافذة ذات المستوى الأعلى عن المستندات الأخرى، مثل النوافذ المنبثقة. [مزيد من المعلومات حول تفعيل عنوان COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "بنية غير صالحة"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "لم يتم العثور على عنوان COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "ضمان عزل النطاق بشكلٍ صحيح باستخدام سياسة COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "يجب تحميل الخطوط `optional` بشكل مسبق حتى يتسنى للزوار الجدد استخدامها. [مزيد من المعلومات عن التحميل المسبَق للخطوط](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "تم رصد عملية تنقّل في الصفحة أثناء التشغيل. لا يُنصَح باستخدام وضع الفترة الزمنية للتدقيق في عمليات التنقّل في الصفحة. يرجى استخدام وضع التنقّل للتدقيق في عمليات التنقّل في الصفحة من أجل تحديد المصادر الخارجية بشكل أفضل ورصد السلاسل الرئيسية."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات فقط التي تم تحميلها من خلال طلب استرداد بيانات باستخدام GET."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي تتضمّن رمز الحالة 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "اكتشَف Chrome محاولةً لتنفيذ JavaScript أثناء التخزين المؤقت."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت AppBanner."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب طلب التحقّق من الاتصال."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في chrome://flags. يمكنك الانتقال إلى الرابط chrome://flags/#back-forward-cache لتفعيلها على هذا الجهاز."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "أوقفَ سطر الأوامر ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب عدم توفّر مساحة كافية في الذاكرة."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "لا تتوفّر ميزة \"التخزين المؤقت للصفحات\" من خلال التفويض."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في العارض المسبق."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "لا يمكن تخزين الصفحة مؤقتًا لأنها تحتوي على مثيل BroadcastChannel يتضمّن أدوات مسجَّلة لمعالجة الحدث."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "لا يمكن تخزين الصفحات التي تحتوي على عنوان cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "تم محو ذاكرة التخزين المؤقت عن قصد."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بتخزين صفحة أخرى مؤقتًا."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تحتوي على مكوّنات إضافية."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم FileChooser API."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم File System Access API."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم Media Device Dispatcher (أداة إرسال جهاز الوسائط)."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "كان أحد مشغّلات الوسائط قيد التشغيل أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم MediaSession API وتضبط حالة للتشغيل."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم MediaSession API وتضبط معالِجات الإجراءات."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام قارئ الشاشة."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم SecurityHandler."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم Serial API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" في الصفحات التي تستخدم واجهة برمجة التطبيقات WebAuthentication API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebBluetooth API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" لتخزين الصفحات التي تستخدم WebUSB API."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب إيقاف ملفات تعريف الارتباط على صفحة تستخدم السمة `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم مشغّل خدمات مخصَّصًا أو وظيفة مصغَّرة."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "تمّت مغادرة المستند قبل أن ينتهي من التحميل."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "كان بانر التطبيق قيد الاستخدام أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "كان \"مدير كلمات المرور\" في Chrome قيد الاستخدام أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "كانت عملية استخلاص \"نموذج العناصر في المستند\" (DOM) يتم تنفيذها أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "كان عارض ميزة DOM Distiller قيد الاستخدام أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ الإضافات تستخدم واجهة برمجة تطبيقات خدمة المراسلة."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "الإضافات ذات الاتصال الطويل الأمد يجب أن تُغلِق الاتصال قبل تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "حاولت الإضافات ذات الاتصال الطويل الأمد إرسال رسائل إلى الإطارات المدرَجة في ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام الإضافات."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "تم عرض مربّع حوار نمطي في الصفحة أثناء مغادرتها، مثل مربّع حوار إعادة إرسال النموذج أو مربّع حوار مصادقة HTTP باستخدام كلمة مرور."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "تم عرض الصفحة المتوفّرة بلا اتصال بالإنترنت أثناء المغادرة."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "كان شريط Out-Of-Memory Intervention قيد الاستخدام أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "كانت هناك طلبات أذونات أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "كان حاجب النوافذ المنبثقة قيد الاستخدام أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "تم عرض تفاصيل \"التصفُّح الآمن\" أثناء مغادرة الصفحة."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "رصدت ميزة \"التصفُّح الآمن\" أنّ هذه الصفحة تتضمن محتوى مسيئًا وحظرت نافذة منبثقة."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "كان أحد مشغّلي الخدمات مفعّلاً أثناء إجراء تخزين مؤقت للصفحة باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب خطأ في المستند."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "لا يمكن تخزين الصفحات التي تستخدم الإطار FencedFrames من خلال ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بتخزين صفحة أخرى مؤقتًا."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي سمحت بالوصول إلى محتوى الوسائط."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم بوابات الويب."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم IdleManager."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تحتوي على اتصال IndexedDB مفتوح."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب حدث في IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "تم استخدام واجهات غير مؤهَّلة لبرمجة التطبيقات."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال `JavaScript` فيها من خلال الإضافات."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال `StyleSheet` فيها من خلال الإضافات."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "حدث خطأ داخلي."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب طلب التحقّق من الاتصال."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم قفل لوحة المفاتيح."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "تمت مغادرة الصفحة قبل أن تنتهي من التحميل."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الرئيسي على cache-control:no-cache باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الرئيسي على cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "تم إلغاء التنقّل قبل أن تتم استعادة الصفحة من عملية التخزين المؤقت باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال النشط بالشبكة تلقّى الكثير من البيانات، علمًا بأنّ Chrome يقلِّل مقدار البيانات التي قد تتلقّاها الصفحة أثناء تخزينها مؤقتًا."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم XHR أو fetch()‎ يتم تنفيذهما حاليًا."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "تم إخراج الصفحة من عملية التخزين المؤقت باستخدام ميزة \"التخزين المؤقت للصفحات\" لأنّ أحد طلبات الشبكة النشطة تضمَّن إعادة توجيه."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال بالشبكة كان مفتوحًا لفترة طويلة جدًا، علمًا بأنّ Chrome يقلِّل مقدار الوقت الذي قد تتلقّى خلاله الصفحة البيانات أثناء تخزينها مؤقتًا."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "لا يمكن تخزين الصفحات التي لا تحتوي على عنوان استجابة صالح باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "حدث التنقّل في إطار غير الإطار الرئيسي."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تتضمّن عمليات جارية لقاعدة البيانات المُفهرَسة."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة يتم تنفيذه حاليًا."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب استرجاع لبيانات شبكة يتم تنفيذه حاليًا."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة يتم تنفيذه حاليًا."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم طلب شبكة XHR يتم تنفيذه حاليًا."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم PaymentManager."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم ميزة \"نافذة ضمن النافذة\"."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم بوابات الويب."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تعرض \"واجهة المستخدم الخاصة بالطباعة\"."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "تم فتح الصفحة باستخدام `window.open()` وعلامة تبويب أخرى بها مرجع إليها، أو فتحت الصفحة نافذة."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "تعطّلت عملية العرض للصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "تم إنهاء عملية العرض للصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات تسجيل الصوت."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات أدوات الاستشعار."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت إذن الاسترجاع أو إذن المزامنة في الخلفية."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات الوصول إلى أجهزة MIDI."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات إرسال الإشعارات."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت الوصول إلى مساحة التخزين."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي طلبت أذونات تسجيل الفيديو."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي يكون مخطَّط URL فيها هو HTTP/HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "استدعى أحد مشغّلي الخدمات الصفحة أثناء تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "حاول أحد مشغّلي الخدمات إرسال `MessageEvent` إلى الصفحة خلال تخزينها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "تم إلغاء تسجيل ServiceWorkers أثناء تخزين صفحة باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "تم استبعاد هذه الصفحة من ميزة \"التخزين المؤقت للصفحات\" بسبب تفعيل مشغّل خدمات."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "تمت إعادة تشغيل Chrome ومحو إدخالات ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SharedWorker."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SpeechRecognizer."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم SpeechSynthesis."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "بدأ إطار iframe على الصفحة عملية تنقُّل لم تكتمل."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الفرعي على cache-control:no-cache باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "لا يمكن تخزين الصفحات التي يحتوي موردها الفرعي على cache-control:no-store باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "تجاوزت الصفحة الحدّ الأقصى لوقت التخزين في ميزة \"التخزين المؤقت للصفحات\" وانتهت صلاحيتها."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "انتهت مهلة تخزين الصفحة باستخدام ميزة \"التخزين المؤقت للصفحات\" (من المرجَّح أنّ سبب ذلك هو معالِجات إخفاء الصفحات التي تستغرق مدة زمنية طويلة)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "تحتوي الصفحة على معالج لإلغاء التحميل في الإطار الرئيسي."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "تحتوي الصفحة على معالِج لإلغاء التحميل في إطار فرعي."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "غيَّر المتصفّح عنوان تجاوز وكيل المستخدم."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي سمحَت بتسجيل فيديو أو صوت."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebDatabase."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebHID."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebLocks."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebNfc."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebOTPService."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "لا يمكن تخزين الصفحات التي تحتوي على WebRTC باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebShare."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "لا يمكن تخزين الصفحات التي تحتوي على WebSocket باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "لا يمكن تخزين الصفحات التي تحتوي على WebTransport باستخدام ميزة \"التخزين المؤقت للصفحات\"."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تستخدم WebXR."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "ننصحك بإضافة مخطّطات عناوين تستخدم https: وhttp: (التي تتجاهلها المتصفّحات الداعمة لـ `'strict-dynamic'`) للتوافق مع الأنظمة القديمة مع المتصفّحات القديمة."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "تم استخدام ميزة متوقّفة نهائيًا"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "لن يشمل رمز حرف البدل (*) الإذن في معالجة العنوان `Access-Control-Allow-Headers` في سياسة Cross-Origin Resource Sharing ‏(CORS)."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "يجب استخدام السمة `disableRemotePlayback` لإيقاف الدمج التلقائي للبث بدلاً من استخدام أداة الاختيار `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "يتم حظر طلبات الموارد التي تتضمّن عناوين URL الخاصة بها كلاً من أحرف `(n|r|t)` للمسافة البيضاء وأحرف \"أقل من\" (`<`) التي تمت إزالتها. لتحميل هذه الموارد، يُرجى إزالة السطور الجديدة وترميز أحرف \"أقل من\" من خلال مواضع مثل قيم سمات العناصر."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "تم إيقاف `chrome.loadTimes()` نهائيًا، ويمكنك بدلاً منها استخدام واجهة برمجة التطبيقات Navigation Timing 2 الموحَّدة."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات `chrome.loadTimes()` نهائيًا. وبدلاً منها، يمكنك استخدام واجهة برمجة التطبيقات الموحَّدة Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات `chrome.loadTimes()` نهائيًا. وبدلاً منها، يمكنك استخدام واجهة برمجة التطبيقات الموحَّدة Navigation Timing 2 التي تتضمّن `nextHopProtocol`."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "سيتم رفض ملفات تعريف الارتباط التي تتضمّن الحرف `(0|r|n)` بدلاً من اقتطاعها."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "إنّ ميزة تخفيف قيود السياسة المشتركة المصدر من خلال ضبط `document.domain` تم إيقافها نهائيًا، وستصبح غير مفعَّلة تلقائيًا. ويتعلّق تحذير الإيقاف النهائي هذا بإذن الوصول من مصادر متعددة والذي تم تفعيله من خلال ضبط `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "إنَّ ميزة تنفيذ الوظيفة window.alert المستنِدة إلى إطارات iframe من مصادر متعددة تم إيقافها نهائيًا وستتم إزالتها في المستقبل."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "إنّ ميزة تنفيذ الوظيفة window.confirm المستنِدة إلى إطارات iframe من مصادر متعددة تم إيقافها نهائيًا وستتم إزالتها في المستقبل."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "تم إيقاف أحداث تغيُّر نموذج العناصر في المستند (DOM)، بما في ذلك `DOMSubtreeModified` و`DOMNodeInserted` و`DOMNodeRemoved` و`DOMNodeRemovedFromDocument` و`DOMNodeInsertedIntoDocument` و`DOMCharacterDataModified` (https://w3c.github.io/uievents/#legacy-event-types) وستتم إزالتها. يُرجى استخدام `MutationObserver` بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "تم إيقاف المخطّطات data: URL نهائيًا في عنصر <use> للرسومات الموجّهة التي يمكن تغيير حجمها (SVG) وستتم إزالتها في المستقبل."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "إنّ ميزة تخفيف قيود السياسة المشتركة المصدر من خلال ضبط `document.domain` تم إيقافها نهائيًا، وستصبح غير مفعَّلة تلقائيًا. لمواصلة استخدام هذه الميزة، يُرجى إيقاف مجموعات الوكلاء المرتبطة حسب المصدر من خلال إرسال العنوان `Origin-Agent-Cluster: ?0` مع استجابة HTTP للمستند والإطارات. لمعرفة مزيد من التفاصيل، يمكنك الاطّلاع على https://developer.chrome.com/blog/immutable-document-domain/‎."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "تم إيقاف عنوان `Expect-CT` نهائيًا وستتم إزالته. يتطلَّب Chrome توفُّر شهادة الشفافية لجميع الشهادات الموثوق بها التي تم إصدارها بشكل علني بعد 30 نيسان (أبريل) 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "لم تعُد الميزتان `getCurrentPosition()` و`watchPosition()` متوافقتين مع المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "تم إيقاف الإجراءين `getCurrentPosition()` و`watchPosition()` نهائيًا على المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "لم تعُد ميزة `getUserMedia()` متوافقة مع المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "تم إيقاف `RTCPeerConnectionIceErrorEvent.hostCandidate` نهائيًا. يُرجى استخدام `RTCPeerConnectionIceErrorEvent.address` أو `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "إنّ مصدر تطبيق التاجر والبيانات العشوائية من حدث مشغّل الخدمات في `canmakepayment` تم إيقافهما نهائيًا وستتم إزالتهما: `topOrigin` و`paymentRequestOrigin` و`methodData` و`modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "طلب الموقع الإلكتروني موردًا فرعيًا من شبكة يمكن الوصول إليه من خلال الموقع الإلكتروني فقط بسبب موضع مستخدميه المميّز على الشبكة. تكشف هذه الطلبات عن الأجهزة والخوادم الخاصة على الإنترنت، ما يزيد من خطر التعرض لهجمات تقليد الطلبات من موقع إلكتروني مختلف (CSRF) و/أو تسرُّب المعلومات. وللحدِّ من هذه المخاطر، أوقف Chrome نهائيًا طلبات الوصول إلى موارد فرعية خاصة، وذلك عند تقديمها من خلال سياقات غير آمنة، وسيبدأ في حظرها."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "إنّ الحقل `dailyUpdateUrl` في `InterestGroups` المضبوط على `joinAdInterestGroup()` تمت إعادة تسميته إلى `updateUrl` للإشارة إلى سلوكه بدقة أكبر."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "لا يمكن تحميل صفحات الأنماط المتتالية (CSS) من عناوين URL للملفات `file:` ما لم تنتهِ الملفات بالامتداد `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "نظرًا لتغيّر المواصفات، تم بشكل نهائي إيقاف إمكانية استخدام `SourceBuffer.abort()` الهادفة إلى إلغاء عملية إزالة النطاق غير المتزامن الذي يخصّ `remove()`. ستتم إزالة الميزة في المستقبل. وعليك معالجة الحدث `updateend` بدلاً من ذلك. ‫`abort()` مخصَّص فقط لإلغاء إمكانية إلحاق الوسائط غير المتزامنة أو إعادة ضبط حالة المحلِّل."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "نظرًا لتغيّر المواصفات، تم بشكل نهائي إيقاف إمكانية ضبط `MediaSource.duration` على قيمة أقل من الحد الأقصى للطابع الزمني المخصَّص لعرض أي إطارات تم ترميزها وتخزينها مؤقتًا. إنّ الإزالة الضمنية للوسائط المُقتطَعة التي تم تخزينها مؤقتًا لن تكون متاحة في المستقبل. وبدلاً من ذلك، يجب تطبيق `remove(newDuration, oldDuration)` بشكل واضح على جميع `sourceBuffers` التي تتوفّر بها `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "ستطلب واجهة برمجة التطبيقات Web MIDI إذنًا للاستخدام حتى في حال عدم تحديد رسائل النظام الحصرية (Sysex) في `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "إنّ سمة `shadowroot` القديمة غير الموحّدة تم إيقافها نهائيًا، و*لن تعمل* بعد الآن في الإصدار M119. يُرجى استخدام سمة `shadowrootmode` الجديدة الموحّدة بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "قد يتوقف استخدام واجهة برمجة التطبيقات Notification API من مصادر غير آمنة. يجب مراعاة نقل تطبيقك إلى مصدر آمن، مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "قد تتوقّف إمكانية طلب إذن لواجهة برمجة التطبيقات Notification API من أحد إطارات iframe من مصادر متعددة. يجب مراعاة طلب إذن من إطار عالي المستوى أو فتح نافذة جديدة بدلاً من ذلك."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "تم إيقاف الخيار `imageOrientation: 'none'`‎ في createImageBitmap نهائيًا. يُرجى استخدام createImageBitmap مع الخيار ‎\\{imageOrientation: 'from-image'\\} بدلاً منه."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "يتفاوض شريكك لاستخدام إصدار (D) القديم من بروتوكول أمان طبقة النقل (TLS). يُرجى التحقّق من الأمر مع شريكك لحلّ هذه المشكلة."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "في حال تحديد القيمة `overflow: visible` ضمن علامات img وvideo وcanvas، قد يُعرَض محتوى مرئي خارج حدود العنصر. يُرجى الاطّلاع على الرابط https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "تم إيقاف `paymentManager.instruments` نهائيًا. يُرجى استخدام ميزة التثبيت الفوري (JIT) مع تطبيقات معالجة عمليات الدفع."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "تجاوز طلب البيانات من واجهة برمجة التطبيقات `PaymentRequest` التوجيه `connect-src` في Content-Security-Policy (سياسة أمان المحتوى). تم إيقاف هذا التجاوز نهائيًا. يُرجى إضافة معرِّف طريقة الدفع من واجهة برمجة التطبيقات `PaymentRequest` (في حقل `supportedMethods`) إلى توجيه `connect-src` في سياسة أمان المحتوى."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "تم إيقاف `StorageType.persistent` نهائيًا. يُرجى استخدام `navigator.storage` الموحّدة بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "إنّ استخدام `<source src>` مع العنصر الرئيسي `<picture>` غير صالح، وبالتالي سيتم تجاهله. يُرجى استخدام `<source srcset>` بدلاً من ذلك."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "إنّ طريقة webkitCancelAnimationFrame مخصّصة للمورّدين. يُرجى استخدام طريقة cancelAnimationFrame العادية بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "إنّ طريقة webkitRequestAnimationFrame مخصّصة للمورّدين. يُرجى استخدام طريقة requestAnimationFrame العادية بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitDisplayingFullscreen نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.fullscreenElement بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitEnterFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Element.requestFullscreen()‎ بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitEnterFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Element.requestFullscreen()‎ بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitExitFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.exitFullscreen()‎ بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitExitFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.exitFullscreen()‎ بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitSupportsFullscreen نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.fullscreenEnabled بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "سيتم إيقاف واجهة برمجة التطبيقات `chrome.privacy.websites.privacySandboxEnabled` نهائيًا، علمًا بأنّها ستظل نشطة للتوافق مع الأنظمة القديمة إلى أن يتم طرح الإصدار الرئيسي M113. بدلاً من هذه الواجهة، يُرجى استخدام واجهات برمجة التطبيقات `chrome.privacy.websites.topicsEnabled` و`chrome.privacy.websites.fledgeEnabled` و`chrome.privacy.websites.adMeasurementEnabled`. لمعرفة مزيد من المعلومات، يمكنك الانتقال إلى https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "تمت إزالة القيد `DtlsSrtpKeyAgreement`. لقد حدَّدت القيمة `false` لهذا القيد، وهو ما يتم تفسيره كمحاولة لاستخدام إجراء `SDES key negotiation` الذي تمت إزالته. لقد تمت إزالة هذه الوظيفة. وبدلاً منها، يمكنك استخدام إحدى الخدمات المتوافقة مع `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "تمت إزالة القيد `DtlsSrtpKeyAgreement`. لقد حدَّدت القيمة `true` لهذا القيد، وهو إجراء ليس له أي تأثير، غير أنّه يمكنك إزالة هذا القيد بغرض التنظيم."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "تم إيقاف الطريقة getStats()‎ المستنِدة إلى معاودة الاتصال نهائيًا وستتم إزالتها. يُرجى استخدام الطريقة getStats()‎ المتوافقة مع المواصفات بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "تم إيقاف واجهة برمجة التطبيقات Range.expand()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Selection.modify()‎ بدلاً منها."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "يتم حظر طلبات الموارد الفرعية إذا كانت عناوين URL الخاصة بها تحتوي على بيانات اعتماد مُضمَّنة (مثل `https://user:pass@host/`)."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "تم إيقاف الخيار `rtcpMuxPolicy` نهائيًا وستتم إزالته."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "ستتطلّب `SharedArrayBuffer` حظر الوصول من نطاقات أخرى. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://developer.chrome.com/blog/enabling-shared-array-buffer/‎."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "إنّ ميزة تنفيذ `speechSynthesis.speak()` بدون تفعيل المستخدِم له متوقفة نهائيًا وستتم إزالتها."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "يجب أن تستخدم الإضافات ميزة حظر الوصول من نطاقات أخرى لمواصلة استخدام `SharedArrayBuffer`. يُرجى الاطّلاع على https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/‎."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "تم إيقاف لغة الاستعلامات البنيوية (SQL) على الويب نهائيًا. يُرجى استخدام SQLite WebAssembly أو Indexed Database."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "تم إيقاف واصف الأذونات `window-placement` نهائيًا. يمكنك استخدام `window-management` كبديل. للحصول على مزيد من المساعدة، يُرجى الاطّلاع على الرابط https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "تم إيقاف سياسة الأذونات `window-placement` نهائيًا. يمكنك استخدام `window-management` كبديل. للحصول على مزيد من المساعدة، يُرجى الاطّلاع على الرابط https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "لا يتوفّر الترميز UTF-16 من خلال استجابة تنسيق json في واجهة برمجة التطبيقات `XMLHttpRequest`."
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "واجهة برمجة التطبيقات `XMLHttpRequest` المتزامنة في سلسلة أنظمة التشغيل الرئيسية متوقفة نهائيًا بسبب تأثيراتها الضارة في تجربة المستخدِم النهائي. للحصول على مزيد من المساعدة، يُرجى الاطّلاع على الرابط https://xhr.spec.whatwg.org/‎."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "تم إيقاف `supportsSession()` نهائيًا. يُرجى استخدام `isSessionSupported()` والتحقّق من القيمة المنطقية النهائية."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "وقت حظر سلسلة المحادثات الأساسية"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "الجهة الخارجية"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "الإجمالي"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "تقرير تدفق المستخدمين في أداة Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "لن يشمل رمز حرف البدل (*) الإذن في معالجة العنوان Access-Control-Allow-Headers في سياسة Cross-Origin Resource Sharing ‏(CORS)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "يجب استخدام السمة disableRemotePlayback لإيقاف الدمج التلقائي لتقنية Google Cast بدلاً من استخدام أداة الاختيار -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "لم يتم توحيد قيمة ظهور خدمة مقارنة الأسعار slider-vertical وستتم إزالتها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "يتم حظر طلبات المصادر التي تتضمّن عناوين URL الخاصة بها كلاً من أحرف المسافة البيضاء \\(n|r|t) ورمز \"الأقل من\" (<). لتحميل هذه المصادر، يُرجى إزالة السطور الجديدة وترميز رمز \"الأقل من\" من خلال مواضع مثل قيم سمات العناصر."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "تقرَّر الإيقاف النهائي لميزة الرصد التلقائي لدليل الرموز ISO-2022-JP في المستقبل القريب. يُرجى تحديد دليل الرموز في عنوان \"نوع المحتوى\" أو باستخدام علامة وصفية (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات chrome.loadTimes() نهائيًا ويمكنك بدلاً منها استخدام واجهة برمجة التطبيقات Navigation Timing 2 الموحَّدة."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات chrome.loadTimes() نهائيًا. وبدلاً منها، يمكنك استخدام واجهة برمجة التطبيقات الموحَّدة: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات chrome.loadTimes() نهائيًا. وبدلاً منها، يمكنك استخدام واجهة برمجة التطبيقات الموحَّدة Navigation Timing 2 التي تتضمّن السمة nextHopProtocol."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "سيتم رفض ملفات تعريف الارتباط التي تتضمّن الحرف \\(0|r|n) بدلاً من اقتطاعها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "بالنسبة إلى ميزة تخفيف قيود السياسة المشتركة المصدر من خلال ضبط الميزة document.domain، تم إيقافها نهائيًا وستكون غير مفعَّلة تلقائيًا. إنّ تحذير الإيقاف النهائي هذا متعلِّق بإذن الوصول من مصادر متعددة والذي تم تفعيله من خلال ضبط الميزة document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "إنَّ ميزة تنفيذ الوظيفة window.alert المستنِدة إلى إطارات iframe من مصادر متعددة تم إيقافها نهائيًا وستتم إزالتها في المستقبل."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "إنّ ميزة تنفيذ الوظيفة window.confirm المستنِدة إلى إطارات iframe من مصادر متعددة تم إيقافها نهائيًا وستتم إزالتها في المستقبل."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "إنّ أحداث تغيُّر نموذج العناصر في المستند (DOM)، بما في ذلك\nDOMSubtreeModified وDOMNodeInserted وDOMNodeRemoved وDOMNodeRemovedFromDocument وDOMNodeInsertedIntoDocument وDOMCharacterDataModified \nتم إيقافها نهائيًا (https://w3c.github.io/uievents/#legacy-event-types)، وستتم إزالتها. يُرجى استخدام MutationObserver بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "تم بشكل نهائي إيقاف استخدام عناوين URL التي تبدأ بمخطّط \"data:‎\" في واجهة SVGUseElement، وستتم إزالة هذه الميزة في المستقبل."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "لم يعد الإجراءان getCurrentPosition() وwatchPosition() متوافقين مع المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "تم إيقاف الإجراءين getCurrentPosition() وwatchPosition() نهائيًا على المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "لم تعد الميزة getUserMedia() متوافقة مع المصادر غير الآمنة. لاستخدام هذه الميزة، يجب مراعاة نقل تطبيقك إلى مصدر آمن مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "تم العثور على علامة <h1> ضِمن <article> أو <aside> أو <nav> أو <section>، ولا يتضمّن هذا العنصر حجمًا محدّدًا للخط. سيتم تغيير حجم نص هذا العنوان في هذا المتصفِّح قريبًا. يُرجى الاطّلاع على https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 لمزيد من المعلومات."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "تم إيقاف RTCPeerConnectionIceErrorEvent.hostCandidate نهائيًا. يُرجى استخدام RTCPeerConnectionIceErrorEvent.address أو RTCPeerConnectionIceErrorEvent.port بدلاً منها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "تم إيقاف تنسيق طلب navigator.credentials.get()‎ لبيانات الاعتماد الرقمية نهائيًا، لذا يُرجى تعديل طلبك لاستخدام التنسيق الجديد."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "إنّ أصل التاجر والبيانات العشوائية من حدث مشغّل الخدمات في canmakepayment تم إيقافهما نهائيًا وستتم إزالتهما: topOrigin وpaymentRequestOrigin وmethodData وmodifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "طلب الموقع الإلكتروني مصدرًا فرعيًا من شبكة يمكن الوصول إليه من خلال الموقع الإلكتروني فقط بسبب موضع مستخدميه المميّز على الشبكة. تكشف هذه الطلبات الأجهزة والخوادم الخاصة على الإنترنت، ما يزيد من خطر تزوير الطلب من موقع إلكتروني مختلف (CSRF) و/أو تسرُّب المعلومات. وللحدِّ من هذه المخاطر، أوقف Chrome نهائيًا طلبات الوصول إلى مصادر فرعية خاصة، وذلك عند تقديمها من خلال سياقات غير آمنة، وسيبدأ في حظرها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "تمت إعادة تسمية الحقل dailyUpdateUrl في InterestGroups الذي تم تمريره إلى joinAdInterestGroup() ليصبح updateUrl لكي يوضّح اسم الحقل سلوكه بدقة أكبر."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "تم إيقاف Intl.v8BreakIterator نهائيًا. يُرجى استخدام Intl.Segmenter بدلاً منها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "لا يمكن تحميل صفحات الأنماط المتتالية (CSS) من عناوين URL للملفات file: ما لم تنتهِ الملفات بالامتداد .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "تم بشكل نهائي إيقاف ميزة استخدام SourceBuffer.abort() لإلغاء إزالة النطاق غير المتزامن للإجراء remove() بسبب تغيُّر المواصفات. ستتم إزالة الميزة في المستقبل. وعليك معالجة الحدث updateend بدلاً من ذلك. يهدف الإجراء abort() فقط إلى إلغاء إمكانية إلحاق الوسائط غير المتزامنة أو إعادة ضبط حالة المحلِّل."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "تم بشكل نهائي إيقاف إمكانية ضبط السمة MediaSource.duration على قيمة أقل من الحد الأقصى للطابع الزمني المخصَّص لعرض أي إطارات تم ترميزها وتخزينها مؤقتًا بسبب تغيُّر المواصفات. إنّ الإزالة الضمنية للوسائط المُقتطَعة التي تم تخزينها مؤقتًا لن تكون متاحة في المستقبل. وبدلاً من ذلك، يجب تطبيق الوظيفة remove(newDuration, oldDuration) بشكل واضح على جميع واجهات برمجة التطبيقات sourceBuffers التي تتوفّر بها newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "ستطلب واجهة برمجة التطبيقات Web MIDI إذنًا للاستخدام حتى في حال عدم تحديد رسائل النظام الحصرية (Sysex) في MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "قد يتوقف استخدام واجهة برمجة التطبيقات Notification API من مصادر غير آمنة. يجب مراعاة نقل تطبيقك إلى مصدر آمن، مثل HTTPS. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "قد تتوقّف إمكانية طلب إذن لواجهة برمجة التطبيقات Notification API من أحد إطارات iframe من مصادر متعددة. يجب مراعاة طلب إذن من إطار عالٍ المستوى أو فتح نافذة جديدة بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "تم إيقاف الخيار \"imageOrientation: 'none'\" في createImageBitmap. يُرجى استخدام createImageBitmap مع الخيار ‎\\\\{imageOrientation: 'from-image'\\\\} بدلاً منه."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "يتفاوض شريكك لاستخدام إصدار (D) القديم من بروتوكول أمان طبقة النقل (TLS). يُرجى التحقّق من الأمر مع شريكك لحلّ هذه المشكلة."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "في حال تحديد القيمة \"overflow: visible\" ضمن علامات img وvideo وcanvas، قد يُعرَض محتوى مرئي خارج حدود العنصر. يُرجى الاطّلاع على https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "تم إيقاف paymentManager.instruments نهائيًا. بدلاً من ذلك، يُرجى استخدام ميزة \"التثبيت في وقت التشغيل\" (JIT) مع تطبيقات معالجة الدفع."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "تجاوز طلب البيانات من واجهة برمجة التطبيقات PaymentRequest التوجيه connect-src في Content-Security-Policy (سياسة أمان المحتوى). تم إيقاف هذا التجاوز نهائيًا. يُرجى إضافة معرِّف طريقة الدفع من واجهة برمجة التطبيقات PaymentRequest (في حقل supportedMethods) إلى توجيه connect-src في سياسة أمان المحتوى (CSP)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "تم إيقاف StorageType.persistent نهائيًا. يُرجى استخدام navigator.storage الموحّدة بدلاً منها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "إنّ استخدام العنصر <source src> مع العنصر الرئيسي <picture> غير صالح، وبالتالي سيتم تجاهله. يُرجى استخدام السمة <source srcset> بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "إنّ طريقة webkitCancelAnimationFrame مخصّصة للمورّدين. يُرجى استخدام طريقة cancelAnimationFrame العادية بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "إنّ طريقة webkitRequestAnimationFrame مخصّصة للمورّدين. يُرجى استخدام طريقة requestAnimationFrame العادية بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitDisplayingFullscreen نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.fullscreenElement بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitEnterFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Element.requestFullscreen()‎ بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitEnterFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Element.requestFullscreen()‎ بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitExitFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.exitFullscreen()‎ بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitExitFullscreen()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.exitFullscreen()‎ بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات HTMLVideoElement.webkitSupportsFullscreen نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Document.fullscreenEnabled بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "سيتم إيقاف واجهة برمجة التطبيقات chrome.privacy.websites.privacySandboxEnabled نهائيًا، علمًا بأنّها ستظل نشطة للتوافق مع الأنظمة القديمة إلى أن يتم طرح الإصدار الرئيسي M113. بدلاً من هذه الواجهة، يُرجى استخدام واجهات برمجة التطبيقات chrome.privacy.websites.topicsEnabled وchrome.privacy.websites.fledgeEnabled وchrome.privacy.websites.adMeasurementEnabled. لمعرفة مزيد من المعلومات، يمكنك الانتقال إلى https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "تمت إزالة القيد DtlsSrtpKeyAgreement. لقد حدَّدت القيمة false لهذا القيد، وهو أمر يتم تفسيره كمحاولة لاستخدام الميزة SDES key negotiation التي تمت إزالتها. لقد تمت إزالة هذه الميزة. وبدلاً منها، يمكنك استخدام إحدى الخدمات التي تتوفّر فيها الميزة DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "تمت إزالة القيد DtlsSrtpKeyAgreement. لقد حدَّدت القيمة true لهذا القيد، وهو أمر ليس له أي تأثير. وفي جميع الأحوال، يمكنك إزالة هذا القيد بغرض التنظيم."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "تم إيقاف الطريقة getStats()‎ المستنِدة إلى معاودة الاتصال نهائيًا وستتم إزالتها. يُرجى استخدام الطريقة getStats()‎ المتوافقة مع المواصفات بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "تم إيقاف واجهة برمجة التطبيقات Range.expand()‎ نهائيًا. يُرجى استخدام واجهة برمجة التطبيقات Select.modify()‎ بدلاً من ذلك."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "يتم حظر طلبات المصادر الفرعية التي تتضمّن عناوين URL الخاصة بها بيانات اعتماد مُضمَّنة (مثل https://user:pass@host/)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "تم إيقاف الخيار rtcpMuxPolicy نهائيًا وستتم إزالته."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "سيطلب الكائن SharedArrayBuffer حظر الوصول من نطاقات أخرى. لمعرفة مزيد من التفاصيل، يُرجى الاطّلاع على https://developer.chrome.com/blog/enabling-shared-array-buffer/‎."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "إنّ ميزة تنفيذ الإجراء speechSynthesis.speak() بدون تفعيل المستخدِم متوقفة نهائيًا وستتم إزالتها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "تم نهائيًا إيقاف أدوات معالجة الأحداث التي تم إلغاء تحميلها، وستتم إزالتها."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "يجب أن تستخدم الإضافات ميزة حظر الوصول من نطاقات أخرى لمواصلة استخدام الكائن SharedArrayBuffer. يُرجى الاطّلاع على https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/‎."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "لا يتوفّر الترميز UTF-16 من خلال استجابة json في واجهة برمجة التطبيقات XMLHttpRequest."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "واجهة برمجة التطبيقات XMLHttpRequest المتزامنة في سلسلة أنظمة التشغيل الرئيسية متوقفة نهائيًا بسبب تأثيراتها الضارة في تجربة المستخدِم النهائي. للحصول على مزيد من المساعدة، يُرجى الاطّلاع على https://xhr.spec.whatwg.org/‎."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "صورة متحركة"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "تحدث تغييرات التصميم عندما تتحرك العناصر بدون أي تدخُّل من المستخدم. [تحقَّق من أسباب تغييرات التصميم](https://web.dev/articles/optimize-cls)، مثل إضافة عناصر أو إزالتها أو تغيير خطوطها أثناء تحميل الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "طلب الخط"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "إطار iframe الذي تم إدخاله"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "وقت بدء مجموعة متغيّرات التصميم: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "تعذَّر رصد أي أسباب لتغييرات التصميم"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "ما مِن تغييرات في التصميم"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "أسباب تغييرات التصميم"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "أهم أسباب تغييرات التصميم"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "صور بلا حجم محدَّد"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "أسوأ مجموعة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "أسوأ مجموعة لمتغيّرات التصميم"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "مدة البقاء (TTL) في ذاكرة التخزين المؤقت"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "يمكن لفترة التخزين المؤقت الطويلة زيادة سرعة الزيارات المتكررة إلى صفحتك. [مزيد من المعلومات](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "ما مِن طلبات تتضمّن سياسات ذاكرة تخزين مؤقت غير فعّالة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "عدد العناصر المتبقية: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "طلب"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "استخدام فترات التخزين المؤقت الفعّالة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "إنّ الحجم الكبير لنموذج العناصر في المستند (DOM) يمكن أن يؤدي إلى زيادة مدة عمليات احتساب الأنماط وإعادة تدفق التنسيقات، ما يؤثر في سرعة استجابة الصفحة. وسيزيد هذا الحجم الكبير أيضًا من استخدام الذاكرة. [التعرّف على كيفية تجنُّب زيادة حجم DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "العنصر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "الحد الأقصى للعناصر الفرعية"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "الحد الأقصى للعناصر المضمّنة في DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "الإحصاءات"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "تحسين حجم عناصر DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "إجمالي العناصر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "القيمة"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "طلب الشبكة الأول هو الأهم.  يمكنك تقليل وقت الاستجابة للطلب عن طريق تجنُّب عمليات إعادة التوجيه وضمان استجابة الخادم بسرعة وتفعيل ميزة ضغط النص."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "لم يتمّ تطبيق أي ضغط"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "يتجنّب هذا الطلب عمليات إعادة التوجيه"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "تمّ تطبيق ضغط النص"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "عمليات إعادة التوجيه"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "مدة استجابة الخادم"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "وقت الاستجابة لطلب المستند"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "عملية تنزيل غير مضغوطة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "وحدات البايت المكرّرة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "المصدر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "يمكنك إزالة وحدات JavaScript الكبيرة المكرّرة من الحِزم لتقليل وحدات البايت غير الضرورية التي يستهلكها نشاط الشبكة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "مصادر JavaScript المكرّرة"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "يمكنك ضبط [font-display](https://developer.chrome.com/blog/font-display) على swap أو optional لضمان ظهور النص بشكل ثابت. ويمكن تحسين swap بشكل أكبر للتخفيف من تغييرات التصميم باستخدام [إجراءات تجاوز مقاييس الخطوط](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "الخط"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "عرض الخط"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "الوقت الضائع"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(مجهولة)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "إنّ العديد من واجهات برمجة التطبيقات، التي تقرأ عادةً عناصر التنسيق الهندسية، تجبر محرّك العرض على إيقاف تنفيذ النص البرمجي مؤقتًا لاحتساب عناصر النمط والتنسيق. يمكنك التعرّف على مزيد من المعلومات حول [إعادة التدفق الإلزامي](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) وإجراءات التخفيف من آثاره."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "تتبُّع تسلسل استدعاء الدوال البرمجية"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "إعادة التدفق الإلزامية"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "استدعاء الدالة الأكثر شيوعًا"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "إجمالي مدة إعادة التدفق"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[نص غير منسوب لأي جهة]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "يمكن أن يؤدي تقليل وقت تنزيل الصور إلى تحسين مدّة التحميل المُدرَكة للصفحة، بالإضافة إلى تحسين سرعة عرض أكبر محتوى مرئي. [مزيد من المعلومات حول تحسين حجم الصورة](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (الحجم المقدَّر: {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "ما مِن صور يمكن تحسينها"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "تحسين حجم الملف"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "عدد العناصر المتبقية: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "تحسين عرض الصور"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "يمكن أن يؤدي زيادة عامل ضغط الصورة إلى تحسين حجم تنزيلها."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "يمكن تحسين حجم تنزيل هذه الصورة باستخدام تنسيق صور حديث (مثل WebP أو AVIF) أو زيادة ضغط الصورة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "حجم ملف الصورة هذا أكبر من الحجم المطلوب ({PH1}) لأبعادها المعروضة ({PH2}). يُرجى استخدام الصور المتجاوبة مع مختلف الأجهزة لتقليل حجم تنزيل الصورة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "إنّ استخدام تنسيقات الفيديو بدلاً من ملفات GIF يمكن أن يؤدي إلى تحسين حجم تنزيل المحتوى المتحرك."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "ابدأ بالتحقيق في المرحلة الأطول. [يمكن تقليل التأخيرات](https://web.dev/articles/optimize-inp#optimize_interactions). ولتقليل مدة المعالجة، [حسِّن تكاليف سلسلة التعليمات الرئيسية](https://web.dev/articles/optimize-long-tasks)، والتي تكون في الغالب بيانات JavaScript."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "المدة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "تأخير عملية الإدخال"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "لم يتم رصد أي تفاعلات"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "المرحلة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "تأخير العرض"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "مدة المعالجة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "مدى استجابة الصفحة لتفاعلات المستخدم (INP) حسب المرحلة"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "يمكنك تحسين مقياس سرعة عرض أكبر محتوى مرئي (LCP) من خلال جعل صورة مقياس LCP [قابلة للاكتشاف](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) من HTML على الفور، و[تجنُّب التحميل الكسول](https://web.dev/articles/lcp-lazy-loading)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "تم تطبيق السمة fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "يجب تطبيق القيمة fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "لم يتم تطبيق طريقة \"التحميل الكسول\""
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "تم تحميل الصورة الخاصة بمقياس \"سرعة عرض أكبر محتوى مرئي\" (LCP) بعد {PH1} من نقطة البداية الأقدم."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "لم يتم رصد أي مقياس لسرعة عرض أكبر محتوى مرئي (LCP)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "لم يتم العثور على أي مصدر لسرعة عرض أكبر محتوى مرئي على الصفحة لأنّه ليس صورة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "الطلب قابل للاكتشاف في المستند الأوّلي"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "الاطّلاع على طلبات LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "لكل [مرحلة استراتيجيات تحسين محدَّدة](https://web.dev/articles/optimize-lcp#lcp-breakdown). ومن الأفضل أن يتم قضاء معظم وقت سرعة عرض أكبر محتوى مرئي (LCP) في تحميل الموارد، وليس في التأخيرات."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "المدة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "مهلة عرض العناصر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "الشريحة المئوية الـ 75 من بيانات تجارب المستخدمِين الحقيقيين"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "لم يتم رصد أي مقياس لسرعة عرض أكبر محتوى مرئي (LCP)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "المرحلة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "مهلة تحميل الموارد"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "مدة تحميل المورد"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "مدة تحميل أول بايت"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "سرعة عرض أكبر محتوى مرئي (LCP) حسب المرحلة"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "النص البرمجي"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "وحدات البايت المُهدرة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "تساعد الرموز البرمجية polyfill وtransform المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية إنشاء رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/articles/baseline-and-polyfills)، إلّا في حال ضرورة دعم المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "ميزات JavaScript القديمة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "يوفِّر البروتوكولان HTTP/2 وHTTP/3 العديد من المزايا أكثر من بروتوكول HTTP/1.1، مثل الإرسال المتعدّد. [مزيد من المعلومات حول استخدام HTTP الحديث](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "لم يتم استخدام بروتوكول HTTP/1.1 في أي طلب"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "البروتوكول"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "طلب"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "بروتوكول HTTP الحديث"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "يُمكن [تجنُّب تقييد الطلبات المهمة](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "الحد الأقصى لوقت استجابة سلسلة الطلبات المُهمّة:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "ما مِن مهام عرض متأثرة بطلبات اعتمادية الشبكة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "شجرة اعتمادية الشبكة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "يُمكن تجنُّب تقييد الطلبات المهمة عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "تؤدي الطلبات إلى حظر العرض الأوّلي للصفحة، ما قد يُبطئ سرعة عرض أكبر محتوى مرئي (LCP). ويمكن [تأجيل هذه الطلبات](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) أو تضمينها لإخراجها من المسار الحرج."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "المدة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "لم يتم حظر أي طلبات لعرض إطار التنقّل هذا"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "طلب الشبكة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "طلبات حظر العرض"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "إذا ظلت تكاليف ميزة \"إعادة احتساب النمط\" مرتفعة، يمكن أن يؤدي تحسين أداة الاختيار إلى خفضها. يمكنك [تحسين أدوات الاختيار](https://developer.chrome.com/docs/devtools/performance/selector-stats) من خلال زيادة الوقت المنقضي وزيادة النسبة المئوية للمسار البطيء. وسيؤدي استخدام أدوات الاختيار الأبسط وعدد أدوات الاختيار الأقل ونموذج DOM الأصغر ونموذج DOM الأقل تعقيدًا إلى تقليل تكاليف المطابقة."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "الوقت المنقضي"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "لم يتم العثور على أي بيانات لأدوات اختيار لغة CSS. يجب تفعيل إحصاءات أداة اختيار لغة CSS في إعدادات لوحة الأداء."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "عدد محاولات المطابقة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "عدد العناصر المطابِقة"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "تكاليف أداة اختيار لغة CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "أدوات الاختيار الأعلى استهلاكًا للوقت والجهد"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "الإجمالي"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "وقت سلسلة المحادثات الأساسية"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "الجهة الخارجية"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "حجم عملية النقل"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "يمكن أن يؤثر الرمز البرمجي التابع لجهة خارجية بشكل كبير في أداء التحميل. [يمكنك تقليل تحميل الرموز البرمجية التابعة لجهات خارجية وتأجيله](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)، ومنح الأولوية لمحتوى صفحتك."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "لم يتم العثور على أي محتوى خارجي"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "الجهات الخارجية"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "إنّ إطار عرض الصفحة غير محسّن للأجهزة الجوّالة، لذا قد يتم [تأخير التفاعلات التي تتم من خلال النقر بمقدار 300 ملي ثانية على الأكثر](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "قد يتم [تأخير الاستجابة لتفاعلات النقر بمقدار 300 ملي ثانية كحد أقصى](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) إذا لم يتم تحسين إطار العرض للأجهزة الجوّالة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "إطار العرض غير محسَّن للأجهزة الجوّالة"
+    "message": "تحسين إطار العرض للأجهزة الجوّالة"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "الصفحات فقط التي تم تحميلها من خلال طلب استرداد بيانات باستخدام GET يمكن حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي تتضمّن رمز الحالة 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "اكتشف Chrome محاولة لتنفيذ JavaScript أثناء التخزين المؤقت."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "الصفحات التي طلبت AppBanner يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في chrome://flags. ويمكنك الانتقال إلى الرابط chrome://flags/#back-forward-cache لتفعيلها على هذا الجهاز."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "أوقفَ سطر الأوامر ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب عدم توفّر مساحة كافية في الذاكرة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "لا تتوفّر ميزة \"التخزين المؤقت للصفحات\" من خلال التفويض."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" في العارض المسبق."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "لا يمكن تخزين الصفحة مؤقتًا لأنها تحتوي على مثال BroadcastChannel يتضمّن أدوات مسجَّلة لمعالجة الحدث."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "الصفحات التي تحتوي على عنوان cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "سيتم محو ذاكرة التخزين المؤقت عن قصد."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بالتخزين المؤقت لصفحة أخرى."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "الصفحات التي تحتوي على مكوّنات إضافية يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "غير محدّد"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "الصفحات التي تستخدِم FileChooser API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "الصفحات التي تستخدِم File System Access API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "الصفحات التي تستخدِم أداة Media Device Dispatcher يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "كان مشغّل الوسائط قيد التشغيل عند مغادرته."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "الصفحات التي تستخدِم MediaSession API وتضبط حالة للتشغيل يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "الصفحات التي تستخدِم MediaSession API وتضبط معالِجات الإجراءات يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام قارئ الشاشة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "الصفحات التي تستخدِم SecurityHandler يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "الصفحات التي تستخدِم Serial API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "الصفحات التي تستخدِم WebAuthentication API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "الصفحات التي تستخدِم WebBluetooth API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "الصفحات التي تستخدِم WebUSB API يتعذّر حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب إيقاف ملفات تعريف الارتباط على صفحة تستخدم السمة Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "الصفحات التي تستخدِم مشغّل خدمات مخصَّصًا أو وظيفة صغيرة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "تمت مغادرة المستند قبل أن ينتهي من التحميل."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "كان بانر التطبيق قيد الاستخدام أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "كان مدير كلمات المرور في Chrome قيد الاستخدام أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "كانت عملية تصفية \"نموذج العناصر في المستند\" قيد التقدُّم أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "كان عارض DOM Distiller Viewer قيد الاستخدام أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ الإضافات تستخدم واجهة برمجة تطبيقات خدمة المراسلة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "الإضافات ذات الاتصال الطويل الأمد يجب أن تُغلِق الاتصال قبل تخزينها مؤقتًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "حاولت الإضافات ذات الاتصال الطويل الأمد إرسال رسائل إلى الإطارات المدرَجة في ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب استخدام الإضافات."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "تم عرض مربع حوار نمطي، مثل مربع حوار إعادة إرسال النموذج أو مربع حوار مصادقة HTTP باستخدام كلمة مرور، في الصفحة أثناء مغادرتها."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "تم عرض الصفحة المتوفّرة بلا اتصال بالإنترنت أثناء المغادرة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "كان شريط Out-Of-Memory Intervention قيد الاستخدام أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "كانت طلبات الأذونات قيد التقدُّم أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "كان حاجب النوافذ المنبثقة قيد الاستخدام أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "تم عرض تفاصيل \"التصفُّح الآمن\" أثناء مغادرة الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "رصدت ميزة \"التصفُّح الآمن\" أنّ هذه الصفحة تتضمن محتوى مسيئًا وحظرت نافذة منبثقة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "تم تفعيل مشغّل خدمات أثناء إدراج الصفحة في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب خطأ في المستند."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "لا يمكن تخزين الصفحات التي تستخدم الإطار FencedFrames من خلال ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت للسماح بالتخزين المؤقت لصفحة أخرى."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "الصفحات التي سمحت بالوصول إلى محتوى بث الوسائط يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "الصفحات التي تحتوي على أنواع معيّنة من المحتوى المضمّن (مثل ملفات PDF) غير مؤهَّلة حاليًا لاستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "الصفحات التي تستخدِم IdleManager يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "الصفحات التي تحتوي على اتصال مفتوح لقاعدة بيانات مفهرسة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب حدث في IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "تم استخدام واجهات غير مؤهَّلة لبرمجة التطبيقات."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال JavaScript فيها من خلال الإضافات."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "لا يمكن استخدام ميزة \"التخزين المؤقت للصفحات\" حاليًا لتخزين الصفحات التي تم إدخال StyleSheet فيها من خلال الإضافات."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "حدث خطأ داخلي."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" لأنّ بعض طلبات شبكة JavaScript تلقّت موردًا يحمل العنوان Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "تم إيقاف ميزة \"التخزين المؤقت للصفحات\" بسبب طلب رسالة التحقّق من الاتصال."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "الصفحات التي تستخدِم قفل لوحة المفاتيح يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "تمت مغادرة الصفحة قبل أن تنتهي من التحميل."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "الصفحات التي يحتوي موردها الرئيسي على cache-control:no-cache يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "الصفحات التي يحتوي موردها الرئيسي على cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "تم إلغاء التنقّل قبل أن تتم استعادة الصفحة من خلال ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال النشط بالشبكة تلقّى الكثير من البيانات، علمًا بأنّ Chrome يقيّد مقدار البيانات التي قد تتلقّاها الصفحة أثناء تخزينها مؤقتًا."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "الصفحات التي تستخدِم XHR أو fetch()‎ قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "تم إخراج الصفحة من ذاكرة \"التخزين المؤقت للصفحات\" لأنّ أحد طلبات الشبكة النشطة تضمَّن إعادة توجيه."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "تم إخراج الصفحة من ذاكرة التخزين المؤقت لأنّ الاتصال بالشبكة كان مفتوحًا لفترة طويلة جدًا، علمًا بأنّ Chrome يقيّد مقدار الوقت الذي قد تتلقّى خلاله الصفحة البيانات أثناء تخزينها مؤقتًا."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "الصفحات التي لا تحتوي على عنوان استجابة صالح يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "حدث التنقُّل في إطار غير الإطار الرئيسي."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "الصفحات التي تتضمّن عمليات جارية لقاعدة البيانات المُفهرَسة يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "الصفحات التي تستخدِم طلب شبكة قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "الصفحات التي تستخدِم طلب شبكة fetch قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "الصفحات التي تستخدِم طلب شبكة قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "الصفحات التي تستخدِم طلب شبكة XHR قيد التقدّم يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "الصفحات التي تستخدِم PaymentManager يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "الصفحات التي تستخدِم ميزة \"نافذة ضمن النافذة\" يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "الصفحات التي تعرض \"واجهة مستخدم الطباعة\" يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "تم فتح الصفحة باستخدام \"window.open()\" وعلامة تبويب أخرى بها مرجع إليها، أو أنّ الصفحة فتحت نافذة."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "تعطّلت عملية العرض للصفحة خلال \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "تم إنهاء عملية العرض للصفحة خلال \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "الصفحات التي طلبت أذونات تسجيل الصوت يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "الصفحات التي طلبت أذونات جهاز الاستشعار يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "الصفحات التي طلبت أذونات الاسترجاع أو المزامنة في الخلفية يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "الصفحات التي طلبت أذونات الوصول إلى أجهزة MIDI يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "الصفحات التي طلبت أذونات الإشعارات يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "الصفحات التي طلبت الوصول إلى مساحة التخزين يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "الصفحات التي طلبت أذونات تسجيل الفيديو يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "لا يمكن إجراء تخزين مؤقت إلا للصفحات التي يكون مخطَّط URL فيها هو HTTP/HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "استدعى مشغّل الخدمات الصفحة أثناء محاولة حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "حاول مشغّل خدمات إرسال MessageEvent إلى الصفحة في ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "تم إلغاء تسجيل ServiceWorkers أثناء إدراج الصفحة في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "تم إخراج الصفحة من \"التخزين المؤقت للصفحات\" بسبب تنشيط مشغّل الخدمات."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "تمت إعادة تشغيل Chrome الذي محا إدخالات ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "الصفحات التي تستخدِم SharedWorker يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "الصفحات التي تستخدِم SpeechRecognizer يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "الصفحات التي تستخدِم SpeechSynthesis يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "بدأ إطار iframe على الصفحة عملية تنقُّل لم تكتمل."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "الصفحات التي يحتوي موردها الفرعي على cache-control:no-cache يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "الصفحات التي يحتوي موردها الفرعي على cache-control:no-store يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "تجاوزت الصفحة الحدّ الأقصى للوقت أثناء حفظها باستخدام ميزة \"التخزين المؤقت للصفحات\" وانتهت صلاحيتها."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "انتهت مهلة إدراج الصفحة في \"التخزين المؤقت للصفحات\" (قد يرجع ذلك إلى معالِجات إخفاء الصفحات التي تستغرق مدة زمنية طويلة)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "تحتوي الصفحة على معالج لإلغاء التحميل في الإطار الرئيسي."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "تحتوي الصفحة على معالِج لإلغاء التحميل في إطار فرعي."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "غيَّر المتصفّح عنوان تجاوز وكيل المستخدم."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "الصفحات التي سمحت بتسجيل فيديو أو صوت يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "الصفحات التي تستخدِم WebDatabase يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "الصفحات التي تستخدِم WebHID يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "الصفحات التي تستخدِم WebLocks يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "الصفحات التي تستخدِم WebNfc يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "الصفحات التي تستخدِم خدمة WebOTPService يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "الصفحات التي تحتوي على WebRTC يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "الصفحات التي تستخدِم WebShare يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "الصفحات التي تحتوي على WebSocket يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعّلة بسبب استخدام WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "الصفحات التي تحتوي على WebTransport يتعذّر إدراجها في \"التخزين المؤقت للصفحات\"."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "ميزة \"التخزين المؤقت للصفحات\" غير مفعَّلة بسبب استخدام WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "الصفحات التي تستخدِم WebXR يتعذّر حفظها حاليًا باستخدام ميزة \"التخزين المؤقت للصفحات\"."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "بالنسبة إلى المحتوى الذي يتضمن صورًا متحركة، يمكنك استخدام [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) لتقليل استخدام وحدة المعالجة المركزية (CPU) عندما يكون المحتوى خارج الشاشة."
@@ -3120,7 +3495,7 @@
     "message": "يمكنك استخدام [مكون WordPress الإضافي لتحسين الصورة](https://wordpress.org/plugins/search/optimize+images/) الذي يضغط صورك مع المحافظة على الجودة."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": {
-    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://wordpress.org/support/article/media-library-screen/) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام أداة الصورة لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
+    "message": "يمكنك تحميل الصور مباشرةً من خلال [مكتبة الوسائط](https://wordpress.org/support/article/media-library-screen/) للتأكّد من توفّر أحجام الصور المطلوبة، ثم إدراجها من مكتبة الوسائط أو استخدام تطبيق الصورة المصغَّر لضمان استخدام أفضل حجم للصورة (بما في ذلك تلك الخاصة بنقاط فاصلة متجاوبة). يمكنك تجنب استخدام صور `Full Size` إلا إذا كانت الأبعاد كافية لاستخدامها. [مزيد من المعلومات](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "يمكنك تفعيل ضغط النص في إعداد خادم الويب."

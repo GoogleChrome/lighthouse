@@ -69,7 +69,7 @@ const stackPacksToInclude = [
   },
   {
     packId: 'angular',
-    requiredStacks: ['js:@angular/core'],
+    requiredStacks: ['js:angular'],
   },
   {
     packId: 'react',

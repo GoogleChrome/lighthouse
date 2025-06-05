@@ -660,7 +660,10 @@
     "message": "Gebruik video-indelingen voor content met animaties"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Volg voor je gebundelde JavaScript een implementatiestrategie voor moderne scripts op basis van module/nomodule-detectie. Dan beperk je namelijk de hoeveelheid code die naar moderne browsers wordt gestuurd, terwijl oudere browsers ondersteund blijven. [Meer informatie over hoe je modern JavaScript gebruikt](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Overweeg om je JavaScript-buildproces aan te passen zodat [Baseline](https://web.dev/baseline)-functies niet worden getranspileerd, tenzij je weet dat je verouderde browsers moet ondersteunen. [Meer informatie over waarom de meeste sites ES6+-code kunnen implementeren zonder transpileren](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Versie 2 van core-js is gevonden op de pagina. Upgrade naar versie 3 voor veel prestatieverbeteringen."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Voorkomen dat verouderde JavaScript wordt geleverd aan moderne browsers"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Zet tekstcompressie aan"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Ernst"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "De koptekst `X-Frame-Options` (XFO) of de instructie `frame-ancestors` in de koptekst `Content-Security-Policy` (CSP) bepalen waar een pagina kan worden ingesloten. Hiermee kun je de gevolgen van clickjacking-aanvallen verminderen door te voorkomen dat sommige of alle sites de pagina insluiten. [Meer informatie over hoe je de gevolgen van clickjacking kunt beperken](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Geen framebeheerbeleid gevonden"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "De gevolgen van clickjacking beperken met XFO of CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "De onderstaande ketens met kritieke verzoeken laten zien welke bronnen met een hoge prioriteit worden geladen. Overweeg de lengte van ketens te verkleinen, de downloadgrootte van bronnen te beperken of het downloaden van onnodige bronnen uit te stellen om de laadtijd van de pagina te verbeteren. [Meer informatie over hoe je ketens van kritieke verzoeken voorkomt](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse kan de `font-display`-waarde voor de oorsprong {fontOrigin} niet automatisch checken.}other{Lighthouse kan de `font-display`-waarden voor de oorsprong {fontOrigin} niet automatisch checken.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Instructie"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Ernst"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Als je de HSTS-header implementeert, verklein je het risico op aanvallen waarbij verbindingen worden gedowngraded naar HTTP en afluisteraanvallen aanzienlijk. We raden aan de uitrol in fasen te doen, te beginnen met een lage maximale leeftijd (max-age). [Meer informatie over het gebruik van een sterk HSTS-beleid.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Ongeldige syntaxis"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` is te laag"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Geen HSTS-header gevonden"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Geen `max-age`-instructie"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Geen `preload`-instructie gevonden"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Geen `includeSubDomains`-instructie gevonden"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Een sterk HSTS-beleid gebruiken"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Beeldverhouding (origineel)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Levert afbeeldingen met de juiste resolutie"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Score voor indelingsverschuiving"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Toegestaan"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Geïnjecteerd iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Door een laat netwerkverzoek is de pagina-indeling aangepast"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Media-element heeft geen expliciet formaat"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effect heeft niet-ondersteunde tijdparameters"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Instructie"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Ernst"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "De Cross-Origin-Opener-Policy (COOP) kan worden gebruikt om het venster op het hoogste niveau te isoleren van andere documenten, zoals pop-ups. [Meer informatie over het implementeren van de COOP-header.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Ongeldige syntaxis"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Geen COOP-header gevonden"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Zorgen voor de juiste bronisolatie met COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Laad lettertypen `optional` vooraf zodat nieuwe bezoekers deze kunnen gebruiken. [Meer informatie over het vooraf laden van lettertypen](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Er is paginanavigatie waargenomen tijdens het uitvoeren. We raden je af de tijdsduurmodus te gebruiken om paginanavigatie te controleren. Gebruik de navigatiemodus om paginanavigatie te controleren voor een betere toeschrijving van derden en detectie van de primaire thread."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Alleen pagina's die worden geladen via een GET-verzoek, komen in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Alleen pagina's met een statuscode 2XX kunnen worden gecachet."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome heeft een poging waargenomen om JavaScript uit te voeren in het cachegeheugen."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Pagina's die een AppBanner hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Back-Forward Cache is uitgezet vanwege een keepalive-verzoek."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Back-Forward Cache is uitgezet door flags. Ga naar chrome://flags/#back-forward-cache om het lokaal aan te zetten op dit apparaat."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Back-Forward Cache is uitgezet door de opdrachtregel."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Back-Forward Cache is uitgezet vanwege onvoldoende geheugen."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Back-Forward Cache wordt niet ondersteund door de gemachtigde."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Back-Forward Cache is uitgezet voor prerenderer."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "De pagina kan niet worden gecachet omdat deze een BroadcastChannel-instantie met geregistreerde listeners bevat."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Pagina's met de header cache-control:no-store kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Het cachegeheugen is opzettelijk gewist."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "De pagina is verwijderd uit het cachegeheugen zodat een andere pagina kon worden gecachet."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Pagina's met plug-ins komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Pagina's die de FileChooser API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Pagina's die de File System Access API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Pagina's die Media Device Dispatcher gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Een mediaspeler speelde tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Pagina's die de MediaSession API gebruiken en een afspeelstatus instellen, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Pagina's die de MediaSession API gebruiken en action-handlers instellen, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Back-Forward Cache is uitgezet vanwege schermlezer."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Pagina's die SecurityHandler gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Pagina's die de Serial API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Pagina's die de WebAuthentication API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Pagina's die de WebBluetooth API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Pagina's die de WebUSB API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Back-Forward Cache is uitgezet omdat cookies zijn uitgezet op een pagina die `Cache-Control: no-store` gebruikt."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Pagina's die een specifieke worker of worklet gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Het document was niet helemaal geladen voordat het werd gesloten."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "App-banner was geopend tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Chrome Wachtwoordmanager was geopend tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "DOM-distillatie was bezig tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer was geopend tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Back-Forward Cache is uitgezet vanwege extensies die de API voor berichten gebruiken."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Extensies met een langdurige verbinding moeten de verbinding sluiten voordat Back-Forward Cache wordt geopend."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Extensies met een langdurige verbinding hebben geprobeerd berichten te sturen naar frames in de Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Back-Forward Cache is uitgezet vanwege extensies."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Modaal dialoogvenster, zoals dialoogvenster voor formulier opnieuw indienen of HTTP-wachtwoord, is getoond voor de pagina tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "De offline pagina werd getoond tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Interventiebalk voor geheugen vol was geopend tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Er waren rechtenverzoeken tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Pop-up blocker was geopend tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Safe Browsing-gegevens zijn getoond tijdens het sluiten."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Safe Browsing beschouwt deze pagina als misleidend en heeft de pop-up geblokkeerd."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Er is een service worker geactiveerd terwijl de pagina zich in Back-Forward Cache bevond."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Back-Forward Cache is uitgezet vanwege een documentfout."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Pagina's die FencedFrames gebruiken, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "De pagina is verwijderd uit het cachegeheugen zodat een andere pagina kon worden gecachet."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Pagina's die toegang tot mediastreams hebben gegeven, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Pagina's die portals gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Pagina's die IdleManager gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Pagina's met een open IndexedDB-verbinding komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Back-Forward Cache is uitgezet vanwege een IndexedDB-gebeurtenis."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Er zijn niet in aanmerking komende API's gebruikt."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Pagina's waarin `JavaScript` is geïnjecteerd door extensies, komen op dit moment niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Pagina's waarin een `StyleSheet` is geïnjecteerd door extensies, komen op dit moment niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Interne fout."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Back-Forward Cache is uitgezet vanwege een keepalive-verzoek."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Pagina's die toetsenbordvergrendeling gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "De pagina was niet helemaal geladen voordat die werd gesloten."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Pagina's waarvan de hoofdbron cache-control:no-cache bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Pagina's waarvan de hoofdbron cache-control:no-store bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Navigatie is geannuleerd voordat de pagina kon worden hersteld vanuit Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "De pagina is verwijderd uit het cachegeheugen omdat een actieve netwerkverbinding te veel gegevens heeft gekregen. Chrome beperkt de hoeveelheid gegevens die een pagina kan ontvangen als deze in het cachegeheugen is opgeslagen."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Pagina's met inflight fetch() of XHR komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "De pagina is verwijderd uit Back-Forward Cache omdat bij een actief netwerkverzoek een omleiding betrokken was."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "De pagina is verwijderd uit het cachegeheugen omdat een netwerkverbinding te lang open was. Chrome beperkt hoelang een pagina gegevens kan ontvangen als deze in het cachegeheugen is opgeslagen."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Pagina's die geen geldige reactiekop hebben, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Navigatie vond plaats in een ander frame dan het hoofdframe."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Pagina's met actieve geïndexeerde DB-transacties komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Pagina's met een netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Pagina's met een netwerkverzoek voor ophalen in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Pagina's met een netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Pagina's met een XHR-netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Pagina's die PaymentManager gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Pagina's die Picture-in-Picture gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Pagina's die portals gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Pagina's die UI voor afdrukken tonen, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "De pagina is geopend met `window.open()` en een ander tabblad bevat een verwijzing ernaar, of de pagina heeft een venster geopend."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Het proces van het weergaveprogramma voor de pagina in Back-Forward Cache is gecrasht."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Het proces van het weergaveprogramma voor de pagina in Back-Forward Cache is beëindigd."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Pagina's die rechten voor audio-opnamen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Pagina's die sensorrechten hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Pagina's die rechten voor synchronisatie of ophalen op de achtergrond hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Pagina's die MIDI-rechten hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Pagina's die rechten voor meldingen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Pagina's die opslagtoegang hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Pagina's die rechten voor video-opnamen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Alleen pagina's met HTTP/HTTPS als URL-schema kunnen worden gecachet."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "De pagina is geclaimd door een service worker terwijl de pagina zich in Back-Forward Cache bevindt."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Een service worker heeft geprobeerd de pagina in Back-Forward Cache een `MessageEvent` te sturen."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "De registratie van ServiceWorker is ongedaan gemaakt terwijl een pagina zich in Back-Forward Cache bevond."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "De pagina is verwijderd uit Back-Forward Cache vanwege de activering van een service worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome is opnieuw opgestart en heeft de Back-Forward Cache-items gewist."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Pagina's die SharedWorker gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Pagina's die SpeechRecognizer gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Pagina's die SpeechSynthesis gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Een iframe op de pagina heeft navigatie gestart die niet is afgerond."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Pagina's waarvan de subbron cache-control:no-cache bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Pagina's waarvan de subbron cache-control:no-store bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "De pagina heeft de maximale tijd in Back-Forward Cache overschreden en is verlopen."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Er is een time-out voor de pagina opgetreden tijdens het opslaan in Back-Forward Cache (waarschijnlijk vanwege langdurige pagehide-handlers)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "De pagina heeft een unload-handler in het hoofdframe."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "De pagina heeft een unload-handler in een subframe."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Browser heeft de override-header voor user-agents gewijzigd."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Pagina's die toegang hebben gegeven om video of audio op te nemen, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Pagina's die WebDatabase gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Pagina's die WebHID gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Pagina's die WebLocks gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Pagina's die WebNfc gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Pagina's die WebOTPService gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Pagina's met WebRTC kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Pagina's die WebShare gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Pagina's met WebSocket kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Pagina's met WebTransport kunnen niet worden opgeslagen in Back-Forward Cache."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Pagina's die WebXR gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Voor compatibiliteit met oudere browsers kun je overwegen https: en http: URL-schema's toe te voegen (deze worden genegeerd door browsers die `'strict-dynamic'` ondersteunen)."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Beëindigde functie gebruikt"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Autorisatie wordt niet gedekt door het jokerteken (*) voor het gebruik van `Access-Control-Allow-Headers` in CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "In plaats van de kiezer `-internal-media-controls-overlay-cast-button` moet het kenmerk `disableRemotePlayback` worden gebruikt om de standaardintegratie van Cast uit te zetten."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Bronverzoeken waarvan de URL's verwijderde `(n|r|t)`-tekens voor witruimten en kleiner-dan-tekens (`<`) bevatten, worden geblokkeerd. Verwijder nieuwe-regelitems en codeer kleiner-dan-tekens, bijvoorbeeld in kenmerkwaarden voor elementen, om deze bronnen te laden."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: `nextHopProtocol` in Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Cookies die een `(0|r|n)`-teken bevatten, worden afgewezen in plaats van afgekapt."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Versoepeling van het same-origin-beleid door `document.domain` in te stellen is beëindigd en wordt standaard uitgezet. Deze beëindigingswaarschuwing is voor een cross-origin-toegang die is aangezet door `document.domain` in te stellen."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "De activering van window.alert via cross-origin iframes is beëindigd en wordt in de toekomst verwijderd."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "De activering van window.confirm van cross-origin iframes is beëindigd en wordt in de toekomst verwijderd."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM-mutatiegebeurtenissen, waaronder `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` en `DOMCharacterDataModified`, zijn beëindigd (https://w3c.github.io/uievents/#legacy-event-types) en worden verwijderd. Gebruik in plaats daarvan `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Ondersteuning voor gegevens: URL's in <use>-element van svg zijn beëindigd en worden in de toekomst verwijderd."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Versoepeling van het same-origin-beleid door `document.domain` in te stellen is beëindigd en wordt standaard uitgezet. Als je deze functie wilt blijven gebruiken, meld je je af voor origin-keyed agentclusters door een `Origin-Agent-Cluster: ?0`-header met de HTTP-reactie voor het document en de frames mee te sturen. Zie https://developer.chrome.com/blog/immutable-document-domain/ voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "De header `Expect-CT` is beëindigd en wordt verwijderd. Chrome vereist certificaattransparantie voor alle openbaar vertrouwde certificaten die na 30 april 2018 zijn uitgegeven."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` en `watchPosition()` werken niet meer op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` en `watchPosition()` zijn beëindigd op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` werkt niet meer op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` is beëindigd. Gebruik in plaats daarvan `RTCPeerConnectionIceErrorEvent.address` of `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "De verkoperoorsprong en willekeurige gegevens van de `canmakepayment`-service worker-gebeurtenis zijn beëindigd en worden verwijderd: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "De website heeft een subbron bij een netwerk aangevraagd die alleen toegankelijk is vanwege de bevoorrechte netwerkpositie van de gebruikers. Deze verzoeken stellen niet-openbare apparaten en servers bloot aan internet, waardoor het risico op een CSRF-aanval (cross-site request forgery) en/of informatielekken toeneemt. Ter beperking van deze risico's beëindigt Chrome verzoeken naar niet-openbare subbronnen als deze worden gestart vanuit onbeveiligde omgevingen en gaat Chrome dergelijke verzoeken blokkeren."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "De naam van het veld `dailyUpdateUrl` van `InterestGroups` dat is doorgegeven aan `joinAdInterestGroup()`, is gewijzigd in `updateUrl` om het gedrag nauwkeuriger aan te geven."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "Css kan niet worden geladen via `file:`-URL's, tenzij ze eindigen op een `.css`-bestandsextensie."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Het gebruik van `SourceBuffer.abort()` om de verwijdering van het asynchrone bereik van `remove()` te annuleren, is verwijderd vanwege wijzigingen in de specificaties. Ondersteuning wordt in de toekomst verwijderd. Gebruik in plaats daarvan een listener voor de gebeurtenis `updateend`. `abort()` is alleen bedoeld om een asynchrone mediatoevoeging te annuleren of om de status van de parser te resetten."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Het instellen van `MediaSource.duration` onder het hoogste presentatietijdstempel van gebufferde gecodeerde frames is beëindigd vanwege wijzigingen in de specificaties. Ondersteuning voor impliciete verwijdering van afgebroken gebufferde media wordt in de toekomst verwijderd. In plaats daarvan moet je `remove(newDuration, oldDuration)` expliciet uitvoeren voor alle `sourceBuffers`, waarbij `newDuration < oldDuration` is."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI vraagt toestemming voor het gebruik van SysEx, zelfs als de SysEx niet is opgegeven in de `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Het oudere, niet-gestandaardiseerde kenmerk `shadowroot` is beëindigd en *werkt niet meer* in M119. Gebruik in plaats daarvan het nieuwe, gestandaardiseerde kenmerk `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "De Notification API mag niet meer worden gebruikt vanaf niet-beveiligde oorsprongen. Je kunt overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Rechten voor de Notification API kunnen niet meer worden aangevraagd bij een cross-origin iframe. Je kunt rechten aanvragen bij een frame op het hoofdniveau of in plaats daarvan een nieuw venster openen."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Optie `imageOrientation: 'none'` in createImageBitmap is beëindigd. Gebruik in plaats daarvan createImageBitmap met de optie \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Je partner gebruikt een verouderde (D)TLS-versie. Neem contact op met je partner om dit op te lossen."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Als je `overflow: visible` opgeeft voor img-, video- en canvas-tags, kunnen deze visuele content produceren buiten de elementgrenzen. Zie https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` is beëindigd. Gebruik in plaats daarvan just-in-time-installaties voor betalingshandlers."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Je aanroep van `PaymentRequest` heeft de instructie Content-Security-Policy (CSP) `connect-src` genegeerd. Deze negeeractie is beëindigd. Voeg de betaalmethode-ID van de `PaymentRequest`-API (in het veld `supportedMethods`) toe aan je CSP-instructie `connect-src`."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` is beëindigd. Gebruik in plaats daarvan de gestandaardiseerde `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` met een bovenliggende `<picture>` is ongeldig en wordt daarom genegeerd. Gebruik in plaats daarvan `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimatieFrame is leverancierspecifiek. Gebruik in plaats daarvan het standaard cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame is leverancierspecifiek. Gebruik in plaats daarvan het standaard requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen is beëindigd. Gebruik in plaats daarvan Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() is beëindigd. Gebruik in plaats daarvan Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() is beëindigd. Gebruik in plaats daarvan Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() is beëindigd. Gebruik in plaats daarvan Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() is beëindigd. Gebruik in plaats daarvan Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen is beëindigd. Gebruik in plaats daarvan Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "De API `chrome.privacy.websites.privacySandboxEnabled` wordt beëindigd, maar blijft actief voor compatibiliteit met eerdere versies tot release M113. Gebruik in plaats daarvan `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` en `chrome.privacy.websites.adMeasurementEnabled`. Zie https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "De beperking `DtlsSrtpKeyAgreement` is verwijderd. Je hebt een `false`-waarde voor deze beperking opgegeven. Deze wordt geïnterpreteerd als een poging om de verwijderde `SDES key negotiation`-methode te gebruiken. Deze functionaliteit is verwijderd. Gebruik een service die `DTLS key negotiation` wel ondersteunt."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "De beperking `DtlsSrtpKeyAgreement` is verwijderd. Je hebt een `true`-waarde voor deze beperking opgegeven. Deze heeft geen effect en kan worden verwijderd om meer orde te scheppen."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "De op callback gebaseerde getStats() is beëindigd en wordt verwijderd. Gebruik in plaats daarvan de getStats() die aan de specificaties voldoet."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() is beëindigd. Gebruik in plaats daarvan Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Subbronverzoeken waarvan de URL's ingesloten inloggegevens bevatten (bijv. `https://user:pass@host/`), worden geblokkeerd."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "De optie `rtcpMuxPolicy` is beëindigd en wordt verwijderd."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` vereist cross-origin-isolatie. Zie https://developer.chrome.com/blog/enabling-shared-array-buffer/ voor meer informatie."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` zonder gebruikersactivering is beëindigd en wordt verwijderd."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Extensies moeten toestemming geven voor cross-origin-isolatie om `SharedArrayBuffer` te blijven gebruiken. Zie https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL is beëindigd. Gebruik SQLite WebAssembly of Indexed Database."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "De rechtenbeschrijving `window-placement` is beëindigd. Gebruik in plaats daarvan `window-management`. Ga voor meer hulp naar https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Het rechtenbeleid `window-placement` is beëindigd. Gebruik in plaats daarvan `window-management`. Ga voor meer hulp naar https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 wordt niet ondersteund door de reactie-json in `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Synchrone `XMLHttpRequest` op de primaire thread is beëindigd vanwege het nadelige effect op de gebruikerservaring van de eindgebruiker. Ga voor meer hulp naar https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` is beëindigd. Gebruik `isSessionSupported()` en check in plaats daarvan de omgezette booleaanse waarde."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Tijd dat primaire thread is geblokkeerd"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Derden"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Totaal"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse-rapport over gebruikersstroom"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Autorisatie wordt niet gedekt door het jokerteken (*) voor het gebruik van Access-Control-Allow-Headers in CORS."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "In plaats van de kiezer -internal-media-controls-overlay-cast-button moet het kenmerk disableRemotePlayback worden gebruikt om de standaardintegratie van Cast uit te zetten."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "De CSS-weergavewaarde slider-vertical is niet gestandaardiseerd en wordt verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Bronverzoeken waarvan de URL's verwijderde \\(n|r|t)-tekens voor witruimten en kleiner-dan-tekens (<) bevatten, worden geblokkeerd. Verwijder nieuwe-regelitems en codeer kleiner-dan-tekens, bijvoorbeeld in kenmerkwaarden voor elementen, om deze bronnen te laden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Automatische detectie van de tekenset ISO-2022-JP is beëindigd en wordt binnenkort uitgezet. Specificeer de tekenset in de Content Type-header of met een metatag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: nextHopProtocol in Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies die een \\(0|r|n)-teken bevatten, worden afgewezen in plaats van afgekapt."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Versoepeling van het same-origin-beleid door document.domain in te stellen is beëindigd en wordt standaard uitgezet. Deze beëindigingswaarschuwing is voor een cross-origin-toegang die is aangezet door document.domain in te stellen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "De activering van window.alert via cross-origin iframes is beëindigd en wordt in de toekomst verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "De activering van window.confirm van cross-origin iframes is beëindigd en wordt in de toekomst verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOM-mutatiegebeurtenissen, waaronder DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument en DOMCharacterDataModified, zijn beëindigd (https://w3c.github.io/uievents/#legacy-event-types) en worden verwijderd. Gebruik in plaats daarvan MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Ondersteuning voor gegevens: URL's in GIFUseElement zijn beëindigd en worden in de toekomst verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() en watchPosition() werken niet meer op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() en watchPosition() zijn beëindigd op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() werkt niet meer op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Er is een <h1>-tag gevonden in een <article>, <aside>, <nav> of <section> waarvoor geen lettergrootte is gespecificeerd. De grootte van deze koptekst wordt binnenkort gewijzigd in deze browser. Ga naar https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is beëindigd. Gebruik in plaats daarvan RTCPeerConnectionIceErrorEvent.address of RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Deze indeling voor het verzoek navigator.credentials.get() voor digitale inloggegevens is beëindigd. Update de aanroep zodat de nieuwe indeling wordt gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "De verkoperoorsprong en willekeurige gegevens van de canmakepayment-service worker-gebeurtenis zijn beëindigd en worden verwijderd: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "De website heeft een subbron bij een netwerk aangevraagd die alleen toegankelijk is vanwege de bevoorrechte netwerkpositie van de gebruikers. Deze verzoeken stellen niet-openbare apparaten en servers bloot aan internet, waardoor het risico op een CSRF-aanval (cross-site request forgery) en/of informatielekken toeneemt. Ter beperking van deze risico's beëindigt Chrome verzoeken naar niet-openbare subbronnen als deze worden gestart vanuit onbeveiligde omgevingen en gaat Chrome dergelijke verzoeken blokkeren."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "De naam van het veld dailyUpdateUrl van InterestGroups dat is doorgegeven aan joinAdInterestGroup(), is gewijzigd in updateUrl om het gedrag nauwkeuriger aan te geven."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator is beëindigd. Gebruik in plaats daarvan Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "Css kan niet worden geladen via file:-URL's, tenzij ze eindigen op een .css-bestandsextensie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Het gebruik van SourceBuffer.abort() om de verwijdering van het asynchrone bereik van remove() te annuleren, is beëindigd vanwege wijzigingen in de specificaties. Ondersteuning wordt in de toekomst verwijderd. Gebruik in plaats daarvan een listener voor de gebeurtenis updateend. abort() is alleen bedoeld om een asynchrone mediatoevoeging te annuleren of om de status van de parser te resetten."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Het instellen van MediaSource.duration onder het hoogste presentatietijdstempel van gebufferde gecodeerde frames is beëindigd vanwege wijzigingen in de specificaties. Ondersteuning voor impliciete verwijdering van afgebroken gebufferde media wordt in de toekomst verwijderd. In plaats daarvan moet je remove(newDuration, oldDuration) expliciet uitvoeren voor alle sourceBuffers, waarbij newDuration < oldDuration is."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI vraagt toestemming voor het gebruik van SysEx, zelfs als de SysEx niet is opgegeven in de MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "De Notification API mag niet meer worden gebruikt vanaf niet-beveiligde oorsprongen. Je kunt overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Rechten voor de Notification API kunnen niet meer worden aangevraagd bij een cross-origin iframe. Je kunt rechten aanvragen bij een frame op het hoofdniveau of in plaats daarvan een nieuw venster openen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Optie imageOrientation: 'none' in createImageBitmap is beëindigd. Gebruik in plaats daarvan createImageBitmap met de optie \\\\{imageOrientation: 'from-image'\\\\}."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Je partner gebruikt een verouderde (D)TLS-versie. Neem contact op met je partner om dit op te lossen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Als je overflow: visible opgeeft voor img-, video- en canvas-tags, kunnen deze visuele content produceren buiten de elementgrenzen. Zie https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments is beëindigd. Gebruik in plaats daarvan just-in-time-installaties voor betalingshandlers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Je aanroep van PaymentRequest heeft de instructie Content-Security-Policy (CSP) connect-src genegeerd. Deze negeeractie is beëindigd. Voeg de betaalmethode-ID van de PaymentRequest-API (in het veld supportedMethods) toe aan je CSP-instructie connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent is beëindigd. Gebruik in plaats daarvan de gestandaardiseerde navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> met een bovenliggende <picture> is ongeldig en wordt daarom genegeerd. Gebruik in plaats daarvan <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimatieFrame is leverancierspecifiek. Gebruik in plaats daarvan het standaard cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame is leverancierspecifiek. Gebruik in plaats daarvan het standaard requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen is beëindigd. Gebruik in plaats daarvan Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() is beëindigd. Gebruik in plaats daarvan Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() is beëindigd. Gebruik in plaats daarvan Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() is beëindigd. Gebruik in plaats daarvan Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() is beëindigd. Gebruik in plaats daarvan Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen is beëindigd. Gebruik in plaats daarvan Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "De API chrome.privacy.websites.privacySandboxEnabled wordt beëindigd, maar blijft actief voor compatibiliteit met eerdere versies tot release M113. Gebruik in plaats daarvan chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled en chrome.privacy.websites.adMeasurementEnabled. Zie https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "De beperking DtlsSrtpKeyAgreement is verwijderd. Je hebt een false-waarde voor deze beperking opgegeven. Deze wordt niet geïnterpreteerd als een poging om de verwijderde SDES key negotiation-methode te gebruiken. Deze functionaliteit is verwijderd. Gebruik een service die in plaats daarvan DTLS key negotiation ondersteunt."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "De beperking DtlsSrtpKeyAgreement is verwijderd. Je hebt een true-waarde voor deze beperking opgegeven. Deze heeft geen effect en kan worden verwijderd om meer orde te scheppen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "De op callback gebaseerde getStats() is beëindigd en wordt verwijderd. Gebruik in plaats daarvan de getStats() die aan de specificaties voldoet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() is beëindigd. Gebruik in plaats daarvan Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subbronverzoeken waarvan de URL's ingesloten inloggegevens bevatten (bijv. https://user:pass@host/), worden geblokkeerd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "De optie rtcpMuxPolicy is beëindigd en wordt verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer vereist cross-origin-isolatie. Zie https://developer.chrome.com/blog/enabling-shared-array-buffer/ voor meer informatie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() zonder gebruikersactivering is beëindigd en wordt verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Unload-event-listeners zijn beëindigd en worden verwijderd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Extensies moeten zijn aangemeld voor cross-origin-isolatie om SharedArrayBuffer te blijven gebruiken. Zie https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 wordt niet ondersteund door de reactie-json in XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Synchrone XMLHttpRequest op de primaire thread is beëindigd vanwege het nadelige effect op de gebruikerservaring van de eindgebruiker. Check https://xhr.spec.whatwg.org/ voor meer hulp."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animatie"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Indelingsverschuivingen komen voor als elementen bewegen zonder gebruikersinteractie. [Stel vast wat de oorzaak is van de indelingsverschuiving](https://web.dev/articles/optimize-cls), zoals elementen die worden toegevoegd of verwijderd, of het lettertype dat verandert terwijl de pagina wordt geladen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Lettertypeverzoek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Geïnjecteerd iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Indelingsverschuivingscluster op {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Kan geen oorzaken van indelingsverschuivingen vinden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Geen indelingsverschuivingen"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Oorzaken van indelingsverschuivingen"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Belangrijkste oorzaken van indelingsverschuivingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Afbeeldingen zonder formaat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Slechtste cluster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Cluster met slechtste indelingsverschuiving"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Cache-TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Een lange levensduur voor het cachegeheugen kan herhaalde bezoeken aan je pagina versnellen. [Meer informatie](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Geen verzoeken met inefficiënt cachebeleid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} andere items"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Verzoek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Efficiënte levensduur voor het cachegeheugen gebruiken"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Een grote DOM kan de duur van stijlberekeningen en dynamische aanpassingen van de indeling verlengen, wat de responsiviteit van de pagina beïnvloedt. Een grote DOM vergroot ook het geheugengebruik. [Meer informatie over hoe je een overmatige DOM-grootte voorkomt](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Meeste onderliggende elementen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM-diepte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistiek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "DOM-grootte optimaliseren"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Totaal aantal elementen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Waarde"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Je eerste netwerkverzoek is het belangrijkst.  Verminder de vertraging door omleidingen te vermijden, een snelle serverreactie te garanderen en tekstcompressie aan te zetten."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Geen compressie toegepast"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Vermijdt omleidingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Past tekstcompressie toe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Omleidingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Serverreactietijd"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Vertraging van documentverzoek"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Niet-gecomprimeerde download"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Dubbele bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Bron"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Verwijder grote, dubbele JavaScript-modules uit bundels, zodat er minder onnodige bytes worden verbruikt door netwerkactiviteit."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Gedupliceerd JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Overweeg [font-display](https://developer.chrome.com/blog/font-display) in te stellen op swap of optional om te zorgen dat tekst consistent zichtbaar is. swap kan verder worden geoptimaliseerd om indelingsverschuivingen te verminderen met [overschrijvingen van lettertypestatistieken](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Lettertype"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Lettertypeweergave"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Verspilde tijd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anoniem)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Veel API's, die meestal de indelingsgeometrie lezen, dwingen de weergave-engine om de scriptuitvoering te onderbreken om de stijl en indeling te berekenen. Meer informatie over [gedwongen dynamische aanpassing](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) en de bijbehorende beperkende maatregelen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Stacktrace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Gedwongen dynamische aanpassing"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Topfunctieaanroep"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Totale tijd voor dynamische aanpassing"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[niet toegeschreven]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Als je de downloadtijd van afbeeldingen verkort, kunnen de waargenomen laadtijd van de pagina en LCP verbeteren. [Meer informatie over hoe je de afbeeldingsgrootte optimaliseert](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (Naar schatting {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Geen afbeeldingen die kunnen worden geoptimaliseerd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Bestandsgrootte optimaliseren"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} andere items"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Afbeeldingslevering verbeteren"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Als je de afbeeldingscompressiefactor verhoogt, kan dit de downloadgrootte van deze afbeelding verbeteren."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Als je een moderne bestandsindeling (WebP, AVIF) gebruikt of de compressie van de afbeelding verhoogt, kan dit de downloadgrootte van deze afbeelding verbeteren."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Dit afbeeldingsbestand is groter dan nodig ({PH1}) voor de getoonde afmetingen ({PH2}). Gebruik responsieve afbeeldingen om de downloadgrootte van de afbeelding te verkleinen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Als je video-indelingen gebruikt in plaats van gifjes, kan dit de downloadgrootte van geanimeerde content verbeteren."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Onderzoek eerst de langste fase. [Je kunt vertraging tot een minimum beperken](https://web.dev/articles/optimize-inp#optimize_interactions). [Optimaliseer de kosten van de hoofdthread](https://web.dev/articles/optimize-long-tasks) (vaak JS) om de verwerkingsduur te verkorten."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Duur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Invoervertraging"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Geen interacties gevonden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Presentatievertraging"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Verwerkingsduur"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP per fase"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimaliseer LCP door de LCP-afbeelding [vindbaar](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) te maken vanuit de HTML en [lazy loading te voorkomen](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high toegepast"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high moet worden toegepast"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "Lazy loading niet toegepast"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP-afbeelding is {PH1} na het vroegste beginpunt geladen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Geen LCP gevonden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Geen LCP-resource gevonden omdat de LCP geen afbeelding is"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Verzoek is vindbaar in het oorspronkelijke document"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP-verzoekdetectie"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Elke [fase heeft specifieke verbeteringsstrategieën](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealiter wordt het grootste deel van de LCP-tijd besteed aan het laden van de resources, niet aan vertragingen."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Duur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Vertraging bij element renderen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75e percentiel voor veld"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Geen LCP gevonden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Vertraging bij bron laden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Duur van bronlading"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP per fase"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Script"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Verspilde bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Overweeg om je JavaScript-buildproces aan te passen zodat [Baseline](https://web.dev/articles/baseline-and-polyfills)-functies niet worden getranspileerd, tenzij je weet dat je verouderde browsers moet ondersteunen. [Meer informatie over waarom de meeste sites ES6+-code kunnen implementeren zonder transpileren](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Verouderde JavaScript-code"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 en HTTP/3 bieden veel voordelen ten opzichte van HTTP/1.1, zoals multiplexing. [Meer informatie over het gebruik van moderne HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Geen verzoeken hebben HTTP/1.1 gebruikt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Verzoek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderne HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Vermijd het doorlinken van kritieke verzoeken](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) door de lengte van ketens te verkleinen, de downloadgrootte van resources te beperken of het downloaden van onnodige resources uit te stellen om de laadtijd van de pagina te verbeteren."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Max. latentie voor kritiek pad:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Geen weergavetaken beïnvloed door netwerkafhankelijkheid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Netwerkafhankelijkheidsstructuur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Vermijd het doorlinken van kritieke verzoeken door de lengte van ketens te verkleinen, de downloadgrootte van resources te beperken of het downloaden van onnodige resources uit te stellen om de laadtijd van de pagina te verbeteren."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Verzoeken blokkeren de eerste keer renderen van de pagina, waardoor LCP kan worden vertraagd. Door [verzoeken uit te stellen of in te sluiten](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) kun je deze netwerkverzoeken van de kritieke route verwijderen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Duur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Geen blokkeerverzoeken voor renderen van deze navigatie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Verzoek"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Verzoeken voor renderblokkering"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Als de kosten van Stijl opnieuw berekenen hoog blijven, kun je ze verlagen met selectoroptimalisatie. [Optimaliseer de selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) met zowel een lange verstreken tijd als een hoog percentage langzame paden. Eenvoudigere selectors, minder selectors, een kleiner DOM en een minder diep DOM verlagen de kosten voor het zoeken naar overeenkomsten."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Verstreken tijd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Er zijn geen css-kiezergegevens gevonden. Statistieken voor css-kiezers moeten worden aangezet in de instellingen van het prestatiedeelvenster."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Overeenkomstpogingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Aantal overeenkomsten"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Kosten van css-kiezer"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Topkiezers"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Totaal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Tijd van primaire thread"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Derde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Overdrachtsgrootte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Code van derden kan van grote invloed zijn op de laadprestaties. [Verminder het laden van code van derden en stel dit uit](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) om prioriteit te geven aan de content van je pagina."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Geen derden gevonden"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Derden"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Het kijkvenster van de pagina is niet geoptimaliseerd voor mobiele apparaten. Tikinteracties kunnen daarom [tot 300 ms vertraagd](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) worden."
+    "message": "Tikinteracties kunnen [tot 300 ms vertraagd](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) worden als het kijkvenster niet is geoptimaliseerd voor mobiel."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Kijkvenster niet geoptimaliseerd voor mobiel"
+    "message": "Kijkvenster optimaliseren voor mobiel"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Alleen pagina's die worden geladen via een GET-verzoek, komen in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Alleen pagina's met een statuscode 2XX kunnen worden gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome heeft een poging waargenomen om JavaScript uit te voeren in het cachegeheugen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Pagina's die een AppBanner hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Back-Forward Cache is uitgezet door flags. Ga naar chrome://flags/#back-forward-cache om het lokaal aan te zetten op dit apparaat."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Back-Forward Cache is uitgezet door de opdrachtregel."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Back-Forward Cache is uitgezet vanwege onvoldoende geheugen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Back-Forward Cache wordt niet ondersteund door de gemachtigde."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Back-Forward Cache is uitgezet voor prerenderer."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "De pagina kan niet worden gecachet omdat deze een BroadcastChannel-instantie met geregistreerde listeners bevat."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Pagina's met de header cache-control:no-store kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Het cachegeheugen is opzettelijk gewist."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "De pagina is verwijderd uit het cachegeheugen zodat een andere pagina kon worden gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Pagina's met plug-ins komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Ongedefinieerd"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Pagina's die de FileChooser API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Pagina's die de File System Access API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Pagina's die Media Device Dispatcher gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Een mediaspeler speelde tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Pagina's die de MediaSession API gebruiken en een afspeelstatus instellen, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Pagina's die de MediaSession API gebruiken en action-handlers instellen, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Back-Forward Cache is uitgezet vanwege schermlezer."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Pagina's die SecurityHandler gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Pagina's die de Serial API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Pagina's die de WebAuthetication API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Pagina's die de WebBluetooth API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Pagina's die de WebUSB API gebruiken, komen niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Back-Forward Cache is uitgezet, omdat cookies zijn uitgezet op een pagina die Cache-Control: no-store gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Pagina's die een specifieke worker of worklet gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Het document was niet helemaal geladen voordat het werd gesloten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "App-banner was geopend tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chrome Wachtwoordmanager was geopend tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM-distillatie was bezig tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer was geopend tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Back-Forward Cache is uitgezet vanwege extensies die de API voor berichten gebruiken."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Extensies met een langdurige verbinding moeten de verbinding sluiten voordat Back-Forward Cache wordt geopend."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Extensies met een langdurige verbinding hebben geprobeerd berichten te sturen naar frames in de Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Back-Forward Cache is uitgezet vanwege extensies."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Modaal dialoogvenster, zoals dialoogvenster voor formulier opnieuw indienen of HTTP-wachtwoord, is getoond voor de pagina tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "De offline pagina werd getoond tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Interventiebalk voor geheugen vol was geopend tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Er waren rechtenverzoeken tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Pop-up blocker was geopend tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Safe Browsing-gegevens zijn getoond tijdens het sluiten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Safe Browsing beschouwt deze pagina als misleidend en heeft de pop-up geblokkeerd"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Er is een service worker geactiveerd terwijl de pagina zich in Back-Forward Cache bevond."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Back-Forward Cache is uitgezet vanwege een documentfout."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Pagina's die FencedFrames gebruiken, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "De pagina is verwijderd uit het cachegeheugen zodat een andere pagina kon worden gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Pagina's die toegang tot mediastreams hebben gegeven, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Pagina's met bepaalde soorten ingesloten content (zoals pdf's) komen op dit moment niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Pagina's die IdleManager gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Pagina's met een open IndexedDB-verbinding komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Back-Forward Cache is uitgezet vanwege een IndexedDB-gebeurtenis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Er zijn niet in aanmerking komende API's gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Pagina's waarin JavaScript is geïnjecteerd door extensies, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Pagina's waarin een StyleSheet is geïnjecteerd door extensies, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Interne fout."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Back-Forward Cache is uitgezet, omdat een JavaScript-netwerkverzoek een resource met Cache-Control: no-store-header heeft ontvangen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Back-Forward Cache is uitgezet vanwege een keepalive-verzoek."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Pagina's die toetsenbordvergrendeling gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "De pagina was niet helemaal geladen voordat die werd gesloten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Pagina's waarvan de hoofdbron cache-control:no-cache bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Pagina's waarvan de hoofdbron cache-control:no-store bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigatie is geannuleerd voordat de pagina kon worden hersteld vanuit Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "De pagina is verwijderd uit het cachegeheugen omdat een actieve netwerkverbinding te veel gegevens heeft ontvangen. Chrome beperkt de hoeveelheid gegevens die een pagina kan ontvangen als deze is gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Pagina's met inflight fetch() of XHR komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "De pagina is verwijderd uit Back-Forward Cache omdat bij een actief netwerkverzoek een omleiding betrokken was."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "De pagina is verwijderd uit het cachegeheugen omdat een netwerkverbinding te lang open was. Chrome beperkt hoelang een pagina gegevens kan ontvangen als deze is gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Pagina's die geen geldige reactiekop hebben, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Navigatie vond plaats in een ander frame dan het hoofdframe."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Pagina's met actieve geïndexeerde DB-transacties komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Pagina's met een netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Pagina's met een netwerkverzoek voor ophalen in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Pagina's met een netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Pagina's met een XHR-netwerkverzoek in behandeling komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Pagina's die PaymentManager gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Pagina's die scherm-in-scherm gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Pagina's die UI voor afdrukken tonen, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "De pagina is geopend met window.open() en een ander tabblad bevat een verwijzing ernaar, of de pagina heeft een venster geopend."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Het proces van het weergaveprogramma voor de pagina in Back-Forward Cache is gecrasht."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Het proces van het weergaveprogramma voor de pagina in Back-Forward Cache is beëindigd."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Pagina's die rechten voor audio-opnamen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Pagina's die sensorrechten hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Pagina's die rechten voor synchronisatie of ophalen op de achtergrond hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Pagina's die MIDI-rechten hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Pagina's die rechten voor meldingen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Pagina's die opslagtoegang hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Pagina's die rechten voor video-opnamen hebben aangevraagd, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Alleen pagina's met HTTP/HTTPS als URL-schema kunnen worden gecachet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "De pagina is geclaimd door een service worker terwijl de pagina zich in Back-Forward Cache bevindt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Een service worker heeft geprobeerd de pagina in Back-Forward Cache een MessageEvent te sturen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "De registratie van ServiceWorker is ongedaan gemaakt terwijl een pagina zich in Back-Forward Cache bevond."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "De pagina is verwijderd uit Back-Forward Cache vanwege de activering van een service worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome is opnieuw opgestart en heeft de Back-Forward Cache-items gewist."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Pagina's die SharedWorker gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Pagina's die SpeechRecognizer gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Pagina's die SpeechSynthesis gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Een iframe op de pagina heeft navigatie gestart die niet is afgerond."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Pagina's waarvan de subbron cache-control:no-cache bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Pagina's waarvan de subbron cache-control:no-store bevat, kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "De pagina heeft de maximale tijd in Back-Forward Cache overschreden en is verlopen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Er is een time-out voor de pagina opgetreden tijdens het opslaan in Back-Forward Cache (waarschijnlijk vanwege langdurige pagehide-handlers)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "De pagina heeft een unload-handler in het hoofdframe."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "De pagina heeft een unload-handler in een subframe."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Browser heeft de override-header voor user-agents gewijzigd."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Pagina's die toegang hebben gegeven om video of audio op te nemen, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Pagina's die WebDatabase gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Pagina's die WebHID gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Pagina's die WebLocks gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Pagina's die WebNfc gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Pagina's die WebOTPService gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Pagina's met WebRTC kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Back-Forward Cache is uitgezet omdat WebRTC is gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Pagina's die WebShare gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Pagina's met WebSocket kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Back-Forward Cache is uitgezet omdat WebSocket is gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Pagina's met WebTransport kunnen niet worden opgeslagen in Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Back-Forward Cache is uitgezet omdat WebTransport is gebruikt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Pagina's die WebXR gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Gebruik in het geval van content met animatie [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) om het CPU-gebruik te minimaliseren als de content niet in beeld is."

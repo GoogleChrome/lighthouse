@@ -44,7 +44,7 @@ class Doctype extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: ['Doctype'],
-      __internalOptionalArtifacts: ['InspectorIssues', 'traces'],
+      __internalOptionalArtifacts: ['InspectorIssues', 'Trace'],
     };
   }
 
@@ -67,11 +67,11 @@ class Doctype extends Audit {
     const doctypeSystemId = artifacts.Doctype.systemId;
     const compatMode = artifacts.Doctype.documentCompatMode;
 
-    const trace = artifacts.traces?.[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
 
     /** @type {LH.Crdp.Audits.QuirksModeIssueDetails[]} */
     let quirksModeIssues = [];
-    if (trace && artifacts.InspectorIssues) {
+    if (trace && artifacts.InspectorIssues?.quirksModeIssue) {
       const processedTrace = await ProcessedTrace.request(trace, context);
       const mainFrameId = processedTrace.mainFrameInfo.frameId;
       quirksModeIssues =

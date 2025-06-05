@@ -660,7 +660,10 @@
     "message": "Gumamit ng mga format ng video para sa animated na content"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Para sa iyong naka-bundle na JavaScript, gumamit ng modernong diskarte sa deployment ng script gamit ang pag-detect ng feature na module/nomodule para mabawasan ang dami ng code na ipinapadala sa mga modernong browser, habang pinapanatili ang suporta para sa mga legacy na browser. [Alamin kung paano gamitin ang modernong JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Pag-isipang baguhin ang iyong proseso ng pagbuo sa JavaScript para hindi ma-transpile ang mga [Baseline](https://web.dev/baseline) na feature, maliban kung alam mong dapat mong masuportahan ang mga legacy na browser. [Matutunan kung bakit puwedeng mag-deploy ang karamihan ng mga site ng ES6+ na code nang hindi nagta-transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na-detect ang bersyon 2 ng core-js sa page. Dapat kang mag-upgrade sa bersyon 3 para sa maraming pagpapahusay sa performance."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Iwasan ang paghahatid ng legacy na JavaScript sa mga modernong browser"
@@ -761,6 +764,18 @@
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "I-enable ang compression ng text"
   },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Kalalaan"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Ang header ng `X-Frame-Options` (XFO) o direktiba ng `frame-ancestors` sa kontrol sa header ng `Content-Security-Policy` (CSP) kung saan puwedeng mag-embed ng page. Puwedeng i-mitigate ng mga ito ang mga clickjacking attack sa pamamagitan ng pag-block sa ilan sa o lahat ng site sa pag-embed sa page. [Matuto pa tungkol sa pag-mitigate sa clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Walang nakitang patakaran sa kontrol ng frame"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "I-mitigate ang clickjacking gamit ang XFO o CSP"
+  },
   "core/audits/critical-request-chains.js | description": {
     "message": "Ipinapakita sa iyo ng Mga Chain ng Mahahalagang Kahilingan kung anong mga resource ang nilo-load nang may mataas na priyoridad. Pag-isipang paikliin ang mga chain, paliitin ang mga dina-download na resource, o ipagpaliban ang pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page. [Alamin kung paano iwasan ang pagsusunod-sunod ng mahahalagang kahilingan](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
   },
@@ -774,7 +789,7 @@
     "message": "Direktiba"
   },
   "core/audits/csp-xss.js | columnSeverity": {
-    "message": "Tindi"
+    "message": "Kalalaan"
   },
   "core/audits/csp-xss.js | description": {
     "message": "Malaki ang nagagawa ng mahigpit na Patakaran sa Seguridad ng Content (Content Security Policy o CSP) para mabawasan ang panganib ng mga cross-site scripting (XSS) na pag-atake. [Alamin kung paano gumamit ng CSP para mapigilan ang XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Hindi awtomatikong nasuri ng Lighthouse ang value ng `font-display` para sa origin na {fontOrigin}.}one{Hindi awtomatikong nasuri ng Lighthouse ang mga value ng `font-display` para sa origin na {fontOrigin}.}other{Hindi awtomatikong nasuri ng Lighthouse ang mga value ng `font-display` para sa origin na {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Direktiba"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Kalalaan"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Malaki ang nagagawa ng pag-deploy ng HSTS header para mabawasan ang panganib ng pag-downgrade ng mga koneksyon sa HTTP at mga eavesdropping attack. Inirerekomendang ilunsad ito nang paunti-unti at magsimula sa mababang max-age. [Matuto pa tungkol sa paggamit ng mahigpit na patakaran sa HSTS.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Invalid na syntax"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "Masyadong mababa ang `max-age`"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Walang nakitang HSTS header"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Walang direktiba na `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Walang nakitang direktiba na `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Walang nakitang direktiba na `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Gumamit ng mahigpit na patakaran sa HSTS"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Aspect Ratio (Aktwal)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Nagpapakita ng mga larawang may naaangkop na resolution"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Score ng pagbabago sa layout"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Pinapayagan"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Na-inject na iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "In-adjust ng nahuling request sa network ang layout ng page"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Walang explicit na laki ang element ng media"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "May mga hindi sinusuportahang parameter ng timing ang effect"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Direktiba"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Kalalaan"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Magagamit ang Cross-Origin-Opener-Policy (COOP) para i-isolate ang top-level na window sa iba pang dokumento gaya ng mga pop-up. [Matuto pa tungkol sa pag-deploy ng COOP header.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Invalid na syntax"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Walang nakitang COOP header"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Tiyakin ang wastong pag-isolate ng origin gamit ang COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Mag-preload ng mga `optional` na font para magamit ng mga unang beses na bisita ang mga ito. [Matuto pa tungkol sa pag-preload ng mga font](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "May na-detect na nabigasyon ng page habang gumagana. Hindi inirerekomenda ang paggamit ng timespan mode para mag-audit ng mga nabigasyon ng page. Gamitin ang navigation mode para mag-audit ng mga nabigasyon ng page para sa mas mahusay na third-party na attribution at pag-detect ng pangunahing thread."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Ang mga page lang na nag-load sa pamamagitan ng request gamit ang GET ang kwalipikado para sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Ang mga page lang na may status code na 2XX ang puwedeng i-cache."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Naka-detect ang Chrome ng pagsubok na i-execute ang JavaScript habang nasa cache."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng AppBanner."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Naka-disable ang back/forward cache dahil sa isang keepalive na request."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Dini-disable ng mga pag-flag ang back/forward cache. Bumisita sa chrome://flags/#back-forward-cache para lokal itong i-enable sa device na ito."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Dini-disable ng command line ang back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Naka-disable ang back/forward cache dahil sa hindi sapat na memory."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Hindi sinusuportahan ng pag-delegate ang back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Naka-disable ang back/forward cache para sa prerenderer."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Hindi puwedeng i-cache ang page dahil mayroon itong instance na BroadcastChannel na may mga nakarehistrong listener."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may header na cache-control:no-store."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Sadyang na-clear ang cache."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Inalis sa cache ang page para mapayagang ma-cache ang isa pang page."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na naglalaman ng mga plugin."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng FileChooser API."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng File System Access API."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Dispatcher ng Media Device."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "May nagpe-play na media player noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng MediaSession API at nagtakda ng status ng pag-playback."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng MediaSession API at nagtakda ng mga tagapangasiwa ng pagkilos."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Naka-disable ang back/forward cache dahil sa screen reader."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SecurityHandler."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Serial API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebAuthentication API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebBluetooth API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebUSB API."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Naka-disable ang back/forward cache dahil naka-disable ang cookies sa isang page na gumagamit ng `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng nakalaang worker o worklet."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Hindi natapos mag-load ang dokumento bago nag-navigate paalis dito."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "May App Banner noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "May Password Manager ng Chrome noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Isinasagawa ang DOM distillation noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "May DOM Distiller Viewer noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Naka-disable ang back/forward cache dahil gumagamit ang mga extension ng messaging API."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Dapat isara ng mga extension na may long-lived na koneksyon ang koneksyon bago pumasok sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Sinubukang magpadala ng mga extension na may long-lived na koneksyon ng mga mensahe sa mga frame sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Naka-disable ang back/forward cache dahil sa mga extension."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Ipinakita ang modal dialog, gaya ng dialog para sa pagsusumite ulit ng form o http password, para sa page noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Ipinakita ang offline na page noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "May Out-Of-Memory Intervention bar noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "May mga request sa pahintulot noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "May popup blocker noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Ipinakita ang mga detalye ng Ligtas na Pag-browse noong nag-navigate paalis."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Tinukoy ng Ligtas na Pag-browse ang page na ito bilang mapang-abuso at nag-block ito ng popup."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "May service worker na na-activate habang nasa back/forward cache ang page."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Naka-disable ang back/forward cache dahil sa isang error sa dokumento."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Hindi puwedeng i-store sa bfcache ang mga page na gumagamit ng FencedFrames."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Inalis sa cache ang page para mapayagang ma-cache ang isa pang page."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagbigay ng access sa pag-stream ng media."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng mga portal."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng IdleManager."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may bukas na IndexedDBConnection."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Naka-disable ang back/forward cache dahil sa event na IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "May ginamit na mga hindi kwalipikadong API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page kung saan na-inject ng mga extension ang `JavaScript`."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page kung saan na-inject ng mga extension ang `StyleSheet`."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Internal na error."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Naka-disable ang back/forward cache dahil sa isang keepalive na request."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na gumagamit ng KeyboardLock."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Hindi natapos mag-load ang page bago nag-navigate paalis dito."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may pangunahing resource na may cache-control:no-cache."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may pangunahing resource na may cache-control:no-store."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Kinansela ang pag-navigate bago ma-restore ang page mula sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Inalis sa cache ang page dahil may aktibong koneksyon ng network na nakatanggap ng masyadong maraming data. Nililimitahan ng Chrome ang dami ng data na puwedeng matanggap ng page habang naka-cache."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may inflight na fetch() o XHR)."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Inalis sa back/forward cache ang page dahil may pag-redirect ang isang request sa aktibong network."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Inalis sa cache ang page dahil masyadong matagal na nakabukas ang isang koneksyon ng network. Nililimitahan ng Chrome ang haba ng oras na puwedeng makatanggap ng data ang isa page habang naka-cache."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na walang valid na header ng sagot."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Nangyari ang pag-navigate sa frame bukod pa sa pangunahing frame."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang page na may mga kasalukuyang naka-index na transaksyon sa DB."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na request sa network."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may in-flight na request sa fetch network."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na request sa network."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na request sa network gamit ang XHR."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng PaymentManager."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Picture-in-Picture."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng mga portal."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagpapakita ng UI sa Pag-print."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Binuksan ang page gamit ang '`window.open()`' at may ibang tab na tumutukoy rito, o may window na binuksan ang page."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Nag-crash ang proseso ng pag-render para sa page sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Inihinto ang proseso ng pag-render para sa page na nasa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa pag-capture ng audio."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa sensor."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa pag-sync o pag-fetch sa background."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa MIDI."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa mga notification."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng access sa storage."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nag-request ng mga pahintulot sa pag-capture ng video."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Ang mga page lang na may scheme ng URL na HTTP / HTTPS ang puwedeng i-cache."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Na-claim ng service worker ang page habang nasa back/forward cache ito."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "May service worker na sumubok na magpadala ng `MessageEvent` sa page na nasa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Na-unregister ang ServiceWorker habang nasa back/forward cache ang isang page."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Inalis sa back/forward cache ang page dahil sa pag-activate ng service worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Ni-restart at na-clear ng Chrome ang mga entry sa back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SharedWorker."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SpeechRecognizer."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SpeechSynthesis."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "May iframe sa page na nagsimula ng pag-navigate na hindi natapos."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may subresource na may cache-control:no-cache."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may subresource na may cache-control:no-store."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Lumampas ang page sa maximum na oras sa back/forward cache at nag-expire na ito."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Nag-time out ang page habang pumapasok sa back/forward cache (malamang na dahil sa mga matagal na tumatakbong tagapangasiwa ng pagehide)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Ang page ay may tagapangasiwa ng pag-unload sa pangunahing frame."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Ang page ay may tagapangasiwa ng pag-unload sa sub frame."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Binago ng browser ang header ng override ng user agent."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagbigay ng access sa pag-record ng video o audio."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebDatabase."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebHID."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebLocks."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebNfc."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Kasalukuyang hindi kwalipikado para sa bfcache ang mga page na gumagamit ng WebOTPService."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebRTC."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebShare."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebSocket."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebTransport."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebXR."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Pag-isipang magdagdag ng https: at http: na URL scheme (binabalewala ng mga browser na sumusuporta sa `'strict-dynamic'`) para maging backward compatible sa mga lumang browser."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Gumagamit ng Hindi na Ginagamit na Feature"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Hindi sasaklawin ang pagpapahintulot ng simbolong wildcard (*) sa pangangasiwa ng `Access-Control-Allow-Headers` sa CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Dapat gamitin ang attribute na `disableRemotePlayback` para i-disable ang default na integration ng Cast sa halip na gamitin ang selector na `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Naka-block ang mga kahiligan sa resource na may mga URL na naglalaman ng mga inalis na whitespace `(n|r|t)` character at less-than character (`<`). Pakialis ang mga newline at i-encode ang mga less-than character mula sa mga lugar tulad ng mga value na attribute ng element para ma-load ang mga resource na ito."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "Hindi na ginagamit ang `chrome.loadTimes()`, standardized na API: Navigation Timing 2 na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "Hindi na ginagamit ang `chrome.loadTimes()`, standardized na API: Paint Timing na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "Hindi na ginagamit ang `chrome.loadTimes()`, standardized na API: `nextHopProtocol` sa Navigation Timing 2 na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Tatanggihan sa halip na puputulin ang cookies na naglalaman ng `(0|r|n)` character."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Hindi na ginagamit, at madi-disable nang default ang pagpapahinga ng patakaran sa iisang origin sa pamamagitan ng pagtatakda sa `document.domain`. Ang babalang ito sa paghinto sa paggamit ay para sa isang cross-origin na access na na-enable sa pamamagitan ng pagtatakda sa `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Hindi na ginagamit ang pag-trigger ng window.alert mula sa mga cross origin na iframe at aalisin na ito sa hinaharap."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Hindi na ginagamit ang pag-trigger ng window.confirm mula sa mga cross origin na iframe at aalisin na ito sa hinaharap."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Hindi na ginagamit at aalisin na ang Mga Event ng DOM Mutation, kasama ang `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, at `DOMCharacterDataModified` (https://w3c.github.io/uievents/#legacy-event-types). `MutationObserver` na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Suporta para sa data: Hindi na ginagamit ang mga URL sa SVG <use> na element at aalisin na ito sa hinaharap."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Hindi na ginagamit, at madi-disable nang default ang pagpapahinga ng patakaran sa iisang origin sa pamamagitan ng pagtatakda sa `document.domain`. Para patuloy na magamit ang feature na ito, mag-opt out sa mga origin-keyed agent cluster sa pamamagitan ng pagpapadala ng header na `Origin-Agent-Cluster: ?0` kasama ng sagot ng HTTP para sa dokumento at mga frame. Tingnan ang https://developer.chrome.com/blog/immutable-document-domain/ para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Hindi na ginagamit at aalisin na ang `Expect-CT` na header. Iniaatas ng Chrome ang Transparency ng Certificate para sa lahat ng pampublikong pinagkakatiwalaang certificate na ibinigay pagkalipas ng Abril 30, 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "Hindi na gumagana ang `getCurrentPosition()` at `watchPosition()` sa mga hindi secure na origin. Para magamit ang feature na ito, pag-isipang ilipat ang iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Hindi na ginagamit ang `getCurrentPosition()` at `watchPosition()` sa mga hindi secure na origin. Para magamit ang feature na ito, pag-isipang ilipat ang iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "Hindi na gumagana ang `getUserMedia()` sa mga hindi secure na origin. Para magamit ang feature na ito, pag-isipang ilipat ang iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "Hindi na ginagamit ang `RTCPeerConnectionIceErrorEvent.hostCandidate`. `RTCPeerConnectionIceErrorEvent.address` o `RTCPeerConnectionIceErrorEvent.port` na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Ang origin ng merchant at arbitrary na data mula sa `canmakepayment` na event ng service worker ay hindi na ginagamit at aalisin: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Humiling ang website ng subresource mula sa isang network na maa-access lang nito dahil sa privileged na posisyon ng network ng mga user nito. Ine-expose ng mga kahilingang ito ang mga hindi pampublikong device at server sa internet, na nagpapataas sa panganib ng cross-site request forgery (CSRF) na pag-atake, at/o pag-leak ng impormasyon. Para mapigilan ang mga panganib na ito, hindi na gagamitin ng Chrome ang mga kahilingan sa mga hindi pampublikong subresource kapag sinimulan mula sa mga hindi secure na konteksto, at magsisimula itong i-block ang mga iyon."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Na-rename sa `updateUrl` ang field ng `dailyUpdateUrl` ng `InterestGroups` na ipinasa sa `joinAdInterestGroup()`, para mas tumpak na maipakita ang gawi nito."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "Hindi ma-load ang CSS mula sa mga URL ng `file:` maliban na lang kung nagtatapos ang mga ito sa file extension na `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Hindi na ginagamit ang paggamit ng `SourceBuffer.abort()` para i-abort ang asynchronous na pag-aalis ng sakop ng `remove()` dahil sa pagbabago ng detalye. Aalisin ang suporta sa hinaharap. Dapat mong pakinggan na lang ang `updateend`. Nilalayon lang ng `abort()` na i-abort ang asynchronous na pagdaragdag ng media o i-reset ang status ng pang-parse."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Hindi na ginagamit ang pagtatakda ng `MediaSource.duration` sa ibaba ng pinakamataas na timestamp ng presentation ng anumang naka-buffer at naka-code na frame dahil sa pagbabago ng detalye. Aalisin ang suporta para sa direktang pag-aalis ng naputol at naka-buffer na media sa hinaharap. Sa halip, dapat kang magsagawa ng direktang `remove(newDuration, oldDuration)` sa lahat ng `sourceBuffers`, kung saan `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Hihingi ng pahintulot ang Web MIDI sa paggamit kahit na hindi tinukoy ang sysex sa `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Hindi na ginagamit ang luma at hindi standardized na attribute na `shadowroot` at *hindi na ito gagana* sa M119. Pakigamit na lang ang bago at standardized na attribute na `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Posibleng hindi na magamit ang Notification API mula sa mga hindi secure na origin. Pag-isipang ilipat ang iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Posibleng hindi na humiling ng pahintulot para sa Notification API mula sa isang cross-origin na iframe. Pag-isipang humiling ng pahintulot mula sa isang top-level na frame o magbukas na lang ng bagong window."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Hindi na ginagamit ang opsyong `imageOrientation: 'none'` sa createImageBitmap. Pakigamit na lang ang createImageBitmap na may opsyong \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Nagne-negotiate ang iyong partner ng lumang bersyon ng (D)TLS. Sumangguni sa iyong partner para maayos ito."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Kapag tinukoy ang `overflow: visible` sa mga tag ng img, video, at canvas, posibleng gumawa ang mga ito ng visual na content sa labas ng mga hangganan ng element. Tingnan ang https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Hindi na ginagamit ang `paymentManager.instruments`. Gumamit na lang ng just-in-time na pag-install para sa mga tagapangasiwa ng pagbabayad."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Na-bypass ng iyong call na `PaymentRequest` ang direktibang `connect-src` ng Content-Security-Policy (CSP). Hindi na ginagamit ang pag-bypass na ito. Magdagdag ng identifier ng paraan ng pagbabayad mula sa `PaymentRequest` API (sa field na `supportedMethods`) sa iyong direktibang `connect-src` ng CSP."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Hindi na ginagamit ang `StorageType.persistent`. Pakigamit na lang ang standardized na `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Invalid at binabalewala ang `<source src>` na may parent na `<picture>`. `<source srcset>` na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "Partikular sa vendor ang webkitCancelAnimationFrame. Pakigamit na lang ang karaniwang cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "Partikular sa vendor ang webkitRequestAnimationFrame. Pakigamit na lang ang karaniwang requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitDisplayingFullscreen. Pakigamit na lang ang Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitEnterFullScreen(). Pakigamit na lang ang Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitEnterFullscreen(). Pakigamit na lang ang Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitExitFullScreen(). Pakigamit na lang ang Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitExitFullscreen(). Pakigamit na lang ang Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitSupportsFullscreen. Pakigamit na lang ang Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Hindi na namin gagamitin ang API na `chrome.privacy.websites.privacySandboxEnabled`, pero mananatili itong aktibo para sa backward compatibility hanggang sa pag-release ng M113. Sa halip, pakigamit ang `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled`, at `chrome.privacy.websites.adMeasurementEnabled`. Tingnan ang https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Inalis ang paghihigpit na `DtlsSrtpKeyAgreement`. Tinukoy mo ang isang `false` na value para sa paghihigpit na ito, na itinuturing na pagsubok na gamitin ang inalis na paraan ng `SDES key negotiation`. Inalis ang functionality na ito; isang serbisyong sumusuporta sa `DTLS key negotiation` na lang ang gamitin."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Inalis ang paghihigpit na `DtlsSrtpKeyAgreement`. Tinukoy mo ang isang `true` na value para sa paghihigpit na ito, na walang epekto, pero puwede mong alisin ang paghihigpit na ito para sa kaayusan."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Hindi na ginagamit at aalisin na ang nakabatay sa callback na getStats(). Gamitin na lang ang sumusunod sa spec na getStats()."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Hindi na ginagamit ang Range.expand(). Pakigamit na lang ang Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Naka-block ang mga kahilingan sa subresource na may mga URL na naglalaman ng mga naka-embed na kredensyal (hal. `https://user:pass@host/`)."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Hindi na ginagamit at aalisin na ang opsyong `rtcpMuxPolicy`."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "Mangangailangan ang `SharedArrayBuffer` ng pag-isolate ng cross-origin. Tingnan ang https://developer.chrome.com/blog/enabling-shared-array-buffer/ para sa higit pang detalye."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Hindi na ginagamit at aalisin ang `speechSynthesis.speak()` nang walang pag-activate ng user."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Dapat mag-opt in ang mga extension sa mga pag-isolate ng cross-origin para patuloy na magamit ang `SharedArrayBuffer`. Tingnan ang https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Hindi na ginagamit ang Web SQL. Gumamit ng SQLite WebAssembly o Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Hindi na ginagamit ang `window-placement` na descriptor ng pahintulot. `window-management` na lang ang gamitin. Para sa higit pang tulong, tingnan ang https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Hindi na ginagamit ang `window-placement` na patakaran sa pahintulot. `window-management` na lang ang gamitin. Para sa higit pang tulong, tingnan ang https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Hindi sinusuportahan ang UTF-16 ng sagot na json sa `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Hindi na ginagamit ang synchronous na `XMLHttpRequest` sa pangunahing thread dahil sa mga nakakapinsalang epekto nito sa experience ng end user. Para sa higit pang tulong, tingnan ang https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Hindi na ginagamit ang `supportsSession()`. Sa halip, pakigamit ang `isSessionSupported()` at tingnan ang nalutas na boolean value."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Oras ng Pag-block ng Pangunahing Thread"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Kabuuan"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Ulat ng Daloy ng User ng Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Hindi sasaklawin ang pagpapahintulot ng simbolong wildcard (*) sa pangangasiwa ng Access-Control-Allow-Headers sa CORS."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Dapat gamitin ang attribute na disableRemotePlayback para i-disable ang default na integration ng Cast sa halip na gamitin ang selector na -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Hindi naka-standardize ang value ng hitsura sa CSS na slider-vertical at aalisin ito."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Naka-block ang mga kahiligan sa resource na may mga URL na naglalaman ng mga inalis na whitespace \\(n|r|t) character at less-than character (<). Pakialis ang mga newline at i-encode ang mga less-than character mula sa mga lugar tulad ng mga value na attribute ng element para ma-load ang mga resource na ito."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Hindi na ginagamit ang awtomatikong pag-detect ng set ng character na ISO-2022-JP at idi-disable ito sa hinaharap. Pakitukoy ang set ng character sa header ng Uri ng Content o sa pamamagitan ng paggamit ng meta tag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "Hindi na ginagamit ang chrome.loadTimes(), standardized na API: Navigation Timing 2 na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "Hindi na ginagamit ang chrome.loadTimes(), standardized na API: Paint Timing na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "Hindi na ginagamit ang chrome.loadTimes(), standardized na API: nextHopProtocol sa Navigation Timing 2 na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Tatanggihan sa halip na puputulin ang cookies na naglalaman ng \\(0|r|n) character."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Hindi na ginagamit, at madi-disable nang default ang pagpapahinga ng patakaran sa iisang origin sa pamamagitan ng pagtatakda sa document.domain. Ang babalang ito sa paghinto sa paggamit ay para sa isang cross-origin na access na na-enable sa pamamagitan ng pagtatakda sa document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Hindi na ginagamit ang pag-trigger ng window.alert mula sa mga cross origin na iframe at aalisin na ito sa hinaharap."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Hindi na ginagamit ang pag-trigger ng window.confirm mula sa mga cross origin na iframe at aalisin na ito sa hinaharap."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Hindi na ginagamit at aalisin na ang Mga Event ng DOM Mutation, kasama ang DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, at DOMCharacterDataModified (https://w3c.github.io/uievents/#legacy-event-types). Pakigamit na lang ang MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Suporta para sa data: Hindi na ginagamit ang mga URL sa SVGUseElement at aalisin na ito sa hinaharap."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "Hindi na gumagana ang getCurrentPosition() at watchPosition() sa mga hindi secure na origin. Para magamit ang feature na ito, dapat mong isaalang-alang ang paglipat ng iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "Hindi na ginagamit ang getCurrentPosition() at watchPosition() sa mga hindi secure na origin. Para magamit ang feature na ito, dapat mong isaalang-alang ang paglipat ng iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "Hindi na gumagana ang getUserMedia() sa mga hindi secure na origin. Para magamit ang feature na ito, dapat mong isaalang-alang ang paglipat ng iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "May nakitang tag na <h1> sa <article>, <aside>, <nav>, o <section> na walang tinukoy na laki ng font. Magbabago ang laki ng text ng heading na ito sa browser na ito sa nalalapit na hinaharap. Tingnan ang https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 para sa higit pang impormasyon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Hindi na ginagamit ang RTCPeerConnectionIceErrorEvent.hostCandidate. RTCPeerConnectionIceErrorEvent.address o RTCPeerConnectionIceErrorEvent.port na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Hindi na ginagamit ang format na ito para sa request na navigator.credentials.get() para sa mga digital na kredensyal, paki-update ang iyong call para gamitin ang bagong format."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Ang origin ng merchant at arbitrary na data mula sa canmakepayment na event ng service worker ay hindi na ginagamit at aalisin: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Humiling ang website ng subresource mula sa isang network na maa-access lang nito dahil sa privileged na posisyon ng network ng mga user nito. Inilalantad ng mga kahilingang ito ang mga hindi pampublikong device at server sa internet, na nagpapataas sa panganib ng cross-site request forgery (CSRF) na pag-atake, at/o pag-leak ng impormasyon. Para mapigilan ang mga panganib na ito, hindi na gagamitin ng Chrome ang mga kahilingan sa mga hindi pampublikong subresource kapag sinimulan mula sa mga hindi secure na konteksto, at magsisimula itong i-block ang mga iyon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Na-rename sa updateUrl ang field ng dailyUpdateUrl ng InterestGroups na ipinasa sa joinAdInterestGroup(), para mas tumpak na maipakita ang gawi nito."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Hindi na ginagamit ang Intl.v8BreakIterator. Intl.Segmenter na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "Hindi ma-load ang CSS mula sa mga URL ng file: maliban kung nagtatapos ang mga ito sa file extension na .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Hindi na ginagamit ang paggamit ng SourceBuffer.abort() para i-abort ang asynchronous na pag-aalis ng sakop ng remove() dahil sa pagbabago ng detalye. Aalisin ang suporta sa hinaharap. Dapat mong pakinggan na lang ang updateend. Nilalayon lang ng abort() na i-abort ang asynchronous na pagdaragdag ng media o i-reset ang status ng pang-parse."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Hindi na ginagamit ang pagtatakda ng MediaSource.duration sa ibaba ng pinakamataas na timestamp ng presentation ng anumang naka-buffer at naka-code na frame dahil sa pagbabago ng detalye. Aalisin ang suporta para sa direktang pag-aalis ng naputol at naka-buffer na media sa hinaharap. Sa halip, dapat kang magsagawa ng direktang remove(newDuration, oldDuration) sa lahat ng sourceBuffers, kung saan newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Hihingi ng pahintulot ang Web MIDI sa paggamit kahit na hindi tinukoy ang sysex sa MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Posibleng hindi na magamit ang Notification API mula sa mga hindi secure na origin. Dapat mong isaalang-alang ang paglipat ng iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Posibleng hindi na humiling ng pahintulot para sa Notification API mula sa isang cross-origin na iframe. Dapat mong isaalang-alang ang paghiling ng pahintulot mula sa isang top-level na frame o sa halip ay magbukas ng bagong window."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Hindi na ginagamit ang opsyong imageOrientation: 'none' sa createImageBitmap. Gamitin na lang ang createImageBitmap na may opsyong '\\\\{imageOrientation: 'from-image'\\\\}.'"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Nakikipagkasundo ang iyong partner sa isang lumang bersyon ng (D)TLS. Sumangguni sa iyong partner para maayos ito."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Kapag tinukoy ang overflow: visible sa mga tag ng img, video at canvas, posibleng gumawa ang mga ito ng visual na content sa labas ng mga hangganan ng element. Tingnan ang https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "Hindi na ginagamit ang paymentManager.instruments. Gumamit na lang ng just-in-time na pag-install para sa mga tagapangasiwa ng pagbabayad."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Na-bypass ng iyong call na PaymentRequest ang direktibang connect-src ng Content-Security-Policy (CSP). Hindi na ginagamit ang pag-bypass na ito. Magdagdag ng identifier ng paraan ng pagbabayad mula sa PaymentRequest API (sa field na supportedMethods) sa iyong direktibang connect-src ng CSP."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "Hindi na ginagamit ang StorageType.persistent. Pakigamit na lang ang standardized na navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Invalid at binabalewala ang <source src> na may parent na <picture>. <source srcset> na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "Partikular sa vendor ang webkitCancelAnimationFrame. Pakigamit na lang ang karaniwang cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "Partikular sa vendor ang webkitRequestAnimationFrame. Pakigamit na lang ang karaniwang requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitDisplayingFullscreen. Pakigamit na lang ang Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitEnterFullScreen(). Pakigamit na lang ang Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitEnterFullscreen(). Pakigamit na lang ang Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitExitFullScreen(). Pakigamit na lang ang Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitExitFullscreen(). Pakigamit na lang ang Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Hindi na ginagamit ang HTMLVideoElement.webkitSupportsFullscreen. Pakigamit na lang ang Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Hindi na namin gagamitin ang API na chrome.privacy.websites.privacySandboxEnabled, pero mananatili itong aktibo para sa backward compatibility hanggang sa pag-release ng M113. Sa halip, pakigamit ang chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled, at chrome.privacy.websites.adMeasurementEnabled. Tingnan ang https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Inalis ang paghihigpit na DtlsSrtpKeyAgreement. Tinukoy mo ang isang false na value para sa paghihigpit na ito, na itinuturing na pagsubok na gamitin ang inalis na paraan ng SDES key negotiation. Inalis ang functionality na ito; isang serbisyong sumusuporta sa DTLS key negotiation na lang ang gamitin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Inalis ang paghihigpit na DtlsSrtpKeyAgreement. Tinukoy mo ang isang true na value para sa paghihigpit na ito, na walang epekto, pero puwede mong alisin ang paghihigpit na ito para sa kaayusan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Hindi na ginagamit at aalisin na ang nakabatay sa callback na getStats(). Gamitin na lang ang sumusunod sa spec na getStats()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Hindi na ginagamit ang Range.expand(). Pakigamit na lang ang Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Naka-block ang mga kahilingan sa subresource na may mga URL na naglalaman ng mga naka-embed na kredensyal (hal., https://user:pass@host/)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Hindi na ginagamit at aalisin ang opsyong rtcpMuxPolicy."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "Mangangailangan ang SharedArrayBuffer ng pag-isolate ng cross-origin. Tingnan ang https://developer.chrome.com/blog/enabling-shared-array-buffer/ para sa higit pang detalye."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Hindi na ginagamit at aalisin ang speechSynthesis.speak() nang walang pag-activate ng user."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Hindi na ginagamit at aalisin na ang mag-unload ng mga event listener."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Dapat mag-opt in ang mga extension sa mga pag-isolate ng cross-origin para patuloy na magamit ang SharedArrayBuffer. Tingnan ang https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "Hindi sinusuportahan ang UTF-16 ng sagot na json sa XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Hindi na ginagamit ang synchronous na XMLHttpRequest sa pangunahing thread dahil sa mga nakakapinsalang epekto nito sa experience ng end user. Para sa higit pang tulong, tingnan ang https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animation"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Nangyayari ang mga pagbabago sa layout kapag gumagalaw ang mga element nang walang anumang interaction ng user. [Siyasatin ang mga dahilan ng pagbabago sa layout](https://web.dev/articles/optimize-cls), tulad ng mga pagdaragdag ng mga element, pag-alis, o pagbabago ng mga font nito kapag naglo-load ang page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Request sa font"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Na-inject na iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Cluster ng pagbabago sa layout @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Walang ma-detect na anumang dahilan ng pagbabago sa layout"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Walang pagbabago sa layout"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Mga dahilan ng pagbabago sa layout"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Mga nangungunang dahilan ng pagbabago sa layout"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Mga Larawang Walang Malinaw na Sukat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Pinakahindi magandang cluster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Pinakamalalang cluster ng pagbabago sa layout"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL ng Cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Puwedeng mapabilis ng mahabang lifetime ng cache ang mga umuulit na pagbisita sa iyong page. [Matuto pa](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Walang request na may mga hindi mahusay na patakaran sa cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} pa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Gumamit ng mahuhusay na lifetime ng cache"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Kapag malaki ang DOM, puwedeng tumaas ang tagal ng pagkalkula ng istilo at mga reflow ng layout, na nakakaapekto sa pagiging responsive ng page. Madaragdagan din ng malaking DOM ang paggamit ng memory. [Alamin kung paano iwasan ang masyadong malaking DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Pinakamaraming child"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Lalim ng DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Istatistika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "I-optimize ang laki ng DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Kabuuang element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Value"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Pinakamahalaga ang iyong unang request sa network.  Bawasan ang latency nito sa pamamagitan ng pag-iwas sa mga pag-redirect, na tumitiyak sa mabilis na pagtugon ng server, at nagbibigay-daan sa pag-compress ng text."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Wala inilapat na pag-compress"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Umiiwas sa mga pag-redirect"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Naglalapat ng pag-compress ng text"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Mga pag-redirect"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Tagal ng pagsagot ng server"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Latency ng pag-request ng dokumento"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Hindi naka-compress na pag-download"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Mga na-duplicate na byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Source"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Alisin ang mga malaki at duplicate na module ng JavaScript sa mga bundle para mabawasan ang mga hindi kinakailangang byte na nakokonsumo ng aktibidad ng network."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Na-duplicate na JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Pag-isipang itakda ang [font-display](https://developer.chrome.com/blog/font-display) sa swap o optional para tiyaking patuloy na makikita ang text. Puwede pang i-optimize ang swap para mabawasan ang mga pagbabago sa layout gamit ang [mga override sa sukatan ng font](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Font"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Font display"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Nasayang na oras"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonymous)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Pinipilit ng maraming API, na kadalasang nagbabasa ng geometry ng layout, ang rendering engine na i-pause ang pag-execute ng script para makalkula nito ang istilo at layout. Matuto pa tungkol sa [sapilitang reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) at ang mga pag-mitigate nito."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Stack trace"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Sapilitang reflow"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Nangungunang function call"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Kabuuang tagal ng pag-reflow"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[hindi na-attribute]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Kapag binawasan ang tagal ng pag-download ng mga larawan, posibleng mapahusay ang natukoy na oras ng pag-load ng page at LCP. [Matuto pa tungkol sa pag-optimize ng laki ng larawan](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (Tinatayang {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Walang mao-optimize na larawan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "I-optimize ang laki ng file"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} pa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Pahusayin ang paghahatid ng larawan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Kapag tinaasan ang salik ng pag-compress ng larawan, posibleng mapahusay ang laki ng download ng larawang ito."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Kapag gumamit ng modernong format ng imahe (WebP, AVIF) o kapag tinaasan ang pag-compress ng larawan, posibleng mapahusay ang laki ng download ng larawang ito."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Ang image file na ito ay mas malaki kaysa sa dapat nitong laki ({PH1}) para sa mga ipinapakitang dimensyon nito ({PH2}). Gumamit ng mga responsive na larawan para bawasan ang laki ng download ng larawan."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Kapag gumamit ng mga format ng video sa halip na mga GIF, posibleng mapahusay ang laki ng download ng animated na content."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Simulan ang pagsisiyasat sa pinakamahabang phase. [Puwedeng mabawasan ang mga pagkaantala](https://web.dev/articles/optimize-inp#optimize_interactions). Para pabilisin ang pagpoproseso, [i-optimize ang mga gastos sa pangunahing thread](https://web.dev/articles/optimize-long-tasks), na madalas na JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Tagal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Pagkaantala ng input"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Walang na-detect na interaction"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Pagkaantala ng presentation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Tagal ng pagpoproseso"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP ayon sa phase"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Gawing [nahahanap](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) kaagad ang larawan para sa LCP mula sa HTML para ma-optimize ang LCP, at [maiwasan ang mabagal na pag-load](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "In-apply ang fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Dapat i-apply ang fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "hindi na-apply ang mabagal na pag-load"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Nag-load ang LCP na larawan {PH1} pagkatapos ng pinakaunang punto ng pagsisimula."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Walang na-detect na LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Walang na-detect na resource ng LCP dahil hindi larawan ang LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Nahahanap ang request sa paunang dokumento"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Pagtuklas sa request ng LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Ang bawat [phase ay may mga partikular na strategy sa pagpapahusay](https://web.dev/articles/optimize-lcp#lcp-breakdown). Mainam kung gugugulin sa pag-load ng mga resource ang malaking bahagi ng tagal ng LCP, hindi sa mga pagkaantala."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Tagal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Pagkaantala sa pag-render ng element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "Ika-75 percentile ng field"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Walang na-detect na LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Phase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Pagkaantala sa pag-load ng resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Tagal ng pag-load ng resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to first byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP ayon sa bahagi"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Script"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Mga nasayang na byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Pag-isipang baguhin ang iyong proseso ng pagbuo sa JavaScript para hindi ma-transpile ang mga [Baseline](https://web.dev/articles/baseline-and-polyfills) na feature, maliban kung alam mong dapat mong masuportahan ang mga legacy na browser. [Alamin kung bakit puwedeng mag-deploy ang karamihan ng mga site ng ES6+ na code nang hindi nagta-transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Legacy na JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "Nag-aalok ang HTTP/2 at HTTP/3 ng maraming benepisyo kumpara sa HTTP/1.1, tulad ng multiplexing. [Matuto pa tungkol sa paggamit ng modernong HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Walang request na gumamit ng HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Modernong HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Iwasan ang pag-chain ng mahahalagang request](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) sa pamamagitan ng pagbabawas sa haba ng mga chain, pagbabawas sa laki ng mga dina-download na resource, o pagpapaliban sa pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maximum na latency ng critical path:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Walang gawain sa pag-render na naapektuhan ng mga dependency ng network"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Dependency tree ng network"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Iwasan ang pag-chain ng mahahalagang request sa pamamagitan ng pagbabawas sa haba ng mga chain, pagbabawas sa laki ng mga dina-download na resource, o pagpapaliban sa pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Bina-block ng mga request ang unang pag-render ng page, na posibleng makaantala sa LCP. Puwedeng alisin ng [pagpapaliban o pag-inline](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) ang mga request sa network na ito sa critical path."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Tagal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Walang request na nagba-block ng pag-render para sa navigation na ito"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Request"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Mag-render ng mga request sa pag-block"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Kung mananatiling mataas ang mga gastos sa Kalkulahin Ulit ang Istilo, mapapababa ito ng pag-optimize ng selector. [I-optimize ang mga selector](https://developer.chrome.com/docs/devtools/performance/selector-stats) gamit ang matagal na lumipas na oras at mataas na % ng slow-path. Mapapaliit ng mga mas simpleng selector, mga mas kaunting selector, mas maliit na DOM, at mas mababaw na DOM ang mga tumutugmang gastos."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Lumipas na oras"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Walang nakitang data ng CSS selector. Kailangang i-enable ang mga istatistika ng CSS selector sa mga setting ng panel ng performance."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Mga pagsubok sa pagtutugma"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Bilang ng tugma"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Mga gastos sa CSS Selector"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Mga nangungunang selector"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Kabuuan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Oras sa pangunahing thread"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "3rd party"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Laki ng paglipat"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Puwedeng lubos na makaapekto ang code ng third party sa performance ng pag-load. [Bawasan at ipagpaliban ang pag-load ng code ng third party](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) para isapriyoridad ang content ng iyong page."
+    "message": "Puwedeng lubos na makaapekto ang code ng 3rd party sa performance ng pag-load. [Bawasan at ipagpaliban ang pag-load ng code ng 3rd party](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) para isapriyoridad ang content ng iyong page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Walang nakitang third party"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
-    "message": "Mga third party"
+    "message": "Mga 3rd party"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Hindi na-optimize sa mobile ang viewport ng page, kaya posibleng [maantala nang hanggang 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) ang mga interaction sa pag-tap."
+    "message": "Posibleng [maantala nang hanggang 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) ang mga interaction sa pag-tap kung hindi na-optimize para sa mobile ang viewport."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Hindi na-optimize ang viewport para sa mobile"
+    "message": "I-optimize ang viewport para sa mobile"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Ang mga page lang na nag-load sa pamamagitan ng kahilingan gamit ang GET ang kwalipikado para sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Ang mga page lang na may status code na 2XX ang puwedeng i-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Naka-detect ang Chrome ng pagsubok na i-execute ang JavaScript habang nasa cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng AppBanner."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Dini-disable ng mga pag-flag ang back/forward cache. Bumisita sa chrome://flags/#back-forward-cache para lokal itong i-enable sa device na ito."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Dini-disable ng command line ang back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Naka-disable ang back/forward cache dahil sa hindi sapat na memory."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Hindi sinusuportahan ng pag-delegate ang back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Naka-disable ang back/forward cache para sa prerenderer."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Hindi puwedeng i-cache ang page dahil mayroon itong instance na BroadcastChannel na may mga nakarehistrong listener."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may header na cache-control:no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Sadyang na-clear ang cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Inalis sa cache ang page para mapayagang ma-cache ang isa pang page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na naglalaman ng mga plugin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Hindi tinukoy"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng FileChooser API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng File System Access API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Dispatcher ng Media Device."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "May nagpe-play na media player noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng MediaSession API at nagtakda ng status ng pag-playback."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng MediaSession API at nagtakda ng mga tagapangasiwa ng pagkilos."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Naka-disable ang back/forward cache dahil sa screen reader."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SecurityHandler."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Serial API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebAuthentication API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebBluetooth API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebUSB API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Naka-disable ang back/forward cache dahil naka-disable ang cookies sa isang page na gumagamit ng Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng nakalaang worker o worklet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Hindi natapos mag-load ang dokumento bago nag-navigate paalis dito."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "May App Banner noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "May Password Manager ng Chrome noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Isinasagawa ang DOM distillation noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "May DOM Distiller Viewer noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Naka-disable ang back/forward cache dahil gumagamit ang mga extension ng messaging API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Dapat isara ng mga extension na may long-lived na koneksyon ang koneksyon bago pumasok sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Sinubukang magpadala ng mga extension na may long-lived na koneksyon ng mga mensahe sa mga frame sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Naka-disable ang back/forward cache dahil sa mga extension."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Ipinakita ang modal dialog, gaya ng dialog para sa pagsusumite ulit ng form o http password, para sa page noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Ipinakita ang offline na page noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "May Out-Of-Memory Intervention bar noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "May mga kahilingan sa pahintulot noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "May popup blocker noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Ipinakita ang mga detalye ng Ligtas na Pag-browse noong nag-navigate paalis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Tinukoy ng Ligtas na Pag-browse ang page na ito bilang mapang-abuso at nag-block ito ng popup."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "May service worker na na-activate habang nasa back/forward cache ang page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Naka-disable ang back/forward cache dahil sa isang error sa dokumento."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Hindi puwedeng i-store sa bfcache ang mga page na gumagamit ng FencedFrames."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Inalis sa cache ang page para mapayagang ma-cache ang isa pang page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagbigay ng access sa pag-stream ng media."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may ilang partikular na uri ng naka-embed na content (hal. mga PDF)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng IdleManager."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may bukas na IndexedDBConnection."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Naka-disable ang back/forward cache dahil sa event na IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "May ginamit na mga hindi kwalipikadong API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page kung saan na-inject ng mga extension ang JavaScript."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page kung saan na-inject ng mga extension ang StyleSheet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Internal na error."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Naka-disable ang back/forward cache dahil nakatanggap ang ilang request sa network ng JavaScript ng resource na may Cache-Control: no-store na header."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Naka-disable ang back/forward cache dahil sa isang keepalive na kahilingan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Kasalukuyang hindi available para sa back/forward cache ang mag page na gumagamit ng KeyboardLock."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Hindi natapos mag-load ang page bago nag-navigate paalis dito."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may pangunahing resource na may cache-control:no-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may pangunahing resource na may cache-control:no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Kinansela ang pag-navigate bago ma-restore ang page mula sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Inalis sa cache ang page dahil may aktibong koneksyon ng network na nakatanggap ng masyadong maraming data. Nililimitahan ng Chrome ang dami ng data na puwedeng matanggap ng page habang naka-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may inflight na fetch() o XHR)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Inalis sa back/forward cache ang page dahil may kaugnay na pag-redirect ang isang kahilingan sa aktibong network."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Inalis sa cache ang page dahil masyadong matagal na nakabukas ang isang koneksyon ng network. Nililimitahan ng Chrome ang haba ng oras na puwedeng makatanggap ng data ang isa page habang naka-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na walang valid na header ng sagot."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Nangyari ang pag-navigate sa frame bukod pa sa pangunahing frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang page na may mga kasalukuyang naka-index na transaksyon sa DB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na kahilingan sa network."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na may in-flight na kahilingan sa fetch network."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na kahilingan sa network."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Kasalukuyang hindi available para sa back/forward cache ang mga page na may in-flight na kahilingan sa network na XHR."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng PaymentManager."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng Picture-in-Picture."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagpapakita ng UI sa Pag-print."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Binuksan ang page gamit ang 'window.open()' at may ibang tab na tumutukoy rito, o may window na binuksan ang page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Nag-crash ang proseso ng pag-render para sa page sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Inihinto ang proseso ng pag-render para sa page na nasa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa pag-capture ng audio."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa sensor."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa pag-sync o pag-fetch ng background."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa MIDI."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa mga notification."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng access sa storage."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na humiling ng mga pahintulot sa pag-capture ng video."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Ang mga page lang na may scheme ng URL na HTTP / HTTPS ang puwedeng i-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Na-claim ng service worker ang page habang nasa back/forward cache ito."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "May service worker na sumubok na magpadala ng MessageEvent sa page na nasa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Na-unregister ang ServiceWorker habang nasa back/forward cache ang isang page."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Inalis sa back/forward cache ang page dahil sa pag-activate ng service worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Ni-restart at na-clear ng Chrome ang mga entry sa back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SharedWorker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SpeechRecognizer."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SpeechSynthesis."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "May iframe sa page na nagsimula ng pag-navigate na hindi natapos."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may subresource na may cache-control:no-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may subresource na may cache-control:no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Lumampas ang page sa maximum na oras sa back/forward cache at nag-expire na ito."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Nag-time out ang page habang pumapasok sa back/forward cache (malamang na dahil sa mga matagal na tumatakbong tagapangasiwa ng pagehide)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Ang page ay may tagapangasiwa ng pag-unload sa pangunahing frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Ang page ay may tagapangasiwa ng pag-unload sa sub frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Binago ng browser ang header ng override ng user agent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na nagbigay ng access sa pag-record ng video o audio."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebDatabase."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebHID."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebLocks."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebNfc."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Kasalukuyang hindi kwalipikado para sa bfcache ang mga page na gumagamit ng WebOTPService."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Naka-disable ang back/forward cache dahil ginamit ang WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebShare."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Naka-disable ang back/forward cache dahil ginamit ang WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Hindi puwedeng pumasok sa back/forward cache ang mga page na may WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Naka-disable ang back/forward cache dahil ginamit ang WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng WebXR."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para sa animated na content, gamitin ang [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para mabawasan ang paggamit ng CPU kapag offscreen ang content."

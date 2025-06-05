@@ -91,9 +91,9 @@ describe('Timespan', function() {
     assert.strictEqual(devicePixelRatio, 1);
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-    assert.strictEqual(auditResults.length, 44);
+    assert.strictEqual(auditResults.length, 61);
     assert.deepStrictEqual(erroredAudits, []);
-    assert.deepStrictEqual(failedAudits.map(audit => audit.id), []);
+    assert.deepStrictEqual(failedAudits.map(audit => audit), []);
 
     // Ensure the timespan captured the user interaction.
     const interactionAudit = lhr.audits['interaction-to-next-paint'];

@@ -31,7 +31,7 @@ describe('SEO: Is page crawlable audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
-        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
         MetaElements: makeMetaElements(robotsValue),
         RobotsTxt: {},
@@ -56,7 +56,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaElements: makeMetaElements('all, noarchive'),
@@ -78,7 +78,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
@@ -122,7 +122,7 @@ describe('SEO: Is page crawlable audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
-        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: {},
@@ -150,7 +150,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
@@ -171,7 +171,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
@@ -195,7 +195,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
@@ -244,7 +244,7 @@ describe('SEO: Is page crawlable audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
-        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: robotsTxt,
@@ -284,7 +284,7 @@ describe('SEO: Is page crawlable audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
-        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: robotsTxt,
@@ -315,7 +315,7 @@ describe('SEO: Is page crawlable audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       MetaElements: makeMetaElements('noindex'),
       RobotsTxt: robotsTxt,
@@ -423,7 +423,7 @@ describe('SEO: Is page crawlable audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
-        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
         MetaElements: metaElements,
         RobotsTxt: {content: robots},

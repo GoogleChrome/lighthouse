@@ -10,7 +10,7 @@
 
 import {readFileSync, writeFileSync} from 'fs';
 
-import {elideAuditErrorStacks} from '../lib/asset-saver.js';
+import {elideLhrErrorStacks} from '../lib/asset-saver.js';
 
 const filename = process.argv[2];
 const extraFlag = process.argv[3];
@@ -48,7 +48,7 @@ function cleanAndFormatLHR(lhrString) {
     }
   }
 
-  elideAuditErrorStacks(lhr);
+  elideLhrErrorStacks(lhr);
 
   // Ensure we have a final newline to conform to .editorconfig
   return `${JSON.stringify(lhr, null, 2)}\n`;

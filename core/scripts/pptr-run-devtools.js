@@ -241,7 +241,7 @@ async function enableDevToolsThrottling() {
   const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
   const panel = LighthousePanel.LighthousePanel.instance();
 
-  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane .toolbar').shadowRoot;
+  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane devtools-toolbar');
   toolbarRoot.querySelector('option[value="devtools"]').selected = true;
   toolbarRoot.querySelector('select').dispatchEvent(new Event('change'));
 }

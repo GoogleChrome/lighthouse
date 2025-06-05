@@ -298,12 +298,25 @@ SPDX-License-Identifier: Apache-2.0
       margin: 0 4px;
     }
 
+    /**
+    * This media query is a temporary fallback for browsers that do not support `@container query`.
+    * TODO: remove this media query when `@container query` is fully supported by browsers
+    * See https://github.com/GoogleChrome/lighthouse/pull/16332
+    */
     @media screen and (max-width: 964px) {
       .lh-tools__dropdown {
         right: 0;
         left: initial;
       }
     }
+
+    @container lh-container (max-width: 964px) {
+      .lh-tools__dropdown {
+        right: 0;
+        left: initial;
+      }
+    }
+
     @media print {
       .lh-topbar {
         position: static;
@@ -549,6 +562,9 @@ SPDX-License-Identifier: Apache-2.0
         height: 26px;
         line-height: 26px;
         white-space: nowrap;
+      }
+      .lh-crc .lh-crc-node__longest {
+        color: var(--color-average-secondary);
       }
       .lh-crc .lh-crc-node__tree-value {
         margin-left: 10px;

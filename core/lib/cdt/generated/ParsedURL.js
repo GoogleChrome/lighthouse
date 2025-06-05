@@ -34,6 +34,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParsedURL = void 0;
 exports.normalizePath = normalizePath;
+exports.schemeIs = schemeIs;
 ;
 /**
  * http://tools.ietf.org/html/rfc3986#section-5.2.4
@@ -67,6 +68,14 @@ function normalizePath(path) {
         normalizedPath = normalizedPath + '/';
     }
     return normalizedPath;
+}
+function schemeIs(url, scheme) {
+    try {
+        return (new URL(url)).protocol === scheme;
+    }
+    catch {
+        return false;
+    }
 }
 class ParsedURL {
     isValid;
@@ -129,13 +138,16 @@ class ParsedURL {
             }
             this.path = this.url;
         }
-        const lastSlashIndex = this.path.lastIndexOf('/');
-        if (lastSlashIndex !== -1) {
-            this.folderPathComponents = this.path.substring(0, lastSlashIndex);
-            this.lastPathComponent = this.path.substring(lastSlashIndex + 1);
+        const lastSlashExceptTrailingIndex = this.path.lastIndexOf('/', this.path.length - 2);
+        if (lastSlashExceptTrailingIndex !== -1) {
+            this.lastPathComponent = this.path.substring(lastSlashExceptTrailingIndex + 1);
         }
         else {
             this.lastPathComponent = this.path;
+        }
+        const lastSlashIndex = this.path.lastIndexOf('/');
+        if (lastSlashIndex !== -1) {
+            this.folderPathComponents = this.path.substring(0, lastSlashIndex);
         }
     }
     static concatenate(devToolsPath, ...appendage) {

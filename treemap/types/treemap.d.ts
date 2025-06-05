@@ -51,6 +51,7 @@ declare global {
     logger: _Logger;
     __treemapOptions?: LH.Treemap.Options;
     __hash?: string;
+    // TODO: use gtag
     ga: UniversalAnalytics.ga;
   }
 

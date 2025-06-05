@@ -72,24 +72,21 @@ const mockArtifacts = (chainNetworkRecords) => {
   const finalDisplayedUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
 
   return {
-    traces: {
-      [CriticalRequestChains.DEFAULT_PASS]: trace,
-    },
-    devtoolsLogs: {
-      [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
-    },
+    Trace: trace,
+    DevtoolsLog: devtoolsLog,
     URL: {
       requestedUrl: finalDisplayedUrl,
       mainDocumentUrl: finalDisplayedUrl,
       finalDisplayedUrl,
     },
+    SourceMaps: [],
   };
 };
 
 describe('Performance: critical-request-chains audit', () => {
   it('calculates the correct chain result for failing example', () => {
     const artifacts = mockArtifacts(FAILING_CHAIN_RECORDS);
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       expect(output.displayValue).toBeDisplayString('2 chains found');
       assert.equal(output.score, 0);
@@ -99,7 +96,7 @@ describe('Performance: critical-request-chains audit', () => {
 
   it('calculates the correct chain result for passing example', () => {
     const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS);
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       assert.equal(output.details.longestChain.duration, 1000);
       assert.equal(output.displayValue, '');
@@ -109,15 +106,16 @@ describe('Performance: critical-request-chains audit', () => {
 
   it('calculates the correct chain result for a real devtools log', () => {
     const artifacts = {
-      traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
-      devtoolsLogs: {defaultPass: redditDevtoolsLog},
+      Trace: createTestTrace({topLevelTasks: [{ts: 0}]}),
+      DevtoolsLog: redditDevtoolsLog,
       URL: {
         requestedUrl: 'https://www.reddit.com/r/nba',
         mainDocumentUrl: 'https://www.reddit.com/r/nba',
         finalDisplayedUrl: 'https://www.reddit.com/r/nba',
       },
+      SourceMaps: [],
     };
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       expect(output.details.longestChain.duration).toBeCloseTo(656.491);
       expect(output.details.longestChain.transferSize).toEqual(2468);
@@ -127,7 +125,7 @@ describe('Performance: critical-request-chains audit', () => {
 
   it('calculates the correct chain result for passing example (no 2.)', () => {
     const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS_2);
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       assert.equal(output.displayValue, '');
       assert.equal(output.score, 1);
@@ -136,7 +134,7 @@ describe('Performance: critical-request-chains audit', () => {
 
   it('throws an error for no main resource found for empty example', () => {
     const artifacts = mockArtifacts(EMPTY_CHAIN_RECORDS);
-    const context = {computedCache: new Map()};
+    const context = {computedCache: new Map(), settings: {}};
     return CriticalRequestChains.audit(artifacts, context).then(_ => {
       throw new Error('should have failed');
     }).catch(err => {

@@ -1,3 +1,298 @@
+<a name="12.6.1"></a>
+# 12.6.1 (2025-06-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.0...v12.6.1)
+
+We expect this release to ship in the DevTools of [Chrome 139](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a couple days.
+
+## New contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+Ian Kerins @isker
+
+## Core
+
+* emulation: bump chrome UA to m136 ([#16489](https://github.com/GoogleChrome/lighthouse/pull/16489))
+* insights: add a bunch of debugData ([#16472](https://github.com/GoogleChrome/lighthouse/pull/16472))
+* inspector-issues: remove trusted types csp issue filter ([#16514](https://github.com/GoogleChrome/lighthouse/pull/16514))
+* inspector-issues: add userReidentificationIssue to artifact ([#16497](https://github.com/GoogleChrome/lighthouse/pull/16497))
+
+## Report
+
+* remove innerHTML usage from insights announce icon ([#16469](https://github.com/GoogleChrome/lighthouse/pull/16469))
+
+## Deps
+
+* upgrade deps ([#16515](https://github.com/GoogleChrome/lighthouse/pull/16515))
+* upgrade trace_engine to 0.0.53 ([#16496](https://github.com/GoogleChrome/lighthouse/pull/16496))
+* bump chrome-launcher to 1.2.0 ([#16479](https://github.com/GoogleChrome/lighthouse/pull/16479))
+
+## Clients
+
+* lr: disable modern-http-insight ([#16471](https://github.com/GoogleChrome/lighthouse/pull/16471))
+
+## Tests
+
+* fix some lantern test failures ([#16498](https://github.com/GoogleChrome/lighthouse/pull/16498))
+* use newer trace in metrics test ([#16492](https://github.com/GoogleChrome/lighthouse/pull/16492))
+
+## Misc
+
+* import i18n messages as JSON modules ([#16500](https://github.com/GoogleChrome/lighthouse/pull/16500))
+* scripts: add bytes-in-trace script ([#16477](https://github.com/GoogleChrome/lighthouse/pull/16477))
+* treemap: hide unused-bytes view mode when missing data ([#16478](https://github.com/GoogleChrome/lighthouse/pull/16478))
+* treemap: highlight many nodes on hover in duplicate modules table ([#16470](https://github.com/GoogleChrome/lighthouse/pull/16470))
+
+<a name="12.6.0"></a>
+# 12.6.0 (2025-04-28)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.1...v12.6.0)
+
+We expect this release to ship in the DevTools of [Chrome 137](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a few days.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+Jack Franklin @jackfranklin
+Rob Kodey @rkodey
+Clément Barbaza @cba85
+
+## Notable Changes
+
+The Performance category in the Lighthouse report now has an option to toggle "insights" - read more [here](https://github.com/GoogleChrome/lighthouse/discussions/16462).
+
+
+## Core
+
+* disable invalidationTracking trace event to prevent crash ([#16451](https://github.com/GoogleChrome/lighthouse/pull/16451))
+* migrate audits from devtoolsLogs/traces to DevtoolsLog/Trace ([#16448](https://github.com/GoogleChrome/lighthouse/pull/16448))
+* modify scoreDisplayMode for insight audits to match Perf panel ([#16432](https://github.com/GoogleChrome/lighthouse/pull/16432))
+* use `with` import attributes for legacy-javascript, bump to node 18.20 ([#16415](https://github.com/GoogleChrome/lighthouse/pull/16415))
+* image-size-responsive: use real mimeType to exclude svg ([#16443](https://github.com/GoogleChrome/lighthouse/pull/16443))
+* insights: drop slow-css-selector-insight for now ([#16457](https://github.com/GoogleChrome/lighthouse/pull/16457))
+* insights: implement `duplicated-javascript-insight` ([#16456](https://github.com/GoogleChrome/lighthouse/pull/16456))
+* insights: add prominent toggle banner to report ([#16461](https://github.com/GoogleChrome/lighthouse/pull/16461))
+* insights: implement `network-dependency-tree` insight ([#16407](https://github.com/GoogleChrome/lighthouse/pull/16407))
+* optimized-images: ignore internal encoding errors ([#16444](https://github.com/GoogleChrome/lighthouse/pull/16444))
+* preload-fonts: add Stylesheets to required artifacts ([#16421](https://github.com/GoogleChrome/lighthouse/pull/16421))
+* stacks: correctly identify angular ([#16439](https://github.com/GoogleChrome/lighthouse/pull/16439))
+* third-party-cookies: update description ([#16464](https://github.com/GoogleChrome/lighthouse/pull/16464))
+* tracehouse: fixup parent tasks when fudging endTime ([#16420](https://github.com/GoogleChrome/lighthouse/pull/16420))
+
+## Report
+
+* add analytics hook for insights state ([#16466](https://github.com/GoogleChrome/lighthouse/pull/16466))
+* adjust insights notice banner, localize strings ([#16463](https://github.com/GoogleChrome/lighthouse/pull/16463))
+* add insights group description ([#16455](https://github.com/GoogleChrome/lighthouse/pull/16455))
+* associate insight audits with stack packs ([#16440](https://github.com/GoogleChrome/lighthouse/pull/16440))
+* tweak style of insight tables; use system font ([#16434](https://github.com/GoogleChrome/lighthouse/pull/16434))
+* support node inside list detail, use in insight audits ([#16433](https://github.com/GoogleChrome/lighthouse/pull/16433))
+* display insights when using toggle, even if hidden ([#16431](https://github.com/GoogleChrome/lighthouse/pull/16431))
+
+## Deps
+
+* upgrade trace_engine to 0.0.52 ([#16465](https://github.com/GoogleChrome/lighthouse/pull/16465))
+* upgrade trace_engine to 0.0.51 ([#16447](https://github.com/GoogleChrome/lighthouse/pull/16447))
+* upgrade deps ([#16438](https://github.com/GoogleChrome/lighthouse/pull/16438))
+* upgrade typescript to 5.8.2 ([#16414](https://github.com/GoogleChrome/lighthouse/pull/16414))
+
+## Docs
+
+* fix "standalone-template.html" broken link in report README ([#16429](https://github.com/GoogleChrome/lighthouse/pull/16429))
+
+## Tests
+
+* disable oopif-scripts smoke for devtools runner ([#16446](https://github.com/GoogleChrome/lighthouse/pull/16446))
+
+## Misc
+
+* prepare core/lib/legacy-javascript to be published to npm ([#16416](https://github.com/GoogleChrome/lighthouse/pull/16416))
+* treemap: represent sizes using transfer size ([#16460](https://github.com/GoogleChrome/lighthouse/pull/16460))
+* treemap: parse options properly from hash params ([#16459](https://github.com/GoogleChrome/lighthouse/pull/16459))
+* treemap: update coerceOptions to grab initialView ([#16458](https://github.com/GoogleChrome/lighthouse/pull/16458))
+* treemap: move table to right, remove Tabulator ([#16428](https://github.com/GoogleChrome/lighthouse/pull/16428))
+* treemap: set initial view mode from options ([#16427](https://github.com/GoogleChrome/lighthouse/pull/16427))
+* treemap: vary colors within bundle, update fonts ([#16403](https://github.com/GoogleChrome/lighthouse/pull/16403))
+
+<a name="12.5.1"></a>
+# 12.5.1 (2025-03-26)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.5.0...v12.5.1)
+
+We expect this release to ship in the DevTools of [Chrome 136](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* trace-engine-result: exclude failed source maps ([#16412](https://github.com/GoogleChrome/lighthouse/pull/16412))
+
+<a name="12.5.0"></a>
+# 12.5.0 (2025-03-25)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.4.0...v12.5.0)
+
+We expect this release to ship in the DevTools of [Chrome 136](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+
+* `legacy-javascript` has been updated to target Baseline instead of esmodules for determining what code is considered "legacy" ([#16366](https://github.com/GoogleChrome/lighthouse/pull/16366)).
+
+## Core
+
+* enable enhanced traces, pass source maps to trace engine ([#16396](https://github.com/GoogleChrome/lighthouse/pull/16396))
+* pass lantern settings to trace engine and add logging ([#16377](https://github.com/GoogleChrome/lighthouse/pull/16377))
+* adapt trace engine i18n functions to LH i18n model ([#16365](https://github.com/GoogleChrome/lighthouse/pull/16365))
+* computed-artifacts: disallow undefined properties ([#16397](https://github.com/GoogleChrome/lighthouse/pull/16397))
+* duplicated-javascript: increase threshold from 1 to 10 KiB ([#16368](https://github.com/GoogleChrome/lighthouse/pull/16368))
+* image-delivery-insight: use strings without savings ([#16364](https://github.com/GoogleChrome/lighthouse/pull/16364))
+* insights: implement `use-cache-insight` ([#16401](https://github.com/GoogleChrome/lighthouse/pull/16401))
+* insights: upgrade and implement forced reflow ([#16395](https://github.com/GoogleChrome/lighthouse/pull/16395))
+* insights: move to hidden group by default ([#16391](https://github.com/GoogleChrome/lighthouse/pull/16391))
+* insights: implement font display insight ([#16369](https://github.com/GoogleChrome/lighthouse/pull/16369))
+* legacy-javascript: rework/revert some unminified bundle detection ([#16394](https://github.com/GoogleChrome/lighthouse/pull/16394))
+* legacy-javascript: support rollup bundles ([#16389](https://github.com/GoogleChrome/lighthouse/pull/16389))
+* legacy-javascript: support esbuild bundles ([#16385](https://github.com/GoogleChrome/lighthouse/pull/16385))
+* legacy-javascript: support unminified code ([#16384](https://github.com/GoogleChrome/lighthouse/pull/16384))
+* legacy-javascript: improve transform detection ([#16381](https://github.com/GoogleChrome/lighthouse/pull/16381))
+* script-treemap-data: keep duplicate info when collapsing nodes ([#16379](https://github.com/GoogleChrome/lighthouse/pull/16379))
+
+## Deps
+
+* upgrade deps ([#16408](https://github.com/GoogleChrome/lighthouse/pull/16408))
+* upgrade trace_engine to 0.0.47 ([#16376](https://github.com/GoogleChrome/lighthouse/pull/16376))
+* upgrade trace_engine, reuse cdt bf-cache/deprecation strings ([#16362](https://github.com/GoogleChrome/lighthouse/pull/16362))
+
+## I18n
+
+* import ([#16409](https://github.com/GoogleChrome/lighthouse/pull/16409))
+
+## Tests
+
+* fix local mocha tests not properly setting isUnderTest ([#16399](https://github.com/GoogleChrome/lighthouse/pull/16399))
+* fix i18n format in Node 20.19 ([#16398](https://github.com/GoogleChrome/lighthouse/pull/16398))
+* trace-engine: fix expectations ([#16380](https://github.com/GoogleChrome/lighthouse/pull/16380))
+
+## Misc
+
+* move support files to core/lib/legacy-javascript ([#16393](https://github.com/GoogleChrome/lighthouse/pull/16393))
+* extract legacy javascript detection to core/lib ([#16392](https://github.com/GoogleChrome/lighthouse/pull/16392))
+* build: use current year for bundle license copyright header ([#16375](https://github.com/GoogleChrome/lighthouse/pull/16375))
+* treemap: restructure header to match new design ([#16402](https://github.com/GoogleChrome/lighthouse/pull/16402))
+
+<a name="12.4.0"></a>
+# 12.4.0 (2025-02-26)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.3.0...v12.4.0)
+
+We expect this release to ship in the DevTools of [Chrome 135](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Daniil Vangonen @dvangonen
+- Rene Schwietzke @rschwietzke
+- Antti @hilja
+- Johannes Homeier @homj
+
+## Notable Changes
+
+* Some performance audits are marked as informative under passing conditions rather than being hidden in the passed audits section. This release reduces the number of audits which have this behavior. ([#16315](https://github.com/GoogleChrome/lighthouse/pull/16315))
+
+## New Audits
+
+* ensure clickjacking mitigation through XFO or CSP ([#16290](https://github.com/GoogleChrome/lighthouse/pull/16290))
+
+## Core
+
+* implement more insight audits, handle localization ([#16326](https://github.com/GoogleChrome/lighthouse/pull/16326))
+* set relevant metric based on insight category ([#16325](https://github.com/GoogleChrome/lighthouse/pull/16325))
+* add hidden audits for each insight ([#16312](https://github.com/GoogleChrome/lighthouse/pull/16312))
+* cls-culprits-insight: implement ([#16357](https://github.com/GoogleChrome/lighthouse/pull/16357))
+* inspector-issues: support SRI message signature issues ([#16345](https://github.com/GoogleChrome/lighthouse/pull/16345))
+* inspector-issues: add select element a11y issue to types ([#16298](https://github.com/GoogleChrome/lighthouse/pull/16298))
+* legacy-javascript: upgrade babel and core-js ([#16331](https://github.com/GoogleChrome/lighthouse/pull/16331))
+* root-causes: grab from trace insights rather than use protocol ([#16352](https://github.com/GoogleChrome/lighthouse/pull/16352))
+* trace-engine: re-enable invalidations handler ([#16293](https://github.com/GoogleChrome/lighthouse/pull/16293))
+
+## Report
+
+* use container queries for responsive design in DevTools ([#16342](https://github.com/GoogleChrome/lighthouse/pull/16342))
+* render LH-only diagnostics alongside insights ([#16332](https://github.com/GoogleChrome/lighthouse/pull/16332))
+* add button to toggle experimental insights ([#16329](https://github.com/GoogleChrome/lighthouse/pull/16329))
+* add checklist detail type ([#16324](https://github.com/GoogleChrome/lighthouse/pull/16324))
+
+## Deps
+
+* upgrade critical dependencies ([#16358](https://github.com/GoogleChrome/lighthouse/pull/16358))
+* upgrade csp_evaluator to 1.1.5 ([#16347](https://github.com/GoogleChrome/lighthouse/pull/16347))
+* update to latest chrome-devtools-frontend ([#16333](https://github.com/GoogleChrome/lighthouse/pull/16333))
+* upgrade puppeteer to 24.2.1 ([#16341](https://github.com/GoogleChrome/lighthouse/pull/16341))
+* upgrade third-party-web to 0.26.5 ([#16340](https://github.com/GoogleChrome/lighthouse/pull/16340))
+* upgrade puppeteer to 24.1.1 ([#16302](https://github.com/GoogleChrome/lighthouse/pull/16302))
+* upgrade `trace_engine` to 0.0.40 ([#16311](https://github.com/GoogleChrome/lighthouse/pull/16311))
+
+## I18n
+
+* import ([#16360](https://github.com/GoogleChrome/lighthouse/pull/16360))
+
+## Docs
+
+* readme: add Sonā to the list of Web Perf services ([#16282](https://github.com/GoogleChrome/lighthouse/pull/16282))
+
+## Tests
+
+* address upstream changes ([#16335](https://github.com/GoogleChrome/lighthouse/pull/16335))
+* refresh sample artifacts ([#16322](https://github.com/GoogleChrome/lighthouse/pull/16322))
+* dbw: revert unload handler expectations ([#16353](https://github.com/GoogleChrome/lighthouse/pull/16353))
+* devtools: fix error in smoke tests with DT throttling ([#16301](https://github.com/GoogleChrome/lighthouse/pull/16301))
+
+## Misc
+
+* remove issue assigner ([#16317](https://github.com/GoogleChrome/lighthouse/pull/16317))
+* ci: workaround new ubuntu 23 security issue for chromium ([#16296](https://github.com/GoogleChrome/lighthouse/pull/16296))
+* readme: add link to Neodymium ([#16349](https://github.com/GoogleChrome/lighthouse/pull/16349))
+* release: add script for updating critical dependencies ([#16359](https://github.com/GoogleChrome/lighthouse/pull/16359))
+* types: add missing type for explanation in NodeValue ([#16314](https://github.com/GoogleChrome/lighthouse/pull/16314))
+
+<a name="12.3.0"></a>
+# 12.3.0 (2024-12-12)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.3...v12.3.0)
+
+We expect this release to ship in the DevTools of [Chrome 133](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻!
+
+- Sebastian Neuner @sebastian9er
+
+## New Audits
+
+This release adds new security audits. These audits are informative and won't affect your best practices score.
+
+* Ensure proper origin isolation with COOP ([#16275](https://github.com/GoogleChrome/lighthouse/pull/16275))
+* Use a strong HSTS policy ([#16257](https://github.com/GoogleChrome/lighthouse/pull/16257))
+
+## Core
+
+* font-size: exclude invisible text ([#16281](https://github.com/GoogleChrome/lighthouse/pull/16281))
+
+## Deps
+
+* upgrade puppeteer to v23.10.4 ([#16279](https://github.com/GoogleChrome/lighthouse/pull/16279))
+* upgrade `trace_engine` to 0.0.38 ([#16269](https://github.com/GoogleChrome/lighthouse/pull/16269))
+
+## I18n
+
+* import ([#16283](https://github.com/GoogleChrome/lighthouse/pull/16283))
+* inject strings from trace engine npm package ([#16272](https://github.com/GoogleChrome/lighthouse/pull/16272))
+
+## Docs
+
+* update releasing instructions ([#16252](https://github.com/GoogleChrome/lighthouse/pull/16252))
+
+## Tests
+
+* update network target type expectations ([#16273](https://github.com/GoogleChrome/lighthouse/pull/16273))
+* devtools: sync e2e ([#16253](https://github.com/GoogleChrome/lighthouse/pull/16253))
+
 <a name="12.2.3"></a>
 # 12.2.3 (2024-12-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.2.2...v12.2.3)

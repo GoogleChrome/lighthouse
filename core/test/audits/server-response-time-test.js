@@ -20,7 +20,7 @@ describe('Performance: server-response-time audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
     const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
@@ -49,7 +49,7 @@ describe('Performance: server-response-time audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
     const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
@@ -80,7 +80,7 @@ describe('Performance: server-response-time audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
     const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
@@ -107,7 +107,7 @@ describe('Performance: server-response-time audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
     const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
@@ -127,7 +127,7 @@ describe('Performance: server-response-time audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([]);
 
     const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };

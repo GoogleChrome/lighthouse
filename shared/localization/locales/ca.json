@@ -660,7 +660,10 @@
     "message": "Utilitza formats de vídeo per al contingut animat"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Els polyfills i les transformacions permeten als navegadors heretats fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Per al teu JavaScript empaquetat, adopta una estratègia de desenvolupament de scripts moderna utilitzant la detecció de la funció mòdul / no mòdul per reduir la quantitat de codi enviat als navegadors moderns, mantenint al mateix temps la compatibilitat amb els navegadors heretats. [Informació sobre com pots utilitzar el JavaScript modern](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "S'ha detectat la versió 2 de core-js a la pàgina. L'has d'actualitzar a la versió 3 per obtenir moltes millores de rendiment."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Evita utilitzar JavaScript heretat als navegadors moderns"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Activa la compressió de text"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Gravetat"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "La capçalera `X-Frame-Options` (XFO) o la directiva `frame-ancestors` a la capçalera `Content-Security-Policy` (CSP) controlen on es pot inserir una pàgina. Poden mitigar els atacs de segrest de clics impedint que alguns llocs web, o tots, insereixin la pàgina. [Obtén més informació sobre com pots mitigar el segrest de clics](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "No s'ha trobat cap política de control de marcs"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Mitiga el segrest de clics amb XFO o CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Les cadenes de sol·licituds essencials de sota et mostren quins recursos es carreguen amb prioritat alta. Et recomanem que escurcis les cadenes, redueixis la mida de baixada dels recursos o ajornis la baixada de recursos innecessaris per millorar la càrrega de les pàgines. [Obtén informació sobre com pots evitar encadenar sol·licituds essencials](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse no ha pogut comprovar automàticament el valor `font-display` de l'URL d'origen {fontOrigin}.}other{Lighthouse no ha pogut comprovar automàticament els valors `font-display` de l'URL d'origen {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Directiva"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Gravetat"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Si s'implementa la capçalera HSTS, es redueix considerablement el risc que es canviïn les connexions HTTP a una versió inferior i que hi hagi atacs d'escolta clandestina. Es recomana llançar-la progressivament, començant amb un valor d'edat màxima que sigui baix. [Obtén més informació sobre com pots utilitzar una política HSTS segura](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)."
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Sintaxi no vàlida"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "El valor de `max-age` és massa baix"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "No s'ha trobat cap capçalera HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "No hi ha cap directiva `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "No s'ha trobat cap directiva `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "No s'ha trobat cap directiva `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Utilitza una política HSTS segura"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Relació d'aspecte (real)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Utilitza imatges amb una resolució adequada"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Puntuació del canvi de disseny"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Permès"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "S'ha injectat un iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Una sol·licitud de xarxa amb retard ha ajustat el disseny de la pàgina"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "L'element multimèdia no té una mida explícita"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "L'efecte té paràmetres de temps no admesos"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Directiva"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Gravetat"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "La política Cross-Origin-Opener-Policy (COOP) es pot utilitzar per aïllar la finestra de nivell superior d'altres documents, com ara els emergents. [Obtén més informació sobre com pots implementar la capçalera COOP](https://web.dev/articles/why-coop-coep#coop)."
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Sintaxi no vàlida"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "No s'ha trobat cap capçalera COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Assegura't que l'aïllament dels orígens sigui adequat amb COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Precarrega les fonts `optional` perquè els visitants nous puguin utilitzar-les. [Més informació sobre la precàrrega de fonts](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "S'ha detectat una navegació de la pàgina durant l'execució. No es recomana fer servir el mode de període de temps per auditar les navegacions de les pàgines. Utilitza el mode de navegació per auditar les navegacions de les pàgines a fi de millorar l'atribució de tercers i la detecció dels fils principals."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Només les pàgines carregades mitjançant una sol·licitud GET són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Només es poden desar a la memòria cau les pàgines amb un codi d'estat 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome ha detectat un intent d'executar JavaScript mentre era a la memòria cau."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Actualment, les pàgines que han sol·licitat un AppBanner no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa d'una sol·licitud de keepalive."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Les marques han desactivat la memòria cau endavant/enrere. Visita chrome://flags/#back-forward-cache per activar-la de manera local en aquest dispositiu."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "La línia d'ordres ha desactivat la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa de memòria insuficient."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "El delegat no admet la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "La memòria cau endavant/enrere s'ha desactivat per al prerenderitzador."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "La pàgina no es pot desar a la memòria cau perquè té una instància BroadcastChannel amb detectors registrats."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Les pàgines amb una capçalera cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "La memòria cau s'ha esborrat intencionadament."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Actualment, les pàgines que contenen connectors no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Les pàgines que utilitzen l'API FileChooser no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Les pàgines que utilitzen l'API File System Access no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Les pàgines que utilitzen Media Device Dispatcher no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Un reproductor multimèdia estava reproduint contingut en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurat un estat de reproducció no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurats gestors d'acció no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa d'un lector de pantalla."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Les pàgines que utilitzen SecurityHandler no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Les pàgines que utilitzen l'API Serial no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Les pàgines que utilitzen l'API WebAuthentication no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Les pàgines que utilitzen l'API WebBluetooth no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Les pàgines que utilitzen l'API WebUSB no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "La memòria cau endavant/enrere està desactivada perquè les galetes estan desactivades en una pàgina que utilitza `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Actualment, les pàgines que utilitzen un worker o un worklet especial no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "El document no s'havia acabat de carregar abans de sortir-ne."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Hi havia el bàner d'aplicacions en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Hi havia el gestor de contrasenyes de Chrome en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Hi havia en curs un procés de DOM Distiller en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Hi havia el lector de DOM Distiller en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "La memòria cau endavant/enrere està desactivada perquè hi ha extensions que utilitzen l'API de missatges."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Les extensions amb una connexió de llarga durada haurien de tancar la connexió abans d'entrar a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Les extensions amb una connexió de llarga durada provaven d'enviar missatges a marcs de la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa de les extensions."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Es mostrava un quadre de diàleg modal (per exemple, de reenviament d'un formulari o de contrasenya HTTP) en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Es mostrava la pàgina sense connexió en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Hi havia la barra d'intervenció de memòria insuficient en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Hi havia sol·licituds de permisos en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Hi havia un bloquejador de finestres emergents en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Es mostraven detalls de Navegació segura en sortir de la pàgina."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Navegació segura ha considerat que aquesta pàgina era abusiva i ha bloquejat la finestra emergent."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "S'ha activat un service worker mentre la pàgina era a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa d'un error del document."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Les pàgines que fan servir FencedFrames no es poden emmagatzemar a bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Actualment, les pàgines que han donat accés de transmissió de contingut multimèdia no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Actualment, les pàgines que utilitzen portals no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Actualment, les pàgines que utilitzen IdleManager no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Actualment, les pàgines que tenen una connexió IndexedDB oberta no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa d'un esdeveniment IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "S'han utilitzat API no aptes."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Actualment, les pàgines en què s'injecta `JavaScript` mitjançant extensions no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Actualment, les pàgines en què s'injecta `StyleSheet` mitjançant extensions no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Error intern."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "La memòria cau endavant/enrere està desactivada a causa d'una sol·licitud de keepalive."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Actualment, les pàgines que utilitzen el bloqueig de teclat no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "La pàgina no s'havia acabat de carregar abans de sortir-ne."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Les pàgines el recurs principal de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Les pàgines el recurs principal de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "La navegació s'ha cancel·lat abans que la pàgina es pogués restaurar de la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa activa ha rebut massa dades. Chrome limita la quantitat de dades que pot rebre una pàgina mentre està desada a la memòria cau."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Actualment, les pàgines que tenen un fetch() o un XHR en trànsit no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "La pàgina s'ha tret de la memòria cau endavant/enrere perquè una sol·licitud a la xarxa activa incloïa una redirecció."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa ha estat oberta durant massa temps. Chrome limita la quantitat de temps durant el qual una pàgina pot rebre dades mentre està desada a la memòria cau."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Les pàgines que no tenen una capçalera de resposta vàlida no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "La navegació ha tingut lloc en un marc diferent del marc principal."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Actualment, les pàgines amb transaccions de base de dades indexades en curs no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa de recollida en trànsit no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Actualment, les pàgines amb una sol·licitud de xarxa XHR en trànsit no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Actualment, les pàgines que utilitzen PaymentManager no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Actualment, les pàgines que utilitzen imatge sobre imatge no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Actualment, les pàgines que utilitzen portals no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Actualment, les pàgines que mostren la IU d'impressió no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "La pàgina s'ha obert amb `window.open()` i una altra pestanya hi fa referència o la pàgina ha obert una finestra."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "El procés renderitzador de la pàgina a la memòria cau endavant/enrere ha fallat."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "El procés renderitzador de la pàgina s'ha cancel·lat a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de captura d'àudio no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de sensor no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de recollida o sincronització en segon pla no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos MIDI no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de notificacions no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Actualment, les pàgines que han sol·licitat accés d'emmagatzematge no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Actualment, les pàgines que han sol·licitat permisos de captura de vídeo no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Només es poden desar a la memòria cau les pàgines amb un esquema d'URL HTTP o HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Un service worker ha reclamat la pàgina mentre era a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Un service worker ha provat d'enviar un `MessageEvent` a la pàgina que és a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "S'ha cancel·lat el registre de Service Worker mentre una pàgina era a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "La pàgina s'ha tret de la memòria cau endavant/enrere a causa de l'activació d'un service worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "S'ha reiniciat Chrome i s'han esborrat les entrades de la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Actualment, les pàgines que utilitzen SharedWorker no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Actualment, les pàgines que utilitzen SpeechRecognizer no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Actualment, les pàgines que utilitzen SpeechSynthesis no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Un iframe de la pàgina ha començat una navegació que no s'ha completat."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Les pàgines el subrecurs de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Les pàgines el subrecurs de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "La pàgina ha excedit el temps màxim a la memòria cau endavant/enrere i ha caducat."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "La pàgina ha esgotat el temps d'espera en accedir a la memòria cau endavant/enrere (probablement a causa de gestors page-hide de llarga durada)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "La pàgina té un gestor d'unload al marc principal."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "La pàgina té un gestor d'unload en un submarc."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "El navegador ha canviat la capçalera de substitució de l'agent d'usuari."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Actualment, les pàgines que han donat accés per gravar vídeo o àudio no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Actualment, les pàgines que utilitzen WebDatabase no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Actualment, les pàgines que utilitzen WebHID no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Actualment, les pàgines que utilitzen WebLocks no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Actualment, les pàgines que utilitzen WebNfc no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Actualment, les pàgines que utilitzen WebOTPService no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Les pàgines amb WebRTC no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Actualment, les pàgines que utilitzen WebShare no són aptes per a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Les pàgines amb WebSocket no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Les pàgines amb WebTransport no poden accedir a la memòria cau endavant/enrere."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Actualment, les pàgines que utilitzen WebXR no són aptes per a la memòria cau endavant/enrere."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Pots optar per afegir esquemes d'URL https: o http: (els navegadors que admeten `'strict-dynamic'` els ignoren) perquè sigui retrocompatible amb navegadors més antics."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "S'ha utilitzat una funció obsoleta"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "El símbol del comodí (*) no cobrirà l'autorització a la gestió de la capçalera `Access-Control-Allow-Headers` a CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "S'ha d'utilitzar l'atribut `disableRemotePlayback` per desactivar la integració de Cast predeterminada en lloc de fer servir el selector `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Les sol·licituds de recursos amb URL que contenien tant caràcters d'espai en blanc (`(n|r|t)`) com caràcters d'\"inferior a\" (`<`) suprimits estan bloquejades. Suprimeix les línies noves i codifica els caràcters d'\"inferior a\" de llocs com els valors d'atribut d'element per carregar aquests recursos."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` està obsoleta. Substitueix-la per l'API estandarditzada Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "La funció `chrome.loadTimes()` està obsoleta. Substitueix-la per l'API estandarditzada: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` està obsoleta. Substitueix-la per l'API estandarditzada: `nextHopProtocol` a Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Les galetes que continguin un caràcter `(0|r|n)` es rebutjaran en lloc de truncar-se."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "El relaxament de la política del mateix origen establint `document.domain` està obsolet i es desactivarà de manera predeterminada. Aquest advertiment de discontinuació és per a un accés d'altres orígens activat establint `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "L'opció d'activar window.alert des d'iframes d'altres orígens està obsoleta i se suprimirà en el futur."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "L'opció d'activar window.confirm des d'iframes d'altres orígens està obsoleta i se suprimirà en el futur."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Els esdeveniments de modificació de DOM, inclosos `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` i `DOMCharacterDataModified`, estan obsolets (https://w3c.github.io/uievents/#legacy-event-types) i se suprimiran. Substitueix-los per `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "La compatibilitat amb data: URL a l'element <use> d'SVG està obsoleta i se suprimirà en el futur."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "El relaxament de la política del mateix origen establint `document.domain` està obsolet i es desactivarà de manera predeterminada. Per continuar utilitzant aquesta funció, cancel·la els clústers d'agent amb clau d'origen enviant una capçalera `Origin-Agent-Cluster: ?0` juntament amb la resposta HTTP per al document i els marcs. Consulta https://developer.chrome.com/blog/immutable-document-domain/ per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "La capçalera `Expect-CT` està obsoleta i se suprimirà. Chrome requereix Transparència de certificats per a tots els certificats considerats de confiança públicament que s'hagin emès després del 30 d'abril de 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` i `watchPosition()` ja no funcionen en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` i `watchPosition()` estan obsoletes en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` ja no funciona en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "La funció `RTCPeerConnectionIceErrorEvent.hostCandidate` està obsoleta. Substitueix-la per `RTCPeerConnectionIceErrorEvent.address` o per `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "L'origen del comerciant i les dades arbitràries de l'esdeveniment `canmakepayment` del Service Worker estan obsolets i se suprimiran: `topOrigin`, `paymentRequestOrigin`, `methodData` i `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "El lloc web ha sol·licitat un subrecurs des d'una xarxa a la qual només ha pogut accedir gràcies a la posició privilegiada a la xarxa dels seus usuaris. Aquestes sol·licituds exposen els dispositius i els servidors que no són públics a Internet, amb la qual cosa augmenta el risc de patir una fuita d'informació o un atac de falsificació de sol·licituds entre llocs web (CSRF). Per reduir aquests riscos, Chrome discontinua les sol·licituds a subrecursos que no són públics quan s'inicien des de contexts no segurs i comença a bloquejar-los."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Al camp `dailyUpdateUrl` de `InterestGroups` que s'ha transferit a `joinAdInterestGroup()` se li ha canviat el nom per `updateUrl` a fi de reflectir-ne el comportament amb més precisió."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "El CSS no es pot carregar des dels URL `file:`, tret que acabin amb l'extensió de fitxer `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "L'opció d'utilitzar `SourceBuffer.abort()` per anul·lar la supressió de l'interval asíncron duta a terme per `remove()` s'ha discontinuat a causa del canvi d'especificació. Es deixarà d'admetre en el futur. Hauràs d'escoltar l'esdeveniment `updateend`. `abort()` s'ha dissenyat només per anul·lar l'addició d'un mitjà asíncron o per restablir l'estat de l'analitzador."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "En configurar `MediaSource.duration` per sota de la marca de temps de presentació més alta de qualsevol marc amb codi emmagatzemat a la memòria intermèdia, està obsoleta a causa del canvi d'especificació. La supressió implícita de mitjans truncats emmagatzemats a la memòria intermèdia es deixarà d'admetre en el futur. En lloc seu, hauràs d'executar el codi `remove(newDuration, oldDuration)` explícit en totes les instàncies de `sourceBuffers` en què `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI demanarà permís d'ús fins i tot si el missatge exclusiu del sistema no s'especifica a `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "L'atribut `shadowroot` anterior no estandarditzat està obsolet i *ja no funcionarà* a la versió M119. Substitueix-lo pel nou atribut `shadowrootmode` estandarditzat."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Pot ser que l'API Notification ja no es pugui utilitzar des d'orígens no segurs. Planteja't canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Pot ser que el permís per a l'API Notification ja no se sol·liciti des d'un iframe d'altres orígens. T'hauries de plantejar sol·licitar permís des d'un marc de nivell superior o bé obrir una finestra nova."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "L'opció `imageOrientation: 'none'` de createImageBitmap està obsoleta. Substitueix-la per createImageBitmap amb l'opció \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "El teu partner està negociant una versió de (D)TLS obsoleta. Demana al teu partner que ho corregeixi."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Si s'especifica `overflow: visible` a les etiquetes img, video i canvas, pot ser que produeixin contingut visual fora dels límits de l'element. Consulta https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "L'API `paymentManager.instruments` està obsoleta. Utilitza la instal·lació Just-In-Time per als gestors de pagaments."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "La crida a `PaymentRequest` ha omès la directiva `connect-src` de la política de seguretat del contingut (CSP). Aquesta omissió està obsoleta. Afegeix l'identificador de la forma de pagament de l'API `PaymentRequest` (al camp `supportedMethods`) a la directiva `connect-src` de la CSP."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "L'API `StorageType.persistent` està obsoleta. Substitueix-la per l'API `navigator.storage` estandarditzada."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "L'element `<source src>` amb un atribut superior `<picture>` no és vàlid i s'ignorarà. Substitueix-lo per `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "El mètode webkitCancelAnimationFrame és específic de cada proveïdor. Substitueix-lo per l'estàndard cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "El mètode webkitRequestAnimationFrame és específic de cada proveïdor. Substitueix-lo per l'estàndard requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "L'API HTMLVideoElement.webkitDisplayingFullscreen està obsoleta. Substitueix-la per Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "L'API HTMLVideoElement.webkitEnterFullScreen() està obsoleta. Substitueix-la per Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "L'API HTMLVideoElement.webkitEnterFullscreen() està obsoleta. Substitueix-la per Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "L'API HTMLVideoElement.webkitExitFullScreen() està obsoleta. Substitueix-la per Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "L'API HTMLVideoElement.webkitExitFullscreen() està obsoleta. Substitueix-la per Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "L'API HTMLVideoElement.webkitSupportsFullscreen està obsoleta. Substitueix-la per Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "L'API `chrome.privacy.websites.privacySandboxEnabled` deixarà d'estar disponible, tot i que continuarà activa per a la retrocompatibilitat fins que es publiqui la versió M113. Substitueix-la per `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` i `chrome.privacy.websites.adMeasurementEnabled`. Consulta https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "La restricció `DtlsSrtpKeyAgreement` s'ha suprimit. Has especificat un valor `false` per a aquesta restricció, la qual cosa s'interpreta com un intent d'utilitzar el mètode `SDES key negotiation` suprimit. Aquesta funcionalitat s'ha suprimit; substitueix-la per un servei que admeti `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "La restricció `DtlsSrtpKeyAgreement` s'ha suprimit. Has especificat un valor `true` per a aquesta restricció, la qual cosa no ha tingut cap efecte, però pots suprimir aquesta restricció per organitzar-te millor."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "El mètode getStats() basat en crida de retorn està obsolet i se suprimirà. Utilitza un getStats() que compleixi les especificacions."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "L'API Range.expand() està obsoleta. Substitueix-la per Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Les sol·licituds de subrecursos amb URL que contenen credencials inserides (per exemple, `https://user:pass@host/`) estan bloquejades."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "L'opció `rtcpMuxPolicy` està obsoleta i se suprimirà."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` requerirà l'aïllament d'altres orígens. Consulta https://developer.chrome.com/blog/enabling-shared-array-buffer/ per obtenir més informació."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` sense l'activació de l'usuari està obsoleta i se suprimirà."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Les extensions han d'activar l'aïllament d'altres orígens per continuar utilitzant `SharedArrayBuffer`. Consulta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL està obsolet. Utilitza SQLite WebAssembly o la base de dades indexada."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "El descriptor del permís `window-placement` està obsolet. Substitueix-lo per `window-management`. Per obtenir més ajuda, consulta https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "La política de permisos `window-placement` està obsoleta. Substitueix-la per `window-management`. Per obtenir més ajuda, consulta https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "La resposta JSON no admet UTF-16 a `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "L'API `XMLHttpRequest` síncrona al fil principal està obsoleta a causa dels seus efectes perjudicials en l'experiència de l'usuari final. Per obtenir més ajuda, consulta https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "La funció `supportsSession()` està obsoleta. Substitueix-la per `isSessionSupported()` i comprova el valor booleà resolt."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Temps de bloqueig del fil principal"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tercers"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Informe del flux d'usuaris de Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "El símbol del comodí (*) no cobrirà l'autorització a la gestió de la capçalera Access-Control-Allow-Headers a CORS."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "S'ha d'utilitzar l'atribut disableRemotePlayback per desactivar la integració de Cast predeterminada en lloc de fer servir el selector -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "El valor d'aspecte del CSS slider-vertical no està estandarditzat i se suprimirà."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Les sol·licituds de recursos amb URL que contenien tant caràcters d'espai en blanc (\\(n|r|t)) com caràcters d'\"inferior a\" (<) suprimits estan bloquejades. Suprimeix les línies noves i codifica els caràcters d'\"inferior a\" de llocs com els valors d'atribut d'element per carregar aquests recursos."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "La detecció automàtica del conjunt de caràcters ISO-2022-JP està obsoleta i es desactivarà pròximament. Especifica el conjunt de caràcters a la capçalera Content-Type o mitjançant una metaetiqueta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() està obsoleta. Substitueix-la per l'API estandarditzada: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() està obsoleta. Substitueix-la per l'API estandarditzada: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() està obsoleta. Substitueix-la per l'API estandarditzada: nextHopProtocol a Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Les galetes que continguin un caràcter \\(0|r|n) es rebutjaran en lloc de truncar-se."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "El relaxament de la política del mateix origen establint document.domain està obsolet i es desactivarà de manera predeterminada. Aquest advertiment de discontinuació és per a un accés d'altres orígens activat establint document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "L'opció d'activar window.alert des d'iframes d'altres orígens està obsoleta i se suprimirà en el futur."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "L'opció d'activar window.confirm des d'iframes d'altres orígens està obsoleta i se suprimirà en el futur."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Els esdeveniments de modificació de DOM, inclosos DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument i DOMCharacterDataModified, estan obsolets (https://w3c.github.io/uievents/#legacy-event-types) i se suprimiran. Substitueix-los per MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "La compatibilitat amb les URL data: a SVGUseElement està obsoleta i se suprimirà en el futur."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() i watchPosition() ja no funcionen en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() i watchPosition() estan obsoletes en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() ja no funciona en orígens no segurs. Per utilitzar aquesta funció, t'has de plantejar canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "S'ha trobat una etiqueta <h1> dins d'un element <article>, <aside>, <nav> o <section> que no té un cos de font especificat. Properament, la mida d'aquest text de capçalera canviarà en aquest navegador. Consulta https://developer.mozilla.org/es-ES/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 per obtenir més informació."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate està obsoleta. Substitueix-la per RTCPeerConnectionIceErrorEvent.address o RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Aquest format de la sol·licitud navigator.credentials.get() per a les credencials digitals està obsolet. Actualitza la crida per utilitzar el format nou."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "L'origen del comerciant i les dades arbitràries de l'esdeveniment canmakepayment del Service Worker estan obsolets i se suprimiran: topOrigin, paymentRequestOrigin, methodData i modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "El lloc web ha sol·licitat un subrecurs des d'una xarxa a la qual només ha pogut accedir gràcies a la posició privilegiada a la xarxa dels seus usuaris. Aquestes sol·licituds exposen els dispositius i els servidors que no són públics a Internet, amb la qual cosa augmenta el risc de patir una fuita d'informació o un atac de falsificació de sol·licituds entre llocs web (CSRF). Per reduir aquests riscos, Chrome discontinua les sol·licituds a subrecursos que no són públics quan s'inicien des de contexts no segurs i comença a bloquejar-los."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Al camp dailyUpdateUrl de InterestGroups que s'ha transferit a joinAdInterestGroup() se li ha canviat el nom a updateUrl per reflectir el comportament amb més precisió."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator està obsoleta. Substitueix-la per Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "El CSS no es pot carregar des dels URL file:, tret que acabin amb l'extensió de fitxer .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "L'opció d'utilitzar SourceBuffer.abort() per anul·lar la supressió de l'interval asíncron duta a terme per remove() s'ha discontinuat a causa del canvi d'especificació. Es deixarà d'admetre en el futur. Hauràs d'escoltar l'esdeveniment updateend. abort() s'ha dissenyat només per anul·lar l'addició d'un mitjà asíncron o per restablir l'estat de l'analitzador."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "En configurar MediaSource.duration per sota de la marca de temps de presentació més alta de qualsevol marc amb codi emmagatzemat a la memòria intermèdia està obsoleta a causa del canvi d'especificació. La supressió implícita de mitjans truncats emmagatzemats a la memòria intermèdia es deixarà d'admetre en el futur. En lloc seu, hauràs d'executar el codi remove(newDuration, oldDuration) explícit en totes les instàncies de sourceBuffers en què newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI demanarà permís d'ús fins i tot si el missatge exclusiu del sistema no s'especifica a MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Pot ser que l'API de notificacions ja no es pugui utilitzar des d'orígens no segurs. Planteja't canviar l'aplicació a un origen segur, com ara HTTPS. Consulta https://goo.gle/chrome-insecure-origins per obtenir més informació."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Pot ser que el permís per a l'API Notification ja no se sol·liciti des d'un iframe d'altres orígens. T'hauries de plantejar sol·licitar permís des d'un marc de nivell superior o bé obrir una finestra nova."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "L'opció imageOrientation: 'none' de createImageBitmap està obsoleta. Substitueix-la per createImageBitmap amb l'opció \"\\\\{imageOrientation: 'from-image'\\\\}\"."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "El teu partner està negociant una versió de (D)TLS obsoleta. Demana al teu partner que ho corregeixi."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Si s'especifica \"overflow: visible\" en les etiquetes img, video i canvas, pot ser que produeixin contingut visual fora dels límits de l'element. Consulta https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments està obsoleta. Utilitza la instal·lació Just-In-Time per als gestors de pagaments."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "La crida a PaymentRequest ha omès la directiva connect-src de la política de seguretat del contingut (CSP). Aquesta omissió està obsoleta. Afegeix l'identificador de la forma de pagament de l'API PaymentRequest (al camp supportedMethods) a la directiva connect-src de la CSP."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent està obsoleta. Substitueix-la per l'API navigator.storage estandarditzada."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> amb un atribut superior <picture> no és vàlid i s'ignorarà. Substitueix-lo per <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "El mètode webkitCancelAnimationFrame és específic de cada proveïdor. Substitueix-lo per l'estàndard cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "El mètode webkitRequestAnimationFrame és específic de cada proveïdor. Substitueix-lo per l'estàndard requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "L'API HTMLVideoElement.webkitDisplayingFullscreen està obsoleta. Substitueix-la per Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "L'API HTMLVideoElement.webkitEnterFullScreen() està obsoleta. Substitueix-la per Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "L'API HTMLVideoElement.webkitEnterFullscreen() està obsoleta. Substitueix-la per Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "L'API HTMLVideoElement.webkitExitFullScreen() està obsoleta. Substitueix-la per Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "L'API HTMLVideoElement.webkitExitFullscreen() està obsoleta. Substitueix-la per Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "L'API HTMLVideoElement.webkitSupportsFullscreen està obsoleta. Substitueix-la per Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "L'API chrome.privacy.websites.privacySandboxEnabled deixarà d'estar disponible, tot i que continuarà activa per a la retrocompatibilitat fins que es publiqui la versió M113. Substitueix-la per chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled i chrome.privacy.websites.adMeasurementEnabled. Consulta https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "La restricció DtlsSrtpKeyAgreement s'ha suprimit. Has especificat un valor false per a aquesta restricció, la qual cosa s'interpreta com un intent d'utilitzar el mètode SDES key negotiation suprimit. Aquesta funcionalitat s'ha suprimit; substitueix-la per un servei que admeti DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "La restricció DtlsSrtpKeyAgreement s'ha suprimit. Has especificat un valor true per a aquesta restricció, la qual cosa no ha tingut cap efecte, però pots suprimir aquesta restricció per organitzar-te millor."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "El mètode getStats() basat en crida de retorn està obsolet i se suprimirà. Utilitza un getStats() que compleixi les especificacions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "L'API Range.expand() està obsoleta. Substitueix-la per Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Les sol·licituds de subrecursos amb URL que contenen credencials inserides (per exemple, https://user:pass@host/) estan bloquejades."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "L'opció rtcpMuxPolicy està obsoleta i se suprimirà."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer requerirà l'aïllament d'altres orígens. Consulta https://developer.chrome.com/blog/enabling-shared-array-buffer/ per obtenir més detalls."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() sense l'activació de l'usuari està obsoleta i se suprimirà."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Els detectors d'esdeveniments unload estan obsolets i se suprimiran."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Les extensions han d'activar l'aïllament d'altres orígens per continuar utilitzant SharedArrayBuffer. Consulta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "La resposta JSON no admet UTF-16 a XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "L'API XMLHttpRequest síncrona al fil principal està obsoleta a causa dels seus efectes perjudicials en l'experiència de l'usuari final. Per obtenir més ajuda, consulta https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animació"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Els canvis de disseny es produeixen quan es mouen elements sense que l'usuari hi interaccioni. [Investiga les causes dels canvis de disseny](https://web.dev/articles/optimize-cls), com ara que s'afegeixin elements, se'n suprimeixin o se'n canviï la font a mesura que es carrega la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Sol·licitud de font"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "S'ha injectat un iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Clúster de canvi de disseny als {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "No s'ha detectat cap causant del canvi de disseny"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "No hi ha canvis de disseny"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Causants del canvi de disseny"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Principals causants del canvi de disseny"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Imatges sense mida"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "El pitjor clúster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Pitjor clúster de canvi de disseny"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL de la memòria cau"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Si la memòria cau té una vida llarga, es poden accelerar les visites repetides a la teva pàgina. [Obtén més informació](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "No hi ha cap sol·licitud amb polítiques de memòria cau ineficients"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} més"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Sol·licitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Utilitza temps de vida eficients de la memòria cau"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Un DOM gran pot augmentar la durada dels càlculs d'estil i de les recomposicions del disseny, i això repercuteix en la capacitat de resposta de la pàgina. Un DOM gran també augmenta l'ús de memòria. [Obtén informació sobre com pots evitar una mida del DOM massa gran](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Nombre màxim d'elements secundaris"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Profunditat del DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Estadística"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "Optimitza la mida del DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Total d'elements"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Valor"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "La primera sol·licitud de xarxa és la més important.  Per reduir-ne la latència, evita les redireccions, assegura't que el servidor respongui amb rapidesa i activa la compressió de text."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "No s'ha aplicat cap compressió"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Evita les redireccions"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "S'aplica la compressió de text"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Redireccions"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Temps de resposta del servidor"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Latència de la sol·licitud del document"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Baixada sense comprimir"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Bytes duplicats"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Font"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Suprimeix els mòduls de JavaScript grans i duplicats dels paquets per reduir el consum innecessari de bytes durant l'activitat de xarxa."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "JavaScript duplicat"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Prova d'establir [font-display](https://developer.chrome.com/blog/font-display) en swap o optional per assegurar-te que el text es vegi de manera coherent. swap es pot optimitzar encara més per mitigar els canvis de disseny amb [anul·lacions de mètriques de fonts](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Font"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Visualització de la font"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Temps perdut"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anònim)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Moltes API, que solen llegir la geometria del disseny, forcen el motor de renderització a posar en pausa l'execució de l'script per calcular l'estil i el disseny. Obtén més informació sobre la [recomposició forçada](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) i les seves mitigacions."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Traça de la pila"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Recomposició forçada"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Crida de funció principal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Temps total de recomposició"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[sense atribuir]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Reduir el temps de baixada de les imatges pot millorar el temps de càrrega percebut de la pàgina i l'LCP. [Més informació sobre com pots optimitzar la mida de les imatges](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (estimació: {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "No hi ha cap imatge que es pugui optimitzar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimitza la mida del fitxer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} més"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Millora la publicació d'imatges"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Augmentar el factor de compressió de la imatge podria millorar la mida de baixada d'aquesta imatge."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Utilitzar un format d'imatge modern (WebP, AVIF) o augmentar la compressió de la imatge podria millorar la mida de baixada d'aquesta imatge."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Aquest fitxer d'imatge és més gran del que hauria de ser ({PH1}) per les dimensions que es mostren ({PH2}). Utilitza imatges responsives per reduir la mida de baixada de la imatge."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Utilitzar formats de vídeo en comptes de GIF pot millorar la mida de baixada del contingut animat."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Comença a investigar amb la fase més llarga. [Els retards es poden minimitzar](https://web.dev/articles/optimize-inp#optimize_interactions). Per reduir la durada del processament, [optimitza els costos del fil principal](https://web.dev/articles/optimize-long-tasks), sovint JavaScript."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Durada"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Retard respecte a la interacció"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "No s'ha detectat cap interacció"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Retard en la presentació"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Durada del processament"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP per fase"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimitza l'LCP fent que la imatge LCP sigui [detectable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) immediatament des de l'HTML i [evitant la càrrega lenta](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "s'ha aplicat fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "S'ha d'aplicar fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "no s'ha aplicat la càrrega lenta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "La imatge LCP s'ha carregat {PH1} després del primer punt d'inici."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "No s'ha detectat cap LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "No s'ha detectat cap recurs de l'LCP perquè l'LCP no és una imatge"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "La sol·licitud és visible al document inicial"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Detecció de sol·licituds d'LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Cada [fase té estratègies de millora específiques](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealment, la majoria del temps de l'LCP s'hauria de dedicar a carregar els recursos, i no hauria de consistir en retards."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Durada"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Retard en la renderització de l'element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "Percentil 75 del camp"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "No s'ha detectat cap LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Retard en la càrrega dels recursos"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Durada de la càrrega de recursos"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Temps fins al primer byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP per fase"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Script"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Bytes malgastats"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Els polyfills i les transformacions permeten als navegadors heretats fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Et recomanem que modifiquis el procés de compilació de JavaScript perquè no transpili les funcions de [referència](https://web.dev/articles/baseline-and-polyfills), tret que sàpigues que has de donar suport als navegadors heretats. [Obtén informació sobre per què la majoria dels llocs web poden implementar codi ES6+ sense transcompilació](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "JavaScript heretat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "L'HTTP/2 i l'HTTP/3 ofereixen molts avantatges respecte de l'HTTP/1.1, com ara el multiplexatge. [Obtén més informació sobre com pots utilitzar un HTTP modern](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "No s'ha utilitzat HTTP/1.1 per a cap sol·licitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Sol·licitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "HTTP modern"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Evita encadenar sol·licituds crítiques](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) escurçant les cadenes, reduint la mida de baixada dels recursos o ajornant la baixada de recursos innecessaris per millorar la càrrega de les pàgines."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Latència de camí crítica màxima:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "No hi ha tasques de renderització afectades per cap dependència de xarxa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Arbre de dependències de la xarxa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Evita encadenar sol·licituds crítiques escurçant les cadenes, reduint la mida de baixada dels recursos o ajornant la baixada de recursos innecessaris per millorar la càrrega de les pàgines."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Les sol·licituds estan bloquejant la renderització inicial de la pàgina, cosa que pot retardar l'LCP. [Ajornar o inserir](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) pot treure aquestes sol·licituds de xarxa del camí crític."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Durada"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "No hi ha sol·licituds de bloqueig de la renderització per a aquesta navegació"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Sol·licitud"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Sol·licituds de bloqueig de la renderització"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Si els costos de Torna a calcular l'estil continuen sent alts, es poden reduir optimitzant els selectors. [Optimitza els selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) en què el temps transcorregut i el percentatge de camí lent siguin elevats. Els costos de coincidència es poden reduir utilitzant selectors més senzills, un menor nombre de selectors, un DOM més petit i un DOM més superficial."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Temps transcorregut"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "No s'han trobat dades del selector CSS. Les estadístiques del selector CSS s'han d'activar a la configuració del tauler de rendiment."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Intents de coincidència"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Recompte de coincidències"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Costos del selector CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Selectors principals"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Total"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Durada del fil principal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Tercer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Mida de la transferència"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "El codi de tercers pot afectar significativament el rendiment de la càrrega. [Redueix i ajorna la càrrega de codi de tercers](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) per prioritzar el contingut de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "No s'ha trobat cap tercer"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Tercers"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "La finestra gràfica de la pàgina no està optimitzada per a mòbils, de manera que les interaccions amb tocs poden [retardar-se fins a 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "Les interaccions amb tocs poden [retardar-se fins a 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) si la finestra gràfica no està optimitzada per a mòbils."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "La finestra gràfica no està optimitzada per a mòbils"
+    "message": "Optimitza la finestra gràfica per a mòbils"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Només les pàgines carregades mitjançant una sol·licitud GET són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Només es poden desar a la memòria cau les pàgines amb un codi d'estat 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome ha detectat un intent d'executar JavaScript a la memòria cau."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Actualment, les pàgines que han sol·licitat un AppBanner no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "chrome://flags ha desactivat la memòria cau endavant/enrere. Visita chrome://flags/#back-forward-cache per activar-la de manera local en aquest dispositiu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "La línia d'ordres ha desactivat la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè no hi ha prou memòria."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "El delegat no admet la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "El prerenderitzador ha desactivat la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "La pàgina no es pot desar a la memòria cau perquè té una instància BroadcastChannel amb detectors registrats."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Les pàgines amb una capçalera cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "La memòria cau s'ha esborrat intencionadament."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Actualment, les pàgines que contenen connectors no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Sense definir"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Les pàgines que utilitzen l'API FileChooser no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Les pàgines que utilitzen l'API File System Access no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Les pàgines que utilitzen Media Device Dispatcher no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Un reproductor multimèdia estava reproduint contingut en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurat un estat de reproducció no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Les pàgines que utilitzen l'API MediaSession i tenen configurats gestors d'acció no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "La memòria cau endavant/enrere està desactivada a causa d'un lector de pantalla."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Les pàgines que utilitzen SecurityHandler no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Les pàgines que utilitzen l'API Serial no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Les pàgines que utilitzen l'API WebAuthentication no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Les pàgines que utilitzen l'API WebBluetooth no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Les pàgines que utilitzen l'API WebUSB no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè les galetes estan desactivades en una pàgina que utilitza Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Actualment, les pàgines que utilitzen un Service Worker o un worklet exclusius no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "El document no s'ha acabat de carregar abans de sortir-ne."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Hi havia el bàner d'aplicacions en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Hi havia el gestor de contrasenyes de Chrome en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Hi havia en curs un procés de DOM Distiller en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Hi havia el lector de DOM Distiller en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè hi ha extensions que utilitzen l'API de missatges."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Les extensions amb una connexió de llarga durada haurien de tancar la connexió abans d'entrar a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Les extensions amb una connexió de llarga durada provaven d'enviar missatges a marcs de la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "La memòria cau endavant/enrere està desactivada a causa de les extensions."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "S'ha mostrat un quadre de diàleg modal (per exemple, de reenviament d'un formulari o d'autenticació HTTP) en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Es mostrava la pàgina corresponent a dispositius sense connexió en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Hi havia la barra d'intervenció de memòria insuficient en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Hi havia sol·licituds de permisos en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Hi havia un bloquejador de finestres emergents en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Els detalls de Navegació segura es mostraven en sortir de la pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Navegació segura ha considerat que aquesta pàgina era abusiva i ha bloquejat la finestra emergent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "S'ha activat un Service Worker mentre la pàgina era a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "La memòria cau endavant/enrere està desactivada a causa d'un error del document."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Les pàgines que fan servir FencedFrames no es poden emmagatzemar a bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "La pàgina s'ha tret de la memòria cau perquè s'hi pugui desar una altra pàgina."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Actualment, les pàgines que han donat accés a la transmissió de contingut multimèdia no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Actualment, les pàgines que tenen determinats tipus de contingut inserit (p. ex., PDF) no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Actualment, les pàgines que utilitzen IdleManager no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Actualment, les pàgines que tenen una connexió IndexedDB oberta no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "La memòria cau endavant/enrere està desactivada a causa d'un esdeveniment IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "S'han utilitzat API no aptes."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Actualment, les pàgines en què s'injecta JavaScript mitjançant extensions no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Actualment, les pàgines en què s'injecta StyleSheet mitjançant extensions no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Error intern."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè alguna sol·licitud de xarxa de JavaScript ha rebut un recurs amb una capçalera Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "La memòria cau endavant/enrere està desactivada a causa d'una sol·licitud de keepalive."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Actualment, les pàgines que utilitzen el bloqueig de teclat no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "La pàgina no s'ha acabat de carregar abans de sortir-ne."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Les pàgines el recurs principal de les quals té cache-control:no-cache no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Les pàgines el recurs principal de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "La navegació s'ha cancel·lat abans que la pàgina es pogués restaurar de la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa activa ha rebut massa dades. Chrome limita la quantitat de dades que pot rebre una pàgina mentre està desada a la memòria cau."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Actualment, les pàgines que tenen un fetch() o un XHR en trànsit no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "La pàgina s'ha tret de la memòria cau endavant/enrere perquè una sol·licitud a la xarxa activa incloïa una redirecció."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "La pàgina s'ha tret de la memòria cau perquè una connexió de xarxa ha estat oberta massa temps. Chrome limita la quantitat de temps durant el qual una pàgina pot rebre dades mentre està desada a la memòria cau."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Les pàgines que no tenen una capçalera de resposta vàlida no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "La navegació ha tingut lloc en un marc diferent del marc principal."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Actualment, les pàgines amb transaccions de base de dades indexades en curs no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Actualment, les pàgines amb una sol·licitud de xarxa de recollida en trànsit no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Actualment, les pàgines amb una sol·licitud de xarxa en trànsit no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Actualment, les pàgines amb una sol·licitud de xarxa XHR en trànsit no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Actualment, les pàgines que utilitzen PaymentManager no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Actualment, les pàgines que utilitzen imatge sobre imatge no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Actualment, les pàgines que mostren la IU d'impressió no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "La pàgina s'ha obert amb \"window.open()\" i una altra pestanya hi té una referència o la pàgina ha obert una finestra."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "El procés renderitzador de la pàgina a la memòria cau endavant/enrere ha fallat."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "El procés renderitzador de la pàgina s'ha cancel·lat a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos de gravació d'àudio no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos de sensor no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos de recollida o sincronització en segon pla no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos MIDI no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos de notificacions no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Actualment, les pàgines que han sol·licitat accés d'emmagatzematge no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Actualment, les pàgines que han sol·licitat permisos de gravació de vídeos no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Només es poden desar a la memòria cau les pàgines amb un esquema d'URL HTTP o HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Un Service Worker ha reclamat la pàgina mentre era a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Un Service Worker ha provat d'enviar un MessageEvent a la pàgina que era a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Service Worker s'ha donat de baixa mentre una pàgina era a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "La pàgina s'ha tret de la memòria cau endavant/enrere per l'activació d'un Service Worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "S'ha reiniciat Chrome i s'han esborrat les entrades de la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Actualment, les pàgines que utilitzen SharedWorker no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Actualment, les pàgines que utilitzen SpeechRecognizer no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Actualment, les pàgines que utilitzen SpeechSynthesis no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Un iframe de la pàgina ha començat una navegació que no s'ha completat."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Les pàgines el subrecurs de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Les pàgines el subrecurs de les quals té cache-control:no-store no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "La pàgina ha excedit el temps màxim a la memòria cau endavant/enrere i ha caducat."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "La pàgina ha esgotat el temps d'espera en accedir a la memòria cau endavant/enrere (probablement a causa de gestors que amaguen la pàgina de llarga durada)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "La pàgina té un gestor d'unload en el marc principal."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "La pàgina té un gestor d'unload en un submarc."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "El navegador ha canviat la capçalera de substitució de l'agent d'usuari."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Actualment, les pàgines que han donat accés a la gravació de vídeo o àudio no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Actualment, les pàgines que utilitzen WebDatabase no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Actualment, les pàgines que utilitzen WebHID no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Actualment, les pàgines que utilitzen WebLocks no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Actualment, les pàgines que utilitzen WebNfc no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Actualment, les pàgines que utilitzen WebOTPService no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Les pàgines amb WebRTC no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Actualment, les pàgines que utilitzen WebShare no són aptes per a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Les pàgines amb WebSocket no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Les pàgines amb WebTransport no poden accedir a la memòria cau endavant/enrere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "La memòria cau endavant/enrere està desactivada perquè s'ha utilitzat WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Actualment, les pàgines que utilitzen WebXR no són aptes per a la memòria cau endavant/enrere."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "En el cas de contingut animat, fes servir [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) per minimitzar l'ús de la CPU quan el contingut és fora de la pantalla."
@@ -2718,55 +3093,55 @@
     "message": "Pots optar per fer servir la utilitat `BreakpointObserver` del Component Dev Kit (CDK) per gestionar els punts de ruptura de la imatge. [Obtén més informació](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your `GIF` to a service which will make it available to embed as an HTML5 video."
+    "message": "Pots penjar el `GIF` en un servei que permeti inserir-lo com un vídeo HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
     "message": "Planteja't la possibilitat de configurar [formats d'imatge WebP amb un estil d'imatge Convert](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles) al teu lloc web."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Consider configuring lazy load images in `Drupal`. The field formatters for images support `lazy` or `eager`."
+    "message": "Pots configurar la càrrega lenta d'imatges a `Drupal`. Els formatejadors de camps per a imatges admeten la càrrega `lazy` o `eager`."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | prioritize-lcp-image": {
-    "message": "If the LCP element is dynamically added to the page, you should optimize the image in order to improve LCP. [Learn more](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)."
+    "message": "Si l'element LCP s'afegeix dinàmicament a la pàgina, has d'optimitzar la imatge per poder millorar l'LCP. [Obtén més informació](https://www.smashingmagazine.com/2023/08/methods-improving-drupal-largest-contentful-paint-core-web-vital/)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | redirects": {
-    "message": "Redirects introduce additional delays before the page can be loaded. If the [Redirect](https://www.drupal.org/project/redirect) module is installed, review if unnecessary redirects can be removed. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
+    "message": "La mètrica Redireccions introdueix retards addicionals abans de poder carregar la pàgina. Si el mòdul [Redirecció](https://www.drupal.org/project/redirect) està instal·lat, revisa si es poden suprimir les redireccions innecessàries. [Obtén més informació](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using [a module](https://www.drupal.org/project/critical_css) to inline critical CSS and JavaScript, and use the defer attribute for non-critical CSS or JavaScript."
+    "message": "Pots utilitzar [un mòdul](https://www.drupal.org/project/critical_css) per inserir fitxers JavaScript i CSS essencials. Fes servir l'atribut d'ajornament per a fitxers JavaScript o CSS que no siguin essencials."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
-    "message": "Offload traffic with one or more `Drupal` caching modules such as `Internal Page Cache`, `Internal Dynamic Page Cache`, and `BigPipe`. Couple these with a CDN to further improve response time. Your hosting servers should make use of PHP OPcache. Consider using memory-caching such as Redis or Memcached to reduce database query times. Lastly use performant themes, modules, and faster servers to lower server response time."
+    "message": "Redueix el trànsit amb un o més mòduls de memòria cau de `Drupal`, com ara `Internal Page Cache`, `Internal Dynamic Page Cache` i `BigPipe`. Combina'ls amb una CDN per millorar encara més el temps de resposta. Els servidors d'allotjament han d'utilitzar PHP OPcache. Prova de fer servir la memòria cau, com ara Redis o Memcached, per reduir els temps de consulta de la base de dades. Finalment, utilitza temes, mòduls i servidors més ràpids d'alt rendiment per reduir el temps de resposta del servidor."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) to reduce the size of images loaded on your page. If you are using `Views` to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Pots utilitzar [estils d'imatges responsives](https://www.drupal.org/documentation/modules/responsive_image) per reduir la mida de les imatges que carregues a la pàgina. Si utilitzes `Views` per mostrar diversos elements de contingut en una pàgina, pots implementar paginació per limitar el nombre d'elements de contingut que es mostren en una pàgina determinada."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page."
+    "message": "Comprova que hagis activat Aggregate CSS files (Fitxers CSS agregats) a la pàgina Administration » Configuration » Development (Administració » Configuració » Desenvolupament)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page."
+    "message": "Comprova que hagis activat Aggregate JavaScript files (Fitxers JavaScript agregats) a la pàgina Administration » Configuration » Development (Administració » Configuració » Desenvolupament)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed `Drupal` libraries to the relevant page or component in a page. See the [`Drupal` documentation](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your `Drupal` site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only attach a stylesheet library if it is actually used on the page."
+    "message": "Pots suprimir les regles de CSS no utilitzades i adjuntar només les biblioteques de `Drupal` necessàries a la pàgina o al component rellevants d'una pàgina. Per obtenir més informació, consulta la [documentació de `Drupal`](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Per identificar les biblioteques adjuntes que afegeixen fitxers CSS externs, prova d'executar la [cobertura del codi](https://developer.chrome.com/docs/devtools/coverage) a Chrome DevTools. Pots identificar el tema o el mòdul responsables a partir de l'URL del full d'estil quan l'agregació de CSS estigui desactivada al teu lloc web de `Drupal`. Posa atenció als temes o mòduls que tinguin molts fulls d'estil a la llista amb molt de vermell a la cobertura del codi. Un tema o mòdul només hauria d'adjuntar una biblioteca de fulls d'estil si es fa servir a la pàgina."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScript assets and only attach the needed `Drupal` libraries to the relevant page or component in a page. See the [Drupal documentation](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your `Drupal` site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only attach a script library if it is actually used on the page."
+    "message": "Pots suprimir els recursos de JavaScript no utilitzats i adjuntar només les biblioteques de `Drupal` necessàries a la pàgina o al component rellevants d'una pàgina. Per obtenir més informació, consulta la [documentació de Drupal](https://www.drupal.org/docs/develop/theming-drupal/adding-assets-css-js-to-a-drupal-theme-via-librariesyml#define). Per identificar les biblioteques adjuntes que afegeixen fitxers JavaScript externs, prova d'executar la [cobertura del codi](https://developer.chrome.com/docs/devtools/coverage) a Chrome DevTools. Pots identificar el tema o el mòdul responsables a partir de l'URL de l'script quan l'agregació de JavaScript estigui desactivada al teu lloc web de `Drupal`. Posa atenció als temes o mòduls que tinguin molts scripts a la llista amb molt de vermell a la cobertura del codi. Un tema o mòdul només hauria d'adjuntar una biblioteca de scripts si es fa servir a la pàgina."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [`Drupal` cache and optimizing for performance](https://www.drupal.org/docs/8/api/cache-api/cache-api)."
+    "message": "Defineix l'opció Browser and proxy cache maximum age (Antiguitat màxima de la memòria cau del navegador i del servidor intermediari) a la pàgina Administration » Configuration » Development (Administració » Configuració » Desenvolupament). Obtén informació sobre [l'optimització per a un bon rendiment i la memòria cau de `Drupal`](https://www.drupal.org/docs/8/api/cache-api/cache-api)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) provided from `Drupal` for all images rendered on the site."
+    "message": "Pots utilitzar [un mòdul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=image&solrsort=iss_project_release_usage+desc&op=Search) que optimitzi i redueixi automàticament la mida de les imatges penjades a través del lloc web sense perdre qualitat. A més, comprova que estiguis utilitzant els [estils d'imatges responsives](https://www.drupal.org/documentation/modules/responsive_image) natius proporcionats per `Drupal` en totes les imatges renderitzades al lloc web."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "`Preconnect` or `dns-prefetch` resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Es poden afegir suggeriments de recursos amb `Preconnect` o `dns-prefetch` instal·lant i configurant [un mòdul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=Preconnect&solrsort=score+desc&op=Search) que proporcioni elements per als suggeriments dels recursos d'agent d'usuari."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/documentation/modules/responsive_image) provided from `Drupal`. Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
+    "message": "Comprova que estiguis utilitzant els [estils d'imatges responsives](https://www.drupal.org/documentation/modules/responsive_image) natius proporcionats per `Drupal`. Utilitza els estils d'imatges responsives per renderitzar camps d'imatge mitjançant modes de visualització, visualitzacions o imatges penjades amb l'editor WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-text-compression": {
-    "message": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. Consider using a CDN that natively supports this, or configure the web server to perform this operation. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "Els recursos basats en text s'han de publicar comprimits (gzip, deflate o brotli) per minimitzar el total de bytes a la xarxa. Pots utilitzar una CDN que admeti aquesta funció de manera nativa o configurar el servidor web perquè dugui a terme aquesta operació. [Obtén més informació](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
     "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Optimize Fonts` per aprofitar automàticament la funció CSS `font-display` per assegurar-te que els usuaris poden veure el text mentre els tipus de lletra per a llocs web es carreguen."
@@ -3096,7 +3471,7 @@
     "message": "Hi ha diversos connectors de WordPress que et poden ajudar a [inserir recursos essencials](https://wordpress.org/plugins/search/critical+css/) o a [ajornar els recursos menys importants](https://wordpress.org/plugins/search/defer+css+javascript/). Tingues en compte que les optimitzacions que proporcionen aquests connectors poden afectar les funcions del tema o dels connectors, de manera que és possible que hagis de fer canvis al codi."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
-    "message": "Choose a lightweight theme (ideally a block theme) and implement full-page caching or a static site solution. Disable unnecessary plugins to minimize server overhead. Consider upgrading your hosting to managed or dedicated service."
+    "message": "Tria un tema lleuger (si pot ser, un tema de blocs) i implementa la memòria cau de pàgines completes o una solució de llocs webs estàtics. Desactiva els connectors innecessaris per minimitzar el temps de càrrega del servidor. Pots actualitzar l'allotjament a un servei gestionat o dedicat."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Pots mostrar extractes a les llistes de publicacions (per exemple, amb l'etiqueta més), reduir el nombre de publicacions que es mostren en una pàgina concreta, tallar les publicacions llargues en diverses pàgines o fer servir un connector per als comentaris de càrrega diferida."

@@ -151,11 +151,13 @@ class ExecutionContext {
   }
 
   /**
-   * Note: Prefer `evaluate` instead.
    * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
    * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
+   *
+   * @deprecated Use `evaluate` instead! It has a better API, and unlike `evaluateAsync` doesn't sometimes
+   * execute invalid code.
    * @param {string} expression
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}

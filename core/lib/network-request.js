@@ -107,6 +107,7 @@ const RESOURCE_TYPES = {
   Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
   Prefetch: 'Prefetch',
+  FedCM: 'FedCM',
 };
 
 class NetworkRequest {

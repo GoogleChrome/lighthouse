@@ -42,12 +42,8 @@ describe('Cache headers audit', () => {
   });
 
   function getArtifacts(networkRecords) {
-    const devtoolLogs = networkRecordsToDevtoolsLog(networkRecords);
-
     return {
-      devtoolsLogs: {
-        [CacheHeadersAudit.DEFAULT_PASS]: devtoolLogs,
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {},
     };
   }

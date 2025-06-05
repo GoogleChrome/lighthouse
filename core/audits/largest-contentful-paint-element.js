@@ -50,7 +50,8 @@ class LargestContentfulPaintElement extends Audit {
       guidanceLevel: 1,
       supportedModes: ['navigation'],
       requiredArtifacts:
-        ['traces', 'TraceElements', 'devtoolsLogs', 'GatherContext', 'settings', 'URL'],
+        ['Trace', 'TraceElements', 'DevtoolsLog', 'GatherContext', 'settings', 'URL',
+          'SourceMaps'],
     };
   }
 
@@ -119,11 +120,14 @@ class LargestContentfulPaintElement extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
-    const metricComputationData = {trace, devtoolsLog, gatherContext,
-      settings: context.settings, URL: artifacts.URL};
+    const metricComputationData = {
+      trace, devtoolsLog, gatherContext,
+      settings: context.settings, URL: artifacts.URL,
+      SourceMaps: artifacts.SourceMaps, simulator: null,
+    };
 
     const elementTable = this.makeElementTable(artifacts);
     if (!elementTable) {

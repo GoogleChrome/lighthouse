@@ -51,7 +51,12 @@ jobs:
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
+    - run: yarn i18n:collect-strings
     - run: yarn reset-link
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     # Run pptr tests using ToT Chrome instead of stable default.
     - name: Install Chrome ToT
@@ -83,6 +88,8 @@ jobs:
     - name: yarn test-viewer
       run: yarn build-viewer && bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
 
+    - run: git add -A && git diff --cached --exit-code
+
     - name: Upload failures
       if: failure()
       uses: actions/upload-artifact@v4
@@ -99,10 +106,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v4
 
-    - name: Use Node.js 18.x
+    - name: Use Node.js 18.20
       uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: '18.20'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report

@@ -445,6 +445,9 @@ message AuditResult {
 
   // An audit's guidance level.
   google.protobuf.DoubleValue guidanceLevel = 16;
+
+  // Audits that this audit replaces.
+  google.protobuf.Value replacesAudits = 17;
 }
 
 // Message containing the i18n data for the LHR - Version 1
@@ -701,6 +704,23 @@ message I18n {
 
     // Message for PWA deprecation.
     string pwa_removal_message = 67;
+
+    // Option in a dropdown menu that toggles the performance audits between
+    // new insights from RPP and legacy perf audits.
+    string dropdown_insights_toggle = 68;
+
+    // Notice about upcoming planned changes to Lighthouse, to replace most
+    // performance audits with a new set of "insight" audits.
+    string insights_notice = 69;
+
+    // Text for a button to try out "Performance insight audits", a new set of
+    // performance advice that will replace performance audits.
+    string try_insights = 70;
+
+    // Text for a button for going back to normal "Performance audits", instead of
+    // using the new set of performance insight audits that will replace performance
+    // audits.
+    string go_back_to_audits = 71;
   }
 
   // The message holding all formatted strings used in the renderer.
