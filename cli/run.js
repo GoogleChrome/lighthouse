@@ -137,7 +137,7 @@ async function saveResults(runnerResult, flags) {
   const cwd = process.cwd();
 
   if (flags.lanternDataOutputPath) {
-    const devtoolsLog = runnerResult.artifacts.devtoolsLogs.defaultPass;
+    const devtoolsLog = runnerResult.artifacts.DevtoolsLog;
     await assetSaver.saveLanternNetworkData(devtoolsLog, flags.lanternDataOutputPath);
   }
 

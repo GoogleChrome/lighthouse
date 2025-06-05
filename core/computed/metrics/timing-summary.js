@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
 import {ProcessedTrace} from '../processed-trace.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {Speedline} from '../speedline.js';
@@ -19,6 +21,7 @@ import {TotalBlockingTime} from './total-blocking-time.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {TimeToFirstByte} from './time-to-first-byte.js';
 import {LCPBreakdown} from './lcp-breakdown.js';
+import {isUnderTest} from '../../lib/lh-env.js';
 
 class TimingSummary {
   /**
@@ -27,11 +30,14 @@ class TimingSummary {
      * @param {LH.Artifacts['GatherContext']} gatherContext
      * @param {LH.Util.ImmutableObject<LH.Config.Settings>} settings
      * @param {LH.Artifacts['URL']} URL
+     * @param {LH.Artifacts['SourceMaps']} SourceMaps
      * @param {LH.Artifacts.ComputedContext} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
-  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, context) {
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
+  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, context) {
+    const metricComputationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
+
     /**
      * @template TArtifacts
      * @template TReturn
@@ -40,7 +46,12 @@ class TimingSummary {
      * @return {Promise<TReturn|undefined>}
      */
     const requestOrUndefined = (Artifact, artifact) => {
-      return Artifact.request(artifact, context).catch(_ => undefined);
+      return Artifact.request(artifact, context).catch(err => {
+        if (isUnderTest) {
+          log.error('lh:computed:TimingSummary', err);
+        }
+        return undefined;
+      });
     };
 
     /* eslint-disable max-len */
@@ -135,7 +146,7 @@ class TimingSummary {
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Util.ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL']}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: LH.Util.ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
@@ -146,6 +157,7 @@ class TimingSummary {
       data.gatherContext,
       data.settings,
       data.URL,
+      data.SourceMaps,
       context
     );
   }
@@ -153,6 +165,6 @@ class TimingSummary {
 
 const TimingSummaryComputed = makeComputedArtifact(
   TimingSummary,
-  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL', 'SourceMaps']
 );
 export {TimingSummaryComputed as TimingSummary};

@@ -68,7 +68,7 @@ class LongTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
       guidanceLevel: 1,
     };
   }
@@ -176,10 +176,10 @@ class LongTasks extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const URL = artifacts.URL;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const {URL, SourceMaps} = artifacts;
+    const trace = artifacts.Trace;
     const tasks = await MainThreadTasks.request(trace, context);
-    const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
@@ -192,9 +192,11 @@ class LongTasks extends Audit {
       taskTimingsByEvent = new Map();
 
       const simulatorOptions = {devtoolsLog, settings: context.settings};
-      const pageGraph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, context);
+      const pageGraph =
+        // eslint-disable-next-line max-len
+        await PageDependencyGraph.request({settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context);
       const simulator = await LoadSimulator.request(simulatorOptions, context);
-      const simulation = await simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
+      const simulation = simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
       for (const [node, timing] of simulation.nodeTimings.entries()) {
         if (node.type !== 'cpu') continue;
         taskTimingsByEvent.set(node.event, timing);

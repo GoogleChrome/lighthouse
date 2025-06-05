@@ -11,6 +11,8 @@
 
 
 import {Audit} from './audit.js';
+import {ImageRecords} from '../computed/image-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
@@ -77,9 +79,10 @@ function isSmallerThanViewport(imageRect, viewportDimensions) {
 
 /**
  * @param {LH.Artifacts.ImageElement} image
+ * @param {LH.Artifacts.ImageElementRecord | undefined} imageRecord
  * @return {boolean}
  */
-function isCandidate(image) {
+function isCandidate(image, imageRecord) {
   /** image-rendering solution for pixel art scaling.
    * https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look
   */
@@ -94,6 +97,10 @@ function isCandidate(image) {
     !image.naturalDimensions.width ||
     !image.naturalDimensions.height
   ) {
+    return false;
+  }
+  // Check the actual mimeType before guessing, since file extension is not guaranteed
+  if (imageRecord?.mimeType === 'image/svg+xml') {
     return false;
   }
   if (UrlUtils.guessMimeType(image.src) === 'image/svg+xml') {
@@ -243,19 +250,38 @@ class ImageSizeResponsive extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: ['ImageElements', 'ViewportDimensions'],
+      __internalOptionalArtifacts: ['DevtoolsLog'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static async audit(artifacts, context) {
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
+
+    // Prepare ImageElementRecord map for retrieving the real mimeType
+    // Derived from ./is-on-https.js and ./byte-efficiency/uses-responsive-images.js
+    /** @type {Map<string, LH.Artifacts.ImageElementRecord>} */
+    const imageRecordsByURL = new Map();
+
+    if (artifacts.DevtoolsLog) {
+      // https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#using-network-requests
+      // if DevtoolsLog is provided, use it to fetch image networkRecords
+      // else the empty imageRecordsByURL map will satisfy isCandidate with an undefined image and fallback to the original logic
+      const networkRecords = await NetworkRecords.request(artifacts.DevtoolsLog, context);
+      const images = await ImageRecords.request({
+        ImageElements: artifacts.ImageElements,
+        networkRecords,
+      }, context);
+      images.forEach(img => imageRecordsByURL.set(img.src, img));
+    }
 
     const results = Array
       .from(artifacts.ImageElements)
-      .filter(isCandidate)
+      .filter(image => isCandidate(image, imageRecordsByURL.get(image.src)))
       .filter(imageHasNaturalDimensions)
       .filter(image => !imageHasRightSize(image, DPR))
       .filter(image => isVisible(image.clientRect, artifacts.ViewportDimensions))

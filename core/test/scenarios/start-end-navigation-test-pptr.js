@@ -49,6 +49,8 @@ describe('Start/End navigation', function() {
     expect(lhr.finalDisplayedUrl).toEqual(`${state.serverBaseUrl}/index.html`);
 
     const {erroredAudits} = getAuditsBreakdown(lhr);
-    expect(erroredAudits).toHaveLength(0);
+    if (erroredAudits.length) {
+      throw new Error(`Unexpected audit error: ${JSON.stringify(erroredAudits[0], null, 2)}`);
+    }
   });
 });

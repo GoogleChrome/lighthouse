@@ -18,9 +18,10 @@ const defaultOptions = TBTAudit.defaultOptions;
 function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
   return {
     GatherContext: {gatherMode},
-    traces: {[TBTAudit.DEFAULT_PASS]: trace},
-    devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
+    Trace: trace,
+    DevtoolsLog: devtoolsLog,
     URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+    SourceMaps: [],
   };
 }
 

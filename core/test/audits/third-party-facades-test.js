@@ -41,21 +41,20 @@ describe('Third party facades audit', () => {
       {transferSize: 8000, url: intercomResourceUrl('a')},
     ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
-      traces: {defaultPass: createTestTrace({
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
         timeOrigin: 0,
         largestContentfulPaint: 15,
         traceEnd: 2000,
         networkRecords,
-      })},
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -101,21 +100,20 @@ describe('Third party facades audit', () => {
       {transferSize: 7000, url: youtubeResourceUrl('b')},
     ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
-      traces: {defaultPass: createTestTrace({
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
         timeOrigin: 0,
         largestContentfulPaint: 15,
         traceEnd: 2000,
         networkRecords,
-      })},
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -182,21 +180,20 @@ describe('Third party facades audit', () => {
       {transferSize: 2000, url: intercomProductUrl('1')},
     ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
-      traces: {defaultPass: createTestTrace({
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
         timeOrigin: 0,
         largestContentfulPaint: 15,
         traceEnd: 2000,
         networkRecords,
-      })},
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -238,21 +235,20 @@ describe('Third party facades audit', () => {
       {transferSize: 4000, url: intercomProductUrl('1')},
     ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
-      traces: {defaultPass: createTestTrace({
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
         timeOrigin: 0,
         largestContentfulPaint: 15,
         traceEnd: 2000,
         networkRecords,
-      })},
+      }),
       URL: {
         requestedUrl: 'https://intercomcdn.com',
         mainDocumentUrl: 'https://intercomcdn.com',
         finalDisplayedUrl: 'https://intercomcdn.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -268,10 +264,11 @@ describe('Third party facades audit', () => {
   it('only reports resources which have facade alternatives', async () => {
     const artifacts = {
       // This devtools log has third party requests but none have facades
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
-      traces: {defaultPass: pwaTrace},
+      DevtoolsLog: pwaDevtoolsLog,
+      Trace: pwaTrace,
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -286,14 +283,15 @@ describe('Third party facades audit', () => {
 
   it('not applicable when no third party resources are present', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: noThirdPartyDevtoolsLog},
-      traces: {defaultPass: noThirdPartyTrace},
+      DevtoolsLog: noThirdPartyDevtoolsLog,
+      Trace: noThirdPartyTrace,
       URL: {
         requestedUrl: 'http://localhost:65178/animation.html',
         mainDocumentUrl: 'http://localhost:65178/animation.html',
         finalDisplayedUrl: 'http://localhost:65178/animation.html',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -308,10 +306,11 @@ describe('Third party facades audit', () => {
 
   it('handles real trace', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: videoEmbedsDevtolsLog},
-      traces: {defaultPass: videoEmbedsTrace},
+      DevtoolsLog: videoEmbedsDevtolsLog,
+      Trace: videoEmbedsTrace,
       URL: getURLArtifactFromDevtoolsLog(videoEmbedsDevtolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -456,10 +455,11 @@ Array [
 
   it('handles real trace that blocks the main thread', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: blockingWidgetDevtoolsLog},
-      traces: {defaultPass: blockingWidgetTrace},
+      DevtoolsLog: blockingWidgetDevtoolsLog,
+      Trace: blockingWidgetTrace,
       URL: getURLArtifactFromDevtoolsLog(blockingWidgetDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

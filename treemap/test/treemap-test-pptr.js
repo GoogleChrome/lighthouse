@@ -177,7 +177,7 @@ describe('Lighthouse Treemap', () => {
         timeout: 30000,
       });
 
-      await page.click('#view-mode--unused-bytes');
+      await page.select('.view-mode-selector', '1'); // unused bytes
       await page.waitForSelector('.lh-treemap--view-mode--unused-bytes');
 
       // Identify the JS data.

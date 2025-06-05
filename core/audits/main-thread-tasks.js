@@ -17,7 +17,7 @@ class MainThreadTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Tasks',
       description: 'Lists the toplevel main thread tasks that executed during page load.',
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['Trace'],
     };
   }
 
@@ -27,7 +27,7 @@ class MainThreadTasks extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const tasks = await MainThreadTasksComputed.request(trace, context);
 
     const results = tasks

@@ -6,6 +6,7 @@
 
 import assert from 'assert/strict';
 import fs from 'fs';
+import path from 'path';
 
 import {readJson} from '../../../core/test/test-utils.js';
 import * as Printer from '../../printer.js';
@@ -34,11 +35,9 @@ describe('Printer', () => {
   });
 
   it('throws for invalid paths', () => {
-    const path = '!/#@.json';
+    const path = '//#@.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write(report, 'html', path).catch(err => {
-      assert.ok(err.code === 'ENOENT');
-    });
+    return assert.rejects(Printer.write(report, 'html', path));
   });
 
   it('returns output modes', () => {
@@ -47,6 +46,22 @@ describe('Printer', () => {
     assert.ok(modes.length > 1);
     modes.forEach(mode => {
       assert.strictEqual(typeof mode, 'string');
+    });
+  });
+
+  it('creates missing directories when writing to file', () => {
+    const dirPath = './non/existent/directory/.test-file.json';
+    const report = JSON.stringify(sampleResults);
+    const dir = path.dirname(dirPath);
+    if (fs.existsSync(dir)) {
+      fs.rmdirSync(dir, {recursive: true});
+    }
+    return Printer.write(report, 'json', dirPath).then(_ => {
+      assert.ok(fs.existsSync(dir), `Directory ${dir} should exist now`);
+      const fileContents = fs.readFileSync(dirPath, 'utf8');
+      assert.ok(/lighthouseVersion/gim.test(fileContents));
+      fs.unlinkSync(dirPath);
+      fs.rmdirSync(dir, {recursive: true});
     });
   });
 });

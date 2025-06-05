@@ -47,6 +47,6 @@ class LargestContentfulPaint extends NavigationMetric {
 
 const LargestContentfulPaintComputed = makeComputedArtifact(
   LargestContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LargestContentfulPaintComputed as LargestContentfulPaint};

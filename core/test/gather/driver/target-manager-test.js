@@ -6,7 +6,7 @@
 
 import {EventEmitter} from 'events';
 
-import {CdpCDPSession} from 'puppeteer-core/lib/cjs/puppeteer/cdp/CDPSession.js';
+import {CdpCDPSession} from 'puppeteer-core/lib/esm/puppeteer/cdp/CdpSession.js';
 
 import {TargetManager} from '../../../gather/driver/target-manager.js';
 import {createMockCdpSession} from '../mock-driver.js';
@@ -116,6 +116,21 @@ describe('TargetManager', () => {
           throw new Error('Cannot use Network.enable');
         })
         .mockResponse('Target.setAutoAttach');
+      await targetManager.enable();
+
+      const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
+      expect(invocations).toHaveLength(0);
+
+      // Should still be resumed.
+      expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(1);
+    });
+
+    it('should ignore errors if Target.getTargetInfo is undefined', async () => {
+      targetInfo.type = 'worker';
+      sendMock
+        .mockResponse('Target.getTargetInfo', () => {
+          throw new Error(`'Target.getTargetInfo' wasn't found`);
+        });
       await targetManager.enable();
 
       const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
@@ -314,12 +329,12 @@ describe('TargetManager', () => {
       iframeSession.on('Animation.animationCreated', iframeListener);
       targetManager.on('protocolevent', allListener);
 
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'Debugger.scriptParsed', params: {script: 'details'}});
-      // @ts-expect-error - types for _onMessage are wrong.
-      iframeSession._onMessage({method: 'Animation.animationCreated', params: {id: 'animated'}});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'Debugger.scriptParsed', params: {script: 'details'}});
+      // @ts-expect-error - internal function
+      iframeSession.onMessage({method: 'Animation.animationCreated', params: {id: 'animated'}});
 
       expect(rootListener).toHaveBeenCalledTimes(1);
       expect(rootListener).toHaveBeenCalledWith(undefined);
@@ -366,12 +381,12 @@ describe('TargetManager', () => {
       const allListener = fnAny();
       targetManager.on('protocolevent', allListener);
 
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
       expect(allListener).toHaveBeenCalled();
       targetManager.off('protocolevent', allListener);
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
       expect(allListener).toHaveBeenCalledTimes(1);
     });
   });

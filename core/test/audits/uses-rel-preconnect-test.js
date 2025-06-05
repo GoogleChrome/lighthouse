@@ -18,6 +18,10 @@ const mainResource = {
 };
 
 function buildArtifacts(networkRecords, fcpTs) {
+  for (const record of networkRecords) {
+    record.transferSize = record.transferSize ?? 1000;
+  }
+
   const trace = createTestTrace({
     timeOrigin: 0,
     largestContentfulPaint: 5000,
@@ -33,8 +37,9 @@ function buildArtifacts(networkRecords, fcpTs) {
       mainDocumentUrl: mainResource.url,
       finalDisplayedUrl: mainResource.url,
     },
-    devtoolsLogs: {defaultPass: devtoolsLog},
-    traces: {defaultPass: trace},
+    DevtoolsLog: devtoolsLog,
+    Trace: trace,
+    SourceMaps: [],
   };
 }
 

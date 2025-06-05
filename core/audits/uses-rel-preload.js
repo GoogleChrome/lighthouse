@@ -44,7 +44,7 @@ class UsesRelPreloadAudit extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'URL', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -212,14 +212,16 @@ class UsesRelPreloadAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const settings = context.settings;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const simulatorOptions = {devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
-      PageDependencyGraph.request({trace, devtoolsLog, URL}, context),
+      PageDependencyGraph.request(
+        {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       LoadSimulator.request(simulatorOptions, context),
     ]);
 

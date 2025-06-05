@@ -12,7 +12,16 @@ import {Globals} from './report-globals.js';
 import {Util} from '../../shared/util.js';
 import {createGauge, updateGauge} from './explodey-gauge.js';
 
+const LOCAL_STORAGE_INSIGHTS_KEY = '__lh__insights_audits_toggle_state';
+
+/**
+ * @typedef {('DEFAULT'|'AUDITS'|'INSIGHTS')} InsightsExperimentState
+ */
+
 export class PerformanceCategoryRenderer extends CategoryRenderer {
+  /** @type InsightsExperimentState*/
+  _memoryInsightToggleState = 'DEFAULT';
+
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @return {!Element}
@@ -135,6 +144,84 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * @param {InsightsExperimentState} newState
+  **/
+  _persistInsightToggleToStorage(newState) {
+    try {
+      window.localStorage.setItem(LOCAL_STORAGE_INSIGHTS_KEY, newState);
+    } finally {
+      this._memoryInsightToggleState = newState;
+    }
+  }
+
+  /**
+   * @returns {InsightsExperimentState}
+  **/
+  _getInsightToggleState() {
+    let state = this._getRawInsightToggleState();
+    if (state === 'DEFAULT') state = 'AUDITS';
+    return state;
+  }
+
+  /**
+   * @returns {InsightsExperimentState}
+  **/
+  _getRawInsightToggleState() {
+    try {
+      const fromStorage = window.localStorage.getItem(LOCAL_STORAGE_INSIGHTS_KEY);
+      if (fromStorage === 'AUDITS' || fromStorage === 'INSIGHTS') {
+        return fromStorage;
+      }
+    } catch {
+      return this._memoryInsightToggleState;
+    }
+    return 'DEFAULT';
+  }
+
+  /**
+   * @param {HTMLButtonElement} button
+  **/
+  _setInsightToggleButtonText(button) {
+    const state = this._getInsightToggleState();
+    button.innerText =
+      state === 'AUDITS' ? Globals.strings.tryInsights : Globals.strings.goBackToAudits;
+  }
+
+  /**
+   * @param {HTMLElement} element
+   */
+  _renderInsightsToggle(element) {
+    // Insights / Audits toggle.
+    const container = this.dom.createChildOf(element, 'div', 'lh-perf-insights-toggle');
+    const textSpan = this.dom.createChildOf(container, 'span', 'lh-perf-toggle-text');
+    const icon = this.dom.createElement('span', 'lh-perf-insights-icon insights-icon-url');
+    textSpan.appendChild(icon);
+    textSpan.appendChild(this.dom.convertMarkdownLinkSnippets(Globals.strings.insightsNotice));
+
+    const buttonClasses = 'lh-button lh-button-insight-toggle';
+    const button = this.dom.createChildOf(container, 'button', buttonClasses);
+    this._setInsightToggleButtonText(button);
+
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      const swappableSection = this.dom.maybeFind('.lh-perf-audits--swappable');
+      if (swappableSection) {
+        this.dom.swapSectionIfPossible(swappableSection);
+      }
+      const currentState = this._getInsightToggleState();
+      const newState = currentState === 'AUDITS' ? 'INSIGHTS' : 'AUDITS';
+      this.dom.fireEventOn('lh-analytics', this.dom.document(), {
+        name: 'toggle_insights',
+        data: {newState},
+      });
+      this._persistInsightToggleToStorage(newState);
+      this._setInsightToggleButtonText(button);
+    });
+
+    container.appendChild(button);
+  }
+
+  /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {{gatherMode: LH.Result.GatherMode}=} options
@@ -201,8 +288,92 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.append(filmstripEl);
     }
 
-    const allInsights = category.auditRefs
-      .filter(audit => audit.group === 'diagnostics')
+    this._renderInsightsToggle(element);
+
+    const legacyAuditsSection =
+      this.renderFilterableSection(category, groups, ['diagnostics'], metricAudits);
+    legacyAuditsSection?.classList.add('lh-perf-audits--swappable', 'lh-perf-audits--legacy');
+
+    const experimentalInsightsSection =
+      this.renderFilterableSection(category, groups, ['insights', 'diagnostics'], metricAudits);
+    experimentalInsightsSection?.classList.add(
+      'lh-perf-audits--swappable', 'lh-perf-audits--experimental');
+
+    if (legacyAuditsSection) {
+      element.append(legacyAuditsSection);
+
+      // Many tests expect just one of these sections to be in the DOM at a given time.
+      // To prevent the hidden section from tripping up these tests, we will just remove the hidden
+      // section from the DOM and store it in memory.
+      if (experimentalInsightsSection) {
+        this.dom.registerSwappableSections(legacyAuditsSection, experimentalInsightsSection);
+      }
+    }
+    // Deal with the user loading the report and having toggled to Insights
+    // which is now stored in local storage. Put in a rAF otherwise this code
+    // runs before the DOM is created.
+    if (this._getInsightToggleState() === 'INSIGHTS') {
+      requestAnimationFrame(() => {
+        const swappableSection = this.dom.maybeFind('.lh-perf-audits--swappable');
+        if (swappableSection) {
+          this.dom.swapSectionIfPossible(swappableSection);
+        }
+      });
+    }
+
+    // Log the initial state.
+    this.dom.fireEventOn('lh-analytics', this.dom.document(), {
+      name: 'initial_insights_state',
+      data: {state: this._getRawInsightToggleState()},
+    });
+
+    const isNavigationMode = !options || options?.gatherMode === 'navigation';
+    if (isNavigationMode && category.score !== null) {
+      const el = createGauge(this.dom);
+      updateGauge(this.dom, el, category);
+      this.dom.find('.lh-score__gauge', element).replaceWith(el);
+    }
+
+    return element;
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} groups
+   * @param {string[]} groupNames
+   * @param {LH.ReportResult.AuditRef[]} metricAudits
+   * @return {Element|null}
+   */
+  renderFilterableSection(category, groups, groupNames, metricAudits) {
+    if (groupNames.some(groupName => !groups[groupName])) return null;
+
+    const element = this.dom.createElement('div');
+
+    /** @type {Set<string>} */
+    const replacedAuditIds = new Set();
+
+    /**
+     * This exists to temporarily allow showing insights - which are in the hidden
+     * group by default - when using the insights toggle.
+     * See https://github.com/GoogleChrome/lighthouse/pull/16418 for motivation.
+     *
+     * @param {LH.ReportResult.AuditRef} auditRef
+     */
+    const getGroup = (auditRef) => {
+      return auditRef.id.endsWith('-insight') ? 'insights' : auditRef.group ?? '';
+    };
+
+    const allGroupAudits =
+      category.auditRefs.filter(audit => groupNames.includes(getGroup(audit)));
+    for (const auditRef of allGroupAudits) {
+      auditRef.result.replacesAudits?.forEach(replacedAuditId => {
+        replacedAuditIds.add(replacedAuditId);
+      });
+    }
+
+    // Diagnostics
+    const allFilterableAudits = allGroupAudits
+      .filter(audit => !replacedAuditIds.has(audit.id))
       .map(auditRef => {
         const {overallImpact, overallLinearImpact} = this.overallImpact(auditRef, metricAudits);
         const guidanceLevel = auditRef.result.guidanceLevel || 1;
@@ -211,21 +382,25 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return {auditRef, auditEl, overallImpact, overallLinearImpact, guidanceLevel};
       });
 
-    // Diagnostics
-    const diagnosticAudits = allInsights
+    const filterableAudits = allFilterableAudits
       .filter(audit => !ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const passedAudits = allInsights
+    const passedAudits = allFilterableAudits
       .filter(audit => ReportUtils.showAsPassed(audit.auditRef.result));
 
-    const [groupEl, footerEl] = this.renderAuditGroup(groups['diagnostics']);
-    groupEl.classList.add('lh-audit-group--diagnostics');
+    /** @type {Record<string, [Element, Element|null]|undefined>} */
+    const groupElsMap = {};
+    for (const groupName of groupNames) {
+      const groupEls = this.renderAuditGroup(groups[groupName]);
+      groupEls[0].classList.add(`lh-audit-group--${groupName}`);
+      groupElsMap[groupName] = groupEls;
+    }
 
     /**
      * @param {string} acronym
      */
     function refreshFilteredAudits(acronym) {
-      for (const audit of allInsights) {
+      for (const audit of allFilterableAudits) {
         if (acronym === 'All') {
           audit.auditEl.hidden = false;
         } else {
@@ -234,7 +409,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         }
       }
 
-      diagnosticAudits.sort((a, b) => {
+      filterableAudits.sort((a, b) => {
         // Performance diagnostics should only have score display modes of "informative" and "metricSavings"
         // If the score display mode is "metricSavings", the `score` will be a coarse approximation of the overall impact.
         // Therefore, it makes sense to sort audits by score first to ensure visual clarity with the score icons.
@@ -266,14 +441,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         return b.guidanceLevel - a.guidanceLevel;
       });
 
-      for (const audit of diagnosticAudits) {
+      for (const audit of filterableAudits) {
+        if (!audit.auditRef.group) continue;
+
+        const groupEls = groupElsMap[getGroup(audit.auditRef)];
+        if (!groupEls) continue;
+
+        const [groupEl, footerEl] = groupEls;
         groupEl.insertBefore(audit.auditEl, footerEl);
       }
     }
 
     /** @type {Set<string>} */
     const filterableMetricAcronyms = new Set();
-    for (const audit of diagnosticAudits) {
+    for (const audit of filterableAudits) {
       const metricSavings = audit.auditRef.result.metricSavings || {};
       for (const [key, value] of Object.entries(metricSavings)) {
         if (typeof value === 'number') filterableMetricAcronyms.add(key);
@@ -290,8 +471,12 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     refreshFilteredAudits('All');
 
-    if (diagnosticAudits.length) {
-      element.append(groupEl);
+    for (const groupName of groupNames) {
+      if (filterableAudits.some(audit => getGroup(audit.auditRef) === groupName)) {
+        const groupEls = groupElsMap[groupName];
+        if (!groupEls) continue;
+        element.append(groupEls[0]);
+      }
     }
 
     if (!passedAudits.length) return element;
@@ -302,13 +487,6 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     };
     const passedElem = this.renderClump('passed', clumpOpts);
     element.append(passedElem);
-
-    const isNavigationMode = !options || options?.gatherMode === 'navigation';
-    if (isNavigationMode && category.score !== null) {
-      const el = createGauge(this.dom);
-      updateGauge(this.dom, el, category);
-      this.dom.find('.lh-score__gauge', element).replaceWith(el);
-    }
 
     return element;
   }

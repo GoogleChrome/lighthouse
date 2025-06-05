@@ -35,7 +35,7 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
 process.env.TZ = 'UTC';
 
 // Expected to be set by lh-env.js
-process.env.NODE_TEST = 'test';
+process.env.NODE_ENV = 'test';
 
 global.expect = expect;
 

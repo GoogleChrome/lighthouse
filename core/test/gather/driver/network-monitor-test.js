@@ -359,6 +359,22 @@ describe('NetworkMonitor', () => {
       expect(monitor.is2Idle()).toBe(false);
       expect(monitor.isCriticalIdle()).toBe(true);
     });
+
+    it('should treat longlived stuff as noncritical', () => {
+      const messages = networkRecordsToDevtoolsLog([
+        // WebSockets usually dont have a priority on them. SSE usually is a 'High'
+        {url: 'http://example.com/ws', priority: undefined, requestId: `314.1`, resourceType: 'WebSocket'},
+        {url: 'http://example.com/sse', priority: 'High', requestId: `314.2`, resourceType: 'EventSource'},
+      ], {skipVerification: true}).filter(event => event.method === 'Network.requestWillBeSent');
+
+      for (const message of messages) {
+        rootDispatch(message);
+      }
+
+      expect(monitor.isCriticalIdle()).toBe(true);
+      expect(monitor.isIdle()).toBe(false);
+      expect(monitor.is2Idle()).toBe(true);
+    });
   });
 
   describe('#findNetworkQuietPeriods', () => {

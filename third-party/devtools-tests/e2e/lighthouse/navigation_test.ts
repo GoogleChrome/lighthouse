@@ -13,7 +13,6 @@ import {
   waitFor,
   waitForElementWithTextContent,
 } from '../../shared/helper.js';
-import {describe} from '../../shared/mocha-extensions.js';
 import {
   clickStartButton,
   getAuditsBreakdown,
@@ -95,7 +94,7 @@ describe('Navigation', function() {
     // 1 refresh after auditing to reset state
     assert.strictEqual(numNavigations, 5);
 
-    assert.strictEqual(lhr.lighthouseVersion, '12.2.0');
+    assert.strictEqual(lhr.lighthouseVersion, '12.6.1');
     assert.match(lhr.finalUrl, /^https:\/\/localhost:[0-9]+\/test\/e2e\/resources\/lighthouse\/hello.html/);
 
     assert.strictEqual(lhr.configSettings.throttlingMethod, 'simulate');
@@ -121,13 +120,15 @@ describe('Navigation', function() {
     });
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, ['max-potential-fid']);
-    assert.strictEqual(auditResults.length, 155);
+    assert.strictEqual(auditResults.length, 175);
     assert.deepStrictEqual(erroredAudits, []);
     assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
       'document-title',
       'html-has-lang',
       'render-blocking-resources',
       'meta-description',
+      'network-dependency-tree-insight',
+      'render-blocking-insight',
     ]);
 
     const viewTraceButton = await $textContent('View Trace', reportEl);
@@ -195,16 +196,19 @@ describe('Navigation', function() {
     const flakyAudits = [
       'server-response-time',
       'render-blocking-resources',
+      'render-blocking-insight',
+      'document-latency-insight',
       'max-potential-fid',
     ];
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, flakyAudits);
-    assert.strictEqual(auditResults.length, 155);
+    assert.strictEqual(auditResults.length, 175);
     assert.deepStrictEqual(erroredAudits, []);
     assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
       'document-title',
       'html-has-lang',
       'meta-description',
+      'network-dependency-tree-insight',
     ]);
 
     const viewTraceButton = await $textContent('View Trace', reportEl);

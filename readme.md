@@ -53,7 +53,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
 > **Note**
-> Lighthouse requires Node 18 LTS (18.x) or later.
+> Lighthouse requires Node 18.20 or later.
 
 **Installation**:
 
@@ -362,6 +362,10 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[DeploymentHawk](https://deploymenthawk.com)** - DeploymentHawk is an automated site auditing tool powered by Lighthouse. Effortlessly catch performance, accessibility, and SEO issues before they impact your users. DeploymentHawk is a paid product with a free 7-day trial.
 
+* **[Guardius](https://guardius.io)** - Guardius is a DevOps and DevSecOps SaaS platform that integrates Lighthouse to deliver automated web performance analysis. It not only provides metrics evaluation and automatic scanning but also enables performance comparisons across different periods and ongoing observation over time. Additionally, Guardius offers predefined and customized alerts tailored to your specific requirements. A free version of Guardius is available for users to explore its features.
+
+* **[Sonā](https://getsona.io)** - Powered by Lighthouse amongst others, Sonā delivers in-depth insights into your website’s health. Track changes over time, share reports, and receive actionable recommendations to improve performance, accessibility, SEO, best practices, and security. Sonā is free during its beta period.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
@@ -399,6 +403,7 @@ Other awesome open source projects that use Lighthouse.
 * **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
 * **[lighthouse-jest-example](https://github.com/justinribeiro/lighthouse-jest-example)** - Gather performance metrics via Lighthouse and assert results with Jest; uses Puppeteer to start Chrome with network emulation settings defined by WebPageTest.
 * **[lighthouse-lambda](https://github.com/Otterseer/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
+* **[lighthouse-matchers](https://github.com/ackama/lighthouse-matchers)** - Provides RSpec matchers for executing and evaluating Google Chrome Lighthouse audit scores.
 * **[lighthouse-mocha-example](https://github.com/rishichawda/lighthouse-mocha-example)** - Run Lighthouse performance tests with Mocha and chrome-launcher.
 * **[lighthouse-monitor](https://github.com/verivox/lighthouse-monitor)** - Run Lighthouse against all your URLs. Send metrics to any backend you want, save all reports with automatic data retention, and compare any two results in a web UI.
 * **[lighthouse-persist](https://github.com/foo-software/lighthouse-persist)** - Run Lighthouse and upload HTML reports to an AWS S3 bucket.
@@ -409,6 +414,7 @@ Other awesome open source projects that use Lighthouse.
 * **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
 * **[cypress-audit](https://github.com/mfrachet/cypress-audit)** - Run Lighthouse and Pa11y audits directly in your E2E test suites.
 * **[laravel-lighthouse](https://github.com/adityadees/laravel-lighthouse)** - Google Lighthouse wrapper for laravel framework to run Google Lighthouse CLI with custom option and can automatically save result in your server directory.
+* **[Neodymium](https://github.com/Xceptance/neodymium/wiki/Accessibility)** - The Neodymium test automation framework integrates Lighthouse for accessibility and Web Vitals verification, allowing programmatic validation and assertion of all audit values.
 
 ## FAQ
 

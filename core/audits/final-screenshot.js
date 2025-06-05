@@ -19,7 +19,7 @@ class FinalScreenshot extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Final Screenshot',
       description: 'The last screenshot captured of the pageload.',
-      requiredArtifacts: ['traces', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'GatherContext'],
     };
   }
 
@@ -29,7 +29,7 @@ class FinalScreenshot extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const processedTrace = await ProcessedTrace.request(trace, context);
     const screenshots = await Screenshots.request(trace, context);
     const {timeOrigin} = processedTrace.timestamps;

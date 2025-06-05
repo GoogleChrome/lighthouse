@@ -14,7 +14,6 @@ import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 import {TBTImpactTasks} from '../computed/tbt-impact-tasks.js';
 import {Sentry} from '../lib/sentry.js';
-import {Util} from '../../shared/util.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -50,7 +49,7 @@ class BootupTime extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -101,8 +100,8 @@ class BootupTime extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
@@ -173,7 +172,6 @@ class BootupTime extends Audit {
 
     return {
       score,
-      scoreDisplayMode: score >= Util.PASS_THRESHOLD ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       notApplicable: !results.length,
       numericValue: totalBootupTime,
       numericUnit: 'millisecond',

@@ -19,7 +19,7 @@ describe('Preload Fonts Audit', () => {
 
   function getArtifacts() {
     return {
-      devtoolsLogs: {[PreloadFontsAudit.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {finalDisplayedUrl: 'https://example.com/foo/bar/page'},
       Stylesheets: [stylesheet],
     };

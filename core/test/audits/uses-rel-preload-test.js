@@ -34,13 +34,14 @@ const defaultMainResource = {
 describe('Performance: uses-rel-preload audit', () => {
   const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     return {
-      traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
-      devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      Trace: createTestTrace({traceEnd: 5000}),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {
         requestedUrl: finalDisplayedUrl,
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 
@@ -51,6 +52,7 @@ describe('Performance: uses-rel-preload audit', () => {
       {
         requestId: '2',
         networkRequestTime: 10_000,
+        transferSize: 1000,
         isLinkPreload: false,
         url: secondRecordUrl,
         timing: defaultMainResource.timing,
@@ -63,6 +65,7 @@ describe('Performance: uses-rel-preload audit', () => {
         // Normally this request would be flagged for preloading.
         requestId: '3',
         networkRequestTime: 20_000,
+        transferSize: 1000,
         isLinkPreload: false,
         url: 'http://www.example.com/a-different-script.js',
         timing: defaultMainResource.timing,
@@ -100,6 +103,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 500,
         networkEndTime: 1000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 500},
         url: mainDocumentNodeUrl,
       },
@@ -110,6 +114,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 1000,
         networkEndTime: 2000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptNodeUrl,
         initiator: {type: 'parser', url: mainDocumentNodeUrl},
@@ -121,6 +126,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3_250,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1250},
         url: scriptAddedNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -132,6 +138,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3000,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptSubNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -143,6 +150,7 @@ describe('Performance: uses-rel-preload audit', () => {
         isLinkPreload: false,
         networkRequestTime: 2000,
         networkEndTime: 3_500,
+        transferSize: 1000,
         timing: {receiveHeadersEnd: 1500},
         url: scriptOtherNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -170,7 +178,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit(artifacts, context).then(output => {
-      assert.equal(output.details.overallSavingsMs, 314);
+      assert.equal(output.details.overallSavingsMs, 303);
       assert.equal(output.details.items.length, 1);
     });
   });
@@ -325,12 +333,9 @@ describe('Performance: uses-rel-preload audit', () => {
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
-      traces: {
-        [UsesRelPreload.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [UsesRelPreload.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'provided'};

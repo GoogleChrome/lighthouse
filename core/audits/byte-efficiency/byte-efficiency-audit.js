@@ -60,7 +60,7 @@ class ByteEfficiencyAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,

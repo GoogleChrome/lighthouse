@@ -5,13 +5,13 @@
 import {assert} from 'chai';
 
 import {goTo, goToResource, waitFor} from '../../shared/helper.js';
-import {describe, it} from '../../shared/mocha-extensions.js';
 import {
   clearSiteData,
   getHelpText,
   isGenerateReportButtonDisabled,
   navigateToLighthouseTab,
   selectCategories,
+  selectMode,
   waitForStorageUsage,
 } from '../helpers/lighthouse-helpers.js';
 
@@ -47,7 +47,7 @@ describe('The Lighthouse start view', () => {
     assert.strictEqual(helpText, '');
   });
 
-  it('disables the start button for internal pages', async () => {
+  it('disables the start button for internal pages in navigation mode', async () => {
     await navigateToLighthouseTab();
     await goTo('about:blank');
 
@@ -55,6 +55,17 @@ describe('The Lighthouse start view', () => {
     const helpText = await getHelpText();
     assert.isTrue(disabled, 'The Generate Report button should be disabled');
     assert.strictEqual(helpText, 'Can only audit pages on HTTP or HTTPS. Navigate to a different page.');
+  });
+
+  it('disables the start button for internal pages in non-navigation mode', async () => {
+    await navigateToLighthouseTab();
+    await goTo('about:blank');
+    await selectMode('timespan');
+
+    const disabled = await isGenerateReportButtonDisabled();
+    const helpText = await getHelpText();
+    assert.isFalse(disabled, 'The Generate Report button should be enabled');
+    assert.strictEqual(helpText, '');
   });
 
   // Broken on non-debug runs

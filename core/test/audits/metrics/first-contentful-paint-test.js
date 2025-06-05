@@ -8,7 +8,7 @@ import assert from 'assert/strict';
 
 import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -38,12 +38,10 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -55,12 +53,10 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates a modern trace correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: frameTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
-      },
+      Trace: frameTrace,
+      DevtoolsLog: frameDevtoolsLog,
+      URL: getURLArtifactFromDevtoolsLog(frameDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

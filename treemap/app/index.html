@@ -41,38 +41,30 @@ SPDX-License-Identifier: Apache-2.0
   <input id="hidden-file-input" type="file" hidden accept="application/json">
 
   <main class="hidden lh-main lh-main--show-table">
-    <div class="lh-settings">
-      <header>
-        <div class="lh-header--section">
-          <span class="lh-logotitle">
-            <!-- Lighthouse logo. Stolen from templates.html -->
-            <svg role="img" class="lh-topbar__logo" title="Lighthouse logo" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-              <path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="#F63"/>
-              <path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="#FFA385"/>
-              <path fill="#FF3" d="M20.5 10h7v7h-7z"/>
-            </svg>
+    <header class="lh-header">
+      <div class="lh-header__logotitle">
+        <!-- Lighthouse logo. Stolen from templates.html -->
+        <svg role="img" class="lh-topbar__logo" title="Lighthouse logo" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path d="m14 7 10-7 10 7v10h5v7h-5l5 24H9l5-24H9v-7h5V7Z" fill="#F63"/>
+          <path d="M31.561 24H14l-1.689 8.105L31.561 24ZM18.983 48H9l1.022-4.907L35.723 32.27l1.663 7.98L18.983 48Z" fill="#FFA385"/>
+          <path fill="#FF3" d="M20.5 10h7v7h-7z"/>
+        </svg>
 
-            <span class="lh-header--title lh-text-dim">Lighthouse Treemap</span>
-          </span>
+        <span class="lh-header--title lh-text-bold">Lighthouse Treemap</span>
+      </div>
 
-          <span class="lh-header__inputs">
-            <select class="bundle-selector"></select>
-            <button data-i18n="toggleTableButtonLabel" class="lh-button lh-button--active lh-button--toggle-table"></button>
-          </span>
-        </div>
+      <div class="lh-header__url">
+        <span class="lh-header--url-and-size">
+          <a href="" class="lh-header--url" target="_blank" rel="noopener"></a> <span class="lh-header--url-bytes lh-text-dim"></span></span>
+        </span>
+      </div>
 
-        <div class="lh-header--section">
-          <span class="lh-header--url-and-size">
-            <a href="" class="lh-header--url" target="_blank" rel="noopener"></a> <span class="lh-text-dim"></span></span>
-          </span>
-          <div class="lh-mode-wrapper">
-            <div class="lh-modes">
-              <!-- View modes go here -->
-            </div>
-          </div>
-        </div>
-      </header>
-    </div>
+      <div class="lh-header__inputs">
+        <select class="view-mode-selector"></select>
+        <select class="bundle-selector"></select>
+        <button data-i18n="toggleTableButtonLabel" class="lh-button lh-button--active lh-button--toggle-table"></button>
+      </div>
+    </header>
 
     <div class="lh-treemap">
       <!-- treemap goes here -->

@@ -56,8 +56,10 @@ describe('TBTImpactTasks', () => {
           mainDocumentUrl,
           finalDisplayedUrl: mainDocumentUrl,
         },
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
     });
 
@@ -243,8 +245,10 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
@@ -260,7 +264,7 @@ describe('TBTImpactTasks', () => {
       expect(tasksWithNoChildren).toEqual(tasksWithAllSelfImpact);
 
       const totalSelfImpact = tasksImpactingTbt.reduce((sum, t) => sum += t.selfTbtImpact, 0);
-      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999577`);
+      expect(totalSelfImpact).toMatchInlineSnapshot(`2819.9999999999545`);
 
       // Total self blocking time is just the total self impact without factoring in the TBT
       // bounds, so it should always be greater than or equal to the total TBT self impact.
@@ -292,8 +296,10 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);

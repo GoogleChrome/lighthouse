@@ -221,8 +221,9 @@ class FontSize extends BaseGatherer {
 
         const nodeIndex = doc.layout.nodeIndex[layoutIndex];
         const styles = doc.layout.styles[layoutIndex];
-        const [fontSizeStringId] = styles;
+        const [fontSizeStringId, visibilityStringId] = styles;
         const fontSize = getFloat(fontSizeStringId);
+        const visibility = getString(visibilityStringId);
 
         const parentIndex = nodes.parentIndex[nodeIndex];
         const grandParentIndex = nodes.parentIndex[parentIndex];
@@ -234,6 +235,7 @@ class FontSize extends BaseGatherer {
           nodeIndex,
           backendNodeId: nodes.backendNodeId[nodeIndex],
           fontSize,
+          visibility,
           textLength: getTextLength(text),
           parentNode: {
             ...parentNode,
@@ -257,17 +259,24 @@ class FontSize extends BaseGatherer {
     let failingTextLength = 0;
 
     for (const textNodeData of this.getTextNodesInLayoutFromSnapshot(snapshot)) {
-      totalTextLength += textNodeData.textLength;
-      if (textNodeData.fontSize < MINIMAL_LEGIBLE_FONT_SIZE_PX) {
-        // Once a bad TextNode is identified, its parent Node is needed.
-        failingTextLength += textNodeData.textLength;
-        failingNodes.push({
-          nodeId: 0, // Set later in fetchFailingNodeSourceRules.
-          parentNode: textNodeData.parentNode,
-          textLength: textNodeData.textLength,
-          fontSize: textNodeData.fontSize,
-        });
+      if (textNodeData.visibility === 'hidden') {
+        continue;
       }
+
+      totalTextLength += textNodeData.textLength;
+
+      if (textNodeData.fontSize >= MINIMAL_LEGIBLE_FONT_SIZE_PX) {
+        continue;
+      }
+
+      // Once a bad TextNode is identified, its parent Node is needed.
+      failingTextLength += textNodeData.textLength;
+      failingNodes.push({
+        nodeId: 0, // Set later in fetchFailingNodeSourceRules.
+        parentNode: textNodeData.parentNode,
+        textLength: textNodeData.textLength,
+        fontSize: textNodeData.fontSize,
+      });
     }
 
     return {totalTextLength, failingTextLength, failingNodes};
@@ -294,7 +303,7 @@ class FontSize extends BaseGatherer {
 
     // Get the computed font-size style of every node.
     const snapshot = await session.sendCommand('DOMSnapshot.captureSnapshot', {
-      computedStyles: ['font-size'],
+      computedStyles: ['font-size', 'visibility'],
     });
 
     const {

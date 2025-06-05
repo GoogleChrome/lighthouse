@@ -241,7 +241,7 @@ describe('backward compatibility', () => {
     );
     assert.deepStrictEqual(
       preparedResult.audits['modern-image-formats'].metricSavings,
-      {LCP: 1500, FCP: 0}
+      {LCP: 1650, FCP: 0}
     );
   });
 });

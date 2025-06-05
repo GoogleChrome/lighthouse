@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Each ARIA `role` supports a specific subset of `aria-*` attributes. ' +
       'Mismatching these invalidates the `aria-*` attributes. [Learn ' +
-      'how to match ARIA attributes to their roles](https://dequeuniversity.com/rules/axe/4.9/aria-allowed-attr).',
+      'how to match ARIA attributes to their roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-attr).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
