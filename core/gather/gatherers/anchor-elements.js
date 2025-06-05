@@ -38,54 +38,31 @@ function collectAnchorElements() {
     return onclick.slice(0, 1024);
   }
 
-  /** @param {HTMLElement|SVGElement|Text|ChildNode} node */
-  function getTrimmedInnerText(node) {
-    return node instanceof HTMLElement
-      ? node.innerText.trim()
-      : (node.textContent ? node.textContent.trim() : '');
-  }
-
   /**
    * @param {HTMLElement|SVGElement} node
-   * @param {string|null} currentLang
-   * @return {string}
+   * @return {string|null}
    */
-  function getLangOfInnerText(node, currentLang = null) {
-    if (currentLang === null) {
-      const parentWithLang = node.closest('[lang]');
+  function getLangOfInnerText(node) {
+    let curNodeLang = node.closest('[lang]')?.getAttribute('lang') ?? '';
 
-      // TODO: fallback to pragma-set-default-language or HTTP header
-      currentLang = !parentWithLang ? '' : parentWithLang.getAttribute('lang');
-    }
+    // If we find multiple languages within this element, return null.
+    for (const child of node.querySelectorAll('*')) {
+      if (!child.textContent) continue;
 
-    const innerElsWithLang = node.querySelectorAll('[lang]');
+      const childLang = child.closest('[lang]')?.getAttribute('lang');
+      if (!childLang) continue;
 
-    if (!innerElsWithLang.length) return currentLang || '';
+      if (!curNodeLang) {
+        curNodeLang = childLang;
+        continue;
+      }
 
-    const innerText = getTrimmedInnerText(node);
-
-    let innerTextLang = currentLang;
-
-    for (const el of node.childNodes) {
-      if (innerText === getTrimmedInnerText(el)) {
-        if (!(el instanceof HTMLElement || el instanceof SVGElement)) {
-          return currentLang || '';
-        }
-
-        const elLang = el.getAttribute('lang');
-        const childrenWithLang = el.querySelectorAll('[lang]');
-
-        if (!childrenWithLang.length) {
-          return elLang || currentLang || '';
-        } else {
-          return getLangOfInnerText(el, elLang || currentLang || '');
-        }
-      } else {
-        innerTextLang = '';
+      if (curNodeLang.split('-')[0] !== childLang.split('-')[0]) {
+        return null;
       }
     }
 
-    return innerTextLang || '';
+    return curNodeLang;
   }
 
   /** @type {Array<HTMLAnchorElement|SVGAElement>} */
@@ -97,15 +74,10 @@ function collectAnchorElements() {
   // possible DOM traversals
   /** @type {Array<HTMLElement|SVGElement>} */
   // @ts-expect-error - put into scope via stringification
-  const langElements = getElementsInDocument('body[lang], body [lang]'); // eslint-disable-line no-undef
-  const documentHasNoLang = !document.documentElement.lang && langElements.length === 0;
-  const canFallbackToBodyLang = (langElements.length === 1) &&
-    langElements[0].nodeName === 'BODY';
-  const canFallbackToHtmlLang = !canFallbackToBodyLang && (langElements.length === 0) &&
-    document.documentElement.lang;
-  const lang = documentHasNoLang ? '' :
-    (canFallbackToBodyLang ? langElements[0].getAttribute('lang') :
-    (canFallbackToHtmlLang ? document.documentElement.lang : null));
+  const langElements = getElementsInDocument('[lang]'); // eslint-disable-line no-undef
+  const documentHasSingleLang = langElements.length === 1 &&
+    (langElements[0].nodeName === 'BODY' || langElements[0].nodeName === 'HTML');
+  const singleLang = documentHasSingleLang ? langElements[0].getAttribute('lang') : null;
 
   return anchorElements.map(node => {
     if (node instanceof HTMLAnchorElement) {
@@ -116,7 +88,7 @@ function collectAnchorElements() {
         role: node.getAttribute('role') || '',
         name: node.name,
         text: node.innerText, // we don't want to return hidden text, so use innerText
-        textLang: lang !== null ? lang : getLangOfInnerText(node),
+        textLang: singleLang ?? getLangOfInnerText(node) ?? undefined,
         rel: node.rel,
         target: node.target,
         id: node.getAttribute('id') || '',
@@ -131,7 +103,7 @@ function collectAnchorElements() {
       onclick: getTruncatedOnclick(node),
       role: node.getAttribute('role') || '',
       text: node.textContent || '',
-      textLang: lang !== null ? lang : getLangOfInnerText(node),
+      textLang: singleLang ?? getLangOfInnerText(node) ?? undefined,
       rel: '',
       target: node.target.baseVal || '',
       id: node.getAttribute('id') || '',
