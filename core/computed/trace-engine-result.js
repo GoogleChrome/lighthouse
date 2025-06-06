@@ -63,7 +63,7 @@ class TraceEngineResult {
     if (!processor.parsedTrace) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
     this.localizeInsights(processor.insights);
-    return {data: processor.parsedTrace, insights: processor.insights};
+    return {parsedTrace: processor.parsedTrace, insights: processor.insights};
   }
 
   /**
