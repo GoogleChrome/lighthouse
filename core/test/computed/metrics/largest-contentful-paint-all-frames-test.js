@@ -7,7 +7,7 @@
 import assert from 'assert/strict';
 
 import {LargestContentfulPaintAllFrames} from '../../../computed/metrics/largest-contentful-paint-all-frames.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const traceAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const devtoolsLogAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
@@ -22,7 +22,10 @@ describe('Metrics: LCP from all frames', () => {
   it('should throw for predicted value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const resultPromise = LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    const resultPromise = LargestContentfulPaintAllFrames.request(
+      // eslint-disable-next-line max-len
+      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], simulator: null},
+      context);
 
     // TODO: Implement lantern solution for LCP all frames.
     await expect(resultPromise).rejects.toThrow();
@@ -31,7 +34,10 @@ describe('Metrics: LCP from all frames', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    const result = await LargestContentfulPaintAllFrames.request(
+      // eslint-disable-next-line max-len
+      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], simulator: null},
+      context);
 
     assert.equal(Math.round(result.timing), 683);
     assert.equal(result.timestamp, 23466705983);
@@ -41,7 +47,8 @@ describe('Metrics: LCP from all frames', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
-      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
+      // eslint-disable-next-line max-len
+      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(invalidDevtoolsLog), SourceMaps: [], simulator: null},
       context
     );
     await expect(resultPromise).rejects.toThrow('NO_LCP_ALL_FRAMES');
@@ -51,7 +58,8 @@ describe('Metrics: LCP from all frames', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(
-      {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings},
+      // eslint-disable-next-line max-len
+      {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogMainFrame), SourceMaps: [], simulator: null},
       context
     );
     await expect(result).toMatchInlineSnapshot(`

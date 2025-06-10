@@ -76,7 +76,7 @@ module.exports = {
       vars: 'all',
       args: 'after-used',
       argsIgnorePattern: '(^reject$|^_+$)',
-      varsIgnorePattern: '(^_$|^LH$|^Lantern$)',
+      varsIgnorePattern: '(^_$|^LH$|^Lantern$|^TraceEngine$|^Protocol$)',
     }],
     'no-cond-assign': 2,
     'space-infix-ops': 2,

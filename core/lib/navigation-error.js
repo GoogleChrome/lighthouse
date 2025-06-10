@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from './lantern/lantern.js';
 import {LighthouseError} from './lh-error.js';
-import {NetworkAnalyzer} from './lantern/simulator/network-analyzer.js';
 import {NetworkRequest} from './network-request.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
@@ -131,7 +131,7 @@ function getNonHtmlError(finalRecord) {
 function getPageLoadError(navigationError, context) {
   const {url, networkRecords} = context;
   /** @type {LH.Artifacts.NetworkRequest|undefined} */
-  let mainRecord = NetworkAnalyzer.findResourceForUrl(networkRecords, url);
+  let mainRecord = Lantern.Core.NetworkAnalyzer.findResourceForUrl(networkRecords, url);
 
   // If the url doesn't give us a network request, it's possible we landed on a chrome-error:// page
   // In this case, just get the first document request.
@@ -149,7 +149,7 @@ function getPageLoadError(navigationError, context) {
   // MIME Type is only set on the final redirected document request. Use this for the HTML check instead of root.
   let finalRecord;
   if (mainRecord) {
-    finalRecord = NetworkAnalyzer.resolveRedirects(mainRecord);
+    finalRecord = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecord);
   } else {
     // We have no network requests to process, use the navError
     return navigationError;

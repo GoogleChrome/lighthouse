@@ -44,7 +44,7 @@ function buildStandaloneReport() {
     outfile: 'dist/report/standalone.js',
     format: 'iife',
     bundle: true,
-    minify: true,
+    minify: !process.env.DEBUG,
   });
 }
 

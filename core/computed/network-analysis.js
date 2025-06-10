@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
-import {NetworkAnalyzer} from '../lib/lantern/simulator/network-analyzer.js';
 import {NetworkRecords} from './network-records.js';
 
 class NetworkAnalysis {
@@ -16,7 +18,17 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    return NetworkAnalyzer.analyze(records);
+    const analysis = Lantern.Core.NetworkAnalyzer.analyze(records);
+    if (!analysis) {
+      log.error('NetworkAnalysis', 'Network analysis failed due to lack of transfer data');
+      return {
+        throughput: 0,
+        rtt: Number.POSITIVE_INFINITY,
+        additionalRttByOrigin: new Map(),
+        serverResponseTimeByOrigin: new Map(),
+      };
+    }
+    return analysis;
   }
 }
 

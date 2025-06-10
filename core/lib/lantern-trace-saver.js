@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('./lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('./lantern/simulator/simulator.js').CompleteNodeTiming} CompleteNodeTiming */
+/** @typedef {import('./lantern/lantern.js').Simulation.CompleteNodeTiming} CompleteNodeTiming */
 
 /**
- * @param {Map<Node, CompleteNodeTiming>} nodeTimings
+ * @param {Map<LH.Gatherer.Simulation.GraphNode, CompleteNodeTiming>} nodeTimings
  * @return {LH.Trace}
  */
 function convertNodeTimingsToTrace(nodeTimings) {
@@ -33,7 +32,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       traceEvents.push(...createFakeTaskEvents(node, timing));
     } else {
       /** @type {LH.Artifacts.NetworkRequest} */
-      const record = node.record;
+      const record = node.rawRequest;
       // Ignore data URIs as they don't really add much value
       if (/^data/.test(record.url)) continue;
       traceEvents.push(...createFakeNetworkEvents(requestId, record, timing));
@@ -116,7 +115,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       const ts = eventTs + (event.ts - nestedBaseTs) * multiplier;
       const newEvent = {...event, ...{pid: baseEvent.pid, tid: baseEvent.tid}, ts};
       if (event.dur) newEvent.dur = event.dur * multiplier;
-      events.push(newEvent);
+      events.push(/** @type {LH.TraceEvent} */(newEvent));
     }
 
     return events;

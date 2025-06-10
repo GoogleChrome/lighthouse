@@ -16,24 +16,15 @@ const scriptUrl = 'http://www.example.com/script.js';
 const imageUrl = 'http://www.example.com/image.png';
 
 describe('Performance: prioritize-lcp-image audit', () => {
-  // TODO(15841): fix createTestTrace, cycles
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   const mockArtifacts = (networkRecords, URL) => {
     return {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [PrioritizeLcpImage.DEFAULT_PASS]: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 4500,
-          networkRecords,
-        }),
-      },
-      devtoolsLogs: {
-        [PrioritizeLcpImage.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 4500,
+        networkRecords,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL,
       TraceElements: [
         {
@@ -44,6 +35,7 @@ describe('Performance: prioritize-lcp-image audit', () => {
           type: 'image',
         },
       ],
+      SourceMaps: [],
     };
   };
 
@@ -140,7 +132,7 @@ describe('Performance: prioritize-lcp-image audit', () => {
     const artifacts = mockArtifacts(networkRecords, URL);
 
     // Make image paint event not apply to our node.
-    const imagePaintEvent = artifacts.traces.defaultPass
+    const imagePaintEvent = artifacts.Trace
         .traceEvents.find(e => e.name === 'LargestImagePaint::Candidate');
     imagePaintEvent.args.data.DOMNodeId = 1729;
 

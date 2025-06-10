@@ -21,7 +21,7 @@ const UIStrings = {
       'sufficient contrast ratio.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Low-contrast text is difficult or impossible for many users to read. ' +
-      '[Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.9/color-contrast).',
+      '[Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

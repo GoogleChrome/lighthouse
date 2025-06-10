@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'A heading with no content or inaccessible text prevent screen reader users from ' +
       'accessing information on the page\'s structure. ' +
-      '[Learn more about headings](https://dequeuniversity.com/rules/axe/4.9/empty-heading).',
+      '[Learn more about headings](https://dequeuniversity.com/rules/axe/4.10/empty-heading).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

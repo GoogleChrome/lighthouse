@@ -313,11 +313,6 @@ describe('DuplicatedJavascript computed artifact', () => {
   });
 
   it('.audit', async () => {
-    // TODO(15841): investigate failures
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const artifacts = await loadArtifacts(`${LH_ROOT}/core/test/fixtures/artifacts/cnn`);
     const ultraSlowThrottling = {rttMs: 150, throughputKbps: 100, cpuSlowdownMultiplier: 8};
     const settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};

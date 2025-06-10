@@ -9,13 +9,14 @@ import {createTestTrace} from '../create-test-trace.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 import {defaultSettings} from '../../config/constants.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
-const videoEmbedsTrace = readJson('../fixtures/artifacts/video-embed/trace.json', import.meta);
-const videoEmbedsDevtolsLog = readJson('../fixtures/artifacts/video-embed/devtoolslog.json', import.meta);
-const blockingWidgetTrace = readJson('../fixtures/artifacts/intercom-widget/trace.json', import.meta);
-const blockingWidgetDevtoolsLog = readJson('../fixtures/artifacts/intercom-widget/devtoolslog.json', import.meta);
-const noThirdPartyTrace = readJson('../fixtures/traces/no-tracingstarted-m74.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
+const videoEmbedsTrace = readJson('../fixtures/artifacts/video-embed/trace.json.gz', import.meta);
+const videoEmbedsDevtolsLog = readJson('../fixtures/artifacts/video-embed/devtoolslog.json.gz', import.meta);
+const blockingWidgetTrace = readJson('../fixtures/artifacts/intercom-widget/trace.json.gz', import.meta);
+const blockingWidgetDevtoolsLog = readJson('../fixtures/artifacts/intercom-widget/devtoolslog.json.gz', import.meta);
+const noThirdPartyTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
+const noThirdPartyDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 
 function intercomProductUrl(id) {
   return `https://widget.intercom.io/widget/${id}`;
@@ -33,27 +34,27 @@ function youtubeResourceUrl(id) {
   return `https://i.ytimg.com/${id}/maxresdefault.jpg`;
 }
 describe('Third party facades audit', () => {
-  // TODO(15841): traces needs updating.
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   it('correctly identifies a third party product with facade alternative', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+    ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-        ]),
-      },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -91,23 +92,28 @@ describe('Third party facades audit', () => {
   });
 
   it('handles multiple products with facades', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+      {transferSize: 3000, url: youtubeProductUrl('2')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+      {transferSize: 7000, url: youtubeResourceUrl('b')},
+    ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-          {transferSize: 3000, url: youtubeProductUrl('2')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-          {transferSize: 7000, url: youtubeResourceUrl('b')},
-        ]),
-      },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -167,22 +173,27 @@ describe('Third party facades audit', () => {
   });
 
   it('handle multiple requests to same product resource', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://example.com', priority: 'High'},
+      {transferSize: 2000, url: intercomProductUrl('1')},
+      {transferSize: 8000, url: intercomResourceUrl('a')},
+      {transferSize: 2000, url: intercomProductUrl('1')},
+    ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-          {transferSize: 2000, url: intercomProductUrl('1')},
-          {transferSize: 8000, url: intercomResourceUrl('a')},
-          {transferSize: 2000, url: intercomProductUrl('1')},
-        ]),
-      },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      }),
       URL: {
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -219,20 +230,25 @@ describe('Third party facades audit', () => {
   });
 
   it('does not report first party resources', async () => {
+    const networkRecords = [
+      {transferSize: 2000, url: 'https://intercomcdn.com', priority: 'High'},
+      {transferSize: 4000, url: intercomProductUrl('1')},
+    ];
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://intercomcdn.com', priority: 'High'},
-          {transferSize: 4000, url: intercomProductUrl('1')},
-        ]),
-      },
-      traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
+      Trace: createTestTrace({
+        timeOrigin: 0,
+        largestContentfulPaint: 15,
+        traceEnd: 2000,
+        networkRecords,
+      }),
       URL: {
         requestedUrl: 'https://intercomcdn.com',
         mainDocumentUrl: 'https://intercomcdn.com',
         finalDisplayedUrl: 'https://intercomcdn.com',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -248,10 +264,11 @@ describe('Third party facades audit', () => {
   it('only reports resources which have facade alternatives', async () => {
     const artifacts = {
       // This devtools log has third party requests but none have facades
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
-      traces: {defaultPass: pwaTrace},
+      DevtoolsLog: pwaDevtoolsLog,
+      Trace: pwaTrace,
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -266,18 +283,15 @@ describe('Third party facades audit', () => {
 
   it('not applicable when no third party resources are present', async () => {
     const artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {transferSize: 2000, url: 'https://example.com', priority: 'High'},
-        ]),
-      },
-      traces: {defaultPass: noThirdPartyTrace},
+      DevtoolsLog: noThirdPartyDevtoolsLog,
+      Trace: noThirdPartyTrace,
       URL: {
-        requestedUrl: 'https://example.com',
-        mainDocumentUrl: 'https://example.com',
-        finalDisplayedUrl: 'https://example.com',
+        requestedUrl: 'http://localhost:65178/animation.html',
+        mainDocumentUrl: 'http://localhost:65178/animation.html',
+        finalDisplayedUrl: 'http://localhost:65178/animation.html',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -292,10 +306,11 @@ describe('Third party facades audit', () => {
 
   it('handles real trace', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: videoEmbedsDevtolsLog},
-      traces: {defaultPass: videoEmbedsTrace},
+      DevtoolsLog: videoEmbedsDevtolsLog,
+      Trace: videoEmbedsTrace,
       URL: getURLArtifactFromDevtoolsLog(videoEmbedsDevtolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -324,42 +339,42 @@ Array [
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 459603,
-          "url": "https://www.youtube.com/s/player/e0d83c30/player_ias.vflset/en_US/base.js",
+          "transferSize": 824806,
+          "url": "https://www.youtube.com/s/player/4b63a6a1/player_ias.vflset/en_US/base.js",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 66273,
-          "url": "https://i.ytimg.com/vi/tgbNymZ7vqY/maxresdefault.jpg",
+          "transferSize": 129402,
+          "url": "https://i.ytimg.com/vi/t_rzYnXEQlE/maxresdefault.jpg",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 50213,
-          "url": "https://www.youtube.com/s/player/e0d83c30/www-embed-player.vflset/www-embed-player.js",
+          "transferSize": 98747,
+          "url": "https://www.youtube.com/s/player/4b63a6a1/www-embed-player.vflset/www-embed-player.js",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 46813,
-          "url": "https://www.youtube.com/s/player/e0d83c30/www-player.css",
+          "transferSize": 48296,
+          "url": "https://www.youtube.com/s/player/4b63a6a1/www-player.css",
+        },
+        Object {
+          "blockingTime": 0,
+          "mainThreadTime": 0.384,
+          "tbtImpact": 0,
+          "transferSize": 40447,
+          "url": "https://www.youtube.com/embed/t_rzYnXEQlE",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 11477,
-          "url": "https://www.youtube.com/s/player/e0d83c30/player_ias.vflset/en_US/embed.js",
-        },
-        Object {
-          "blockingTime": 0,
-          "mainThreadTime": 0,
-          "tbtImpact": 0,
-          "transferSize": 16971,
+          "transferSize": 22879,
           "url": Object {
             "formattedDefault": "Other resources",
             "i18nId": "core/lib/i18n/i18n.js | otherResourcesLabel",
@@ -369,7 +384,7 @@ Array [
       ],
       "type": "subitems",
     },
-    "transferSize": 651350,
+    "transferSize": 1164577,
   },
   Object {
     "blockingTime": 0,
@@ -387,42 +402,42 @@ Array [
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 145772,
-          "url": "https://f.vimeocdn.com/p/3.22.3/js/player.js",
+          "transferSize": 143719,
+          "url": "https://f.vimeocdn.com/p/4.33.11/js/player.module.js",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 17633,
-          "url": "https://f.vimeocdn.com/p/3.22.3/css/player.css",
+          "transferSize": 104244,
+          "url": "https://f.vimeocdn.com/p/4.33.11/js/vendor.module.js",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 9313,
-          "url": "https://i.vimeocdn.com/video/784397921.webp?mw=1200&mh=675&q=70",
+          "transferSize": 22326,
+          "url": "https://f.vimeocdn.com/p/4.33.11/css/player.css",
+        },
+        Object {
+          "blockingTime": 0,
+          "mainThreadTime": 0.128,
+          "tbtImpact": 0,
+          "transferSize": 20465,
+          "url": "https://player.vimeo.com/video/517294790?h=da863dae0d",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 8300,
-          "url": "https://player.vimeo.com/video/336812660",
+          "transferSize": 6329,
+          "url": "https://i.vimeocdn.com/video/1071113919-b94500e76071b48f12f379fb6fc9573b52eac89eac80438679f34564bb66cd6e-d?mw=1280&mh=720&q=70",
         },
         Object {
           "blockingTime": 0,
           "mainThreadTime": 0,
           "tbtImpact": 0,
-          "transferSize": 1474,
-          "url": "https://f.vimeocdn.com/js_opt/modules/utils/vuid.min.js",
-        },
-        Object {
-          "blockingTime": 0,
-          "mainThreadTime": 0,
-          "tbtImpact": 0,
-          "transferSize": 2003,
+          "transferSize": 4903,
           "url": Object {
             "formattedDefault": "Other resources",
             "i18nId": "core/lib/i18n/i18n.js | otherResourcesLabel",
@@ -432,7 +447,7 @@ Array [
       ],
       "type": "subitems",
     },
-    "transferSize": 184495,
+    "transferSize": 301986,
   },
 ]
 `);
@@ -440,19 +455,20 @@ Array [
 
   it('handles real trace that blocks the main thread', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: blockingWidgetDevtoolsLog},
-      traces: {defaultPass: blockingWidgetTrace},
+      DevtoolsLog: blockingWidgetDevtoolsLog,
+      Trace: blockingWidgetTrace,
       URL: getURLArtifactFromDevtoolsLog(blockingWidgetDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
     const results = await ThirdPartyFacades.audit(artifacts, {computedCache: new Map(), settings});
 
     expect(results.score).toBe(0);
-    expect(results.metricSavings).toEqual({TBT: 224});
+    expect(results.metricSavings).toEqual({TBT: 145});
     expect(results.displayValue).toBeDisplayString('1 facade alternative available');
-    expect(results.details.items[0].blockingTime).toEqual(234.984); // TBT impact is not equal to the blocking time
+    expect(results.details.items[0].blockingTime).toBeCloseTo(145);
     expect(results.details.items[0].product)
       .toBeDisplayString('Intercom Widget (Customer Success)');
   });

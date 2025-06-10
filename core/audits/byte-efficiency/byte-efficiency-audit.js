@@ -14,9 +14,6 @@ import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
-/** @typedef {import('../../lib/lantern/simulator/simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-
 // Parameters for log-normal distribution scoring. These values were determined by fitting the
 // log-normal cumulative distribution function curve to the former method of linear interpolation
 // scoring between the control points {average = 300 ms, poor = 750 ms, zero = 5000 ms} using the
@@ -63,7 +60,7 @@ class ByteEfficiencyAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
@@ -96,8 +93,8 @@ class ByteEfficiencyAudit extends Audit {
    * Computes the estimated effect of all the byte savings on the provided graph.
    *
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
-   * @param {Node} graph
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {{label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
    * @return {{savings: number, simulationBeforeChanges: LH.Gatherer.Simulation.Result, simulationAfterChanges: LH.Gatherer.Simulation.Result}}
    */
@@ -120,7 +117,7 @@ class ByteEfficiencyAudit extends Audit {
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const wastedBytes = wastedBytesByUrl.get(node.record.url);
+      const wastedBytes = wastedBytesByUrl.get(node.request.url);
       if (!wastedBytes) return;
 
       const original = node.request.transferSize;
@@ -151,7 +148,7 @@ class ByteEfficiencyAudit extends Audit {
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {LH.Artifacts.MetricComputationDataInput} metricComputationInput
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}

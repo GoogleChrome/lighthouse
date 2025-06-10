@@ -53,7 +53,7 @@
  */
 
 import * as LH from '../../types/lh.js';
-import * as Lantern from './lantern/types/lantern.js';
+import * as Lantern from './lantern/lantern.js';
 import UrlUtils from './url-utils.js';
 
 // Lightrider X-Header names for timing information.
@@ -107,6 +107,7 @@ const RESOURCE_TYPES = {
   Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
   Prefetch: 'Prefetch',
+  FedCM: 'FedCM',
 };
 
 class NetworkRequest {
@@ -129,7 +130,11 @@ class NetworkRequest {
      * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
      */
     this.networkRequestTime = -1;
-    /** When the last byte of the response headers is received, in milliseconds. */
+    /**
+     * When the last byte of the response headers is received, in milliseconds.
+     * Equal to networkRequestTime if no data is recieved over the
+     * network (ex: cached requests or data urls).
+     */
     this.responseHeadersEndTime = -1;
     /** When the last byte of the response body is received, in milliseconds. */
     this.networkEndTime = -1;
@@ -222,8 +227,9 @@ class NetworkRequest {
     this.isSecure = UrlUtils.isSecureScheme(this.parsedURL.scheme);
 
     this.rendererStartTime = data.timestamp * 1000;
-    // Expected to be overridden with better value in `_recomputeTimesWithResourceTiming`.
+    // These are expected to be overridden with better value in `_recomputeTimesWithResourceTiming`.
     this.networkRequestTime = this.rendererStartTime;
+    this.responseHeadersEndTime = this.rendererStartTime;
 
     this.requestMethod = data.request.method;
 
@@ -350,8 +356,7 @@ class NetworkRequest {
 
     if (response.protocol) this.protocol = response.protocol;
 
-    // This is updated in _recomputeTimesWithResourceTiming, if timings are present.
-    this.responseHeadersEndTime = timestamp * 1000;
+    this.responseTimestamp = timestamp * 1000;
 
     this.transferSize = response.encodedDataLength;
     this.responseHeadersTransferSize = response.encodedDataLength;
@@ -381,7 +386,7 @@ class NetworkRequest {
   _recomputeTimesWithResourceTiming(timing) {
     // Don't recompute times if the data is invalid. RequestTime should always be a thread timestamp.
     // If we don't have receiveHeadersEnd, we really don't have more accurate data.
-    if (timing.requestTime === 0 || timing.receiveHeadersEnd === -1) return;
+    if (timing.requestTime === -1 || timing.receiveHeadersEnd === -1) return;
 
     // Take networkRequestTime and responseHeadersEndTime from timing data for better accuracy.
     // Before this, networkRequestTime and responseHeadersEndTime were set to bogus values based on
@@ -392,15 +397,15 @@ class NetworkRequest {
     // See https://raw.githubusercontent.com/GoogleChrome/lighthouse/main/docs/Network-Timings.svg
     this.networkRequestTime = timing.requestTime * 1000;
     const headersReceivedTime = this.networkRequestTime + timing.receiveHeadersEnd;
-    // This was set in `_onResponse` as that event's timestamp.
-    const responseTimestamp = this.responseHeadersEndTime;
 
     // Update this.responseHeadersEndTime. All timing values from the netstack (timing) are well-ordered, and
     // so are the timestamps from CDP (which this.responseHeadersEndTime belongs to). It shouldn't be possible
     // that this timing from the netstack is greater than the onResponse timestamp, but just to ensure proper order
     // is maintained we bound the new timing by the network request time and the response timestamp.
     this.responseHeadersEndTime = headersReceivedTime;
-    this.responseHeadersEndTime = Math.min(this.responseHeadersEndTime, responseTimestamp);
+    if (this.responseTimestamp !== undefined) {
+      this.responseHeadersEndTime = Math.min(this.responseHeadersEndTime, this.responseTimestamp);
+    }
     this.responseHeadersEndTime = Math.max(this.responseHeadersEndTime, this.networkRequestTime);
 
     // We're only at responseReceived (_onResponse) at this point.
@@ -573,7 +578,7 @@ class NetworkRequest {
 
   /**
    * @param {NetworkRequest} record
-   * @return {Lantern.NetworkRequest<NetworkRequest>}
+   * @return {Lantern.Types.NetworkRequest<NetworkRequest>}
    */
   static asLanternNetworkRequest(record) {
     // In LR, network records are missing connection timing, but we've smuggled it in via headers.
@@ -604,15 +609,15 @@ class NetworkRequest {
     record.fromWorker = record.sessionTargetType === 'worker';
 
     return {
+      rawRequest: record,
       ...record,
       timing,
       serverResponseTime,
-      record,
     };
   }
 
   /**
-   * @param {NetworkRequest} record
+   * @param {Pick<NetworkRequest, 'protocol'|'parsedURL'>} record
    * @return {boolean}
    */
   static isNonNetworkRequest(record) {

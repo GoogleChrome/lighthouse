@@ -87,7 +87,7 @@ class ThirdPartyFacades extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -150,7 +150,7 @@ class ThirdPartyFacades extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
@@ -225,7 +225,7 @@ class ThirdPartyFacades extends Audit {
         itemCount: results.length,
       }),
       details: Audit.makeTableDetails(headings, results),
-      metricSavings: {TBT: tbtImpact},
+      metricSavings: {TBT: Math.round(tbtImpact)},
     };
   }
 }

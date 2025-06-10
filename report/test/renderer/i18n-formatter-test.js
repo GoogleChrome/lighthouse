@@ -10,6 +10,8 @@ import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 
 const NBSP = '\xa0';
 
+const [nodeMajor, nodeMinor] = process.version.replace('v', '').split('.').map(Number);
+
 describe('i18n formatter', () => {
   it('formats a number', () => {
     const i18n = new I18nFormatter('en');
@@ -139,9 +141,16 @@ describe('i18n formatter', () => {
     // Yes, this is actually backwards (s h d).
     i18n = new I18nFormatter('ar');
     /* eslint-disable no-irregular-whitespace */
-    assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
-    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
-    assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
+    if (nodeMajor >= 20 && nodeMinor >= 19) {
+      assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}د`);
+      assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}س 5${NBSP}ث`);
+      assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1 ي 4 س 5 ث`);
+    } else {
+      assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
+      assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
+      assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
+    }
+
     /* eslint-enable no-irregular-whitespace */
   });
 

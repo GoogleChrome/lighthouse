@@ -31,7 +31,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [],
     };
@@ -47,7 +47,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: 'https://www.example.com'}),
@@ -68,7 +68,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: null, hrefRaw: 'https:// example.com'}),
@@ -88,7 +88,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'headers', href: 'https://www.example.com', hrefRaw: '/'}),
@@ -108,7 +108,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'alternate', source: 'headers', href: 'https://example.com/', hreflang: 'xx'}),
@@ -133,7 +133,7 @@ describe('SEO: Document has valid canonical link', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: 'https://example.com'}),
@@ -150,7 +150,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: 'https://example.com'}),
@@ -170,7 +170,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: 'https://example.com'}),
@@ -189,7 +189,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'head', href: 'https://example.com/articles/cats-and-you'}),
@@ -207,7 +207,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'headers', href: 'https://example.com/articles/cats'}),
@@ -225,7 +225,7 @@ describe('SEO: Document has valid canonical link', () => {
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
       LinkElements: [
         link({rel: 'canonical', source: 'body', href: 'https://foo.com'}),

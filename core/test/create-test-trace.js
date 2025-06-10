@@ -154,15 +154,6 @@ function createTestTrace(options) {
     cat: 'loading,rail,devtools.timeline',
     dur: 0,
     args: {frame: rootFrame, data: {navigationId}},
-  }, {
-    name: 'firstMeaningfulPaint',
-    ts: timeOrigin + 15,
-    pid,
-    tid,
-    ph: 'R',
-    cat: 'loading,rail,devtools.timeline',
-    dur: 0,
-    args: {frame: rootFrame},
   }];
 
   if (options.childFrames) {
@@ -246,13 +237,6 @@ function createTestTrace(options) {
     traceEvents.push(getTopLevelTask({ts: options.traceEnd - 1, duration: 1}));
   }
 
-  // TODO(15841): why does "should estimate the FCP & LCP impact" in byte-efficiency-audit-test.js
-  // fail even when not creating records from trace? For now... just don't emit these events for
-  // when using CDP.
-  if (!process.env.INTERNAL_LANTERN_USE_TRACE) {
-    options.networkRecords = undefined;
-  }
-
   const networkRecords = options.networkRecords || [];
   for (const record of networkRecords) {
     // `requestId` is optional in the input test records.
@@ -289,7 +273,6 @@ function createTestTrace(options) {
           data: {
             requestId,
             frame: record.frameId,
-            initiator: record.initiator ?? {type: 'other'},
           },
         },
       });
@@ -307,6 +290,7 @@ function createTestTrace(options) {
         data: {
           requestId,
           frame: record.frameId,
+          initiator: record.initiator ?? {type: 'other'},
           priority: record.priority,
           requestMethod: record.requestMethod,
           resourceType: record.resourceType ?? 'Document',
@@ -356,8 +340,8 @@ function createTestTrace(options) {
           requestId,
           frame: record.frameId,
           finishTime: endTime / 1000 / 1000,
-          encodedDataLength: record.transferSize,
-          decodedBodyLength: record.resourceSize,
+          encodedDataLength: record.transferSize ?? 0,
+          decodedBodyLength: record.resourceSize ?? 0,
         },
       },
     });

@@ -18,19 +18,18 @@ describe('DOMSize audit', () => {
 
   beforeEach(() => {
     const mainDocumentUrl = 'https://example.com/';
-
+    const networkRecords = [{url: mainDocumentUrl, priority: 'High', transferSize: 1000}];
     const trace = createTestTrace({
+      largestContentfulPaint: 15,
       topLevelTasks: [
         {ts: 1000, duration: 1000, children: [
           {ts: 1100, duration: 200, eventName: 'ScheduleStyleRecalculation'},
         ]},
       ],
+      networkRecords,
     });
 
-    const devtoolsLog = networkRecordsToDevtoolsLog([{
-      url: mainDocumentUrl,
-      priority: 'High',
-    }]);
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     artifacts = {
       DOMStats: {
@@ -44,8 +43,9 @@ describe('DOMSize audit', () => {
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
+      SourceMaps: [],
     };
     context = {
       options,
@@ -55,11 +55,6 @@ describe('DOMSize audit', () => {
   });
 
   it('calculates score hitting mid distribution', async () => {
-    // TODO(15841): investigate failures
-    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      return;
-    }
-
     const auditResult = await DOMSize.audit(artifacts, context);
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.numericValue, 1500);
@@ -80,8 +75,8 @@ describe('DOMSize audit', () => {
   });
 
   it('works if missing trace/dtlog in navigation mode', async () => {
-    artifacts.devtoolsLogs = undefined;
-    artifacts.traces = undefined;
+    artifacts.DevtoolsLog = undefined;
+    artifacts.Trace = undefined;
     const auditResult = await DOMSize.audit(artifacts, context);
     expect(auditResult.score).toEqual(0.43);
     expect(auditResult.metricSavings).toEqual({TBT: 0});
@@ -89,7 +84,7 @@ describe('DOMSize audit', () => {
 
   it('works if tbt impact throws an error', async () => {
     // Empty array will cause an error.
-    artifacts.traces.defaultPass = [];
+    artifacts.Trace.traceEvents = [];
 
     const auditResult = await DOMSize.audit(artifacts, context);
     expect(auditResult.score).toEqual(0.43);

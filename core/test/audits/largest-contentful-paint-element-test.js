@@ -22,7 +22,7 @@ function mockNetworkRecords() {
     isLinkPreload: false,
     networkRequestTime: 0,
     networkEndTime: 500,
-    timing: {sendEnd: 0, receiveHeadersEnd: 500},
+    responseHeadersEndTime: 500,
     responseHeadersTransferSize: 400,
     transferSize: 400,
     url: requestedUrl,
@@ -68,11 +68,6 @@ function mockNetworkRecords() {
 }
 
 describe('Performance: largest-contentful-paint-element audit', () => {
-  // TODO(15841): investigate failures
-  if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-    return;
-  }
-
   it('correctly surfaces the LCP element', async () => {
     const networkRecords = mockNetworkRecords();
     const artifacts = {
@@ -87,22 +82,19 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         type: 'text',
       }],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 8000,
-          networkRecords,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(networkRecords),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+        networkRecords,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {
         requestedUrl,
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const context = {settings: artifacts.settings, computedCache: new Map()};
@@ -110,8 +102,8 @@ describe('Performance: largest-contentful-paint-element audit', () => {
 
     expect(auditResult.score).toEqual(0);
     expect(auditResult.notApplicable).toBeUndefined();
-    expect(auditResult.displayValue).toBeDisplayString('5,800\xa0ms');
-    expect(auditResult.metricSavings).toEqual({LCP: 3304}); // 5804 - 2500 (p10 mobile)
+    expect(auditResult.displayValue).toBeDisplayString('5,340\xa0ms');
+    expect(auditResult.metricSavings).toEqual({LCP: 2837}); // calculated LCP - 2500 (p10 mobile)
     expect(auditResult.details.items).toHaveLength(2);
     expect(auditResult.details.items[0].items).toHaveLength(1);
     expect(auditResult.details.items[0].items[0].node.path).toEqual('1,HTML,3,BODY,5,DIV,0,HEADER');
@@ -123,26 +115,22 @@ describe('Performance: largest-contentful-paint-element audit', () => {
     expect(auditResult.details.items[1].items[0].phase).toBeDisplayString('TTFB');
     expect(auditResult.details.items[1].items[0].timing).toBeCloseTo(800, 0.1);
     expect(auditResult.details.items[1].items[1].phase).toBeDisplayString('Load Delay');
-    expect(auditResult.details.items[1].items[1].timing).toBeCloseTo(651, 0.1);
+    expect(auditResult.details.items[1].items[1].timing).toBeCloseTo(534.2, 0.1);
     expect(auditResult.details.items[1].items[2].phase).toBeDisplayString('Load Time');
-    expect(auditResult.details.items[1].items[2].timing).toBeCloseTo(1813.7, 0.1);
+    expect(auditResult.details.items[1].items[2].timing).toBeCloseTo(1667.8, 0.1);
     expect(auditResult.details.items[1].items[3].phase).toBeDisplayString('Render Delay');
-    expect(auditResult.details.items[1].items[3].timing).toBeCloseTo(2539.2, 0.1);
+    expect(auditResult.details.items[1].items[3].timing).toBeCloseTo(2334.9, 0.1);
   });
 
   it('doesn\'t throw an error when there is nothing to show', async () => {
     const artifacts = {
       TraceElements: [],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 4500,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(mockNetworkRecords()),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 4500,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(mockNetworkRecords()),
       URL: {
         requestedUrl,
         mainDocumentUrl,
@@ -174,15 +162,11 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         type: 'text',
       }],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 8000,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: [],
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+      }),
+      DevtoolsLog: [],
       URL: {
         requestedUrl,
         mainDocumentUrl,

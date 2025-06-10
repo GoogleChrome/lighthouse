@@ -101,7 +101,7 @@ describe('UnusedJavaScript audit', () => {
     const artifacts = {
       Scripts: all.map((s) => s.script).filter(Boolean),
       JsUsage: makeJsUsage(all.map((s) => s.coverage)),
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       SourceMaps: [],
     };
     const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
@@ -142,7 +142,7 @@ describe('UnusedJavaScript audit', () => {
     const networkRecords = [generateRecord(url, content.length, 'Script')];
     const artifacts = {
       JsUsage: makeJsUsage([usage]),
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       SourceMaps: [{scriptId: 'squoosh', scriptUrl: url, map}],
       Scripts: [{scriptId: 'squoosh', url, content}].map(createScript),
     };

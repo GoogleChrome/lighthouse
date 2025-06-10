@@ -19,7 +19,7 @@ const UIStrings = {
   failureTitle: 'Document does not have a main landmark.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'One main landmark helps screen reader users navigate a web page. ' +
-      '[Learn more about landmarks](https://dequeuniversity.com/rules/axe/4.9/landmark-one-main).',
+      '[Learn more about landmarks](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

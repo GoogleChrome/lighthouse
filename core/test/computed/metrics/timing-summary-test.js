@@ -16,7 +16,8 @@ describe('Timing summary', () => {
     const context = {computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const artifacts =
-      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, gatherContext};
+      // eslint-disable-next-line max-len
+      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, SourceMaps: [], gatherContext};
     const result = await TimingSummary.request(artifacts, context);
 
     expect(result.metrics).toMatchInlineSnapshot(`
@@ -27,8 +28,6 @@ describe('Timing summary', () => {
         "firstContentfulPaintAllFrames": 697.751,
         "firstContentfulPaintAllFramesTs": 10327885660,
         "firstContentfulPaintTs": 10332856184,
-        "firstMeaningfulPaint": 669.212,
-        "firstMeaningfulPaintTs": 10327857121,
         "interactive": 8654.264,
         "interactiveTs": 10335842173,
         "largestContentfulPaint": 5668.275,
@@ -46,8 +45,6 @@ describe('Timing summary', () => {
         "observedFirstContentfulPaintAllFrames": 697.751,
         "observedFirstContentfulPaintAllFramesTs": 10327885660,
         "observedFirstContentfulPaintTs": 10332856184,
-        "observedFirstMeaningfulPaint": 669.212,
-        "observedFirstMeaningfulPaintTs": 10327857121,
         "observedFirstPaint": 669.212,
         "observedFirstPaintTs": 10327857121,
         "observedFirstVisualChange": 673,

@@ -30,7 +30,7 @@ class CumulativeLayoutShift extends Audit {
       title: str_(i18n.UIStrings.cumulativeLayoutShiftMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['Trace'],
     };
   }
 
@@ -53,7 +53,7 @@ class CumulativeLayoutShift extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
 
     // impactByNodeId is unused but we don't want it on debug data
     // eslint-disable-next-line no-unused-vars

@@ -93,7 +93,7 @@ function getSlowHostCpuWarning(context) {
 function getEnvironmentWarnings(context) {
   return [
     getSlowHostCpuWarning(context),
-  ].filter(/** @return {s is LH.IcuMessage} */ s => !!s);
+  ].filter(s => !!s);
 }
 
 export {

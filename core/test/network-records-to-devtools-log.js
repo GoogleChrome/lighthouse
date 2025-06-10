@@ -96,6 +96,7 @@ function extractPartialTiming(networkRecord) {
     responseHeadersEndTime,
     networkEndTime,
     redirectResponseTimestamp, // Generated timestamp added in addRedirectResponseIfNeeded; only used as backup start time.
+    responseTimestamp, // Time of response event from CDP, not from the netstack.
   } = networkRecord;
 
   const requestTime = timeDefined(requestTimeS) ? requestTimeS * 1000 : undefined;
@@ -130,6 +131,7 @@ function extractPartialTiming(networkRecord) {
 
   return {
     redirectResponseTimestamp,
+    responseTimestamp,
     rendererStartTime,
     networkRequestTime,
     requestTime,
@@ -199,11 +201,14 @@ function getNormalizedRequestTiming(networkRecord) {
   const networkEndTime = extractedTimes.networkEndTime ??
       (responseHeadersEndTime + defaultTimingOffset);
 
+  const responseTimestamp = extractedTimes.responseTimestamp ?? requestTime + receiveHeadersEnd;
+
   return {
     rendererStartTime,
     networkRequestTime,
     responseHeadersEndTime,
     networkEndTime,
+    responseTimestamp,
     timing: {
       // TODO: other `timing` properties could have default values.
       ...networkRecord.timing,
@@ -277,7 +282,7 @@ function getResponseReceivedEvent(networkRecord, index, normalizedTiming) {
     method: 'Network.responseReceived',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: normalizedTiming.responseHeadersEndTime / 1000,
+      timestamp: normalizedTiming.responseTimestamp / 1000,
       type: networkRecord.resourceType || undefined,
       response: {
         url: networkRecord.url || exampleUrl,

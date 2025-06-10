@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {Runner} from '../runner.js';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
+import {fnAny} from './test-utils.js';
 
-const snapshotModule = {snapshotGather: jestMock.fn()};
+const snapshotModule = {snapshotGather: fnAny()};
 await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
-const navigationModule = {navigationGather: jestMock.fn()};
+const navigationModule = {navigationGather: fnAny()};
 await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
-const timespanModule = {startTimespanGather: jestMock.fn()};
+const timespanModule = {startTimespanGather: fnAny()};
 await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
 
 const mockRunner = await mockRunnerModule();
@@ -68,7 +68,7 @@ describe('UserFlow', () => {
         computedCache: new Map(),
       },
     };
-    const timespan = {endTimespanGather: jestMock.fn().mockResolvedValue(timespanGatherResult)};
+    const timespan = {endTimespanGather: fnAny().mockResolvedValue(timespanGatherResult)};
     timespanModule.startTimespanGather.mockReset();
     timespanModule.startTimespanGather.mockResolvedValue(timespan);
   });
@@ -206,7 +206,6 @@ describe('UserFlow', () => {
       let teardownDone = false;
       navigationModule.navigationGather.mockImplementation(async (_, cb) => {
         setupDone = true;
-        // @ts-expect-error
         await cb();
         teardownDone = true;
       });
@@ -238,7 +237,6 @@ describe('UserFlow', () => {
 
     it('should throw errors from the teardown phase', async () => {
       navigationModule.navigationGather.mockImplementation(async (_, cb) => {
-        // @ts-expect-error
         await cb();
         throw new Error('Teardown Error');
       });

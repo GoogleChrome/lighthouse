@@ -6,7 +6,7 @@
 
 declare global {
   var expect: import('expect').Expect;
-  type Mock<T, Y extends unknown[]> = import('jest-mock').Mock<T, Y>;
+  type Mock<T> = import('jest-mock').Mock<(...args: any) => T>;
 }
 
 declare module 'expect' {

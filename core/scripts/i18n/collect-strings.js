@@ -16,7 +16,7 @@ import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
 import esMain from 'es-main';
-import isDeepEqual from 'lodash/isEqual.js';
+import {isEqual} from 'lodash-es';
 
 import {Util} from '../../../shared/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
@@ -29,7 +29,7 @@ import {escapeIcuMessage} from '../../../shared/localization/format.js';
 // Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
 // or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
 // closing brace in the middle of the declaration does not prematurely end the pattern)
-const UISTRINGS_REGEX = /UIStrings = .*?\}(;|\n)\n/s;
+const UISTRINGS_REGEX = /\bUIStrings = .*?\}(;|\n)\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
 /** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
@@ -47,9 +47,12 @@ const ignoredPathComponents = [
   '**/.git/**',
   '**/scripts/**',
   '**/node_modules/!(lighthouse-stack-packs)/**', // ignore all node modules *except* stack packs
+  '**/core/lib/bf-cache-strings.js',
+  '**/core/lib/deprecations-strings.js',
   '**/core/lib/stack-packs.js',
   '**/test/**',
   '**/*-test.js',
+  '**/*.test.js',
   '**/*-renderer.js',
   '**/util-commonjs.js',
   'treemap/app/src/main.js',
@@ -57,7 +60,7 @@ const ignoredPathComponents = [
 
 /**
  * Extract the description and examples (if any) from a jsDoc annotation.
- * @param {import('typescript').JSDoc|undefined} ast
+ * @param {import('typescript').JSDoc|import('typescript').JSDocTag|undefined} ast
  * @param {string} message
  * @return {{description: string, examples: Record<string, string>}}
  */
@@ -66,7 +69,7 @@ function computeDescription(ast, message) {
     throw Error(`Missing description comment for message "${message}"`);
   }
 
-  if (ast.tags) {
+  if ('tags' in ast && ast.tags) {
     // This is a complex description with description and examples.
     let description = '';
     /** @type {Record<string, string>} */
@@ -318,6 +321,8 @@ function _processPlaceholderCustomFormattedIcu(icu) {
   icu.message = '';
   let idx = 0;
 
+  const rawNameCache = new Map();
+
   while (parts.length) {
     // Seperate out the match into parts.
     const [preambleText, rawName, format, formatType] = parts.splice(0, 4);
@@ -334,8 +339,22 @@ function _processPlaceholderCustomFormattedIcu(icu) {
       throw Error(`Unsupported custom-formatted ICU type var "${formatType}" in message "${icu.message}"`);
     }
 
+    let index;
+    const previousRawName = rawNameCache.get(rawName);
+    if (previousRawName) {
+      const [prevFormat, prevFormatType, prevIndex] = previousRawName;
+      if (prevFormat !== format || prevFormatType !== formatType) {
+        throw new Error(`must use same format and formatType for a given name. Invalid for: ${rawName}`);
+      }
+
+      index = prevIndex;
+    } else {
+      index = idx++;
+      rawNameCache.set(rawName, [format, formatType, index]);
+    }
+
     // Append ICU replacements if there are any.
-    const placeholderName = `CUSTOM_ICU_${idx++}`;
+    const placeholderName = `CUSTOM_ICU_${index}`;
     icu.message += `$${placeholderName}$`;
     let example;
 
@@ -392,7 +411,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
       throw Error(`Example '${key}' provided, but has no corresponding ICU replacement in message "${icu.message}"`);
     }
     const eName = `ICU_${idx++}`;
-    tempMessage = tempMessage.replace(`{${key}}`, `$${eName}$`);
+    tempMessage = tempMessage.replaceAll(`{${key}}`, `$${eName}$`);
 
     icu.placeholders[eName] = {
       content: `{${key}}`,
@@ -519,7 +538,6 @@ function parseUIStrings(sourceStr, liveUIStrings) {
     // Use live message to avoid having to e.g. concat strings broken into parts.
     const message = (liveUIStrings[key]);
 
-    // @ts-expect-error - Not part of the public tsc interface yet.
     const jsDocComments = tsc.getJSDocCommentsAndTags(property);
     const {description, examples} = computeDescription(jsDocComments[0], message);
 
@@ -644,7 +662,7 @@ function doPlaceholdersMatch(strings) {
   // Technically placeholder `content` is not required to match by TC, but since
   // `example` must match and any auto-generated `example` is copied from `content`,
   // it would be confusing to let it differ when `example` is explicit.
-  return strings.every(val => isDeepEqual(val.ctc.placeholders, strings[0].ctc.placeholders));
+  return strings.every(val => isEqual(val.ctc.placeholders, strings[0].ctc.placeholders));
 }
 
 /**
@@ -709,29 +727,31 @@ function checkKnownFixedCollisions(strings) {
       'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
       'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
       'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
-      'Back/forward cache is disabled due to a keepalive request.',
-      'Back/forward cache is disabled due to a keepalive request.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
-      'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
+      'Directive',
+      'Directive',
+      'Directive',
       'Document contains a $MARKDOWN_SNIPPET_0$ that triggers $MARKDOWN_SNIPPET_1$',
       'Document contains a $MARKDOWN_SNIPPET_0$ that triggers $MARKDOWN_SNIPPET_1$',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
+      'Est Savings',
+      'Est Savings',
       'Failing Elements',
       'Failing Elements',
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: $ICU_0$)',
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: $ICU_0$)',
       'Name',
       'Name',
-      'Pages that use portals are not currently eligible for back/forward cache.',
-      'Pages that use portals are not currently eligible for back/forward cache.',
-      'Pages with an in-flight network request are not currently eligible for back/forward cache.',
-      'Pages with an in-flight network request are not currently eligible for back/forward cache.',
-      'Potential Savings',
-      'Potential Savings',
-      'The page was evicted from the cache to allow another page to be cached.',
-      'The page was evicted from the cache to allow another page to be cached.',
+      'No $MARKDOWN_SNIPPET_0$ directive found',
+      'No $MARKDOWN_SNIPPET_0$ directive found',
+      'Severity',
+      'Severity',
+      'Severity',
+      'Severity',
+      'Total',
+      'Total',
       'Use $MARKDOWN_SNIPPET_0$ to detect unused JavaScript code. $LINK_START_0$Learn more$LINK_END_0$',
       'Use $MARKDOWN_SNIPPET_0$ to detect unused JavaScript code. $LINK_START_0$Learn more$LINK_END_0$',
       'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
@@ -748,6 +768,67 @@ function checkKnownFixedCollisions(strings) {
     console.log('copy/paste this to pass check:');
     console.log(collidingMessages);
     throw new Error(err.message);
+  }
+}
+
+/**
+ * @param {Record<any, any>} obj
+ * @return {Record<any, any>}
+ */
+function sortObject(obj) {
+  return Object.keys(obj).sort().reduce(function(result, key) {
+    // @ts-expect-error
+    result[key] = obj[key];
+    return result;
+  }, {});
+}
+
+/**
+ * Inject translated strings from `node_modules/@paulirish/trace_engine`. This avoids Lighthouse
+ * re-translating these same strings.
+ */
+function injectTraceEngineStrings() {
+  const traceEngineStringsDir = `${LH_ROOT}/node_modules/@paulirish/trace_engine/locales`;
+  const lhStringsDir = `${LH_ROOT}/shared/localization/locales`;
+  for (const file of glob.sync(`${lhStringsDir}/*.json`)) {
+    let name = path.basename(file);
+    if (name.endsWith('.ctc.json')) {
+      continue;
+    }
+
+    if (name === 'ar-XB.json') {
+      name = 'ar.json';
+    }
+
+    if (['en-XA.json'].includes(name)) {
+      continue;
+    }
+
+    const traceEnginePath = `${traceEngineStringsDir}/${name}`;
+    if (!fs.existsSync(traceEnginePath)) {
+      throw new Error(`expected locale file to exist: ${traceEnginePath}`);
+    }
+
+    const traceEngineStrings = JSON.parse(fs.readFileSync(traceEnginePath, 'utf-8'));
+    const strings = JSON.parse(fs.readFileSync(file, 'utf-8'));
+    for (const [key, value] of Object.entries(traceEngineStrings)) {
+      const lhKey = `node_modules/@paulirish/trace_engine/${key.replace('.ts', '.js')}`;
+
+      // TODO: why is this so malformed? see b/399706272
+      if (['he.json', 'ru.json', 'ta.json'].includes(name) && lhKey === 'node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone') {
+        continue;
+      }
+
+      value.message = value.message
+        .replace(/\\\\/g, '')
+        .replace(`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`)
+        .replace(`{imageOrientation: ''from-image''}`, `\\\\{imageOrientation: ''from-image''\\\\}`)
+        .replace(`{imageOrientation: "from-image"}`, `\\\\{imageOrientation: "from-image"\\\\}`)
+        .replace(`{imageOrientation: 'from-image'\\}`, `\\\\{imageOrientation: 'from-image'\\\\}`);
+      strings[lhKey] = value;
+    }
+
+    fs.writeFileSync(file, JSON.stringify(sortObject(strings), null, 2) + '\n');
   }
 }
 
@@ -778,6 +859,7 @@ async function main() {
 
   // Remove any obsolete strings in existing LHL files.
   console.log('Checking for out-of-date LHL messages...');
+  injectTraceEngineStrings();
   pruneObsoleteLhlMessages();
 
   // Report on translation progress.

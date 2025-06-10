@@ -8,21 +8,15 @@
  * @fileoverview Audit a page to see if it does have resources that are blocking first paint
  */
 
-
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {BaseNode} from '../../lib/lantern/base-node.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {UnusedCSS} from '../../computed/unused-css.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
 import {FirstContentfulPaint} from '../../computed/metrics/first-contentful-paint.js';
 import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 import {NavigationInsights} from '../../computed/navigation-insights.js';
-
-
-/** @typedef {import('../../lib/lantern/simulator/simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-/** @typedef {import('../../lib/lantern/network-node.js').NetworkNode<LH.Artifacts.NetworkRequest>} NetworkNode */
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -44,10 +38,10 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
  * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
- * @return {Map<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
+ * @return {Map<string, {node: LH.Gatherer.Simulation.GraphNetworkNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
  */
 function getNodesAndTimingByRequestId(nodeTimings) {
-  /** @type {Map<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
+  /** @type {Map<string, {node: LH.Gatherer.Simulation.GraphNetworkNode, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
   const requestIdToNode = new Map();
 
   for (const [node, nodeTiming] of nodeTimings) {
@@ -61,8 +55,8 @@ function getNodesAndTimingByRequestId(nodeTimings) {
 
 /**
  * Adjust the timing of a node and its dependencies to account for stack specific overrides.
- * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} adjustedNodeTimings
- * @param {Node} node
+ * @param {Map<LH.Gatherer.Simulation.GraphNode, LH.Gatherer.Simulation.NodeTiming>} adjustedNodeTimings
+ * @param {LH.Gatherer.Simulation.GraphNode} node
  * @param {LH.Artifacts.DetectedStack[]} Stacks
  */
 function adjustNodeTimings(adjustedNodeTimings, node, Stacks) {
@@ -83,7 +77,7 @@ function adjustNodeTimings(adjustedNodeTimings, node, Stacks) {
  * Any stack specific timing overrides should go in this function.
  * @see https://github.com/GoogleChrome/lighthouse/issues/2832#issuecomment-591066081
  *
- * @param {Node} node
+ * @param {LH.Gatherer.Simulation.GraphNode} node
  * @param {LH.Gatherer.Simulation.NodeTiming} nodeTiming
  * @param {LH.Artifacts.DetectedStack[]} Stacks
  */
@@ -93,8 +87,8 @@ function computeStackSpecificTiming(node, nodeTiming, Stacks) {
     // AMP will load a linked stylesheet asynchronously if it has not been loaded after 2.1 seconds:
     // https://github.com/ampproject/amphtml/blob/8e03ac2f315774070651584a7e046ff24212c9b1/src/font-stylesheet-timeout.js#L54-L59
     // Any potential savings must only include time spent on AMP stylesheet nodes before 2.1 seconds.
-    if (node.type === BaseNode.TYPES.NETWORK &&
-        node.record.resourceType === NetworkRequest.TYPES.Stylesheet &&
+    if (node.type === Lantern.Graph.BaseNode.types.NETWORK &&
+        node.request.resourceType === NetworkRequest.TYPES.Stylesheet &&
         nodeTiming.endTime > 2100) {
       stackSpecificTiming.endTime = Math.max(nodeTiming.startTime, 2100);
       stackSpecificTiming.duration = stackSpecificTiming.endTime - stackSpecificTiming.startTime;
@@ -118,7 +112,8 @@ class RenderBlockingResources extends Audit {
       // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
       // of CSSUsage
       requiredArtifacts:
-        ['URL', 'traces', 'devtoolsLogs', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks'],
+        // eslint-disable-next-line max-len
+        ['URL', 'Trace', 'DevtoolsLog', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks', 'SourceMaps'],
     };
   }
 
@@ -128,15 +123,17 @@ class RenderBlockingResources extends Audit {
    * @return {Promise<{fcpWastedMs: number, lcpWastedMs: number, results: Array<{url: string, totalBytes: number, wastedMs: number}>}>}
    */
   static async computeResults(artifacts, context) {
+    const settings = context.settings;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const SourceMaps = artifacts.SourceMaps;
     const simulatorData = {devtoolsLog, settings: context.settings};
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
-    const navInsights = await NavigationInsights.request(trace, context);
+    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
 
-    const renderBlocking = navInsights.RenderBlocking;
+    const renderBlocking = navInsights.model.RenderBlocking;
     if (renderBlocking instanceof Error) throw renderBlocking;
 
     /** @type {LH.Audit.Context['settings']} */
@@ -146,7 +143,7 @@ class RenderBlockingResources extends Audit {
     };
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, simulator,
-      settings: metricSettings, URL: artifacts.URL};
+      settings: metricSettings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
 
     // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
     const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */
@@ -175,7 +172,7 @@ class RenderBlockingResources extends Audit {
 
       results.push({
         url: resource.args.data.url,
-        totalBytes: resource.args.data.encodedDataLength,
+        totalBytes: node.request.transferSize,
         wastedMs,
       });
     }
@@ -208,8 +205,8 @@ class RenderBlockingResources extends Audit {
    * devs that they should be able to get to a reasonable first paint without JS, which is not a bad
    * thing.
    *
-   * @param {Simulator} simulator
-   * @param {Node} fcpGraph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} fcpGraph
    * @param {Set<string>} deferredIds
    * @param {Map<string, number>} wastedCssBytesByUrl
    * @param {LH.Artifacts.DetectedStack[]} Stacks
@@ -225,14 +222,14 @@ class RenderBlockingResources extends Audit {
 
       // If a node can be deferred, exclude it from the new FCP graph
       const canDeferRequest = deferredIds.has(node.id);
-      if (node.type !== BaseNode.TYPES.NETWORK) return !canDeferRequest;
+      if (node.type !== Lantern.Graph.BaseNode.types.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
-        node.record.resourceType === NetworkRequest.TYPES.Stylesheet;
+        node.request.resourceType === NetworkRequest.TYPES.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
-        const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;
-        totalChildNetworkBytes += (node.record.transferSize || 0) - wastedBytes;
+        const wastedBytes = wastedCssBytesByUrl.get(node.request.url) || 0;
+        totalChildNetworkBytes += (node.request.transferSize || 0) - wastedBytes;
       }
       return !canDeferRequest;
     });
@@ -247,7 +244,7 @@ class RenderBlockingResources extends Audit {
     ));
 
     // Add the inlined bytes to the HTML response
-    const originalTransferSize = minimalFCPGraph.record.transferSize;
+    const originalTransferSize = minimalFCPGraph.request.transferSize;
     const safeTransferSize = originalTransferSize || 0;
     minimalFCPGraph.request.transferSize = safeTransferSize + totalChildNetworkBytes;
     const estimateAfterInline = simulator.simulate(minimalFCPGraph).timeInMs;
@@ -266,7 +263,7 @@ class RenderBlockingResources extends Audit {
       const unusedCssItems = await UnusedCSS.request({
         Stylesheets: artifacts.Stylesheets,
         CSSUsage: artifacts.CSSUsage,
-        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+        devtoolsLog: artifacts.DevtoolsLog,
       }, context);
       for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
@@ -294,7 +291,7 @@ class RenderBlockingResources extends Audit {
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
-      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnDuration)},
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results,

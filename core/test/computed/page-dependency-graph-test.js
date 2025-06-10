@@ -6,8 +6,8 @@
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
-import {BaseNode} from '../../lib/lantern/base-node.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const sampleTrace = readJson('../fixtures/artifacts/iframe/trace.json', import.meta);
@@ -21,8 +21,11 @@ describe('PageDependencyGraph computed artifact', () => {
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
+        SourceMaps: [],
+        settings: {},
+        fromTrace: false,
       }, context);
-      assert.ok(output instanceof BaseNode, 'did not return a graph');
+      assert.ok(output instanceof Lantern.Graph.BaseNode, 'did not return a graph');
       const dependents = output.getDependents();
       const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
       assert.ok(nodeWithNestedDependents, 'did not link initiators');

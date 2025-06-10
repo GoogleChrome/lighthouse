@@ -161,6 +161,8 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       bufferedConsole.log(`  Retrying run (${i} out of ${retries} retries)…`);
     }
 
+    const logger = new LocalConsole();
+
     // Run Lighthouse.
     try {
       // Each individual runner has internal timeouts, but we've had bugs where
@@ -170,12 +172,13 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
           reject(new Error('Timed out waiting for provided lighthouseRunner')), 1000 * 120);
       });
       const timedResult = await Promise.race([
-        lighthouseRunner(requestedUrl, config, testRunnerOptions),
+        lighthouseRunner(requestedUrl, config, logger, testRunnerOptions),
         timeoutPromise,
       ]);
       result = {
         ...timedResult,
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
+        log: logger.getLog(),
       };
 
       if (!result.lhr?.audits || !result.artifacts) {
@@ -188,6 +191,8 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       if (takeNetworkRequestUrls) takeNetworkRequestUrls();
 
       logChildProcessError(bufferedConsole, e);
+      bufferedConsole.log('Timed out. log from lighthouseRunner:');
+      bufferedConsole.log(logger.getLog());
       continue; // Retry, if possible.
     }
 

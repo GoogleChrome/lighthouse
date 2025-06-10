@@ -23,7 +23,7 @@ describe('SEO: HTTP code audit', () => {
 
       const artifacts = {
         GatherContext: {gatherMode: 'timespan'},
-        devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
+        DevtoolsLog: devtoolsLog,
         URL: {mainDocumentUrl},
       };
 
@@ -46,7 +46,7 @@ describe('SEO: HTTP code audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       URL: {mainDocumentUrl},
     };
 
@@ -60,7 +60,7 @@ describe('SEO: HTTP code audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: []},
+      DevtoolsLog: [],
       URL: {mainDocumentUrl},
     };
 

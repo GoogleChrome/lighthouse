@@ -4,23 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
-import {LanternFirstMeaningfulPaint} from './lantern-first-meaningful-paint.js';
-import {Interactive} from '../../lib/lantern/metrics/interactive.js';
+import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
-
-class LanternInteractive extends Interactive {
+class LanternInteractive extends Lantern.Metrics.Interactive {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    return this.compute(await getComputationDataParams(data, context), extras)
-      .catch(lanternErrorAdapter);
+    const params = await getComputationDataParams(data, context);
+    return Promise.resolve(this.compute(params, extras)).catch(lanternErrorAdapter);
   }
 
   /**
@@ -29,13 +27,13 @@ class LanternInteractive extends Interactive {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {
-    const fmpResult = await LanternFirstMeaningfulPaint.request(data, context);
-    return this.computeMetricWithGraphs(data, context, {fmpResult});
+    const lcpResult = await LanternLargestContentfulPaint.request(data, context);
+    return this.computeMetricWithGraphs(data, context, {lcpResult});
   }
 }
 
 const LanternInteractiveComputed = makeComputedArtifact(
   LanternInteractive,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternInteractiveComputed as LanternInteractive};

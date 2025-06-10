@@ -129,7 +129,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * Returns whether the network is completely idle (i.e. there are 0 inflight network requests).
    */
   isIdle() {
-    return this._isActiveIdlePeriod(0);
+    return this._isIdlePeriod(0);
   }
 
   /**
@@ -144,10 +144,13 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
     const rootFrameRequest = requests.find(r => r.resourceType === 'Document');
     const rootFrameId = rootFrameRequest?.frameId;
 
-    return this._isActiveIdlePeriod(
+    return this._isIdlePeriod(
       0,
+      // Return true if it should be a candidate for critical.
       request =>
         request.frameId === rootFrameId &&
+        // WebSocket and Server-sent Events are typically long-lived and shouldn't be considered critical.
+        request.resourceType !== 'WebSocket' && request.resourceType !== 'EventSource' &&
         (request.priority === 'VeryHigh' || request.priority === 'High')
     );
   }
@@ -156,7 +159,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * Returns whether the network is semi-idle (i.e. there are 2 or fewer inflight network requests).
    */
   is2Idle() {
-    return this._isActiveIdlePeriod(2);
+    return this._isIdlePeriod(2);
   }
 
   /**
@@ -166,7 +169,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * @param {(request: NetworkRequest) => boolean} [requestFilter]
    * @return {boolean}
    */
-  _isActiveIdlePeriod(allowedRequests, requestFilter) {
+  _isIdlePeriod(allowedRequests, requestFilter) {
     if (!this._networkRecorder) return false;
     const requests = this._networkRecorder.getRawRecords();
     let inflightRequests = 0;
@@ -174,7 +177,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
     for (let i = 0; i < requests.length; i++) {
       const request = requests[i];
       if (request.finished) continue;
-      if (requestFilter && !requestFilter(request)) continue;
+      if (requestFilter?.(request) === false) continue;
       if (NetworkRequest.isNonNetworkRequest(request)) continue;
       inflightRequests++;
     }

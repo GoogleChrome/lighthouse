@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       'that tables use the actual caption element instead of cells with the `[colspan]` ' +
       'attribute may improve the experience for screen reader users. ' +
-      '[Learn more about captions](https://dequeuniversity.com/rules/axe/4.9/table-fake-caption).',
+      '[Learn more about captions](https://dequeuniversity.com/rules/axe/4.10/table-fake-caption).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

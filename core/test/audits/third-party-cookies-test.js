@@ -11,8 +11,8 @@ import ThirdPartyCookies from '../../audits/third-party-cookies.js';
  * @return {LH.Artifacts}
  */
 function createArtifacts(issues) {
+  // @ts-expect-error ignore n/a issue types
   return {
-    // @ts-expect-error ignore n/a issue types
     InspectorIssues: {
       cookieIssue: issues,
     },

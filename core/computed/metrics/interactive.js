@@ -181,7 +181,7 @@ class Interactive extends NavigationMetric {
 
 const InteractiveComputed = makeComputedArtifact(
   Interactive,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {InteractiveComputed as Interactive};
 

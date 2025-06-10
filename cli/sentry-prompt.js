@@ -26,7 +26,7 @@ function prompt() {
     return Promise.resolve(false);
   }
 
-  /** @type {NodeJS.Timer|undefined} */
+  /** @type {NodeJS.Timeout|undefined} */
   let timeout;
 
   const prompt = new Confirm.Confirm({
@@ -47,7 +47,7 @@ function prompt() {
 
   return Promise.race([
     prompt.run().then(result => {
-      clearTimeout(/** @type {NodeJS.Timer} */ (timeout));
+      clearTimeout(timeout);
       return result;
     }),
     timeoutPromise,

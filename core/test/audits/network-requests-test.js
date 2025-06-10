@@ -17,9 +17,7 @@ const GatherContext = {
 describe('Network requests audit', () => {
   it('should report finished and unfinished network requests', async () => {
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: cutoffLoadDevtoolsLog,
-      },
+      DevtoolsLog: cutoffLoadDevtoolsLog,
       URL: {mainDocumentUrl: 'https://googlechrome.github.io/lighthouse/viewer/'},
       GatherContext,
     };
@@ -76,9 +74,7 @@ describe('Network requests audit', () => {
     ];
 
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(records),
       URL: {mainDocumentUrl: 'https://example.com/0'},
       GatherContext,
     };
@@ -104,9 +100,7 @@ describe('Network requests audit', () => {
     ];
 
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(records),
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext,
     };
@@ -128,9 +122,7 @@ describe('Network requests audit', () => {
     ];
 
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(records),
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'timespan'},
     };
@@ -152,9 +144,7 @@ describe('Network requests audit', () => {
     ];
 
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(records),
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext,
     };
@@ -176,9 +166,7 @@ describe('Network requests audit', () => {
     ];
 
     const artifacts = {
-      devtoolsLogs: {
-        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog(records),
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext,
     };

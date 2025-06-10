@@ -4,19 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {TotalBlockingTime} from '../../lib/lantern/metrics/total-blocking-time.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 import {LanternInteractive} from './lantern-interactive.js';
 import {getComputationDataParams} from './lantern-metric.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
-
-class LanternTotalBlockingTime extends TotalBlockingTime {
+class LanternTotalBlockingTime extends Lantern.Metrics.TotalBlockingTime {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
@@ -37,6 +35,6 @@ class LanternTotalBlockingTime extends TotalBlockingTime {
 
 const LanternTotalBlockingTimeComputed = makeComputedArtifact(
   LanternTotalBlockingTime,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternTotalBlockingTimeComputed as LanternTotalBlockingTime};

@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Form elements without effective labels can create frustrating experiences ' +
       'for screen reader users. ' +
-      '[Learn more about the `select` element](https://dequeuniversity.com/rules/axe/4.9/select-name).',
+      '[Learn more about the `select` element](https://dequeuniversity.com/rules/axe/4.10/select-name).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
