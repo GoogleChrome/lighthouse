@@ -94,6 +94,7 @@ function collectAnchorElements() {
         rel: node.rel,
         target: node.target,
         id: node.getAttribute('id') || '',
+        attributeNames: node.getAttributeNames(),
         // @ts-expect-error - getNodeDetails put into scope via stringification
         node: getNodeDetails(node),
       };
@@ -109,6 +110,7 @@ function collectAnchorElements() {
       rel: '',
       target: node.target.baseVal || '',
       id: node.getAttribute('id') || '',
+      attributeNames: node.getAttributeNames(),
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(node),
     };
@@ -160,9 +162,27 @@ class AnchorElements extends BaseGatherer {
     const anchorsWithEventListeners = anchors.map(async anchor => {
       const listeners = await getEventListeners(session, anchor.node.devtoolsNodePath);
 
+      /** @type {Set<{type: string}>} */
+      const ancestorListeners = new Set();
+      const splitPath = anchor.node.devtoolsNodePath.split(',');
+      const ancestorListenerPromises = [];
+      while (splitPath.length >= 2) {
+        splitPath.length -= 2;
+        const path = splitPath.join(',');
+        const promise = getEventListeners(session, path).then(listeners => {
+          for (const listener of listeners) {
+            ancestorListeners.add(listener);
+          }
+        }).catch(() => {});
+        ancestorListenerPromises.push(promise);
+      }
+
+      await Promise.all(ancestorListenerPromises);
+
       return {
         ...anchor,
         listeners,
+        ancestorListeners: Array.from(ancestorListeners),
       };
     });
 
