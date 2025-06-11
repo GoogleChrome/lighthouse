@@ -18,12 +18,16 @@ const compat = new FlatCompat({
 });
 
 export default [{
+  files: [
+    'core/**',
+    'cli/**',
+  ],
   ignores: [
     '**/node_modules/**/*',
     '**/third_party/**/*',
     '**/source-maps/**/*',
-    'cli/test/fixtures/byte-efficiency/bundle.js',
     '**/dist',
+    'cli/test/fixtures/**',
     'coverage/**/*',
     '!**/.eslintrc.cjs',
     'core/scripts/legacy-javascript/variants',
@@ -150,5 +154,14 @@ export default [{
 
   rules: {
     'max-len': 0,
+  },
+}, {
+  files: ['cli/test/**/*.js'],
+
+  languageOptions: {
+    globals: {
+      ...globals.jest,
+      ...globals.mocha,
+    }
   },
 }];
