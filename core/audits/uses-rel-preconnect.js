@@ -62,7 +62,7 @@ class UsesRelPreconnectAudit extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'LinkElements', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -122,8 +122,9 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const settings = context.settings;
 
     let maxWastedLcp = 0;
@@ -134,15 +135,16 @@ class UsesRelPreconnectAudit extends Audit {
     const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
       await Promise.all([
         NetworkRecords.request(devtoolsLog, context),
-        MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
+        MainResource.request({devtoolsLog, URL}, context),
         LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(trace, context),
-        PageDependencyGraph.request({trace, devtoolsLog, URL: artifacts.URL}, context),
+        PageDependencyGraph.request(
+          {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
     const lcpGraph =
-      await LanternLargestContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
+      LanternLargestContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {
@@ -150,7 +152,7 @@ class UsesRelPreconnectAudit extends Audit {
     });
 
     const fcpGraph =
-      await LanternFirstContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
+      LanternFirstContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
     const fcpGraphURLs = new Set();
     fcpGraph.traverse(node => {
       if (node.type === 'network') fcpGraphURLs.add(node.request.url);

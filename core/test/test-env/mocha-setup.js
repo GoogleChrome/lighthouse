@@ -35,7 +35,7 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
 process.env.TZ = 'UTC';
 
 // Expected to be set by lh-env.js
-process.env.NODE_TEST = 'test';
+process.env.NODE_ENV = 'test';
 
 global.expect = expect;
 
@@ -63,6 +63,7 @@ function getSnapshotState(testFile) {
   const snapshotDir = path.join(path.dirname(testFile), '__snapshots__');
   const snapshotFile = path.join(snapshotDir, path.basename(testFile) + '.snap');
   snapshotState = new SnapshotState(snapshotFile, {
+    rootDir: snapshotDir,
     updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'none',
     prettierPath: '',
     snapshotFormat: {},
@@ -120,7 +121,6 @@ expect.extend({
     const context = {snapshotState, currentTestName: title};
     // @ts-expect-error - this is enough for snapshots to work.
     const matcher = toMatchInlineSnapshot.bind(context);
-    // @ts-expect-error - not sure why these types are so wrong
     const result = matcher(actual, expected);
     // @ts-expect-error - not sure why these types are so wrong
     if (!result.pass) snapshotTestFailed = true;

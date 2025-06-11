@@ -74,6 +74,8 @@ async function runA11yChecks() {
       'select-name': {enabled: true},
       'server-side-image-map': {enabled: false},
       'skip-link': {enabled: true},
+      // https://github.com/GoogleChrome/lighthouse/issues/16163
+      'summary-name': {enabled: false},
       'svg-img-alt': {enabled: false},
       'tabindex': {enabled: true},
       'table-duplicate-name': {enabled: true},

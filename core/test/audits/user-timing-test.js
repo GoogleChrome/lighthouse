@@ -13,9 +13,7 @@ const trace = readJson('../fixtures/artifacts/user-timing/trace.json', import.me
 
 function generateArtifactsWithTrace(trace) {
   return {
-    traces: {
-      defaultPass: trace,
-    },
+    Trace: trace,
   };
 }
 describe('Performance: user-timings audit', () => {

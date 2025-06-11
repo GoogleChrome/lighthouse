@@ -69,7 +69,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
       requiredArtifacts: ['JsUsage', 'Scripts', 'SourceMaps', 'GatherContext',
-        'devtoolsLogs', 'traces', 'URL'],
+        'DevtoolsLog', 'Trace', 'URL', 'SourceMaps'],
     };
   }
 
@@ -94,7 +94,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const script = artifacts.Scripts.find(s => s.scriptId === scriptId);
       if (!script) continue; // This should never happen.
 
-      const bundle = bundles.find(b => b.script.scriptId === scriptId);
+      const bundle = bundles.find(b => b.script.scriptId === scriptId) ?? null;
       const unusedJsSummary =
         await UnusedJavascriptSummary.request({scriptId, scriptCoverage, bundle}, context);
       if (unusedJsSummary.wastedBytes === 0 || unusedJsSummary.totalBytes === 0) continue;

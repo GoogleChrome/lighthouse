@@ -13,8 +13,8 @@ const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.d
 describe('Diagnostics audit', () => {
   it('should work', async () => {
     const artifacts = {
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevToolsLog},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevToolsLog,
       URL: {
         mainDocumentUrl: 'https://pwa.rocks/',
       },

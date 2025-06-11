@@ -19,7 +19,7 @@ const UIStrings = {
   failureTitle: 'ARIA attributes are not used as specified for the element\'s role',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Some ARIA attributes are only allowed on an element under certain conditions. ' +
-      '[Learn more about conditional ARIA attributes](https://dequeuniversity.com/rules/axe/4.9/aria-conditional-attr).',
+      '[Learn more about conditional ARIA attributes](https://dequeuniversity.com/rules/axe/4.10/aria-conditional-attr).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

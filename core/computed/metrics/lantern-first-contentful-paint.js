@@ -32,6 +32,6 @@ class LanternFirstContentfulPaint extends Lantern.Metrics.FirstContentfulPaint {
 
 const LanternFirstContentfulPaintComputed = makeComputedArtifact(
   LanternFirstContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternFirstContentfulPaintComputed as LanternFirstContentfulPaint};

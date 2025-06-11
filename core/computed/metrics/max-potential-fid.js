@@ -40,6 +40,6 @@ class MaxPotentialFID extends NavigationMetric {
 
 const MaxPotentialFIDComputed = makeComputedArtifact(
   MaxPotentialFID,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {MaxPotentialFIDComputed as MaxPotentialFID};

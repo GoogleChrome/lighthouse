@@ -21,7 +21,7 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       'that `<td>` elements in a large table (3 or more cells in width and height) have an ' +
       'associated table header may improve the experience for screen reader users. ' +
-      '[Learn more about table headers](https://dequeuniversity.com/rules/axe/4.9/td-has-header).',
+      '[Learn more about table headers](https://dequeuniversity.com/rules/axe/4.10/td-has-header).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

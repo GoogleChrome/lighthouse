@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Visible text labels that do not match the accessible name can result in a ' +
       'confusing experience for screen reader users. ' +
-      '[Learn more about accessible names](https://dequeuniversity.com/rules/axe/4.9/label-content-name-mismatch).',
+      '[Learn more about accessible names](https://dequeuniversity.com/rules/axe/4.10/label-content-name-mismatch).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

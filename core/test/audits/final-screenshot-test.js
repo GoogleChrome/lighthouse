@@ -20,7 +20,7 @@ describe('Final screenshot', () => {
 
   it('should extract a final screenshot from a trace', async () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: pwaTrace},
+      Trace: pwaTrace,
       GatherContext: {gatherMode: 'timespan'},
     });
     const results = await FinalScreenshotAudit.audit(artifacts, context);
@@ -33,7 +33,7 @@ describe('Final screenshot', () => {
 
   it('should returns not applicable for missing screenshots in timespan mode', async () => {
     const artifacts = {
-      traces: {defaultPass: noScreenshotsTrace},
+      Trace: noScreenshotsTrace,
       GatherContext: {gatherMode: 'timespan'},
     };
 
@@ -43,7 +43,7 @@ describe('Final screenshot', () => {
 
   it('should throws for missing screenshots in navigation mode', async () => {
     const artifacts = {
-      traces: {defaultPass: noScreenshotsTrace},
+      Trace: noScreenshotsTrace,
       GatherContext: {gatherMode: 'navigation'},
     };
 

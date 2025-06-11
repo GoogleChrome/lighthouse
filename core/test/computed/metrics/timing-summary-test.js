@@ -16,7 +16,8 @@ describe('Timing summary', () => {
     const context = {computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const artifacts =
-      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, gatherContext};
+      // eslint-disable-next-line max-len
+      {URL, settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, SourceMaps: [], gatherContext};
     const result = await TimingSummary.request(artifacts, context);
 
     expect(result.metrics).toMatchInlineSnapshot(`

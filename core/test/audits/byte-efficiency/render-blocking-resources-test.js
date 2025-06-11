@@ -17,6 +17,8 @@ const {Simulator} = Lantern.Simulation;
 
 const trace = readJson('../../fixtures/artifacts/render-blocking/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/render-blocking/devtoolslog.json', import.meta);
+const lrTrace = readJson('../../fixtures/artifacts/lr/trace.json.gz', import.meta);
+const lrDevtoolsLog = readJson('../../fixtures/artifacts/lr/devtoolslog.json.gz', import.meta);
 
 const mobileSlow4G = constants.throttling.mobileSlow4G;
 
@@ -25,9 +27,10 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
@@ -36,6 +39,48 @@ describe('Render blocking resources audit', () => {
     assert.equal(result.score, 0);
     assert.equal(result.numericValue, 300);
     assert.deepStrictEqual(result.metricSavings, {FCP: 300, LCP: 0});
+  });
+
+  describe('Lightrider', () => {
+    before(() => {
+      global.isLightrider = true;
+    });
+
+    after(() => {
+      global.isLightrider = undefined;
+    });
+
+    it('considers X-TotalFetchedSize in its reported transfer size', async () => {
+      // TODO(15841): The trace backend knows nothing of Lantern.
+      if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+        return;
+      }
+
+      const artifacts = {
+        URL: getURLArtifactFromDevtoolsLog(lrDevtoolsLog),
+        GatherContext: {gatherMode: 'navigation'},
+        Trace: lrTrace,
+        DevtoolsLog: lrDevtoolsLog,
+        Stacks: [],
+        SourceMaps: [],
+      };
+
+      const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
+      const computedCache = new Map();
+      const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
+      expect(result.details.items).toMatchInlineSnapshot(`
+  Array [
+    Object {
+      "totalBytes": 128188,
+      "url": "https://www.llentab.cz/wp-content/uploads/fusion-styles/715df3f482419a9ed822189df6e57839.min.css?ver=3.11.10",
+      "wastedMs": 750,
+    },
+  ]
+  `);
+      assert.equal(result.score, 0);
+      assert.equal(result.numericValue, 0);
+      assert.deepStrictEqual(result.metricSavings, {FCP: 0, LCP: 0});
+    });
   });
 
   it('evaluates correct wastedMs when LCP is text', async () => {
@@ -52,9 +97,10 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: textLcpTrace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: textLcpTrace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
@@ -67,8 +113,8 @@ describe('Render blocking resources audit', () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       Stacks: [
         {
           detector: 'js',
@@ -78,6 +124,7 @@ describe('Render blocking resources audit', () => {
           npm: 'https://www.npmjs.com/org/ampproject',
         },
       ],
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};

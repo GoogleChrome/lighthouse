@@ -44,7 +44,7 @@ class CspXss extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'MetaElements', 'URL'],
     };
   }
 
@@ -54,7 +54,7 @@ class CspXss extends Audit {
    * @return {Promise<{cspHeaders: string[], cspMetaTags: string[]}>}
    */
   static async getRawCsps(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
     const cspMetaTags = artifacts.MetaElements

@@ -67,7 +67,7 @@ class ThirdPartySummary extends Audit {
       description: str_(UIStrings.description),
       guidanceLevel: 1,
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -159,7 +159,7 @@ class ThirdPartySummary extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);

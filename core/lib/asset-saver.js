@@ -263,7 +263,7 @@ async function saveArtifacts(artifacts, basePath, options = {}) {
   }
 
   // `devtoolsLogs` and `traces` are duplicate compat artifacts.
-  // We don't need to save them twice, so extract them here.
+  // We don't need to save them twice, so extract them here. TODO(v13): remove
   const {
     // eslint-disable-next-line no-unused-vars
     traces,
@@ -515,18 +515,30 @@ function normalizeTimingEntries(timings) {
 }
 
 /**
+ * @param {string} errorStack
+ * @return {string}
+ */
+function elideErrorStack(errorStack) {
+  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+  return errorStack
+    // Make paths relative to the repo root.
+    .replaceAll(baseCallFrameUrl.pathname, '')
+    // Remove line/col info.
+    .replaceAll(/:\d+:\d+/g, '');
+}
+
+/**
  * @param {LH.Result} lhr
  */
-function elideAuditErrorStacks(lhr) {
-  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+function elideLhrErrorStacks(lhr) {
   for (const auditResult of Object.values(lhr.audits)) {
     if (auditResult.errorStack) {
-      auditResult.errorStack = auditResult.errorStack
-        // Make paths relative to the repo root.
-        .replaceAll(baseCallFrameUrl.pathname, '')
-        // Remove line/col info.
-        .replaceAll(/:\d+:\d+/g, '');
+      auditResult.errorStack = elideErrorStack(auditResult.errorStack);
     }
+  }
+
+  if (lhr.runtimeError?.errorStack) {
+    lhr.runtimeError.errorStack = elideErrorStack(lhr.runtimeError.errorStack);
   }
 }
 
@@ -543,5 +555,5 @@ export {
   saveLanternNetworkData,
   stringifyReplacer,
   normalizeTimingEntries,
-  elideAuditErrorStacks,
+  elideLhrErrorStacks,
 };

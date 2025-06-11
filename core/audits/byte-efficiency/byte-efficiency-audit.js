@@ -8,8 +8,8 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {NetworkRecords} from '../../computed/network-records.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {LanternLargestContentfulPaint} from '../../computed/metrics/lantern-largest-contentful-paint.js';
-import {LanternFirstContentfulPaint} from '../../computed/metrics/lantern-first-contentful-paint.js';
+import {LanternLargestContentfulPaint as LanternLCP} from '../../computed/metrics/lantern-largest-contentful-paint.js';
+import {LanternFirstContentfulPaint as LanternFCP} from '../../computed/metrics/lantern-first-contentful-paint.js';
 import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
@@ -60,7 +60,7 @@ class ByteEfficiencyAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
@@ -168,12 +168,10 @@ class ByteEfficiencyAudit extends Audit {
     // This is useful information in the LHR and should be preserved.
     let wastedMs;
     if (metricComputationInput.gatherContext.gatherMode === 'navigation') {
-      const {
-        optimisticGraph: optimisticFCPGraph,
-      } = await LanternFirstContentfulPaint.request(metricComputationInput, context);
-      const {
-        optimisticGraph: optimisticLCPGraph,
-      } = await LanternLargestContentfulPaint.request(metricComputationInput, context);
+      const optimisticFCPGraph = (await LanternFCP.request(metricComputationInput, context))
+        .optimisticGraph;
+      const optimisticLCPGraph = (await LanternLCP.request(metricComputationInput, context))
+        .optimisticGraph;
 
       const {savings: fcpSavings} = this.computeWasteWithGraph(
         results,

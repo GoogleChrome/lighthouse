@@ -31,7 +31,7 @@ class InteractionToNextPaint extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['timespan'],
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['Trace'],
     };
   }
 
@@ -61,7 +61,7 @@ class InteractionToNextPaint extends Audit {
       return {score: null, notApplicable: true};
     }
 
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const metricData = {trace, settings};
     const interactionEvent = await ComputedResponsivenes.request(metricData, context);
 

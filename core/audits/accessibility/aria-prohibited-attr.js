@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Using ARIA attributes in roles where they are prohibited can mean that important ' +
       'information is not communicated to users of assistive technologies. ' +
-      '[Learn more about prohibited ARIA roles](https://dequeuniversity.com/rules/axe/4.9/aria-prohibited-attr).',
+      '[Learn more about prohibited ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-prohibited-attr).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

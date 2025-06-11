@@ -42,7 +42,7 @@ node "$pwd/cleanup-LHR-for-diff.js" "$goldenLHRPath"
 node "$pwd/cleanup-LHR-for-diff.js" "$freshLHRPath"
 
 colorText "Diff'ing golden LHR against the fresh LHR" "$purple"
-git --no-pager diff --color=always --no-index "$goldenLHRPath" "$freshLHRPath"
+git --no-pager diff -U30 --color=always --no-index "$goldenLHRPath" "$freshLHRPath"
 
 # Use the return value from last command
 retVal=$?

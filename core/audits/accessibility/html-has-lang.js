@@ -22,7 +22,7 @@ const UIStrings = {
       'that the page is in the default language that the user chose when setting up the ' +
       'screen reader. If the page isn\'t actually in the default language, then the screen ' +
       'reader might not announce the page\'s text correctly. ' +
-      '[Learn more about the `lang` attribute](https://dequeuniversity.com/rules/axe/4.9/html-has-lang).',
+      '[Learn more about the `lang` attribute](https://dequeuniversity.com/rules/axe/4.10/html-has-lang).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

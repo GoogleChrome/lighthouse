@@ -19,7 +19,8 @@ declare module Treemap {
       configSettings: {
         locale: Locale;
       }
-    }
+    },
+    initialView?: ViewMode['id'],
   }
 
   type NodePath = string[];
@@ -48,6 +49,9 @@ declare module Treemap {
     /** Could be a url, a path component from a source map, or an arbitrary string. */
     name: string;
     resourceBytes: number;
+    /** Transfer size of the script. Only set for non-inline top-level script nodes. */
+    encodedBytes?: number;
+    /** Unused bytes, in terms of resource size. */
     unusedBytes?: number;
     /** If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource */
     duplicatedNormalizedModuleName?: string;

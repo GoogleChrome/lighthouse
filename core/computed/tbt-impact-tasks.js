@@ -239,6 +239,6 @@ class TBTImpactTasks {
 
 const TBTImpactTasksComputed = makeComputedArtifact(
   TBTImpactTasks,
-  ['trace', 'devtoolsLog', 'URL', 'gatherContext', 'settings', 'simulator']
+  ['trace', 'devtoolsLog', 'URL', 'SourceMaps', 'gatherContext', 'settings', 'simulator']
 );
 export {TBTImpactTasksComputed as TBTImpactTasks};
