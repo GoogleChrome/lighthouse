@@ -9,7 +9,7 @@
  * against the results actually collected from Lighthouse.
  */
 
-import cloneDeep from 'lodash/cloneDeep.js';
+import {cloneDeep} from 'lodash-es';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';

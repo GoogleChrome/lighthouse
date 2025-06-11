@@ -45,9 +45,12 @@ export class DetailsRenderer {
         return this._renderFilmstrip(details);
       case 'list':
         return this._renderList(details);
+      case 'checklist':
+        return this._renderChecklist(details);
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
+      case 'network-tree':
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, details, this);
 
@@ -229,6 +232,9 @@ export class DetailsRenderer {
         }
         case 'numeric': {
           return this._renderNumeric(value);
+        }
+        case 'text': {
+          return this._renderText(value.value);
         }
         case 'source-location': {
           return this.renderSourceLocation(value);
@@ -542,12 +548,36 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
+      if (item.type === 'node') {
+        listContainer.append(this.renderNode(item));
+        return;
+      }
+
       const listItem = this.render(item);
       if (!listItem) return;
       listContainer.append(listItem);
     });
 
     return listContainer;
+  }
+
+  /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.Checklist>} details
+   * @return {Element}
+   */
+  _renderChecklist(details) {
+    const container = this._dom.createElement('ul', 'lh-checklist');
+
+    Object.values(details.items).forEach(item => {
+      const element = this._dom.createChildOf(container, 'li', 'lh-checklist-item');
+      const iconClass = item.value ?
+        'lh-report-plain-icon--checklist-pass' :
+        'lh-report-plain-icon--checklist-fail';
+      this._dom.createChildOf(element, 'span', `lh-report-plain-icon ${iconClass}`)
+        .textContent = item.label;
+    });
+
+    return container;
   }
 
   /**

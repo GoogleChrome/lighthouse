@@ -17,3 +17,6 @@ then
 fi
 
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git "$DEPOT_TOOLS_PATH"
+
+cd "$DEPOT_TOOLS_PATH"
+bash update_depot_tools

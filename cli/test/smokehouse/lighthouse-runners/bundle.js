@@ -18,9 +18,11 @@ import {once} from 'events';
 
 import puppeteer from 'puppeteer-core';
 import * as ChromeLauncher from 'chrome-launcher';
+import thirdPartyWebLib from 'third-party-web/nostats-subset.js';
 
 import {LH_ROOT} from '../../../../shared/root.js';
 import {loadArtifacts, saveArtifacts} from '../../../../core/lib/asset-saver.js';
+import {LocalConsole} from '../lib/local-console.js';
 
 // This runs only in the worker. The rest runs on the main thread.
 if (!isMainThread && parentPort) {
@@ -73,6 +75,11 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
   // @ts-expect-error - not worth giving test global an actual type.
   const lighthouse = global.runBundledLighthouse;
 
+  /** @type {import('../../../../core/lib/third-party-web.js')['default']} */
+  // @ts-expect-error
+  const thirdPartyWeb = global.thirdPartyWeb;
+  thirdPartyWeb.provideThirdPartyWeb(thirdPartyWebLib);
+
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch({
     chromeFlags: [
@@ -105,12 +112,13 @@ async function runBundledLighthouse(url, config, testRunnerOptions) {
  * Launch Chrome and do a full Lighthouse run via the Lighthouse DevTools bundle.
  * @param {string} url
  * @param {LH.Config=} config
+ * @param {LocalConsole=} logger
  * @param {Smokehouse.SmokehouseOptions['testRunnerOptions']=} testRunnerOptions
- * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
+ * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
-async function runLighthouse(url, config, testRunnerOptions = {}) {
-  /** @type {string[]} */
-  const logs = [];
+async function runLighthouse(url, config, logger, testRunnerOptions = {}) {
+  logger = logger || new LocalConsole();
+
   const worker = new Worker(new URL(import.meta.url), {
     stdout: true,
     stderr: true,
@@ -119,16 +127,16 @@ async function runLighthouse(url, config, testRunnerOptions = {}) {
   worker.stdout.setEncoding('utf8');
   worker.stderr.setEncoding('utf8');
   worker.stdout.addListener('data', (data) => {
-    logs.push(`[STDOUT] ${data}`);
+    logger.log(`[STDOUT] ${data}`);
   });
   worker.stderr.addListener('data', (data) => {
-    logs.push(`[STDERR] ${data}`);
+    logger.log(`[STDERR] ${data}`);
   });
   const [workerResponse] = await once(worker, 'message');
-  const log = logs.join('') + '\n';
 
   if (workerResponse.type === 'error') {
-    throw new Error(`Worker returned an error: ${workerResponse.value}\nLog:\n${log}`);
+    const log = logger.getLog();
+    throw new Error(`Worker returned an error: ${workerResponse.value}\nLog:\n${log}\n`);
   }
 
   const result = workerResponse.value;
@@ -142,7 +150,6 @@ async function runLighthouse(url, config, testRunnerOptions = {}) {
   return {
     lhr: result.lhr,
     artifacts,
-    log,
   };
 }
 

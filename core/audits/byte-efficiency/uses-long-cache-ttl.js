@@ -46,7 +46,7 @@ class CacheHeaders extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['DevtoolsLog', 'SourceMaps'],
     };
   }
 
@@ -196,7 +196,7 @@ class CacheHeaders extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLogs = artifacts.DevtoolsLog;
     const records = await NetworkRecords.request(devtoolsLogs, context);
     const results = [];
     let totalWastedBytes = 0;

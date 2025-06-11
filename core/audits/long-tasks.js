@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {Audit} from './audit.js';
 import {NetworkRecords} from '../computed/network-records.js';
 import * as i18n from '../lib/i18n/i18n.js';
@@ -23,7 +24,7 @@ const UIStrings = {
   /** Description of a diagnostic LH audit that shows the user the longest running tasks that occur when the page loads. */
   description: 'Lists the longest tasks on the main thread, ' +
     'useful for identifying worst contributors to input delay. ' +
-    '[Learn how to avoid long main-thread tasks](https://web.dev/articles/long-tasks-devtools)',
+    '[Learn how to avoid long main-thread tasks](https://web.dev/articles/optimize-long-tasks)',
   /** [ICU Syntax] Label identifying the number of long-running CPU tasks that occurred while loading a web page. */
   displayValue: `{itemCount, plural,
   =1 {# long task found}
@@ -67,7 +68,7 @@ class LongTasks extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
       guidanceLevel: 1,
     };
   }
@@ -85,7 +86,7 @@ class LongTasks extends Audit {
    * most time will be attributed to 'other' (the category of the top-level
    * RunTask). See pruning in `PageDependencyGraph.linkCPUNodes`.
    * @param {LH.Artifacts.TaskNode} task
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.Types.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @param {Map<TaskGroupIds, number>} [timeByTaskGroup]
    * @return {{startTime: number, duration: number, timeByTaskGroup: Map<TaskGroupIds, number>}}
    */
@@ -116,7 +117,7 @@ class LongTasks extends Audit {
   /**
    * @param {Array<LH.Artifacts.TaskNode>} longTasks
    * @param {Set<string>} jsUrls
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.Types.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @return {LH.Audit.Details.DebugData}
    */
   static makeDebugData(longTasks, jsUrls, taskTimingsByEvent) {
@@ -154,7 +155,7 @@ class LongTasks extends Audit {
   /**
    * Get timing from task, overridden by taskTimingsByEvent if provided.
    * @param {LH.Artifacts.TaskNode} task
-   * @param {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
+   * @param {Map<Lantern.Types.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} taskTimingsByEvent
    * @return {Timing}
    */
   static getTiming(task, taskTimingsByEvent) {
@@ -175,25 +176,27 @@ class LongTasks extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const URL = artifacts.URL;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const {URL, SourceMaps} = artifacts;
+    const trace = artifacts.Trace;
     const tasks = await MainThreadTasks.request(trace, context);
-    const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
     const tbtResult = await TotalBlockingTime.request(metricComputationData, context);
 
-    /** @type {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} */
+    /** @type {Map<Lantern.Types.TraceEvent, LH.Gatherer.Simulation.NodeTiming>|undefined} */
     let taskTimingsByEvent;
 
     if (settings.throttlingMethod === 'simulate') {
       taskTimingsByEvent = new Map();
 
       const simulatorOptions = {devtoolsLog, settings: context.settings};
-      const pageGraph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, context);
+      const pageGraph =
+        // eslint-disable-next-line max-len
+        await PageDependencyGraph.request({settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context);
       const simulator = await LoadSimulator.request(simulatorOptions, context);
-      const simulation = await simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
+      const simulation = simulator.simulate(pageGraph, {label: 'long-tasks-diagnostic'});
       for (const [node, timing] of simulation.nodeTimings.entries()) {
         if (node.type !== 'cpu') continue;
         taskTimingsByEvent.set(node.event, timing);

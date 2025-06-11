@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import UrlUtils from '../lib/url-utils.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {Audit} from './audit.js';
@@ -43,7 +44,7 @@ class UsesRelPreloadAudit extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'URL', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -61,8 +62,8 @@ class UsesRelPreloadAudit extends Audit {
       if (node.type !== 'network') return;
       // Don't include the node itself or any CPU nodes in the initiatorPath
       const path = traversalPath.slice(1).filter(initiator => initiator.type === 'network');
-      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.rawRequest, mainResource, path)) return;
-      urls.add(node.rawRequest.url);
+      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.request, mainResource, path)) return;
+      urls.add(node.request.url);
     });
 
     return urls;
@@ -75,6 +76,7 @@ class UsesRelPreloadAudit extends Audit {
    * @return {Set<string>}
    */
   static getURLsFailedToPreload(graph) {
+    // TODO: add `fromPrefetchCache` to Lantern.Types.NetworkRequest, then use node.request here instead of rawRequest.
     /** @type {Array<LH.Artifacts.NetworkRequest>} */
     const requests = [];
     graph.traverse(node => node.type === 'network' && requests.push(node.rawRequest));
@@ -109,8 +111,8 @@ class UsesRelPreloadAudit extends Audit {
    * Critical requests deeper than depth 2 are more likely to be a case-by-case basis such that it
    * would be a little risky to recommend blindly.
    *
-   * @param {LH.Artifacts.NetworkRequest} request
-   * @param {LH.Artifacts.NetworkRequest} mainResource
+   * @param {Lantern.Types.NetworkRequest} request
+   * @param {Lantern.Types.NetworkRequest} mainResource
    * @param {Array<LH.Gatherer.Simulation.GraphNode>} initiatorPath
    * @return {boolean}
    */
@@ -157,7 +159,7 @@ class UsesRelPreloadAudit extends Audit {
 
       if (node.isMainDocument()) {
         mainDocumentNode = node;
-      } else if (node.rawRequest && urls.has(node.rawRequest.url)) {
+      } else if (node.request && urls.has(node.request.url)) {
         nodesToPreload.push(node);
       }
     });
@@ -189,7 +191,7 @@ class UsesRelPreloadAudit extends Audit {
 
       const wastedMs = Math.round(timingBefore.endTime - timingAfter.endTime);
       if (wastedMs < THRESHOLD_IN_MS) continue;
-      results.push({url: node.rawRequest.url, wastedMs});
+      results.push({url: node.request.url, wastedMs});
     }
 
     if (!results.length) {
@@ -210,14 +212,16 @@ class UsesRelPreloadAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const settings = context.settings;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const simulatorOptions = {devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
-      PageDependencyGraph.request({trace, devtoolsLog, URL}, context),
+      PageDependencyGraph.request(
+        {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       LoadSimulator.request(simulatorOptions, context),
     ]);
 

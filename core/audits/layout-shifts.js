@@ -29,8 +29,6 @@ const UIStrings = {
   rootCauseFontChanges: 'Web font loaded',
   /** A possible reason why that the layout shift occured. */
   rootCauseInjectedIframe: 'Injected iframe',
-  /** A possible reason why that the layout shift occured. */
-  rootCauseRenderBlockingRequest: 'A late network request adjusted the page layout',
   /** Label shown per-audit to show how many layout shifts are present. The `{# shifts found}` placeholder will be replaced with the number of layout shifts. */
   displayValueShiftsFound: `{shiftCount, plural, =1 {1 layout shift found} other {# layout shifts found}}`,
 };
@@ -49,7 +47,7 @@ class LayoutShifts extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 2,
-      requiredArtifacts: ['traces', 'RootCauses', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
     };
   }
 
@@ -59,62 +57,64 @@ class LayoutShifts extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const traceEngineResult = await TraceEngineResult.request({trace}, context);
-    const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
+    const settings = context.settings;
+    const trace = artifacts.Trace;
+    const SourceMaps = artifacts.SourceMaps;
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+    const clusters = traceEngineResult.parsedTrace.LayoutShifts.clusters ?? [];
     const {cumulativeLayoutShift: clsSavings, impactByNodeId} =
       await CumulativeLayoutShiftComputed.request(trace, context);
     const traceElements = artifacts.TraceElements
       .filter(element => element.traceEventType === 'layout-shift');
 
+    /** @type {LH.Artifacts.TraceEngineRootCauses} */
+    const allRootCauses = {
+      layoutShifts: new Map(),
+    };
+    for (const insightSet of traceEngineResult.insights.values()) {
+      for (const [shift, reasons] of insightSet.model.CLSCulprits.shifts) {
+        allRootCauses.layoutShifts.set(shift, reasons);
+      }
+    }
+
     /** @type {Item[]} */
     const items = [];
     const layoutShiftEvents =
       /** @type {import('../lib/trace-engine.js').SaneSyntheticLayoutShift[]} */(
-        clusters.flatMap(c => c.events)
+        clusters.flatMap(c => c.events).filter(e => !!e.args.data)
       );
     const topLayoutShiftEvents = layoutShiftEvents
       .sort((a, b) => b.args.data.weighted_score_delta - a.args.data.weighted_score_delta)
       .slice(0, MAX_LAYOUT_SHIFTS);
     for (const event of topLayoutShiftEvents) {
       const biggestImpactNodeId = TraceElements.getBiggestImpactNodeForShiftEvent(
-        event.args.data.impacted_nodes || [], impactByNodeId, event);
+        event.args.data.impacted_nodes || [], impactByNodeId);
       const biggestImpactElement = traceElements.find(t => t.nodeId === biggestImpactNodeId);
 
       // Turn root causes into sub-items.
-      const index = layoutShiftEvents.indexOf(event);
-      const rootCauses = artifacts.RootCauses.layoutShifts[index];
+      const rootCauses = allRootCauses.layoutShifts.get(event);
       /** @type {SubItem[]} */
       const subItems = [];
       if (rootCauses) {
-        for (const cause of rootCauses.unsizedMedia) {
+        for (const unsizedImage of rootCauses.unsizedImages) {
           const element = artifacts.TraceElements.find(
-            t => t.traceEventType === 'layout-shift' && t.nodeId === cause.node.backendNodeId);
+            t => t.traceEventType === 'trace-engine' && t.nodeId === unsizedImage.backendNodeId);
           subItems.push({
             extra: element ? Audit.makeNodeItem(element.node) : undefined,
             cause: str_(UIStrings.rootCauseUnsizedMedia),
           });
         }
-        for (const cause of rootCauses.fontChanges) {
-          const url = cause.request.args.data.url;
+        for (const request of rootCauses.fontRequests) {
+          const url = request.args.data.url;
           subItems.push({
             extra: {type: 'url', value: url},
             cause: str_(UIStrings.rootCauseFontChanges),
           });
         }
-        for (const cause of rootCauses.iframes) {
-          const element = artifacts.TraceElements.find(
-            t => t.traceEventType === 'layout-shift' && t.nodeId === cause.iframe.backendNodeId);
+        if (rootCauses.iframeIds.length) {
           subItems.push({
-            extra: element ? Audit.makeNodeItem(element.node) : undefined,
             cause: str_(UIStrings.rootCauseInjectedIframe),
-          });
-        }
-        for (const cause of rootCauses.renderBlockingRequests) {
-          const url = cause.request.args.data.url;
-          subItems.push({
-            extra: {type: 'url', value: url},
-            cause: str_(UIStrings.rootCauseRenderBlockingRequest),
           });
         }
       }

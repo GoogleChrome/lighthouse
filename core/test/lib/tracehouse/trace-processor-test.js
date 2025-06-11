@@ -11,10 +11,7 @@ import {createTestTrace} from '../../create-test-trace.js';
 import {readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
-const badNavStartTrace = readJson('../../fixtures/traces/bad-nav-start-ts.json', import.meta);
 const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);
-const preactTrace = readJson('../../fixtures/traces/preactjs.com_ts_of_undefined.json', import.meta);
-const noFMPtrace = readJson('../../fixtures/traces/no_fmp_event.json', import.meta);
 const noFCPtrace = readJson('../../fixtures/traces/airhorner_no_fcp.json', import.meta);
 const timespanTrace = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
 const noNavStartTrace = readJson('../../fixtures/traces/no_navstart_event.json', import.meta);
@@ -227,7 +224,6 @@ describe('TraceProcessor', () => {
           "FrameCommittedInBrowser   - ROOT_FRAME",
           "domContentLoadedEventEnd  - ROOT_FRAME",
           "firstContentfulPaint      - ROOT_FRAME",
-          "firstMeaningfulPaint      - ROOT_FRAME",
           "FrameCommittedInBrowser   - CHILD_FRAME",
           "Event1                    - ROOT_FRAME",
           "Event2                    - CHILD_FRAME",
@@ -255,7 +251,6 @@ describe('TraceProcessor', () => {
         'navigationStart',
         'domContentLoadedEventEnd',
         'firstContentfulPaint',
-        'firstMeaningfulPaint',
         'Event1',
       ]);
     });
@@ -285,7 +280,6 @@ describe('TraceProcessor', () => {
         'navigationStart',
         'domContentLoadedEventEnd',
         'firstContentfulPaint',
-        'firstMeaningfulPaint',
         'Event1',
         'Event2',
       ]);
@@ -520,7 +514,6 @@ describe('TraceProcessor', () => {
         const navigation = TraceProcessor.processNavigation(trace);
 
         assert.equal(trace.mainFrameInfo.startingPid, navigation.firstContentfulPaintEvt.pid);
-        assert.equal(trace.mainFrameInfo.startingPid, navigation.firstMeaningfulPaintEvt.pid);
       });
 
       it('computes timings of each event', () => {
@@ -529,7 +522,6 @@ describe('TraceProcessor', () => {
         assert.equal(Math.round(navigation.timings.timeOrigin), 0);
         assert.equal(Math.round(navigation.timings.firstPaint), 80);
         assert.equal(Math.round(navigation.timings.firstContentfulPaint), 80);
-        assert.equal(Math.round(navigation.timings.firstMeaningfulPaint), 530);
         assert.equal(Math.round(navigation.timings.traceEnd), 649);
       });
 
@@ -539,50 +531,7 @@ describe('TraceProcessor', () => {
         assert.equal(Math.round(navigation.timestamps.timeOrigin), 29343540951);
         assert.equal(Math.round(navigation.timestamps.firstPaint), 29343620997);
         assert.equal(Math.round(navigation.timestamps.firstContentfulPaint), 29343621005);
-        assert.equal(Math.round(navigation.timestamps.firstMeaningfulPaint), 29344070867);
         assert.equal(Math.round(navigation.timestamps.traceEnd), 29344190232);
-      });
-    });
-
-    describe('.processNavigation() - FMP', () => {
-      it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
-        const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
-        const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameInfo.frameId, '0x163736997740');
-        assert.equal(trace.timeOriginEvt.ts, 29343540951);
-        assert.equal(navigation.firstContentfulPaintEvt.ts, 29343621005);
-        assert.equal(navigation.firstMeaningfulPaintEvt.ts, 29344070867);
-        assert.ok(!navigation.fmpFellBack);
-      });
-
-      it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
-        const trace = TraceProcessor.processTrace(badNavStartTrace);
-        const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameInfo.frameId, '0x89915541e48');
-        assert.equal(trace.timeOriginEvt.ts, 8885424467);
-        assert.equal(navigation.firstContentfulPaintEvt.ts, 8886056886);
-        assert.equal(navigation.firstMeaningfulPaintEvt.ts, 8886056891);
-        assert.ok(!navigation.fmpFellBack);
-      });
-
-      it('if it appears slightly before the fCP', () => {
-        const trace = TraceProcessor.processTrace(preactTrace);
-        const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameInfo.frameId, '0x25edaa521e58');
-        assert.equal(trace.timeOriginEvt.ts, 1805796384607);
-        assert.equal(navigation.firstContentfulPaintEvt.ts, 1805797263653);
-        assert.equal(navigation.firstMeaningfulPaintEvt.ts, 1805797262960);
-        assert.ok(!navigation.fmpFellBack);
-      });
-
-      it('from candidates if no defined FMP exists', () => {
-        const trace = TraceProcessor.processTrace(noFMPtrace);
-        const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameInfo.frameId, '0x150343381dd0');
-        assert.equal(trace.timeOriginEvt.ts, 2146735807738);
-        assert.equal(navigation.firstContentfulPaintEvt.ts, 2146737302468);
-        assert.equal(navigation.firstMeaningfulPaintEvt.ts, 2146740268666);
-        assert.ok(navigation.fmpFellBack);
       });
     });
 
@@ -769,9 +718,8 @@ Object {
       });
     });
 
-    it('handles traces missing a paints (captured in background tab)', () => {
+    it('handles traces with no paints (captured in background tab)', () => {
       const trace = TraceProcessor.processTrace(backgroundTabTrace);
-      const navigation = TraceProcessor.processNavigation(trace);
       assert.equal(trace.mainFrameInfo.frameId, '0x53965941e30');
       assert.notEqual(trace.timeOriginEvt.ts, 1966813346529, 'picked wrong frame');
       assert.notEqual(trace.timeOriginEvt.ts, 1966813520313, 'picked wrong frame');
@@ -780,7 +728,6 @@ Object {
         1966813258737,
         'didnt select navStart event with same timestamp as usertiming measure'
       );
-      assert.equal(navigation.firstMeaningfulPaintEvt, undefined, 'bad fmp');
     });
 
     it('handles traces with TracingStartedInBrowser events', () => {

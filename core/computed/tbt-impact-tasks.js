@@ -4,13 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {MainThreadTasks} from './main-thread-tasks.js';
 import {FirstContentfulPaint} from './metrics/first-contentful-paint.js';
 import {Interactive} from './metrics/interactive.js';
 import {TotalBlockingTime} from './metrics/total-blocking-time.js';
 import {ProcessedTrace} from './processed-trace.js';
-import {calculateTbtImpactForEvent} from './metrics/tbt-utils.js';
+
+const {calculateTbtImpactForEvent} = Lantern.Metrics.TBTUtils;
 
 class TBTImpactTasks {
   /**
@@ -62,8 +64,9 @@ class TBTImpactTasks {
   /**
    * @param {LH.Artifacts.TaskNode[]} tasks
    * @param {Map<LH.Artifacts.TaskNode, number>} taskToImpact
+   * @param {Map<LH.Artifacts.TaskNode, number>} taskToBlockingTime
    */
-  static createImpactTasks(tasks, taskToImpact) {
+  static createImpactTasks(tasks, taskToImpact, taskToBlockingTime) {
     /** @type {LH.Artifacts.TBTImpactTask[]} */
     const tbtImpactTasks = [];
 
@@ -71,15 +74,25 @@ class TBTImpactTasks {
       const tbtImpact = taskToImpact.get(task) || 0;
       let selfTbtImpact = tbtImpact;
 
+      const blockingTime = taskToBlockingTime.get(task) || 0;
+      let selfBlockingTime = blockingTime;
+
       for (const child of task.children) {
         const childTbtImpact = taskToImpact.get(child) || 0;
         selfTbtImpact -= childTbtImpact;
+
+        const childBlockingTime = taskToBlockingTime.get(child) || 0;
+        selfBlockingTime -= childBlockingTime;
       }
 
       tbtImpactTasks.push({
         ...task,
-        tbtImpact,
-        selfTbtImpact,
+        // Floating point numbers are not perfectly precise, so the subtraction operations above
+        // can sometimes output negative numbers close to 0 here. To prevent potentially confusing
+        // output we should bump those values to 0.
+        tbtImpact: Math.max(tbtImpact, 0),
+        selfTbtImpact: Math.max(selfTbtImpact, 0),
+        selfBlockingTime: Math.max(selfBlockingTime, 0),
       });
     }
 
@@ -96,6 +109,9 @@ class TBTImpactTasks {
     /** @type {Map<LH.Artifacts.TaskNode, number>} */
     const taskToImpact = new Map();
 
+    /** @type {Map<LH.Artifacts.TaskNode, number>} */
+    const taskToBlockingTime = new Map();
+
     for (const task of tasks) {
       const event = {
         start: task.startTime,
@@ -111,11 +127,13 @@ class TBTImpactTasks {
       };
 
       const tbtImpact = calculateTbtImpactForEvent(event, startTimeMs, endTimeMs, topLevelEvent);
+      const blockingTime = calculateTbtImpactForEvent(event, -Infinity, Infinity, topLevelEvent);
 
       taskToImpact.set(task, tbtImpact);
+      taskToBlockingTime.set(task, blockingTime);
     }
 
-    return this.createImpactTasks(tasks, taskToImpact);
+    return this.createImpactTasks(tasks, taskToImpact, taskToBlockingTime);
   }
 
   /**
@@ -129,10 +147,13 @@ class TBTImpactTasks {
     /** @type {Map<LH.Artifacts.TaskNode, number>} */
     const taskToImpact = new Map();
 
+    /** @type {Map<LH.Artifacts.TaskNode, number>} */
+    const taskToBlockingTime = new Map();
+
     /** @type {Map<LH.Artifacts.TaskNode, {start: number, end: number, duration: number}>} */
     const topLevelTaskToEvent = new Map();
 
-    /** @type {Map<LH.TraceEvent, LH.Artifacts.TaskNode>} */
+    /** @type {Map<Lantern.Types.TraceEvent, LH.Artifacts.TaskNode>} */
     const traceEventToTask = new Map();
     for (const task of tasks) {
       traceEventToTask.set(task.event, task);
@@ -149,19 +170,21 @@ class TBTImpactTasks {
       };
 
       const tbtImpact = calculateTbtImpactForEvent(event, startTimeMs, endTimeMs);
+      const blockingTime = calculateTbtImpactForEvent(event, -Infinity, Infinity);
 
       const task = traceEventToTask.get(node.event);
       if (!task) continue;
 
       topLevelTaskToEvent.set(task, event);
       taskToImpact.set(task, tbtImpact);
+      taskToBlockingTime.set(task, blockingTime);
     }
 
     // Interpolate the TBT impact of remaining tasks using the top level ancestor tasks.
     // We don't have any lantern estimates for tasks that are not top level, so we need to estimate
     // the lantern timing based on the task's observed timing relative to it's top level task's observed timing.
     for (const task of tasks) {
-      if (taskToImpact.has(task)) continue;
+      if (taskToImpact.has(task) || taskToBlockingTime.has(task)) continue;
 
       const topLevelTask = this.getTopLevelTask(task);
 
@@ -181,11 +204,13 @@ class TBTImpactTasks {
       };
 
       const tbtImpact = calculateTbtImpactForEvent(event, startTimeMs, endTimeMs, topLevelEvent);
+      const blockingTime = calculateTbtImpactForEvent(event, -Infinity, Infinity, topLevelEvent);
 
       taskToImpact.set(task, tbtImpact);
+      taskToBlockingTime.set(task, blockingTime);
     }
 
-    return this.createImpactTasks(tasks, taskToImpact);
+    return this.createImpactTasks(tasks, taskToImpact, taskToBlockingTime);
   }
 
   /**
@@ -214,6 +239,6 @@ class TBTImpactTasks {
 
 const TBTImpactTasksComputed = makeComputedArtifact(
   TBTImpactTasks,
-  ['trace', 'devtoolsLog', 'URL', 'gatherContext', 'settings', 'simulator']
+  ['trace', 'devtoolsLog', 'URL', 'SourceMaps', 'gatherContext', 'settings', 'simulator']
 );
 export {TBTImpactTasksComputed as TBTImpactTasks};

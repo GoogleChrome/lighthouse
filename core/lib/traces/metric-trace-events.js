@@ -46,11 +46,6 @@ class MetricTraceEvents {
         tsKey: 'observedFirstContentfulPaintTs',
       },
       {
-        name: 'First Meaningful Paint',
-        id: 'ttfmp',
-        tsKey: 'observedFirstMeaningfulPaintTs',
-      },
-      {
         name: 'Speed Index',
         id: 'si',
         tsKey: 'observedSpeedIndexTs',

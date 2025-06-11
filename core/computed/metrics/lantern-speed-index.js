@@ -4,24 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
 import {Speedline} from '../speedline.js';
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
-import {SpeedIndex} from '../../lib/lantern/metrics/speed-index.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
-
-class LanternSpeedIndex extends SpeedIndex {
+class LanternSpeedIndex extends Lantern.Metrics.SpeedIndex {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    return this.compute(await getComputationDataParams(data, context), extras)
-      .catch(lanternErrorAdapter);
+    const params = await getComputationDataParams(data, context);
+    return Promise.resolve(this.compute(params, extras)).catch(lanternErrorAdapter);
   }
 
   /**
@@ -34,7 +32,7 @@ class LanternSpeedIndex extends SpeedIndex {
     const speedline = await Speedline.request(data.trace, context);
     const fcpResult = await LanternFirstContentfulPaint.request(data, context);
     return this.computeMetricWithGraphs(data, context, {
-      speedline,
+      observedSpeedIndex: speedline.speedIndex,
       fcpResult,
     });
   }
@@ -42,6 +40,6 @@ class LanternSpeedIndex extends SpeedIndex {
 
 const LanternSpeedIndexComputed = makeComputedArtifact(
   LanternSpeedIndex,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternSpeedIndexComputed as LanternSpeedIndex};

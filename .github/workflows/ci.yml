@@ -29,14 +29,18 @@ jobs:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: '18.20'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn type-check
     - run: yarn build-all
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     # Run pptr tests using ToT Chrome instead of stable default.
     - name: Install Chrome ToT
@@ -56,6 +60,7 @@ jobs:
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
+    - run: yarn generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code
@@ -74,7 +79,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/

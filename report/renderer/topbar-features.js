@@ -146,8 +146,7 @@ export class TopbarFeatures {
    */
   onCopyButtonClick() {
     this._dom.fireEventOn('lh-analytics', this._dom.document(), {
-      cmd: 'send',
-      fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'},
+      name: 'copy',
     });
 
     try {

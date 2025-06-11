@@ -6,17 +6,15 @@
 
 import {Protocol as Crdp} from 'devtools-protocol/types/protocol.js';
 import * as TraceEngine from '@paulirish/trace_engine';
-import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
+import * as Lantern from '../core/lib/lantern/lantern.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
-import {Simulator} from '../core/lib/lantern/simulator/simulator.js';
 import {LighthouseError} from '../core/lib/lh-error.js';
 import {NetworkRequest as _NetworkRequest} from '../core/lib/network-request.js';
 import speedline from 'speedline-core';
 import * as CDTSourceMap from '../core/lib/cdt/generated/SourceMap.js';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
 import type { TaskNode as _TaskNode } from '../core/lib/tracehouse/main-thread-tasks.js';
-import type {EnabledHandlers} from '../core/computed/trace-engine-result.js';
 import AuditDetails from './lhr/audit-details.js'
 import Config from './config.js';
 import Gatherer from './gatherer.js';
@@ -139,8 +137,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
-  /** The result of calling the shared trace engine root cause analysis. */
-  RootCauses: Artifacts.TraceEngineRootCauses;
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
@@ -164,7 +160,7 @@ declare module Artifacts {
 
   type NetworkRequest = _NetworkRequest;
   type TaskNode = _TaskNode;
-  type TBTImpactTask = TaskNode & {tbtImpact: number, selfTbtImpact: number};
+  type TBTImpactTask = TaskNode & {tbtImpact: number, selfTbtImpact: number, selfBlockingTime: number};
   type MetaElement = Artifacts['MetaElements'][0];
 
   interface URL {
@@ -361,6 +357,7 @@ declare module Artifacts {
     rawHref: string
     name?: string
     text: string
+    textLang?: string
     role: string
     target: string
     node: NodeDetails
@@ -503,7 +500,7 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
+    traceEventType: 'trace-engine'|'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     node: NodeDetails;
     nodeId: number;
     animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
@@ -511,12 +508,12 @@ declare module Artifacts {
   }
 
   interface TraceEngineResult {
-    data: TraceEngine.Handlers.Types.EnabledHandlerDataWithMeta<EnabledHandlers>;
-    insights: TraceEngine.Insights.Types.TraceInsightData<EnabledHandlers>;
+    parsedTrace: TraceEngine.Handlers.Types.ParsedTrace;
+    insights: TraceEngine.Insights.Types.TraceInsightSets;
   }
 
   interface TraceEngineRootCauses {
-    layoutShifts: Record<number, LayoutShiftRootCausesData>;
+    layoutShifts: Map<TraceEngine.Types.Events.SyntheticLayoutShift, TraceEngine.Insights.Models.CLSCulprits.LayoutShiftRootCausesData>;
   }
 
   interface ViewportDimensions {
@@ -527,29 +524,15 @@ declare module Artifacts {
     devicePixelRatio: number;
   }
 
-  interface InspectorIssues {
-    attributionReportingIssue: Crdp.Audits.AttributionReportingIssueDetails[];
-    blockedByResponseIssue: Crdp.Audits.BlockedByResponseIssueDetails[];
-    bounceTrackingIssue: Crdp.Audits.BounceTrackingIssueDetails[];
-    clientHintIssue: Crdp.Audits.ClientHintIssueDetails[];
-    contentSecurityPolicyIssue: Crdp.Audits.ContentSecurityPolicyIssueDetails[];
-    cookieDeprecationMetadataIssue: Crdp.Audits.CookieDeprecationMetadataIssueDetails[],
-    corsIssue: Crdp.Audits.CorsIssueDetails[];
-    deprecationIssue: Crdp.Audits.DeprecationIssueDetails[];
-    federatedAuthRequestIssue: Crdp.Audits.FederatedAuthRequestIssueDetails[],
-    genericIssue: Crdp.Audits.GenericIssueDetails[];
-    heavyAdIssue: Crdp.Audits.HeavyAdIssueDetails[];
-    lowTextContrastIssue: Crdp.Audits.LowTextContrastIssueDetails[];
-    mixedContentIssue: Crdp.Audits.MixedContentIssueDetails[];
-    navigatorUserAgentIssue: Crdp.Audits.NavigatorUserAgentIssueDetails[];
-    propertyRuleIssue: Crdp.Audits.PropertyRuleIssueDetails[],
-    quirksModeIssue: Crdp.Audits.QuirksModeIssueDetails[];
-    cookieIssue: Crdp.Audits.CookieIssueDetails[];
-    sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
-    sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
-    stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
-    federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
-  }
+  type Replace<T extends string, S extends string, D extends string,
+    A extends string = ""> = T extends `${infer L}${S}${infer R}` ?
+    Replace<R, S, D, `${A}${L}${D}`> : `${A}${T}`;
+
+  export type InspectorIssuesKeyToArtifactKey<T extends string> = Replace<T, 'Details', ''>;
+
+  export type InspectorIssues = {
+    [x in keyof Crdp.Audits.InspectorIssueDetails as InspectorIssuesKeyToArtifactKey<x>]: Array<Exclude<Crdp.Audits.InspectorIssueDetails[x], undefined>>
+  };
 
   // Computed artifact types below.
   type CriticalRequestNode = {
@@ -566,8 +549,9 @@ declare module Artifacts {
     trace: Trace;
     settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: InstanceType<typeof Simulator>;
+    simulator: Gatherer.Simulation.Simulator | null;
     URL: Artifacts['URL'];
+    SourceMaps: Artifacts['SourceMaps'];
   }
 
   interface MetricComputationData extends MetricComputationDataInput {
@@ -592,14 +576,7 @@ declare module Artifacts {
     throughput: number;
   }
 
-  interface LanternMetric {
-    timing: number;
-    timestamp?: never;
-    optimisticEstimate: Gatherer.Simulation.Result
-    pessimisticEstimate: Gatherer.Simulation.Result;
-    optimisticGraph: Gatherer.Simulation.GraphNode;
-    pessimisticGraph: Gatherer.Simulation.GraphNode;
-  }
+  type LanternMetric = Lantern.Metrics.MetricResult<Artifacts.NetworkRequest>;
 
   type Speedline = speedline.Output<'speedIndex'>;
 
@@ -613,7 +590,6 @@ declare module Artifacts {
     firstPaint?: number;
     firstContentfulPaint: number;
     firstContentfulPaintAllFrames: number;
-    firstMeaningfulPaint?: number;
     largestContentfulPaint?: number;
     largestContentfulPaintAllFrames?: number;
     traceEnd: number;
@@ -657,8 +633,6 @@ declare module Artifacts {
     firstContentfulPaintEvt: TraceEvent;
     /** The trace event marking firstContentfulPaint from all frames, if it was found. */
     firstContentfulPaintAllFramesEvt: TraceEvent;
-    /** The trace event marking firstMeaningfulPaint, if it was found. */
-    firstMeaningfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint, if it was found. */
     largestContentfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint from all frames, if it was found. */
@@ -667,11 +641,6 @@ declare module Artifacts {
     loadEvt?: TraceEvent;
     /** The trace event marking domContentLoadedEventEnd, if it was found. */
     domContentLoadedEvt?: TraceEvent;
-    /**
-     * Whether the firstMeaningfulPaintEvt was the definitive event or a fallback to
-     * firstMeaningfulPaintCandidate events had to be attempted.
-     */
-    fmpFellBack: boolean;
     /** Whether LCP was invalidated without a new candidate. */
     lcpInvalidated: boolean;
   }
@@ -695,8 +664,6 @@ declare module Artifacts {
     firstContentfulPaintTs: number | undefined;
     firstContentfulPaintAllFrames: number | undefined;
     firstContentfulPaintAllFramesTs: number | undefined;
-    firstMeaningfulPaint: number | undefined;
-    firstMeaningfulPaintTs: number | undefined;
     largestContentfulPaint: number | undefined;
     largestContentfulPaintTs: number | undefined;
     largestContentfulPaintAllFrames: number | undefined;
@@ -725,8 +692,6 @@ declare module Artifacts {
     observedFirstContentfulPaintTs: number | undefined;
     observedFirstContentfulPaintAllFrames: number | undefined;
     observedFirstContentfulPaintAllFramesTs: number | undefined;
-    observedFirstMeaningfulPaint: number | undefined;
-    observedFirstMeaningfulPaintTs: number | undefined;
     observedLargestContentfulPaint: number | undefined;
     observedLargestContentfulPaintTs: number | undefined;
     observedLargestContentfulPaintAllFrames: number | undefined;

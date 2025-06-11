@@ -9,9 +9,6 @@
  * origin are over the http/2 protocol.
  */
 
-/** @typedef {import('../../lib/lantern/simulator/simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-
 import {Audit} from '../audit.js';
 import {EntityClassification} from '../../computed/entity-classification.js';
 import UrlUtils from '../../lib/url-utils.js';
@@ -61,7 +58,7 @@ class UsesHTTP2Audit extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       supportedModes: ['timespan', 'navigation'],
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'GatherContext'],
+      requiredArtifacts: ['URL', 'DevtoolsLog', 'Trace', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -69,8 +66,8 @@ class UsesHTTP2Audit extends Audit {
    * Computes the estimated effect of all results being converted to http/2 on the provided graph.
    *
    * @param {Array<{url: string}>} results
-   * @param {Node} graph
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {{label?: string}=} options
    * @return {{savings: number, simulationBefore: LH.Gatherer.Simulation.Result, simulationAfter: LH.Gatherer.Simulation.Result}}
    */
@@ -205,7 +202,7 @@ class UsesHTTP2Audit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const URL = artifacts.URL;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);

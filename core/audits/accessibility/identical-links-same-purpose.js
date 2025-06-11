@@ -20,7 +20,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Links with the same destination should have the same description, to help users ' +
       'understand the link\'s purpose and decide whether to follow it. ' +
-      '[Learn more about identical links](https://dequeuniversity.com/rules/axe/4.9/identical-links-same-purpose).',
+      '[Learn more about identical links](https://dequeuniversity.com/rules/axe/4.10/identical-links-same-purpose).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import ComputedMetric from './metric.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import {LanternTotalBlockingTime} from './lantern-total-blocking-time.js';
 import {Interactive} from './interactive.js';
-import {calculateSumOfBlockingTime} from './tbt-utils.js';
+
+const {calculateSumOfBlockingTime} = Lantern.Metrics.TBTUtils;
 
 /**
  * @fileoverview This audit determines Total Blocking Time.
@@ -69,6 +71,6 @@ class TotalBlockingTime extends ComputedMetric {
 
 const TotalBlockingTimeComputed = makeComputedArtifact(
   TotalBlockingTime,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {TotalBlockingTimeComputed as TotalBlockingTime};

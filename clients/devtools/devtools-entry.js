@@ -14,6 +14,7 @@ import lighthouse, {navigation, startTimespan, snapshot} from '../../core/index.
 import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
 import * as constants from '../../core/config/constants.js';
+import thirdPartyWeb from '../../core/lib/third-party-web.js';
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -68,46 +69,15 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
-/**
- * TODO: Expose api directly when DevTools usage is updated.
- * @param {string} url
- * @param {{page: LH.Puppeteer.Page, config?: LH.Config, flags?: LH.Flags}} args
- */
-function runLighthouseNavigation(url, {page, ...options}) {
-  return navigation(page, url, options);
-}
-
-/**
- * TODO: Expose api directly when DevTools usage is updated.
- * @param {{page: LH.Puppeteer.Page, config?: LH.Config, flags?: LH.Flags}} args
- */
-function startLighthouseTimespan({page, ...options}) {
-  return startTimespan(page, options);
-}
-
-/**
- * TODO: Expose api directly when DevTools usage is updated.
- * @param {{page: LH.Puppeteer.Page, config?: LH.Config, flags?: LH.Flags}} args
- */
-function runLighthouseSnapshot({page, ...options}) {
-  return snapshot(page, options);
-}
-
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
   global.isDevtools = true;
 
   // @ts-expect-error
-  self.runLighthouseNavigation = runLighthouseNavigation;
-  // @ts-expect-error
   self.navigation = navigation;
   // @ts-expect-error
-  self.startLighthouseTimespan = startLighthouseTimespan;
-  // @ts-expect-error
   self.startTimespan = startTimespan;
-  // @ts-expect-error
-  self.runLighthouseSnapshot = runLighthouseSnapshot;
   // @ts-expect-error
   self.snapshot = snapshot;
   // @ts-expect-error
@@ -119,8 +89,12 @@ if (typeof self !== 'undefined') {
   // TODO: expose as lookupCanonicalLocale in LighthouseService.ts?
   // @ts-expect-error
   self.lookupLocale = lookupCanonicalLocale;
+  // @ts-expect-error
+  self.thirdPartyWeb = thirdPartyWeb;
 } else {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.thirdPartyWeb = thirdPartyWeb;
 }

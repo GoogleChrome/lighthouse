@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    // Expected to be run in a browser tab
+    "lib": ["dom"],
+    // Puppeteer internals are used which can lead to type errors
+    "skipLibCheck": true,
+  },
+  "references": [
+    {"path": "../../"},
+  ],
+  "include": [
+    "**/*.js",
+    "../../types/internal/node.d.ts",
+    "../../types/internal/global.d.ts",
+  ],
+}

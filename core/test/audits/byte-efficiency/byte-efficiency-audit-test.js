@@ -6,8 +6,8 @@
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../../lib/lantern/lantern.js';
 import {ByteEfficiencyAudit as ByteEfficiencyAudit_} from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
-import {Simulator} from '../../../lib/lantern/simulator/simulator.js';
 import {LoadSimulator} from '../../../computed/load-simulator.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
@@ -18,7 +18,7 @@ const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
-  let simulator;
+  let simulator = null;
   let metricComputationInput;
 
   const ByteEfficiencyAudit = class extends ByteEfficiencyAudit_ {
@@ -81,9 +81,11 @@ describe('Byte efficiency base audit', () => {
         finalDisplayedUrl: mainDocumentUrl,
       },
       settings: JSON.parse(JSON.stringify(defaultSettings)),
+      simulator: null,
+      SourceMaps: [],
     };
 
-    simulator = new Simulator({});
+    simulator = new Lantern.Simulation.Simulator({});
   });
 
   const baseHeadings = [
@@ -217,7 +219,7 @@ describe('Byte efficiency base audit', () => {
     const settings = {throttlingMethod: 'simulate', throttling};
     const computedCache = new Map();
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const simulator = await LoadSimulator.request({devtoolsLog, settings, URL}, {computedCache});
+    const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
     const result = await ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],
@@ -226,7 +228,8 @@ describe('Byte efficiency base audit', () => {
         ],
       },
       simulator,
-      {trace, devtoolsLog, URL, gatherContext: {gatherMode: 'navigation'}, settings},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, URL, gatherContext: {gatherMode: 'navigation'}, settings, SourceMaps: [], simulator: null},
       {computedCache: new Map()}
     );
 
@@ -245,9 +248,10 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      SourceMaps: [],
     };
     const computedCache = new Map();
 
@@ -278,8 +282,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
@@ -302,8 +306,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: []},
+      Trace: trace,
+      DevtoolsLog: [],
       URL: {},
     };
     const computedCache = new Map();
@@ -329,8 +333,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();

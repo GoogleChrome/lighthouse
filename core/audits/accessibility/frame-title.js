@@ -19,7 +19,7 @@ const UIStrings = {
   failureTitle: '`<frame>` or `<iframe>` elements do not have a title',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Screen reader users rely on frame titles to describe the contents of frames. ' +
-      '[Learn more about frame titles](https://dequeuniversity.com/rules/axe/4.9/frame-title).',
+      '[Learn more about frame titles](https://dequeuniversity.com/rules/axe/4.10/frame-title).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

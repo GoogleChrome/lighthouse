@@ -31,7 +31,7 @@ class Redirects extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['navigation'],
       guidanceLevel: 2,
-      requiredArtifacts: ['URL', 'GatherContext', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['URL', 'GatherContext', 'DevtoolsLog', 'Trace', 'SourceMaps'],
     };
   }
 
@@ -84,14 +84,17 @@ class Redirects extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
+    const {URL, SourceMaps} = artifacts;
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
+    const metricComputationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
 
     /** @type {Map<string, LH.Gatherer.Simulation.NodeTiming>} */
@@ -101,8 +104,6 @@ class Redirects extends Audit {
         nodeTimingsById.set(node.request.requestId, timing);
       }
     }
-
-    const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
     let totalWastedMs = 0;
     const tableRows = [];

@@ -8,12 +8,6 @@ declare global {
   var isDevtools: boolean | undefined;
   var isLightrider: boolean | undefined;
 
-  // Augment Intl to include
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales
-  namespace Intl {
-    var getCanonicalLocales: (locales?: string | Array<string>) => Array<string>;
-  }
-
   // Some functions defined in node are stringified and run in the browser.
   // Ensure those functions are working with the correct browser environment.
   interface Window {
@@ -35,22 +29,6 @@ declare global {
 
     /** Injected into the page when the `--debug` flag is used. */
     continueLighthouseRun(): void;
-  }
-
-  // `fetchPriority` not defined in tsc as of 4.9.4.
-  interface HTMLImageElement {
-    /**
-     * Sets the priority for fetches initiated by the element.
-     * @see https://html.spec.whatwg.org/multipage/embedded-content.html#dom-img-fetchpriority
-     */
-    fetchPriority: string;
-  }
-  interface HTMLLinkElement {
-    /**
-     * Sets the priority for fetches initiated by the element.
-     * @see https://html.spec.whatwg.org/multipage/semantics.html#dom-link-fetchpriority
-     */
-    fetchPriority: string;
   }
 }
 

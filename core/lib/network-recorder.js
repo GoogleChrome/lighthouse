@@ -9,8 +9,8 @@ import {EventEmitter} from 'events';
 import log from 'lighthouse-logger';
 
 import * as LH from '../../types/lh.js';
+import * as Lantern from './lantern/lantern.js';
 import {NetworkRequest} from './network-request.js';
-import {PageDependencyGraph} from '../lib/lantern/page-dependency-graph.js';
 
 /**
  * @typedef {{
@@ -253,7 +253,7 @@ class NetworkRecorder extends RequestEventEmitter {
       return record.redirectSource;
     }
 
-    const initiatorURL = PageDependencyGraph.getNetworkInitiators(record)[0];
+    const initiatorURL = Lantern.Graph.PageDependencyGraph.getNetworkInitiators(record)[0];
     let candidates = recordsByURL.get(initiatorURL) || [];
     // The (valid) initiator must come before the initiated request.
     candidates = candidates.filter(c => {

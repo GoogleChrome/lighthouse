@@ -52,9 +52,6 @@ const expectations = {
       'speed-index': {
         score: '>=0.80', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
       },
-      'first-meaningful-paint': {
-        score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
-      },
       'interactive': {
         score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
       },

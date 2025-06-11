@@ -67,6 +67,10 @@ declare module Util {
   type CamelCasify<T> = {
     [K in keyof T as KebabToCamelCase<K>]: T[K];
   }
+
+  type LowercaseFirst<S extends string> = S extends `${infer First}${infer Rest}`
+    ? `${Lowercase<First>}${Rest}`
+    : S;
 }
 
 export default Util;

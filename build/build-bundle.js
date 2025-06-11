@@ -62,7 +62,7 @@ const banner = `
  * ${pkg.description}
  *
  * @homepage ${pkg.homepage}
- * @author   Copyright 2023 ${pkg.author}
+ * @author   Copyright ${new Date().getFullYear()} ${pkg.author}
  * @license  ${pkg.license}
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -134,6 +134,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
     shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
+  }
+
+  // Don't bundle third-party-web (CDT provides its own copy). This prevents duplications of 40+ KB.
+  if (isDevtools(entryPath)) {
+    shimsObj['third-party-web/nostats-subset.js'] = 'export default {};';
   }
 
   for (const modulePath of modulesToIgnore) {

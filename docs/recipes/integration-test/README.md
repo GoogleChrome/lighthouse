@@ -5,10 +5,15 @@ See [example-lh-auth.test.js](./example-lh-auth.test.js) for an example of how t
 ```sh
 # Be in this folder: docs/recipes/integration-test
 
-# Install deps.
+# Build Lighthouse
+yarn --cwd ../../..
+yarn --cwd ../../.. build-report
+yarn --cwd ../../.. build-pack
+
+# Install deps for this recipe.
 yarn
 yarn --cwd ../auth
 
-# Test.
+# Run the recipe.
 yarn test
 ```

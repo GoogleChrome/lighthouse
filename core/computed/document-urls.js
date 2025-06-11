@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NetworkAnalyzer} from '../lib/lantern/simulator/network-analyzer.js';
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
 import {ProcessedTrace} from './processed-trace.js';
@@ -41,7 +41,8 @@ class DocumentUrls {
     }
     if (!requestedUrl || !mainDocumentUrl) throw new Error('No main frame navigations found');
 
-    const initialRequest = NetworkAnalyzer.findResourceForUrl(networkRecords, requestedUrl);
+    const initialRequest =
+      Lantern.Core.NetworkAnalyzer.findResourceForUrl(networkRecords, requestedUrl);
     if (initialRequest?.redirects?.length) requestedUrl = initialRequest.redirects[0].url;
 
     return {requestedUrl, mainDocumentUrl};

@@ -4,7 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import thirdPartyWeb from 'third-party-web/nostats-subset.js';
+import thirdPartyWebLib from 'third-party-web/nostats-subset.js';
+
+let thirdPartyWeb = thirdPartyWebLib;
+
+/**
+ * For use by DevTools.
+ *
+ * @param {typeof import('third-party-web/nostats-subset.js')} providedThirdPartyWeb
+ */
+function provideThirdPartyWeb(providedThirdPartyWeb) {
+  thirdPartyWeb = providedThirdPartyWeb;
+}
 
 /** @typedef {import("third-party-web").IEntity} ThirdPartyEntity */
 /** @typedef {import("third-party-web").IProduct} ThirdPartyProduct */
@@ -45,6 +56,7 @@ function isFirstParty(url, mainDocumentEntity) {
 }
 
 export default {
+  provideThirdPartyWeb,
   getEntity,
   getProduct,
   isThirdParty,

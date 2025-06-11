@@ -4,40 +4,47 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
-import {PageDependencyGraph as LanternPageDependencyGraph} from '../lib/lantern/page-dependency-graph.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {ProcessedTrace} from './processed-trace.js';
 import {NetworkRecords} from './network-records.js';
 import {TraceEngineResult} from './trace-engine-result.js';
 
-/** @typedef {import('../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
-
 class PageDependencyGraph {
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, URL: LH.Artifacts['URL'], fromTrace?: boolean}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings'], URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], fromTrace: boolean}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<Node>}
+   * @return {Promise<LH.Gatherer.Simulation.GraphNode>}
    */
   static async compute_(data, context) {
-    const {trace, devtoolsLog, URL} = data;
+    const {trace, settings, devtoolsLog, URL, SourceMaps} = data;
     const [{mainThreadEvents}, networkRecords] = await Promise.all([
       ProcessedTrace.request(trace, context),
       NetworkRecords.request(devtoolsLog, context),
     ]);
 
     if (data.fromTrace) {
-      const traceEngineResult = await TraceEngineResult.request({trace}, context);
-      const {graph} = await LanternPageDependencyGraph.createGraphFromTrace(
-        mainThreadEvents, trace, traceEngineResult, URL);
+      const traceEngineResult =
+        await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+      const parsedTrace = traceEngineResult.parsedTrace;
+      const requests =
+        Lantern.TraceEngineComputationData.createNetworkRequests(trace, parsedTrace);
+      const graph =
+        Lantern.TraceEngineComputationData.createGraph(requests, trace, parsedTrace, URL);
+      // @ts-expect-error for now, ignore that this is a SyntheticNetworkEvent instead of LH's NetworkEvent.
       return graph;
     }
 
+    // TODO: currently the trace version has no requests that failed, or requests that have "Preflight".
+    //       so the following gets the devtools log version _closer_ to the exact same results as the trace.
+    // const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest).filter(r => !r.failed && r.resourceType !== 'Preflight');
+
     const lanternRequests = networkRecords.map(NetworkRequest.asLanternNetworkRequest);
-    return LanternPageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
+    return Lantern.Graph.PageDependencyGraph.createGraph(mainThreadEvents, lanternRequests, URL);
   }
 }
 
-const PageDependencyGraphComputed =
-  makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace', 'URL', 'fromTrace']);
+const PageDependencyGraphComputed = makeComputedArtifact(PageDependencyGraph,
+  ['devtoolsLog', 'settings', 'trace', 'URL', 'SourceMaps', 'fromTrace']);
 export {PageDependencyGraphComputed as PageDependencyGraph};

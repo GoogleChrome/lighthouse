@@ -7,7 +7,7 @@
 import {ReportGenerator as _ReportGenerator} from '../../report/generator/report-generator.js';
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
-import 'google.analytics';
+import 'gtag.js';
 
 // Import for needed DOM type augmentation.
 import '../../report/types/augment-dom';
@@ -24,7 +24,6 @@ declare global {
 
   interface Window {
     viewer: _LighthouseReportViewer;
-    ga: UniversalAnalytics.ga;
     __hash?: string;
 
     // Inserted by viewer build.

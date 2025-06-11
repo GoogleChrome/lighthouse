@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LanternError} from '../../lib/lantern/lantern-error.js';
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {LoadSimulator} from '../load-simulator.js';
 import {ProcessedNavigation} from '../processed-navigation.js';
 import {PageDependencyGraph} from '../page-dependency-graph.js';
+import {TraceEngineResult} from '../trace-engine-result.js';
 
 /**
  * @param {LH.Artifacts.MetricComputationDataInput} data
@@ -19,7 +20,7 @@ async function getComputationDataParamsFromDevtoolsLog(data, context) {
     throw new Error(`Lantern metrics can only be computed on navigations`);
   }
 
-  const graph = await PageDependencyGraph.request(data, context);
+  const graph = await PageDependencyGraph.request({...data, fromTrace: false}, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
@@ -36,7 +37,16 @@ async function getComputationDataParamsFromTrace(data, context) {
   }
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
-  const processedNavigation = await ProcessedNavigation.request(data.trace, context);
+  const traceEngineResult = await TraceEngineResult.request(data, context);
+  const frameId = traceEngineResult.parsedTrace.Meta.mainFrameId;
+  const navigationId =
+    traceEngineResult.parsedTrace.Meta.mainFrameNavigations[0].args.data?.navigationId;
+  if (!navigationId) {
+    throw new Error(`Lantern metrics could not be calculated due to missing navigation id`);
+  }
+
+  const processedNavigation = Lantern.TraceEngineComputationData.createProcessedNavigation(
+    traceEngineResult.parsedTrace, frameId, navigationId);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};
@@ -47,7 +57,7 @@ async function getComputationDataParamsFromTrace(data, context) {
  * @return {never}
  */
 function lanternErrorAdapter(err) {
-  if (!(err instanceof LanternError)) {
+  if (!(err instanceof Lantern.Core.LanternError)) {
     throw err;
   }
 

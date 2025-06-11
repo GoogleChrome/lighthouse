@@ -303,6 +303,37 @@ describe('NetworkRequest', () => {
     });
   });
 
+  describe('#asLanternNetworkRequest', () => {
+    it('uses lrStatistics to make timings', () => {
+      global.isLightrider = true;
+      const request = NetworkRequest.asLanternNetworkRequest({
+        protocol: 'h2',
+        timing: {},
+        lrStatistics: {TCPMs: 100, requestMs: 1000},
+      });
+      expect(request.timing).toStrictEqual({
+        connectStart: 0,
+        connectEnd: 100,
+        sslStart: 50,
+        sslEnd: 100,
+      });
+      expect(request.serverResponseTime).toStrictEqual(1000);
+    });
+
+    it('uses lrStatistics to make timings (h3)', () => {
+      global.isLightrider = true;
+      const request = NetworkRequest.asLanternNetworkRequest({
+        protocol: 'h3',
+        timing: {},
+        lrStatistics: {TCPMs: 100},
+      });
+      expect(request.timing).toStrictEqual({
+        connectStart: 0,
+        connectEnd: 100,
+      });
+    });
+  });
+
   describe('#isSecureRequest', () => {
     const isSecureRequest = NetworkRequest.isSecureRequest;
 

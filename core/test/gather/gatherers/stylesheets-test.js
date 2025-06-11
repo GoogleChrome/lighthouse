@@ -85,7 +85,8 @@ describe('Stylesheets gatherer', () => {
       .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}});
     context.driver.defaultSession.sendCommand
       .mockResponse('DOM.enable')
-      .mockResponse('CSS.enable')
+      // @ts-expect-error - Force events to emit.
+      .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
       .mockResponse('CSS.getStyleSheetText', () => {
         throw new Error('Sheet not found');
       })

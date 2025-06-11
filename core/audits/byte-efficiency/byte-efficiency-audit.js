@@ -8,14 +8,11 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {NetworkRecords} from '../../computed/network-records.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {LanternLargestContentfulPaint} from '../../computed/metrics/lantern-largest-contentful-paint.js';
-import {LanternFirstContentfulPaint} from '../../computed/metrics/lantern-first-contentful-paint.js';
+import {LanternLargestContentfulPaint as LanternLCP} from '../../computed/metrics/lantern-largest-contentful-paint.js';
+import {LanternFirstContentfulPaint as LanternFCP} from '../../computed/metrics/lantern-first-contentful-paint.js';
 import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
-
-/** @typedef {import('../../lib/lantern/simulator/simulator.js').Simulator} Simulator */
-/** @typedef {import('../../lib/lantern/base-node.js').Node<LH.Artifacts.NetworkRequest>} Node */
 
 // Parameters for log-normal distribution scoring. These values were determined by fitting the
 // log-normal cumulative distribution function curve to the former method of linear interpolation
@@ -63,7 +60,7 @@ class ByteEfficiencyAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
@@ -96,8 +93,8 @@ class ByteEfficiencyAudit extends Audit {
    * Computes the estimated effect of all the byte savings on the provided graph.
    *
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
-   * @param {Node} graph
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {{label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
    * @return {{savings: number, simulationBeforeChanges: LH.Gatherer.Simulation.Result, simulationAfterChanges: LH.Gatherer.Simulation.Result}}
    */
@@ -151,7 +148,7 @@ class ByteEfficiencyAudit extends Audit {
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Simulator} simulator
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @param {LH.Artifacts.MetricComputationDataInput} metricComputationInput
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -171,12 +168,10 @@ class ByteEfficiencyAudit extends Audit {
     // This is useful information in the LHR and should be preserved.
     let wastedMs;
     if (metricComputationInput.gatherContext.gatherMode === 'navigation') {
-      const {
-        optimisticGraph: optimisticFCPGraph,
-      } = await LanternFirstContentfulPaint.request(metricComputationInput, context);
-      const {
-        optimisticGraph: optimisticLCPGraph,
-      } = await LanternLargestContentfulPaint.request(metricComputationInput, context);
+      const optimisticFCPGraph = (await LanternFCP.request(metricComputationInput, context))
+        .optimisticGraph;
+      const optimisticLCPGraph = (await LanternLCP.request(metricComputationInput, context))
+        .optimisticGraph;
 
       const {savings: fcpSavings} = this.computeWasteWithGraph(
         results,

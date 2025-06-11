@@ -389,7 +389,7 @@ function coerceOptionalStringBoolean(value) {
 function coerceOutput(values) {
   const outputTypes = ['json', 'html', 'csv'];
   const errorHint = `Argument 'output' must be an array from choices "${outputTypes.join('", "')}"`;
-  if (!values.every(/** @return {item is string} */ item => typeof item === 'string')) {
+  if (!values.every(item => typeof item === 'string')) {
     throw new Error('Invalid values. ' + errorHint);
   }
   // Allow parsing of comma-separated values.

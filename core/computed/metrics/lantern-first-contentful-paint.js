@@ -4,22 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js';
-import {FirstContentfulPaint} from '../../lib/lantern/metrics/first-contentful-paint.js';
 
-/** @typedef {import('../../lib/lantern/metric.js').Extras} Extras */
-
-class LanternFirstContentfulPaint extends FirstContentfulPaint {
+class LanternFirstContentfulPaint extends Lantern.Metrics.FirstContentfulPaint {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Extras, 'optimistic'>=} extras
+   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    return this.compute(await getComputationDataParams(data, context), extras)
-      .catch(lanternErrorAdapter);
+    const params = await getComputationDataParams(data, context);
+    return Promise.resolve(this.compute(params, extras)).catch(lanternErrorAdapter);
   }
 
   /**
@@ -34,6 +32,6 @@ class LanternFirstContentfulPaint extends FirstContentfulPaint {
 
 const LanternFirstContentfulPaintComputed = makeComputedArtifact(
   LanternFirstContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternFirstContentfulPaintComputed as LanternFirstContentfulPaint};

@@ -22,7 +22,7 @@ class ResourceSummary extends Audit {
       title: 'Resources Summary',
       description: 'Aggregates all network requests and groups them by type',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'URL'],
     };
   }
 
@@ -32,7 +32,7 @@ class ResourceSummary extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const summary = await ComputedResourceSummary
       .request({devtoolsLog, URL: artifacts.URL}, context);
 

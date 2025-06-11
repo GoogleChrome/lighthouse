@@ -140,11 +140,11 @@ class CpuProfileModel {
     const startNodes = currentNodeIds
       .filter(id => !previousNodeIds.includes(id))
       .map(id => this._nodesById.get(id))
-      .filter(/** @return {node is CpuProfile['nodes'][0]} */ node => !!node);
+      .filter(node => !!node);
     const endNodes = previousNodeIds
       .filter(id => !currentNodeIds.includes(id))
       .map(id => this._nodesById.get(id))
-      .filter(/** @return {node is CpuProfile['nodes'][0]} */ node => !!node);
+      .filter(node => !!node);
 
     /** @param {CpuProfile['nodes'][0]} node @return {SynthethicEvent} */
     const createSyntheticEvent = node => ({

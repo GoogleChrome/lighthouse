@@ -53,7 +53,7 @@
  */
 
 import * as LH from '../../types/lh.js';
-import * as Lantern from './lantern/types/lantern.js';
+import * as Lantern from './lantern/lantern.js';
 import UrlUtils from './url-utils.js';
 
 // Lightrider X-Header names for timing information.
@@ -107,6 +107,7 @@ const RESOURCE_TYPES = {
   Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
   Prefetch: 'Prefetch',
+  FedCM: 'FedCM',
 };
 
 class NetworkRequest {
@@ -577,7 +578,7 @@ class NetworkRequest {
 
   /**
    * @param {NetworkRequest} record
-   * @return {Lantern.NetworkRequest<NetworkRequest>}
+   * @return {Lantern.Types.NetworkRequest<NetworkRequest>}
    */
   static asLanternNetworkRequest(record) {
     // In LR, network records are missing connection timing, but we've smuggled it in via headers.
@@ -616,7 +617,7 @@ class NetworkRequest {
   }
 
   /**
-   * @param {NetworkRequest} record
+   * @param {Pick<NetworkRequest, 'protocol'|'parsedURL'>} record
    * @return {boolean}
    */
   static isNonNetworkRequest(record) {

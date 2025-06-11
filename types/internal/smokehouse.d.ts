@@ -7,6 +7,7 @@
 import {Artifacts} from '../artifacts.js';
 import Config from '../config.js';
 import LHResult from '../lhr/lhr.js';
+import {LocalConsole} from '../../cli/test/smokehouse/lib/local-console.js';
 
 declare global {
   module Smokehouse {
@@ -53,7 +54,7 @@ declare global {
       {expectations: Smokehouse.ExpectedRunnerResult | Array<Smokehouse.ExpectedRunnerResult>}
 
     export type LighthouseRunner =
-      {runnerName?: string} & ((url: string, config?: Config, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts, log: string}>);
+      {runnerName?: string} & ((url: string, config?: Config, logger?: LocalConsole, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts}>);
 
     export interface SmokehouseOptions {
       /** Options to pass to the specific Lighthouse runner. */

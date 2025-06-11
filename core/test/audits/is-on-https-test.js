@@ -13,7 +13,7 @@ describe('Security: HTTPS audit', () => {
   function getArtifacts(networkRecords, mixedContentIssues) {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     return {
-      devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLog},
+      DevtoolsLog: devtoolsLog,
       InspectorIssues: {mixedContentIssue: mixedContentIssues || []},
     };
   }
