@@ -164,7 +164,7 @@ class Audit {
     if (results.length === 0) {
       return {
         type: 'table',
-        headings: [],
+        headings,
         items: [],
         summary,
       };
@@ -174,7 +174,7 @@ class Audit {
 
     return {
       type: 'table',
-      headings: headings,
+      headings,
       items: results,
       summary,
       sortedBy,

@@ -68,10 +68,11 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     parsedTrace,
     insights,
   });
-  if (!details || (details.type === 'table' && details.headings.length === 0)) {
+  if (!details || (details.type === 'table' && details.items.length === 0)) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,
+      details,
     };
   }
 
