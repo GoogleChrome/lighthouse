@@ -33,7 +33,7 @@ class HTTPStatusCode extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['DevtoolsLog', 'URL', 'GatherContext'],
       supportedModes: ['navigation'],
     };
   }
@@ -44,7 +44,7 @@ class HTTPStatusCode extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const URL = artifacts.URL;
     const mainResource = await MainResource.request({devtoolsLog, URL}, context);
 

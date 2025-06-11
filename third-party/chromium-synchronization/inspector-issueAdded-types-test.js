@@ -48,12 +48,15 @@ Array [
   "lowTextContrastIssueDetails",
   "mixedContentIssueDetails",
   "navigatorUserAgentIssueDetails",
+  "partitioningBlobURLIssueDetails",
   "propertyRuleIssueDetails",
   "quirksModeIssueDetails",
   "selectElementAccessibilityIssueDetails",
   "sharedArrayBufferIssueDetails",
   "sharedDictionaryIssueDetails",
+  "sriMessageSignatureIssueDetails",
   "stylesheetLoadingIssueDetails",
+  "userReidentificationIssueDetails",
 ]
 `);
   });

@@ -474,7 +474,7 @@ describe('asset-saver helper', () => {
     });
   });
 
-  describe('elideAuditErrorStacks', () => {
+  describe('elideLhrErrorStacks', () => {
     it('elides correctly', async () => {
       const lhr = JSON.parse(JSON.stringify(dbwResults));
       lhr.audits['bf-cache'].errorStack = `Error: LighthouseError: ERRORED_REQUIRED_ARTIFACT
@@ -485,7 +485,7 @@ describe('asset-saver helper', () => {
       at async runLighthouse (${LH_ROOT}/cli/run.js:250:8)
       at async ${LH_ROOT}/cli/index.js:10:1
       at <anonymous>:1:1`;
-      assetSaver.elideAuditErrorStacks(lhr);
+      assetSaver.elideLhrErrorStacks(lhr);
 
       // eslint-disable-next-line max-len
       expect(lhr.audits['bf-cache'].errorStack).toEqual(`Error: LighthouseError: ERRORED_REQUIRED_ARTIFACT

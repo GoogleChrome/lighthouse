@@ -24,7 +24,8 @@ class RenderBlockingInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      replacesAudits: ['render-blocking-resources'],
     };
   }
 
@@ -40,7 +41,7 @@ class RenderBlockingInsight extends Audit {
       const headings = [
         {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
         {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
-        {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
+        {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnDuration)},
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items = insight.renderBlockingRequests.map(request => ({

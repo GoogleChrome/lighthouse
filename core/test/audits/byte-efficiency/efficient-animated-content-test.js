@@ -27,7 +27,7 @@ describe('Page uses videos for animated GIFs', () => {
       },
     ];
     const artifacts = {
-      devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
+      DevtoolsLog: [],
     };
 
     const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
@@ -46,7 +46,7 @@ describe('Page uses videos for animated GIFs', () => {
       },
     ];
     const artifacts = {
-      devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
+      DevtoolsLog: [],
     };
 
     const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
@@ -67,7 +67,7 @@ describe('Page uses videos for animated GIFs', () => {
       },
     ];
     const artifacts = {
-      devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
+      DevtoolsLog: [],
     };
 
     const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);

@@ -660,7 +660,10 @@
     "message": "Użyj formatów wideo dla animacji"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Elementy polyfill i przekształcenia umożliwiają obsługę nowych funkcji JavaScript przez starsze przeglądarki. Jednak nowoczesne przeglądarki nie potrzebują wielu takich elementów. W przypadku pakietów JavaScript zastosuj nowoczesną strategię wdrażania skryptów opartą na wykrywaniu ich atrybutów „module” i „nomodule”. Pozwala to ograniczyć ilość kodu przesyłanego do nowoczesnych przeglądarek i jednocześnie umożliwia obsługę przeglądarek starszych. [Jak używać nowoczesnego kodu JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stronie wykryto wersję 2 biblioteki core-js. Przejście na wersję 3 pozwoli Ci skorzystać z wielu ulepszeń."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Unikaj wyświetlania starszych skryptów JavaScript w nowoczesnych przeglądarkach"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Włącz kompresję tekstu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Waga"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Nagłówek `X-Frame-Options` (XFO) lub dyrektywa `frame-ancestors` w nagłówku `Content-Security-Policy` (CSP) określają, gdzie można umieścić stronę. Mogą one ograniczyć ataki typu clickjacking, blokując możliwość umieszczenia strony w niektórych lub wszystkich witrynach. [Więcej informacji o zmniejszaniu ryzyka ataku typu clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nie znaleziono zasad kontroli ramki"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Ogranicz ataki typu clickjacking za pomocą XFO lub CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Poniższe łańcuchy żądań krytycznych pokazują zasoby ładowane z wysokim priorytetem. Aby przyspieszyć ładowanie strony, możesz skrócić łańcuchy, zmniejszyć rozmiar pobieranych zasobów lub opóźnić pobieranie zasobów, które nie są niezbędne. [Jak unikać łańcuchów żądań krytycznych](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Narzędziu Lighthouse nie udało się automatycznie sprawdzić wartości `font-display` dla strony źródłowej {fontOrigin}.}few{Narzędziu Lighthouse nie udało się automatycznie sprawdzić wartości `font-display` dla strony źródłowej {fontOrigin}.}many{Narzędziu Lighthouse nie udało się automatycznie sprawdzić wartości `font-display` dla strony źródłowej {fontOrigin}.}other{Narzędziu Lighthouse nie udało się automatycznie sprawdzić wartości `font-display` dla strony źródłowej {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Dyrektywa"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Waga"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Wdrożenie nagłówka HSTS znacznie zmniejsza ryzyko obniżenia poziomu zabezpieczeń połączeń HTTP i przeprowadzenia ataków polegających na podsłuchiwaniu. Zalecamy stopniowe wdrażanie z niską wartością max-age na początku. [Więcej informacji o używaniu silnej zasady HSTS](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Nieprawidłowa składnia"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "Wartość `max-age` jest za niska"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Nie znaleziono nagłówka HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Brak dyrektywy `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Nie znaleziono dyrektywy `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Nie znaleziono dyrektywy `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Używaj silnej zasady HSTS"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Współczynnik proporcji (rzeczywisty)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Wyświetla obrazy w odpowiedniej rozdzielczości"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Wynik przesunięcia układu"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Dozwolony"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Wstrzyknięty element iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Spóźnione żądanie sieciowe spowodowało zmianę układu strony"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Element multimedialny nie ma wyraźnego rozmiaru"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekt ma nieobsługiwane parametry czasowe"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Dyrektywa"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Waga"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Zasady dotyczącej otwierającego z innej domeny (COOP) można użyć do oddzielenia okna najwyższego poziomu od innych dokumentów, takich jak wyskakujące okienka. [Więcej informacji o wdrażaniu nagłówka COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Nieprawidłowa składnia"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Nie znaleziono nagłówka COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Zapewnij prawidłowe izolowanie źródła za pomocą COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Włącz wstępne wczytywanie czcionek z atrybutem `optional`, aby mogli z nich korzystać nowi użytkownicy. [Więcej informacji o wstępnym wczytywaniu czcionek](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Podczas działania wykryto nawigację na stronie. Nie zalecamy używania trybu zakresu czasu do kontroli nawigacji na stronach. Aby kontrolować nawigację na stronach, używaj trybu nawigacji. Pozwoli to ulepszyć atrybucję firm zewnętrznych i wykrywanie wątków głównych."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Tylko strony wczytane za pomocą żądania GET kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "W pamięci mogą być przechowywane tylko strony z kodem stanu 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Przeglądarka Chrome wykryła próbę wykonania JavaScriptu podczas przechowywania strony w pamięci podręcznej."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Strony, które poprosiły o AppBanner, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu żądania utrzymywania aktywności."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona przez flagi. Wejdź na chrome://flags/#back-forward-cache, aby włączyć ją lokalnie na tym urządzeniu."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona przez wiersz poleceń."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu niewystarczającej ilości pamięci."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Pamięć podręczna stanu strony internetowej nie jest obsługiwana w ramach przekazywania."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona w przypadku renderowania wstępnego."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Strona nie może być przechowywana w pamięci podręcznej, bo zawiera wystąpienie BroadcastChannel z zarejestrowanymi detektorami."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Strony z nagłówkiem cache-control:no-store nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Pamięć podręczna została celowo wyczyszczona."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Strona została usunięta z pamięci podręcznej, aby umożliwić przechowywanie w niej innej strony."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Strony, które zawierają wtyczki, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Strony, które używają interfejsu FileChooser API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Strony, które używają interfejsu File System Access API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Strony, które używają dyspozytora nośnika danych, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Odtwarzacz był włączony, gdy użytkownik zamknął stronę."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Strony, które używają interfejsu MediaSession API i określają stan odtwarzania, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Strony, które używają interfejsu MediaSession API i określają elementy działania, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu czytnika ekranu."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Strony, które używają SecurityHandler, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Strony, które używają interfejsu Serial API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Strony, które używają interfejsu WebAuthentication API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Strony, które używają interfejsu WebBluetooth API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Strony, które używają interfejsu WebUSB API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, bo na stronie, która korzysta z elementu `Cache-Control: no-store`, wyłączone są pliki cookie."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Strony, które używają dedykowanej instancji roboczej lub workletu, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokument nie został w pełni wczytany, zanim użytkownik go zamknął."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Podczas zamykania strony widoczny był baner aplikacji."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Podczas zamykania strony widoczny był Menedżer haseł Chrome."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Podczas zamykania strony aktywny był proces destylacji DOM."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Podczas zamykania strony widoczna była przeglądarka narzędzia DOM Distiller."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, bo rozszerzenia używają interfejsu Messaging API."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Rozszerzenia od dłuższego czasu połączone powinny zakończyć połączenie przed uzyskaniem dostępu do pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Rozszerzenia od dłuższego czasu połączone próbowały wysłać wiadomości do ramek w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu rozszerzeń."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Podczas zamykania strony wyświetliło się okno modalne takie jak ponowne przesłanie formularza lub okno hasła http."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Podczas zamykania strony pokazywana była strona offline."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Podczas zamykania strony widoczny był pasek interwencji związanej z brakiem miejsca w pamięci."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Podczas zamykania strony pojawiły się prośby o uprawnienia."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Podczas zamykania strony widoczne było blokowanie wyskakujących okienek."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Podczas zamykania strony wyświetliły się szczegóły Bezpiecznego przeglądania."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Bezpieczne przeglądanie wykryło na tej stronie nadużycie i zablokowało wyskakujące okienko."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Skrypt service worker został aktywowany, gdy strona znajdowała się w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu błędu w dokumencie."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Stron używających FencedFrames nie można przechowywać w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Strona została usunięta z pamięci podręcznej, aby umożliwić przechowywanie w niej innej strony."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Strony, które mają przyznany dostęp do strumienia multimediów, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Strony, które używają portali, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Strony, które używają IdleManagera, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Strony, które mają otwarte połączenie IndexedDB, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu zdarzenia IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Użyto nieodpowiednich interfejsów API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Strony z interfejsem `JavaScript` wstrzykiwanym przez rozszerzenia nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Strony z interfejsem `StyleSheet` wstrzykiwanym przez rozszerzenia nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Błąd wewnętrzny."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu żądania utrzymywania aktywności."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Strony, które używają blokady klawiatury, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Strona nie została w pełni wczytana, zanim użytkownik ją opuścił."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Strony, których zasoby główne mają nagłówek cache-control:no-cache, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Strony, których zasoby główne mają nagłówek cache-control:no-store, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Nawigacja została anulowana przed przywróceniem strony z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Strona została usunięta z pamięci podręcznej, ponieważ aktywne połączenie sieciowe otrzymało za dużo danych. Chrome ogranicza ilość danych, które strona może otrzymać, gdy jest przechowywana w pamięci podręcznej."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Strony, które mają przesyłane żądanie fetch() lub XHR, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Strona została usunięta z pamięci podręcznej stanu strony internetowej, ponieważ aktywne żądanie sieciowe wiązało się z przekierowaniem."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Strona została usunięta z pamięci podręcznej, ponieważ połączenie sieciowe było zbyt długo otwarte. Chrome ogranicza ilość czasu, przez który strona może otrzymywać dane podczas przechowywania w pamięci podręcznej."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Strony, które nie mają prawidłowego nagłówka odpowiedzi, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Nawigacja odbywała się w ramce innej niż ramka główna."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Strony z trwającymi transakcjami indeksowanej bazy danych nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Strony z przesyłanym żądaniem sieciowym nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Strony z przesyłanym żądaniem sieciowym fetch() nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Strony z przesyłanym żądaniem sieciowym nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Strony z przesyłanym żądaniem sieciowym XHR nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Strony, które używają PaymentManagera, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Strony, które używają obrazu w obrazie, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Strony, które używają portali, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Strony, które wyświetlają interfejs drukowania, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Strona została otwarta za pomocą „`window.open()`” i inna karta się do niej odnosi lub strona otworzyła okno."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "W trakcie renderowania strony w pamięci podręcznej stanu strony internetowej wystąpił błąd."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Proces renderowania strony w pamięci podręcznej stanu strony internetowej został przerwany."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień do nagrywania dźwięku, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień dotyczących czujników, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień do pobierania lub synchronizacji w tle, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień dotyczących MIDI, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień do powiadomień, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Strony, które poprosiły o przyznanie dostępu do pamięci, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Strony, które poprosiły o przyznanie uprawnień do nagrywania filmów, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "W pamięci mogą być przechowywane tylko strony, których schemat URL to HTTP/HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Strona została wywołana przez skrypt service worker podczas korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Skrypt service worker próbował wysłać właściwość `MessageEvent` stronie w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Skrypt service worker był niezarejestrowany, gdy strona znajdowała się w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Strona została usunięta z pamięci podręcznej stanu strony internetowej z powodu aktywacji skryptu service worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Przeglądarka Chrome uruchomiła się ponownie i wyczyściła wpisy w pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Strony, które używają SharedWorker, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Strony, które używają SpeechRecognizer, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Strony, które używają SpeechSynthesis, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Element iframe na stronie rozpoczął nawigację, która się nie zakończyła."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Strony, których zasoby podrzędne mają nagłówek cache-control:no-cache, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Strony, których zasoby podrzędne mają nagłówek cache-control:no-store, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Strona przekroczyła limit czasu w pamięci podręcznej stanu strony internetowej i wygasła."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Strona przekroczyła limit czasu w trakcie zapisywania w pamięci podręcznej stanu strony internetowej (prawdopodobnie z powodu długotrwałych wyrażeń pagehide)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Strona ma wyrażenie unload w ramce głównej."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Strona ma wyrażenie unload w ramce podrzędnej."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Przeglądarka zmieniła nagłówek zastępowania klienta użytkownika."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Strony, które mają przyznany dostęp do nagrywania filmu lub dźwięku, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Strony, które używają WebDatabase, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Strony, które używają WebHID, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Strony, które używają WebLocks, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Strony, które używają WebNfc, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Strony, które używają WebOTPService, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Strony z WebRTC nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Strony, które używają WebShare, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Strony z WebSocket nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Strony z WebTransport nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Strony, które używają WebXR, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Zastanów się, czy nie dodać schematów adresów URL https: i http: (ignorowanych przez przeglądarki obsługujące dyrektywę `'strict-dynamic'`), aby uzyskać zgodność wsteczną ze starszymi przeglądarkami."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Użyto wycofanej funkcji"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "W przypadku obsługi nagłówka CORS `Access-Control-Allow-Headers` autoryzacja nie będzie przeprowadzana przy użyciu symboli wieloznacznych (*)."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Aby wyłączyć domyślną integrację przesyłania, nie używaj selektora `-internal-media-controls-overlay-cast-button`. Zamiast tego użyj atrybutu `disableRemotePlayback`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Żądania zasobów, których adresy URL zawierają znaki `(n|r|t)` z usuniętymi odstępami i znaki mniejszości (`<`), są blokowane. Usuń nowe wiersze i zakoduj znaki mniejszości z miejsc takich jak wartości atrybutów elementów, aby umożliwić wczytywanie tych zasobów."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "Interfejs `chrome.loadTimes()` został wycofany. Użyj standaryzowanego interfejsu API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "Interfejs `chrome.loadTimes()` został wycofany. Użyj standaryzowanego interfejsu API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "Interfejs `chrome.loadTimes()` został wycofany. Użyj standaryzowanego interfejsu API: `nextHopProtocol` w Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Pliki cookie zawierające znak `(0|r|n)` będą odrzucane (nie będą skracane)."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Złagodzenie zasady dotyczącej tej samej domeny przez ustawienie `document.domain` zostało wycofane i będzie domyślnie wyłączone. To ostrzeżenie o wycofaniu dotyczy dostępu z tej samej domeny, który był włączony przez ustawienie `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Możliwość aktywowania funkcji window.alert z elementów iframe z innych domen została wycofana i w przyszłości zostanie usunięta."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Możliwość aktywowania funkcji window.confirm z elementów iframe z innych domen została wycofana i w przyszłości zostanie usunięta."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Zdarzenia mutacji DOM, w tym `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` i `DOMCharacterDataModified`, są wycofane (https://w3c.github.io/uievents/#legacy-event-types) i zostaną usunięte. Zamiast nich używaj elementu `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Obsługa danych: adresy URL w elemencie SVG <use> zostały wycofane i w przyszłości zostaną usunięte."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Złagodzenie zasady dotyczącej tej samej domeny przez ustawienie `document.domain` zostało wycofane i będzie domyślnie wyłączone. Aby nadal używać tej funkcji, przestań używać klastrów agentów ze źródłem jako kluczem, wysyłając nagłówek `Origin-Agent-Cluster: ?0` z odpowiedzią HTTP dla dokumentu i ramek. Więcej informacji znajdziesz na stronie https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Nagłówek `Expect-CT` został wycofany i zostanie usunięty. Chrome wymaga protokołu Certificate Transparency w przypadku wszystkich publicznie zaufanych certyfikatów wystawionych po 30 kwietnia 2018 roku."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "Metody `getCurrentPosition()` i `watchPosition()` nie działają już w przypadku niezabezpieczonych źródeł. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Wycofano metody `getCurrentPosition()` i `watchPosition()` w niezabezpieczonych źródłach. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "Metoda `getUserMedia()` nie działa już w przypadku niezabezpieczonych źródeł. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "Pole `RTCPeerConnectionIceErrorEvent.hostCandidate` zostało wycofane. Użyj pola `RTCPeerConnectionIceErrorEvent.address` lub `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Dane pochodzenia sprzedawcy i arbitralne dane ze zdarzenia skryptu service worker `canmakepayment` nie są już używane i zostaną usunięte: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Witryna zażądała zasobu podrzędnego z sieci, do której miała dostęp wyłącznie z powodu uprawnień sieci użytkownika. Takie żądania ujawniają w internecie niepubliczne urządzenia i serwery, zwiększając ryzyko ataku polegającego na sfałszowaniu żądania z innej witryny (CSRF) lub wycieku informacji. Aby zapobiegać temu ryzyku, wycofujemy z Chrome możliwość przesyłania żądań do niepublicznych zasobów podrzędnych, gdy są wysyłane z niezabezpieczonych kontekstów. Chrome będzie je blokować."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Nazwa pola `dailyUpdateUrl` dla elementu `InterestGroups` przekazanego do `joinAdInterestGroup()` została zmieniona na `updateUrl`, aby trafniej odzwierciedlała jego działanie."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS nie można ładować z adresów URL `file:`, chyba że są zakończone rozszerzeniem pliku `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Używanie metody `SourceBuffer.abort()` w celu przerwania procesu usuwania zakresu asynchronicznego przez metodę `remove()` zostało wycofane z powodu zmiany specyfikacji. Obsługa zostanie wycofana w przyszłości. Zamiast tego zacznij nasłuchiwać zdarzenia `updateend`. Metoda `abort()` służy tylko do przerywania procesu dołączania asynchronicznych multimediów lub resetowania stanu parsera."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Ustawianie `MediaSource.duration` poniżej najwyższej sygnatury czasowej prezentacji dowolnych buforowanych ramek kodu zostało wycofane z powodu zmiany specyfikacji. W przyszłości wycofamy możliwość usuwania przyciętych multimediów buforowanych. Zamiast tego użyj bezpośrednio metod `remove(newDuration, oldDuration)` w przypadku wszystkich elementów `sourceBuffers`, gdzie `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI poprosi o uprawnienia do użycia, nawet jeśli w interfejsie `MIDIOptions` nie określono komunikatów SysEx."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Starszy, niestandaryzowany atrybut `shadowroot` został wycofany i w wersji M119 *nie będzie już działać*. Użyj nowego, ustandaryzowanego atrybutu `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Nie można już używać interfejsu Notification API z niezabezpieczonych źródeł. Przełącz aplikację na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Żądanie uprawnienia dla interfejsu Notification API nie może już być wysyłane z elementów iframe z innych domen. Rozważ wysłanie żądania o przyznanie uprawnienia z ramki najwyższego poziomu lub otwarcie nowego okna."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Opcja `imageOrientation: 'none'` w metodzie createImageBitmap została wycofana. Użyj tej metody z opcją \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Partner negocjuje przestarzałą wersję (D)TLS. Poproś go o rozwiązanie problemu."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Jeśli określisz właściwość `overflow: visible` w tagach img, video i canvas, mogą one wyświetlać treści wizualne poza granicami elementu. Więcej informacji znajdziesz na https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Interfejs `paymentManager.instruments` został wycofany. Zamiast niego w przypadku modułów obsługi płatności używaj instalacji „just-in-time”."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Twoje wywołanie `PaymentRequest` pomijało dyrektywę Content Security Policy (CSP) `connect-src`. To ominięcie zostało wycofane. Dodaj identyfikator formy płatności z interfejsu API `PaymentRequest` (w polu `supportedMethods`) do dyrektywy CSP `connect-src`."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Interfejs `StorageType.persistent` został wycofany. Zamiast niego użyj standaryzowanego typu `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Element `<source src>` z elementem nadrzędnym `<picture>` jest nieprawidłowy i dlatego jest ignorowany. Zamiast niego użyj elementu `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "Metoda webkitRequestAnimationFrame jest specyficzna dla dostawcy. Użyj standardowej metody cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "Metoda webkitRequestAnimationFrame jest specyficzna dla dostawcy. Użyj standardowej metody requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Interfejs HTMLVideoElement.webkitDisplayingFullscreen został wycofany. Użyj interfejsu Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Interfejs HTMLVideoElement.webkitEnterFullScreen() został wycofany. Użyj interfejsu Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Interfejs HTMLVideoElement.webkitEnterFullscreen() został wycofany. Użyj interfejsu Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Interfejs HTMLVideoElement.webkitExitFullScreen() został wycofany. Użyj interfejsu Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Interfejs HTMLVideoElement.webkitExitFullscreen() został wycofany. Użyj interfejsu Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Interfejs HTMLVideoElement.webkitSupportsFullscreen został wycofany. Użyj interfejsu Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Wycofujemy interfejs API `chrome.privacy.websites.privacySandboxEnabled`, ale pozostanie on aktywny, aby zapewniał zgodność wsteczną do czasu opublikowania wersji M113. Zamiast niego używaj interfejsów `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` i `chrome.privacy.websites.adMeasurementEnabled`. Więcej informacji znajdziesz na stronie https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Ograniczenie `DtlsSrtpKeyAgreement` zostało usunięte. W przypadku tego ograniczenia określono wartość `false`, co jest interpretowane jako próba użycia usuniętej metody `SDES key negotiation`. Ta funkcja została usunięta. Użyj usługi, która obsługuje `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Ograniczenie `DtlsSrtpKeyAgreement` zostało usunięte. W przypadku tego ograniczenia określono wartość `true`, która nie ma zastosowania. W razie potrzeby możesz usunąć to ograniczenie."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Metoda getStats() z wywołaniem zwrotnym nie jest już używana i zostanie usunięta. Użyj metody getStats() zgodnej ze specyfikacją."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Interfejs Range.expand() został wycofany. Użyj interfejsu Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Żądania zasobów podrzędnych, których adresy URL zawierają umieszczone dane logowania (np. `https://user:pass@host/`), są blokowane."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Opcja `rtcpMuxPolicy` jest wycofana i zostanie usunięta."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` będzie wymagać witryny izolowanej od zasobów z innych domen. Więcej informacji znajdziesz na stronie https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Możliwość wywołania interfejsu `speechSynthesis.speak()` bez aktywacji użytkownika jest wycofana i zostanie usunięta."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Aby nadal używać obiektu `SharedArrayBuffer`, rozszerzenia powinny korzystać z witryn izolowanych od zasobów z innych domen. Więcej informacji znajdziesz na stronie https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Usługa Web SQL została wycofana. Użyj bazy danych SQLite WebAssembly lub Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Deskryptor uprawnień `window-placement` został wycofany. Użyj w zamian zasady `window-management`. Więcej informacji znajdziesz na stronie https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Zasada dotycząca uprawnień `window-placement` została wycofana. Użyj w zamian zasady `window-management`. Więcej informacji znajdziesz na stronie https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Kodowanie UTF-16 nie jest obsługiwane w kodzie JSON odpowiedzi na żądanie `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Synchroniczny interfejs `XMLHttpRequest` w głównym wątku został wycofany z powodu negatywnego wpływu na sposób obsługi. Więcej informacji znajdziesz na stronie https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Metoda `supportsSession()` została wycofana. Użyj metody `isSessionSupported()` i sprawdź znalezioną wartość logiczną."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Czas blokowania głównego wątku"
@@ -2402,11 +1937,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Zewnętrzne"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Łącznie"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Razem"
+    "message": "Łącznie"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Podczas rejestrowania śladu wczytywania strony wystąpił błąd. Uruchom Lighthouse ponownie. ({errorCode})"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Raport Lighthouse dotyczący przepływu użytkowników"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "W przypadku obsługi nagłówka CORS Access-Control-Allow-Headers autoryzacja nie będzie przeprowadzana przy użyciu symboli wieloznacznych (*)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Aby wyłączyć domyślną integrację przesyłania, nie używaj selektora -internal-media-controls-overlay-cast-button. Zamiast tego użyj atrybutu disableRemotePlayback."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Wartość wyglądu CSS slider-vertical nie jest ustandaryzowana i zostanie usunięta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Żądania zasobów, których adresy URL zawierają znaki \\(n|r|t) z usuniętymi odstępami i znaki mniejszości (<), są blokowane. Usuń nowe wiersze i zakoduj znaki mniejszości z miejsc takich jak wartości atrybutów elementów, aby umożliwić wczytywanie tych zasobów."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Automatyczne wykrywanie zestawu znaków ISO-2022-JP zostało wycofane i w najbliższej przyszłości zostanie wyłączone. Określ zestaw znaków w nagłówku Content Type lub za pomocą metatagu (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "Wycofano interfejs chrome.loadTimes(). Użyj standaryzowanego interfejsu API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "Wycofano chrome.loadTimes(). Użyj standaryzowanego interfejsu API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "Interfejs chrome.loadTimes() został wycofany. Użyj standaryzowanego interfejsu API: nextHopProtocol w Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Pliki cookie zawierające znak \\(0|r|n) będą odrzucane (nie będą skracane)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Złagodzenie zasady dotyczącej tej samej domeny przez ustawienie document.domain zostało wycofane i będzie domyślnie wyłączone. To ostrzeżenie o wycofaniu dotyczy dostępu z tej samej domeny, który był włączony przez ustawienie document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Możliwość aktywowania funkcji window.alert z elementów iframe z innych domen została wycofana i w przyszłości zostanie usunięta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Możliwość aktywowania funkcji window.confirm z elementów iframe z innych domen została wycofana i w przyszłości zostanie usunięta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Zdarzenia mutacji DOM, w tym DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument i DOMCharacterDataModified, są wycofane (https://w3c.github.io/uievents/#legacy-event-types) i zostaną usunięte. Zamiast nich używaj elementu MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Obsługa danych: adresy URL w funkcji SVGUseElement zostały wycofane i w przyszłości zostaną usunięte."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "Metody getCurrentPosition() i watchPosition() nie działają już w przypadku niezabezpieczonych źródeł. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "Wycofano metody getCurrentPosition() i watchPosition() w niezabezpieczonych źródłach. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "Metoda getUserMedia() nie działa już w przypadku niezabezpieczonych źródeł. Aby używać tej funkcji, rozważ przełączenie aplikacji na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Znaleziono tag <h1> w elementach <article>, <aside>, <nav> lub <section>, który nie ma określonego rozmiaru czcionki. W najbliższym czasie rozmiar tego nagłówka w tej przeglądarce ulegnie zmianie. Więcej informacji znajdziesz na stronie https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Pole RTCPeerConnectionIceErrorEvent.hostCandidate zostało wycofane. Zamiast niego użyj pola RTCPeerConnectionIceErrorEvent.address lub RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Ten format prośby navigator.credentials.get() o cyfrowe dane uwierzytelniające został wycofany. Zaktualizuj wywołanie, aby użyć nowego formatu."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Dane pochodzenia sprzedawcy i arbitralne dane ze zdarzenia skryptu service worker canmakepayment nie są już używane i zostaną usunięte: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Witryna zażądała zasobu podrzędnego z sieci, do której miała dostęp wyłącznie z powodu uprawnień sieci użytkownika. Takie żądania ujawniają w internecie niepubliczne urządzenia i serwery, zwiększając ryzyko ataku polegającego na sfałszowaniu żądania z innej witryny (CSRF) lub wycieku informacji. Aby zapobiegać temu ryzyku, wycofujemy z Chrome możliwość przesyłania żądań do niepublicznych zasobów podrzędnych, gdy są wysyłane z niezabezpieczonych kontekstów. Chrome będzie je blokować."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Nazwa pola dailyUpdateUrl dla elementu InterestGroups przekazanego do joinAdInterestGroup() została zmieniona na updateUrl, aby trafniej odzwierciedlała jego działanie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Interfejs Intl.v8BreakIterator został wycofany. Zamiast niego użyj interfejsu Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS nie można ładować z adresów URL file:, chyba że są zakończone rozszerzeniem pliku .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Używanie metody SourceBuffer.abort() w celu przerwania procesu usuwania zakresu asynchronicznego przez metodę remove() zostało wycofane z powodu zmiany specyfikacji. Obsługa zostanie wycofana w przyszłości. Zamiast tego zacznij nasłuchiwać zdarzenia updateend. Metoda abort() służy tylko do przerywania procesu dołączania asynchronicznych multimediów lub resetowania stanu parsera."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Ustawianie MediaSource.duration poniżej najwyższej sygnatury czasowej prezentacji dowolnych buforowanych ramek kodu zostało wycofane z powodu zmiany specyfikacji. W przyszłości wycofamy możliwość usuwania przyciętych multimediów buforowanych. Zamiast tego użyj bezpośrednio metod remove(newDuration, oldDuration) w przypadku wszystkich elementów sourceBuffers, gdzie newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI poprosi o uprawnienia do użycia, nawet jeśli w interfejsie MIDIOptions nie określono komunikatów SysEx."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Nie można już używać interfejsu Notification API z niezabezpieczonych źródeł. Przełącz aplikację na zabezpieczone źródło, np. HTTPS. Więcej informacji znajdziesz na stronie https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Żądanie uprawnienia dla interfejsu Notification API nie może już być wysyłane z elementów iframe z innych domen. Rozważ wysłanie żądania o przyznanie uprawnienia z ramki najwyższego poziomu lub otwarcie nowego okna."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Opcja imageOrientation: 'none' w metodzie createImageBitmap została wycofana. Użyj tej metody z opcją „\\\\{imageOrientation: 'from-image'\\\\}”."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Partner negocjuje przestarzałą wersję (D)TLS. Poproś go o rozwiązanie problemu."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Jeśli określisz właściwość overflow: visible w tagach img, video i canvas, mogą one wyświetlać treści wizualne poza granicami elementu. Więcej informacji znajdziesz na https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "Interfejs paymentManager.instruments został wycofany. Zamiast niego w przypadku modułów obsługi płatności używaj instalacji „just-in-time”."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Twoje wywołanie PaymentRequest pomijało dyrektywę Content Security Policy (CSP) connect-src. To ominięcie zostało wycofane. Dodaj identyfikator formy płatności z interfejsu API PaymentRequest (w polu supportedMethods) do dyrektywy CSP connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "Interfejs StorageType.persistent został wycofany. Zamiast niego użyj standaryzowanego interfejsu navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Element <source src> z elementem nadrzędnym <picture> jest nieprawidłowy i dlatego jest ignorowany. Zamiast niego użyj elementu <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "Metoda webkitRequestAnimationFrame jest specyficzna dla dostawcy. Użyj standardowej metody cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "Metoda webkitRequestAnimationFrame jest specyficzna dla dostawcy. Użyj standardowej metody requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Interfejs HTMLVideoElement.webkitDisplayingFullscreen został wycofany. Użyj interfejsu Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Interfejs HTMLVideoElement.webkitEnterFullScreen() został wycofany. Użyj interfejsu Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Interfejs HTMLVideoElement.webkitEnterFullscreen() został wycofany. Użyj interfejsu Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Interfejs HTMLVideoElement.webkitExitFullScreen() został wycofany. Użyj interfejsu Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Interfejs HTMLVideoElement.webkitExitFullscreen() został wycofany. Użyj interfejsu Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Interfejs HTMLVideoElement.webkitSupportsFullscreen został wycofany. Użyj interfejsu Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Wycofujemy interfejs API chrome.privacy.websites.privacySandboxEnabled, ale pozostanie on aktywny, aby zapewniał zgodność wsteczną do czasu opublikowania wersji M113. Zamiast niego używaj interfejsów chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled i chrome.privacy.websites.adMeasurementEnabled. Więcej informacji znajdziesz na stronie https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Ograniczenie DtlsSrtpKeyAgreement zostało usunięte. W przypadku tego ograniczenia określono wartość false, co jest interpretowane jako próba użycia usuniętej metody SDES key negotiation. Ta funkcja została usunięta. Użyj usługi, która obsługuje DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Ograniczenie DtlsSrtpKeyAgreement zostało usunięte. W przypadku tego ograniczenia określono wartość true, która nie ma zastosowania. W razie potrzeby możesz usunąć to ograniczenie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Metoda getStats() z wywołaniem zwrotnym nie jest już używana i zostanie usunięta. Użyj metody getStats() zgodnej ze specyfikacją."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Interfejs Range.expand() został wycofany. Użyj interfejsu Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Żądania zasobów podrzędnych, których adresy URL zawierają umieszczone dane logowania (np. https://user:pass@host/), są blokowane."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Opcja rtcpMuxPolicy jest wycofana i zostanie usunięta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer będzie wymagać witryny izolowanej od zasobów z innych domen. Więcej informacji znajdziesz na stronie https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Możliwość wywołania interfejsu speechSynthesis.speak() bez aktywacji użytkownika jest wycofana i zostanie usunięta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Niezaładowane detektory zdarzeń zostały wycofane i zostaną usunięte"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Aby nadal używać obiektu SharedArrayBuffer, rozszerzenia powinny korzystać z witryn izolowanych od zasobów z innych domen. Więcej informacji znajdziesz na stronie https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "Kodowanie UTF-16 nie jest obsługiwane w kodzie JSON odpowiedzi na żądanie XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Synchroniczny interfejs XMLHttpRequest w głównym wątku został wycofany z powodu negatywnego wpływu na sposób obsługi. Więcej informacji znajdziesz na stronie https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animacja"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Przesunięcia układu występują, gdy elementy poruszają się bez interakcji ze strony użytkownika. [Zbadaj przyczyny przesunięć układu](https://web.dev/articles/optimize-cls) takie jak dodanie lub usunięcie elementów lub zmiana czcionek podczas wczytywania strony."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Prośba o czcionkę"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Wstrzyknięty element iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Klaster przesunięć układu dla {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Nie udało się wykryć przyczyn problemów związanych z przesunięciem układu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Brak przesunięć układu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Przyczyny problemów związanych z przesunięciem układu"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Najczęstsze przyczyny problemów związanych z przesunięciem układu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Obrazy bez określonego rozmiaru"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Najgorszy klaster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Najgorszy klaster przesunięć układu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Czas przechowywania danych w pamięci podręcznej"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Długi czas przechowywania w pamięci podręcznej może przyspieszyć ponowne otwarcie strony. [Więcej informacji](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Brak żądań z zasadami nieefektywnej pamięci podręcznej"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "Inne elementy: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Żądanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Używaj efektywnego czasu przechowywania w pamięci podręcznej"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Duży DOM zwiększy wykorzystanie pamięci, wydłuży obliczenia stylów i spowoduje kosztowne przeformatowania układu, które będą miały wpływ na responsywność strony. [Jak unikać nadmiernego rozmiaru DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "Duży DOM może wydłużać obliczenia stylów i przeformatowania układu, co wpływa na responsywność strony. Duży DOM zwiększy też wykorzystanie pamięci. [Jak unikać nadmiernego rozmiaru DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Maksymalna liczba elementów podrzędnych"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Głębokość DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statystyki"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optymalizuj rozmiar DOM"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Łączna liczba elementów"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Wartość"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Pierwsze żądanie sieciowe jest najważniejsze.  Zmniejsz jego opóźnienie, unikając przekierowań, zapewniając szybką reakcję serwera i włączając kompresję tekstu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Nie zastosowano kompresji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Nie używa przekierowań"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Stosuje kompresję tekstu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Przekierowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Czas reakcji serwera"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Czas oczekiwania w przypadku żądania dokumentu"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Pobieranie nieskompresowanych plików"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Zduplikowane bajty"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Źródło"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Usuń z pakietów duplikaty dużych modułów JavaScript, aby zmniejszyć ilość danych niepotrzebnie przesyłanych w sieci."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplikat kodu JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Sugerujemy ustawienie właściwości [font-display](https://developer.chrome.com/blog/font-display) na swap lub optional, aby tekst był zawsze widoczny. Element swap można dodatkowo zoptymalizować za pomocą [zastąpień danych o czcionkach](https://developer.chrome.com/blog/font-fallbacks) – pozwoli to zmniejszyć przesunięcia układu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Czcionka"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Wyświetlanie czcionki"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Stracony czas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonimowa)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "W celu obliczenia stylu i układu wiele interfejsów API zwykle odczytujących geometrię układu wymusza na mechanizmie renderowania wstrzymanie wykonywania skryptu. Dowiedz się więcej o [wymuszonym przeformatowaniu](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) i sposobach jego ograniczenia."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Zrzut stosu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Wymuszone przeformatowanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Najczęstsze wywołanie funkcji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Łączny czas przeformatowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[nieprzypisane]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Skrócenie czasu pobierania obrazów może poprawić postrzegany czas wczytywania strony i LCP. [Dowiedz się więcej o optymalizowaniu rozmiaru obrazu](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (szac. {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Brak obrazów do zoptymalizowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Zoptymalizuj rozmiar pliku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "Inne elementy: {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Ulepsz dostarczanie obrazów"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Zwiększenie współczynnika kompresji obrazu może zmniejszyć rozmiar pobierania. (Szac. {PH1})"
+    "message": "Zwiększenie współczynnika kompresji obrazu może zmniejszyć rozmiar pobierania."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Pobieranie tego obrazu może być szybsze, jeśli użyjesz nowoczesnego formatu (WebP, AVIF) lub zwiększysz kompresję obrazu. (Szac. {PH1})"
+    "message": "Pobieranie tego obrazu może być szybsze, jeśli użyjesz nowoczesnego formatu (WebP, AVIF) lub zwiększysz kompresję obrazu."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Ten plik obrazu jest większy niż powinien ({PH2}) przy wyświetlanych wymiarach ({PH3}). Aby zmniejszyć rozmiar pobierania obrazu, użyj obrazów elastycznych. (Ok. {PH1})."
+    "message": "Ten plik obrazu jest większy niż powinien ({PH1}) przy wyświetlanych wymiarach ({PH2}). Aby zmniejszyć rozmiar pobierania obrazu, użyj obrazów elastycznych."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Używanie formatów wideo zamiast GIF-ów może zmniejszyć rozmiar pobieranych treści animowanych. (Szac. {PH1})"
+    "message": "Używanie formatów wideo zamiast GIF-ów może zmniejszyć rozmiar pobieranych treści animowanych."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Zacznij analizę od najdłuższego etapu. [Można zminimalizować opóźnienia](https://web.dev/articles/optimize-inp#optimize_interactions). Aby skrócić czas przetwarzania, [zoptymalizuj koszty wątku głównego](https://web.dev/articles/optimize-long-tasks), często JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Czas trwania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Opóźnienie wejściowe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Nie wykryto interakcji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Faza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Opóźnienie prezentacji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Czas przetwarzania"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP według etapu"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Zoptymalizuj LCP, zapewniając natychmiastową [wykrywalność](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) obrazu LCP w kodzie HTML i [unikając leniwego ładowania](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "Zastosowano fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Należy zastosować fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "nie zastosowano leniwego ładowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Obraz LCP został wczytany {PH1} po najstarszym punkcie początkowym."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Nie wykryto LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Nie wykryto zasobu LCP, ponieważ LCP nie jest obrazem"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Prośbę można znaleźć w dokumencie początkowym"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Wykrywanie żądań LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Każdy [etap ma określone strategie poprawy](https://web.dev/articles/optimize-lcp#lcp-breakdown). W idealnym przypadku większość czasu LCP powinna być poświęcona na ładowanie zasobów, a nie na opóźnienia."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Czas trwania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Opóźnienie renderowania elementu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75 percentyl zgromadzonych danych"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Nie wykryto LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Faza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Opóźnienie ładowania zasobów"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Czas wczytywania zasobu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Czas do pierwszego bajtu"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP według etapu"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skrypt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Zmarnowane bajty"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Elementy polyfill i przekształcenia umożliwiają obsługę nowych funkcji JavaScript przez starsze przeglądarki. Jednak nowoczesne przeglądarki nie potrzebują wielu takich elementów. Rozważ zmianę procesu kompilacji JavaScriptu, aby nie transpilować funkcji [podstawowych](https://web.dev/articles/baseline-and-polyfills), chyba że potrzebna jest obsługa starszych przeglądarek. [Dlaczego większość witryn może wdrażać kod ES6+ bez transpilacji](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Starszy kod JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "Protokoły HTTP/2 i HTTP/3 mają wiele zalet w porównaniu z HTTP/1.1, np. multipleksowanie. [Więcej informacji o korzystaniu z nowoczesnego protokołu HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Żadne żądanie nie używało protokołu HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokół"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Żądanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Nowoczesny protokół HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "Aby przyspieszyć ładowanie strony, [unikaj tworzenia łańcuchów żądań krytycznych](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains): skróć łańcuchy, zmniejsz rozmiar pobieranych zasobów lub opóźnij pobieranie zasobów, które nie są niezbędne."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maksymalne opóźnienie ścieżki krytycznej:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Zależności sieciowe nie mają wpływu na żadne zadania renderowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Drzewo zależności sieciowych"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Aby przyspieszyć ładowanie strony, unikaj tworzenia łańcuchów żądań krytycznych: skróć łańcuchy, zmniejsz rozmiar pobieranych zasobów lub opóźnij pobieranie zasobów, które nie są niezbędne."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Żądania blokują początkowe renderowanie strony, co może opóźniać LCP. [Opóźnianie lub wstawianie](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) może skierować te żądania sieciowe poza ścieżkę krytyczną."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Czas trwania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Brak żądań blokujących renderowanie dla tej nawigacji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Żądanie"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Prośby o zablokowanie renderowania"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Jeśli koszty ponownego obliczania stylu są wysokie, optymalizacja selektora może je obniżyć. [Zoptymalizuj selektory](https://developer.chrome.com/docs/devtools/performance/selector-stats), które mają zarówno długi czas działania, jak i wysoki odsetek ścieżek powolnych. Prostsze selektory, mniejsza ich liczba oraz mniejszy i płytszy DOM pozwolą zmniejszyć koszty dopasowywania."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Upłynęło"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Nie znaleziono danych selektora CSS. Statystyki selektora CSS muszą być włączone w ustawieniach panelu wydajności."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Próby dopasowania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Liczba zgodnych elementów"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Koszty selektora CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Najpopularniejsze selektory"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Łącznie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Czas w wątku głównym"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Spoza witryny"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Rozmiar przesłanych danych"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kod spoza witryny może znacznie spowalniać wczytywanie stron. [Ogranicz i opóźnij wczytywanie kodu spoza witryny](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), aby nadać priorytet treściom ze swojej strony."
+    "message": "Kod spoza witryny może znacznie spowalniać wczytywanie stron. [Ogranicz i opóźnij wczytywanie takiego kodu](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), aby nadać priorytet treściom ze swojej strony."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Nie znaleziono treści zewnętrznych"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Spoza witryny"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Zoptymalizuj widoczny obszar dla telefonów"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Tylko strony wczytane za pomocą żądania GET kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "W pamięci mogą być przechowywane tylko strony z kodem stanu 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Przeglądarka Chrome wykryła próbę wykonania JavaScriptu podczas przechowywania strony w pamięci podręcznej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Strony, które poprosiły o AppBanner, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona przez flagi. Wejdź na chrome://flags/#back-forward-cache, aby włączyć ją lokalnie na tym urządzeniu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona przez wiersz poleceń."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu niewystarczającej ilości pamięci."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Pamięć podręczna stanu strony internetowej nie jest obsługiwana w ramach przekazywania."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona w przypadku wstępnego renderowania."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Strona nie może być przechowywana w pamięci podręcznej, bo zawiera wystąpienie BroadcastChannel z zarejestrowanymi detektorami."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Strony z nagłówkiem cache-control:no-store nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Pamięć podręczna została celowo wyczyszczona."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Strona została usunięta z pamięci podręcznej, aby umożliwić przechowywanie w niej innej strony."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Strony, które zawierają wtyczki, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Nieokreślony"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Strony, które używają interfejsu FileChooser API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Strony, które używają interfejsu File System Access API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Strony, które używają dyspozytora nośnika danych, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Odtwarzacz był włączony, gdy użytkownik zamknął stronę."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Strony, które używają interfejsu MediaSession API i określają stan odtwarzania, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Strony, które używają interfejsu MediaSession API i określają elementy działania, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu czytnika ekranu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Strony, które używają SecurityHandler, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Strony, które używają interfejsu Serial API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Strony, które używają interfejsu WebAuthetication API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Strony, które używają interfejsu WebBluetooth API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Strony, które używają interfejsu WebUSB API, nie kwalifikują się do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, bo na stronie, która korzysta z elementu Cache-Control: no-store, wyłączone są pliki cookie."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Strony, które używają dedykowanej instancji roboczej lub workletu, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokument nie został w pełni wczytany, zanim użytkownik go zamknął."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Podczas zamykania strony widoczny był baner aplikacji."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Podczas zamykania strony widoczny był menedżer haseł Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Podczas zamykania strony aktywny był proces destylacji DOM."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Podczas zamykania strony widoczna była przeglądarka narzędzia DOM Distiller."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, bo rozszerzenia używają interfejsu Messaging API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Rozszerzenia od dłuższego czasu połączone powinny zakończyć połączenie przed uzyskaniem dostępu do pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Rozszerzenia od dłuższego czasu połączone próbowały wysłać wiadomości do ramek w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu rozszerzeń."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Podczas zamykania strony wyświetliło się okno modalne takie jak ponowne przesłanie formularza lub okno hasła http."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Podczas zamykania strony pokazywana była strona offline."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Podczas zamykania strony widoczny był pasek interwencji związanej z brakiem miejsca w pamięci."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Podczas zamykania strony pojawiły się prośby o uprawnienia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Podczas zamykania strony widoczne było blokowanie wyskakujących okienek."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Podczas zamykania strony wyświetliły się szczegóły Bezpiecznego przeglądania."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Bezpieczne przeglądanie wykryło na tej stronie nadużycie i zablokowało wyskakujące okienko."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Skrypt service worker został aktywowany, gdy strona znajdowała się w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu błędu w dokumencie."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Stron używających FencedFrames nie można przechowywać w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Strona została usunięta z pamięci podręcznej, aby umożliwić przechowywanie w niej innej strony."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Strony, które mają przyznany dostęp do strumienia multimediów, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Strony zawierające niektóre rodzaje umieszczonych treści (np. pliki PDF) nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Strony, które używają IdleManagera, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Strony, które mają otwarte połączenie IndexedDB, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu zdarzenia IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Użyto nieodpowiednich interfejsów API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Strony z interfejsem JavaScript wstrzykiwanym przez rozszerzenia nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Strony z interfejsem StyleSheet wstrzykiwanym przez rozszerzenia nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Błąd wewnętrzny."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, ponieważ niektóre żądania sieciowe JavaScript otrzymały zasób z nagłówkiem Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona z powodu żądania utrzymywania aktywności."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Strony, które używają blokady klawiatury, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Strona nie została w pełni wczytana, zanim użytkownik ją opuścił."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Strony, których zasoby główne mają nagłówek cache-control:no-cache, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Strony, których zasoby główne mają nagłówek cache-control:no-store, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Nawigacja została anulowana przed przywróceniem strony z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Strona została usunięta z pamięci podręcznej, ponieważ aktywne połączenie sieciowe otrzymało za dużo danych. Chrome ogranicza ilość danych, które strona może otrzymać, gdy jest przechowywana w pamięci podręcznej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Strony, które mają przesyłane żądanie fetch() lub XHR, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Strona została usunięta z pamięci podręcznej stanu strony internetowej, ponieważ aktywne żądanie sieciowe wiązało się z przekierowaniem."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Strona została usunięta z pamięci podręcznej, ponieważ połączenie sieciowe było zbyt długo otwarte. Chrome ogranicza ilość czasu, przez który strona może otrzymywać dane podczas przechowywania w pamięci podręcznej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Strony, które nie mają prawidłowego nagłówka odpowiedzi, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Nawigacja odbywała się w ramce innej niż ramka główna."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Strony z trwającymi transakcjami indeksowanej bazy danych nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Strony z przesyłanym żądaniem sieciowym nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Strony z przesyłanym żądaniem sieciowym fetch() nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Strony z przesyłanym żądaniem sieciowym nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Strony z przesyłanym żądaniem sieciowym XHR nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Strony, które używają PaymentManagera, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Strony, które używają obrazu w obrazie, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Strony, które wyświetlają interfejs drukowania, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Strona została otwarta za pomocą „window.open()” i inna karta się do niej odnosi lub strona otworzyła okno."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "W trakcie renderowania strony w pamięci podręcznej stanu strony internetowej wystąpił błąd."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Proces renderowania strony w pamięci podręcznej stanu strony internetowej został przerwany."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień do nagrywania dźwięku, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień dotyczących czujników, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień do pobierania lub synchronizacji w tle, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień dotyczących MIDI, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień do powiadomień, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Strony, które poprosiły o przyznanie dostępu do pamięci, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Strony, które poprosiły o przyznanie uprawnień do nagrywania filmów, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "W pamięci mogą być przechowywane tylko strony, których schemat URL to HTTP/HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Strona została wywołana przez skrypt service worker podczas korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Skrypt service worker próbował wysłać właściwość MessageEvent stronie w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Skrypt service worker był niezarejestrowany, gdy strona znajdowała się w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Strona została usunięta z pamięci podręcznej stanu strony internetowej z powodu aktywacji skryptu service worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Przeglądarka Chrome uruchomiła się ponownie i wyczyściła wpisy w pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Strony, które używają SharedWorker, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Strony, które używają SpeechRecognizer, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Strony, które używają SpeechSynthesis, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Element iframe na stronie rozpoczął nawigację, która się nie zakończyła."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Strony, których zasoby podrzędne mają nagłówek cache-control:no-cache, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Strony, których zasoby podrzędne mają nagłówek cache-control:no-store, nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Strona przekroczyła limit czasu w pamięci podręcznej stanu strony internetowej i wygasła."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Strona przekroczyła limit czasu w trakcie zapisywania w pamięci podręcznej stanu strony internetowej (prawdopodobnie z powodu długotrwałych wyrażeń pagehide)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Strona ma wyrażenie unload w ramce głównej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Strona ma wyrażenie unload w ramce podrzędnej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Przeglądarka zmieniła nagłówek zastępowania klienta użytkownika."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Strony, które mają przyznany dostęp do nagrywania filmu lub dźwięku, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Strony, które używają WebDatabase, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Strony, które używają WebHID, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Strony, które używają WebLocks, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Strony, które używają WebNfc, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Strony, które używają WebOTPService, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Strony z WebRTC nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, ponieważ użyto WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Strony, które używają WebShare, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Strony z WebSocket nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, ponieważ korzystasz z WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Strony z WebTransport nie mogą korzystać z pamięci podręcznej stanu strony internetowej."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Pamięć podręczna stanu strony internetowej jest wyłączona, ponieważ korzystasz z WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Strony, które używają WebXR, nie kwalifikują się obecnie do korzystania z pamięci podręcznej stanu strony internetowej."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "W przypadku treści animowanych stosuj atrybut [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), by zminimalizować wykorzystanie procesora, gdy te treści znajdują się poza ekranem."

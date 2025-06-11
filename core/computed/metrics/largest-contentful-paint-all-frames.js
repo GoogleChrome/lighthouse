@@ -40,6 +40,6 @@ class LargestContentfulPaintAllFrames extends NavigationMetric {
 
 const LargestContentfulPaintAllFramesComputed = makeComputedArtifact(
   LargestContentfulPaintAllFrames,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LargestContentfulPaintAllFramesComputed as LargestContentfulPaintAllFrames};

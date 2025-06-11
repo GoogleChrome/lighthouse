@@ -660,7 +660,10 @@
     "message": "Upotrebljavajte formate videozapisa za animirani sadržaj"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Kodovi polyfill i transform omogućuju starim preglednicima da upotrebljavaju nove značajke JavaScripta. Međutim, mnogi nisu potrebni za moderne preglednike. Za svoj skupni JavaScript usvojite modernu strategiju implementacije skripte upotrebom otkrivanja značajke modula/nemodula kako bi se smanjila količina koda koji se šalje modernim preglednicima, uz istodobno zadržavanje podrške za stare preglednike. [Saznajte kako upotrebljavati moderni JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Kodovi polyfill i transform omogućuju starim preglednicima da upotrebljavaju nove značajke JavaScripta. Međutim, mnogi nisu potrebni za moderne preglednike. Razmislite o izmjeni procesa izrade JavaScripta kako ne bi transpilirao značajke [Baseline](https://web.dev/baseline), osim ako znate da morate podržavati naslijeđene preglednike. [Saznajte zašto većina web-lokacija može implementirati ES6+ kôd bez transpiliranja](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stranici je otkrivena verzija 2 core-js-a. Trebali biste nadograditi na verziju 3 za brojna poboljšanja izvedbe."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Izbjegavajte posluživanje starog JavaScripta u modernim preglednicima"
@@ -761,6 +764,18 @@
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Omogućite sažimanje teksta"
   },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Ozbiljnost"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Zaglavlje `X-Frame-Options` (XFO) ili direktiva `frame-ancestors` u kontroli za zaglavlje `Content-Security-Policy` (CSP) gdje se stranica može ugraditi. To može ublažiti clickjacking tako da se blokira ugrađivanje stranice na nekim ili svim web-lokacijama. [Saznajte više o ublažavanju clickjackinga](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nije pronađeno pravilo za kontrolu za okvir"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Ublažavanje clickjackinga pomoću XFO-a ili CSP-a"
+  },
   "core/audits/critical-request-chains.js | description": {
     "message": "Lanci kritičkih zahtjeva u nastavku prikazuju koji se resursi učitavaju s visokim prioritetom. Savjetujemo vam da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni kako biste poboljšali učitavanje stranice. [Saznajte kako izbjeći lančano povezivanje kritičnih zahtjeva](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
   },
@@ -771,7 +786,7 @@
     "message": "Izbjegavajte ulančavanje kritičnih zahtjeva"
   },
   "core/audits/csp-xss.js | columnDirective": {
-    "message": "Direktiva"
+    "message": "Smjernica"
   },
   "core/audits/csp-xss.js | columnSeverity": {
     "message": "Ozbiljnost"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse nije mogao automatski provjeriti vrijednost `font-display` za izvor {fontOrigin}.}one{Lighthouse nije mogao automatski provjeriti vrijednost `font-display` za izvor {fontOrigin}.}few{Lighthouse nije mogao automatski provjeriti vrijednost `font-display` za izvor {fontOrigin}.}other{Lighthouse nije mogao automatski provjeriti vrijednost `font-display` za izvor {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Smjernica"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Ozbiljnost"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Uvođenje zaglavlja HSTS-a značajno smanjuje rizik od snižavanja HTTP veza i napada prisluškivanja. Preporučuje se postupno uvođenje, počevši od niske maksimalne dobi. [Saznajte više o upotrebi snažnog pravila HSTS-a.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Nevažeća sintaksa"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` je preniska"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Nije pronađeno zaglavlje HSTS-a"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Nema smjernice `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Nije pronađena smjernica `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Nije pronađena smjernica `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Upotreba snažnog pravila HSTS-a"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Omjer slike (stvarni)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Poslužuje slike s odgovarajućom razlučivošću"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Pokazatelj pomaka izgleda"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Dopušteno"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Ugrađeni iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Izgled stranice promijenjen je zbog kasnog mrežnog zahtjeva"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Medijski element bez eksplicitne veličine"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekt sadrži parametre tempiranja koji nisu podržani"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Smjernica"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Ozbiljnost"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Cross-Origin-Opener-Policy (COOP) može se upotrijebiti za izolaciju prozora najviše razine od drugih dokumenata, kao što su skočni prozori. [Saznajte više o upotrebi zaglavlja COOP-a.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Nevažeća sintaksa"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Nije pronađeno zaglavlje COOP-a"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Zaštitite izvore pomoću COOP-a"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Predučitajte fontove s opcijom `optional` kako bi ih novi posjetitelji mogli koristiti. [Saznajte više o predučitavanju fontova](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Tijekom pokretanja otkrivena je navigacija po stranici. Za reviziju navigacije po stranici ne preporučuje se upotreba načina vremenskog razdoblja. Navigacijski način rada upotrijebite da biste provjerili navigacije po stranicama radi bolje atribucije treće strane i otkrivanja glavne niti."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Samo stranice koje su učitane putem GET zahtjeva ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Jedino se stranice sa šifrom statusa 2XX mogu predmemorirati."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome je otkrio pokušaj izvršavanja JavaScripta dok je u predmemoriji."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Stranice koje su zatražile AppBanner trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog keepalive zahtjeva."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Oznake onemogućuju predmemoriranje cijele stranice. Otvorite chrome://flags/#back-forward-cache da biste ga lokalno omogućili na ovom uređaju."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Naredbeni redak onemogućio je predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog nedovoljno memorije."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Ovlaštenje ne podržava predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Predučitavač je onemogućio predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Stranica se ne može predmemorirati jer ima instancu BroadcastChannel s registriranim slušateljima."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Stranice sa zaglavljem cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Predmemorija je namjerno izbrisana."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Stranica je izbačena iz predmemorije kako bi se omogućilo predmemoriranje druge stranice."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Stranice koje sadrže dodatke trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Stranice koje koriste FileChooser API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Stranice koje koriste File System Access API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Stranice koje koriste otpremnik za medijski uređaj ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Tijekom napuštanja stranice u tijeku je bila reprodukcija Media Playera."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Stranice koje koriste MediaSession API i postave stanje reprodukcije ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Stranice koje koriste MediaSession API i postave rukovatelje radnjom ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog čitača zaslona."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Stranice koje koriste SecurityHandler ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Stranice koje koriste Serial API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Stranice koje koriste WebAuthentication API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Stranice koje koriste WebBluetooth API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Stranice koje koriste WebUSB API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je jer su kolačići onemogućeni na stranici koja upotrebljava `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Stranice koje koriste predviđeni alat ili radni zadatak trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokument nije završio s učitavanjem prije napuštanja stranice."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Tijekom napuštanja stranice bio je prisutan natpis aplikacije."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Tijekom napuštanja stranice bio je prisutan Chromeov Upravitelj zaporki."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Tijekom napuštanja stranice u tijeku je bilo sažimanje DOM-a."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Tijekom napuštanja stranice bio je prisutan preglednik za sažimanje DOM-a."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog proširenja koja koriste API za slanje poruka."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Proširenja s dugotrajnijom vezom trebaju zatvoriti vezu prije pristupanja predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Proširenja s dugotrajnijom vezom pokušala su poslati poruke okvirima u predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog proširenja."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Modalni dijalog, kao što je ponovno slanje obrasca ili dijalog sa zaporkom za http prikazao se za stranicu tijekom napuštanja stranice."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Tijekom napuštanja stranice prikazala se offline stranica."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Tijekom napuštanja stranice bila je prisutna traka za intervenciju zbog nedovoljno memorije."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Tijekom napuštanja stranice postojali su zahtjevi za dopuštenja."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Tijekom napuštanja stranice bio je prisutan alat za blokiranje skočnih prozora."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Pojedinosti o sigurnom pregledavanju prikazale su se tijekom napuštanja stranice."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Sigurno pregledavanje ovu je stranicu smatralo zlonamjernom i blokiralo je skočne prozore."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Uslužni alat aktiviran je dok je u tijeku bilo predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog pogreške dokumenta."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Stranice koje upotrebljavaju FencedFrames ne mogu se pohraniti u predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Stranica je izbačena iz predmemorije kako bi se omogućilo predmemoriranje druge stranice."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Stranice koje su odobrile pristup streamanju medijskih sadržaja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Stranice koje koriste portale trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Stranice koje koriste IdleManager trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Stranice koje imaju otvorenu IndexedDB vezu trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog IndexedDB događaja."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Korišteni su API-ji koji ne ispunjavaju kriterije."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Stranice u koje je `JavaScript` ugrađen putem proširenja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Stranice u koje je `StyleSheet` ugrađen putem proširenja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Interna pogreška."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Predmemoriranje cijele stranice onemogućeno je zbog keepalive zahtjeva."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Stranice koje koriste zaključavanje tipkovnice trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Stranica nije završila s učitavanjem prije napuštanja stranice."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Stranice čiji glavni resurs ima cache-control:no-cache ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Stranice čiji glavni izvor ima cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Kretanje je otkazano prije nego što se stranica mogla vratiti iz predmemoriranja cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Stranica je izbačena iz predmemorije jer je aktivna mrežna veza primila previše podataka. Chrome ograničava količinu podataka koje stranica može primiti tijekom predmemoriranja."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Stranice koje imaju dohvaćanje ili XHR u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Stranica je izbačena iz predmemoriranja cijele stranice jer je aktivni zahtjev za mrežu uključivao preusmjeravanje."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Stranica je izbačena iz predmemorije jer je mrežna veza bila predugo otvorena. Chrome ograničava količinu vremena tijekom kojeg stranica može primiti podatke za vrijeme predmemoriranja."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Stranice koje nemaju važeći odgovor ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Kretanje se dogodilo u okviru koji nije glavni."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Stranice s indeksiranim DB transakcijama trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Stranice sa zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Stranice sa zahtjevom za dohvaćanje mreže u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Stranice sa zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Stranice s XHR zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Stranice koje koriste PaymentManager trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Stranice koje koriste sliku u slici trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Stranice koje koriste portale trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Stranice koje prikazuju korisničko sučelje za ispisivanje trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Stranica je otvorena pomoću metode `window.open()`, a druga kartica navodi referencu na nju ili je stranica otvorila prozor."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Proces generiranja za stranicu u predmemoriranju cijele stranice se srušio."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Postupak generiranja za stranicu u predmemoriranju cijele stranice je prekinut."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Stranice koje su zatražile dopuštenja za snimanje zvučnih zapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Stranice koje su zatražile dopuštenja za senzor trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Stranice koje su zatražile pozadinsku sinkronizaciju ili dopuštenja za dohvaćanje trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Stranice koje su zatražile dopuštenja za MIDI trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Stranice koje su zatražile dopuštenja za obavijesti trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Stranice koje su zatražite pristup pohrani trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Stranice koje su zatražile dopuštenja za snimanje videozapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Jedino se stranice čija je shema URL-a HTTP/HTTPS mogu predmemorirati."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Stranicu je preuzeo uslužni alat dok je u predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Uslužni alat pokušao je stranici kod koje je u tijeku predmemoriranje cijele stranice poslati `MessageEvent`."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Otkazana je registracija za ServiceWorker dok je u tijeku bilo predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Stranica je izbačena iz predmemoriranja cijele stranice zbog aktivacije uslužnog alata."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome se ponovno pokrenuo i izbrisao unose predmemoriranja cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Stranice koje koriste SharedWorker trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Stranice koje koriste SpeechRecognizer trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Stranice koje koriste SpeechSynthesis trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Iframe na stranici pokrenuo je kretanje koje nije dovršeno."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Stranice čiji podresurs ima cache-control:no-cache ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Stranice čiji podresurs ima cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Stranica je premašila maksimalno vrijeme u predmemoriranju cijele stranice i istekla je."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Isteklo je pristupanje predmemoriranju cijele stranice (vjerojatno zbog rukovatelja sakrivanjem stranice koji su bili dugo pokrenuti)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Stranica ima unload rukovatelj u glavnom okviru."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Stranica ima unload rukovatelj u podokviru."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Preglednik je promijenio zaglavlje nadjačavanja korisničkog agenta."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Stranice koje su odobrile pristup snimanju videozapisa ili audiozapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Stranice koje koriste WebDatabase trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Stranice koje koriste WebHID trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Stranice koje koriste WebLocks trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Stranice koje koriste WebNfc trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Stranice koje koriste WebOTPService trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Stranice s WebRTC-om ne mogu pristupiti predmemoriranju cijele stranice"
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Stranice koje koriste WebShare trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Stranice s WebSocketom ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Stranice s WebTransportom ne mogu pristupiti predmemoriranju cijele stranice."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Stranice koje koriste WebXR trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Savjetujemo vam da dodate https: i http: URL sheme (koje ignoriraju preglednici koji podržavaju `'strict-dynamic'`) radi kompatibilnosti s prijašnjim verzijama preglednika."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Koristi se obustavljena značajka"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Autorizacija neće biti pokrivena zamjenskim znakom (*) u rukovanju CORS zaglavljem `Access-Control-Allow-Headers`."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Atribut `disableRemotePlayback` trebao bi se koristiti kako bi se onemogućila zadana integracija Casta umjesto upotrebe selektora `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Blokirani su zahtjevi za resurse čiji su URL-ovi sadržavali uklonjene znakove razmaka `(n|r|t)` i znakove \"manje od\" (`<`). Uklonite nove retke i kodirajte znakove \"manje od\" s mjesta kao što su vrijednosti atributa elemenata kako bi se ti resursi učitali."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` je obustavljen, upotrijebite standardizirani API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` je obustavljen, upotrijebite standardizirani API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` je obustavljen, upotrijebite standardizirani API: `nextHopProtocol` u Navigation Timingu 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Kolačići koji sadrže znak `(0|r|n)` neće se skratiti već će se odbiti."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Popuštanje pravila istog porijekla postavljanjem `document.domain` obustavlja se i onemogućit će se prema zadanim postavkama. Ovo upozorenje o obustavljanju odnosi se na pristupanje iz više izvora koje je bilo omogućeno postavkom `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Pokretanje window.alert iz iframea različitih izvora obustavlja se i ubuduće će biti uklonjeno."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Pokretanje API-ja window.confirm iz iframesa različitih izvora obustavlja se i ubuduće će biti uklonjeno."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Obustavljeni su događaji mutacije DOM-a, uključujući `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` i `DOMCharacterDataModified` (https://w3c.github.io/uievents/#legacy-event-types) i uklonit će se. Umjesto toga koristite `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Podrška za podatke: URL-ovi u SVG elementu <use> obustavljaju se i uklanjaju."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Popuštanje pravila istog porijekla postavljanjem `document.domain` obustavlja se i onemogućit će se prema zadanim postavkama. Da biste nastavili koristiti tu značajku, isključite grupe agenata s ključem porijekla slanjem zaglavlja `Origin-Agent-Cluster: ?0` uz HTTP odgovor za dokument i okvire. Više pojedinosti pročitajte na vezi https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Zaglavlje `Expect-CT` obustavlja se i uklonit će se. Chrome zahtijeva Transparentnost certifikata za sve javno pouzdane certifikate izdane nakon 30. travnja 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` i `watchPosition()` više ne rade na nesigurnim izvorima. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` i `watchPosition()` obustavljaju se na nesigurnim izvorima. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` više ne funkcionira na nesigurnim izvorima. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` je obustavljen. Upotrijebite `RTCPeerConnectionIceErrorEvent.address` ili `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Podaci o izvoru trgovca i proizvoljni podaci o događaju uslužnog alata `canmakepayment` obustavljeni su te će se ukloniti: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Web-lokacija je zatražila podresurs s mreže kojem može pristupiti samo zbog privilegiranog položaja svojih korisnika u mreži. Ti zahtjevi internetu izlažu uređaje i poslužitelje koji nisu javni, povećavajući opasnost od napada krivotvorenjem zahtjeva s druge web-lokacije (CSRF) i/ili curenja informacija. Da bi smanjio te opasnosti, Chrome obustavlja zahtjeve podresursima koji nisu javni kad se pokreću iz nesigurnih konteksta i počet će ih blokirati."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Polje `dailyUpdateUrl` u strukturi `InterestGroups` koje je proslijeđeno na `joinAdInterestGroup()` preimenovano je u `updateUrl` kako bi preciznije odražavalo njegovo ponašanje."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS se ne može učitati s `file:` URL-ova osim ako završavaju na datotečni nastavak `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Upotreba `SourceBuffer.abort()` za prekid uklanjanja asinkronog raspona za `remove()` obustavljena je zbog promjene specifikacija. Podrška će se ukloniti u budućnosti. Umjesto toga trebali biste osluškivati događaj `updateend`. `abort()` može prekinuti samo stanje dodavanja asinkronog medija ili raščlanjivača vraćanja na zadano."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Postavljanje atributa `MediaSource.duration` ispod najviše vremenske oznake prezentacije bilo kojeg kodiranog okvira spremljenog u međuspremnik obustavljeno je zbog promjene specifikacija. Podrška za implicitno uklanjanje skraćenog medija spremljenog u međuspremnik uklonit će se. Umjesto toga trebali biste izvesti eksplicitni `remove(newDuration, oldDuration)` na svim `sourceBuffers`, gdje je `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI tražit će dopuštenje za upotrebu čak i ako sysex nije naveden u `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Obustavljen je stariji nestandardizirani atribut `shadowroot` više *neće funkcionirati* u verziji M119. Umjesto njega koristite novi, standardizirani atribut `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification API možda se više neće upotrebljavati iz nesigurnih izvora. Savjetujemo vam da svoju aplikaciju prebacite na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Možda se više neće tražiti dopuštenje za Notification API iz iframea različitih izvora. Trebali biste razmisliti o traženju dopuštenja okvira najviše razine ili o otvaranju novog prozora."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Opcija `imageOrientation: 'none'` u stavci CreateImageBitmapa je obustavljena. Umjesto nje upotrijebite oznaku createImageBitmap s opcijom \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Vaš partner pregovara o zastarjeloj verziji (D)TLS-a. Provjerite s partnerom kako biste to ispravili."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Ako navedete `overflow: visible` za oznake img, video i canvas, te oznake mogu proizvesti vizualni sadržaj izvan granica elemenata. Pogledajte https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` je obustavljen. Umjesto toga koristite just-in-time instalaciju za rukovatelje plaćanjem."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Vaš je poziv `PaymentRequest` zaobilazio direktivu `connect-src` Pravila o sigurnosti sadržaja (CSP). To je zaobilaženje obustavljeno. Dodajte identifikator načina plaćanja iz `PaymentRequest` API-ja (u polju `supportedMethods`) direktivi `connect-src` CSP-a."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` je obustavljen. Umjesto njega upotrijebite standardizirani `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` s nadređenim `<picture>` nevažeći je i stoga se zanemaruje. Umjesto toga koristite `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame odnosi se na dobavljača. Upotrijebite standardni cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame odnosi se na dobavljača. Umjesto njega upotrijebite standardni requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingfullscreen je obustavljen. Umjesto njega koristite Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() je obustavljen. Umjesto njega koristite Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() je obustavljen. Umjesto njega koristite Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() je obustavljen. Umjesto njega koristite Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() je obustavljen. Umjesto njega koristite Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen je obustavljen. Umjesto njega koristite Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Obustavljamo API `chrome.privacy.websites.privacySandboxEnabled`, ali će ostati aktivan za kompatibilnost s prijašnjim verzijama do izdanja M113. Umjesto toga upotrijebite `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` i `chrome.privacy.websites.adMeasurementEnabled`. Posjetite https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Uklonjeno je ograničenje `DtlsSrtpKeyAgreement`. Naveli ste vrijednost `false` za ograničenje, što se tumači kao pokušaj korištenja uklonjene metode `SDES key negotiation`. Ta je funkcija uklonjena. Umjesto nje koristite uslugu koja podržava `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Uklonjeno je ograničenje `DtlsSrtpKeyAgreement`. Naveli ste vrijednost `true` za to ograničenje, što nije imalo učinka, ali možete ukloniti to ograničenje radi jasnoće."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "GetStats() na temelju poziva obustavljen je i uklonit će se. Umjesto toga upotrijebite getStats() usklađen sa specifikacijama."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() je obustavljen. Umjesto njega upotrijebite Select.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Blokirani su zahtjevi podresursa čiji URL-ovi sadrže ugrađene vjerodajnice (npr. `https://user:pass@host/`)."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Opcija `rtcpMuxPolicy` obustavlja se i uklonit će se."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` će zahtijevati izoliranje unakrsnih izvora. Više pojedinosti pročitajte na vezi https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` bez aktivacije korisnika obustavlja se i uklonit će se."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Proširenja se trebaju uključiti u izoliranje unakrsnih izvora da bi se nastavio upotrebljavati `SharedArrayBuffer`. Posjetite https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL je obustavljen. Upotrijebite SQLite WebAssembly ili indeksiranu bazu podataka"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Obustavljen je opisnik dopuštenja `window-placement`. Umjesto toga upotrijebite pravilo `window-management`. Za dodatnu pomoć posjetite https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Obustavljeno je pravilo o dopuštenjima `window-placement`. Umjesto toga upotrijebite pravilo `window-management`. Za dodatnu pomoć posjetite https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "JSON odgovor ne podržava UTF-16 u `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Sinkroni `XMLHttpRequest` na glavnoj niti obustavlja se zbog negativnog utjecaja na doživljaj krajnjeg korisnika. Za dodatnu pomoć posjetite https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Metoda `supportsSession()` je obustavljena. Umjesto toga koristite `isSessionSupported()` i označite riješenu Booleovu vrijednost."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Vrijeme blokiranja glavne niti"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Treća strana"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Ukupno"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouseovo izvješće o putovima korisnika"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Authorization will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "The disableRemotePlayback attribute should be used in order to disable the default Cast integration instead of using -internal-media-controls-overlay-cast-button selector."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Vrijednost izgleda CSS-a slider-vertical nije standardizirana i uklonit će se."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resource requests whose URLs contained both removed whitespace \\(n|r|t) characters and less-than characters (<) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Automatsko otkrivanje ISO-2022-JP skupa znakova obustavljeno je i uskoro će se onemogućiti. Navedite skup znakova u zaglavlju vrste sadržaja ili pomoću metaoznake (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: nextHopProtocol in Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Popuštanje pravila istog porijekla postavljanjem document.domain obustavlja se i onemogućit će se prema zadanim postavkama. Ovo upozorenje o obustavljanju odnosi se na pristupanje iz više izvora koje je bilo omogućeno postavkom document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Pokretanje window.alert iz iframea različitih izvora obustavlja se i ubuduće će biti uklonjeno."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Pokretanje API-ja window.confirm iz iframesa različitih izvora obustavlja se i ubuduće će biti uklonjeno."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Obustavljeni su događaji mutacije DOM-a, uključujući DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument i DOMCharacterDataModified (https://w3c.github.io/uievents/#legacy-event-types) i uklonit će se. Umjesto toga koristite MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Podrška za podatke: URL-ovi u SVGUseElementu obustavljeni su i ubuduće će se ukloniti."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() i watchPosition() više ne rade na nesigurnim izvorima. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() i watchPosition() obustavljaju se na nesigurnim izvorima. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() no longer works on insecure origins. Da biste upotrebljavali tu značajku, trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao što je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Pronađena je oznaka <h1> unutar oznake <article>, <aside>, <nav> ili <section> za koju nije navedena veličina fonta. Veličina teksta naslova mijenjat će se u ovom pregledniku u bliskoj budućnosti. Više informacija potražite na https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Polje RTCPeerConnectionIceErrorEvent.hostCandidate je obustavljeno. Upotrijebite RTCPeerConnectionIceErrorEvent.address ili RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Ovaj je format za navigator.credentials.get() zahtjev za digitalne vjerodajnice zastario. Ažurirajte poziv da biste upotrebljavali novi format."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Podaci o izvoru trgovca i proizvoljni podaci o događaju uslužnog alata canmakepayment obustavljeni su te će se ukloniti: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Polje dailyUpdateUrl u strukturi InterestGroups koje je proslijeđeno na joinAdInterestGroup() preimenovano je u updateUrl kako bi preciznije odražavalo njegovo ponašanje."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator je obustavljen. Umjesto njega upotrijebite Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Upotreba SourceBuffer.abort() za prekid uklanjanja asinkronog raspona za remove() obustavljena je zbog promjene specifikacija. Podrška će se ukloniti u budućnosti. Umjesto toga trebali biste osluškivati događaj updateend. abort() može prekinuti samo stanje dodavanja asinkronog medija ili raščlanjivača vraćanja na zadano."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Notification API možda se više neće upotrebljavati iz nesigurnih izvora. Trebali biste razmisliti o prebacivanju svoje aplikacije na siguran izvor kao to je HTTPS. Više pojedinosti pročitajte na vezi https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Možda se više neće tražiti dopuštenje za Notification API iz iframea različitih izvora. Trebali biste razmisliti o traženju dopuštenja okvira najviše razine ili o otvaranju novog prozora."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Opcija imageOrientation: 'none' u stavci CreateImageBitmapa je obustavljena. Umjesto nje upotrijebite oznaku createImageBitmap s opcijom \"\\\\{imageOrientation: 'from-image'\\\\}\"."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Ako navedete overflow: visible za oznake img, video i canvas, te oznake mogu proizvesti vizualni sadržaj izvan granica elemenata. Pogledajte https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments je obustavljen. Umjesto toga koristite just-in-time instalaciju za rukovatelje plaćanjem."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Vaš je poziv PaymentRequest zaobilazio direktivu connect-src Pravila o sigurnosti sadržaja (CSP). To je zaobilaženje obustavljeno. Dodajte identifikator načina plaćanja iz PaymentRequest API-ja (u polju supportedMethods) direktivi connect-src CSP-a."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent je obustavljen. Umjesto njega upotrijebite standardizirani navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> s nadređenim <picture> nevažeći je i stoga se zanemaruje. Umjesto toga koristite <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame odnosi se na dobavljača. Upotrijebite standardni cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame odnosi se na dobavljača. Umjesto njega upotrijebite standardni requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingfullscreen je obustavljen. Umjesto njega koristite Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() je obustavljen. Umjesto njega koristite Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() je obustavljen. Umjesto njega koristite Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() je obustavljen. Umjesto njega koristite Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() je obustavljen. Umjesto njega koristite Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen je obustavljen. Umjesto njega koristite Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Obustavljamo API chrome.privacy.websites.privacySandboxEnabled, ali će ostati aktivan za kompatibilnost s prijašnjim verzijama do izdanja M113. Umjesto toga upotrijebite chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled i chrome.privacy.websites.adMeasurementEnabled. Posjetite https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Uklonjeno je ograničenje DtlsSrtpKeyAgreement. Naveli ste vrijednost false za ograničenje, što se tumači kao pokušaj korištenja uklonjene metode SDES key negotiation. Ta je funkcija uklonjena. Umjesto nje koristite uslugu koja podržava DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Uklonjeno je ograničenje DtlsSrtpKeyAgreement. Naveli ste vrijednost true za ovo ograničenje, što nije imalo učinka, ali možete ukloniti ovo ograničenje radi jasnoće."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "GetStats() na temelju poziva obustavljen je i uklonit će se. Umjesto toga upotrijebite getStats() usklađen sa specifikacijama."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() je obustavljen. Umjesto njega upotrijebite Select.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Opcija rtcpMuxPolicy obustavlja se i uklonit će se."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer will require cross-origin isolation. Više pojedinosti pročitajte na vezi https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() bez aktivacije korisnika obustavlja se i uklonit će se."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Uklanjanje učitavanja slušatelja događaja obustavlja se i uklonit će se."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. Posjetite https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 is not supported by response json in XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Sinkroni XMLHttpRequest na glavnoj niti obustavlja se zbog negativnog utjecaja na doživljaj krajnjeg korisnika. Za dodatnu pomoć posjetite https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animacija"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Do pomaka izgleda dolazi kada se elementi pomiču bez korisničke interakcije. [Istražite uzroke pomaka izgleda](https://web.dev/articles/optimize-cls), kao što su dodavanje i uklanjanje elemenata ili promjena njihovih fontova tijekom učitavanja stranice."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Zahtjev za font"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Ugrađeni iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Skupina pomaka izgleda @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Nije otkriven nijedan uzrok pomaka izgleda"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Nema pomaka izgleda"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Uzroci pomaka izgleda"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Najčešći uzroci pomaka izgleda"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Slike bez veličine"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Najgora skupina"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Najgora skupina pomaka izgleda"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL predmemoriranja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Dugotrajno predmemoriranje može ubrzati ponovljene posjete vašoj stranici. [Saznajte više](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Nema zahtjeva s neučinkovitim pravilima predmemoriranja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "Još {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Zahtjev"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Upotrijebi učinkovito trajanje predmemorije"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Veliki DOM zahtijeva više memorije, produljuje izračune stila i dovodi do skupih ponovno proračunatih izgleda koji utječu na responzivnost stranice. [Saznajte kako izbjeći pretjeranu veličinu DOM-a](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+    "message": "Veliki DOM može produžiti trajanje proračuna stila i ponovnih proračuna izgleda, što utječe na responzivnost stranice. Veliki DOM također će povećati upotrebu memorije. [Saznajte kako izbjeći pretjeranu veličinu DOM-a](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Većina podređenih elemenata"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Dubina DOM-a"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistika"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimizirajte veličinu DOM-a"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Ukupan broj elemenata"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Vrijednost"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Vaš je prvi zahtjev za mrežu najvažniji.  Smanjite latenciju izbjegavanjem preusmjeravanja, osiguravanjem brzog odgovora poslužitelja i omogućavanjem kompresije teksta."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Nije primijenjena kompresija"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Izbjegava preusmjeravanja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Primjenjuje kompresiju teksta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Preusmjeravanja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Vrijeme odgovora poslužitelja"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Latencija zahtjeva za dokument"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Preuzimanje bez kompresije"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Duplicirani bajtovi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Izvor"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Uklonite velike JavaScript module iz skupova u njihove duplikate kako biste smanjili nepotrebne bajtove koje troši mrežna aktivnost."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplicirani JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Savjetujemo vam da [font-display](https://developer.chrome.com/blog/font-display) postavite na swap ili optional kako biste osigurali dosljednu vidljivost teksta. swap može se dodatno optimizirati kako bi se ublažili pomaci izgleda pomoću [prevladavanja mjernih podataka o fontu](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Font"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Prikaz fonta"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Izgubljeno vrijeme"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonimno)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Mnogi API-jevi, obično oni koji čitaju geometriju izgleda, prisiljavaju alat za renderiranje da pauzira izvršavanje skripte radi proračuna stila i izgleda. Saznajte više o [prisilnom ponovnom proračunu](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) i njegovom ublažavanju."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Praćenje snopa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Prisilni ponovni proračun"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Najčešći poziv funkcije"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Ukupno vrijeme ponovnog proračuna"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[unattributed]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Smanjenje vremena preuzimanja slika može poboljšati percipirano vrijeme učitavanja stranice i LCP. [Saznajte više o optimizaciji veličine slike](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (proc. {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Nema slika koje se mogu optimizirati"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimizirajte veličinu datoteke"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "Još {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Poboljšanje preuzimanja i upotrebe slika"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Povećanje koeficijenta kompresije slike može poboljšati veličinu preuzimanja te slike. (Proc. {PH1})"
+    "message": "Povećanje koeficijenta kompresije slike može poboljšati veličinu preuzimanja te slike."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Upotreba modernog formata slike (WebP, AVIF) ili povećanje kompresije slike može poboljšati veličinu preuzimanja ove slike. (Proc. {PH1})"
+    "message": "Upotreba modernog formata slike (WebP, AVIF) ili povećanje kompresije slike može poboljšati veličinu preuzimanja ove slike."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Ova je slikovna datoteka veća nego što treba biti ({PH2}) za prikazane dimenzije ({PH3}). Upotrijebite responzivne slike da biste smanjili veličinu preuzimanja slike. (Proc. {PH1})"
+    "message": "Ova je slikovna datoteka veća nego što treba biti ({PH1}) za prikazane dimenzije ({PH2}). Upotrijebite responzivne slike da biste smanjili veličinu preuzimanja slike."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Upotreba videoformata umjesto GIF-ova može poboljšati veličinu preuzimanja animiranog sadržaja. (Proc. {PH1})"
+    "message": "Upotreba videoformata umjesto GIF-ova može poboljšati veličinu preuzimanja animiranog sadržaja."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Započnite s najdužim razdobljem. [Kašnjenja se mogu svesti na najmanju moguću mjeru](https://web.dev/articles/optimize-inp#optimize_interactions). Da biste skratili trajanje obrade, [optimizirajte troškove glavne niti](https://web.dev/articles/optimize-long-tasks), koji su često JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Trajanje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Kašnjenje unosa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Nije otkrivena nijedna interakcija"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Faza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Kašnjenje prezentacije"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Trajanje obrade"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "Vrijeme između interakcija (INP) po fazi"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimizirajte LCP tako da odmah [otkrijete](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) sliku LCP-a iz HTML-a i [izbjegnete odgođeno učitavanje](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "primijenjeno je dohvaćanje prioriteta=visoko"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "treba primijeniti dohvaćanje prioriteta=visoko"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "nije primijenjeno odgođeno učitavanje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Slika LCP-a učitana je {PH1} nakon najranije početne točke."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Nije otkriven LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Nije otkriven nijedan resurs LCP-a jer LCP nije slika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Zahtjev se može otkriti u početnom dokumentu"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Otkrivanje zahtjeva za vrijeme učitavanja punog sadržaja (LCP)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Svaka [faza ima određene strategije poboljšanja](https://web.dev/articles/optimize-lcp#lcp-breakdown). U idealnom slučaju većina vremena LCP-a trebala bi se potrošiti na učitavanje resursa, a ne na kašnjenja."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Trajanje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Kašnjenje renderiranja elementa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75. percentil polja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Nije otkriven LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Faza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Kašnjenje učitavanja resursa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Trajanje učitavanja resursa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Vrijeme do prvog bajta (TTFB)"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "Vrijeme učitavanja punog sadržaja (LCP) po fazi"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skripta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Neiskorišteni bajtovi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Kodovi polyfill i transform omogućuju starim preglednicima da upotrebljavaju nove značajke JavaScripta. Međutim, mnogi nisu potrebni za moderne preglednike. Razmislite o izmjeni procesa izrade JavaScripta kako ne bi transpilirao značajke [Baseline](https://web.dev/articles/baseline-and-polyfills), osim ako znate da morate podržavati naslijeđene preglednike. [Saznajte zašto većina web-lokacija može implementirati ES6+ kôd bez transpiliranja](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Stari JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 i HTTP/3 nude brojne prednosti u odnosu na HTTP/1.1, kao što je sabiranje signala u jedan signal. [Saznajte više o upotrebi modernog HTTP-a](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Nijedan zahtjev nije upotrebljavao HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Zahtjev"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderni HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Izbjegavajte lančano povezivanje kritičnih zahtjeva](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) tako da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni kako biste poboljšali učitavanje stranice."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maks. latencija kritičnog puta:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Nema zadataka renderiranja na koje utječu mrežne zavisnosti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Stablo mrežne zavisnosti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Izbjegavajte lančano povezivanje kritičnih zahtjeva tako da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni da biste poboljšali učitavanje stranice."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Zahtjevi blokiraju početno renderiranje stranice zbog čega učitavanje punog sadržaja (LCP) može kasniti. [Odgađanjem ili ugrađivanjem](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) ti se mrežni zahtjevi mogu premjestiti s kritične putanje."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Trajanje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Nema zahtjeva za blokiranje renderiranja za ovu navigaciju"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Zahtjev"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Zahtjevi koji su blokirali renderiranje"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Ako troškovi za ponovo izračunaj stil ostanu visoki, optimizacija alata za odabir može ih smanjiti. [Optimizirajte selektore](https://developer.chrome.com/docs/devtools/performance/selector-stats) s visokim proteklim vremenom i visokim postotkom sporog puta. Jednostavniji selektori, manji broj selektora, manji DOM i plići DOM smanjit će troškove uparivanja."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Proteklo vrijeme"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Nisu pronađeni podaci o selektoru CSS-a. Statistički podaci o selektoru CSS-a moraju se omogućiti u postavkama ploče izvedbe."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Pokušaji podudaranja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Broj podudaranja"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Troškovi selektora CSS-a"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Najčešći selektori"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Ukupno"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Vrijeme glavne niti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Treća strana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Veličina prijenosa"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Kôd treće strane može znatno utjecati na izvedbu učitavanja. [Smanjite i odgodite učitavanje koda treće strane](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) da biste prioritet dali sadržaju svoje stranice."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Nije pronađena nijedna treća strana"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Treće strane"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimizirajte vidljivi dio za mobilne uređaje"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Samo stranice koje su učitane putem GET zahtjeva ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Jedino se stranice sa šifrom statusa 2XX mogu predmemorirati."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome je otkrio pokušaj izvršavanja JavaScripta dok je u predmemoriji."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Stranice koje su zatražile AppBanner trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Oznake onemogućuju predmemoriranje cijele stranice. Otvorite chrome://flags/#back-forward-cache da biste ga lokalno omogućili na ovom uređaju."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Naredbeni redak onemogućio je predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog nedovoljno memorije."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Ovlaštenje ne podržava predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Predučitavač je onemogućio predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Stranica se ne može predmemorirati jer ima instancu BroadcastChannel s registriranim slušateljima."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Stranice sa zaglavljem cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Predmemorija je namjerno izbrisana."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Stranica je izbačena iz predmemorije kako bi se omogućilo predmemoriranje druge stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Stranice koje sadrže dodatke trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Neodređeno"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Stranice koje koriste FileChooser API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Stranice koje koriste File System Access API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Stranice koje koriste otpremnik za medijski uređaj ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Tijekom napuštanja stranice u tijeku je bila reprodukcija Media Playera."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Stranice koje koriste MediaSession API i postave stanje reprodukcije ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Stranice koje koriste MediaSession API i postave rukovatelje radnjom ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog čitača zaslona."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Stranice koje koriste SecurityHandler ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Stranice koje koriste Serial API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Stranice koje koriste WebAuthetication API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Stranice koje koriste WebBluetooth API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Stranice koje koriste WebUSB API ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je jer su kolačići onemogućeni na stranici koja upotrebljava Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Stranice koje koriste predviđeni alat ili radni zadatak trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokument nije završio s učitavanjem prije napuštanja stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Tijekom napuštanja stranice bio je prisutan natpis aplikacije."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Tijekom napuštanja stranice bio je prisutan Chromeov Upravitelj zaporki."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Tijekom napuštanja stranice u tijeku je bilo sažimanje DOM-a."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Tijekom napuštanja stranice bio je prisutan preglednik za sažimanje DOM-a."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog proširenja koja koriste API za slanje poruka."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Proširenja s dugotrajnijom vezom trebaju zatvoriti vezu prije pristupanja predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Proširenja s dugotrajnijom vezom pokušala su poslati poruke okvirima u predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog proširenja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Modalni dijalog, kao što je ponovno slanje obrasca ili dijalog sa zaporkom za http prikazao se za stranicu tijekom napuštanja stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Tijekom napuštanja stranice prikazala se offline stranica."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Tijekom napuštanja stranice bila je prisutna traka za intervenciju zbog nedovoljno memorije."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Tijekom napuštanja stranice postojali su zahtjevi za dopuštenja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Tijekom napuštanja stranice bio je prisutan alat za blokiranje skočnih prozora."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Pojedinosti o sigurnom pregledavanju prikazale su se tijekom napuštanja stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Sigurno pregledavanje ovu je stranicu smatralo zlonamjernom i blokiralo je skočne prozore."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Uslužni alat aktiviran je dok je u tijeku bilo predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog pogreške dokumenta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Stranice koje upotrebljavaju FencedFrames ne mogu se pohraniti u predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Stranica je izbačena iz predmemorije kako bi se omogućilo predmemoriranje druge stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Stranice koje su odobrile pristup streamanju medijskih sadržaja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Stranice koje imaju određene vrste ugrađenog sadržaja (npr. PDF-ovi) trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Stranice koje koriste IdleManager trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Stranice koje imaju otvorenu IndexedDB vezu trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog IndexedDB događaja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Korišteni su API-ji koji ne ispunjavaju kriterije."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Stranice u koje je JavaScript ugrađen putem proširenja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Stranice u koje je StyleSheet ugrađen putem proširenja trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Interna pogreška."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je jer je neki zahtjev za JavaScript mrežu primio resurs sa zaglavljem Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je zbog keepalive zahtjeva."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Stranice koje koriste zaključavanje tipkovnice trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Stranica nije završila s učitavanjem prije napuštanja stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Stranice čiji glavni resurs ima cache-control:no-cache ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Stranice čiji glavni izvor ima cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Kretanje je otkazano prije nego što se stranica mogla vratiti iz predmemoriranja cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Stranica je izbačena iz predmemorije jer je aktivna mrežna veza primila previše podataka. Chrome ograničava količinu podataka koje stranica može primiti tijekom predmemoriranja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Stranice koje imaju dohvaćanje ili XHR u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Stranica je izbačena iz predmemoriranja cijele stranice jer je aktivni zahtjev za mrežu uključivao preusmjeravanje."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Stranica je izbačena iz predmemorije jer je mrežna veza bila predugo otvorena. Chrome ograničava količinu vremena tijekom kojeg stranica može primiti podatke za vrijeme predmemoriranja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Stranice koje nemaju važeći odgovor ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Kretanje se dogodilo u okviru koji nije glavni."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Stranice s indeksiranim DB transakcijama trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Stranice sa zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Stranice sa zahtjevom za dohvaćanje mreže u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Stranice sa zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Stranice s XHR zahtjevom za mrežu u tijeku trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Stranice koje koriste PaymentManager trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Stranice koje koriste sliku u slici trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Stranice koje prikazuju korisničko sučelje za ispisivanje trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Stranica je otvorena pomoću metode window.open(), a druga kartica navodi referencu na nju ili je stranica otvorila prozor."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Proces generiranja za stranicu u predmemoriranju cijele stranice se srušio."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Postupak generiranja za stranicu u predmemoriranju cijele stranice je prekinut."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Stranice koje su zatražile dopuštenja za snimanje zvučnih zapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Stranice koje su zatražile dopuštenja za senzor trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Stranice koje su zatražile pozadinsku sinkronizaciju ili dopuštenja za dohvaćanje trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Stranice koje su zatražile dopuštenja za MIDI trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Stranice koje su zatražile dopuštenja za obavijesti trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Stranice koje su zatražite pristup pohrani trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Stranice koje su zatražile dopuštenja za snimanje videozapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Jedino se stranice čija je shema URL-a HTTP/HTTPS mogu predmemorirati."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Stranicu je preuzeo uslužni alat dok je u predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Uslužni alat pokušao je stranici kod koje je u tijeku predmemoriranje cijele stranice poslati MessageEvent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Otkazana je registracija za ServiceWorker dok je u tijeku bilo predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Stranica je izbačena iz predmemoriranja cijele stranice zbog aktivacije uslužnog alata."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome se ponovno pokrenuo i izbrisao unose predmemoriranja cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Stranice koje koriste SharedWorker trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Stranice koje koriste SpeechRecognizer trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Stranice koje koriste SpeechSynthesis trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Iframe na stranici pokrenuo je kretanje koje nije dovršeno."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Stranice čiji podresurs ima cache-control:no-cache ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Stranice čiji podresurs ima cache-control:no-store ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Stranica je premašila maksimalno vrijeme u predmemoriranju cijele stranice i istekla je."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Isteklo je pristupanje predmemoriranju cijele stranice (vjerojatno zbog rukovatelja sakrivanjem stranice koji su bili dugo pokrenuti)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Stranica ima unload rukovatelj u glavnom okviru."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Stranica ima unload rukovatelj u podokviru."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Preglednik je promijenio zaglavlje nadjačavanja korisničkog agenta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Stranice koje su odobrile pristup snimanju videozapisa ili audiozapisa trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Stranice koje koriste WebDatabase trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Stranice koje koriste WebHID trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Stranice koje koriste WebLocks trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Stranice koje koriste WebNfc trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Stranice koje koriste WebOTPService trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Stranice s WebRTC-om ne mogu pristupiti predmemoriranju cijele stranice"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je jer je upotrijebljen WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Stranice koje koriste WebShare trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Stranice s WebSocketom ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je jer je upotrijebljen WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Stranice s WebTransportom ne mogu pristupiti predmemoriranju cijele stranice."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Predmemoriranje cijele stranice onemogućeno je jer je upotrijebljen WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Stranice koje koriste WebXR trenutačno ne ispunjavaju kriterije za predmemoriranje cijele stranice."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Za animirani sadržaj upotrijebite [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) da biste smanjili upotrebu procesora kad sadržaj nije na zaslonu."

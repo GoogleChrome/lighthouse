@@ -49,6 +49,7 @@ class Audit {
    * @return {string}
    */
   static get DEFAULT_PASS() {
+    // TODO(v13): remove.
     return DEFAULT_PASS;
   }
 
@@ -478,6 +479,7 @@ class Audit {
 
       details: product.details,
       guidanceLevel: audit.meta.guidanceLevel,
+      replacesAudits: audit.meta.replacesAudits,
     };
   }
 
@@ -487,10 +489,12 @@ class Audit {
    * @returns {LH.Artifacts.MetricComputationDataInput}
    */
   static makeMetricComputationDataInput(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace ?? artifacts.traces[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog ?? artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
-    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL: artifacts.URL};
+    const {URL, SourceMaps} = artifacts;
+    // eslint-disable-next-line max-len
+    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL, SourceMaps, simulator: null};
   }
 }
 

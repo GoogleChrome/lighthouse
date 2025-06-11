@@ -24,7 +24,8 @@ class DOMSizeInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      replacesAudits: ['dom-size'],
     };
   }
 
@@ -76,7 +77,15 @@ class DOMSizeInsight extends Audit {
           },
         },
       ];
-      return Audit.makeTableDetails(headings, items);
+
+      const details = Audit.makeTableDetails(headings, items);
+      details.debugData = {
+        type: 'debugdata',
+        totalElements,
+        maxChildren: maxChildren.numChildren,
+        maxDepth: maxDepth.depth,
+      };
+      return details;
     });
   }
 }

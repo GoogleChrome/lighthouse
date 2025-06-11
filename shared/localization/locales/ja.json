@@ -660,7 +660,10 @@
     "message": "アニメーション コンテンツでの動画フォーマットの使用"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。バンドルされた JavaScript の場合、モジュールあり / モジュールなしの機能検出を使用する最新スクリプトの導入戦略を採用することにより、従来のブラウザに対するサポートを維持しながら、最新ブラウザに送るコード量を減らすことができます。[最新の JavaScript の使用方法の詳細](https://web.dev/articles/publish-modern-javascript)"
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/baseline) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "ページで core-js のバージョン 2 が検出されました。パフォーマンスのさまざまな改善を適用するには、バージョン 3 にアップグレードする必要があります。"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "テキスト圧縮の有効化"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options`（XFO）ヘッダーまたは `Content-Security-Policy`（CSP）ヘッダーの `frame-ancestors` ディレクティブは、ページを埋め込むことができる場所を制御します。これらを使用して、一部またはすべてのサイトでページの埋め込みをブロックすることで、クリックジャッキング攻撃を軽減できます。[クリックジャッキングを軽減する方法について](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "フレーム制御ポリシーが見つかりません"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO または CSP を使用してクリックジャッキングを軽減する"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "下のクリティカル リクエスト チェーンでは、高い優先度で読み込まれたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどの手段を行って、ページの読み込み速度を改善することをご検討ください。[重要なリクエストのチェーンを回避する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}other{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "ディレクティブ"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "HSTS ヘッダーを実装すると、HTTP 接続のダウングレードやスニッフィング攻撃のリスクが大幅に軽減されます。低い max-age から段階的にロールアウトすることをおすすめします。[強力な HSTS ポリシーの使用に関する詳細](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "無効な構文"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` が低すぎます"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "HSTS ヘッダーはありません"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "`max-age` ディレクティブはありません"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "`preload` ディレクティブはありません"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "`includeSubDomains` ディレクティブはありません"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "強力な HSTS ポリシーを使用する"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "アスペクト比（実際）"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "画像が適切な解像度で表示されています"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "レイアウト シフトのスコア"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "許可"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "挿入された iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "遅延したネットワーク リクエストによりページ レイアウトが調整されました"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "メディア要素に明示的なサイズが含まれていません"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "サポートされていないタイミング パラメータがエフェクトで使用されています"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "ディレクティブ"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Cross-Origin-Opener-Policy（COOP）を使用すると、ポップアップなどの他のドキュメントから最上位のウィンドウを分離できます。[COOP ヘッダーの実装に関する詳細](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "無効な構文"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "COOP ヘッダーはありません"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "COOP でオリジン分離が適切に行われていることを確認する"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "`optional` のフォントをプリロードすると、初めてのユーザーも使用できます。[フォントのプリロードの詳細](https://web.dev/articles/preload-optional-fonts)"
@@ -1332,7 +1395,7 @@
     "message": "[構造化データ テストツール](https://search.google.com/structured-data/testing-tool/)と[構造化データ用 Linter](http://linter.structured-data.org/) を実行して構造化データを検証してください。[構造化データの詳細](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
-    "message": "構造化データが無効です"
+    "message": "構造化データが有効です"
   },
   "core/audits/seo/meta-description.js | description": {
     "message": "メタ ディスクリプションを検索結果に追加すると、ページ コンテンツの内容を簡潔にまとめることができます。[メタ ディスクリプションの詳細](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "実行中にページ ナビゲーションが検出されました。タイムスパン モードを使用したページ ナビゲーションの監査は推奨されません。サードパーティ アトリビューションとメインスレッド検出を改善するには、ナビゲーション モードを使用してページ ナビゲーションの監査を行ってください。"
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "バックフォワード キャッシュの対象になるのは、GET リクエストで読み込まれたページのみです。"
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "キャッシュに保存できるのは、ステータス コードが 2XX のページのみです。"
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "キャッシュにある間に JavaScript を実行しようとしていることが検出されました。"
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "AppBanner をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "バックフォワード キャッシュはキープアライブ リクエストが原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "バックフォワード キャッシュはフラグにより無効になっています。chrome://flags/#back-forward-cache に移動して、このデバイスでローカルに有効化してください。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "バックフォワード キャッシュはコマンドラインにより無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "バックフォワード キャッシュはメモリ不足のため無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "バックフォワード キャッシュは委任には対応していません。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "バックフォワード キャッシュは事前レンダリングのため無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "このページにはリスナーが登録された BroadcastChannel インスタンスがあるため、キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Cache-Control: no-store ヘッダーがあるページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "キャッシュは意図的に消去されました。"
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "プラグインを含むページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "FileChooser API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "File System Access API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "メディア デバイス ディスパッチャーを使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "ページから移動するときにメディア プレーヤーが再生中でした。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "MediaSession API を使用しており再生状態にあるページは、バックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "MediaSession API を使用しておりアクション ハンドラを設定するページは、バックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "バックフォワード キャッシュはスクリーン リーダーが原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "SecurityHandler を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Serial API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthentication API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "WebBluetooth API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "WebUSB API を使用するページはバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "`Cache-Control: no-store` を使用するページで Cookie が無効になっているため、バックフォワード キャッシュは無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "専用のワーカーまたはワークレットを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "読み込みが終了していないドキュメントから移動しました。"
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "ページから移動するときにアプリバナーが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "ページから移動するときに Chrome パスワード マネージャーが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "ページから移動するときに DOM 抽出の処理が実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "ページから移動するときに DOM Distiller ビューアが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "バックフォワード キャッシュは、Messaging API を使用している拡張機能が原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "バックフォワード キャッシュを使用する前に、持続的に接続している拡張機能の接続を終了する必要があります。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "持続的に接続している拡張機能で、バックフォワード キャッシュのフレームへのメッセージ送信が試行されていました。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "バックフォワード キャッシュは拡張機能が原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "ページから移動するときにフォームの再送信や HTTP パスワード ダイアログなどのモーダル ダイアログがページに表示されていました。"
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "ページから移動するときにオフラインのページが表示されていました。"
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "ページから移動するときにメモリ不足介入バーが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "ページから移動するときに権限リクエストが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "ページから移動するときにポップアップ ブロッカーが実行中でした。"
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "ページから移動するときにセーフ ブラウジングのメッセージが表示されていました。"
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "セーフ ブラウジングでこのページが不正と判断され、ポップアップがブロックされました。"
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "ページがバックフォワード キャッシュにある間に、Service Worker が起動されました。"
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "バックフォワード キャッシュはドキュメントのエラーが原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Fenced Frame を使用しているページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "メディア ストリーム アクセスが可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "ポータルを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "IdleManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "IndexedDB 接続が開いているページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "バックフォワード キャッシュは IndexedDB イベントが原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "対象外の API が使用されました。"
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "拡張機能によって `JavaScript` が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "拡張機能によって `StyleSheet` が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "内部エラーが発生しました。"
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "バックフォワード キャッシュはキープアライブ リクエストが原因で無効になっています。"
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "キーボード ロックを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "読み込みが終了していないページから移動しました。"
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Cache-Control: no-cache のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Cache-Control: no-store のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "ページがバックフォワード キャッシュから復元される前に移動がキャンセルされました。"
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "アクティブなネットワーク接続による受信データが多すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページが受信できるデータ量に上限を設けています。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "処理中の fetch() または XHR があるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "アクティブなネットワーク リクエストにリダイレクトが含まれていたため、ページがバックフォワード キャッシュから削除されました。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "ネットワーク接続の時間が長すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページがデータを受信できる時間に上限を設けています。"
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "有効なレスポンス ヘッダーのないページはバックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "メインフレーム以外のフレームで移動が行われました。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "インデックス登録済み DB のトランザクションが進行中のページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "処理中の fetch ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "処理中の XHR ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "PaymentManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "ピクチャー イン ピクチャーを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "ポータルを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "印刷 UI を表示するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "このページは、`window.open()` を使用して開かれ、他のタブから参照されているか、ウィンドウが開かれています。"
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスに問題が発生しました。"
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスが強制終了されました。"
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "音声キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "センサーの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "バックグラウンド同期またはバックグラウンド フェッチの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "MIDI の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "通知の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "ストレージ アクセスをリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "動画キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "キャッシュに保存できるのは、URL スキームが HTTP または HTTPS のページのみです。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "ページがバックフォワード キャッシュにある間に Service Worker に要求されました。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Service Worker がバックフォワード キャッシュ内のページに `MessageEvent` を送信しようとしました。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ページがバックフォワード キャッシュにある間に Service Worker が登録解除されました。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Service Worker の起動により、ページがバックフォワード キャッシュから削除されました。"
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome が再起動し、バックフォワード キャッシュの内容が消去されました。"
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "SharedWorker を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "SpeechRecognizer を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "SpeechSynthesis を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "ページ上で iframe が移動を開始し、完了しませんでした。"
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Cache-Control: no-cache のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Cache-Control: no-store のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "このページは、バックフォワード キャッシュの最大保存時間を超えたため期限切れとなりました。"
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "ページのバックフォワード キャッシュへの保存がタイムアウトしました（長時間実行中の pagehide ハンドラが原因である可能性があります）。"
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "ページのメインフレームにアンロード ハンドラがあります。"
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "ページのサブフレームにアンロード ハンドラがあります。"
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "ブラウザによりユーザー エージェント オーバーライド ヘッダーが変更されました。"
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "録画や録音が可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "WebDatabase を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "WebHID を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "WebLocks を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "WebNFC を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "WebOTPService を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "WebRTC を使用するページは、バックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "WebShare を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "WebSocket を使用するページはバックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "WebTransport を使用するページはバックフォワード キャッシュに保存できません。"
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "WebXR を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "古いブラウザとの下位互換性を保つため、https: と http: の URL スキームを追加することを検討してください（`'strict-dynamic'` をサポートしているブラウザでは無視されます）。"
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "非推奨の機能が使用されています"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "CORS の `Access-Control-Allow-Headers` の処理では、Authorization はワイルドカード記号（*）で表されなくなります。"
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "デフォルトの Cast の統合を無効にするには、`-internal-media-controls-overlay-cast-button` セレクタではなく `disableRemotePlayback` 属性を使用する必要があります。"
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "URL に削除された空白文字（`(n|r|t)`）と小なり記号（`<`）が含まれるリソース リクエストはブロックされます。これらのリソースを読み込むには、要素の属性値などの場所にある改行を削除し、小なり記号をエンコードしてください。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API の Navigation Timing 2 を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API の Paint Timing を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` は非推奨となっています。代わりに標準化 API である Navigation Timing 2 の `nextHopProtocol` を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "`(0|r|n)` 文字が含まれる Cookie は、切り捨てではなく拒否されます。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "`document.domain` の設定による同一オリジン ポリシーの緩和は非推奨であり、デフォルトで無効になる予定です。この非推奨の警告は、`document.domain` の設定により有効にしたクロスオリジンのアクセスに対して行われます。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "クロスオリジンの iframe から window.alert をトリガーすることは非推奨であり、今後削除される予定です。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "クロスオリジンの iframe から window.confirm をトリガーすることは非推奨であり、今後削除される予定です。"
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "`DOMSubtreeModified`、`DOMNodeInserted`、`DOMNodeRemoved`、`DOMNodeRemovedFromDocument`、`DOMNodeInsertedIntoDocument`、`DOMCharacterDataModified` を含む DOM ミューテーション イベントは非推奨となり（https://w3c.github.io/uievents/#legacy-event-types）、削除される予定です。代わりに `MutationObserver` を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "データのサポート: SVG の <use> 要素の URL は非推奨となり、今後削除される予定です。"
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "`document.domain` の設定による同一オリジン ポリシーの緩和は非推奨であり、デフォルトで無効になる予定です。引き続きこの機能を使用するには、オリジンキー エージェント クラスタを無効にしてください。これには、ドキュメントとフレームの HTTP レスポンスとともに `Origin-Agent-Cluster: ?0` ヘッダーを送信します。詳しくは、https://developer.chrome.com/blog/immutable-document-domain/ をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "`Expect-CT` ヘッダーは非推奨であり、削除される予定です。Chrome では、2018 年 4 月 30 日以降に発行されたすべての公的に信頼されている証明書に対して、Certificate Transparency（証明書の透明性）を設定する必要があります。"
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` と `watchPosition()` は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` と `watchPosition()` は、保護されていないオリジンでは非推奨となっています。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` は非推奨になりました。代わりに `RTCPeerConnectionIceErrorEvent.address` または `RTCPeerConnectionIceErrorEvent.port` を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "`canmakepayment` Service Worker イベントの、次の販売者のオリジンと任意のデータのサポートは終了し、削除される予定です。`topOrigin`、`paymentRequestOrigin`、`methodData`、`modifiers`。"
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "ウェブサイトが、ネットワークで特権を持つユーザーのみアクセス可能な、ネットワークのサブリソースをリクエストしました。これらのリクエストにより、非公開のデバイスやサーバーがインターネット上で参照できるようになるため、クロスサイト リクエスト フォージェリ（CSRF）攻撃や情報漏洩のリスクが高まります。これらのリスクを軽減するため、Chrome では、保護されていないコンテキストからの非公開サブリソースへのリクエストは非推奨となっており、今後ブロックされるようになる予定です。"
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "動作を正確に反映させるため、`joinAdInterestGroup()` に渡される `InterestGroups` の `dailyUpdateUrl` フィールドの名前を `updateUrl` に変更しました。"
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "末尾が `.css` ファイル拡張子ではない CSS を、`file:` の URL から読み込むことはできません。"
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "`remove()` の非同期の範囲の削除を中止するための `SourceBuffer.abort()` の使用は、仕様変更により非推奨となっており、今後サポートされなくなります。代わりに `updateend` イベントをリッスンします。なお、`abort()` については、非同期メディアの追加の中止と、パーサーの状態のリセットのみを行います。"
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "バッファ済みコードフレームの最も高いプレゼンテーション タイムスタンプを下回る `MediaSource.duration` の設定は、仕様変更により非推奨となりました。切り捨てられたバッファ済みメディアの暗黙的な削除は、今後サポートされなくなります。代わりに、すべての `sourceBuffers` で明示的に `remove(newDuration, oldDuration)` を実行してください。このとき、`newDuration < oldDuration` となるよう指定してください。"
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI は、`MIDIOptions` で SysEx が指定されていない場合でも使用許可を要求します。"
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "標準化されていない古い `shadowroot` 属性は非推奨になり、M119 以降*は機能しなくなります*。代わりに、標準化されている新しい `shadowrootmode` 属性を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification API は保護されていないオリジンから使用できなくなっている可能性があります。アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "通知 API の権限は、クロスオリジンの iframe からリクエストできなくなっている可能性があります。最上位フレームからの権限をリクエストするか、代わりに新しいウィンドウを開くことを検討してください。"
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "createImageBitmap の `imageOrientation: 'none'` オプションは非推奨になりました。createImageBitmap を使用する際は、代わりに \\{imageOrientation: 'from-image'\\} オプションを使用してください。"
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "パートナーは古い (D)TLS バージョンの交渉を行っています。パートナーに確認してこれを修正してもらってください。"
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "img タグ、video タグ、canvas タグに `overflow: visible` を指定すると、要素の境界外にビジュアル コンテンツが作成される場合があります。https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` が非推奨となりました。支払いハンドラには、代わりに JIT インストールを使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "`PaymentRequest` 呼び出しが Content-Security-Policy（CSP）`connect-src` ディレクティブをバイパスしました。このバイパスは非推奨となっています。`PaymentRequest` API（`supportedMethods` フィールド）のお支払い方法 ID を CSP の `connect-src` ディレクティブに追加してください。"
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` が非推奨となりました。代わりに、標準化された `navigator.storage` を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` で `<picture>` 親要素を使用すると無効となり、無視されます。代わりに `<source srcset>` を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame はベンダー固有です。代わりに標準の cancelAnimationFrame を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame はベンダー固有です。代わりに標準の requestAnimationFrame を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen は非推奨になりました。代わりに Document.fullscreenElement を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen は非推奨になりました。代わりに Document.fullscreenEnabled を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "API `chrome.privacy.websites.privacySandboxEnabled` は非推奨になりますが、下位互換性を確保するため、リリース M113 まで引き続き有効です。代わりに、`chrome.privacy.websites.topicsEnabled`、`chrome.privacy.websites.fledgeEnabled`、`chrome.privacy.websites.adMeasurementEnabled` を使用してください。詳しくは https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "`DtlsSrtpKeyAgreement` の制約は削除されました。この制約に指定されている `false` 値は、削除された `SDES key negotiation` の方法を使用する試みとして解釈されます。この機能は削除されたため、`DTLS key negotiation` をサポートしているサービスで代用してください。"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "`DtlsSrtpKeyAgreement` の制約は削除されました。この制約に指定されている `true` 値は適用されませんが、この制約を削除するとシンプルにできます。"
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "コールバックベースの getStats() は非推奨になっており、今後削除されます。代わりに、仕様に準拠した getStats() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() は非推奨になりました。代わりに Selection.modify() を使用してください。"
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "URL に埋め込み認証情報（`https://user:pass@host/` など）が含まれるサブリソース リクエストはブロックされます。"
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy` オプションは非推奨であり、削除される予定です。"
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` ではクロスオリジン分離が必要となります。詳しくは、https://developer.chrome.com/blog/enabling-shared-array-buffer/ をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "ユーザー アクティベーションのない `speechSynthesis.speak()` は非推奨であり、削除される予定です。"
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "拡張機能で引き続き `SharedArrayBuffer` を使用するには、クロスオリジン分離を有効にする必要があります。https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "ウェブ SQL は非推奨となっています。SQLite WebAssembly または Indexed Database を使用してください"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "権限記述子 `window-placement` は非推奨になりました。代わりに `window-management` を使用してください。詳しくは、https://bit.ly/window-placement-rename をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "権限ポリシー `window-placement` は非推奨になりました。代わりに `window-management` を使用してください。詳しくは、https://bit.ly/window-placement-rename をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 は、`XMLHttpRequest` のレスポンス JSON ではサポートされていません。"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "メインスレッドの同期的な `XMLHttpRequest` は、エンドユーザーのエクスペリエンスに悪影響があるため、非推奨となっています。詳しくは、https://xhr.spec.whatwg.org/ をご覧ください。"
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` は非推奨になりました。代わりに `isSessionSupported()` を使用して、解決済みのブール値を確認してください。"
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "メインスレッドのブロック時間"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三者"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "合計"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse ユーザーフロー レポート"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "CORS の Access-Control-Allow-Headers の処理では、Authorization はワイルドカード記号（*）で表されなくなります。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "デフォルトの Cast の統合を無効にするには、-internal-media-controls-overlay-cast-button セレクタではなく disableRemotePlayback 属性を使用する必要があります。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS の appearance 値 slider-vertical は標準化されておらず、削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "URL に削除された空白文字（\\(n|r|t)）と未満文字（<）が含まれるリソース リクエストはブロックされます。これらのリソースを読み込むには、要素の属性値などの場所にある改行を削除し、未満文字をエンコードしてください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "ISO-2022-JP 文字セットの自動検出機能は非推奨となり、まもなく無効になります。Content-Type ヘッダーで文字セットを指定するか、メタタグ（https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding）を使用して文字セットを指定してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() は非推奨となっています。代わりに標準化 API の Navigation Timing 2 を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() は非推奨となっています。代わりに標準化 API の Paint Timing を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() は非推奨となっています。代わりに標準化 API である Navigation Timing 2 の nextHopProtocol を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "\\(0|r|n) 文字が含まれる Cookie は、切り捨てではなく拒否されます。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "document.domain の設定による同一オリジン ポリシーの緩和は非推奨であり、デフォルトで無効になる予定です。この非推奨の警告は、document.domain の設定により有効にしたクロスオリジンのアクセスに対して行われます。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "クロスオリジンの iframe から window.alert をトリガーすることは非推奨であり、今後削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "クロスオリジンの iframe から window.confirm をトリガーすることは非推奨であり、今後削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOMSubtreeModified、DOMNodeInserted、DOMNodeRemoved、DOMNodeRemovedFromDocument、DOMNodeInsertedIntoDocument、DOMCharacterDataModified を含む DOM ミューテーション イベントは非推奨となり（https://w3c.github.io/uievents/#legacy-event-types）、削除される予定です。代わりに MutationObserver を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "データのサポート: SVGUseElement の URL は非推奨となり、今後削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() と watchPosition() は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() と watchPosition() は、保護されていないオリジンでは非推奨となっています。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() は、保護されていないオリジンでは使用できなくなりました。この機能を使用する場合は、アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "<article>、<aside>、<nav>、<section> 内に、フォントサイズが指定されていない <h1> タグが見つかりました。まもなくこのブラウザでは、この見出しのテキストのサイズが変更されます。詳しくは、https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate のサポートは終了しました。代わりに RTCPeerConnectionIceErrorEvent.address または RTCPeerConnectionIceErrorEvent.port を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "この形式は、デジタル認証情報の navigator.credentials.get() リクエストで非推奨となりました。呼び出しを更新して新しい形式を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "canmakepayment　Service Worker イベントの、次の販売者のオリジンと任意のデータのサポートは終了し、削除される予定です。topOrigin、paymentRequestOrigin、methodData、modifiers。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "ウェブサイトが、ネットワークで特権を持つユーザーのみアクセス可能な、ネットワークのサブリソースをリクエストしました。これらのリクエストにより、非公開のデバイスやサーバーがインターネット上で参照できるようになるため、クロスサイト リクエスト フォージェリ（CSRF）攻撃や情報漏洩のリスクが高まります。これらのリスクを軽減するため、Chrome では、保護されていないコンテキストからの非公開サブリソースへのリクエストは非推奨となっており、今後ブロックされるようになる予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "動作を正確に反映させるため、joinAdInterestGroup() に渡される InterestGroups の dailyUpdateUrl フィールドの名前を updateUrl に変更しました。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator は非推奨になりました。代わりに Intl.Segmenter を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "末尾が .css ファイル拡張子ではない CSS を、file: の URL から読み込むことはできません。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "remove() の非同期の範囲の削除を中止するための SourceBuffer.abort() の使用は、仕様変更により非推奨となっており、今後サポートされなくなります。代わりに updateend イベントをリッスンします。なお、abort() については、非同期メディアの追加の中止と、パーサーの状態のリセットのみを行います。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "バッファ済みコードフレームの最も高いプレゼンテーション タイムスタンプを下回る MediaSource.duration の設定は、仕様変更により非推奨となりました。切り捨てられたバッファ済みメディアの暗黙的な削除は、今後サポートされなくなります。代わりに、すべての sourceBuffers で明示的に remove(newDuration, oldDuration) を実行してください。このとき、newDuration < oldDuration となるよう指定してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI は、MIDIOptions で SysEx が指定されていない場合でも使用許可を要求します。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "通知 API は保護されていないオリジンから使用できなくなっている可能性があります。アプリケーションを安全なオリジン（HTTPS など）に切り替えることを検討してください。詳しくは、https://goo.gle/chrome-insecure-origins をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "通知 API の権限は、クロスオリジンの iframe からリクエストできなくなっている可能性があります。最上位フレームからの権限をリクエストするか、代わりに新しいウィンドウを開くことを検討してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmap の imageOrientation: 'none' オプションは非推奨になりました。createImageBitmap を使用する際は、代わりに \\\\{imageOrientation: 'from-image'\\\\} オプションを使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "パートナーは古い（D）TLS バージョンの交渉を行っています。パートナーに確認してこれを修正してもらってください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "img タグ、video タグ、canvas タグに overflow: visible を指定すると、要素の境界外にビジュアル コンテンツが作成される場合があります。https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments は非推奨になりました。支払いハンドラには、代わりに JIT インストールを使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "PaymentRequest 呼び出しが Content-Security-Policy（CSP）connect-src ディレクティブをバイパスしました。このバイパスは非推奨となっています。PaymentRequest API（supportedMethods フィールド）のお支払い方法 ID を CSP の connect-src ディレクティブに追加してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent のサポートは終了しました。代わりに、標準化された navigator.storage を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> で <picture> 親要素を使用すると無効となり、無視されます。代わりに <source srcset> を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame はベンダー固有です。代わりに標準の cancelAnimationFrame を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame はベンダー固有です。代わりに標準の requestAnimationFrame を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen は非推奨になりました。代わりに Document.fullscreenElement を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() は非推奨になりました。代わりに Element.requestFullscreen() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() は非推奨になりました。代わりに Document.exitFullscreen() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen は非推奨になりました。代わりに Document.fullscreenEnabled を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "API chrome.privacy.websites.privacySandboxEnabled は非推奨になりますが、下位互換性を確保するため、リリース M113 まで引き続き有効です。代わりに、chrome.privacy.websites.topicsEnabled、chrome.privacy.websites.fledgeEnabled、chrome.privacy.websites.adMeasurementEnabled を使用してください。詳しくは https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "DtlsSrtpKeyAgreement の制約は削除されました。この制約に指定されている false 値は、削除された SDES key negotiation の方法を使用する試みとして解釈されます。この機能は削除されたため、DTLS key negotiation をサポートしているサービスで代用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "DtlsSrtpKeyAgreement の制約は削除されました。この制約に指定されている true 値は適用されませんが、この制約を削除するとシンプルにできます。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "コールバックベースの getStats() は非推奨になっており、今後削除されます。代わりに、仕様に準拠した getStats() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() は非推奨になりました。代わりに Selection.modify() を使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "URL に埋め込み認証情報（https://user:pass@host/ など）が含まれるサブリソース リクエストはブロックされます。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy オプションは非推奨であり、削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer ではクロスオリジン分離が必要となります。詳しくは、https://developer.chrome.com/blog/enabling-shared-array-buffer/ をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "ユーザー アクティベーションのない speechSynthesis.speak() は非推奨であり、削除される予定です。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "unload イベント リスナーはサポートが終了したため、今後削除されます。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "拡張機能で引き続き SharedArrayBuffer を使用するは、クロスオリジン分離を有効にする必要があります。https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 は、XMLHttpRequest のレスポンス JSON ではサポートされていません。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "メインスレッドの同期的な XMLHttpRequest は、エンドユーザーのエクスペリエンスに悪影響があるため、非推奨となっています。詳しくは、https://xhr.spec.whatwg.org/ をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "アニメーション"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "レイアウト シフトは、ユーザーの操作なしで要素が移動する場合に発生します。[レイアウト シフトの原因を調査](https://web.dev/articles/optimize-cls)してください。たとえば、ページの読み込み時に要素が追加、削除される、フォントが変更されるなどの原因が考えられます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "フォントのリクエスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "挿入された iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "レイアウト シフト クラスタ @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "レイアウト シフトの原因を検出できませんでした"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "レイアウト シフトなし"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "レイアウト シフトの原因"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "レイアウト シフトの主な原因"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "サイズ指定されていない画像"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "最も影響の大きいクラスタ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "最も影響の大きいレイアウト シフト クラスタ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "キャッシュの TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "キャッシュの有効期間を長くすると、再訪問したユーザーへのページの読み込み速度を向上できます。[詳細](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "非効率的キャッシュ ポリシーの対象となるリクエストはありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "他 {PH1} 件"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "リクエスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "効率的なキャッシュ保存期間を使用する"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "DOM サイズが大きいと、メモリ使用量が増え、スタイルの計算に時間がかかり、レイアウトのリフローというコストが発生して、ページの応答性に影響を及ぼします。[過度な DOM サイズの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "DOM サイズが大きいと、スタイルの計算とレイアウトのリフローに時間がかかり、ページの応答性に影響する可能性があります。DOM サイズが大きいと、メモリ使用量も増加します。[過度な DOM サイズの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "要素"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "子の最大数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM の深さ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "統計情報"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM サイズを最適化する"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "合計要素数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "値"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "最初のネットワーク リクエストは最も重要です。リダイレクトを回避し、サーバー応答を高速に保ち、テキスト圧縮を有効にして、レイテンシを削減します。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "圧縮の適用なし"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "リダイレクトなし"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "テキスト圧縮の適用あり"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "リダイレクト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "サーバーの応答時間"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "ドキュメント リクエストのレイテンシ"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "非圧縮のダウンロード"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "重複するバイト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "ソース"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "重複する大きい JavaScript モジュールをバンドルから削除すると、ネットワーク アクティビティで不必要に消費されるデータ量を減らすことができます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "重複する JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "テキストの表示を統一するため、[font-display](https://developer.chrome.com/blog/font-display) を swap または optional に設定することを検討してください。swap をさらに最適化して、[フォント指標のオーバーライド](https://developer.chrome.com/blog/font-fallbacks)でレイアウト シフトを軽減できます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "フォント"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "フォント表示"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "無駄になった時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "（匿名）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "一般的に、レイアウト ジオメトリの読み取りを行う多くの API は、レンダリング エンジンによるスクリプトの実行を強制的に一時停止して、スタイルとレイアウトを計算します。詳しくは、[強制リフロー](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)とその緩和策をご覧ください。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "スタック トレース"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "強制リフロー"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "上位の関数呼び出し"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "合計リフロー時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[ソース不明]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "画像のダウンロード時間を短縮すると、ページ読み込みの体感時間と LCP を改善できます。[画像サイズの最適化に関する詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1}（推定 {PH2}）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "最適化できる画像はありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "ファイルサイズの最適化"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "他 {PH1} 件"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "画像配信を改善する"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "画像の圧縮係数を増やすと、この画像のダウンロード サイズ（推定 {PH1}）を抑えることができます。"
+    "message": "画像の圧縮係数を増やすと、この画像のダウンロード サイズが改善する可能性があります。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "最新の画像形式（WebP、AVIF）を使用するか、画像の圧縮率を高くすると、この画像のダウンロード サイズ（推定 {PH1}）を抑えることができます。"
+    "message": "最新の画像形式（WebP、AVIF）を使用するか、画像の圧縮率を高くすると、この画像のダウンロード サイズが改善する可能性があります。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "この画像ファイルは、表示サイズ（{PH3}）に必要なサイズ（{PH2}）より大きくなっています。画像のダウンロード サイズ（推定 {PH1}）を小さくするには、レスポンシブ画像を使用してください。"
+    "message": "この画像ファイルは、表示サイズ（{PH2}）に必要なサイズ（{PH1}）より大きくなっています。画像のダウンロード サイズを小さくするには、レスポンシブ画像を使用します。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "GIF ではなく動画形式を使用すると、アニメーション コンテンツのダウンロード サイズ（推定 {PH1}）を抑えることができます。"
+    "message": "GIF ではなく動画形式を使用すると、アニメーション コンテンツのダウンロード サイズが改善する可能性があります。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "最も長いフェーズから調査を開始します。[遅延を最小限に抑えることができます](https://web.dev/articles/optimize-inp#optimize_interactions)。処理期間を削減するには、[メインスレッドのコスト（通常は JS）を最適化](https://web.dev/articles/optimize-long-tasks)します。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "所要時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "入力遅延"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "操作は検出されませんでした"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "フェーズ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "表示の遅延"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "処理期間"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "フェーズ別の INP"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "LCP 画像を HTML からすぐに[検出できる](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)ようにし、[遅延読み込みを回避](https://web.dev/articles/lcp-lazy-loading)して、LCP を最適化します"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "「fetchpriority=high」が適用されました"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "「fetchpriority=high」を適用する必要があります"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "遅延読み込みが適用されていません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP のイメージは、最も早い開始点から {PH1} 後に読み込まれました。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "LCP は検出されませんでした"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "LCP が画像ではないため、LCP リソースは検出されませんでした"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "リクエストは最初のドキュメントで検出可能です"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP リクエストの検出"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "各[フェーズには、それに適した改善戦略があります](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想的なのは、LCP 時間のほとんどがリソースの読み込みに使われ、遅延に費やされないことです。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "所要時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "要素のレンダリングの遅延"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "フィールドの 75 パーセンタイル"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "LCP は検出されませんでした"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "フェーズ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "リソース読み込みの遅延"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "リソースの読み込み時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "フェーズ別の LCP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "スクリプト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "不要なバイト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新のブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/articles/baseline-and-polyfills) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "以前の JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 と HTTP/3 には、多重化など、HTTP/1.1 と比べて多くのメリットがあります。[最新の HTTP の使用について](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "HTTP/1.1 を使用したリクエストはありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "プロトコル"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "リクエスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "最新の HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善し、[クリティカル リクエスト チェーンを回避](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)してください。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "クリティカル パスの最大待ち時間:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "ネットワークの依存関係の影響を受けるレンダリング処理はありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "ネットワークの依存関係ツリー"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善し、クリティカル リクエスト チェーンを回避してください。"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "リクエストがページの最初のレンダリングをブロックしているため、LCP が遅れる可能性があります。これらのネットワーク リクエストを[遅らせるかインライン化](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)すると、クリティカル パスから移動できます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "所要時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "このナビゲーションのレンダリングをブロックしているリクエストはありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "リクエスト"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "レンダリングをブロックしているリクエスト"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "スタイルの再計算のコストが引き続き高い場合は、セレクタの最適化によってコストを削減できます。経過時間が長く、遅いパスの割合（%）が高い[セレクタを最適化](https://developer.chrome.com/docs/devtools/performance/selector-stats)します。セレクタの複雑さや数、DOM のサイズや深さを抑えて、一致コストを削減します。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "経過時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "CSS セレクタのデータは見つかりませんでした。パフォーマンス パネルの設定で CSS セレクタの統計情報を有効にする必要があります。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "マッチング試行回数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "一致数"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS セレクタのコスト"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "主なセレクタ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "合計"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "メインスレッド時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "サードパーティ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "転送サイズ"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。ページのコンテンツを優先させるには、[サードパーティのコードの読み込みを減らして遅らせ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)ます。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "サードパーティのコンテンツは見つかりませんでした"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "サードパーティ"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "ビューポートをモバイル向けに最適化する"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "バックフォワード キャッシュの対象になるのは、GET リクエストで読み込まれたページのみです。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "キャッシュに保存できるのは、ステータス コードが 2XX のページのみです。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "キャッシュにある間に JavaScript を実行しようとしていることが検出されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "AppBanner をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "バックフォワード キャッシュはフラグにより無効になっています。chrome://flags/#back-forward-cache に移動して、このデバイスでローカルに有効化してください。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "バックフォワード キャッシュはコマンドラインにより無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "バックフォワード キャッシュはメモリ不足のため無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "バックフォワード キャッシュは委任には対応していません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "バックフォワード キャッシュは事前レンダリングのため無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "このページにはリスナーが登録された BroadcastChannel インスタンスがあるため、キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Cache-Control: no-store ヘッダーがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "キャッシュは意図的に消去されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "プラグインを含むページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "未定義"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "FileChooser API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "File System Access API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "メディア デバイス ディスパッチャーを使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "ページから移動するときにメディア プレーヤーが再生中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "MediaSession API を使用しており再生状態にあるページは、バックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "MediaSession API を使用しておりアクション ハンドラを設定するページは、バックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "バックフォワード キャッシュはスクリーン リーダーが原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "SecurityHandler を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Serial API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "WebAuthentication API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "WebBluetooth API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "WebUSB API を使用するページはバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Cache-Control: no-store を使用するページで Cookie が無効になっているため、バックフォワード キャッシュは無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "専用のワーカーまたはワークレットを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "読み込みが終了していないドキュメントから移動しました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "ページから移動するときにアプリバナーが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "ページから移動するときに Chrome パスワード マネージャーが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "ページから移動するときに DOM 抽出の処理が実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "ページから移動するときに DOM Distiller ビューアが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "バックフォワード キャッシュは、Messaging API を使用している拡張機能が原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "バックフォワード キャッシュを使用する前に、持続的に接続している拡張機能の接続を終了する必要があります。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "持続的に接続している拡張機能で、バックフォワード キャッシュのフレームへのメッセージ送信が試行されていました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "バックフォワード キャッシュは拡張機能が原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "ページから移動するときにフォームの再送信や HTTP パスワード ダイアログなどのモーダル ダイアログがページに表示されていました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "ページから移動するときにオフラインのページが表示されていました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "ページから移動するときにメモリ不足介入バーが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "ページから移動するときに権限リクエストが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "ページから移動するときにポップアップ ブロッカーが実行中でした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "ページから移動するときにセーフ ブラウジングのメッセージが表示されていました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "セーフ ブラウジングでこのページが不正と判断され、ポップアップがブロックされました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "ページがバックフォワード キャッシュにある間に、Service Worker が起動されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "バックフォワード キャッシュはドキュメントのエラーが原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Fenced Frame を使用しているページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "別のページをキャッシュに保存できるようにするため、ページがキャッシュから削除されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "メディア ストリーム アクセスが可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "特定の種類の埋め込みコンテンツ（PDF など）があるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "IdleManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "IndexedDB 接続が開いているページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "バックフォワード キャッシュは IndexedDB イベントが原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "対象外の API が使用されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "拡張機能によって JavaScript が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "拡張機能によって StyleSheet が挿入されるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "内部エラーが発生しました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "一部の JavaScript ネットワーク リクエストで Cache-Control: no-store ヘッダーを含むリソースが返されたため、バックフォワード キャッシュは無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "バックフォワード キャッシュはキープアライブ リクエストが原因で無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "キーボード ロックを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "読み込みが終了していないページから移動しました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Cache-Control: no-cache のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Cache-Control: no-store のメインリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "ページがバックフォワード キャッシュから復元される前に移動がキャンセルされました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "アクティブなネットワーク接続による受信データが多すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページが受信できるデータ量に上限を設けています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "処理中の fetch() または XHR があるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "アクティブなネットワーク リクエストにリダイレクトが含まれていたため、ページがバックフォワード キャッシュから削除されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "ネットワーク接続の時間が長すぎたため、ページがキャッシュから削除されました。Chrome は、キャッシュに保存されたページがデータを受信できる時間に上限を設けています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "有効なレスポンス ヘッダーのないページはバックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "メインフレーム以外のフレームで移動が行われました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "インデックス登録済み DB のトランザクションが進行中のページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "処理中の fetch ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "処理中のネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "処理中の XHR ネットワーク リクエストがあるページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "PaymentManager を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "ピクチャー イン ピクチャーを使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "印刷 UI を表示するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "このページは、window.open() を使用して開かれ、他のタブから参照されているか、ウィンドウが開かれています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスに問題が発生しました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "バックフォワード キャッシュにあるページのレンダラ プロセスが強制終了されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "音声キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "センサーの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "バックグラウンド同期またはバックグラウンド フェッチの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "MIDI の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "通知の権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "ストレージ アクセスをリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "動画キャプチャの権限をリクエストしたページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "キャッシュに保存できるのは、URL スキームが HTTP または HTTPS のページのみです。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "ページがバックフォワード キャッシュにある間に Service Worker に要求されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Service Worker がバックフォワード キャッシュ内のページに MessageEvent を送信しようとしました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ページがバックフォワード キャッシュにある間に Service Worker が登録解除されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Service Worker の起動により、ページがバックフォワード キャッシュから削除されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome が再起動し、バックフォワード キャッシュの内容が消去されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "SharedWorker を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "SpeechRecognizer を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "SpeechSynthesis を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "ページ上で iframe が移動を開始し、完了しませんでした。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Cache-Control: no-cache のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Cache-Control: no-store のサブリソースがあるページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "このページは、バックフォワード キャッシュの最大保存時間を超えたため期限切れとなりました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "ページのバックフォワード キャッシュへの保存がタイムアウトしました（長時間実行中の pagehide ハンドラが原因である可能性があります）。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "ページのメインフレームにアンロード ハンドラがあります。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "ページのサブフレームにアンロード ハンドラがあります。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "ブラウザによりユーザー エージェント オーバーライド ヘッダーが変更されました。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "録画や録音が可能なページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "WebDatabase を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "WebHID を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "WebLocks を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "WebNFC を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "WebOTPService を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "WebRTC を使用するページは、バックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "バックフォワード キャッシュは、WebRTC が使用されているため無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "WebShare を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "WebSocket を使用するページはバックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "バックフォワード キャッシュは、WebSocket が使用されているため無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "WebTransport を使用するページはバックフォワード キャッシュに保存できません。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "バックフォワード キャッシュは、WebTransport が使用されているため無効になっています。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "WebXR を使用するページは、現時点ではバックフォワード キャッシュの対象になりません。"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "アニメーション コンテンツの場合は、[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) を使用して、コンテンツが画面外にあるときの CPU 使用量を最小限に抑えることができます。"

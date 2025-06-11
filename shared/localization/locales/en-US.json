@@ -660,7 +660,10 @@
     "message": "Use video formats for animated content"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Version 2 of core-js was detected on the page. You should upgrade to version 3 for many performance improvements."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Avoid serving legacy JavaScript to modern browsers"
@@ -1052,6 +1055,9 @@
   "core/audits/image-size-responsive.js | title": {
     "message": "Serves images with appropriate resolution"
   },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Layout shift score"
+  },
   "core/audits/is-on-https.js | allowed": {
     "message": "Allowed"
   },
@@ -1123,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Injected iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "A late network request adjusted the page layout"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Media element lacking an explicit size"
@@ -1437,7 +1440,7 @@
     "message": "Initial server response time was short"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome is moving towards a new experience that allows users to choose to browse without third-party cookies. [Learn more about third-party cookies](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Third-party cookies may be blocked in some contexts. [Learn more about preparing for third-party cookie restrictions](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 cookie found}\n    other {# cookies found}\n    }"
@@ -1673,7 +1676,10 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint Improvements"
   },
-  "core/config/default-config.js | insightGroupTitle": {
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "These insights are also available in the Chrome DevTools Performance Panel - [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
     "message": "Insights"
   },
   "core/config/default-config.js | metricGroupTitle": {
@@ -1738,357 +1744,6 @@
   },
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "A page navigation was detected during the run. Using timespan mode to audit page navigations is not recommended. Use navigation mode to audit page navigations for better third-party attribution and main thread detection."
-  },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Only pages loaded via a GET request are eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Only pages with a status code of 2XX can be cached."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome detected an attempt to execute JavaScript while in the cache."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Back/forward cache is disabled due to a keepalive request."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Back/forward cache is disabled by the command line."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Back/forward cache is disabled due to insufficient memory."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Back/forward cache is not supported by delegate."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Back/forward cache is disabled for prerenderer."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "The page cannot be cached because it has a BroadcastChannel instance with registered listeners."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Pages with cache-control:no-store header cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "The cache was intentionally cleared."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "The page was evicted from the cache to allow another page to be cached."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Pages containing plugins are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Pages that use FileChooser API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Pages that use File System Access API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Pages that use Media Device Dispatcher are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "A media player was playing upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Pages that use MediaSession API and set a playback state are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Pages that use MediaSession API and set action handlers are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Back/forward cache is disabled due to screen reader."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Pages that use SecurityHandler are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Pages that use Serial API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Pages that use WebAuthentication API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Pages that use WebBluetooth API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Pages that use WebUSB API are not eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Back/forward cache is disabled because cookies are disabled on a page that uses `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Pages that use a dedicated worker or worklet are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "The document did not finish loading before navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "App Banner was present upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Chrome Password Manager was present upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "DOM distillation was in progress upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer was present upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Back/forward cache is disabled due to extensions using messaging API."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Extensions with long-lived connection should close the connection before entering back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Extensions with long-lived connection attempted to send messages to frames in back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Back/forward cache is disabled due to extensions."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Modal dialog such as form resubmission or http password dialog was shown for the page upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "The offline page was shown upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Out-Of-Memory Intervention bar was present upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "There were permission requests upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Popup blocker was present upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Safe Browsing details were shown upon navigating away."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Safe Browsing considered this page to be abusive and blocked popup."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "A service worker was activated while the page was in back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Back/forward cache is disabled due to a document error."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Pages using FencedFrames cannot be stored in bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "The page was evicted from the cache to allow another page to be cached."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Pages that have granted media stream access are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Pages that use portals are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Pages that use IdleManager are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Pages that have an open IndexedDB connection are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Back/forward cache is disabled due to an IndexedDB event."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Ineligible APIs were used."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Pages that `JavaScript` is injected into by extensions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Pages that a `StyleSheet` is injected into by extensions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Internal error."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Back/forward cache is disabled due to a keepalive request."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Pages that use Keyboard lock are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "The page did not finish loading before navigating away."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Pages whose main resource has cache-control:no-cache cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Pages whose main resource has cache-control:no-store cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Navigation was cancelled before the page could be restored from back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "The page was evicted from the cache because an active network connection received too much data. Chrome limits the amount of data that a page may receive while cached."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Pages that have inflight fetch() or XHR are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "The page was evicted from back/forward cache because an active network request involved a redirect."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "The page was evicted from the cache because a network connection was open too long. Chrome limits the amount of time that a page may receive data while cached."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Pages that do not have a valid response head cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Navigation happened in a frame other than the main frame."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Page with ongoing indexed DB transactions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Pages with an in-flight fetch network request are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Pages with an in-flight XHR network request are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Pages that use PaymentManager are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Pages that use Picture-in-Picture are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Pages that use portals are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Pages that show Printing UI are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "The page was opened using '`window.open()`' and another tab has a reference to it, or the page opened a window."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "The renderer process for the page in back/forward cache crashed."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "The renderer process for the page in back/forward cache was killed."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Pages that have requested audio capture permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Pages that have requested sensor permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Pages that have requested background sync or fetch permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Pages that have requested MIDI permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Pages that have requested notifications permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Pages that have requested storage access are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Pages that have requested video capture permissions are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Only pages whose URL scheme is HTTP / HTTPS can be cached."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "The page was claimed by a service worker while it is in back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "A service worker attempted to send the page in back/forward cache a `MessageEvent`."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker was unregistered while a page was in back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "The page was evicted from back/forward cache due to a service worker activation."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome restarted and cleared the back/forward cache entries."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Pages that use SharedWorker are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Pages that use SpeechRecognizer are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Pages that use SpeechSynthesis are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "An iframe on the page started a navigation that did not complete."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Pages whose subresource has cache-control:no-cache cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Pages whose subresource has cache-control:no-store cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "The page exceeded the maximum time in back/forward cache and was expired."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "The page timed out entering back/forward cache (likely due to long-running pagehide handlers)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "The page has an unload handler in the main frame."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "The page has an unload handler in a sub frame."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Browser has changed the user agent override header."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Pages that have granted access to record video or audio are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Pages that use WebDatabase are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Pages that use WebHID are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Pages that use WebLocks are not currently eligible for back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Pages that use WebNfc are not currently eligible for back/forwad cache."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Pages that use WebOTPService are not currently eligible for bfcache."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Pages with WebRTC cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Pages that use WebShare are not currently eligible for back/forwad cache."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Pages with WebSocket cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Pages with WebTransport cannot enter back/forward cache."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Pages that use WebXR are not currently eligible for back/forward cache."
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Consider adding https: and http: URL schemes (ignored by browsers supporting `'strict-dynamic'`) to be backward compatible with older browsers."
@@ -2156,183 +1811,6 @@
   "core/lib/deprecation-description.js | title": {
     "message": "Deprecated Feature Used"
   },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Authorization will not be covered by the wildcard symbol (*) in CORS `Access-Control-Allow-Headers` handling."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "The `disableRemotePlayback` attribute should be used in order to disable the default Cast integration instead of using `-internal-media-controls-overlay-cast-button` selector."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` is deprecated, instead use standardized API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` is deprecated, instead use standardized API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` is deprecated, instead use standardized API: `nextHopProtocol` in Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Cookies containing a `(0|r|n)` character will be rejected instead of truncated."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Relaxing the same-origin policy by setting `document.domain` is deprecated, and will be disabled by default. This deprecation warning is for a cross-origin access that was enabled by setting `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Triggering window.alert from cross origin iframes has been deprecated and will be removed in the future."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Triggering window.confirm from cross origin iframes has been deprecated and will be removed in the future."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM Mutation Events, including `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, and `DOMCharacterDataModified` are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use `MutationObserver` instead."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Support for data: URLs in SVG <use> element is deprecated and it will be removed in the future."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Relaxing the same-origin policy by setting `document.domain` is deprecated, and will be disabled by default. To continue using this feature, please opt-out of origin-keyed agent clusters by sending an `Origin-Agent-Cluster: ?0` header along with the HTTP response for the document and frames. See https://developer.chrome.com/blog/immutable-document-domain/ for more details."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "The `Expect-CT` header is deprecated and will be removed. Chrome requires Certificate Transparency for all publicly trusted certificates issued after April 30, 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` and `watchPosition()` no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` and `watchPosition()` are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` is deprecated. Please use `RTCPeerConnectionIceErrorEvent.address` or `RTCPeerConnectionIceErrorEvent.port` instead."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "The merchant origin and arbitrary data from the `canmakepayment` service worker event are deprecated and will be removed: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "The `dailyUpdateUrl` field of `InterestGroups` passed to `joinAdInterestGroup()` has been renamed to `updateUrl`, to more accurately reflect its behavior."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Using `SourceBuffer.abort()` to abort `remove()`'s asynchronous range removal is deprecated due to specification change. Support will be removed in the future. You should listen to the `updateend` event instead. `abort()` is intended to only abort an asynchronous media append or reset parser state."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Setting `MediaSource.duration` below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit `remove(newDuration, oldDuration)` on all `sourceBuffers`, where `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "The older, non-standardized `shadowroot` attribute is deprecated, and will *no longer function* in M119. Please use the new, standardized `shadowrootmode` attribute instead."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Permission for the Notification API may no longer be requested from a cross-origin iframe. You should consider requesting permission from a top-level frame or opening a new window instead."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Option `imageOrientation: 'none'` in createImageBitmap is deprecated. Please use createImageBitmap with option \\{imageOrientation: 'from-image'\\} instead."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Specifying `overflow: visible` on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` is deprecated. Please use just-in-time install for payment handlers instead."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Your `PaymentRequest` call bypassed Content-Security-Policy (CSP) `connect-src` directive. This bypass is deprecated. Please add the payment method identifier from the `PaymentRequest` API (in `supportedMethods` field) to your CSP `connect-src` directive."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` is deprecated. Please use standardized `navigator.storage` instead."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` with a `<picture>` parent is invalid and therefore ignored. Please use `<source srcset>` instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame is vendor-specific. Please use the standard cancelAnimationFrame instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame is vendor-specific. Please use the standard requestAnimationFrame instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen is deprecated. Please use Document.fullscreenElement instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() is deprecated. Please use Element.requestFullscreen() instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() is deprecated. Please use Element.requestFullscreen() instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() is deprecated. Please use Document.exitFullscreen() instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() is deprecated. Please use Document.exitFullscreen() instead."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "We're deprecating the API `chrome.privacy.websites.privacySandboxEnabled`, though it will remain active for backward compatibility until release M113. Instead, please use `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` and `chrome.privacy.websites.adMeasurementEnabled`. See https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "The constraint `DtlsSrtpKeyAgreement` is removed. You have specified a `false` value for this constraint, which is interpreted as an attempt to use the removed `SDES key negotiation` method. This functionality is removed; use a service that supports `DTLS key negotiation` instead."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "The constraint `DtlsSrtpKeyAgreement` is removed. You have specified a `true` value for this constraint, which had no effect, but you can remove this constraint for tidiness."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "The callback-based getStats() is deprecated and will be removed. Use the spec-compliant getStats() instead."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "The `rtcpMuxPolicy` option is deprecated and will be removed."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` without user activation is deprecated and will be removed."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Extensions should opt into cross-origin isolation to continue using `SharedArrayBuffer`. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL is deprecated. Please use SQLite WebAssembly or Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "The permission descriptor `window-placement` is deprecated. Use `window-management` instead. For more help, check https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "The permission policy `window-placement` is deprecated. Use `window-management` instead. For more help, check https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 is not supported by response json in `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Synchronous `XMLHttpRequest` on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` is deprecated. Please use `isSessionSupported()` and check the resolved boolean value instead."
-  },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Main-Thread Blocking Time"
   },
@@ -2385,22 +1863,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potential Savings"
+    "message": "Est Savings"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potential Savings"
+    "message": "Est Savings"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Est savings of {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount, plural, =1 {1 element found} other {# elements found}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potential savings of {wastedMs, number, milliseconds} ms"
+    "message": "Est savings of {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
@@ -2464,6 +1942,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Total"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2684,6 +2165,183 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse User Flow Report"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Authorization will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "The disableRemotePlayback attribute should be used in order to disable the default Cast integration instead of using -internal-media-controls-overlay-cast-button selector."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS appearance value slider-vertical is not standardized and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resource requests whose URLs contained both removed whitespace \\(n|r|t) characters and less-than characters (<) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Auto-detection of ISO-2022-JP character set is deprecated and it will be disabled in the near future. Please specify character set in the Content Type header or by using a meta tag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: nextHopProtocol in Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Relaxing the same-origin policy by setting document.domain is deprecated, and will be disabled by default. This deprecation warning is for a cross-origin access that was enabled by setting document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Triggering window.alert from cross origin iframes has been deprecated and will be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Triggering window.confirm from cross origin iframes has been deprecated and will be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOM Mutation Events, including DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, and DOMCharacterDataModified are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use MutationObserver instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() and watchPosition() are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Found an <h1> tag within an <article>, <aside>, <nav>, or <section> which does not have a specified font-size. The size of this heading text will be changing in this browser in the near future. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is deprecated. Please use RTCPeerConnectionIceErrorEvent.address or RTCPeerConnectionIceErrorEvent.port instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "This format for the navigator.credentials.get() request for digital credentials is deprecated, please update your call to use the new format."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "The merchant origin and arbitrary data from the canmakepayment service worker event are deprecated and will be removed: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "The dailyUpdateUrl field of InterestGroups passed to joinAdInterestGroup() has been renamed to updateUrl, to more accurately reflect its behavior."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator is deprecated. Please use Intl.Segmenter instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Using SourceBuffer.abort() to abort remove()'s asynchronous range removal is deprecated due to specification change. Support will be removed in the future. You should listen to the updateend event instead. abort() is intended to only abort an asynchronous media append or reset parser state."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Permission for the Notification API may no longer be requested from a cross-origin iframe. You should consider requesting permission from a top-level frame or opening a new window instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Option imageOrientation: 'none' in createImageBitmap is deprecated. Please use createImageBitmap with option '\\\\{imageOrientation: 'from-image'\\\\}' instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Specifying overflow: visible on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments is deprecated. Please use just-in-time install for payment handlers instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Your PaymentRequest call bypassed Content-Security-Policy (CSP) connect-src directive. This bypass is deprecated. Please add the payment method identifier from the PaymentRequest API (in supportedMethods field) to your CSP connect-src directive."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent is deprecated. Please use standardized navigator.storage instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> with a <picture> parent is invalid and therefore ignored. Please use <source srcset> instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame is vendor-specific. Please use the standard cancelAnimationFrame instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame is vendor-specific. Please use the standard requestAnimationFrame instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen is deprecated. Please use Document.fullscreenElement instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() is deprecated. Please use Element.requestFullscreen() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() is deprecated. Please use Element.requestFullscreen() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() is deprecated. Please use Document.exitFullscreen() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() is deprecated. Please use Document.exitFullscreen() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen is deprecated. Please use Document.fullscreenEnabled instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "We're deprecating the API chrome.privacy.websites.privacySandboxEnabled, though it will remain active for backward compatibility until release M113. Instead, please use chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled and chrome.privacy.websites.adMeasurementEnabled. See https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "The constraint DtlsSrtpKeyAgreement is removed. You have specified a false value for this constraint, which is interpreted as an attempt to use the removed SDES key negotiation method. This functionality is removed; use a service that supports DTLS key negotiation instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "The constraint DtlsSrtpKeyAgreement is removed. You have specified a true value for this constraint, which had no effect, but you can remove this constraint for tidiness."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "The callback-based getStats() is deprecated and will be removed. Use the spec-compliant getStats() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() is deprecated. Please use Selection.modify() instead."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "The rtcpMuxPolicy option is deprecated and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() without user activation is deprecated and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Unload event listeners are deprecated and will be removed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "The GPUAdapter isFallbackAdapter attribute is deprecated, instead use the GPUAdapterInfo isFallbackAdapter attribute."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 is not supported by response json in XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
     "message": "Animation"
   },
@@ -2720,6 +2378,24 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
     "message": "Worst layout shift cluster"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Cache TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "No requests with inefficient cache policies"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} others"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Use efficient cache lifetimes"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
@@ -2748,10 +2424,10 @@
     "message": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
-    "message": "Had redirects"
+    "message": "Had redirects ({PH1} redirects, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "Server responded slowly"
+    "message": "Server responded slowly (observed {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "No compression applied"
@@ -2760,7 +2436,7 @@
     "message": "Avoids redirects"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "Server responds quickly"
+    "message": "Server responds quickly (observed {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Applies text compression"
@@ -2777,6 +2453,18 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
     "message": "Uncompressed download"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Duplicated bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Source"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplicated JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks)."
   },
@@ -2788,6 +2476,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
     "message": "Wasted time"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonymous)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
     "message": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations."
@@ -2804,8 +2495,14 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
     "message": "Total reflow time"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[unattributed]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (Est {PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
     "message": "No optimizable images"
@@ -2820,16 +2517,16 @@
     "message": "Improve image delivery"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Increasing the image compression factor could improve this image's download size. (Est {PH1})"
+    "message": "Increasing the image compression factor could improve this image's download size."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size. (Est {PH1})"
+    "message": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "This image file is larger than it needs to be ({PH2}) for its displayed dimensions ({PH3}). Use responsive images to reduce the image download size. (Est {PH1})"
+    "message": "This image file is larger than it needs to be ({PH1}) for its displayed dimensions ({PH2}). Use responsive images to reduce the image download size."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Using video formats instead of GIFs can improve the download size of animated content. (Est {PH1})"
+    "message": "Using video formats instead of GIFs can improve the download size of animated content."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS."
@@ -2861,6 +2558,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
     "message": "fetchpriority=high applied"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high should be applied"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
     "message": "lazy load not applied"
   },
@@ -2882,14 +2582,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Duration"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
     "message": "Element render delay"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "Field p75"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "No LCP detected"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | percentLCP": {
-    "message": "% of LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
     "message": "Phase"
@@ -2906,17 +2609,89 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP by phase"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": {
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Script"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Wasted bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Legacy JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "No requests used HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protocol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Modern HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Source"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Time"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Est LCP savings"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | noLongCriticalNetworkTree": {
-    "message": "No rendering tasks impacted by long critical network tree"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use fewer than 4."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": {
-    "message": "Long critical network tree"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Preconnect candidates"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Max critical path latency:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "No rendering tasks impacted by network dependencies"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "No additional origins are good candidates for preconnecting"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "no origins were preconnected"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Preconnect origins"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Network dependency tree"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "More than 4 preconnect connections were found. These should be used sparingly and only to the most important origins."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Unused preconnect. Only use preconnect for origins that the page is likely to request."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Avoid chaining critical requests by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path."
+    "message": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Duration"
@@ -2954,29 +2729,389 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
     "message": "Total"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnBlockingTime": {
-    "message": "Blocking time"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Main thread time"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
-    "message": "Third party"
+    "message": "3rd party"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
     "message": "Transfer size"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content."
+    "message": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) to prioritize your page's content."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "No third parties found"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
-    "message": "Third parties"
+    "message": "3rd parties"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimize viewport for mobile"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Only pages loaded via a GET request are eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Only pages with a status code of 2XX can be cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome detected an attempt to execute JavaScript while in the cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Back/forward cache is disabled by the command line."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Back/forward cache is disabled due to insufficient memory."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Back/forward cache is not supported by delegate."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Back/forward cache is disabled for prerenderer."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "The page cannot be cached because it has a BroadcastChannel instance with registered listeners."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Pages with cache-control:no-store header cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "The cache was intentionally cleared."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "The page was evicted from the cache to allow another page to be cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Pages containing plugins are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Undefined"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Pages that use FileChooser API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Pages that use File System Access API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Pages that use Media Device Dispatcher are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "A media player was playing upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Pages that use MediaSession API and set a playback state are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Pages that use MediaSession API and set action handlers are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Back/forward cache is disabled due to screen reader."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Pages that use SecurityHandler are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Pages that use Serial API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Pages that use WebAuthetication API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Pages that use WebBluetooth API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Pages that use WebUSB API are not eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Back/forward cache is disabled because cookies are disabled on a page that uses Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Pages that use a dedicated worker or worklet are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "The document did not finish loading before navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "App Banner was present upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chrome Password Manager was present upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM distillation was in progress upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer was present upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Back/forward cache is disabled due to extensions using messaging API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Extensions with long-lived connection should close the connection before entering back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Extensions with long-lived connection attempted to send messages to frames in back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Back/forward cache is disabled due to extensions."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Modal dialog such as form resubmission or http password dialog was shown for the page upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "The offline page was shown upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Out-Of-Memory Intervention bar was present upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "There were permission requests upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Popup blocker was present upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Safe Browsing details were shown upon navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Safe Browsing considered this page to be abusive and blocked popup."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "A service worker was activated while the page was in back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Back/forward cache is disabled due to a document error."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Pages using FencedFrames cannot be stored in bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "The page was evicted from the cache to allow another page to be cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Pages that have granted media stream access are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Pages that have certain kinds of embedded content (e.g. PDFs) are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Pages that use IdleManager are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Pages that have an open IndexedDB connection are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Back/forward cache is disabled due to an IndexedDB event."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Ineligible APIs were used."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Pages that JavaScript is injected into by extensions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Pages that a StyleSheet is injected into by extensions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Internal error."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Back/forward cache is disabled because some JavaScript network request received resource with Cache-Control: no-store header."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Back/forward cache is disabled due to a keepalive request."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Pages that use Keyboard lock are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "The page did not finish loading before navigating away."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Pages whose main resource has cache-control:no-cache cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Pages whose main resource has cache-control:no-store cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigation was cancelled before the page could be restored from back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "The page was evicted from the cache because an active network connection received too much data. Chrome limits the amount of data that a page may receive while cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Pages that have inflight fetch() or XHR are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "The page was evicted from back/forward cache because an active network request involved a redirect."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "The page was evicted from the cache because a network connection was open too long. Chrome limits the amount of time that a page may receive data while cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Pages that do not have a valid response head cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Navigation happened in a frame other than the main frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Page with ongoing indexed DB transactions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Pages with an in-flight fetch network request are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Pages with an in-flight XHR network request are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Pages that use PaymentManager are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Pages that use Picture-in-Picture are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Pages that show Printing UI are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "The page was opened using 'window.open()' and another tab has a reference to it, or the page opened a window."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "The renderer process for the page in back/forward cache crashed."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "The renderer process for the page in back/forward cache was killed."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Pages that have requested audio capture permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Pages that have requested sensor permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Pages that have requested background sync or fetch permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Pages that have requested MIDI permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Pages that have requested notifications permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Pages that have requested storage access are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Pages that have requested video capture permissions are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Only pages whose URL scheme is HTTP / HTTPS can be cached."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "The page was claimed by a service worker while it is in back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "A service worker attempted to send the page in back/forward cache a MessageEvent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker was unregistered while a page was in back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "The page was evicted from back/forward cache due to a service worker activation."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome restarted and cleared the back/forward cache entries."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Pages that use SharedWorker are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Pages that use SpeechRecognizer are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Pages that use SpeechSynthesis are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "An iframe on the page started a navigation that did not complete."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Pages whose subresource has cache-control:no-cache cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Pages whose subresource has cache-control:no-store cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "The page exceeded the maximum time in back/forward cache and was expired."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "The page timed out entering back/forward cache (likely due to long-running pagehide handlers)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "The page has an unload handler in the main frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "The page has an unload handler in a sub frame."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Browser has changed the user agent override header."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Pages that have granted access to record video or audio are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Pages that use WebDatabase are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Pages that use WebHID are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Pages that use WebLocks are not currently eligible for back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Pages that use WebNfc are not currently eligible for back/forwad cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Pages that use WebOTPService are not currently eligible for bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Pages with WebRTC cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Back/forward cache is disabled because WebRTC has been used."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Pages that use WebShare are not currently eligible for back/forwad cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Pages with WebSocket cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Back/forward cache is disabled because WebSocket has been used."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Pages with WebTransport cannot enter back/forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Back/forward cache is disabled because WebTransport has been used."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Pages that use WebXR are not currently eligible for back/forward cache."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimize CPU usage when the content is offscreen."
@@ -3506,8 +3641,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "File an issue"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Go back to audits"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Hide"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Lab Data"
@@ -3608,6 +3749,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "There were issues affecting this run of Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Try insights"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Unattributable"
   },
@@ -3630,24 +3774,30 @@
     "message": "All"
   },
   "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "All Scripts"
+    "message": "All scripts"
   },
   "treemap/app/src/util.js | coverageColumnName": {
     "message": "Coverage"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Duplicate Modules"
+    "message": "Duplicate modules"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Duplicated bytes"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resource Bytes"
+    "message": "Resource bytes"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "Name"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Toggle Table"
+    "message": "Toggle table"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Transfer bytes"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Unused Bytes"
+    "message": "Unused bytes"
   }
 }

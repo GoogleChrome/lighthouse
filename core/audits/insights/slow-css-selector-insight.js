@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */ // TODO: remove once implemented.
 
+// TODO: currently disabled via core/scripts/generate-insight-audits.js. Ignore for now.
+
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -26,7 +28,7 @@ class SlowCSSSelectorInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
     };
   }
 

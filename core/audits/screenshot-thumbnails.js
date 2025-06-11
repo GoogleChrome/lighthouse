@@ -24,7 +24,7 @@ class ScreenshotThumbnails extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Screenshot Thumbnails',
       description: 'This is what the load of your site looked like.',
-      requiredArtifacts: ['traces', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'GatherContext'],
     };
   }
 
@@ -70,7 +70,7 @@ class ScreenshotThumbnails extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async _audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     /** @type {Map<SpeedlineFrame, string>} */
     const cachedThumbnails = new Map();
 

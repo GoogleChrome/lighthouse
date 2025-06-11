@@ -660,7 +660,10 @@
     "message": "Pre animovaný obsah použite formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Viacnásobné vyplnenia a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Adoptujte pre svoj zabalený JavaScript modernejšiu stratégiu nasadzovania skriptov využívajúcu detekciu modulových a nemodulových funkcií a zredukujte tak množstvo kódu dodávaného do moderných prehliadačov, pričom zachováte podporu starých prehliadačov. [Ako používať moderný JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Na stránke bola zistená 2. verzia knižnice core-js. Ak chcete získať množstvo zlepšení výkonu, mali by ste inovovať na 3. verziu."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nezobrazujte starý JavaScript v moderných prehliadačoch"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Povoľte kompresiu textu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Hlavička `X-Frame-Options` (XFO) alebo direktíva `frame-ancestors` v ovládaní hlavičky `Content-Security-Policy` (PZO), kam možno vložiť stránku. Môže to zmierniť clickjackingové útoky tým, že bude niektorým alebo všetkým webom zablokované vloženie stránky. [Ďalšie informácie o zmierňovaní rizika clickjackingu](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Nenašli sa žiadne pravidlá kontroly rámu"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Implementujte XFO alebo PZO a zmiernite tak riziko clickjackingu"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Reťazce podstatných žiadostí uvedené nižšie znázorňujú, ktoré zdroje sú načítané s vysokou prioritou. Zvážte skrátenie dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky. [Ako sa vyhnúť reťazeniu kľúčových žiadostí](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Nástroju Lighthouse sa nepodarilo automaticky skontrolovať hodnotu `font-display` webu {fontOrigin}.}few{Nástroju Lighthouse sa nepodarilo automaticky skontrolovať hodnoty `font-display` webu {fontOrigin}.}many{Lighthouse was unable to automatically check the `font-display` values for the origin {fontOrigin}.}other{Nástroju Lighthouse sa nepodarilo automaticky skontrolovať hodnoty `font-display` webu {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Direktíva"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Nasadením hlavičky HSTS sa výrazne zníži riziko prechodu na nižšiu verziu pripojení HTTP a útokov spočívajúcich v odpočúvaní. Odporúča sa postupné zavádzanie s nízkou hodnotou max‑age. [Ďalšie informácie o používaní silných pravidiel HSTS](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Neplatná syntax"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "Direktíva `max-age` je príliš nízka"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Nenašla sa žiadna hlavička HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Žiadna direktíva `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Nenašla sa žiadna direktíva `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Nenašla sa žiadna direktíva `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Používajte silné pravidlá HSTS"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Pomer strán (skutočný)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Zobrazuje obrázky v príslušnom rozlíšení"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Skóre posunu rozloženia"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Povolené"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Vložený prvok iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Posledná sieťová požiadavka upravila rozloženie stránky"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Mediálny prvok nemá explicitnú veľkosť"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekt má nepodporované parametre časovania"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Direktíva"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Pomocou hlavičky Cross-Origin-Opener-Policy (COOP) je možné izolovať okno najvyššej úrovne od iných dokumentov, ako sú vyskakovacie okná. [Ďalšie informácie o nasadení hlavičky COOP](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Neplatná syntax"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Nenašla sa žiadna hlavička COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Zabezpečte správne izolovanie pôvodného zdroja pomocou hlavičky COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Prednačítajte písma s atribútom `optional`, aby ich mohli používať noví návštevníci. [Ďalšie informácie o prednačítavaní písiem](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Počas spustenia bola zistená navigácia na stránke. Používanie režimu časového rozsahu na kontrolu navigácie na stránke sa neodporúča. Navigácie na stránke môžete skontrolovať v režime navigácie. Získate lepšiu atribúciu tretích strán a detekciu hlavného vlákna."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Iba stránky načítané prostredníctvom požiadavky GET môžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Do vyrovnávacej pamäte sa dajú ukladať iba stránky so stavovým kódom 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome rozpoznal pokus o spustenie JavaScriptu počas uloženia vo vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Stránky, ktoré požiadali o AppBanner, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná v dôsledku žiadosti so signálom keepalive."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná experimentálnymi funkciami. Prejdite na chrome://flags/#back-forward-cache a aktivujte ju miestne v tomto zariadení."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná príkazovým riadkom."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná z dôvodu nedostatočnej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Delegát nepodporuje spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná pre predbežný vykresľovací modul."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Stránka sa nedá uložiť do vyrovnávacej pamäte, pretože má inštanciu BroadcastChannel s registrovanými prijímačmi."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Stránky s hlavičkou cache-control:no-store nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Vyrovnávacia pamäť bola zámerne vyčistená."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, aby bolo do nej možné uložiť inú."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Stránky s doplnkami momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Stránky s rozhraním FileChooser API nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Stránky s rozhraním File System Access API momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Stránky s nástrojom Media Device Dispatcher nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "V čase odchodu hral Prehrávač médií."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Stránky s rozhraním MediaSession API a nastaveným stavom prehrávania nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Stránky s rozhraním MediaSession API a nastavenými obslužnými nástrojmi akcií momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Čítačka obrazovky spôsobila deaktiváciu spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Stránky s nástrojom SecurityHandler nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Stránky s rozhraním Serial API nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Stránky s rozhraním WebAuthentication API nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Stránky s rozhraním WebBluetooth API nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Stránky s rozhraním WebUSB API nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože súbory cookie sú zakázané na stránke, ktorá používa `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Stránky s vyhradenou obsluhou alebo workletom momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Načítavanie dokumentu nebolo dokončené, kým ste odlišli preč."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "V čase odchodu bol zobrazený banner aplikácie."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "V čase odchodu bol zobrazený správca hesiel Chromu"
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "V čase odchodu prebiehala extrakcia pomocou nástroja DOM."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "V čase odchodu bol otvorený zobrazovač nástroja DOM Distiller."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Rozšírenia používajúce četové rozhranie API spôsobili deaktiváciu spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Rozšírenia s dlhotrvajúcim pripojením by mali pred získaním prístupu k spätnej vyrovnávacej pamäti pripojenie ukončiť."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Rozšírenia s dlhotrvajúcim pripojením sa pokúsili odoslať správy rámom v spätnej vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Rozšírenia spôsobili deaktiváciu spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "V čase odchodu bolo na stránke zobrazené modálne dialógové okno, ktoré sa mohlo napríklad týkať opätovného odoslania formulára alebo hesla HTTP."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "V čase odchodu bola zobrazená offline stránka."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "V čase odchodu bol zobrazený intervenčný pruh znamenajúci nedostatok pamäte."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "V čase odchodu bola odoslaná žiadosť o povolenie."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "V čase odchodu bola zobrazená možnosť blokovania vyskakovacích okien."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "V čase odchodu boli zobrazené podrobnosti Bezpečného prehliadania."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Bezpečné prehliadanie považuje túto stránku sa obťažujúcu a zablokovalo vyskakovacie okno."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Keď sa stránka nachádzala v spätnej vyrovnávacej pamäti, bola aktivovaná obsluha."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Spätná vyrovnávacia pamäť je deaktivovaná pre chybu v dokumente."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Stránky, ktoré používajú FencedFrames, nie je možné uložiť v spätnej vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, aby bolo do nej možné uložiť inú."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Stránky, ktoré udelili prístup k streamu médií, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Stránky s portálmi momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Stránky s nástrojom IdleManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Stránky s otvoreným pripojením IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná v dôsledku udalosti IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Boli použité nevhodné rozhrania API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Stránky, do ktorých rozšírenia vložili `JavaScript`, nemôžu momentálne používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Stránky, do ktorých rozšírenia vložili šablónu`StyleSheet`, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Interná chyba."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná v dôsledku žiadosti so signálom keepalive."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Stránky so zámkou klávesnice momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Načítavanie stránky nebolo dokončené, kým ste odlišli preč."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache-control:no-cache, momentálne nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache-control:no-store, nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Navigácia bola zrušená skôr, ako došlo k obnoveniu stránky zo spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože aktívne pripojenie k sieti dostalo príliš veľa dát. Chrome obmedzuje objem dát, ktoré môže dostávať stránka vo vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Stránky s načítavaním počas prenosu() alebo XHR momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Stránka bola vylúčená zo spätnej vyrovnávacej pamäte, pretože aktívna sieťová požiadavka zahŕňala presmerovanie."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože pripojenie k sieti bolo príliš dlho otvorené. Chrome obmedzuje obdobie, počas ktorého môže stránka vo vyrovnávacej pamäti dostávať dáta."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Stránky bez platnej hlavičky odpovede nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Navigácia sa uskutočnila v inom ako hlavnom ráme."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Stránky s prebiehajúcimi transakciami IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Stránky so sieťovou požiadavkou na načítanie počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Stránky so sieťovou požiadavkou XHR počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Stránky s nástrojom PaymentManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Stránky s obrazom v obraze momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Stránky s portálmi momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Stránky zobrazujúce používateľské rozhranie na tlač momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Stránka bola otvorená pomocou prvku `window.open()` a ďalšia karta má odkaz na ňu, prípadne stránka otvorila okno."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Proces vykresľovacieho modulu pre danú stránku v spätnej vyrovnávacej pamäti spadol."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Proces vykresľovacieho modulu pre danú stránku v spätnej vyrovnávacej pamäti bol zrušený."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Stránky, ktoré požiadali o povolenia na snímanie zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Stránky, ktoré požiadali o povolenia pre senzory, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Stránky, ktoré požiadali o synchronizáciu na pozadí alebo načítanie povolení, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Stránky, ktoré požiadali o povolenia pre MIDI, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Stránky, ktoré požiadali o povolenia pre upozornenia, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Stránky, ktoré požiadali o prístup k ukladaciemu priestoru, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Stránky, ktoré požiadali o povolenia na snímanie videí, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Do vyrovnávacej pamäte sa dajú uložiť iba stránky, ktorých schéma webovej adresy je HTTP alebo HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Stránku si nárokovala obsluha počas obdobia, kedy sa nachádza v spätnej vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Obsluha sa pokúsila odoslať stránke v spätnej vyrovnávacej pamäti `MessageEvent`."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Registrácia funkcie ServiceWorker bola zrušená, keď sa stránka nachádzala v spätnej vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Stránka bola vylúčená zo spätnej vyrovnávacej pamäte z dôvodu aktivácie obsluhy."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome reštartoval a vymazal záznamy v spätnej vyrovnávacej pamäti."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Stránky s rozhraním SharedWorker momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Stránky s rozhraním SpeechRecognizer momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Stránky s rozhraním SpeechSynthesis momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Prvok iframe na stránke spustil navigáciu, ktorá nebola dokončená."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Stránky, ktorých podzdroj má hlavičku cache-control:no-cache, nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Stránky, ktorých podzdroj má hlavičku cache-control:no-store, momentálne nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Stránka prekročila maximálny čas v spätnej vyrovnávacej pamäti a vypršala."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Pri zadávaní stránky do spätnej vyrovnávacej pamäte vypršal časový limit (pravdepodobne to spôsobili dlhodobo spustené obslužné nástroje pagehide)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Stránka má v hlavnom ráme obslužný nástroj uvoľnenia z pamäte."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Stránka má v podráme obslužný nástroj uvoľnenia z pamäte."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Prehliadač zmenil hlavičku prepísania používateľského agenta."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Stránky, ktoré udelili prístup na nahrávanie videa alebo zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Stránky s rozhraním WebDatabase momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Stránky s rozhraním WebHID momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Stránky s rozhraním WebLocks momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Stránky s rozhraním WebNfc momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Stránky s rozhraním WebOTPService momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Stránky s rozhraním WebRTC nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Stránky s rozhraním WebShare momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Stránky s rozhraním WebSocket nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Stránky s rozhraním WebTransport nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Stránky s rozhraním WebXR momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Zvážte pridanie schémy webovej adresy HTTPS alebo HTTP (ignorované prehliadačmi podporujúcimi direktívu `'strict-dynamic'`), aby boli pravidlá spätne kompatibilné so staršími prehliadačmi."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Používa sa funkcia s ukončenou podporou"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Autorizácie sa nebude týkať zástupný symbol (*) pri spracovaní CORS `Access-Control-Allow-Headers`."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Ak chcete zakázať predvolenú integráciu prenosu, použite namiesto selektora `-internal-media-controls-overlay-cast-button` atribút `disableRemotePlayback`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Požiadavky zdrojov, ktorých webové adresy zahrnujú odstránené prázdne znaky `(n|r|t)` a znaky „menej ako“ (`<`), sú blokované. Ak chcete načítať tieto zdroje, odstráňte nové riadky a kódujte znaky „menej ako“ z miest, ako sú hodnoty atribútu prvkov."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "Podpora funkcie `chrome.loadTimes()` bola ukončená. Namiesto nej použite štandardizované rozhranie API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "Podpora funkcie `chrome.loadTimes()` bola ukončená. Namiesto nej použite štandardizované rozhranie API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "Podpora funkcie `chrome.loadTimes()` bola ukončená. Namiesto nej použite štandardizované rozhranie API: `nextHopProtocol` v rámci funkcie Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Súbory cookie so znakom `(0|r|n)` budú namiesto skrátenia odmietnuté."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Podpora uvoľnenia pravidla z rovnakých zdrojov nastavením funkcie `document.domain` bola ukončená a táto možnosť bude predvolene zakázaná. Upozornenie na ukončenie podpory pochádza z prístupu z iných zdrojov, ktorý bol povolený nastavením funkcie `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Podpora spúšťania funkcie window.alert z prvkov iframe z rôznych zdrojov bola ukončená a v budúcnosti bude odstránená."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Podpora spúšťania funkcie window.confirm z prvkov iframe z rôznych zdrojov bola ukončená a v budúcnosti bude odstránená."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Podpora udalostí DOM Mutation vrátane `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` a `DOMCharacterDataModified` bola ukončená (https://w3c.github.io/uievents/#legacy-event-types) a udalosti budú odstránené. Použite namiesto nich `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Podpora údajov: podpora webových adries v prvku SVG <use> bola ukončená a v budúcnosti budú odstránené."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Podpora uvoľnenia pravidla z rovnakých zdrojov nastavením funkcie `document.domain` bola ukončená a táto možnosť bude predvolene zakázaná. Ak chcete naďalej používať túto funkciu, odhláste sa z klastrov zástupcu spojených so zdrojom odoslaním hlavičky `Origin-Agent-Cluster: ?0` spolu s odpoveďou HTTP pre dokument a rámy. Viac sa dozviete na https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Podpora hlavičky `Expect-CT` bola ukončená a bude odstránená. Chrome vyžaduje transparentnosť pre všetky verejne dôveryhodné certifikáty vydané po 30. apríli 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "Funkcie `getCurrentPosition()` a `watchPosition()` už nefungujú v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Podpora funkcií `getCurrentPosition()` a `watchPosition()` bola ukončená v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` už nefunguje v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "Podpora funkcie `RTCPeerConnectionIceErrorEvent.hostCandidate` bola ukončená. Namiesto nej použite funkciu `RTCPeerConnectionIceErrorEvent.address` alebo `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Podpora údajov o zdroji obchodníka a ľubovoľných údajov z udalosti obsluhy `canmakepayment` bola ukončená a tieto údaje budú odstránené: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Web požiadal o podzdroj zo siete, ku ktorému má prístup iba na základe privilegovanej pozície siete svojich používateľov. Tieto požiadavky vystavujú neverejné zariadenia a servery internetu, čím zvyšujú riziko útoku zahrnujúceho falšovanie požiadaviek z iného webu alebo úniku informácií. Na zmiernenie týchto rizík Chrome ukončuje podporu požiadaviek neverejných podzdrojov pri ich odoslaní z nezabezpečených kontextov a začne ich blokovať."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Pole `dailyUpdateUrl` položky `InterestGroups` odovzdané položke `joinAdInterestGroup()` bolo premenované na `updateUrl`, aby presnejšie vyjadrovalo vlastné správanie."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "Šablóny CSS nie je možné načítať z webových adries `file:`, pokiaľ sa nekončia príponou súboru `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Podpora použitia funkcie `SourceBuffer.abort()` na prerušenie odstránenia asynchrónneho rozsahu možnosti `remove()` bola ukončená z dôvodu zmeny špecifikácie. Podpora bude v budúcnosti odstránená. Namiesto toho by ste mali prijímať udalosť `updateend`. Funkcia `abort()` je určená iba na prerušenie pripojenia asynchrónnych médií alebo resetovanie stavu analyzátora."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Podpora nastavenia funkcie `MediaSource.duration` pod najvyššiu časovú pečiatku prezentácie akýchkoľvek kódovaných rámov vo vyrovnávacej pamäti bola ukončená z dôvodu zmeny špecifikácie. V budúcnosti bude odstránená podpora implicitného odstránenia skrátených médií vo vyrovnávacej pamäti. Namiesto toho by ste mali vykonať explicitnú funkciu `remove(newDuration, oldDuration)` v prípade všetkých možností `sourceBuffers`, kde platí `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI požiada o povolenie na použitie, aj keď exkluzívne správy systému (SysEx) nie sú vo funkcii `MIDIOptions` špecifikované."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Podpora staršieho neštandardizovaného atribútu `shadowroot` bola ukončená a vo verzii M119 *už nebude fungovať*. Použite namiesto neho nový štandardizovaný atribút `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Rozhranie Notification API už nie je možné používať z nezabezpečených zdrojov. Mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Povolenie pre rozhranie Notification API už nie je možné požadovať z prvku iframe od iných zdrojov. Namiesto toho by ste mali zvážiť požadovanie povolenia z rámu najvyššej úrovne alebo otvorenie nového okna."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Podpora možnosti `imageOrientation: 'none'` v nástroji createImageBitmap bola ukončená. Namiesto nej použite nástroj createImageBitmap pomocou možnosti \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Váš partner používa zastaranú verziu (D)TLS. Požiadajte ho, aby tento problém odstránil."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Ak v značkách img, značkách videa a značkách canvas špecifikujete atribút `overflow: visible`, môže to spôsobiť, že vytvoria vizuálny obsah mimo hraníc prvku. Prejdite na https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Podpora rozhrania `paymentManager.instruments` bola ukončená. Použite namiesto nej inštaláciu v pravej chvíli pre obslužné nástroje platieb."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Volanie `PaymentRequest` obišlo direktívu `connect-src` pravidiel na zabezpečenie obsahu (PZO). Podpora tohto obchádzania bola ukončená. Pridajte identifikátor spôsobu platby z rozhrania API `PaymentRequest` (v poli `supportedMethods`) do direktívy `connect-src` svojich PZO."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Podpora rozhrania `StorageType.persistent` bola ukončená. Použite namiesto nej štandardizovaný parameter `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Prvok `<source src>` s nadradeným prvkom `<picture>` je neplatný, a preto bude ignorovaný. Použite radšej `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame je metóda špecifická pre konkrétneho dodávateľa. Použite namiesto nej štandardnú metódu cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame je metóda špecifická pre konkrétneho dodávateľa. Použite namiesto nej štandardnú metódu requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitDisplayingFullscreen bola ukončená. Použite namiesto neho Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitEnterFullScreen() bola ukončená. Použite namiesto neho Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitEnterFullscreen() bola ukončená. Použite namiesto neho Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitExitFullScreen() bola ukončená. Použite namiesto neho Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitExitFullscreen() bola ukončená. Použite namiesto neho Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Podpora rozhrania HTMLVideoElement.webkitSupportsFullscreen bola ukončená. Použite namiesto neho Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Ukončujeme podporu rozhrania API `chrome.privacy.websites.privacySandboxEnabled`, ale zostane aktívne na zaistenie spätnej kompatibility až do vydania verzie M113. Používajte namiesto neho `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` a `chrome.privacy.websites.adMeasurementEnabled`. Viac sa dozviete na https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Obmedzenie `DtlsSrtpKeyAgreement` bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu `false`, ktorá je interpretovaná ako pokus o použitie odstránenej metódy `SDES key negotiation`. Táto funkcia bola odstránená. Namiesto nej použite službu, ktorá podporuje funkciu `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Obmedzenie `DtlsSrtpKeyAgreement` bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu `true`, ktorá nemala žiadny účinok. Toto obmedzenie však môžete odstrániť pre poriadok."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Podpora metódy callback-based getStats() bola ukončená. Táto metóda bude odstránená. Použite namiesto nej spec-compliant getStats()."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Podpora rozhrania Range.expand() bola ukončená. Použite namiesto neho Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Požiadavky podzdrojov, ktorých webové adresy zahrnujú vložené prihlasovacie údaje (napr. `https://user:pass@host/`), sú blokované."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Podpora možnosti `rtcpMuxPolicy` bola ukončená a táto možnosť bude odstránená."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` bude vyžadovať izoláciu od iných zdrojov. Viac sa dozviete na https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Podpora funkcie `speechSynthesis.speak()` bez aktivácie používateľa bola ukončená a funkcia bude odstránená."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Rozšírenia by sa mali prihlásiť do izolovania od iných zdrojov, ak chcú ďalej používať funkciu `SharedArrayBuffer`. Prejdite na https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Podpora jazyka Web SQL bola ukončená. Použite SQLite WebAssembly alebo indexovanú databázu."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Podpora deskriptora povolenia `window-placement` bola ukončená. Radšej použite `window-management`. Ďalšiu pomoc nájdete na https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Podpora pravidiel povolenia `window-placement` bola ukončená. Radšej použite `window-management`. Ďalšiu pomoc nájdete na https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "JSON odpoveď nepodporuje kódovanie UTF‑16 v rámci funkcie `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Podpora synchrónnej funkcie `XMLHttpRequest` v hlavnom vlákne bola ukončená pre nepriaznivé účinky na prostredie koncového používateľa. Viac sa dozviete na https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Podpora funkcie `supportsSession()` bola ukončená. Namiesto toho použite značku `isSessionSupported()` a skontrolujte vybranú logickú hodnotu."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Čas blokovania hlavného vlákna"
@@ -2402,11 +1937,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tretia strana"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Celkove"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Celkovo"
+    "message": "Celkove"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Pri zaznamenávaní stopy načítania stránky sa vyskytol problém. Znova spustite Lighthouse. ({errorCode})"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Prehľad cesty používateľov v službe Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Autorizácie sa nebude týkať zástupný symbol (*) pri spracovaní CORS Access-Control-Allow-Headers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Ak chcete zakázať predvolenú integráciu prenosu, použite namiesto selektora -internal-media-controls-overlay-cast-button atribút disableRemotePlayback."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Hodnota vzhľadu šablón kaskádových štýlov slider-vertical nie je štandardizovaná a bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Požiadavky zdrojov, ktorých webové adresy zahrnujú odstránené prázdne znaky \\(n|r|t) a znaky „menej ako“ (<), sú blokované. Ak chcete načítať tieto zdroje, odstráňte nové riadky a kódujte znaky „menej ako“ z miest, ako sú hodnoty atribútu prvkov."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Podpora automatického rozpoznávania znakovej sady ISO-2022-JP bola ukončená a čoskoro bude deaktivovaná. Špecifikujte znakovú sadu v hlavičke typu obsahu alebo pomocou metaznačky (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "Podpora funkcie chrome.loadTimes() bola ukončená. Namiesto nej použite štandardizované rozhranie API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "Podpora funkcie chrome.loadTimes() bola ukončená. Namiesto nej použite štandardizované rozhranie API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "Podpora funkcie chrome.loadTimes() bola ukončená. Namiesto nej použite štandardizované rozhranie API: nextHopProtocol v rámci funkcie Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Súbory cookie so znakom \\(0|r|n) budú namiesto skrátenia odmietnuté."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Podpora uvoľnenia pravidla z rovnakých zdrojov nastavením funkcie document.domain bola ukončená a táto možnosť bude predvolene zakázaná. Upozornenie na ukončenie podpory pochádza z prístupu z iných zdrojov, ktorý bol povolený nastavením funkcie document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Podpora spúšťania funkcie window.alert z prvkov iframe z rôznych zdrojov bola ukončená a v budúcnosti bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Podpora spúšťania funkcie window.confirm z prvkov iframe z rôznych zdrojov bola ukončená a v budúcnosti bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Podpora udalostí DOM Mutation vrátane DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument a DOMCharacterDataModified bola ukončená (https://w3c.github.io/uievents/#legacy-event-types) a udalosti budú odstránené. Použite namiesto nich MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Podpora údajov: podpora webových adries v prvku SVGUseElement bola ukončená a v budúcnosti bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "Funkcie getCurrentPosition() a watchPosition() už nefungujú v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "Podpora funkcií getCurrentPosition() a watchPosition() bola ukončená v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() už nefunguje v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "V prvku <article>, <aside>, <nav> alebo <section> bola nájdená značka <h1>, ktorá nemá špecifikovanú veľkosť písma. V blízkej budúcnosti sa veľkosť tohto textu nadpisu v tomto prehliadači zmení. Viac sa dozviete na https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Podpora funkcie RTCPeerConnectionIceErrorEvent.hostCandidate bola ukončená. Použite namiesto nej funkciu RTCPeerConnectionIceErrorEvent.address alebo RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Tento formát žiadosti navigator.credentials.get() o digitálne prihlasovacie údaje je zastaraný. Aktualizujte volanie tak, aby používalo nový formát."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Podpora údajov o zdroji obchodníka a ľubovoľných údajov z udalosti obsluhy canmakepaymentbola ukončená a tieto údaje budú odstránené: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Web požiadal o podzdroj zo siete, ku ktorému má prístup iba na základe privilegovanej pozície siete svojich používateľov. Tieto požiadavky vystavujú neverejné zariadenia a servery internetu, čím zvyšujú riziko útoku zahrnujúceho falšovanie požiadaviek z iného webu alebo úniku informácií. Na zmiernenie týchto rizík Chrome ukončuje podporu požiadaviek neverejných podzdrojov pri ich odoslaní z nezabezpečených kontextov a začne ich blokovať."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Pole dailyUpdateUrl položky InterestGroups odovzdané položke joinAdInterestGroup() bolo premenované na updateUrl, aby presnejšie vyjadrovalo vlastné správanie."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Podpora volania Intl.v8BreakIterator bola ukončená. Namiesto neho použite volanie Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "Šablóny CSS nie je možné načítať z webových adries file:, pokiaľ sa nekončia príponou súboru .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Podpora použitia funkcie SourceBuffer.abort() na prerušenie odstránenia asynchrónneho rozsahu možnosti remove() bola ukončená z dôvodu zmeny špecifikácie. Podpora bude v budúcnosti odstránená. Namiesto toho by ste mali prijímať udalosť updateend. Funkcia abort() je určená iba na prerušenie pripojenia asynchrónnych médií alebo resetovanie stavu analyzátora."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Podpora nastavenia funkcie MediaSource.duration pod najvyššiu časovú pečiatku prezentácie akýchkoľvek kódovaných rámov vo vyrovnávacej pamäti bola ukončená z dôvodu zmeny špecifikácie. V budúcnosti bude odstránená podpora implicitného odstránenia skrátených médií vo vyrovnávacej pamäti. Namiesto toho by ste mali vykonať explicitnú funkciu remove(newDuration, oldDuration) v prípade všetkých možností sourceBuffers, kde platí newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI požiada o povolenie na použitie, aj keď exkluzívne správy systému (SysEx) nie sú vo funkcii MIDIOptions špecifikované."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Rozhranie Notification API už nie je možné používať z nezabezpečených zdrojov. Mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Povolenie pre rozhranie Notification API už nie je možné požadovať z prvku iframe od iných zdrojov. Namiesto toho by ste mali zvážiť požadovanie povolenia z rámu najvyššej úrovne alebo otvorenie nového okna."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Podpora možnosti imageOrientation: 'none' v nástroji createImageBitmap bola ukončená. Použite namiesto nej nástroj createImageBitmap pomocou možnosti \\\\{imageOrientation: 'from-image'\\\\}."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Váš partner používa zastaranú verziu (D)TLS. Požiadajte ho, aby tento problém odstránil."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Ak v značkách img, značkách videa a značkách canvas špecifikujete atribútoverflow: visible, môže to spôsobiť, že vytvoria vizuálny obsah mimo hraníc prvku. Prejdite na https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "Podpora funkcie paymentManager.instruments bola ukončená. Použite namiesto nej inštaláciu v pravej chvíli pre obslužné nástroje platieb."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Volanie PaymentRequest obišlo direktívu connect-src pravidiel na zabezpečenie obsahu (PZO). Podpora tohto obchádzania bola ukončená. Pridajte identifikátor spôsobu platby z rozhrania API PaymentRequest (v poli supportedMethods) do direktívy connect-src svojich PZO."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "Podpora funkcie StorageType.persistent bola ukončená. Použite namiesto nej štandardizovanú funkciu navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Funkcia <source src> s nadradenou funkciou <picture> je neplatná, a preto bude ignorovaná. Namiesto nich použite funkciu <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame je metóda špecifická pre konkrétneho dodávateľa. Použite namiesto nej štandardnú metódu cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame je metóda špecifická pre konkrétneho dodávateľa. Použite namiesto nej štandardnú metódu requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitDisplayingFullscreen bola ukončená. Použite namiesto neho Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitEnterFullScreen() bola ukončená. Použite namiesto neho Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitEnterFullscreen() bola ukončená. Použite namiesto neho Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitExitFullScreen() bola ukončená. Použite namiesto neho Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitExitFullscreen() bola ukončená. Použite namiesto neho Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Podpora rozhrania HTMLVideoElement.webkitSupportsFullscreen bola ukončená. Použite namiesto neho Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Ukončujeme podporu rozhrania API chrome.privacy.websites.privacySandboxEnabled, ale zostane aktívne na zaistenie spätnej kompatibility až do vydania verzie M113. Používajte namiesto neho chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled a chrome.privacy.websites.adMeasurementEnabled. Viac sa dozviete na https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Obmedzenie DtlsSrtpKeyAgreement bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu false, ktorá je interpretovaná ako pokus o použitie odstránenej metódy SDES key negotiation. Táto funkcia bola odstránená. Namiesto nej použite službu, ktorá podporuje funkciu DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Obmedzenie DtlsSrtpKeyAgreement bolo odstránené. Pre toto obmedzenie ste špecifikovali hodnotu true, ktorá nemala žiadny účinok. Toto obmedzenie však môžete odstrániť pre poriadok."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Podpora metódy callback-based getStats() bola ukončená. Táto metóda bude odstránená. Použite namiesto nej spec-compliant getStats()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Podpora rozhrania Range.expand() bola ukončená. Použite namiesto neho Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Požiadavky podzdrojov, ktorých webové adresy zahrnujú vložené prihlasovacie údaje (napr. https://user:pass@host/), sú blokované."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Podpora možnosti rtcpMuxPolicy bola ukončená a táto možnosť bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer bude vyžadovať izoláciu od iných zdrojov. Viac sa dozviete na https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Podpora funkcie speechSynthesis.speak() bez aktivácie používateľa bola ukončená a funkcia bude odstránená."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Podpora prijímačov udalostí uvoľnenia z pamäte bola ukončená a prijímače budú odstránené."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Rozšírenia by sa mali prihlásiť do izolovania od iných zdrojov, ak chcú ďalej používať funkciu SharedArrayBuffer. Prejdite na https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "JSON odpovede nepodporuje kódovanie UTF‑16 v rámci funkcie XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Podpora synchrónnej funkcie XMLHttpRequest v hlavnom vlákne bola ukončená pre nepriaznivé účinky na prostredie koncového používateľa. Viac sa dozviete na https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animácia"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Zmeny rozloženia sa vyskytujú, keď sa prvky pohnú bez interakcie používateľa. [Vyšetrite príčiny zmien rozloženia](https://web.dev/articles/optimize-cls), ako sú pridávanie, odstraňovanie prvkov alebo zmena ich písiem pri načítavaní stránky."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Žiadosť o písmo"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Vložený prvok iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Klaster zmeny rozloženia @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Nepodarilo sa rozpoznať žiadne príčiny zmien rozloženia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Žiadne zmeny rozloženia"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Príčiny zmien rozloženia"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Najčastejšie príčiny zmien rozloženia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Obrázky nezatriedené podľa veľkosti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Najhorší klaster"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Najhorší klaster zmeny rozloženia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL vyrovnávacej pamäte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Dlhá životnosť vyrovnávacej pamäte môže zrýchliť opakované návštevy stránky. [Ďalšie informácie](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Žiadne požiadavky s neefektívnymi pravidlami vyrovnávacej pamäte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "ďalšie ({PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Požiadavka"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Efektívne využívanie celých období vyrovnácej pamäte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Rozsiahly model DOM zvýši využitie pamäte, predĺži výpočty štýlov a spôsobí nákladné preformátovania rozloženia, ktoré ovplyvňujú rýchlosť odozvy stránky. [Ako sa vyhnúť nadmernej veľkosti modelu DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "Rozsiahly model DOM môže predĺžiť výpočty štýlov a preformátovaní rozložení, čím ovplyvní responzívnosť stránky. Okrem toho zvýši využitie pamäte. [Ako sa vyhnúť nadmernej veľkosti modelu DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Prvok"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Najviac podradených položiek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Hĺbka modelu DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Štatistika"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimalizácia veľkosti modelu DOM"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Celkový počet prvkov"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Hodnota"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Vaša prvá požiadavka siete je najdôležitejšia.  Zabráňte presmerovaniam, zaistite rýchlu odozvu servera a povoľte kompresiou textu, aby ste znížili latenciu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Nebola použitá žiadna kompresia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Vyhýba sa presmerovaniam"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Používa sa kompresia textu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Presmerovania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Čas odpovede servera"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Latencia žiadosti o dokument"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Neskomprimovaný súbor na stiahnutie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Duplicitné bajty"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Zdroj"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Odstráňte z balíčkov veľké duplicitné moduly JavaScriptu, aby ste zredukovali nepotrebné bajty spotrebované aktivitou siete."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplicitný JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Zvážte nastavenie písma [font-display](https://developer.chrome.com/blog/font-display) na swap alebo optional, aby bol text konzistentne viditeľný. swap je možné ďalej optimalizovať a zjemniť tak zmeny rozloženia [prepísaním metriky písma](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Písmo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Zobrazenie písma"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Stratený čas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonymné)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Mnohé rozhrania API, ktoré zvyčajne čítajú geometriu rozloženia, nútia vykresľovací modul pozastaviť spustenie skriptu, aby mohli vypočítať štýl a rozloženie. [Ďalšie informácie o vynútenom preformátovaní a jeho zmierňovaní](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Sledovanie zásobníka"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Vynútené preformátovanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Najčastejšie volanie funkcie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Celkový čas preformátovania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[bez atribútu]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Znížením času sťahovania obrázkov môžete zlepšiť registrovaný čas načítania stránky a vykreslenie najväčšieho prvku. [Ďalšie informácie o optimalizácii veľkosti obrázkov](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (odhad. {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Žiadne optimalizovateľné obrázky"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimalizácia veľkosti súboru"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "ďalšie ({PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Zlepšenie zobrazovania obrázkov"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Zvýšením faktora kompresie obrázka sa môže zlepšiť jeho veľkosť pri sťahovaní. (Predpoklad. {PH1})"
+    "message": "Zvýšením faktora kompresie obrázka sa môže zlepšiť jeho veľkosť na stiahnutie."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Veľkosť tohto obrázka na stiahnutie by sa mohla zlepšiť použitím moderného formátu obrázka (WebP, AVIF) alebo zvýšením kompresie obrázka. (Predpoklad. {PH1})"
+    "message": "Veľkosť tohto obrázka na stiahnutie by sa mohla zlepšiť použitím moderného formátu obrázka (WebP, AVIF) alebo zvýšením kompresie obrázka."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Tento súbor obrázka je väčší, než má byť ({PH2}) vzhľadom na jeho zobrazené rozmery ({PH3}). Znížte veľkosť obrázka na stiahnutie použitím responzívnych obrázkov. (Predpoklad. {PH1})"
+    "message": "Tento súbor obrázka je väčší, než má byť ({PH1}) vzhľadom na jeho zobrazené rozmery ({PH2}). Znížte veľkosť obrázka na stiahnutie použitím responzívnych obrázkov."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Používanie videoformátov namiesto súborov GIF môže zlepšiť veľkosť animovaného obsahu na stiahnutie. (Predpoklad. {PH1})"
+    "message": "Používanie videoformátov namiesto gifov môže zlepšiť veľkosť animovaného obsahu na stiahnutie."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Začnite skúmať najdlhšiu fázu. [Oneskorenia sa dajú minimalizovať](https://web.dev/articles/optimize-inp#optimize_interactions). Ak chcete skrátiť čas spracovania, [optimalizujte náklady hlavného vlákna](https://web.dev/articles/optimize-long-tasks), vo väčšine prípadov JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Trvanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Oneskorenie vstupu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Neboli zistené žiadne interakcie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fáza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Oneskorenie prezentácie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Trvanie spracovania"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "Oneskorenie vykreslenia po interakcii podľa fázy"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimalizujte vykreslenie najväčšieho prvku tým, že jeho obrázok okamžite [zviditeľníte](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) v jazyku HTML a [zabránite lenivému načítaniu](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "prioritanačítania=použitá možnosť Vysoká"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Mala by byť použitá hodnota fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "lenivé načítanie nebolo použité"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Obrázok vykreslenia najväčšieho prvku bol načítaný {PH1} po najskoršom začatí."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Nebolo zistené žiadne vykreslenie najväčšieho prvku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Nebol zistený žiadny zdroj vykreslenia najväčšieho prvku, pretože vykreslenie najväčšieho prvku nie je obrázok"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Žiadosť je viditeľná v pôvodnom dokumente"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Nepriame vyhľadávanie žiadostí o vykreslenie najväčšieho prvku"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Každá [fáza má špecifické stratégie zlepšenia](https://web.dev/articles/optimize-lcp#lcp-breakdown). V ideálnom prípade by väčšina času vykreslenia najväčšieho prvku mala byť vynaložená na načítanie zdrojov, ktoré nie sú v rozsahu oneskorenia."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Trvanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Oneskorenie vykreslenia prvku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75. percentil poľa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Nebolo zistené žiadne vykreslenie najväčšieho prvku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fáza"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Oneskorenie načítania zdroja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Trvanie načítania zdroja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Oneskorenie prvého bajtu"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "Vykreslenie najväčšieho prvku podľa fázy"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Stratené bajty"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Viacnásobné vyplnenia a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Ak nutne nemusíte podporovať staršie prehliadače, zvážte úpravu procesu kompilácie JavaScriptu tak, aby nedochádzalo k transpilovaniu [základných](https://web.dev/articles/baseline-and-polyfills) funkcií. [Prečo väčšina webov môže nasadiť kód ES6+ bez transpilácie](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Starý JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 a HTTP/3 ponúkajú v porovnaní s protokolom HTTP/1.1 mnoho výhod, napríklad multiplexnú moduláciu. [Ďalšie informácie o používaní moderného protokolu HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Žiadna požiadavka nepoužila HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokol"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Požiadavka"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderný protokol HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Vyhnite sa zreťazeniu kľúčových žiadostí](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) skrátením dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maximálna latencia kľúčovej cesty:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Žiadne úlohy vykresľovania ovplyvnené dependenciami siete"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Strom dependencií siete"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Predíďte zreťazeniu kľúčových žiadostí skrátením dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Požiadavky blokujú počiatočné vykreslenie stránky, čo môže spôsobiť oneskorenie vykreslenia najväčšieho prvku. [Oneskorením alebo vložením](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) môžete tieto požiadavky na sieť presunúť mimo kritickej cesty."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Trvanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Pre túto navigáciu nie sú k dispozícii žiadne požiadavky na blokovanie vykreslenia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Žiadosť"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Žiadosti o blokovanie vykreslenia"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Ak sú náklady na prepočítanie štýlu stále vysoké, optimalizáciou selektora ich môžete znížiť. [Optimalizujte selektory](https://developer.chrome.com/docs/devtools/performance/selector-stats) s dlhým časom uplynutia a vysokým percentom pomalej cesty. Jednoduchšie selektory, menej selektorov, menší model DOM a plytší model DOM znížia náklady na párovanie."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Uplynutý čas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Nenašli sa žiadne údaje selektora CSS. Štatistické údaje selektora CSS je potrebné povoliť v nastaveniach panela výkonnosti."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Pokusy o zhodu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Počet zhôd"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Náklady selektora CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Najčastejšie selektory"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Celkove"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Čas hlavného vlákna"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Tretia strana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Veľkosť prenosu"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Kód tretej strany môže výrazne ovplyvniť výkonnosť načítavania. [Zredukujte a odložte načítanie kódu tretej strany](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), aby sa priorizoval obsah vašej stránky."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Nenašli sa žiadne tretie strany"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Tretie strany"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimalizácia oblasti zobrazenia pre mobily"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Iba stránky načítané prostredníctvom požiadavky GET môžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Do vyrovnávacej pamäte sa dajú ukladať iba stránky so stavovým kódom 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome rozpoznal pokus o spustenie JavaScriptu počas uloženia vo vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Stránky, ktoré požiadali o AppBanner, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná experimentálnymi funkciami. Prejdite na chrome://flags/#back-forward-cache a aktivujte ju miestne v tomto zariadení."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná príkazovým riadkom."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná z dôvodu nedostatočnej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Delegát nepodporuje spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná pre predbežný vykresľovací modul."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Stránka sa nedá uložiť do vyrovnávacej pamäte, pretože má inštanciu BroadcastChannel s registrovanými prijímačmi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Stránky s hlavičkou cache-control:no-store nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Vyrovnávacia pamäť bola zámerne vyčistená."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, aby bolo do nej možné uložiť inú."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Stránky s doplnkami momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Neurčené"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Stránky s rozhraním FileChooser API nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Stránky s rozhraním File System Access API momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Stránky s nástrojom Media Device Dispatcher nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "V čase odchodu hral Prehrávač médií."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Stránky s rozhraním MediaSession API a nastaveným stavom prehrávania nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Stránky s rozhraním MediaSession API a nastavenými obslužnými nástrojmi akcií momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Čítačka obrazovky spôsobila deaktiváciu spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Stránky s nástrojom SecurityHandler nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Stránky s rozhraním Serial API nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Stránky s rozhraním WebAuthetication API nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Stránky s rozhraním WebBluetooth API nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Stránky s rozhraním WebUSB API nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože súbory cookie sú zakázané na stránke, ktorá používa Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Stránky s vyhradenou obsluhou alebo workletom momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Načítavanie dokumentu nebolo dokončené, kým ste odlišli preč."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "V čase odchodu bol zobrazený banner aplikácie."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "V čase odchodu bol zobrazený správca hesiel Chromu"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "V čase odchodu prebiehala extrakcia pomocou nástroja DOM."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "V čase odchodu bol otvorený zobrazovač nástroja DOM Distiller."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Rozšírenia používajúce rozhranie Messaging API spôsobili deaktiváciu spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Rozšírenia s dlhotrvajúcim pripojením by mali pred získaním prístupu k spätnej vyrovnávacej pamäti pripojenie ukončiť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Rozšírenia s dlhotrvajúcim pripojením sa pokúsili odoslať správy snímkam v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Rozšírenia spôsobili deaktiváciu spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "V čase odchodu bolo na stránke zobrazené modálne dialógové okno, ktoré sa mohlo napríklad týkať opätovného odoslania formulára alebo hesla HTTP."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "V čase odchodu bola zobrazená offline stránka."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "V čase odchodu bol zobrazený intervenčný pruh znamenajúci nedostatok pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "V čase odchodu bola odoslaná žiadosť o povolenie."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "V čase odchodu bola zobrazená možnosť blokovania vyskakovacích okien."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "V čase odchodu boli zobrazené podrobnosti Bezpečného prehliadania."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Bezpečné prehliadanie považuje túto stránku sa obťažujúcu a zablokovalo vyskakovacie okno."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Bola aktivovaná obsluha, keď sa stránka nachádzala v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Spätná vyrovnávacia pamäť je deaktivovaná pre chybu v dokumente."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Stránky, ktoré používajú FencedFrames, nie je možné uložiť v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, aby bolo do nej možné uložiť inú."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Stránky, ktoré udelili prístup k streamu médií, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Stránky s určitými druhmi vloženého obsahu (napr. súbormi PDF) momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Stránky s nástrojom IdleManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Stránky s otvoreným pripojením IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná v dôsledku udalosti IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Boli použité nevhodné rozhrania API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Stránky, do ktorých rozšírenia vložili JavaScript, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Stránky, do ktorých rozšírenia vložili šablónuStyleSheet, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Interná chyba."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože nejaká sieťová požiadavka v jazyku JavaScript dostala zdroj s hlavičkou Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná v dôsledku žiadosti so signálom keepalive."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Stránky so zámkou klávesnice momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Načítavanie stránky nebolo dokončené, kým ste odlišli preč."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache-control:no-cache, momentálne nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Stránky, ktorých hlavný zdroj má hlavičku cache-control:no-store, nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigácia bola zrušená skôr, ako došlo k obnoveniu stránky zo spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože aktívne pripojenie k sieti dostalo príliš veľa dát. Chrome obmedzuje objem dát, ktoré môže dostávať stránka vo vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Stránky s načítavaním počas prenosu() alebo XHR momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Stránka bola vylúčená zo spätnej vyrovnávacej pamäte, pretože aktívna sieťová požiadavka zahŕňala presmerovanie."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože pripojenie k sieti bolo príliš dlho otvorené. Chrome obmedzuje obdobie, počas ktorého môže stránka vo vyrovnávacej pamäti dostávať dáta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Stránky bez platnej hlavičky odpovede nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Navigácia sa uskutočnila v inom ako hlavnom ráme."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Stránky s prebiehajúcimi transakciami IndexedDB momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Stránky so sieťovou požiadavkou na načítanie počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Stránky so sieťovou požiadavkou počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Stránky so sieťovou požiadavkou XHR počas prenosu momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Stránky s nástrojom PaymentManager momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Stránky s obrazom v obraze momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Stránky zobrazujúce používateľské rozhranie na tlač momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Stránka bola otvorená pomocou prvku window.open() a ďalšia karta má odkaz na ňu, prípadne stránka otvorila okno."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Proces vykresľovacieho modulu pre danú stránku v spätnej vyrovnávacej pamäti spadol."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Proces vykresľovacieho modulu pre danú stránku v spätnej vyrovnávacej pamäti bol zrušený."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Stránky, ktoré požiadali o povolenia na snímanie zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Stránky, ktoré požiadali o povolenia pre senzory, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Stránky, ktoré požiadali o synchronizáciu na pozadí alebo načítanie povolení, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Stránky, ktoré požiadali o povolenia pre MIDI, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Stránky, ktoré požiadali o povolenia pre upozornenia, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Stránky, ktoré požiadali o prístup k ukladaciemu priestoru, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Stránky, ktoré požiadali o povolenia na snímanie videí, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Do vyrovnávacej pamäte sa dajú uložiť iba stránky, ktorých schéma webovej adresy je HTTP alebo HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Stránku si nárokovala obsluha počas obdobia, kedy sa nachádza v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Obsluha sa pokúsila odoslať stránke v spätnej vyrovnávacej pamäti MessageEvent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Registrácia funkcie ServiceWorker bola zrušená, keď sa stránka nachádzala v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Stránka bola vylúčená zo spätnej vyrovnávacej pamäte z dôvodu aktivácie obsluhy."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome reštartoval a vymazal záznamy v spätnej vyrovnávacej pamäti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Stránky s rozhraním SharedWorker momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Stránky s rozhraním SpeechRecognizer momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Stránky s rozhraním SpeechSynthesis momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Prvok iframe na stránke spustil navigáciu, ktorá nebola dokončená."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Stránky, ktorých podzdroj má hlavičku cache-control:no-cache, nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Stránky, ktorých podzdroj má hlavičku cache-control:no-store, momentálne nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Stránka prekročila maximálny čas v spätnej vyrovnávacej pamäti a vypršala."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Pri zadávaní stránky do spätnej vyrovnávacej pamäte vypršal časový limit (pravdepodobne to spôsobili dlhodobo spustené obslužné nástroje skrytia stránky)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Stránka má v hlavnom ráme obslužný nástroj uvoľnenia z pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Stránka má v podráme obslužný nástroj uvoľnenia z pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Prehliadač zmenil hlavičku prepísania používateľského agenta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Stránky, ktoré udelili prístup na nahrávanie videa alebo zvuku, momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Stránky s rozhraním WebDatabase momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Stránky s rozhraním WebHID momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Stránky s rozhraním WebLocks momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Stránky s rozhraním WebNfc momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Stránky s rozhraním WebOTPService momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Stránky s rozhraním WebRTC nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná, pretože bol použitý protokol WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Stránky s rozhraním WebShare momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Stránky s rozhraním WebSocket nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože bol použitý protokol WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Stránky s rozhraním WebTransport nemajú prístup do spätnej vyrovnávacej pamäte."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože bol použitý protokol WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Stránky s rozhraním WebXR momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."

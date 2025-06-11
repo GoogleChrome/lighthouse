@@ -14,21 +14,19 @@ it('marked N/A if no violations found', async () => {
       mainDocumentUrl: 'https://example.com',
       finalDisplayedUrl: 'https://example.com',
     },
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'X-Frame-Options', value: `SAMEORIGIN`},
-            {
-              name: 'Content-Security-Policy',
-              value:
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'X-Frame-Options', value: `SAMEORIGIN`},
+          {
+            name: 'Content-Security-Policy',
+            value:
                   `script-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; report-uri https://csp.example.com`,
-            },
-          ],
-        },
-      ]),
-    },
+          },
+        ],
+      },
+    ]),
   };
   const results =
       await ClickjackingMitigation.audit(artifacts, {computedCache: new Map()});
@@ -38,20 +36,18 @@ it('marked N/A if no violations found', async () => {
 
 it('No XFO header but CSP header found', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Content-Security-Policy',
-              value:
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Content-Security-Policy',
+            value:
                   `script-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; report-uri https://csp.example.com`,
-            },
-          ],
-        },
-      ]),
-    },
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -67,20 +63,18 @@ it('No XFO header but CSP header found', async () => {
 
 it('No CSP header but XFO header found', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'X-Frame-Options',
-              value:
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'X-Frame-Options',
+            value:
                   `SAMEORIGIN`,
-            },
-          ],
-        },
-      ]),
-    },
+          },
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -96,16 +90,14 @@ it('No CSP header but XFO header found', async () => {
 
 it('No CSP and no XFO headers but foo header found', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Foo-Header', value: `same-origin`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Foo-Header', value: `same-origin`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -123,16 +115,14 @@ it('No CSP and no XFO headers but foo header found', async () => {
 
 it('Messed up XFO directive and no CSP present.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'X-Frame-Options', value: `fooDirective`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'X-Frame-Options', value: `fooDirective`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -150,16 +140,14 @@ it('Messed up XFO directive and no CSP present.', async () => {
 
 it('Messed up CSP directive and no XFO present.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Content-Security-Policy', value: `foo-directive 'none'; report-uri https://csp.example.com`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Content-Security-Policy', value: `foo-directive 'none'; report-uri https://csp.example.com`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -177,17 +165,15 @@ it('Messed up CSP directive and no XFO present.', async () => {
 
 it('Messed up CSP and XFO directives.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'X-Frame-Options', value: `fooDirective`},
-            {name: 'Content-Security-Policy', value: `foo-directive 'none'; report-uri https://csp.example.com`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'X-Frame-Options', value: `fooDirective`},
+          {name: 'Content-Security-Policy', value: `foo-directive 'none'; report-uri https://csp.example.com`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -211,23 +197,21 @@ describe('getRawCspsAndXfo', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'X-Frame-Options',
-                value: `SAMEORIGIN`,
-              },
-              {
-                name: 'Content-Security-Policy',
-                value: `frame-ancestors 'self'`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'X-Frame-Options',
+              value: `SAMEORIGIN`,
+            },
+            {
+              name: 'Content-Security-Policy',
+              value: `frame-ancestors 'self'`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, xfoHeaders} =
       await ClickjackingMitigation.getRawCspsAndXfo(artifacts, {computedCache: new Map()});
@@ -242,23 +226,21 @@ describe('getRawCspsAndXfo', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: ``,
-              },
-              {
-                name: 'X-Frame-Options',
-                value: `deny`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: ``,
+            },
+            {
+              name: 'X-Frame-Options',
+              value: `deny`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, xfoHeaders} =
       await ClickjackingMitigation.getRawCspsAndXfo(artifacts, {computedCache: new Map()});
@@ -275,23 +257,21 @@ describe('getRawCspsAndXfo', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: '   \t',
-              },
-              {
-                name: 'X-Frame-Options',
-                value: 'DENY',
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: '   \t',
+            },
+            {
+              name: 'X-Frame-Options',
+              value: 'DENY',
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, xfoHeaders} =
       await ClickjackingMitigation.getRawCspsAndXfo(artifacts, {computedCache: new Map()});

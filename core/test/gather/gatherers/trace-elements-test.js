@@ -11,8 +11,6 @@ import {createMockDriver} from '../mock-driver.js';
 
 const animationTrace = readJson('../../fixtures/artifacts/animation/trace.json.gz', import.meta);
 
-const RootCauses = {layoutShifts: {}};
-
 function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) { // eslint-disable-line camelcase
   return {
     name: 'LayoutShift',
@@ -73,15 +71,6 @@ function makeLCPTraceEvent(nodeId) {
     ts: 1400,
   };
 }
-
-describe('Trace Elements gatherer - GetTopLayoutShifts', () => {
-  describe('getBiggestImpactForShiftEvent', () => {
-    it('is non fatal if impactedNodes is not iterable', () => {
-      const result = TraceElementsGatherer.getBiggestImpactNodeForShiftEvent(1, new Map());
-      expect(result).toBeUndefined();
-    });
-  });
-});
 
 describe('Trace Elements gatherer - Animated Elements', () => {
   it('gets animated node ids with non-composited animations', async () => {
@@ -258,9 +247,10 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses},
-      computedCache: new Map()}
-    );
+      dependencies: {Trace: trace, SourceMaps: []},
+      computedCache: new Map(),
+      settings: {},
+    });
     const sorted = result.sort((a, b) => a.nodeId - b.nodeId);
 
     expect(sorted).toEqual([
@@ -340,8 +330,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: animationTrace, RootCauses},
+      dependencies: {Trace: animationTrace, SourceMaps: []},
       computedCache: new Map(),
+      settings: {},
     });
 
     const animationTraceElements = result.filter(el => el.traceEventType === 'animation');
@@ -421,8 +412,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 
     const result = await gatherer.getArtifact({
       driver,
-      dependencies: {Trace: trace, RootCauses},
+      dependencies: {Trace: trace, SourceMaps: []},
       computedCache: new Map(),
+      settings: {},
     });
 
     expect(result).toEqual([
@@ -485,8 +477,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const result = await gatherer.getArtifact({
       driver,
       gatherMode: 'timespan',
-      dependencies: {Trace: trace, RootCauses},
+      dependencies: {Trace: trace, SourceMaps: []},
       computedCache: new Map(),
+      settings: {},
     });
 
     expect(result).toEqual([

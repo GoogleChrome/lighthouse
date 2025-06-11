@@ -126,18 +126,18 @@ class CriticalRequestChains {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}} data
+   * @param {{URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
   static async compute_(data, context) {
     const mainResource = await MainResource.request(data, context);
-    const graph = await PageDependencyGraph.request(data, context);
+    const graph = await PageDependencyGraph.request({...data, fromTrace: false}, context);
 
     return CriticalRequestChains.extractChainsFromGraph(mainResource, graph);
   }
 }
 
-const CriticalRequestChainsComputed =
-  makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+const CriticalRequestChainsComputed = makeComputedArtifact(CriticalRequestChains,
+  ['URL', 'SourceMaps', 'devtoolsLog', 'trace', 'settings']);
 export {CriticalRequestChainsComputed as CriticalRequestChains};

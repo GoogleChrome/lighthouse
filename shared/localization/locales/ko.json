@@ -660,7 +660,10 @@
     "message": "애니메이션 콘텐츠에 동영상 형식 사용하기"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 및 변환을 통해 레거시 브라우저에서 새로운 자바스크립트 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 번들로 포함된 자바스크립트의 경우, module/nomodule 기능 감지를 사용하는 최신 스크립트 배포 전략을 채택하여 최신 브라우저에 적용되는 코드를 줄이고 레거시 브라우저 지원을 유지할 수 있습니다. [최신 자바스크립트 사용 방법 알아보기](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "페이지에서 core-js 버전 2가 감지되었습니다. 다양한 성능 개선사항을 적용하려면 버전 3으로 업그레이드해야 합니다."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "레거시 JavaScript를 최신 브라우저에 제공하지 않기"
@@ -761,6 +764,18 @@
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "텍스트 압축 사용"
   },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`Content-Security-Policy`(CSP) 헤더의 `frame-ancestors` 지시어 또는 `X-Frame-Options`(XFO) 헤더는 페이지를 삽입할 수 있는 위치를 제어합니다. 이렇게 하면 일부 또는 모든 사이트에서 페이지를 삽입하는 것을 차단하여 clickjacking 공격을 완화할 수 있습니다. [clickjacking 완화 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "프레임 제어 정책을 찾을 수 없습니다."
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO 또는 CSP로 clickjacking 완화"
+  },
   "core/audits/critical-request-chains.js | description": {
     "message": "다음의 크리티컬 요청 체인은 로드 시 우선순위가 높은 리소스를 보여줍니다. 체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 높이는 것이 좋습니다. [크리티컬 요청 체이닝을 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
   },
@@ -771,7 +786,7 @@
     "message": "중요 요청 체이닝 차단"
   },
   "core/audits/csp-xss.js | columnDirective": {
-    "message": "명령어"
+    "message": "지시어"
   },
   "core/audits/csp-xss.js | columnSeverity": {
     "message": "심각도"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse에서 원본 {fontOrigin}의 `font-display` 값을 자동으로 확인할 수 없습니다.}other{Lighthouse에서 원본 {fontOrigin}의 `font-display` 값을 자동으로 확인할 수 없습니다.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "지시어"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "HSTS 헤더를 배포하면 HTTP 연결을 다운그레이드하거나 도청 공격을 받을 위험이 크게 줄어듭니다. 처음에는 낮은 max-age 값을 설정하여 단계적으로 배포하는 것이 권장됩니다. [강력한 HSTS 정책 사용에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "잘못된 문법"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` 값이 너무 낮습니다"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "HSTS 헤더를 찾을 수 없음"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "`max-age` 지시어 없음"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "`preload` 지시어를 찾을 수 없습니다"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "`includeSubDomains` 지시어를 찾을 수 없습니다"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "강력한 HSTS 정책 사용"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "가로세로 비율(실제)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "이미지가 적절한 해상도로 제공됨"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "레이아웃 변경 점수"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "허용됨"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "삽입된 iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "네트워크 요청이 늦어져 페이지 레이아웃이 조정됨"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "명시적인 크기가 없는 미디어 요소"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "지원되지 않는 타이밍 매개변수가 효과에 포함됨"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "지시어"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "COOP(Cross-Origin-Opener-Policy)를 사용하면 최상위 창을 팝업 등의 다른 문서에서 분리할 수 있습니다. [COOP 헤더 배포 자세히 알아보기](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "잘못된 문법"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "COOP 헤더를 찾을 수 없음"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "COOP을 통해 적절한 출처 분리 보장"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "신규 방문자가 사용할 수 있도록 `optional` 글꼴을 미리 로드하세요 [글꼴 미리 로드에 관해 자세히 알아보기](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "실행 중에 페이지 탐색이 감지되었습니다. 페이지 탐색을 감사할 때 기간 모드를 사용하지 않는 것이 좋습니다. 탐색 모드로 페이지 탐색을 감사하여 서드 파티 기여 분석 및 기본 스레드 감지를 개선하세요."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "GET 요청을 통해 로드된 페이지만 뒤로-앞으로 캐시를 사용할 수 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "상태 코드가 2XX인 페이지만 캐시될 수 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome이 캐시된 페이지에서 자바스크립트 실행 시도를 감지했습니다."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "AppBanner를 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "연결 유지 요청으로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "플래그에서 뒤로-앞으로 캐시가 사용 중지되었습니다. chrome://flags/#back-forward-cache로 이동하여 뒤로-앞으로 캐시를 사용 설정하세요. 캐시는 기기의 로컬에 저장됩니다."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "명령줄에 의해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "메모리가 충분하지 못하여 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "권한 대리자가 뒤로-앞으로 캐시를 지원하지 않습니다."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "프리렌더러에 의해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "페이지에 등록된 리스너가 포함된 BroadcastChannel 인스턴스가 있어 페이지를 캐시할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "cache-control:no-store 헤더가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "캐시가 의도적으로 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "다른 페이지를 캐시하기 위해 페이지가 캐시에서 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "플러그인을 포함하고 있는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "FileChooser API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "File System Access API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "미디어 기기 디스패처를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "페이지에서 나갈 때 미디어 플레이어가 재생 중이었습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "MediaSession API를 사용하며 재생 상태를 설정한 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "MediaSession API를 사용하며 작업 핸들러를 설정한 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "스크린 리더로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "SecurityHandler를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Serial API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthentication API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "WebBluetooth API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "WebUSB API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "`Cache-Control: no-store`를 사용하는 페이지에서 쿠키가 사용 중지되므로 뒤로-앞으로 캐시가 사용 중지됩니다."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "전용 worker 또는 Worklet을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "사용자가 문서에서 나갈 때까지 문서 로드가 완료되지 않았습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "페이지에서 나갈 때 앱 배너가 표시되어 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "페이지에서 나갈 때 Chrome 비밀번호 관리자가 표시되어 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "페이지에서 나갈 때 DOM 디스틸레이션이 진행 중이었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "페이지에서 나갈 때 DOM Distiller 뷰어가 표시되어 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "메시징 API를 사용하는 확장 프로그램으로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "장시간 연결이 포함된 확장 프로그램은 연결을 해제해야 뒤로/앞으로 캐시에 저장될 수 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "장기 연결이 포함된 확장 프로그램에서 뒤로/앞으로 캐시 내 프레임으로 메시지를 전송하려 했습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "확장 프로그램으로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "페이지에서 나갈 때 양식 다시 제출과 같은 모달 대화상자 또는 http 인증 대화상자가 표시되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "페이지에서 나갈 때 오프라인 페이지가 표시되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "페이지에서 나갈 때 메모리 부족 알림 표시줄이 표시되어 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "페이지에서 나갈 때 권한 요청이 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "페이지에서 나갈 때 팝업 차단기가 표시되어 있었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "페이지에서 나갈 때 세이프 브라우징 세부정보가 표시되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "세이프 브라우징에서 이 페이지를 악성으로 간주하여 팝업을 차단했습니다."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 서비스 워커가 활성화되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "문서 오류로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "FencedFrame을 사용하는 페이지는 bfcache에 저장할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "다른 페이지를 캐시하기 위해 페이지가 캐시에서 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "미디어 스트림 액세스 권한을 부여한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "포털을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "IdleManager를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "IndexedDB가 연결된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "IndexedDB 이벤트로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "사용 불가능한 API가 사용되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "확장 프로그램에 의해 `JavaScript`가 삽입된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "확장 프로그램에 의해 `StyleSheet`가 삽입된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "내부 오류입니다."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "연결 유지 요청으로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "키보드 잠금을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "사용자가 페이지에서 나갈 때까지 페이지 로드가 완료되지 않았습니다."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "기본 리소스에 cache-control:no-cache가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "기본 리소스에 cache-control:no-store가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "뒤로-앞으로 캐시에서 페이지를 복원하기 전에 탐색이 취소되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "활성 네트워크에 연결되는 동안 페이지에서 지나치게 많은 데이터를 수신하여 페이지가 캐시에서 삭제되었습니다. Chrome은 캐시된 페이지에서 수신할 수 있는 데이터의 양을 제한합니다."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "fetch() 또는 XHR이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "활성 네트워크 요청에 리디렉션이 발생하여 페이지가 뒤로-앞으로 캐시에서 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "네트워크 연결 시간이 너무 길어 페이지가 캐시에서 삭제되었습니다. Chrome은 캐시된 페이지에서 데이터를 수신할 수 있는 시간을 제한합니다."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "유효한 응답 헤드가 없는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "기본 프레임이 아닌 다른 프레임에서 탐색이 이루어졌습니다."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "indexedDB 트랜잭션이 진행 중인 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "가져오기 네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "XHR 네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "PaymentManager를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "PIP 모드를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "포털을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "인쇄 UI를 표시하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "페이지가 '`window.open()`'을 사용하여 열렸고 다른 탭에 해당 페이지 참조가 있거나, 페이지에 창이 열려 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "뒤로-앞으로 캐시에 저장된 페이지의 렌더러 프로세스가 다운되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "뒤로-앞으로 캐시에 저장된 페이지의 렌더러 프로세스가 중단되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "오디오 캡처 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "센서 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "백그라운드 동기화 또는 가져오기 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "MIDI 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "알림 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "저장용량 액세스를 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "동영상 캡처 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "URL 스킴이 HTTP/HTTPS인 페이지만 캐시될 수 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 서비스 워커에 의해 사용되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "서비스 워커가 뒤로-앞으로 캐시에 추가된 페이지에 `MessageEvent` 속성을 전송하려고 했습니다."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 ServiceWorker가 등록 취소되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "서비스 워커 활성화로 인하여 페이지가 뒤로-앞으로 캐시에서 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome이 다시 시작되면서 뒤로-앞으로 캐시 항목이 삭제되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "SharedWorker를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "SpeechRecognizer를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "SpeechSynthesis를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "페이지의 iframe이 탐색을 시작했으나 완료되지 않았습니다."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "하위 리소스에 cache-control:no-cache가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "하위 리소스에 cache-control:no-store가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "페이지가 뒤로-앞으로 캐시에서 최대 시간을 초과하여 만료되었습니다."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "페이지의 뒤로-앞으로 캐시 시작이 타임아웃되었습니다(pagehide 핸들러의 장시간 실행 때문일 가능성이 큼)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "페이지 기본 프레임에 로드 취소 핸들러가 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "페이지 하위 프레임에 로드 취소 핸들러가 있습니다."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "브라우저에서 사용자 에이전트 재정의 헤더를 변경했습니다."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "동영상 녹화 또는 오디오 녹음 액세스를 부여한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "WebDatabase를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "WebHID를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "WebLock을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "WebNfc를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "WebOTPService를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "WebRTC가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "WebShare를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "WebSocket이 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "WebTransport가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "WebXR을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "기존 브라우저와의 하위 호환성을 위하여 https: 및 http: URL 스키마(`'strict-dynamic'`을 지원하는 브라우저에서 무시됨)를 추가하는 것이 좋습니다."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "지원 중단된 기능이 사용됨"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "CORS `Access-Control-Allow-Headers` 처리 시 와일드 카드 기호(*)를 사용하면 승인되지 않습니다."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "기본 Cast 통합을 사용 중지하려면 `-internal-media-controls-overlay-cast-button` 선택기 대신 `disableRemotePlayback` 속성을 사용해야 합니다."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "URL에 삭제된 공백 `(n|r|t)` 문자 및 '미만' 문자(`<`)가 포함된 리소스 요청이 차단되었습니다. 이러한 리소스를 로드하려면 요소 속성 값과 같은 위치에서 줄바꿈을 삭제하고 '미만' 문자를 인코딩하세요."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()`는 지원 중단되었습니다. 대신 표준화된 API인 Navigation Timing 2를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()`는 사용 중지되었습니다. 대신 표준화된 API인 Paint Timing을 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()`는 지원 중단되었습니다. 대신 `nextHopProtocol`이 추가된 표준화된 API인 Navigation Timing 2를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "`(0|r|n)` 문자를 포함하는 쿠키는 잘리는 대신 거부됩니다."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "`document.domain` 설정을 통한 동일 출처 정책의 해제는 지원 중단되었으며 기본적으로 사용 중지될 예정입니다. 이 지원 중단 경고는 `document.domain` 설정에 의해 사용 설정된 교차 출처 액세스에 적용됩니다."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "교차 출처 iframe에서의 window.alert 트리거는 지원 중단되었으며 앞으로 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "교차 출처 iframe에서의 window.confirm 트리거는 지원 중단되었으며 앞으로 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "`DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, `DOMCharacterDataModified` 등의 DOM 변형 이벤트가 지원 중단되었으며(https://w3c.github.io/uievents/#legacy-event-types) 삭제됩니다. 대신 `MutationObserver`를 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "데이터 지원: SVG <use> 요소의 URL은 지원 중단되었으며 앞으로 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "`document.domain` 설정을 통한 동일 출처 정책의 해제는 지원 중단되었으며 기본적으로 사용 중지될 예정입니다. 이 기능을 계속 사용하려면 문서 및 프레임의 HTTP 응답과 함께 `Origin-Agent-Cluster: ?0` 헤더를 전송하여 오리진 키 에이전트 클러스터를 선택 해제하세요. 자세한 내용은 다음 페이지를 참고하세요. https://developer.chrome.com/blog/immutable-document-domain/"
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "`Expect-CT` 헤더는 지원 중단되었으며 삭제될 예정입니다. Chrome에서는 2018년 4월 30일 이후 발행되었으며 공개적으로 신뢰할 수 있는 모든 인증서에 대해 인증서 투명성을 요구합니다."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` 및 `watchPosition()`은 안전하지 않은 출처에서 더 이상 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "안전하지 않은 출처의 `getCurrentPosition()` 및 `watchPosition()`은 지원 중단되었습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()`는 안전하지 않은 출처에서 더 이상 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate`는 지원 중단되었습니다. 대신 `RTCPeerConnectionIceErrorEvent.address` 또는 `RTCPeerConnectionIceErrorEvent.port`를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "`canmakepayment` 서비스 워커 이벤트의 판매자 원본 및 임의 데이터인 `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`가 지원 중단되었으며 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "웹사이트에서 사용자 권한이 지정된 네트워크 위치로 인해 해당 웹사이트만 액세스 가능한 네트워크의 하위 리소스를 요청했습니다. 이러한 요청은 비공개 기기 및 서버를 인터넷에 노출시켜 크로스 사이트 요청 위조(CSRF) 공격 또는 정보 유출의 위험을 높입니다. 위험을 완화하기 위해 Chrome은 안전하지 않은 컨텍스트에서 시작된 비공개 하위 리소스에 대한 요청을 사용 중지하고 차단하기 시작합니다."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "`joinAdInterestGroup()`에 전달된 `InterestGroups`의 `dailyUpdateUrl` 필드 이름이 동작을 더 정확하게 반영하도록 `updateUrl`로 변경되었습니다."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "`.css` 파일 확장자로 끝나지 않는 CSS는 `file:` URL에서 로드할 수 없습니다."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "사양 변경으로 인해 `SourceBuffer.abort()`를 사용하여 `remove()`의 비동기 범위 삭제를 취소하는 기능이 지원 중단되었습니다. 향후 지원이 삭제될 예정입니다. 대신 `updateend` 이벤트를 수신 대기해야 합니다. `abort()`는 비동기 미디어 추가 항목을 취소하거나 파서 상태를 초기화하는 데만 사용하도록 만들어졌습니다."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "사양 변경으로 인해, `MediaSource.duration`을 버퍼링된 코드 프레임의 최고 타임스탬프보다 낮게 설정하는 기능이 지원 중단되었습니다. 버퍼링된 미디어의 잘린 부분을 암시적으로 삭제하는 기능에 대한 지원은 앞으로 삭제될 예정입니다. `newDuration < oldDuration`의 경우 대신 모든 `sourceBuffers`에서 명시적 `remove(newDuration, oldDuration)`을 수행해야 합니다."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "sysex가 `MIDIOptions`에 지정되어 있지 않은 경우에도 사용할 수 있도록 웹 MIDI가 권한을 요청합니다."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "표준화되지 않은 이전 `shadowroot` 속성의 지원이 중단되며 M119에서 *더 이상 작동하지 않습니다*. 대신 새로운 표준화된 `shadowrootmode` 속성을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "안전하지 않은 출처의 Notification API는 더 이상 사용할 수 없습니다. 애플리케이션을 HTTPS와 같이 안전한 출처로 전환해 보세요. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "더 이상 교차 출처 iframe에서 Notification API 권한을 요청할 수 없습니다. 최상위 프레임에서 권한을 요청하거나 대신 새로운 창을 여는 방법을 고려해야 합니다."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "createImageBitmap의 `imageOrientation: 'none'` 옵션은 지원이 중단됩니다. 대신 \\{imageOrientation: 'from-image'\\} 옵션으로 createImageBitmap을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "파트너가 지원 중단된 (D)TLS 버전을 협상합니다. 파트너에게 확인하여 이를 해결하세요."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "img, video, canvas 태그에 `overflow: visible`을 지정하면 요소 경계 외부에 시각적 콘텐츠가 생성될 수 있습니다. 다음을 참고하세요. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md"
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments`가 지원 중단되었습니다. 대신 결제 핸들러에 just-in-time (JIT) 설치를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "`PaymentRequest` 호출이 콘텐츠 보안 정책(CSP) `connect-src` 지시어를 우회했습니다. 이 우회 지원은 중단되었습니다. `PaymentRequest` API(`supportedMethods` 입력란)의 결제 수단 식별자를 CSP `connect-src` 지시어에 추가하세요."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` 지원이 중단됩니다. 대신 표준화된 `navigator.storage`를 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<picture>` 상위 요소를 지닌 `<source src>`가 잘못되었으므로 무시됩니다. 대신 `<source srcset>`를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame은 공급업체별로 다릅니다. 대신 표준 cancelAnimationFrame을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame은 공급업체별로 다릅니다. 대신 표준 requestAnimationFrame을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen 지원이 중단됩니다. 대신 Document.fullscreenElement를 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() 지원이 중단됩니다. 대신 Element.requestFullscreen()을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() 지원이 중단됩니다. 대신 Element.requestFullscreen()을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() 지원이 중단됩니다. 대신 Document.exitFullscreen()을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() 지원이 중단됩니다. 대신 Document.exitFullscreen()을 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen 지원이 중단됩니다. 대신 Document.fullscreenEnabled를 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "`chrome.privacy.websites.privacySandboxEnabled` API는 지원 중단되지만 M113 버전이 출시될 때까지 이전 버전과의 호환성을 위해 활성 상태로 유지됩니다. 대신 `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled`, `chrome.privacy.websites.adMeasurementEnabled`를 사용하시기 바랍니다. 자세한 내용은 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "`DtlsSrtpKeyAgreement` 제약 조건은 삭제되었습니다. 이 제약 조건에 `false` 값을 지정했으며 이는 삭제된 `SDES key negotiation` 메서드를 사용하기 위한 시도로 해석될 수 있습니다. 해당 기능은 삭제되었습니다. 대신 `DTLS key negotiation`을 지원하는 서비스를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "`DtlsSrtpKeyAgreement` 제약 조건은 삭제되었습니다. 이 제약 조건에 `true` 값을 지정했으며 이는 아무런 영향을 미치지 않습니다. 정돈을 위해 이 제약 조건을 삭제할 수 있습니다."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "콜백 기반 getStats() 지원이 중단되었으며 삭제될 예정입니다. 대신 사양을 준수하는 getStats()를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() 지원이 중단됩니다. 대신 Selection.modify()를 사용하시기 바랍니다."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "삽입된 사용자 인증 정보(예: `https://user:pass@host/`)가 URL에 포함된 하위 리소스 요청이 차단되었습니다."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy` 옵션은 지원 중단되었으며 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer`에서는 교차 출처 분리를 요구합니다. 자세한 내용은 다음 페이지를 참고하세요. https://developer.chrome.com/blog/enabling-shared-array-buffer/"
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "사용자 활성화를 포함하지 않은 `speechSynthesis.speak()`는 지원 중단되었으며 삭제될 예정입니다."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "`SharedArrayBuffer`를 계속 사용하려면 확장 프로그램에서 교차 출처 분리를 사용해야 합니다. 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/"
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "웹 SQL 지원이 중단됩니다. SQLite WebAssembly 또는 Indexed Database를 사용하세요."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "`window-placement` 권한 설명자의 지원이 중단됩니다. 대신 `window-management`를 사용하세요. 추가 지원이 필요한 경우 다음 페이지를 참고하세요. https://bit.ly/window-placement-rename"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "`window-placement` 권한 정책의 지원이 중단됩니다. 대신 `window-management`를 사용하세요. 추가 지원이 필요한 경우 다음 페이지를 참고하세요. https://bit.ly/window-placement-rename"
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16은 `XMLHttpRequest`의 response.json에서 지원되지 않습니다."
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "최종 사용자 환경에 부정적인 영향을 미치므로 기본 스레드의 동기식 `XMLHttpRequest` 지원이 중단됩니다. 추가 지원이 필요한 경우 다음 페이지를 참고하세요. https://xhr.spec.whatwg.org/"
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()`은 지원 중단되었습니다. 대신 `isSessionSupported()`를 사용하고 결정된 불리언 값을 확인하세요."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "기본 스레드 차단 시간"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "타사"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "합계"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse 사용자 플로우 보고서"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "CORS Access-Control-Allow-Headers 처리 시 와일드 카드 기호(*)를 사용하면 승인되지 않습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "기본 Cast 통합을 사용 중지하려면 -internal-media-controls-overlay-cast-button 선택기 대신 disableRemotePlayback 속성을 사용해야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS 모양 값(slider-vertical)이 표준화되지 않았으며 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "삭제된 공백 \\(n|r|t)자 및 글자수 제한(<)이 URL에 포함된 리소스 요청이 차단되었습니다. 이러한 리소스를 로드하려면 엘리먼트 속성 값과 같은 위치에서 줄바꿈을 삭제하고 글자수 제한을 인코딩하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "ISO-2022-JP 문자 집합의 자동 감지는 지원 중단되었으며 조만간 사용 중지됩니다. 콘텐츠 유형 헤더에서 문자 집합을 지정하거나 메타 태그(https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes()는 지원 중단되었습니다. 대신 표준화된 API인 Navigation Timing 2를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes()는 사용 중지되었습니다. 대신 표준화된 API인 Paint Timing을 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes()는 지원 중단되었습니다. 대신 nextHopProtocol이 추가된 표준화된 API인 Navigation Timing 2를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "\\(0|r|n)자를 포함하는 쿠키는 잘리는 대신 거부됩니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "document.domain 설정을 통한 동일 출처 정책의 해제는 지원 중단되었으며 기본적으로 사용 중지될 예정입니다. 이 지원 중단 경고는 document.domain 설정에 의해 사용 설정된 교차 출처 액세스에 적용됩니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "교차 출처 iframe에서의 window.alert 트리거는 지원 중단되었으며 앞으로 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "교차 출처 iframe에서의 window.confirm 트리거는 지원 중단되었으며 앞으로 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, DOMCharacterDataModified 등의 DOM 변형 이벤트가 지원 중단되었으며(https://w3c.github.io/uievents/#legacy-event-types) 삭제됩니다. 대신 MutationObserver를 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "데이터 지원: SVGUseElement의 URL은 지원 중단되며 향후 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() 및 watchPosition()은 더 이상 안전하지 않은 출처에서 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "안전하지 않은 출처의 getCurrentPosition() 및 watchPosition()은 지원 중단되었습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia()는 더 이상 안전하지 않은 출처에서 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "<article>, <aside>, <nav> 또는 <section> 내에 지정된 글꼴 크기가 없는 <h1> 태그가 있습니다. 이 브라우저에서 이 제목 텍스트의 크기가 조만간 변경될 예정입니다. 자세한 내용은 다음을 참고하세요. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate는 지원 중단되었습니다. 대신 RTCPeerConnectionIceErrorEvent.address 또는 RTCPeerConnectionIceErrorEvent.port를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "디지털 사용자 인증 정보에 대한 navigator.credentials.get() 요청의 이 형식은 지원 중단되었으므로 호출을 업데이트하여 새 형식을 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "canmakepayment 서비스 워커 이벤트의 판매자 원본 및 임의 데이터인 topOrigin, paymentRequestOrigin, methodData, modifiers가 지원 중단되었으며 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "웹사이트에서 사용자 권한이 지정된 네트워크 위치로 인해 해당 웹사이트만 액세스 가능한 네트워크의 하위 리소스를 요청했습니다. 이러한 요청은 비공개 기기 및 서버를 인터넷에 노출시켜 크로스 사이트 요청 위조(CSRF) 공격 또는 정보 유출의 위험을 높입니다. 위험을 완화하기 위해 Chrome은 안전하지 않은 컨텍스트에서 시작된 비공개 하위 리소스에 대한 요청을 사용 중지하고 차단하기 시작합니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "joinAdInterestGroup()에 전달된 InterestGroups의 dailyUpdateUrl 필드 이름이 동작을 더 정확하게 반영하도록 updateUrl로 변경되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator는 지원 중단되었습니다. 대신 Intl.Segmenter를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": ".css 파일 확장자로 끝나지 않는 CSS는 file: URL에서 로드할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "사양 변경으로 인해 SourceBuffer.abort()를 사용하여 remove() 비동기 범위 삭제를 취소하는 기능의 지원이 중단됩니다. 지원은 향후 삭제될 예정입니다. 대신 updateend 이벤트를 수신 대기해야 합니다. abort()는 비동기 미디어 추가 항목을 취소하거나 파서 상태를 초기화하는 데만 사용하도록 만들어졌습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "사양 변경으로 인해, MediaSource.duration을 버퍼링된 코드 프레임의 최고 타임스탬프보다 낮게 설정하는 기능이 지원 중단되었습니다. 버퍼링된 미디어의 잘린 부분을 암시적으로 삭제하는 기능에 대한 지원은 앞으로 삭제될 예정입니다. newDuration < oldDuration의 경우 대신 모든 sourceBuffers에서 명시적 remove(newDuration, oldDuration)을 수행해야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "SysEx가 MIDIOptions에 지정되어 있지 않은 경우에도 사용할 수 있도록 웹 MIDI가 권한을 요청합니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "안전하지 않은 출처의 Notification API는 더 이상 사용할 수 없습니다. 애플리케이션을 HTTPS와 같이 안전한 출처로 전환해 보세요. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "더 이상 교차 출처 iframe에서 Notification API 권한을 요청할 수 없습니다. 최상위 프레임에서 권한을 요청하거나 대신 새로운 창을 여는 방법을 고려해야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmap의 imageOrientation: 'none' 옵션은 지원 중단됩니다. 대신 '\\\\{imageOrientation: 'from-image'\\\\}' 옵션으로 createImageBitmap을 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "파트너가 지원 중단된 (D)TLS 버전을 협상합니다. 파트너에게 확인하여 이를 해결하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "img, video, canvas 태그에 overflow: visible을(를) 지정하면 요소 경계 외부에 시각적 콘텐츠가 생성될 수 있습니다. 다음을 참고하세요. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments 지원이 중단됩니다. 대신 결제 핸들러에 적시 설치를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "PaymentRequest 호출이 콘텐츠 보안 정책(CSP) connect-src 지시어를 우회했습니다. 이 우회 지원이 중단됩니다. PaymentRequest API(supportedMethods 입력란)의 결제 수단 식별자를 CSP connect-src 지시어에 추가하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent는 지원 중단되었습니다. 대신 표준화된 navigator.storage를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<picture> 상위 요소를 지닌 <source src>가 잘못되었으므로 무시됩니다. 대신 <source srcset>를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame은 공급업체별로 다릅니다. 표준 cancelAnimationFrame을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame은 공급업체별로 다릅니다. 표준 requestAnimationFrame을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen은 지원 중단되었습니다. 대신 Document.fullscreenElement를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen()은 지원 중단되었습니다. Element.requestFullscreen()을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen()은 지원 중단되었습니다. Element.requestFullscreen()을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen()은 지원 중단되었습니다. Document.exitFullscreen()을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen()은 지원 중단되었습니다. Document.exitFullscreen()을 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen은 지원 중단되었습니다. 대신 Document.fullscreenEnabled를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "chrome.privacy.websites.privacySandboxEnabled API는 지원 중단되지만 M113 버전이 출시될 때까지 이전 버전과의 호환성을 위해 활성 상태로 유지됩니다. 대신 chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled, chrome.privacy.websites.adMeasurementEnabled API를 사용하세요. 자세한 내용은 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "DtlsSrtpKeyAgreement 제약 조건은 삭제되었습니다. 이 제약 조건에 false 값을 지정했으며 이는 삭제된 SDES key negotiation 메서드를 사용하기 위한 시도로 해석될 수 있습니다. 해당 기능은 삭제되었습니다. 대신 DTLS key negotiation을 지원하는 서비스를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "DtlsSrtpKeyAgreement 제약 조건은 삭제되었습니다. 이 제약 조건에 true 값을 지정했으며 이는 아무런 영향을 미치지 않습니다. 정돈을 위해 이 제약 조건을 삭제할 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "콜백 기반 getStats()는 지원 중단되었으며 삭제될 예정입니다. 대신 사양을 준수하는 getStats()를 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand()는 지원 중단되었습니다. Selection.modify()를 대신 사용하시기 바랍니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "삽입된 사용자 인증 정보(예: https://user:pass@host/)가 URL에 포함된 하위 리소스 요청이 차단되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy 옵션은 지원 중단되었으며 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer에서는 교차 출처 분리를 요구합니다. 자세한 내용은 다음 페이지를 참고하세요. https://developer.chrome.com/blog/enabling-shared-array-buffer/"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "사용자 활성화를 포함하지 않은 speechSynthesis.speak()는 지원 중단되었으며 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "로드 취소 이벤트 리스너는 지원 중단되었으며 삭제될 예정입니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "SharedArrayBuffer를 계속 사용하려면 확장 프로그램에서 교차 출처 분리를 사용해야 합니다. 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16은 XMLHttpRequest의 response.json에서 지원되지 않습니다."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "최종 사용자 환경에 부정적인 영향을 미치므로 기본 스레드의 동기식 XMLHttpRequest이(가) 지원 중단되었습니다. 추가 지원이 필요한 경우 다음 페이지를 참고하세요. https://xhr.spec.whatwg.org/"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "애니메이션"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "레이아웃 변경은 사용자 상호작용 없이 요소가 이동할 때 발생합니다. 페이지가 로드될 때 요소가 추가되거나 삭제되거나 글꼴이 변경되는 등 [레이아웃이 변경되는 이유를 조사](https://web.dev/articles/optimize-cls)하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "글꼴 요청"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "삽입된 iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "레이아웃 변경 클러스터 @{PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "레이아웃 변경 원인을 찾을 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "레이아웃 변경 없음"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "레이아웃 변경 원인"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "상위 레이아웃 변경 원인"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "크기가 지정되지 않은 이미지"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "최악의 클러스터"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "최악의 레이아웃 변경 클러스터"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "캐시 TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "캐시 수명이 길면 페이지를 반복해서 방문하는 속도가 빨라질 수 있습니다. [자세히 알아보기](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "비효율적인 캐시 정책을 사용하는 요청 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "그 외 {PH1}개"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "요청"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "효율적인 캐시 수명 사용"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "DOM이 크면 메모리 사용량이 늘어나고 스타일 계산 시간이 길어지며 큰 비용이 드는 레이아웃 리플로우가 발생하여 페이지 반응성에 영향을 미칩니다. [과도한 DOM 크기를 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "DOM이 크면 스타일 계산 및 레이아웃 리플로우 시간이 길어져 페이지 반응성에 영향을 미칠 수 있습니다. DOM이 크면 메모리 사용량도 늘어납니다. [과도한 DOM 크기를 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "대부분의 하위 요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM 깊이"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "통계"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM 크기 최적화"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "총 요소 수"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "값"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "첫 번째 네트워크 요청이 가장 중요합니다.  리디렉션을 방지하고 서버 응답 속도를 높이며 텍스트 압축을 사용 설정하여 지연 시간을 줄이세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "적용된 압축 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "리디렉션 방지"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "텍스트 압축 적용"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "리디렉션"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "서버 응답 시간"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "문서 요청 지연 시간"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "비압축 다운로드"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "중복된 바이트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "소스"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "번들에서 크고 중복된 JavaScript 모듈을 삭제하여 네트워크 활동이 소비하는 불필요한 바이트 수를 줄입니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "중복된 JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "[font-display](https://developer.chrome.com/blog/font-display)를 swap 또는 optional로 설정하여 텍스트가 일관되게 표시되도록 하세요. swap은 [글꼴 측정항목 재정의](https://developer.chrome.com/blog/font-fallbacks)를 통해 레이아웃 변화를 완화하도록 추가로 최적화할 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "글꼴"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "글꼴 표시"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "낭비된 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(익명)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "많은 API가 일반적으로 레이아웃 도형을 읽으며, 스타일과 레이아웃을 계산하기 위해 렌더링 엔진이 스크립트 실행을 일시중지하도록 강제합니다. [강제 리플로우](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) 및 완화에 관해 자세히 알아보세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "스택 트레이스"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "강제 실행된 리플로우"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "상위 함수 호출"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "총 리플로우 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[출처 불명]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "이미지의 다운로드 시간을 줄이면 페이지의 체감 로드 시간과 LCP를 개선할 수 있습니다. [이미지 크기 최적화에 대해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1}(예상: {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "최적화할 수 있는 이미지 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "파일 크기 최적화"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "그 외 {PH1}개"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "이미지 전송 개선"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "이미지 압축률을 높이면 이 이미지의 다운로드 크기가 개선될 수 있습니다. (예상: {PH1})"
+    "message": "이미지 압축률을 높이면 이 이미지의 다운로드 크기가 개선될 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "최신 이미지 형식(WebP, AVIF)을 사용하거나 이미지 압축률을 높이면 이 이미지의 다운로드 크기를 개선할 수 있습니다. (예상: {PH1})"
+    "message": "최신 이미지 형식(WebP, AVIF)을 사용하거나 이미지 압축률을 높이면 이 이미지의 다운로드 크기를 개선할 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "이 이미지 파일은 표시되는 크기({PH3})에 비해 크기가 너무 큽니다({PH2}). 반응형 이미지를 사용하여 이미지 다운로드 크기를 줄이세요. (예상: {PH1})"
+    "message": "이 이미지 파일은 표시된 크기({PH2})에 비해 크기가 너무 큽니다({PH1}). 반응형 이미지를 사용하여 이미지 다운로드 크기를 줄이세요."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "GIF 대신 동영상 형식을 사용하면 애니메이션 콘텐츠의 다운로드 크기를 개선할 수 있습니다. (예상: {PH1})"
+    "message": "GIF 대신 동영상 형식을 사용하면 애니메이션 콘텐츠의 다운로드 크기를 개선할 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "가장 긴 단계부터 조사를 시작하세요. [지연을 최소화할 수 있습니다](https://web.dev/articles/optimize-inp#optimize_interactions). 처리 시간을 줄이려면 [주 스레드 비용(JS인 경우가 많음)을 최적화](https://web.dev/articles/optimize-long-tasks)하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "입력 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "상호작용이 감지되지 않음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "단계"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "표시 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "처리 기간"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "단계별 INP"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "HTML에서 LCP 이미지를 즉시 [검색 가능](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)하게 만들고 [지연 로드](https://web.dev/articles/lcp-lazy-loading)를 방지하여 LCP를 최적화합니다."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high 적용됨"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high가 적용되어야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "지연 로드가 적용되지 않음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP 이미지가 가장 이른 시작 시간 {PH1} 후에 로드되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "감지된 LCP 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "LCP가 이미지가 아니기 때문에 LCP 리소스가 감지되지 않았습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "초기 문서에서 요청을 검색할 수 있습니다"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP 요청 탐색"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "각 [단계에는 해당 단계에 맞는 개선 전략이 있습니다](https://web.dev/articles/optimize-lcp#lcp-breakdown). 이상적으로는 대부분의 LCP 시간이 지연이 아닌 리소스 로드에 소요되어야 합니다."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "요소 렌더링 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "필드 75번째 백분위수"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "감지된 LCP 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "단계"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "리소스 로드 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "리소스 로드 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "첫 바이트까지의 시간"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "단계별 LCP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "스크립트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "낭비된 바이트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "폴리필 및 변환을 통해 레거시 브라우저에서 새로운 JavaScript 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 레거시 브라우저를 지원해야 하는 경우가 아니라면 [Baseline](https://web.dev/articles/baseline-and-polyfills) 기능을 트랜스파일하지 않도록 JavaScript 빌드 프로세스를 수정해 보세요. [대부분의 사이트에서 트랜스파일링 없이 ES6+ 코드를 배포할 수 있는 이유 알아보기](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "레거시 JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 및 HTTP/3은 HTTP/1.1에 비해 다중화와 같은 많은 이점을 제공합니다. [최신 HTTP 사용에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "HTTP/1.1을 사용한 요청 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "프로토콜"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "요청"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "최신 HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 개선하는 방식으로 [크리티컬 요청 체이닝을 방지](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "최대 중요 경로 지연 시간:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "네트워크 종속 항목의 영향을 받는 렌더링 작업이 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "네트워크 종속 항목 트리"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 개선하는 방식으로 크리티컬 요청 체이닝을 방지합니다."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "요청으로 인해 페이지의 초기 렌더링이 차단되어 LCP가 지연될 수 있습니다. [지연 또는 인라인 처리](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)하면 이러한 네트워크 요청이 주요 경로에서 벗어날 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "이 탐색에 대한 렌더링 차단 요청 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "요청"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "렌더링 차단 요청"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "스타일 재계산 비용이 여전히 높다면 선택자 최적화를 통해 비용을 줄일 수 있습니다. 경과 시간이 길고 느린 경로 비율이 높은 경우 [선택자를 최적화](https://developer.chrome.com/docs/devtools/performance/selector-stats)하세요. 선택자가 간단하고 선택자 수가 적으며 DOM이 작고 DOM이 얕으면 일치 비용이 줄어듭니다."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "경과 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "CSS 선택자 데이터를 찾을 수 없습니다. 성능 패널 설정에서 CSS 선택자 통계를 사용 설정해야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "일치 시도"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "일치 항목 수"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS 선택자 비용"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "상위 선택기"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "합계"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "기본 스레드 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "서드 파티"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "전송 크기"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "서드 파티 코드는 로드 성능에 크게 영향을 미칠 수 있습니다. [서드 파티 코드의 로드를 줄이고 연기](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)하여 페이지 콘텐츠에 우선순위를 지정하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "서드 파티를 찾을 수 없음"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "서드 파티"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "모바일 표시 영역 최적화"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "GET 요청을 통해 로드된 페이지만 뒤로-앞으로 캐시를 사용할 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "상태 코드가 2XX인 페이지만 캐시될 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome이 캐시된 페이지에서 자바스크립트 실행 시도를 감지했습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "AppBanner를 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "플래그에서 뒤로-앞으로 캐시가 사용 중지되었습니다. chrome://flags/#back-forward-cache로 이동하여 뒤로-앞으로 캐시를 사용 설정하세요. 캐시는 기기의 로컬에 저장됩니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "명령줄에 의해 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "메모리가 충분하지 못하여 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "권한을 위임받은 사용자가 뒤로-앞으로 캐시를 허용하지 않습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "프리렌더러에 의해 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "페이지에 등록된 리스너가 포함된 BroadcastChannel 인스턴스가 있어 페이지를 캐시할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "cache-control:no-store 헤더가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "캐시가 의도적으로 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "다른 페이지를 캐시하기 위해 페이지가 캐시에서 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "플러그인을 포함하고 있는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "정의되지 않음"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "FileChooser API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "File System Access API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "미디어 기기 디스패처를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "페이지에서 나갈 때 미디어 플레이어가 재생 중이었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "MediaSession API를 사용하며 재생 상태를 설정한 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "MediaSession API를 사용하며 작업 핸들러를 설정한 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "스크린 리더로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "SecurityHandler를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Serial API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "WebAuthetication API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "WebBluetooth API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "WebUSB API를 사용하는 페이지에서는 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Cache-Control: no-store를 사용하는 페이지에서 쿠키가 사용 중지되므로 뒤로-앞으로 캐시가 사용 중지됩니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "전용 작업자 또는 Worklet을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "사용자가 문서에서 나갈 때까지 문서 로드가 완료되지 않았습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "페이지에서 나갈 때 앱 배너가 표시되어 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "페이지에서 나갈 때 Chrome 비밀번호 관리자가 표시되어 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "페이지에서 나갈 때 DOM 디스틸레이션이 진행 중이었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "페이지에서 나갈 때 DOM Distiller 뷰어가 표시되어 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "messaging API를 사용하는 확장 프로그램으로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "장시간 연결이 포함된 확장 프로그램은 연결을 해제해야 뒤로/앞으로 캐시에 저장될 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "장기 연결이 포함된 확장 프로그램에서 뒤로/앞으로 캐시 내 프레임으로 메시지를 전송하려 했습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "확장 프로그램으로 인해 뒤로/앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "페이지에서 나갈 때 양식 다시 제출과 같은 모달 대화상자 또는 http 인증 대화상자가 표시되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "페이지에서 나갈 때 오프라인 페이지가 표시되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "페이지에서 나갈 때 메모리 부족 알림 표시줄이 표시되어 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "페이지에서 나갈 때 권한 요청이 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "페이지에서 나갈 때 팝업 차단기가 표시되어 있었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "페이지에서 나갈 때 세이프 브라우징 세부정보가 표시되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "세이프 브라우징에서 이 페이지를 악성으로 간주하여 팝업을 차단했습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 서비스 워커가 활성화되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "문서 오류로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "FencedFrame을 사용하는 페이지는 bfcache에 저장할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "다른 페이지를 캐시하기 위해 페이지가 캐시에서 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "미디어 스트림 액세스 권한을 부여한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "특정 유형의 삽입 콘텐츠(예: PDF)가 있는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "IdleManager를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "IndexedDB가 연결된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "IndexedDB 이벤트로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "사용 불가능한 API가 사용되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "확장 프로그램에 의해 JavaScript가 삽입된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "확장 프로그램에 의해 StyleSheet이(가) 삽입된 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "내부 오류입니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "일부 JavaScript 네트워크 요청에서 Cache-Control: no-store 헤더가 있는 리소스를 수신했으므로 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "연결 유지 요청으로 인해 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "키보드 잠금을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "사용자가 페이지에서 나갈 때까지 페이지 로드가 완료되지 않았습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "기본 리소스에 cache-control:no-cache가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "기본 리소스에 cache-control:no-store가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "뒤로-앞으로 캐시에서 페이지를 복원하기 전에 탐색이 취소되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "활성 네트워크에 연결된 동안 페이지에서 지나치게 많은 데이터를 수신하여 페이지가 캐시에서 삭제되었습니다. Chrome은 캐시된 페이지에서 수신할 수 있는 데이터의 양을 제한합니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "fetch() 또는 XHR이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "활성 네트워크 요청에 리디렉션이 발생하여 페이지가 뒤로-앞으로 캐시에서 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "네트워크 연결 시간이 너무 길어 페이지가 캐시에서 삭제되었습니다. Chrome은 캐시된 페이지에서 데이터를 수신할 수 있는 시간을 제한합니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "유효한 응답 헤드가 없는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "기본 프레임이 아닌 다른 프레임에서 탐색이 이루어졌습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "indexedDB 트랜잭션이 진행 중인 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "가져오기 네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "XHR 네트워크 요청이 발생한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "PaymentManager를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "PIP 모드를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "인쇄 UI를 표시하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "페이지가 'window.open()'을(를) 사용하여 열렸고 다른 탭에 해당 페이지 참조가 있거나 페이지가 새 창에서 열렸습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "뒤로-앞으로 캐시에 저장된 페이지의 렌더기 프로세스가 다운되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "뒤로-앞으로 캐시에 저장된 페이지의 렌더기 프로세스가 중단되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "오디오 캡처 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "센서 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "백그라운드 동기화 또는 가져오기 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "MIDI 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "알림 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "저장용량 액세스를 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "동영상 캡처 권한을 요청한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "URL 스킴이 HTTP/HTTPS인 페이지만 캐시될 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 서비스 워커에 의해 사용되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "서비스 워커가 뒤로-앞으로 캐시에 추가된 페이지에 MessageEvent 속성을 전송하려고 했습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "페이지가 뒤로-앞으로 캐시에 저장된 상태에서 ServiceWorker가 등록 취소되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "서비스 워커 활성화로 인하여 페이지가 뒤로-앞으로 캐시에서 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome이 다시 시작되면서 뒤로-앞으로 캐시 항목이 삭제되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "SharedWorker를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "SpeechRecognizer를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "SpeechSynthesis를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "페이지의 iframe이 탐색을 시작했으나 완료되지 않았습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "하위 리소스에 cache-control:no-cache가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "하위 리소스에 cache-control:no-store가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "페이지가 뒤로-앞으로 캐시에서 최대 시간을 초과하여 만료되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "페이지의 뒤로-앞으로 캐시 시작이 타임아웃되었습니다(페이지 숨김 핸들러의 장기간 실행 때문일 가능성이 큼)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "페이지 기본 프레임에 로드 취소 핸들러가 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "페이지 하위 프레임에 로드 취소 핸들러가 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "브라우저에서 사용자 에이전트 재정의 헤더를 변경했습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "동영상 녹화 또는 오디오 녹음 액세스를 부여한 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "WebDatabase를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "WebHID를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "WebLock을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "WebNfc를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "WebOTPService를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "WebRTC가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "WebRTC가 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "WebShare를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "WebSocket이 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "WebSocket이 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "WebTransport가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "WebTransport가 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "WebXR을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "애니메이션 콘텐츠의 경우 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)을 사용하여 콘텐츠가 화면에 표시되지 않을 때 CPU 사용량을 최소화하세요."

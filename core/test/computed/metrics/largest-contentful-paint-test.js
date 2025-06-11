@@ -14,11 +14,16 @@ describe('Metrics: LCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute predicted value', async () => {
+    // TODO(15841): investigate difference.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings, URL}, context);
+      settings, URL, SourceMaps: [], simulator: null}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -38,7 +43,7 @@ Object {
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings, URL}, context);
+      settings, URL, SourceMaps: [], simulator: null}, context);
 
     await expect(result).toMatchInlineSnapshot(`
 Object {

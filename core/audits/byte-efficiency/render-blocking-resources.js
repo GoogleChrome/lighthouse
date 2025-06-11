@@ -112,7 +112,8 @@ class RenderBlockingResources extends Audit {
       // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
       // of CSSUsage
       requiredArtifacts:
-        ['URL', 'traces', 'devtoolsLogs', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks'],
+        // eslint-disable-next-line max-len
+        ['URL', 'Trace', 'DevtoolsLog', 'Stylesheets', 'CSSUsage', 'GatherContext', 'Stacks', 'SourceMaps'],
     };
   }
 
@@ -122,13 +123,15 @@ class RenderBlockingResources extends Audit {
    * @return {Promise<{fcpWastedMs: number, lcpWastedMs: number, results: Array<{url: string, totalBytes: number, wastedMs: number}>}>}
    */
   static async computeResults(artifacts, context) {
+    const settings = context.settings;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const SourceMaps = artifacts.SourceMaps;
     const simulatorData = {devtoolsLog, settings: context.settings};
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
-    const navInsights = await NavigationInsights.request(trace, context);
+    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
 
     const renderBlocking = navInsights.model.RenderBlocking;
     if (renderBlocking instanceof Error) throw renderBlocking;
@@ -140,7 +143,7 @@ class RenderBlockingResources extends Audit {
     };
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, simulator,
-      settings: metricSettings, URL: artifacts.URL};
+      settings: metricSettings, URL: artifacts.URL, SourceMaps: artifacts.SourceMaps};
 
     // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
     const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */
@@ -260,7 +263,7 @@ class RenderBlockingResources extends Audit {
       const unusedCssItems = await UnusedCSS.request({
         Stylesheets: artifacts.Stylesheets,
         CSSUsage: artifacts.CSSUsage,
-        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
+        devtoolsLog: artifacts.DevtoolsLog,
       }, context);
       for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
@@ -288,7 +291,7 @@ class RenderBlockingResources extends Audit {
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
-      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnDuration)},
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results,

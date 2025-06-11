@@ -33,7 +33,7 @@ class PredictivePerf extends Audit {
         'a cellular connection on a mobile device.',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'SourceMaps'],
     };
   }
 
@@ -44,12 +44,13 @@ class PredictivePerf extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     /** @type {LH.Config.Settings} */
     const settings = JSON.parse(JSON.stringify(defaultSettings)); // Use default settings.
-    const computationData = {trace, devtoolsLog, gatherContext, settings, URL};
+    const computationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const fcp = await LanternFirstContentfulPaint.request(computationData, context);
     const tti = await LanternInteractive.request(computationData, context);
     const si = await LanternSpeedIndex.request(computationData, context);

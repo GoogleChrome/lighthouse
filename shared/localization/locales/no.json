@@ -660,7 +660,10 @@
     "message": "Bruk videoformat for animert innhold"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill- og transform-kode gjør det mulig for nettlesere i eldre versjoner å bruke nye JavaScript-funksjoner. Mange former for slik kode trengs imidlertid ikke i moderne nettlesere. Ta i bruk en moderne skriptimplementeringsstrategi for JavaScript-pakken din ved å bruke module/nomodule-funksjonsoppdagelse for å redusere mengden kode som sendes til moderne nettlesere, samtidig som støtten for nettlesere i eldre versjoner ivaretas. [Finn ut hvordan du bruker moderne JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfill- og transform-kode gjør det mulig for nettlesere i eldre versjoner å bruke nye JavaScript-funksjoner. Mange former for slik kode trengs imidlertid ikke i moderne nettlesere. Vurder å endre JavaScript-prosessen din slik at den ikke transkompilerer [Baseline](https://web.dev/baseline)-funksjoner, med mindre du vet at du må støtte eldre nettlesere. [Finn ut hvorfor de fleste nettsteder kan implementere ES6+-kode uten transkompilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Versjon 2 av core-js ble funnet på siden. Du bør oppgradere til versjon 3 for å få mange ytelsesforbedringer."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Unngå å sende JavaScript i en eldre versjon til moderne nettlesere"
@@ -761,6 +764,18 @@
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktiver tekstkomprimering"
   },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Alvorlighetsgrad"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options`-hodet (XFO) eller `frame-ancestors`-direktivet i `Content-Security-Policy`-hodet (CSP) styrer hvor sider kan bygges inn. Disse kan forebygge klikk-kapringsangrep ved å blokkere noen eller alle nettsteder fra å bygge inn siden. [Finn ut mer om hvordan du kan forebygge klikk-kapring.](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Fant ingen regler for rammekontroll"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Forebygg klikk-kapring med XFO eller CSP"
+  },
   "core/audits/critical-request-chains.js | description": {
     "message": "Kjedene med kritiske forespørsler nedenfor viser hvilke ressurser som lastes inn med høy prioritet. Vurder å redusere lengden på kjedene, redusere nedlastingsstørrelsen på ressursene eller utsette nedlasting av unødvendige ressurser for å bedre sideinnlastingen. [Finn ut hvordan du unngår kjeder med kritiske forespørsler](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
   },
@@ -774,7 +789,7 @@
     "message": "Direktiv"
   },
   "core/audits/csp-xss.js | columnSeverity": {
-    "message": "Intensitet"
+    "message": "Alvorlighetsgrad"
   },
   "core/audits/csp-xss.js | description": {
     "message": "En sterk Content Security Policy (CSP) reduserer faren for skriptangrep på tvers av nettsteder (XSS) betydelig. [Finn ut hvordan du bruker en CSP for å forhindre XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse kunne ikke sjekke `font-display`-verdien for opphavet {fontOrigin} automatisk.}other{Lighthouse kunne ikke sjekke `font-display`-verdiene for opphavet {fontOrigin} automatisk.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Alvorlighetsgrad"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Implementering av HSTS-hodet senker risikoen for nedgradering av HTTP-tilkoblinger og avlyttingsangrep betydelig. Vi anbefaler at du implementerer dette i flere trinn og starter med en lav «max-age»-verdi (maksimumsalder). [Finn ut mer om bruk av sterke HSTS-regler.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Ugyldig syntaks"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` er for lav"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Fant ikke noe HSTS-hode"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Ikke noe `max-age`-direktiv"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Fant ikke noe `preload`-direktiv"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Fant ikke noe `includeSubDomains`-direktiv"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Bruk en sterk HSTS-regel"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Høyde/bredde-forhold (faktisk)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Viser bilder med riktig oppløsning"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Poengsum for utseendeforskyvning"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Tillatt"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Injisert iframe-element"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "En sen nettverksforespørsel justerte sideutseendet"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Medieelement uten eksplisitt størrelse"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametere som ikke støttes"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Alvorlighetsgrad"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "COOP (Cross-Origin-Opener-Policy – regel for tverropphavlig åpning) kan brukes til å isolere toppnivåvinduet fra andre dokumenter, for eksempel forgrunnsvinduer. [Finn ut mer om implementering av COOP-hodet.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Ugyldig syntaks"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Fant ikke noe COOP-hode"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Sørg for riktig opphavsisolasjon med COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Forhåndslast `optional` skrifttyper, slik at førstegangsbesøkende kan bruke dem. [Finn ut mer om forhåndslasting av skrifttyper](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Det ble registrert en sidenavigering under kjøringen. Vi anbefaler ikke å bruke tidsspennmodus ved kontroll av sidenavigeringer. Bruk navigasjonsmodus ved kontroll av sidenavigeringer for å oppnå bedre tredjepartsattribusjon og registrering av hovedtråden."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Kun sider som lastes inn via GET-forespørsler, kan lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Kun sider med statuskode 2XX kan bufres."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome oppdaget et forsøk på kjøring av JavaScript mens siden var i bufferen."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Sider som bruker har forespurt AppBanner, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en keepalive-forespørsel."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert via flagg. Gå til chrome://flags/#back-forward-cache for å aktivere den lokalt på denne enheten."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert via kommandolinjen."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av utilstrekkelig minne."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Frem-og-tilbake-bufferen støttes ikke av delegat."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert for forhåndsgjengivelse."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Siden kan ikke bufres, ettersom den har en BroadcastChannel-forekomst med registrerte lyttere."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Sider med hodet «cache-control:no-store» kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Bufferen ble tømt med vilje."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Siden ble fjernet fra bufferen, slik at en annen side kunne bli bufret."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Sider som inneholder programtillegg, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Sider som bruker FileChooser-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Sider som bruker File System Access-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Sider som bruker Media Device Dispatcher, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "En mediespiller holdt på å spille av da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Sider som bruker MediaSession-API-et og angir en avspillingsstatus, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Sider som bruker MediaSession-API-et og angir handlingsbehandlere, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av skjermleseren."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Sider som bruker SecurityHandler, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Sider som bruker Serial-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Sider som bruker WebAuthentication-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Sider som bruker WebBluetooth-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Sider som bruker WebUSB-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert fordi informasjonskapsler er deaktivert på en side som bruker `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Sider som bruker en dedikert Service Worker eller worklet, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokumentet ble ikke ferdig innlastet før nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Appbanneret var til stede da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Chrome Passordlagring var til stede da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "DOM-destillering pågikk da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM-destilleringsvisningen var til stede da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert fordi utvidelser bruker meldings-API-et."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Utvidelser med tilkoblinger med lang levetid må lukke tilkoblingen før de kan lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Utvidelser med tilkoblinger med lang levetid prøvde å sende meldinger til rammer i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av utvidelser."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "En modaldialogboks for siden, for eksempel en dialogboks om å sende inn et skjema på nytt eller en dialogboks for HTTP-passord, ble vist da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Siden hvor det står at enheten er uten nett, ble vist da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Intervensjonsfeltet hvor det står at enheten ikke har nok minne, var til stede da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Det eksisterte tillatelsesforespørsler da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Blokkering av forgrunnsvinduer var til stede da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Safe Browsing-detaljer ble vist da nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Safe Browsing anså denne siden for å være villedende og blokkerte forgrunnsvinduet."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "En Service Worker ble aktivert mens siden var i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en dokumentfeil."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Sider som bruker FencedFrames, kan ikke lagres i bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Siden ble fjernet fra bufferen, slik at en annen side kunne bli bufret."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Sider som har gitt mediestrømtilgang, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Sider som bruker portaler, er for øyeblikket ikke kvalifisert for frem-og-tilbake-hurtigbuffer."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Sider som bruker IdleManager, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Sider med åpne IndexedDB-tilkoblinger kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en IndexedDB-hendelse."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Det ble brukt API-er som ikke er kvalifisert."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Sider som utvidelser har injisert `JavaScript` i, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Sider som utvidelser har injisert `StyleSheet` i, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Intern feil."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en keepalive-forespørsel."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Sider som bruker tastaturlås, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Siden ble ikke ferdig innlastet før nettleseren navigerte bort."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Sider som har «cache-control:no-cache» i hovedressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Sider som har «cache-control:no-store» i hovedressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Navigeringen ble avbrutt før siden kunne gjenopprettes fra frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Siden ble fjernet fra bufferen fordi en aktiv nettverkstilkobling mottok for mye data. Chrome begrenser hvor mye data sider kan motta mens de er bufret."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Sider med pågående fetch()- eller XHR-forespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Siden ble fjernet fra frem-og-tilbake-bufferen fordi en aktiv nettverksforespørsel medførte en viderekobling."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Siden ble fjernet fra bufferen fordi en nettverkstilkobling var åpen for lenge. Chrome begrenser hvor lenge sider kan motta data mens de er bufret."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Sider som ikke har noe gyldig svarhode, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Navigeringen skjedde i en annen ramme enn hovedrammen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Sider med pågående IndexedDB-transaksjoner, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Sider med pågående nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Sider med pågående fetch()-nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Sider med pågående nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Sider med pågående XHR-nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Sider som bruker PaymentManager, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Sider som bruker bilde-i-bilde, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Sider som bruker portaler, er for øyeblikket ikke kvalifisert for frem-og-tilbake-hurtigbuffer."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Sider som viser UI for utskrift, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Siden ble åpnet med '`window.open()`', og en annen fane har en henvisning til den, eller siden åpnet et vindu."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Gjengivelsesprosessen for siden i frem-og-tilbake-bufferen krasjet."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Gjengivelsesprosessen for siden i frem-og-tilbake-bufferen ble avsluttet."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Sider som har bedt om tillatelser til lydopptak, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Sider som har bedt om sensortillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Sider som har bedt om bakgrunnssynkronisering eller fetch()-tillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Sider som har bedt om MIDI-tillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Sider som har bedt om varseltillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Sider som har bedt om tilgang til lagring, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Sider som har bedt om tillatelser til videoopptak, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Kun sider med HTTP eller HTTPS som nettadresseprotokoll kan bufres."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Siden ble gjort krav på av en Service Worker mens den var i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "En Service Worker prøvde å sende en `MessageEvent` til siden i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker ble avregistrert mens en side var i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Siden ble fjernet fra frem-og-tilbake-bufferen på grunn av en Service Worker-aktivering."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome ble startet på nytt og slettet oppføringene i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Sider som bruker SharedWorker, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Sider som bruker SpeechRecognizer, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Sider som bruker SpeechSynthesis, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Et iframe-element på siden startet en navigering som ikke ble fullført."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Sider som har «cache-control:no-cache» i underressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Sider som har «cache-control:no-store» i underressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Siden overskred den maksimale tiden i frem-og-tilbake-bufferen og har utløpt."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Siden fikk tidsavbrudd under lagring i frem-og-tilbake-bufferen (sannsynligvis på grunn av pagehide-behandlere med lang kjøretid)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Siden har en utlastingsbehandler i hovedrammen."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Siden har en utlastingsbehandler i en underramme."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Nettleseren har endret hodet for overstyring av brukeragenten."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Sider som har gitt tilgang til opptak av video eller lyd, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Sider som bruker WebDatabase, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Sider som bruker WebHID, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Sider som bruker WebLocks, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Sider som bruker WebNfc, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Sider som bruker WebOTPService, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Sider med WebRTC kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Sider som bruker WebShare, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Sider med WebSocket kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Sider med WebTransport kan ikke lagres i frem-og-tilbake-bufferen."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Sider som bruker WebXR, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Vurder å legge til nettadresseprotokollene https: og http: (ignoreres av nettlesere som støtter `'strict-dynamic'`) for bakoverkompatibilitet med eldre nettlesere."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "En avviklet funksjon ble brukt"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Autorisasjon kommer ikke til å bli dekket av jokertegnet (*) ved håndtering av CORS-hodet `Access-Control-Allow-Headers`."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "For å slå av Cast-integreringen som brukes som standard, bruk `disableRemotePlayback`-attributtet i stedet for `-internal-media-controls-overlay-cast-button`-velgeren."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Ressursforespørsler med nettadresser som inneholdt både fjernede mellomromstegn (`(n|r|t)`) og mindre-enn-tegn (`<`), er blokkert. For å kunne laste inn disse ressursene, fjern linjeskift og gjør mindre-enn-tegn om til kode på steder som i attributtverdiene til elementer."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` er avviklet. Bruk heller det standardiserte API-et Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` er avviklet. Bruk heller det standardiserte API-et Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` er avviklet. Bruk heller det standardiserte API-et `nextHopProtocol` i Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Informasjonskapsler som inneholder tegnet `(0|r|n)`, blir avvist i stedet for å bli avkortet."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Oppmykning av samme opphav-reglene ved å angi `document.domain` er avviklet og kommer til å være avslått som standard. Dette avviklingsvarselet gjelder en opphavsuavhengig tilgang som ble påslått ved å angi `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Utløsing av window.alert fra iframe-elementer med andre opphav er avviklet og kommer til å bli fjernet i fremtiden."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Utløsing av window.confirm fra iframe-elementer med andre opphav er avviklet og kommer til å bli fjernet i fremtiden."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM-mutasjonshendelser, inkludert `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` og `DOMCharacterDataModified`, er avviklet (https://w3c.github.io/uievents/#legacy-event-types) og kommer til å bli fjernet. Bruk `MutationObserver` i stedet."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Støtte for data:-nettadresser i <use>-elementer i SVG-filer er avviklet og kommer til å bli fjernet i fremtiden."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Oppmykning av samme opphav-reglene ved å angi `document.domain` er avviklet og kommer til å være avslått som standard. For å fortsette å bruke denne funksjonen, velg bort agentgrupper med opphavsnøkler ved å sende et `Origin-Agent-Cluster: ?0`-hode sammen med HTTP-svaret for dokumentet og rammene. Se https://developer.chrome.com/blog/immutable-document-domain/ for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "`Expect-CT`-hodet er avviklet og kommer til å bli fjernet. Chrome krever sertifikatåpenhet for alle offentlig klarerte sertifikater som er utstedt etter 30. april 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` og `watchPosition()` fungerer ikke på usikre opphav lenger. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` og `watchPosition()` er avviklet på usikre opphav. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` fungerer ikke på usikre opphav lenger. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` er avviklet. Bruk `RTCPeerConnectionIceErrorEvent.address` eller `RTCPeerConnectionIceErrorEvent.port` i stedet."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Selgerens opprinnelse og vilkårlige data fra Service Worker-hendelsen `canmakepayment` er avviklet og blir fjernet: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Nettstedet forespurte en underressurs fra et nettverk det kun hadde tilgang til på grunn av den privilegerte nettverksposisjonen til brukerne sine. Disse forespørslene eksponerer ikke-offentlige enheter og tjenere for internett, noe som øker risikoen for angrep via forfalskning av tredjepartsforespørsler (CSRF) og/eller informasjonslekkasjer. For å forebygge disse risikoene avvikler Chrome forespørsler til ikke-offentlige underressurser når disse igangsettes fra ikke-sikre kontekster, og kommer til å begynne å blokkere dem."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Feltet `dailyUpdateUrl` for `InterestGroups`, som ble sendt til `joinAdInterestGroup()`, har fått det nye navnet `updateUrl` for å gjenspeile funksjonaliteten bedre."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS-filer kan ikke lastes inn fra `file:`-nettadresser med mindre de har filetternavnet `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Bruk av `SourceBuffer.abort()` for å avbryte den asynkrone områdefjerningen som utføres av `remove()`, er avviklet på grunn av endringer i spesifikasjonen. Støtten kommer til å bli fjernet i fremtiden. Du bør lytte etter `updateend`-hendelsen i stedet. `abort()` er kun ment å avbryte asynkrone medietilføyninger eller tilbakestille parsertilstanden."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Å angi en verdi for `MediaSource.duration` som er lavere enn det høyeste presentasjonstidsstempelet for noen bufret, kodet ramme, er avviklet på grunn av endringer i spesifikasjonen. Støtte for implisitt fjerning av avkortede, bufrede medier kommer til å bli fjernet i fremtiden. Du bør i stedet utføre eksplisitte `remove(newDuration, oldDuration)`-kall på alle `sourceBuffers`, hvor `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI kommer til å be om brukstillatelse selv om sysex ikke er angitt i `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Det eldre, ikke-standardiserte `shadowroot`-attributtet er avviklet og *fungerer ikke lenger* i M119. Bruk det nye, standardiserte `shadowrootmode`-attributtet i stedet."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification API kan ikke lenger brukes fra usikre opphav. Vurder å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Det er ikke lenger mulig å be om tillatelse for Notification API via «iframe»-elementer med andre opphav. Vurder å be om tillatelse via en toppnivåramme eller åpne et nytt vindu i stedet."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Alternativet `imageOrientation: 'none'` i createImageBitmap er avviklet. Bruk createImageBitmap med alternativet \\{imageOrientation: 'from-image'\\} i stedet."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Partneren din bruker en foreldet (D)TLS-versjon. Snakk med partneren din for å få rettet dette."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Hvis du angir `overflow: visible` på img-, video- eller canvas-tagger, kan det hende at de produserer visuelt innhold utenfor elementgrensene. Se https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` er avviklet. Bruk siste liten-installasjon for betalingsbehandlere i stedet."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "`PaymentRequest`-kallet ditt omgikk Content-Security-Policy (CSP)-direktivet `connect-src`. Denne omgåelsen er avviklet. Legg til identifikatoren for betalingsmåten fra `PaymentRequest`-API-et (i `supportedMethods`-feltet) i CSP-direktivet `connect-src`."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` er avviklet. Bruk standardisert `navigator.storage` i stedet."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` med `<picture>` som overordnet element er ugyldig og blir derfor ignorert. Bruk `<source srcset>` i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame er en leverandørspesifikk metode. Bruk standardmetoden cancelAnimationFrame i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame er en leverandørspesifikk metode. Bruk standardmetoden requestAnimationFrame i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen er avviklet. Bruk Document.fullscreenElement i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() er avviklet. Bruk Element.requestFullscreen() i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() er avviklet. Bruk Element.requestFullscreen() i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() er avviklet. Bruk Document.exitFullscreen() i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() er avviklet. Bruk Document.exitFullscreen() i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen er avviklet. Bruk Document.fullscreenEnabled i stedet."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Vi avvikler API-et `chrome.privacy.websites.privacySandboxEnabled`, men av hensyn til bakoverkompatibilitet forblir det aktivt frem til versjon M113. Bruk `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` og `chrome.privacy.websites.adMeasurementEnabled` i stedet. Se https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Begrensningen `DtlsSrtpKeyAgreement` er fjernet. Du har angitt verdien `false` for denne begrensningen, noe som tolkes som et forsøk på å bruke den fjernede `SDES key negotiation`-metoden. Denne funksjonaliteten er fjernet. Bruk en tjeneste som støtter `DTLS key negotiation` i stedet."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Begrensningen `DtlsSrtpKeyAgreement` er fjernet. Du har angitt verdien `true` for denne begrensningen. Dette har ingen virkning, men du kan fjerne denne begrensningen for ryddighets skyld."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Den tilbakekallbaserte metoden getStats() er avviklet og kommer til å bli fjernet. Bruk den spesifikasjonskompatible metoden getStats() i stedet."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() er avviklet. Bruk Selection.modify() i stedet."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Underressursforespørsler med nettadresser som inneholder innebygd legitimasjon (f.eks. `https://user:pass@host/`), er blokkert."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy`-alternativet er avviklet og kommer til å bli fjernet."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` kommer til å kreve isolering fra andre opphav. Se https://developer.chrome.com/blog/enabling-shared-array-buffer/ for mer informasjon."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` uten brukeraktivering er avviklet og kommer til å bli fjernet."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Utvidelser må slå på isolering fra andre opphav for å fortsette å bruke `SharedArrayBuffer`. Se https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL er avviklet. Bruk SQLite WebAssembly eller Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Tillatelsesbeskrivelsen `window-placement` er avviklet. Bruk `window-management` i stedet. Du finner mer hjelp på https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Tillatelsesregelen `window-placement` er avviklet. Bruk `window-management` i stedet. Du finner mer hjelp på https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 støttes ikke av JSON-svaret i `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Synkrone `XMLHttpRequest`-forespørsler på hovedtråden er avviklet på grunn av de negative virkningene på sluttbrukerens opplevelse. For å få mer hjelp, se https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` er avviklet. Bruk `isSessionSupported()` og sjekk den resulterende boolske verdien i stedet."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Blokkeringstid i hovedtråden"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tredjepart"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Totalt"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse-rapport over brukerflyt"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Autorisasjon kommer ikke til å bli dekket av jokertegnet (*) ved håndtering av CORS-hodet Access-Control-Allow-Headers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "For å slå av Cast-integreringen som brukes som standard, bruk disableRemotePlayback-attributtet i stedet for -internal-media-controls-overlay-cast-button-velgeren."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS-utseendeverdien slider-vertical er ikke standardisert og blir fjernet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Ressursforespørsler med nettadresser som inneholdt både fjernede mellomromstegn (\\(n|r|t)) og mindre-enn-tegn (<), er blokkert. For å kunne laste inn disse ressursene, fjern linjeskift og gjør mindre-enn-tegn om til kode på steder som i attributtverdiene til elementer."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Automatisk gjenkjenning av ISO-2022-JP-tegnsettet er avviklet og blir deaktivert i nær fremtid. Angi tegnsettet i Content Type-hodet eller ved å bruke en metatag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() er avviklet. Bruk heller det standardiserte API-et Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() er avviklet. Bruk heller det standardiserte API-et Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() er avviklet. Bruk heller det standardiserte API-et nextHopProtocol i Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Informasjonskapsler som inneholder tegnet \\(0|r|n), blir avvist i stedet for å bli avkortet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Oppmykning av samme opphav-reglene ved å angi document.domain er avviklet og kommer til å være avslått som standard. Dette avviklingsvarselet gjelder en opphavsuavhengig tilgang som ble påslått ved å angi document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Utløsing av window.alert fra iframe-elementer med andre opphav er avviklet og kommer til å bli fjernet i fremtiden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Utløsing av window.confirm fra iframe-elementer med andre opphav er avviklet og kommer til å bli fjernet i fremtiden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOM-mutasjonshendelser, inkludert DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument og DOMCharacterDataModified, er avviklet (https://w3c.github.io/uievents/#legacy-event-types) og kommer til å bli fjernet. Bruk MutationObserver i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Støtte for data:-nettadresser i SVGUseElement er avviklet og blir fjernet i fremtiden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() og watchPosition() fungerer ikke på usikre opphav lenger. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() og watchPosition() er avviklet på usikre opphav. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() fungerer ikke på usikre opphav lenger. For å bruke denne funksjonen bør du vurdere å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Fant en <h1>-tag i et <article>-, <aside>-, <nav>- eller <section>-element som det ikke er angitt noen skriftstørrelse for. Størrelsen på denne overskriftsteksten endres snart i denne nettleseren. Les https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate er avviklet. Bruk RTCPeerConnectionIceErrorEvent.address eller RTCPeerConnectionIceErrorEvent.port i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Dette formatet for navigator.credentials.get()-forespørselen om digitale legitimasjoner er avviklet. Oppdater kallet for å bruke det nye formatet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Selgerens opprinnelse og vilkårlige data fra canmakepayment Service Worker-hendelsen er avviklet og blir fjernet: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Nettstedet forespurte en underressurs fra et nettverk det kun hadde tilgang til på grunn av den privilegerte nettverksposisjonen til brukerne sine. Disse forespørslene eksponerer ikke-offentlige enheter og tjenere for internett, noe som øker risikoen for angrep via forfalskning av tredjepartsforespørsler (CSRF) og/eller informasjonslekkasjer. For å forebygge disse risikoene avvikler Chrome forespørsler til ikke-offentlige underressurser når disse igangsettes fra ikke-sikre kontekster, og kommer til å begynne å blokkere dem."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Feltet dailyUpdateUrl for InterestGroups, som ble sendt til joinAdInterestGroup(), har fått det nye navnet updateUrl, for en mer nøyaktig atferd."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator er avviklet. Bruk Intl.Segmenter i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS-filer kan ikke lastes inn fra file:-nettadresser med mindre de har filetternavnet .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Bruk av SourceBuffer.abort() for å avbryte den asynkrone områdefjerningen som utføres av remove(), er avviklet på grunn av endringer i spesifikasjonen. Støtten kommer til å bli fjernet i fremtiden. Du bør lytte etter updateend-hendelsen i stedet. abort() er kun ment å avbryte asynkrone medietilføyninger eller tilbakestille parsertilstanden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Å angi en verdi for MediaSource.duration som er lavere enn det høyeste presentasjonstidsstempelet for noen bufret, kodet ramme, er avviklet på grunn av endringer i spesifikasjonen. Støtte for implisitt fjerning av avkortede, bufrede medier kommer til å bli fjernet i fremtiden. Du bør i stedet utføre eksplisitte remove(newDuration, oldDuration)-kall på alle sourceBuffers, hvor newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI kommer til å be om brukstillatelse selv om sysex ikke er angitt i MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Notification-API-et kan ikke lenger brukes fra usikre opphav. Vurder å flytte programmet ditt til et sikkert opphav, for eksempel HTTPS. Se https://goo.gle/chrome-insecure-origins for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Det er ikke lenger mulig å be om tillatelse for Notification-API-et via iframe-elementer med andre opphav. Vurder å be om tillatelse via en toppnivåramme eller åpne et nytt vindu i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Alternativet imageOrientation: 'none' i createImageBitmap er avviklet. Bruk createImageBitmap med alternativet '\\\\{imageOrientation: 'from-image'\\\\}' i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Partneren din bruker en foreldet (D)TLS-versjon. Snakk med partneren din for å få rettet dette."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Hvis du angir overflow: visible på img-, video- eller canvas-tagger, kan det hende at de produserer visuelt innhold utenfor elementgrensene. Se https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments er avviklet. Bruk siste liten-installasjon for betalingsbehandlere i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "PaymentRequest-kallet ditt omgikk Content-Security-Policy (CSP)-direktivet connect-src. Denne omgåelsen er avviklet. Legg til identifikatoren for betalingsmåten fra PaymentRequest-API-et (i supportedMethods-feltet) i CSP-direktivet connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent er avviklet. Bruk standardisert navigator.storage i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> med <picture> som forelder er ugyldig og blir derfor ignorert. Bruk <source srcset> i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame er en leverandørspesifikk metode. Bruk standardmetoden cancelAnimationFrame i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame er en leverandørspesifikk metode. Bruk standardmetoden requestAnimationFrame i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen er avviklet. Bruk Document.fullscreenElement i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() er avviklet. Bruk Element.requestFullscreen() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() er avviklet. Bruk Element.requestFullscreen() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() er avviklet. Bruk Document.exitFullscreen() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() er avviklet. Bruk Document.exitFullscreen() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen er avviklet. Bruk Document.fullscreenEnabled i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Vi avvikler API-et chrome.privacy.websites.privacySandboxEnabled, men av hensyn til bakoverkompatibilitet forblir det aktivt frem til versjon M113. Bruk chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled og chrome.privacy.websites.adMeasurementEnabled i stedet. Se https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Begrensningen DtlsSrtpKeyAgreement er fjernet. Du har angitt verdien false for denne begrensningen, noe som tolkes som et forsøk på å bruke den fjernede SDES key negotiation-metoden. Denne funksjonaliteten er fjernet. Bruk en tjeneste som støtter DTLS key negotiation i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Begrensningen DtlsSrtpKeyAgreement er fjernet. Du har angitt verdien true for denne begrensningen. Dette har ingen virkning, men du kan fjerne denne begrensningen for ryddighets skyld."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Den tilbakekallbaserte metoden getStats() er avviklet og kommer til å bli fjernet. Bruk den spesifikasjonskompatible metoden getStats() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() er avviklet. Bruk Selection.modify() i stedet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Underressursforespørsler med nettadresser som inneholder innebygd legitimasjon (f.eks. https://user:pass@host/), er blokkert."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy-alternativet er avviklet og kommer til å bli fjernet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer kommer til å kreve isolering fra andre opphav. Se https://developer.chrome.com/blog/enabling-shared-array-buffer/ for mer informasjon."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() uten brukeraktivering er avviklet og kommer til å bli fjernet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "«unload»-hendelseslyttere er avviklet og kommer til å bli fjernet."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Utvidelser må slå på isolering fra andre opphav for å fortsette å bruke SharedArrayBuffer. Se https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 støttes ikke av JSON-svaret i XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Synkrone XMLHttpRequest-forespørsler på hovedtråden er avviklet på grunn av de negative virkningene på sluttbrukerens opplevelse. For å få mer hjelp, se https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animasjon"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Utseendeforskyvninger oppstår når elementer beveger seg uten at brukeren har gjort noe. [Undersøk årsakene til utseendeforskyvninger](https://web.dev/articles/optimize-cls), for eksempel elementer som legges til, fjernes eller endrer skrifttype mens siden lastes inn."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Forespørsel om skrifttype"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Injisert iframe-element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Klynge med utseendeforskyvning etter {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Fant ingen årsaker til utseendeforskyvning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Ingen utseendeforskyvninger"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Årsaker til utseendeforskyvning"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "De vanligste årsakene til utseendeforskyvning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Bilder uten størrelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Verste klynge"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Verste klynge med utseendeforskyvning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Buffer-TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "En lang bufferlevetid kan gjøre at gjentatte besøk på siden din går raskere. [Finn ut mer.](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Ingen forespørsler med ineffektive bufferregler"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} til"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Forespørsel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Bruk effektive bufferlevetider"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Store DOM-er øker minnebruken, forårsaker lengre stilberegninger og utløser kostbare dynamiske tilpasninger av layouten, noe som påvirker sidens responstid. [Finn ut hvordan du unngår at DOM-en blir for stor.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "Store DOM-er kan øke varigheten på stilberegninger og dynamiske tilpasninger av layouten, noe som påvirker sidens responstid. Store DOM-er øker også minnebruken. [Finn ut hvordan du unngår at DOM-en blir for stor.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Flest underelementer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM-dybde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistikk"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimaliser DOM-størrelsen"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Elementer totalt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Verdi"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Den første nettverksforespørselen er den viktigste.  Reduser tidsforsinkelsen ved å unngå omdirigeringer, sikre rask tjenerrespons og slå på tekstkomprimering."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Ingen komprimering er brukt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Unngår viderekoblinger"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Bruker tekstkomprimering"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Viderekoblinger"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Responstid for tjeneren"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Tidsforsinkelse for dokumentforespørsel"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Ukomprimert nedlasting"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Dupliserte byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Kilde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Fjern store, dupliserte JavaScript-moduler fra pakker for å redusere antall byte som brukes unødvendig av nettverksaktiviteten."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplisert JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Vurder å sette [font-display](https://developer.chrome.com/blog/font-display) til swap eller optional for å sikre at teksten er synlig hele tiden. swap kan optimaliseres ytterligere for å motvirke utseendeforskyvninger med [overstyring av skrifttypeverdier](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Skrifttype"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Visning av skrifttype"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Tidstap"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonym)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Mange API-er, som vanligvis leser layoutgeometri, tvinger gjengivelsesmotoren til å sette skriptutførelsen på pause for å beregne stilen og layouten. Finn ut mer om [tvungen dynamisk tilpasning](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) og avhjelpende tiltak."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Stabelspor"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Tvungen dynamisk tilpasning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Mest tidkrevende funksjonskall"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Totaltid for dynamiske tilpasninger"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[uten attribusjon]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Hvis du reduserer nedlastingstiden for bilder, kan det redusere den opplevde innlastingstiden for siden og LCP (største innholdsrike opptegning). [Finn ut mer om optimalisering av bildestørrelser](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (anslått {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Ingen bilder som kan optimaliseres"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimaliser filstørrelsen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} til"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Forbedre bildeleveringen"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Hvis du øker komprimeringsfaktoren for bildet, kan nedlastingsstørrelsen bli mindre. (Anslått: {PH1})"
+    "message": "Hvis du øker komprimeringsfaktoren for bildet, kan nedlastingsstørrelsen bli mindre."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Hvis du bruker et moderne bildeformat (WebP, AVIF) eller øker bildekomprimeringsfaktoren, kan nedlastingsstørrelsen for dette bildet bli mindre. (Anslått: {PH1})"
+    "message": "Hvis du bruker et moderne bildeformat (WebP, AVIF) eller øker bildekomprimeringsfaktoren, kan nedlastingsstørrelsen for dette bildet bli mindre."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Denne bildefilen er større enn nødvendig ({PH2}) for de viste dimensjonene ({PH3}). Bruk responsivt bildeinnhold for å redusere nedlastingsstørrelsen for bildet. (Anslått: {PH1})"
+    "message": "Denne bildefilen er større enn nødvendig ({PH1}) for de viste dimensjonene ({PH2}). Bruk responsivt bildeinnhold for å redusere nedlastingsstørrelsen for bildet."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Ved å bruke videoformater i stedet for GIF-er kan du redusere nedlastingsstørrelsen på animert innhold. (Anslått: {PH1})"
+    "message": "Ved å bruke videoformater i stedet for GIF-er kan du redusere nedlastingsstørrelsen på animert innhold."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Begynn med å undersøke den lengste fasen. [Forsinkelser kan minimeres.](https://web.dev/articles/optimize-inp#optimize_interactions) For å redusere behandlingstiden må du [optimalisere kostnadene på hovedtråden](https://web.dev/articles/optimize-long-tasks). Ofte er dette JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Varighet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Inndataforsinkelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Ingen interaksjoner ble registrert"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Presentasjonsforsinkelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Behandlingsvarighet"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP (tid fra interaksjon til neste opptegning) etter fase"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimaliser LCP (største innholdsrike opptegning) ved å gjøre LCP-bildet [synlig](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) umiddelbart i HTML-koden og [unngå bruk av utsatt innlasting](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high er tatt i bruk"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high bør brukes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "utsatt innlasting er ikke brukt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Bildet med største innholdsrike opptegning (LCP) ble lastet inn {PH1} etter det tidligste startpunktet."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Ingen LCP (største innholdsrike opptegning) ble registrert"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Ingen LCP-ressurs ble oppdaget fordi LCP (største innholdsrike opptegning) ikke er et bilde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Forespørselen er synlig i det opprinnelige dokumentet"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Oppdagelse av forespørsel med LCP (største innholdsrike opptegning)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Hver [fase har spesifikke forbedringsstrategier](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideelt sett bør mesteparten av LCP-tiden brukes på innlasting av ressurser, ikke på forsinkelser."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Varighet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Forsinkelse for gjengivelse av element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75. persentil for felten"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Ingen LCP (største innholdsrike opptegning) ble registrert"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fase"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Forsinkelse ved innlasting av ressurser"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Varighet av ressursinnlasting"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Tid til første byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP (største innholdsrike opptegning) etter fase"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Bortkastede byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Polyfill- og transform-kode gjør det mulig for nettlesere i eldre versjoner å bruke nye JavaScript-funksjoner. Mange former for slik kode trengs imidlertid ikke i moderne nettlesere. Vurder å endre JavaScript-byggeprosessen din slik at den ikke transkompilerer [Baseline](https://web.dev/articles/baseline-and-polyfills)-funksjoner, med mindre du vet at du må støtte eldre nettlesere. [Finn ut hvorfor de fleste nettsteder kan implementere ES6+-kode uten transkompilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "JavaScript i en eldre versjon"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 og HTTP/3 har mange fordeler sammenlignet med HTTP/1.1, for eksempel multipleksing. [Finn ut mer om bruk av moderne HTTP.](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Ingen forespørsler brukte HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokoll"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Forespørsel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderne HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Unngå kjeding av kritiske forespørsler](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) ved å redusere lengden på kjedene, redusere nedlastingsstørrelsen på ressursene eller utsette nedlasting av unødvendige ressurser for å bedre sideinnlastingen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maksimal tidsforsinkelse for kritisk bane:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Ingen gjengivelsesoppgaver påvirkes av nettverksavhengigheter"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Avhengighetstre for nettverket"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Unngå kjeding av kritiske forespørsler ved å redusere lengden på kjedene, redusere nedlastingsstørrelsen på ressursene eller utsette nedlasting av unødvendige ressurser for å bedre sideinnlastingen."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Forespørsler blokkerer den innledende gjengivelsen av siden, noe som kan forsinke LCP (største innholdsrike opptegning). [Hvis du utsetter eller fletter inn disse](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/), flyttes disse nettverksforespørslene ut av den kritiske banen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Varighet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Ingen forespørsler om blokkering av gjengivelse for denne navigeringen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Forespørsel"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Forespørsler som blokkerer gjengivelse"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Hvis kostnadene for omberegning av stiler fortsetter å være høye, kan du senke dem ved å optimalisere velgere. [Optimaliser velgere](https://developer.chrome.com/docs/devtools/performance/selector-stats) som både har lang forløpstid og følger den langsomme banen en stor prosentandel av tiden. Både enklere velgere, færre velgere, en mindre DOM og en mindre omfattende DOM er med på å senke kostnadene ved å beregne elementsamsvar."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Forløpt tid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Fant ingen data for CSS-velgere. Du må slå på statistikk for CSS-velgere i innstillingene for ytelsespanelet."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Samsvarsforsøk"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Antall samsvarende elementer"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Kostnader for CSS-velger"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Mest tidkrevende velgere"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Totalt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Tid i hovedtråden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Tredjepart"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Overføringsstørrelse"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Tredjepartskode kan ha betydelig innvirkning på hvor lang tid det tar å laste inn siden. [Reduser og utsett innlasting av tredjepartskode](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) for å prioritere innholdet på siden din."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Fant ingen tredjeparter"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Tredjeparter"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimaliser det synlige området for mobil"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Kun sider som lastes inn via GET-forespørsler, kan lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Kun sider med statuskode 2XX kan bufres."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome oppdaget et forsøk på kjøring av JavaScript mens siden var i bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Sider som bruker har forespurt AppBanner, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert via flagg. Gå til chrome://flags/#back-forward-cache for å aktivere den lokalt på denne enheten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert via kommandolinjen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av utilstrekkelig minne."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Frem-og-tilbake-bufferen støttes ikke av den innbyggende nettleseren."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert for forhåndsgjengivelse."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Siden kan ikke bufres, ettersom den har en BroadcastChannel-forekomst med registrerte lyttere."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Sider med hodet «cache-control:no-store» kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Bufferen ble tømt med vilje."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Siden ble fjernet fra bufferen slik at en annen side kunne bli bufret."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Sider som inneholder programtillegg, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Udefinert"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Sider som bruker FileChooser-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Sider som bruker File System Access-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Sider som bruker Media Device Dispatcher, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "En mediespiller holdt på å spille av da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Sider som bruker MediaSession-API-et og angir en avspillingsstatus, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Sider som bruker MediaSession-API-et og angir handlingsbehandlere, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av skjermleseren."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Sider som bruker SecurityHandler, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Sider som bruker Serial-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Sider som bruker WebAuthentication-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Sider som bruker WebBluetooth-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Sider som bruker WebUSB-API-et, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi informasjonskapsler er deaktivert på en side som bruker Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Sider som bruker en dedikert Service Worker eller worklet, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokumentet ble ikke ferdig innlastet før nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Appbanneret var til stede da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chrome Passordlagring var til stede da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM-destillering pågikk da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM-destilleringsvisningen var til stede da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi utvidelser bruker meldings-API-et."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Utvidelser med tilkoblinger med lang levetid må lukke tilkoblingen før de kan lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Utvidelser med tilkoblinger med lang levetid prøvde å sende meldinger til rammer i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av utvidelser."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "En modal dialogboks for siden, for eksempel en dialogboks om å sende inn et skjema på nytt eller en dialogboks for HTTP-passord, ble vist da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Siden hvor det står at enheten er uten nett, ble vist da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Intervensjonsfeltet hvor det står at enheten ikke har nok minne, var til stede da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Det fantes tillatelsesforespørsler da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Blokkering av forgrunnsvinduer var til stede da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Safe Browsing-detaljer ble vist da nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Safe Browsing anså denne siden for å være villedende og blokkerte forgrunnsvinduet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "En Service Worker ble aktivert mens siden var i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en dokumentfeil."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Sider som bruker FencedFrames, kan ikke lagres i bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Siden ble fjernet fra bufferen slik at en annen side kunne bli bufret."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Sider som har gitt mediestrømtilgang, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Sider med visse typer innebygd innhold (f.eks. PDF-filer) kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Sider som bruker IdleManager, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Sider med åpne IndexedDB-tilkoblinger kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en IndexedDB-hendelse."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Det ble brukt API-er som ikke er kvalifisert."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Sider som utvidelser har injisert JavaScript i, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Sider som utvidelser har injisert StyleSheet i, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Intern feil."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi en JavaScript-nettverksforespørsel har mottatt en ressurs med Cache-Control: no-store-hodet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert på grunn av en keepalive-forespørsel."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Sider som bruker tastaturlås, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Siden ble ikke ferdig innlastet før nettleseren navigerte bort."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Sider som har «cache-control:no-cache» i hovedressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Sider som har «cache-control:no-store» i hovedressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigeringen ble avbrutt før siden kunne gjenopprettes fra frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Siden ble fjernet fra bufferen fordi en aktiv nettverkstilkobling mottok for mye data. Chrome begrenser hvor mye data sider kan motta mens de er bufret."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Sider med pågående fetch()- eller XHR-forespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Siden ble fjernet fra frem-og-tilbake-bufferen fordi en aktiv nettverksforespørsel medførte en viderekobling."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Siden ble fjernet fra bufferen fordi en nettverkstilkobling var åpen for lenge. Chrome begrenser hvor lenge sider kan motta data mens de er bufret."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Sider som ikke har noe gyldig svarhode, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Navigeringen skjedde i en annen ramme enn hovedrammen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Sider med pågående IndexedDB-transaksjoner, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Sider med pågående nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Sider med pågående fetch()-nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Sider med pågående nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Sider med pågående XHR-nettverksforespørsler kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Sider som bruker PaymentManager, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Sider som bruker bilde-i-bilde, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Sider som viser UI for utskrift, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Siden ble åpnet med 'window.open()', og en annen fane har en henvisning til den, eller siden åpnet et vindu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Gjengivelsesprosessen for siden i frem-og-tilbake-bufferen krasjet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Gjengivelsesprosessen for siden i frem-og-tilbake-bufferen ble avsluttet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Sider som har bedt om tillatelser til lydopptak, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Sider som har bedt om sensortillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Sider som har bedt om bakgrunnssynkronisering eller fetch()-tillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Sider som har bedt om MIDI-tillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Sider som har bedt om varseltillatelser, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Sider som har bedt om tilgang til lagring, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Sider som har bedt om tillatelser til videoopptak, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Kun sider med HTTP eller HTTPS som nettadresseprotokoll kan bufres."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Siden ble gjort krav på av en Service Worker mens den var i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "En Service Worker prøvde å sende en MessageEvent til siden i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker ble avregistrert mens en side var i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Siden ble fjernet fra frem-og-tilbake-bufferen på grunn av en Service Worker-aktivering."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome ble startet på nytt og slettet oppføringene i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Sider som bruker SharedWorker, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Sider som bruker SpeechRecognizer, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Sider som bruker SpeechSynthesis, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Et iframe-element på siden startet en navigering som ikke ble fullført."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Sider som har «cache-control:no-cache» i underressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Sider som har «cache-control:no-store» i underressursen sin, kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Siden overskred den maksimale tiden i frem-og-tilbake-bufferen og har utløpt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Siden fikk tidsavbrudd under lagring i frem-og-tilbake-bufferen (sannsynligvis på grunn av pagehide-behandlere med lang kjøretid)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Siden har en utlastingsbehandler i hovedrammen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Siden har en utlastingsbehandler i en underramme."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Nettleseren har endret hodet for overstyring av brukeragenten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Sider som har gitt tilgang til opptak av video eller lyd, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Sider som bruker WebDatabase, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Sider som bruker WebHID, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Sider som bruker WebLocks, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Sider som bruker WebNfc, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Sider som bruker WebOTPService, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Sider med WebRTC kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi WebRTC er brukt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Sider som bruker WebShare, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Sider med WebSocket kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi WebSocket er brukt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Sider med WebTransport kan ikke lagres i frem-og-tilbake-bufferen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Frem-og-tilbake-bufferen er deaktivert fordi WebTransport er brukt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Sider som bruker WebXR, kan for tiden ikke lagres i frem-og-tilbake-bufferen."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "For animert innhold, bruk [`amp-anim`‏](https://amp.dev/documentation/components/amp-anim/) for å minimere prosessorbruken når innholdet er utenfor skjermen."

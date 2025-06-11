@@ -45,7 +45,7 @@ class CharsetDefined extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['MainDocumentContent', 'URL', 'devtoolsLogs', 'MetaElements'],
+      requiredArtifacts: ['MainDocumentContent', 'URL', 'DevtoolsLog', 'MetaElements'],
     };
   }
 
@@ -55,7 +55,7 @@ class CharsetDefined extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
     let isCharsetSet = false;
     // Check the http header 'content-type' to see if charset is defined there

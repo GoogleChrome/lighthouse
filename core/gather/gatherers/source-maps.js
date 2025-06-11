@@ -12,8 +12,11 @@ import Scripts from './scripts.js';
  * @fileoverview Gets JavaScript source maps.
  */
 class SourceMaps extends BaseGatherer {
+  static symbol = Symbol('SourceMaps');
+
   /** @type {LH.Gatherer.GathererMeta<'Scripts'>} */
   meta = {
+    symbol: SourceMaps.symbol,
     supportedModes: ['timespan', 'navigation'],
     dependencies: {Scripts: Scripts.symbol},
   };

@@ -26,6 +26,14 @@ function getAllInsightNames() {
  * @return {string}
  */
 function kebabize(str) {
+  if (str === 'DuplicatedJavaScript') {
+    return 'duplicated-javascript';
+  }
+
+  if (str === 'LegacyJavaScript') {
+    return 'legacy-javascript';
+  }
+
   return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g,
     ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
 }
@@ -63,7 +71,7 @@ class ${insightName}Insight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3, // TODO: confirm/change.
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
     };
   }
 
@@ -77,6 +85,8 @@ class ${insightName}Insight extends Audit {
     return adaptInsightToAuditProduct(artifacts, context, '${insightName}', (insight) => {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
+        /* eslint-disable max-len */
+        /* eslint-enable max-len */
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
@@ -95,6 +105,9 @@ const insightNames = getAllInsightNames();
 const allAuditIds = [];
 for (const insightName of insightNames) {
   const auditId = `${kebabize(insightName)}-insight`;
+  // For now, skip, b/c this needs an extra trace category on, which is slow, and we'd
+  // have to build a way to opt-in to running it.
+  if (auditId === 'slow-css-selector-insight') continue;
   allAuditIds.push(auditId);
 
   const outputFile = `${LH_ROOT}/core/audits/insights/${auditId}.js`;
@@ -121,13 +134,24 @@ function insert(text, needleStart, needleEnd, replacementText) {
 
 allAuditIds.sort();
 
-const defaultConfigPath = `${LH_ROOT}/core/config/default-config.js`;
-let defaultConfigText = fs.readFileSync(defaultConfigPath, 'utf-8');
+{
+  const defaultConfigPath = `${LH_ROOT}/core/config/default-config.js`;
+  let defaultConfigText = fs.readFileSync(defaultConfigPath, 'utf-8');
 
-const auditListCode = allAuditIds.map(id => `    'insights/${id}',\n`).join('') + '  ';
-defaultConfigText = insert(defaultConfigText, `'bf-cache',\n`, ']', auditListCode);
+  const auditListCode = allAuditIds.map(id => `    'insights/${id}',\n`).join('') + '  ';
+  defaultConfigText = insert(defaultConfigText, `'bf-cache',\n`, ']', auditListCode);
 
-const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'hidden'},`).join('\n');
-defaultConfigText = insert(defaultConfigText, 'Insight audits.\n', '\n\n', auditRefListCode);
+  const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'hidden'},`).join('\n');
+  defaultConfigText = insert(defaultConfigText, 'Insight audits.\n', '\n\n', auditRefListCode);
+  fs.writeFileSync(defaultConfigPath, defaultConfigText);
+}
 
-fs.writeFileSync(defaultConfigPath, defaultConfigText);
+{
+  const experimentalConfigPath = `${LH_ROOT}/core/config/experimental-config.js`;
+  let experimentalConfigText = fs.readFileSync(experimentalConfigPath, 'utf-8');
+
+  const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'insights'},`).join('\n');
+  experimentalConfigText = insert(experimentalConfigText, 'Insight audits.\n', '\n      ]', auditRefListCode);
+
+  fs.writeFileSync(experimentalConfigPath, experimentalConfigText);
+}

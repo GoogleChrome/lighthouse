@@ -15,6 +15,7 @@ interface BaseDetails {
 
 type Details =
   Details.CriticalRequestChain |
+  Details.NetworkTree |
   Details.DebugData |
   Details.TreemapData |
   Details.Filmstrip |
@@ -26,9 +27,37 @@ type Details =
 
 // Details namespace.
 declare module Details {
+  type NetworkNode = {
+    [id: string]: {
+      url: string;
+      /** In ms */
+      navStartToEndTime: number;
+      transferSize: number;
+      isLongest?: boolean;
+      children?: NetworkNode;
+    }
+  };
+
+  /**
+   * This detail type is introduced to address the differences in how the RPP network tree is displayed vs the old Lighthouse CRC audit:
+   * - The CRC audit will show individual request durations but the new NDT insight will show the entire chain duration
+   * - The CRC audit will only show any timing/size for leaf node requests, but the NDT insight will show this info for all requests
+   * - The CRC audit contains extra request timing info like `responseReceivedTime` but we don't need this for the NDT insight.
+   *   The NDT insight has enough information to fill in this extra data, but we shouldn't add calculations just to fill in the CRC detail type.
+   */
+  interface NetworkTree extends BaseDetails {
+    type: 'network-tree';
+    longestChain: {
+      /** In ms */
+      duration: number;
+    };
+    chains: NetworkNode;
+  }
+
   interface CriticalRequestChain extends BaseDetails {
     type: 'criticalrequestchain';
     longestChain: {
+      /** In ms */
       duration: number;
       length: number;
       transferSize: number;
@@ -40,8 +69,11 @@ declare module Details {
     [id: string]: {
       request: {
         url: string;
+        /** In seconds */
         startTime: number;
+        /** In seconds */
         endTime: number;
+        /** In seconds */
         responseReceivedTime: number;
         transferSize: number;
       };
@@ -66,7 +98,7 @@ declare module Details {
     type: 'list';
     // NOTE: any `Details` type *should* be usable in `items`, but check
     // styles/report-ui-features are good before adding.
-    items: Array<Table | DebugData>;
+    items: Array<Table | Checklist | NodeValue | DebugData>;
   }
 
   interface Opportunity extends BaseDetails {
@@ -157,7 +189,7 @@ declare module Details {
   type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
   /** Possible types of values found within table items. */
-  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | IcuMessage | TableSubItems;
+  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems;
 
   interface TableColumnHeading {
     /**
@@ -236,6 +268,8 @@ declare module Details {
     snippet?: string;
     /** A human-friendly text descriptor that's used to identify the node more quickly. */
     nodeLabel?: string;
+    /** A human-friendly explainer on how to approach the possible fix. */
+    explanation?: string;
   }
 
   /**
@@ -315,6 +349,10 @@ declare module Details {
     granularity?: number,
   }
 
+  interface TextValue {
+    type: 'text',
+    value: IcuMessage | string,
+  }
 }
 
 export default Details;

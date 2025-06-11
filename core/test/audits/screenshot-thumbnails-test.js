@@ -23,8 +23,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: pwaTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: pwaTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -50,8 +50,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: noScreenshotsTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: noScreenshotsTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -63,8 +63,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: noScreenshotsTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: noScreenshotsTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -77,8 +77,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: pwaTrace},
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -92,7 +92,7 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: pwaTrace},
+      Trace: pwaTrace,
     };
 
     const context = {settings, options: {}, computedCache: new Map()};
@@ -113,7 +113,7 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: infiniteTrace},
+      Trace: infiniteTrace,
     };
     const context = {settings, options: {}, computedCache: new Map()};
 

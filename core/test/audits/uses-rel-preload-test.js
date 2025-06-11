@@ -34,13 +34,14 @@ const defaultMainResource = {
 describe('Performance: uses-rel-preload audit', () => {
   const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     return {
-      traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
-      devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      Trace: createTestTrace({traceEnd: 5000}),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {
         requestedUrl: finalDisplayedUrl,
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 
@@ -332,12 +333,9 @@ describe('Performance: uses-rel-preload audit', () => {
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = {
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
-      traces: {
-        [UsesRelPreload.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [UsesRelPreload.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
+      SourceMaps: [],
     };
 
     const settings = {throttlingMethod: 'provided'};

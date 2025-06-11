@@ -1,5 +1,5 @@
 {
-  "lighthouseVersion": "12.3.0",
+  "lighthouseVersion": "12.6.1",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalDisplayedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -9,7 +9,7 @@
   "runWarnings": [],
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
   "environment": {
-    "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36",
+    "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
     "benchmarkIndex": 3082.5,
     "credits": {
@@ -341,7 +341,7 @@
       "title": "Initial server response time was short",
       "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/).",
       "score": 1,
-      "scoreDisplayMode": "informative",
+      "scoreDisplayMode": "metricSavings",
       "numericValue": 3.681,
       "numericUnit": "millisecond",
       "displayValue": "Root document took 0 ms",
@@ -930,7 +930,7 @@
         ],
         "items": [
           {
-            "value": "Synchronous `XMLHttpRequest` on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
             "source": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -940,13 +940,23 @@
             }
           },
           {
-            "value": "UnloadHandler",
+            "value": "Unload event listeners are deprecated and will be removed.",
             "source": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
               "line": 399,
               "column": 9
+            },
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "type": "link",
+                  "url": "https://chromestatus.com/feature/5579556305502208",
+                  "text": "Check the feature status page for more details."
+                }
+              ]
             }
           }
         ]
@@ -955,7 +965,7 @@
     "third-party-cookies": {
       "id": "third-party-cookies",
       "title": "Avoids third-party cookies",
-      "description": "Chrome is moving towards a new experience that allows users to choose to browse without third-party cookies. [Learn more about third-party cookies](https://developers.google.com/privacy-sandbox/cookies).",
+      "description": "Third-party cookies may be blocked in some contexts. [Learn more about preparing for third-party cookie restrictions](https://privacysandbox.google.com/cookies/prepare/overview).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -1034,7 +1044,7 @@
       "title": "JavaScript execution time",
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
       "score": 1,
-      "scoreDisplayMode": "informative",
+      "scoreDisplayMode": "metricSavings",
       "numericValue": 1165.3349999999984,
       "numericUnit": "millisecond",
       "displayValue": "1.2 s",
@@ -2244,31 +2254,7 @@
               "snippet": "<div>",
               "nodeLabel": "Do better web tester page\nHi there! "
             },
-            "score": 0.060146177116290604,
-            "subItems": {
-              "type": "subitems",
-              "items": [
-                {
-                  "extra": {
-                    "type": "node",
-                    "lhId": "page-2-IMG",
-                    "path": "2,HTML,1,BODY,61,IMG",
-                    "selector": "body > img",
-                    "boundingRect": {
-                      "top": 1220,
-                      "bottom": 1236,
-                      "left": 310,
-                      "right": 326,
-                      "width": 16,
-                      "height": 16
-                    },
-                    "snippet": "<img src=\"blob:http://localhost:10200/ba1e8ada-23a1-4a1c-b049-890a6483b3d1\">",
-                    "nodeLabel": "body > img"
-                  },
-                  "cause": "Media element lacking an explicit size"
-                }
-              ]
-            }
+            "score": 0.060146177116290604
           },
           {
             "node": {
@@ -2522,7 +2508,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": -17.284999999999854,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of -20 ms",
+      "displayValue": "Est savings of -20 ms",
       "metricSavings": {
         "LCP": 0
       },
@@ -2542,7 +2528,7 @@
           {
             "key": "wastedMs",
             "valueType": "timespanMs",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -2768,6 +2754,7 @@
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "resourceBytes": 8414,
+            "encodedBytes": 8420,
             "unusedBytes": 985,
             "children": [
               {
@@ -2855,15 +2842,18 @@
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "resourceBytes": 233,
+            "encodedBytes": 244,
             "unusedBytes": 0
           },
           {
             "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "resourceBytes": 0
+            "resourceBytes": 0,
+            "encodedBytes": 5
           },
           {
             "name": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "resourceBytes": 166320,
+            "encodedBytes": 166334,
             "unusedBytes": 94194
           }
         ]
@@ -4234,7 +4224,7 @@
       "title": "Avoids enormous network payloads",
       "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
       "score": 1,
-      "scoreDisplayMode": "informative",
+      "scoreDisplayMode": "metricSavings",
       "numericValue": 1871037,
       "numericUnit": "byte",
       "displayValue": "Total size was 1,827 KiB",
@@ -4341,7 +4331,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "Est savings of 0 ms",
       "metricSavings": {
         "FCP": 0,
         "LCP": 0
@@ -4362,7 +4352,7 @@
           {
             "key": "wastedMs",
             "valueType": "timespanMs",
-            "label": "Potential Savings"
+            "label": "Duration"
           }
         ],
         "items": [
@@ -4441,7 +4431,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 540,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 81 KiB",
+      "displayValue": "Est savings of 81 KiB",
       "warnings": [],
       "metricSavings": {
         "FCP": 0,
@@ -4463,7 +4453,7 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -4529,7 +4519,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 690,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 92 KiB",
+      "displayValue": "Est savings of 92 KiB",
       "metricSavings": {
         "FCP": 0,
         "LCP": 700
@@ -4560,7 +4550,7 @@
             "subItemsHeading": {
               "key": "sourceWastedBytes"
             },
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -4594,7 +4584,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 1650,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 312 KiB",
+      "displayValue": "Est savings of 312 KiB",
       "warnings": [],
       "metricSavings": {
         "FCP": 0,
@@ -4621,7 +4611,7 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -4842,7 +4832,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 1140,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 143 KiB",
+      "displayValue": "Est savings of 143 KiB",
       "metricSavings": {
         "FCP": 150,
         "LCP": 1150
@@ -4863,7 +4853,7 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -4901,7 +4891,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 2100,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 456 KiB",
+      "displayValue": "Est savings of 456 KiB",
       "metricSavings": {
         "FCP": 0,
         "LCP": 2100
@@ -4927,7 +4917,7 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -5065,7 +5055,7 @@
       "scoreDisplayMode": "metricSavings",
       "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 666 KiB",
+      "displayValue": "Est savings of 666 KiB",
       "metricSavings": {
         "FCP": 0,
         "LCP": 0
@@ -5086,7 +5076,7 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
@@ -5146,12 +5136,13 @@
     "legacy-javascript": {
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
-      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/articles/publish-modern-javascript)",
+      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
       "score": 0,
       "scoreDisplayMode": "metricSavings",
       "numericValue": 240,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 26 KiB",
+      "displayValue": "Est savings of 40 KiB",
+      "warnings": [],
       "metricSavings": {
         "FCP": 0,
         "LCP": 250
@@ -5179,34 +5170,44 @@
           {
             "key": "wastedBytes",
             "valueType": "bytes",
-            "label": "Potential Savings"
+            "label": "Est Savings"
           }
         ],
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "wastedBytes": 26585,
+            "wastedBytes": 40984,
             "subItems": {
               "type": "subitems",
               "items": [
                 {
-                  "signal": "Object.defineProperty",
+                  "signal": "Object.create",
                   "location": {
                     "type": "source-location",
                     "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
                     "urlProvider": "network",
-                    "line": 2613,
+                    "line": 2629,
                     "column": 8
                   }
                 },
                 {
-                  "signal": "Object.defineProperties",
+                  "signal": "Object.getOwnPropertyDescriptor",
                   "location": {
                     "type": "source-location",
                     "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
                     "urlProvider": "network",
-                    "line": 2623,
+                    "line": 2637,
                     "column": 8
+                  }
+                },
+                {
+                  "signal": "Promise.allSettled",
+                  "location": {
+                    "type": "source-location",
+                    "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                    "urlProvider": "network",
+                    "line": 1392,
+                    "column": 21
                   }
                 }
               ]
@@ -5215,7 +5216,7 @@
           }
         ],
         "overallSavingsMs": 240,
-        "overallSavingsBytes": 26585,
+        "overallSavingsBytes": 40984,
         "sortedBy": [
           "wastedBytes"
         ],
@@ -5248,7 +5249,7 @@
       "title": "Avoids an excessive DOM size",
       "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
       "score": 1,
-      "scoreDisplayMode": "informative",
+      "scoreDisplayMode": "metricSavings",
       "numericValue": 151,
       "numericUnit": "element",
       "displayValue": "151 elements",
@@ -5831,13 +5832,215 @@
       },
       "guidanceLevel": 4
     },
+    "cache-insight": {
+      "id": "cache-insight",
+      "title": "Use efficient cache lifetimes",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
+      "score": 0,
+      "scoreDisplayMode": "metricSavings",
+      "displayValue": "Est savings of 1,791 KiB",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 3250
+      },
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "Request"
+          },
+          {
+            "key": "cacheLifetimeMs",
+            "valueType": "ms",
+            "label": "Cache TTL",
+            "displayUnit": "duration"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Transfer Size",
+            "displayUnit": "kb",
+            "granularity": 1
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 934513
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 166576
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 112939
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 24848
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?async",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 24848
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 700
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 665
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 486
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 247
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/empty.css",
+            "cacheLifetimeMs": 0,
+            "wastedBytes": 233
+          }
+        ],
+        "sortedBy": [
+          "wastedBytes"
+        ],
+        "skipSumming": [
+          "cacheLifetimeMs"
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "wastedBytes": 1834075
+        }
+      },
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "uses-long-cache-ttl"
+      ]
+    },
     "cls-culprits-insight": {
       "id": "cls-culprits-insight",
       "title": "Layout shift culprits",
       "description": "Layout shifts occur when elements move absent any user interaction. [Investigate the causes of layout shifts](https://web.dev/articles/optimize-cls), such as elements being added, removed, or their fonts changing as the page loads.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "metricSavings": {
+        "CLS": 0
+      },
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "node",
+                "valueType": "node",
+                "subItemsHeading": {
+                  "key": "extra"
+                },
+                "label": "Element"
+              },
+              {
+                "key": "score",
+                "valueType": "numeric",
+                "subItemsHeading": {
+                  "key": "cause",
+                  "valueType": "text"
+                },
+                "granularity": 0.001,
+                "label": "Layout shift score"
+              }
+            ],
+            "items": [
+              {
+                "node": {
+                  "type": "text",
+                  "value": "Total"
+                },
+                "score": 0.09957584751767748
+              },
+              {
+                "score": 0.060146177116290604
+              },
+              {
+                "score": 0.03942967040138687
+              }
+            ]
+          }
+        ]
+      },
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "layout-shifts",
+        "non-composited-animations",
+        "unsized-images"
+      ]
     },
     "document-latency-insight": {
       "id": "document-latency-insight",
@@ -5845,6 +6048,7 @@
       "description": "Your first network request is the most important.  Reduce its latency by avoiding redirects, ensuring a fast server response, and enabling text compression.",
       "score": 0.5,
       "scoreDisplayMode": "metricSavings",
+      "displayValue": "Est savings of 12 KiB",
       "metricSavings": {
         "FCP": 0,
         "LCP": 0
@@ -5857,16 +6061,28 @@
             "value": true
           },
           "serverResponseIsFast": {
-            "label": "Server responds quickly",
+            "label": "Server responds quickly (observed 568 ms) ",
             "value": true
           },
           "usesCompression": {
             "label": "No compression applied",
             "value": false
           }
+        },
+        "debugData": {
+          "type": "debugdata",
+          "redirectDuration": 0,
+          "serverResponseTime": 568,
+          "uncompressedResponseBytes": 11905,
+          "wastedBytes": 11905
         }
       },
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "redirects",
+        "server-response-time",
+        "uses-text-compression"
+      ]
     },
     "dom-size-insight": {
       "id": "dom-size-insight",
@@ -5921,9 +6137,29 @@
               "value": 4
             }
           }
-        ]
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "totalElements": 153,
+          "maxChildren": 100,
+          "maxDepth": 4
+        }
       },
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "dom-size"
+      ]
+    },
+    "duplicated-javascript-insight": {
+      "id": "duplicated-javascript-insight",
+      "title": "Duplicated JavaScript",
+      "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 2,
+      "replacesAudits": [
+        "duplicated-javascript"
+      ]
     },
     "font-display-insight": {
       "id": "font-display-insight",
@@ -5931,23 +6167,179 @@
       "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
       "score": null,
       "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "font-display"
+      ]
     },
     "forced-reflow-insight": {
       "id": "forced-reflow-insight",
       "title": "Forced reflow",
       "description": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [],
+            "items": []
+          }
+        ]
+      },
       "guidanceLevel": 3
     },
     "image-delivery-insight": {
       "id": "image-delivery-insight",
       "title": "Improve image delivery",
       "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "score": 0,
+      "scoreDisplayMode": "metricSavings",
+      "displayValue": "Est savings of 1,107 KiB",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 1950
+      },
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL",
+            "subItemsHeading": {
+              "key": "reason",
+              "valueType": "text"
+            }
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Resource Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Est Savings",
+            "subItemsHeading": {
+              "key": "wastedBytes",
+              "valueType": "bytes"
+            }
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
+            "totalBytes": 934285,
+            "wastedBytes": 682028,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "Using video formats instead of GIFs can improve the download size of animated content.",
+                  "wastedBytes": 682028
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1",
+            "totalBytes": 112710,
+            "wastedBytes": 111541,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x30). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 111541
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2",
+            "totalBytes": 112710,
+            "wastedBytes": 106476,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 106476
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2",
+            "totalBytes": 112710,
+            "wastedBytes": 106476,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (240x160). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 106476
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3",
+            "totalBytes": 112710,
+            "wastedBytes": 56604,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 56604
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg",
+            "totalBytes": 112710,
+            "wastedBytes": 56604,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (720x480). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 56604
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp",
+            "totalBytes": 112710,
+            "wastedBytes": 13590,
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "reason": "This image file is larger than it needs to be (1024x678) for its displayed dimensions (960x636). Use responsive images to reduce the image download size.",
+                  "wastedBytes": 13590
+                }
+              ]
+            }
+          }
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "wastedBytes": 1133319
+        }
+      },
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "modern-image-formats",
+        "uses-optimized-images",
+        "efficient-animated-content",
+        "uses-responsive-images"
+      ]
     },
     "interaction-to-next-paint-insight": {
       "id": "interaction-to-next-paint-insight",
@@ -5955,7 +6347,10 @@
       "description": "Start investigating with the longest phase. [Delays can be minimized](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimize the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "work-during-interaction"
+      ]
     },
     "lcp-discovery-insight": {
       "id": "lcp-discovery-insight",
@@ -5967,48 +6362,216 @@
         "LCP": 0
       },
       "details": {
-        "type": "checklist",
-        "items": {
-          "priorityHinted": {
-            "label": "fetchpriority=high applied",
-            "value": false
-          },
-          "requestDiscoverable": {
-            "label": "Request is discoverable in initial document",
-            "value": false
-          },
-          "eagerlyLoaded": {
-            "label": "lazy load not applied",
-            "value": true
+        "type": "list",
+        "items": [
+          {
+            "type": "checklist",
+            "items": {
+              "priorityHinted": {
+                "label": "fetchpriority=high should be applied",
+                "value": false
+              },
+              "requestDiscoverable": {
+                "label": "Request is discoverable in initial document",
+                "value": false
+              },
+              "eagerlyLoaded": {
+                "label": "lazy load not applied",
+                "value": true
+              }
+            }
           }
-        }
+        ]
       },
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "prioritize-lcp-image",
+        "lcp-lazy-loaded"
+      ]
     },
     "lcp-phases-insight": {
       "id": "lcp-phases-insight",
       "title": "LCP by phase",
       "description": "Each [phase has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays.",
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "metricSavings": {
+        "LCP": 0
+      },
+      "details": {
+        "type": "list",
+        "items": [
+          {
+            "type": "table",
+            "headings": [
+              {
+                "key": "label",
+                "valueType": "text",
+                "label": "Phase"
+              },
+              {
+                "key": "duration",
+                "valueType": "ms",
+                "label": "Duration"
+              }
+            ],
+            "items": [
+              {
+                "phase": "timeToFirstByte",
+                "label": "Time to first byte",
+                "duration": 5.453
+              },
+              {
+                "phase": "resourceLoadDelay",
+                "label": "Resource load delay",
+                "duration": 6783.663
+              },
+              {
+                "phase": "resourceLoadDuration",
+                "label": "Resource load duration",
+                "duration": 4063.4230000000007
+              },
+              {
+                "phase": "elementRenderDelay",
+                "label": "Element render delay",
+                "duration": 41.86499999999978
+              }
+            ]
+          }
+        ]
+      },
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "largest-contentful-paint-element"
+      ]
+    },
+    "legacy-javascript-insight": {
+      "id": "legacy-javascript-insight",
+      "title": "Legacy JavaScript",
+      "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
+      "guidanceLevel": 2
+    },
+    "modern-http-insight": {
+      "id": "modern-http-insight",
+      "title": "Modern HTTP",
+      "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "guidanceLevel": 3
     },
-    "long-critical-network-tree-insight": {
-      "id": "long-critical-network-tree-insight",
-      "title": "Long critical network tree",
+    "network-dependency-tree-insight": {
+      "id": "network-dependency-tree-insight",
+      "title": "Network dependency tree",
       "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "score": 0,
+      "scoreDisplayMode": "numeric",
+      "metricSavings": {
+        "LCP": 0
+      },
+      "details": {
+        "type": "network-tree",
+        "chains": {
+          "62CEDB8B1F6190031188277D9F158FEB": {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "navStartToEndTime": 657,
+            "transferSize": 18011,
+            "isLongest": true,
+            "children": {
+              "26694.2": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+                "navStartToEndTime": 1158,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.3": {
+                "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+                "navStartToEndTime": 1167,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.4": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+                "navStartToEndTime": 2795,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.8": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
+                "navStartToEndTime": 3614,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.11": {
+                "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+                "navStartToEndTime": 1229,
+                "transferSize": 700,
+                "children": {}
+              },
+              "26694.14": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+                "navStartToEndTime": 4177,
+                "transferSize": 665,
+                "children": {}
+              },
+              "26694.17": {
+                "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+                "navStartToEndTime": 6753,
+                "transferSize": 0,
+                "children": {}
+              },
+              "26694.24": {
+                "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                "navStartToEndTime": 6627,
+                "transferSize": 166576,
+                "children": {}
+              },
+              "26694.44": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+                "navStartToEndTime": 7969,
+                "transferSize": 665,
+                "isLongest": true,
+                "children": {}
+              },
+              "26694.15": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+                "navStartToEndTime": 1738,
+                "transferSize": 486,
+                "children": {}
+              },
+              "26694.16": {
+                "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+                "navStartToEndTime": 1801,
+                "transferSize": 247,
+                "children": {}
+              },
+              "26694.45": {
+                "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                "navStartToEndTime": 7882,
+                "transferSize": 18011,
+                "children": {}
+              }
+            }
+          }
+        },
+        "longestChain": {
+          "duration": 7969
+        }
+      },
+      "guidanceLevel": 1,
+      "replacesAudits": [
+        "critical-request-chains"
+      ]
     },
     "render-blocking-insight": {
       "id": "render-blocking-insight",
       "title": "Render blocking requests",
-      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) can move these network requests out of the critical path.",
-      "score": 0,
+      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
+      "score": 0.5,
       "scoreDisplayMode": "metricSavings",
       "metricSavings": {
-        "FCP": 3500,
+        "FCP": 0,
         "LCP": 0
       },
       "details": {
@@ -6027,68 +6590,66 @@
           {
             "key": "wastedMs",
             "valueType": "timespanMs",
-            "label": "Potential Savings"
+            "label": "Duration"
           }
         ],
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "totalBytes": 0,
-            "wastedMs": 581
+            "wastedMs": 881
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "totalBytes": 665,
-            "wastedMs": 581
+            "wastedMs": 881
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 665,
-            "wastedMs": 581
+            "wastedMs": 881
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "totalBytes": 486,
-            "wastedMs": 581
+            "wastedMs": 881
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "totalBytes": 0,
-            "wastedMs": 581
+            "wastedMs": 881
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "totalBytes": 665,
-            "wastedMs": 581
+            "wastedMs": 731
           }
         ]
       },
-      "guidanceLevel": 3
-    },
-    "slow-css-selector-insight": {
-      "id": "slow-css-selector-insight",
-      "title": "CSS Selector costs",
-      "description": "If Recalculate Style costs remain high, selector optimization can reduce them. [Optimize the selectors](https://developer.chrome.com/docs/devtools/performance/selector-stats) with both high elapsed time and high slow-path %. Simpler selectors, fewer selectors, a smaller DOM, and a shallower DOM will all reduce matching costs.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "render-blocking-resources"
+      ]
     },
     "third-parties-insight": {
       "id": "third-parties-insight",
-      "title": "Third parties",
-      "description": "Third party code can significantly impact load performance. [Reduce and defer loading of third party code](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) to prioritize your page's content.",
+      "title": "3rd parties",
+      "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) to prioritize your page's content.",
       "score": null,
       "scoreDisplayMode": "notApplicable",
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "third-party-summary"
+      ]
     },
     "viewport-insight": {
       "id": "viewport-insight",
       "title": "Optimize viewport for mobile",
       "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimized for mobile.",
-      "score": 0,
-      "scoreDisplayMode": "metricSavings",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
       "metricSavings": {
-        "INP": 300
+        "INP": 0
       },
       "details": {
         "type": "table",
@@ -6103,7 +6664,10 @@
           {}
         ]
       },
-      "guidanceLevel": 3
+      "guidanceLevel": 3,
+      "replacesAudits": [
+        "viewport"
+      ]
     }
   },
   "configSettings": {
@@ -6133,7 +6697,7 @@
       "deviceScaleFactor": 1.75,
       "disabled": false
     },
-    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
     "auditMode": true,
     "gatherMode": false,
     "clearStorageTypes": [
@@ -6199,6 +6763,11 @@
           "acronym": "SI"
         },
         {
+          "id": "cache-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
           "id": "cls-culprits-insight",
           "weight": 0,
           "group": "hidden"
@@ -6210,6 +6779,11 @@
         },
         {
           "id": "dom-size-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "duplicated-javascript-insight",
           "weight": 0,
           "group": "hidden"
         },
@@ -6244,17 +6818,22 @@
           "group": "hidden"
         },
         {
-          "id": "long-critical-network-tree-insight",
+          "id": "legacy-javascript-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "modern-http-insight",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "network-dependency-tree-insight",
           "weight": 0,
           "group": "hidden"
         },
         {
           "id": "render-blocking-insight",
-          "weight": 0,
-          "group": "hidden"
-        },
-        {
-          "id": "slow-css-selector-insight",
           "weight": 0,
           "group": "hidden"
         },
@@ -7087,7 +7666,8 @@
       "title": "Metrics"
     },
     "insights": {
-      "title": "Insights"
+      "title": "Insights",
+      "description": "These insights are also available in the Chrome DevTools Performance Panel - [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information."
     },
     "diagnostics": {
       "title": "Diagnostics",
@@ -8190,6 +8770,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ImageRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:deprecations",
         "duration": 100,
         "entryType": "measure"
@@ -8359,6 +8945,330 @@
       {
         "startTime": 0,
         "name": "lh:computed:TraceEngineResult",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:total",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:handleEvent",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Meta:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:AnimationFrames:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Animations:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Samples:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:AuctionWorklets:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:NetworkRequests:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Renderer:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Flows:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:AsyncJSCalls:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:DOMStats:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:UserTimings:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:ExtensionTraceData:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:LayerTree:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Frames:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:GPU:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:ImagePainting:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Initiators:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Invalidations:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:PageLoadMetrics:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:LargestImagePaint:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:LargestTextPaint:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Screenshots:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:LayoutShifts:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Memory:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:PageFrames:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Scripts:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:SelectorStats:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:UserInteractions:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Workers:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:Warnings:finalize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:parse:clone",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:createLanternContext",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:CLSCulprits",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:Cache",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:DOMSize",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:DocumentLatency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:DuplicatedJavaScript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:FontDisplay",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:ForcedReflow",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:ImageDelivery",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:InteractionToNextPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:LCPDiscovery",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:LCPPhases",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:LegacyJavaScript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:ModernHTTP",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:NetworkDependencyTree",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:RenderBlocking",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:SlowCSSSelector",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:ThirdParties",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceEngineResult:insights:Viewport",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9024,6 +9934,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:PageDependencyGraph",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:LoadSimulator",
         "duration": 100,
         "entryType": "measure"
@@ -9073,12 +9989,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:uses-responsive-images",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ImageRecords",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9234,6 +10144,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:cache-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:cls-culprits-insight",
         "duration": 100,
         "entryType": "measure"
@@ -9247,6 +10163,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:dom-size-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:duplicated-javascript-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9288,19 +10210,25 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:long-critical-network-tree-insight",
+        "name": "lh:audit:legacy-javascript-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:modern-http-insight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:network-dependency-tree-insight",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:audit:render-blocking-insight",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:slow-css-selector-insight",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9345,7 +10273,9 @@
       "expandView": "Expand view",
       "firstPartyChipLabel": "1st party",
       "footerIssue": "File an issue",
+      "goBackToAudits": "Go back to audits",
       "hide": "Hide",
+      "insightsNotice": "Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462).",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -9379,6 +10309,7 @@
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
       "throttlingProvided": "Provided by environment",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
+      "tryInsights": "Try insights",
       "unattributable": "Unattributable",
       "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.",
       "viewTraceLabel": "View Trace",
@@ -9590,6 +10521,7 @@
         "audits[uses-responsive-images].details.headings[1].label",
         "audits[efficient-animated-content].details.headings[0].label",
         "audits[legacy-javascript].details.headings[0].label",
+        "audits[image-delivery-insight].details.headings[0].label",
         "audits[render-blocking-insight].details.headings[0].label"
       ],
       "core/lib/i18n/i18n.js | columnTimeSpent": [
@@ -9632,7 +10564,10 @@
       ],
       "core/lib/i18n/i18n.js | columnDuration": [
         "audits[user-timings].details.headings[3].label",
-        "audits[long-tasks].details.headings[2].label"
+        "audits[long-tasks].details.headings[2].label",
+        "audits[render-blocking-resources].details.headings[2].label",
+        "audits[lcp-phases-insight].details.items[0].headings[1].label",
+        "audits[render-blocking-insight].details.headings[2].label"
       ],
       "core/audits/critical-request-chains.js | title": [
         "audits[critical-request-chains].title"
@@ -9698,8 +10633,14 @@
       "core/audits/deprecations.js | columnDeprecate": [
         "audits.deprecations.details.headings[0].label"
       ],
-      "core/lib/deprecation-description.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": [
+      "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": [
         "audits.deprecations.details.items[0].value"
+      ],
+      "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": [
+        "audits.deprecations.details.items[1].value"
+      ],
+      "core/lib/deprecation-description.js | feature": [
+        "audits.deprecations.details.items[1].subItems.items[0].text"
       ],
       "core/audits/third-party-cookies.js | title": [
         "audits[third-party-cookies].title"
@@ -9770,10 +10711,12 @@
         "audits[unminified-javascript].details.headings[1].label",
         "audits[unused-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label",
+        "audits[cache-insight].details.headings[2].label",
         "audits[render-blocking-insight].details.headings[1].label"
       ],
-      "core/lib/i18n/i18n.js | totalResourceType": [
-        "audits[resource-summary].details.items[0].label"
+      "core/lib/i18n/i18n.js | total": [
+        "audits[resource-summary].details.items[0].label",
+        "audits[cls-culprits-insight].details.items[0].items[0].node.value"
       ],
       "core/lib/i18n/i18n.js | imageResourceType": [
         "audits[resource-summary].details.items[1].label"
@@ -9836,6 +10779,7 @@
         "audits[layout-shifts].details.headings[0].label",
         "audits[non-composited-animations].details.headings[0].label",
         "audits[dom-size].details.headings[1].label",
+        "audits[cls-culprits-insight].details.items[0].headings[0].label",
         "audits[dom-size-insight].details.headings[1].label"
       ],
       "core/audits/largest-contentful-paint-element.js | columnPhase": [
@@ -9881,9 +10825,6 @@
       ],
       "core/audits/layout-shifts.js | columnScore": [
         "audits[layout-shifts].details.headings[1].label"
-      ],
-      "core/audits/layout-shifts.js | rootCauseUnsizedMedia": [
-        "audits[layout-shifts].details.items[0].subItems.items[0].cause"
       ],
       "core/audits/long-tasks.js | title": [
         "audits[long-tasks].title"
@@ -9956,7 +10897,6 @@
       ],
       "core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[prioritize-lcp-image].details.headings[2].label",
-        "audits[render-blocking-resources].details.headings[2].label",
         "audits[unminified-javascript].details.headings[2].label",
         "audits[unused-javascript].details.headings[2].label",
         "audits[modern-image-formats].details.headings[3].label",
@@ -9964,7 +10904,7 @@
         "audits[uses-responsive-images].details.headings[3].label",
         "audits[efficient-animated-content].details.headings[2].label",
         "audits[legacy-javascript].details.headings[2].label",
-        "audits[render-blocking-insight].details.headings[2].label"
+        "audits[image-delivery-insight].details.headings[2].label"
       ],
       "core/audits/csp-xss.js | title": [
         "audits[csp-xss].title"
@@ -10431,7 +11371,8 @@
         }
       ],
       "core/lib/i18n/i18n.js | columnCacheTTL": [
-        "audits[uses-long-cache-ttl].details.headings[1].label"
+        "audits[uses-long-cache-ttl].details.headings[1].label",
+        "audits[cache-insight].details.headings[1].label"
       ],
       "core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
@@ -10510,9 +11451,27 @@
         },
         {
           "values": {
-            "wastedBytes": 26585
+            "wastedBytes": 40984
           },
           "path": "audits[legacy-javascript].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 1834075
+          },
+          "path": "audits[cache-insight].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 11905
+          },
+          "path": "audits[document-latency-insight].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 1133319
+          },
+          "path": "audits[image-delivery-insight].displayValue"
         }
       ],
       "core/audits/byte-efficiency/unused-css-rules.js | title": [
@@ -10536,7 +11495,8 @@
       "core/lib/i18n/i18n.js | columnResourceSize": [
         "audits[modern-image-formats].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[2].label",
-        "audits[efficient-animated-content].details.headings[1].label"
+        "audits[efficient-animated-content].details.headings[1].label",
+        "audits[image-delivery-insight].details.headings[1].label"
       ],
       "core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
@@ -10769,11 +11729,20 @@
       "core/audits/bf-cache.js | failureTypeColumn": [
         "audits[bf-cache].details.headings[1].label"
       ],
-      "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": [
+      "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": [
         "audits[bf-cache].details.items[0].reason"
       ],
       "core/audits/bf-cache.js | actionableFailureType": [
         "audits[bf-cache].details.items[0].failureType"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": [
+        "audits[cache-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": [
+        "audits[cache-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": [
+        "audits[cache-insight].details.headings[0].label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": [
         "audits[cls-culprits-insight].title"
@@ -10781,11 +11750,28 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": [
         "audits[cls-culprits-insight].description"
       ],
+      "core/audits/insights/cls-culprits-insight.js | columnScore": [
+        "audits[cls-culprits-insight].details.items[0].headings[1].label"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": [
         "audits[document-latency-insight].title"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": [
         "audits[document-latency-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": [
+        "audits[document-latency-insight].details.items.noRedirects.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": [
+        {
+          "values": {
+            "PH1": "568 ms"
+          },
+          "path": "audits[document-latency-insight].details.items.serverResponseIsFast.label"
+        }
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": [
+        "audits[document-latency-insight].details.items.usesCompression.label"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": [
         "audits[dom-size-insight].title"
@@ -10808,6 +11794,12 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": [
         "audits[dom-size-insight].details.items[2].statistic"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": [
+        "audits[duplicated-javascript-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": [
+        "audits[duplicated-javascript-insight].description"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": [
         "audits[font-display-insight].title"
       ],
@@ -10826,6 +11818,53 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
         "audits[image-delivery-insight].description"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": [
+        "audits[image-delivery-insight].details.items[0].subItems.items[0].reason"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": [
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "240x30"
+          },
+          "path": "audits[image-delivery-insight].details.items[1].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "240x160"
+          },
+          "path": "audits[image-delivery-insight].details.items[2].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "240x160"
+          },
+          "path": "audits[image-delivery-insight].details.items[3].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "720x480"
+          },
+          "path": "audits[image-delivery-insight].details.items[4].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "720x480"
+          },
+          "path": "audits[image-delivery-insight].details.items[5].subItems.items[0].reason"
+        },
+        {
+          "values": {
+            "PH1": "1024x678",
+            "PH2": "960x636"
+          },
+          "path": "audits[image-delivery-insight].details.items[6].subItems.items[0].reason"
+        }
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": [
         "audits[interaction-to-next-paint-insight].title"
       ],
@@ -10838,29 +11877,59 @@
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": [
         "audits[lcp-discovery-insight].description"
       ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": [
+        "audits[lcp-discovery-insight].details.items[0].items.priorityHinted.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": [
+        "audits[lcp-discovery-insight].details.items[0].items.requestDiscoverable.label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": [
+        "audits[lcp-discovery-insight].details.items[0].items.eagerlyLoaded.label"
+      ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": [
         "audits[lcp-phases-insight].title"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": [
         "audits[lcp-phases-insight].description"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | title": [
-        "audits[long-critical-network-tree-insight].title"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": [
+        "audits[lcp-phases-insight].details.items[0].headings[0].label"
       ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/LongCriticalNetworkTree.js | description": [
-        "audits[long-critical-network-tree-insight].description"
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": [
+        "audits[lcp-phases-insight].details.items[0].items[0].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": [
+        "audits[lcp-phases-insight].details.items[0].items[1].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": [
+        "audits[lcp-phases-insight].details.items[0].items[2].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": [
+        "audits[lcp-phases-insight].details.items[0].items[3].label"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": [
+        "audits[legacy-javascript-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": [
+        "audits[legacy-javascript-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": [
+        "audits[modern-http-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": [
+        "audits[modern-http-insight].description"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": [
+        "audits[network-dependency-tree-insight].title"
+      ],
+      "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
+        "audits[network-dependency-tree-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
         "audits[render-blocking-insight].title"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": [
         "audits[render-blocking-insight].description"
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": [
-        "audits[slow-css-selector-insight].title"
-      ],
-      "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": [
-        "audits[slow-css-selector-insight].description"
       ],
       "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": [
         "audits[third-parties-insight].title"
@@ -10901,8 +11970,11 @@
       "core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"
       ],
-      "core/config/default-config.js | insightGroupTitle": [
+      "core/config/default-config.js | insightsGroupTitle": [
         "categoryGroups.insights.title"
+      ],
+      "core/config/default-config.js | insightsGroupDescription": [
+        "categoryGroups.insights.description"
       ],
       "core/config/default-config.js | diagnosticsGroupTitle": [
         "categoryGroups.diagnostics.title"

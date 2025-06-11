@@ -52,7 +52,7 @@ class LCPBreakdown {
 
 const LCPBreakdownComputed = makeComputedArtifact(
   LCPBreakdown,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LCPBreakdownComputed as LCPBreakdown};
 

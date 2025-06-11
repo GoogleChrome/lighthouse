@@ -6,7 +6,7 @@
 
 import {EventEmitter} from 'events';
 
-import {CdpCDPSession} from 'puppeteer-core/lib/cjs/puppeteer/cdp/CDPSession.js';
+import {CdpCDPSession} from 'puppeteer-core/lib/esm/puppeteer/cdp/CdpSession.js';
 
 import {TargetManager} from '../../../gather/driver/target-manager.js';
 import {createMockCdpSession} from '../mock-driver.js';
@@ -83,7 +83,7 @@ describe('TargetManager', () => {
       await targetManager.enable();
 
       expect(sessionMock.on).toHaveBeenCalled();
-      const sessionListener = sessionMock.on.mock.calls.find(c => c[0] === 'sessionattached')[1];
+      const sessionListener = sessionMock.on.mock.calls.find(c => c[0] === 'sessionattached')?.[1];
 
       // Original, attach.
       expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(1);
@@ -329,12 +329,12 @@ describe('TargetManager', () => {
       iframeSession.on('Animation.animationCreated', iframeListener);
       targetManager.on('protocolevent', allListener);
 
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'Debugger.scriptParsed', params: {script: 'details'}});
-      // @ts-expect-error - types for _onMessage are wrong.
-      iframeSession._onMessage({method: 'Animation.animationCreated', params: {id: 'animated'}});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'Debugger.scriptParsed', params: {script: 'details'}});
+      // @ts-expect-error - internal function
+      iframeSession.onMessage({method: 'Animation.animationCreated', params: {id: 'animated'}});
 
       expect(rootListener).toHaveBeenCalledTimes(1);
       expect(rootListener).toHaveBeenCalledWith(undefined);
@@ -381,12 +381,12 @@ describe('TargetManager', () => {
       const allListener = fnAny();
       targetManager.on('protocolevent', allListener);
 
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
       expect(allListener).toHaveBeenCalled();
       targetManager.off('protocolevent', allListener);
-      // @ts-expect-error - types for _onMessage are wrong.
-      rootSession._onMessage({method: 'DOM.documentUpdated'});
+      // @ts-expect-error - internal function
+      rootSession.onMessage({method: 'DOM.documentUpdated'});
       expect(allListener).toHaveBeenCalledTimes(1);
     });
   });

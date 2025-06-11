@@ -274,10 +274,10 @@ export class LighthouseReportViewer {
     try {
       if (this._isFlowReport(json)) {
         this._renderFlowResult(json, rootEl, saveGistCallback);
-        window.ga('send', 'event', 'report', 'flow-report');
+        if (window.gtag) window.gtag('event', 'report', {type: 'flow-report'});
       } else {
         this._renderLhr(json, rootEl, saveGistCallback);
-        window.ga('send', 'event', 'report', 'report');
+        if (window.gtag) window.gtag('event', 'report', {type: 'report'});
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
@@ -298,8 +298,8 @@ export class LighthouseReportViewer {
       placeholder.remove();
     }
 
-    if (window.ga) {
-      window.ga('send', 'event', 'report', 'view');
+    if (window.gtag) {
+      window.gtag('event', 'view');
     }
   }
 
@@ -351,15 +351,15 @@ export class LighthouseReportViewer {
    * @private
    */
   async _onSaveJson(reportJson) {
-    if (window.ga) {
-      window.ga('send', 'event', 'report', 'share');
+    if (window.gtag) {
+      window.gtag('event', 'report', {type: 'share'});
     }
 
     // TODO: find and reuse existing json gist if one exists.
     try {
       const id = await this._github.createGist(reportJson);
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'created');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'created'});
       }
       history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
       return id;
@@ -382,8 +382,8 @@ export class LighthouseReportViewer {
       const url = new URL(e.clipboardData.getData('text'));
       this._loadFromGistURL(url.href);
 
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'paste-link');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'paste-link'});
       }
     } catch (err) {
       // noop
@@ -394,8 +394,8 @@ export class LighthouseReportViewer {
       const json = JSON.parse(e.clipboardData.getData('text'));
       this._replaceReportHtml(json);
 
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'paste');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'paste'});
       }
     } catch (err) {
     }
@@ -459,8 +459,8 @@ export class LighthouseReportViewer {
         if (self.opener && !self.opener.closed) {
           self.opener.postMessage({rendered: true}, '*');
         }
-        if (window.ga) {
-          window.ga('send', 'event', 'report', 'open in viewer');
+        if (window.gtag) {
+          window.gtag('event', 'report', {type: 'open in viewer'});
         }
       }
     });

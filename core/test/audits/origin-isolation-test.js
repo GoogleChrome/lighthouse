@@ -14,16 +14,14 @@ it('marked N/A if no violations found', async () => {
       mainDocumentUrl: 'https://example.com',
       finalDisplayedUrl: 'https://example.com',
     },
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Cross-Origin-Opener-Policy', value: `same-origin`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Cross-Origin-Opener-Policy', value: `same-origin`},
+        ],
+      },
+    ]),
   };
   const results =
       await OriginIsolation.audit(artifacts, {computedCache: new Map()});
@@ -33,16 +31,14 @@ it('marked N/A if no violations found', async () => {
 
 it('No COOP header found', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Foo-Header', value: `same-origin`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Foo-Header', value: `same-origin`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -65,16 +61,14 @@ it('No COOP header found', async () => {
 
 it('Messed up directive.', async () => {
   const artifacts = {
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Cross-Origin-Opener-Policy', value: `fooDirective`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Cross-Origin-Opener-Policy', value: `fooDirective`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -103,19 +97,17 @@ describe('getRawCoop', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Cross-Origin-Opener-Policy',
-                value: `same-origin`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Cross-Origin-Opener-Policy',
+              value: `same-origin`,
+            },
+          ],
+        },
+      ]),
     };
     const coopHeaders =
       await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});
@@ -131,19 +123,17 @@ describe('getRawCoop', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Cross-Origin-Opener-Policy',
-                value: ``,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Cross-Origin-Opener-Policy',
+              value: ``,
+            },
+          ],
+        },
+      ]),
     };
     const coopHeaders =
       await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});
@@ -159,19 +149,17 @@ describe('getRawCoop', () => {
         mainDocumentUrl: 'https://example.com',
         finalDisplayedUrl: 'https://example.com',
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Cross-Origin-Opener-Policy',
-                value: '   \t',
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Cross-Origin-Opener-Policy',
+              value: '   \t',
+            },
+          ],
+        },
+      ]),
     };
     const coopHeaders =
       await OriginIsolation.getRawCoop(artifacts, {computedCache: new Map()});

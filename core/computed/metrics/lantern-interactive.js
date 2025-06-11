@@ -34,6 +34,6 @@ class LanternInteractive extends Lantern.Metrics.Interactive {
 
 const LanternInteractiveComputed = makeComputedArtifact(
   LanternInteractive,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {LanternInteractiveComputed as LanternInteractive};

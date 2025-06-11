@@ -61,6 +61,7 @@ import screenshot from './test-definitions/screenshot.js';
 import seoFailing from './test-definitions/seo-failing.js';
 import seoPassing from './test-definitions/seo-passing.js';
 import seoStatus403 from './test-definitions/seo-status-403.js';
+import seoMixedLanguage from './test-definitions/seo-mixed-language.js';
 import serviceWorkerReloaded from './test-definitions/service-worker-reloaded.js';
 import shiftAttribution from './test-definitions/shift-attribution.js';
 import sourceMaps from './test-definitions/source-maps.js';
@@ -125,6 +126,7 @@ const smokeTests = [
   seoFailing,
   seoPassing,
   seoStatus403,
+  seoMixedLanguage,
   serviceWorkerReloaded,
   shiftAttribution,
   sourceMaps,

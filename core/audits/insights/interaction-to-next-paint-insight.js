@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */ // TODO: remove once implemented.
-
 /**
  * @license
  * Copyright 2025 Google LLC
@@ -26,7 +24,8 @@ class InteractionToNextPaintInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      replacesAudits: ['work-during-interaction'],
     };
   }
 
@@ -36,15 +35,32 @@ class InteractionToNextPaintInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    // TODO: implement.
     return adaptInsightToAuditProduct(artifacts, context, 'InteractionToNextPaint', (insight) => {
+      const event = insight.longestInteractionEvent;
+      if (!event) {
+        // TODO: show UIStrings.noInteractions?
+        return;
+      }
+
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
+        {key: 'label', valueType: 'text', label: str_(UIStrings.phase)},
+        {key: 'duration', valueType: 'ms', label: str_(i18n.UIStrings.columnDuration)},
       ];
+
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
+        /* eslint-disable max-len */
+        {phase: 'inputDelay', label: str_(UIStrings.inputDelay), duration: event.inputDelay / 1000},
+        {phase: 'processingDuration', label: str_(UIStrings.processingDuration), duration: event.mainThreadHandling / 1000},
+        {phase: 'presentationDelay', label: str_(UIStrings.presentationDelay), duration: event.presentationDelay / 1000},
+        /* eslint-enable max-len */
       ];
-      return Audit.makeTableDetails(headings, items);
+
+      return Audit.makeListDetails([
+        Audit.makeTableDetails(headings, items),
+        makeNodeItemForNodeId(artifacts.TraceElements, event.args.data.beginEvent.args.data.nodeId),
+      ].filter(table => !!table));
     });
   }
 }

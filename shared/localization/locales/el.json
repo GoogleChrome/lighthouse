@@ -660,7 +660,10 @@
     "message": "Χρήση μορφών βίντεο για περιεχόμενο κινούμενων εικόνων"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Για JavaScript σε πακέτο, υιοθετήστε μια σύγχρονη στρατηγική ανάπτυξης σεναρίων χρησιμοποιώντας εντοπισμό λειτουργίας module/nomodule για μείωση του όγκου κώδικα που αποστέλλεται σε σύγχρονα προγράμματα περιήγησης, διατηρώντας την υποστήριξη για προγράμματα περιήγησης παλαιού τύπου. [Μάθετε πώς να χρησιμοποιείτε τη σύγχρονη JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Εξετάστε το ενδεχόμενο να τροποποιήσετε τη διαδικασία κατασκευής JavaScript, ώστε να μην μετατρέπονται οι λειτουργίες [Baseline](https://web.dev/baseline), εκτός εάν γνωρίζετε ότι πρέπει να υποστηρίζετε τα προγράμματα περιήγησης παλαιού τύπου. [Μάθετε γιατί οι περισσότεροι ιστότοποι μπορούν να αναπτύξουν κώδικα ES6+ χωρίς μετατροπή](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Εντοπίστηκε στη σελίδα η έκδοση 2 του core-js. Για πολλές βελτιώσεις απόδοσης, θα πρέπει να αναβαθμίσετε στην έκδοση 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Αποφύγετε την προβολή JavaScript παλαιού τύπου σε σύγχρονα προγράμματα περιήγησης"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ενεργοποίηση συμπίεσης κειμένου"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Σοβαρότητα"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Η κεφαλίδα `X-Frame-Options` (XFO) ή η οδηγία `frame-ancestors` στο στοιχείο ελέγχου κεφαλίδας `Content-Security-Policy` (CSP) όπου μπορεί να ενσωματωθεί μια σελίδα. Μπορούν να μετριάσουν τις επιθέσεις click-jacking, εμποδίζοντας ορισμένους ή όλους τους ιστοτόπους να ενσωματώσουν τη σελίδα. [Μάθετε περισσότερα σχετικά με τον μετριασμό των επιθέσεων click-jacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Δεν βρέθηκε πολιτική ελέγχου πλαισίου"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Μετριάστε τις επιθέσεις click-jacking με XFO ή CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Στις ακόλουθες αλυσίδες κρίσιμων αιτημάτων φαίνεται ποιοι πόροι φορτώνονται με υψηλή προτεραιότητα. Για τη βελτίωση της φόρτωσης των σελίδων, εξετάστε το ενδεχόμενο μείωσης του μεγέθους των αλυσίδων, μείωσης του μεγέθους λήψης πόρων ή καθυστέρησης λήψης των μη απαραίτητων πόρων. [Μάθετε πώς μπορείτε να αποφύγετε τη συσσώρευση κρίσιμων αιτημάτων](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Το Lighthouse δεν μπόρεσε να ελέγξει αυτόματα την τιμή `font-display` για την προέλευση {fontOrigin}.}other{Το Lighthouse δεν μπόρεσε να ελέγξει αυτόματα τις τιμές `font-display` για την προέλευση {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Οδηγία"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Σοβαρότητα"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Η ανάπτυξη της κεφαλίδας HSTS μειώνει σημαντικά τον κίνδυνο υποβάθμισης των συνδέσεων HTTP και των επιθέσεων υποκλοπής. Συνιστάται η σταδιακή διάθεση, ξεκινώντας με χαμηλό μέγιστο όριο ηλικίας. [Μάθετε περισσότερα σχετικά με τη χρήση μιας ισχυρής πολιτικής HSTS.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Μη έγκυρη σύνταξη"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "Η διάρκεια της οδηγίας `max-age` είναι πολύ μικρή"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Δεν βρέθηκε κεφαλίδα HSTS"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Δεν υπάρχει οδηγία `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Δεν βρέθηκε οδηγία `preload`"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Δεν βρέθηκε οδηγία `includeSubDomains`"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Χρήση ισχυρής πολιτικής HSTS"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Λόγος διαστάσεων (Πραγματικός)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Προβάλλει εικόνες με κατάλληλη ανάλυση"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Βαθμολογία αλλαγής διάταξης"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Επιτρέπεται"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Έγινε εισαγωγή iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Ένα αίτημα δικτύου που έχει καθυστερήσει προσάρμοσε τη διάταξη της σελίδας"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Λείπει σαφές μέγεθος από το στοιχείο μέσων"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Το εφέ έχει μη υποστηριζόμενες παραμέτρους χρονισμού."
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Οδηγία"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Σοβαρότητα"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Η Πολιτική ανοίγματος διασταυρούμενων προελεύσεων (COOP) μπορεί να χρησιμοποιηθεί για την απομόνωση του παραθύρου ανώτερου επιπέδου από άλλα έγγραφα, όπως τα αναδυόμενα. [Μάθετε περισσότερα σχετικά με την ανάπτυξη της κεφαλίδας COOP.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Μη έγκυρη σύνταξη"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Δεν βρέθηκε κεφαλίδα COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Εξασφαλίστε την κατάλληλη απομόνωση προελεύσεων με την κεφαλίδα COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Προφορτώστε γραμματοσειρές `optional` για να μπορούν να τις χρησιμοποιούν οι νέοι επισκέπτες. [Μάθετε περισσότερα σχετικά με την προφόρτωση γραμματοσειρών](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Εντοπίστηκε πλοήγηση στις σελίδες κατά τη διάρκεια της εκτέλεσης. Δεν συνιστάται η χρήση της λειτουργίας χρονικού διαστήματος για τον έλεγχο των πλοηγήσεων στις σελίδες. Χρησιμοποιήστε τη λειτουργία πλοήγησης, για να ελέγχετε τις πλοηγήσεις στις σελίδες για καλύτερη απόδοση τρίτου μέρους και εντοπισμό κύριου νήματος."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Μόνο οι σελίδες που φορτώνονται μέσω αιτήματος GET είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Μόνο οι σελίδες με κωδικό κατάστασης 2XX μπορούν να αποθηκευτούν στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Το Chrome εντόπισε μια προσπάθεια εκτέλεσης JavaScript κατά την αποθήκευση στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Οι σελίδες που έχουν ζητήσει ένα AppBanner δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω ενός αιτήματος μηνύματος keepalive."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε από επισημάνσεις. Μεταβείτε στο chrome://flags/#back-forward-cache για να την ενεργοποιήσετε τοπικά σε αυτήν τη συσκευή."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε από τη γραμμή εντολής."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε λόγω ανεπαρκούς μνήμης."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός δεν υποστηρίζεται μέσω ανάθεσης."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε για προαπόδοση."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Δεν είναι δυνατή η αποθήκευση της σελίδας στην κρυφή μνήμη επειδή έχει μια παρουσία BroadcastChannel με εγγεγραμμένες λειτουργίες αναμονής."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Οι σελίδες με την κεφαλίδα cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Έγινε σκόπιμα διαγραφή της προσωρινής μνήμης."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη προκειμένου να επιτραπεί η αποθήκευση μιας άλλης σελίδας στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Οι σελίδες που περιέχουν προσθήκες δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Οι σελίδες που χρησιμοποιούν το FileChooser API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Οι σελίδες που χρησιμοποιούν το File System Access API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Οι σελίδες που χρησιμοποιούν διεκπεραιωτή συσκευής μέσων δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Γινόταν αναπαραγωγή από ένα Media Player κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Οι σελίδες που χρησιμοποιούν το MediaSession API και ορίζουν κατάσταση αναπαραγωγής δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Οι σελίδες που χρησιμοποιούν το MediaSession API και ορίζουν δείκτες χειρισμού ενεργειών δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω του αναγνώστη οθόνης."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SecurityHandler δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Οι σελίδες που χρησιμοποιούν το Serial API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Οι σελίδες που χρησιμοποιούν το WebAuthentication API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Οι σελίδες που χρησιμοποιούν το WebBluetooth API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Οι σελίδες που χρησιμοποιούν το WebUSB API δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη επειδή τα cookie έχουν απενεργοποιηθεί σε μια σελίδα που χρησιμοποιεί το `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Οι σελίδες που χρησιμοποιούν ένα ειδικό worker ή worklet δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Η φόρτωση του εγγράφου δεν ολοκληρώθηκε πριν από την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Το banner εφαρμογής υπήρχε κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Η Διαχείριση κωδικών πρόσβασης Chrome υπήρχε κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Η διύλιση DOM βρισκόταν σε εξέλιξη κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Το εργαλείο προβολής DOM Distiller υπήρχε κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω επεκτάσεων που χρησιμοποιούν το API ανταλλαγής μηνυμάτων."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Οι επεκτάσεις με σύνδεση μεγάλης διάρκειας θα πρέπει να κλείνουν τη σύνδεση προτού γίνει εισαγωγή τους στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Έγινε απόπειρα αποστολής μηνυμάτων σε πλαίσια στην κρυφή μνήμη πίσω-εμπρός, από επεκτάσεις με σύνδεση μεγάλης διάρκειας."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε λόγω επεκτάσεων."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Εμφανιζόταν βοηθητικό παράθυρο διαλόγου ως εκ νέου υποβολή φόρμας ή παράθυρο διαλόγου κωδικού πρόσβασης HTTP για τη σελίδα κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Η σελίδα εκτός σύνδεσης εμφανιζόταν κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Η γραμμή παρέμβασης ανεπαρκούς μνήμης υπήρχε κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Υπήρχαν αιτήματα αδειών κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Το πρόγραμμα αποκλεισμού αναδυόμενων παραθύρων υπήρχε κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Εμφανίζονταν λεπτομέρειες Ασφαλούς περιήγησης κατά την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Σύμφωνα με την Ασφαλή περιήγηση, αυτή η σελίδα είναι καταχρηστική και το αναδυόμενο αποκλείστηκε."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Ένα service worker ενεργοποιήθηκε ενώ η σελίδα βρισκόταν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω σφάλματος στο έγγραφο."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Δεν είναι δυνατή η αποθήκευση σελίδων που χρησιμοποιούν FencedFrames στο bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη προκειμένου να επιτραπεί η αποθήκευση μιας άλλης σελίδας στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Οι σελίδες στις οποίες έχει εκχωρηθεί πρόσβαση για ροή μέσων δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Οι σελίδες που χρησιμοποιούν πύλες δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο IdleManager δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Οι σελίδες που έχουν ανοικτή σύνδεση IndexedDB δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω ενός συμβάντος IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Χρησιμοποιήθηκαν ακατάλληλα API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Οι σελίδες στις οποίες εισάγεται `JavaScript` από επεκτάσεις δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Οι σελίδες στις οποίες εισάγεται `StyleSheet` από επεκτάσεις δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Εσωτερικό σφάλμα."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω ενός αιτήματος μηνύματος keepalive."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Οι σελίδες που χρησιμοποιούν το κλείδωμα πληκτρολογίου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Η φόρτωση της σελίδας δεν ολοκληρώθηκε πριν από την απομάκρυνση."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Οι σελίδες των οποίων ο κύριος πόρος έχει το στοιχείο cache-control:no-cache δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Οι σελίδες των οποίων ο κύριος πόρος έχει το στοιχείο cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Η πλοήγηση ακυρώθηκε πριν να είναι δυνατή η επαναφορά της σελίδας από την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη επειδή μια ενεργή σύνδεση δικτύου έλαβε πάρα πολλά δεδομένα. Το Chrome περιορίζει την ποσότητα δεδομένων που μπορεί να λάβει μια σελίδα ενώ είναι αποθηκευμένη στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Οι σελίδες που έχουν inflight fetch() ή XHR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη πίσω-εμπρός επειδή ένα ενεργό αίτημα δικτύου περιλάμβανε ανακατεύθυνση."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη επειδή μια σύνδεση δικτύου ήταν ανοικτή για μεγάλο διάστημα. Το Chrome περιορίζει την ποσότητα χρόνου που μπορεί να λάβει δεδομένα μια σελίδα ενώ είναι αποθηκευμένη στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Οι σελίδες που δεν έχουν έγκυρη κεφαλίδα απόκρισης δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Η πλοήγηση έγινε σε πλαίσιο διαφορετικό από το κύριο πλαίσιο."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Οι σελίδες με καταλογοποιημένες συναλλαγές DB σε εξέλιξη δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Οι σελίδες με αίτημα δικτύου in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Οι σελίδες με αίτημα δικτύου ανάκτησης in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Οι σελίδες με αίτημα δικτύου in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Οι σελίδες με αίτημα δικτύου in-flight XHR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο PaymentManager δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Οι σελίδες που χρησιμοποιούν τη λειτουργία picture-in-picture δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Οι σελίδες που χρησιμοποιούν πύλες δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Οι σελίδες που εμφανίζουν τη διεπαφή χρήστη εκτύπωσης δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Η σελίδα άνοιξε με χρήση του στοιχείου `window.open()` και μια άλλη καρτέλα περιέχει αναφορά σε αυτό ή η σελίδα άνοιξε ένα παράθυρο."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Η διεργασία της λειτουργίας απόδοσης για τη σελίδα στην κρυφή μνήμη πίσω-εμπρός παρουσίασε σφάλμα."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Η διεργασία της λειτουργίας απόδοσης για τη σελίδα στην κρυφή μνήμη πίσω-εμπρός τερματίστηκε."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες εγγραφής ήχου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες αισθητήρα δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες συγχρονισμού ή ανάκτησης στο παρασκήνιο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες MIDI δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες ειδοποίησης δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Οι σελίδες που έχουν ζητήσει πρόσβαση στον αποθηκευτικό χώρο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Οι σελίδες που έχουν ζητήσει άδειες εγγραφής βίντεο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Μόνο οι σελίδες των οποίων ο συνδυασμός URL είναι HTTP/HTTPS μπορούν να αποθηκευτούν στην κρυφή μνήμη."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Υποβλήθηκε αξίωση για αυτήν τη σελίδα από service worker κατά την αποθήκευση στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Ένα service worker προσπάθησε να στείλει ένα `MessageEvent`στη σελίδα που βρίσκεται στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Η εγγραφή του ServiceWorker καταργήθηκε ενώ η σελίδα βρισκόταν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη πίσω-εμπρός λόγω ενεργοποίησης service worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Έγινε επανεκκίνηση του Chrome και οι καταχωρίσεις της κρυφής μνήμης πίσω-εμπρός διαγράφηκαν."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SharedWorker δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SpeechRecognizer δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SpeechSynthesis δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Ένα iframe στη σελίδα ξεκίνησε πλοήγηση που δεν ολοκληρώθηκε."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Οι σελίδες των οποίων ο δευτερεύων πόρος έχει το στοιχείο cache-control:no-cache δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Οι σελίδες των οποίων ο δευτερεύων πόρος έχει το στοιχείο cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Η σελίδα ξεπέρασε τον μέγιστο χρόνο στην κρυφή μνήμη πίσω-εμπρός και έληξε το χρονικό όριο."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Έληξε το χρονικό όριο της σελίδας κατά την εισαγωγή της στην κρυφή μνήμη πίσω-εμπρός (ενδεχομένως λόγω δεικτών χειρισμού pagehide που εκτελούνται για μεγάλο χρονικό διάστημα)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Η σελίδα έχει δείκτη χειρισμού unload στο κύριο πλαίσιο."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Η σελίδα έχει δείκτη χειρισμού unload στο δευτερεύον πλαίσιο."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Το πρόγραμμα περιήγησης άλλαξε την κεφαλίδα παράκαμψης παράγοντα χρήστη."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Οι σελίδες στις οποίες έχει εκχωρηθεί πρόσβαση για εγγραφή βίντεο ή ήχου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebDatabase δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebHID δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Οι σελίδες που χρησιμοποιούν WebLocks δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebNfc δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebOTPService δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Οι σελίδες με το στοιχείο WebRTC δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebShare δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Οι σελίδες με το στοιχείο WebSocket δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Οι σελίδες με το στοιχείο WebTransport δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebXR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Εξετάστε το ενδεχόμενο προσθήκης συνδυασμών URL https: και http: (παραβλέπονται από προγράμματα περιήγησης που υποστηρίζουν `'strict-dynamic'`) για συμβατότητα με παλαιότερες εκδόσεις προγραμμάτων περιήγησης."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Χρησιμοποιήθηκε λειτουργία που έχει καταργηθεί"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Η εξουσιοδότηση θα καλυφθεί από τον χαρακτήρα μπαλαντέρ (*) στον χειρισμό `Access-Control-Allow-Headers` CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Το χαρακτηριστικό `disableRemotePlayback` θα πρέπει να χρησιμοποιείται για την απενεργοποίηση της προεπιλεγμένης ενσωμάτωσης μετάδοσης αντί να χρησιμοποιείται ο επιλογέας `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Τα αιτήματα πόρων των οποίων τα URL περιείχαν καταργημένους χαρακτήρες κενού διαστήματος `(n|r|t)` και χαρακτήρες \"λιγότερο από\" (`<`) αποκλείονται. Καταργήστε τις νέες γραμμές και κωδικοποιήστε τους χαρακτήρες \"λιγότερο από\" από μέρη, όπως οι τιμές χαρακτηριστικών στοιχείων, προκειμένου να γίνει φόρτωση αυτών των πόρων."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "Το `chrome.loadTimes()` έχει καταργηθεί. Αντ' αυτού, χρησιμοποιήστε το τυποποιημένο API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "Το `chrome.loadTimes()` έχει καταργηθεί. Αντ' αυτού χρησιμοποιήστε το τυποποιημένο API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "Το `chrome.loadTimes()` έχει καταργηθεί. Αντ' αυτού, χρησιμοποιήστε το τυποποιημένο API: `nextHopProtocol` στο Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Τα cookie που περιέχουν χαρακτήρα `(0|r|n)` θα απορριφθούν αντί να περικοπούν."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Η χαλάρωση της πολιτικής κοινής προέλευσης με ρύθμιση του `document.domain` έχει καταργηθεί και θα απενεργοποιηθεί από προεπιλογή. Αυτή η προειδοποίηση κατάργησης αφορά μια πρόσβαση διασταυρούμενων προελεύσεων που ενεργοποιήθηκε με τη ρύθμιση του `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Η ενεργοποίηση της συνάρτησης window.alerts από iframe διασταυρούμενων προελεύσεων έχει καταργηθεί και θα αποσυρθεί στο μέλλον."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Η ενεργοποίηση του window.confirm από iframe διασταυρούμενων προελεύσεων έχει καταργηθεί και θα αποσυρθεί στο μέλλον."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Τα συμβάντα σίγασης DOM, συμπεριλαμβανομένων των `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` και `DOMCharacterDataModified` έχουν καταργηθεί (https://w3c.github.io/uievents/#legacy-event-types) και θα αποσυρθούν. Εναλλακτικά, χρησιμοποιήστε το `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Η υποστήριξη για το στοιχείο data: URLs in SVG <use> έχει καταργηθεί και θα αποσυρθεί στο μέλλον."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Η χαλάρωση της πολιτικής κοινής προέλευσης με ρύθμιση του `document.domain` έχει καταργηθεί και θα απενεργοποιηθεί από προεπιλογή. Για να συνεχίσετε να χρησιμοποιείτε αυτήν τη λειτουργία, εξαιρεθείτε από τα συμπλέγματα παραγόντων με κλειδιά προέλευσης, στέλνοντας μια κεφαλίδα `Origin-Agent-Cluster: ?0` μαζί με την απόκριση HTTP για το έγγραφο και τα πλαίσια. Ανατρέξτε στη σελίδα https://developer.chrome.com/blog/immutable-document-domain/ για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Η κεφαλίδα `Expect-CT` καταργήθηκε και θα αποσυρθεί. Το Chrome απαιτεί Διαφάνεια πιστοποιητικών για όλα τα πιστοποιητικά που θεωρούνται αξιόπιστα δημοσίως και έχουν εκδοθεί μετά τις 30 Απριλίου 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "Τα `getCurrentPosition()` και `watchPosition()` δεν λειτουργούν πλέον σε μη ασφαλείς προελεύσεις. Για να χρησιμοποιήσετε αυτήν τη λειτουργία, θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη διεύθυνση https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Τα `getCurrentPosition()` και `watchPosition()` καταργήθηκαν σε μη ασφαλείς προελεύσεις. Για να χρησιμοποιήσετε αυτήν τη λειτουργία, θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη διεύθυνση https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "Το `getUserMedia()` δεν λειτουργεί πλέον σε μη ασφαλείς προελεύσεις. Για να χρησιμοποιήσετε αυτήν τη λειτουργία, θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη διεύθυνση https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "Το `RTCPeerConnectionIceErrorEvent.hostCandidate` καταργήθηκε. Αντ' αυτού, χρησιμοποιήστε το `RTCPeerConnectionIceErrorEvent.address` ή το `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Η προέλευση εμπόρου και αυθαίρετα δεδομένα από το συμβάν service worker `canmakepayment` έχουν αποσυρθεί και θα καταργηθούν: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Ο ιστότοπος ζήτησε έναν δευτερεύοντα πόρο από ένα δίκτυο στο οποίο θα μπορούσε να αποκτήσει πρόσβαση μόνο λόγω της προνομιακής θέσης δικτύου των χρηστών του. Αυτά τα αιτήματα εκθέτουν τις μη δημόσιες συσκευές και τους μη δημόσιους διακομιστές στο διαδίκτυο, αυξάνοντας τον κίνδυνο επίθεσης τύπου cross-site request forgery (CSRF) ή/και διαρροής πληροφοριών. Για να μειωθούν αυτοί οι κίνδυνοι, το Chrome καταργεί τα αιτήματα σε μη δημόσιους δευτερεύοντες πόρους, όταν εκκινούνται από μη ασφαλή περιβάλλοντα και θα αρχίσει να τα αποκλείει."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Το πεδίο `dailyUpdateUrl` του `InterestGroups` που μεταβιβάζεται στο `joinAdInterestGroup()` μετονομάστηκε σε `updateUrl`, ώστε να αντικατοπτρίζει με μεγαλύτερη ακρίβεια τη συμπεριφορά του."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "Δεν είναι δυνατή η φόρτωση του CSS από τα URL `file:`, εκτός εάν καταλήγουν σε επέκταση αρχείου `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Η χρήση του `SourceBuffer.abort()` για ακύρωση της ασύγχρονης κατάργησης εύρους του στοιχείου `remove()` έχει καταργηθεί λόγω αλλαγής προδιαγραφών. Η υποστήριξη θα καταργηθεί μελλοντικά. Εναλλακτικά, θα πρέπει να χρησιμοποιήσετε τη λειτουργία αναμονής για το συμβάν `updateend`. Το `abort()` προορίζεται μόνο για την ακύρωση της ασύγχρονης προσάρτησης μέσου ή την επαναφορά κατάστασης συντακτικού αναλυτή."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Η ρύθμιση του `MediaSource.duration` κάτω από την υψηλότερη χρονική σήμανση παρουσίασης τυχόν κωδικοποιημένων πλαισίων στην προσωρινή μνήμη έχει καταργηθεί λόγω αλλαγής προδιαγραφών. Η υποστήριξη για την έμμεση κατάργηση των περικομμένων μέσων στην προσωρινή μνήμη θα καταργηθεί στο μέλλον. Αντ' αυτού θα πρέπει να εκτελέσετε ρητή `remove(newDuration, oldDuration)` σε όλα τα `sourceBuffers`, όπου `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Το MIDI ιστού θα ζητήσει άδεια για χρήση ακόμα και αν το sysex δεν είναι καθορισμένο στο `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Το παλαιότερο, μη τυποποιημένο χαρακτηριστικό `shadowroot` έχει καταργηθεί και *δεν θα λειτουργεί πλέον* στο M119. Εναλλακτικά, χρησιμοποιήστε το νέο τυποποιημένο χαρακτηριστικό `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Το Notification API δεν μπορεί πλέον να χρησιμοποιείται από μη ασφαλείς προελεύσεις. Θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη διεύθυνση https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Δεν επιτρέπεται πλέον να ζητείται άδεια για το Notification API από ένα iframe διασταυρούμενων προελεύσεων. Θα πρέπει να εξετάσετε το ενδεχόμενο να ζητήσετε άδεια από ένα πλαίσιο ανώτερου επιπέδου ή, εναλλακτικά, να ανοίξετε ένα νέο παράθυρο."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Η επιλογή `imageOrientation: 'none'` στο createImageBitmap έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το createImageBitmap με την επιλογή \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Ο συνεργάτης σας κάνει διαπραγμάτευση για μια παρωχημένη έκδοση (D)TLS. Επικοινωνήστε με τον συνεργάτη σας για την επίλυση αυτού του ζητήματος."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Ο καθορισμός του στοιχείου `overflow: visible` σε ετικέτες img, video και canvas μπορεί να έχει ως αποτέλεσμα τη δημιουργία οπτικού περιεχομένου εκτός των ορίων του στοιχείου. Ανατρέξτε στη διεύθυνση https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Το `paymentManager.instruments` καταργήθηκε. Χρησιμοποιήστε αντ' αυτού την έγκαιρη εγκατάσταση για τους δείκτες χειρισμού πληρωμών."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Η κλήση `PaymentRequest` παρέβλεψε την οδηγία `connect-src` της Πολιτικής ασφάλειας περιεχομένου (CSP). Αυτή η παράκαμψη καταργήθηκε. Προσθέστε το αναγνωριστικό τρόπου πληρωμής από το `PaymentRequest` API (στο πεδίο `supportedMethods`) στην οδηγία `connect-src` της CSP."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Το `StorageType.persistent` έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το τυποποιημένο `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Το `<source src>` με γονικό στοιχείο `<picture>` δεν είναι έγκυρο και συνεπώς παραβλέφθηκε. Εναλλακτικά, χρησιμοποιήστε το `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "Το webkitCancelAnimationFrame εξαρτάται από τον προμηθευτή. Εναλλακτικά, χρησιμοποιήστε το βασικό cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "Το webkitRequestAnimationFrame εξαρτάται από τον προμηθευτή. Εναλλακτικά, χρησιμοποιήστε το βασικό requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Το HTMLVideoElement.webkitDisplayingFullscreen έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Το HTMLVideoElement.webkitEnterFullScreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Το HTMLVideoElement.webkitEnterFullscreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Το HTMLVideoElement.webkitExitFullScreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Το HTMLVideoElement.webkitExitFullscreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Το HTMLVideoElement.webkitSupportsFullscreen έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Το API `chrome.privacy.websites.privacySandboxEnabled` καταργείται αλλά θα παραμείνει ενεργό για συμβατότητα με παλιότερη έκδοση, έως την κυκλοφορία του M113. Εναλλακτικά, χρησιμοποιήστε τα `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` και `chrome.privacy.websites.adMeasurementEnabled`. Ανατρέξτε στη διεύθυνση https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Ο περιορισμός `DtlsSrtpKeyAgreement` καταργήθηκε. Έχετε καθορίσει μια τιμή `false` για αυτόν τον περιορισμό, η οποία ερμηνεύεται ως προσπάθεια χρήσης της μεθόδου `SDES key negotiation` που καταργήθηκε. Αυτή η λειτουργία καταργήθηκε, χρησιμοποιήστε εναλλακτικά μια υπηρεσία που υποστηρίζει το `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Ο περιορισμός `DtlsSrtpKeyAgreement` καταργήθηκε. Έχετε καθορίσει μια τιμή `true` για αυτόν τον περιορισμό, η οποία δεν είχε κάποια επίδραση, αλλά μπορείτε να καταργήσετε αυτόν τον περιορισμό για λόγους οργάνωσης."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Η μέθοδος getStats() που βασίζεται σε επανάκληση έχει καταργηθεί και θα αποσυρθεί. Εναλλακτικά, χρησιμοποιήστε τη μέθοδο getStats() που συμμορφώνεται με τις προδιαγραφές."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Το Range.expand() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Τα αιτήματα δευτερευόντων πόρων των οποίων τα URL περιέχουν ενσωματωμένα διαπιστευτήρια (π.χ. `https://user:pass@host/`) είναι αποκλεισμένα."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Η επιλογή `rtcpMuxPolicy` καταργήθηκε και θα αποσυρθεί."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "Για το `SharedArrayBuffer` θα απαιτηθεί απομόνωση διασταυρούμενων προελεύσεων. Ανατρέξτε στη διεύθυνση https://developer.chrome.com/blog/enabling-shared-array-buffer/ για περισσότερες λεπτομέρειες."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Το `speechSynthesis.speak()` χωρίς ενεργοποίηση χρήστη καταργήθηκε και θα αποσυρθεί."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Οι επεκτάσεις θα πρέπει να συμμετέχουν στην απομόνωση διασταυρούμενων προελεύσεων, για να συνεχιστεί η χρήση του `SharedArrayBuffer`. Ανατρέξτε στη διεύθυνση https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Το SQL ιστού έχει καταργηθεί. Χρησιμοποιήστε το SQLite WebAssembly ή την καταλογοποιημένη βάση δεδομένων."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Το περιγραφικό στοιχείο άδειας `window-placement` έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε την πολιτική `window-management`. Για περισσότερη βοήθεια, ανατρέξτε στη διεύθυνση https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Η πολιτική άδειας `window-placement` έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε την πολιτική `window-management`. Για περισσότερη βοήθεια, ανατρέξτε στη διεύθυνση https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Το UTF-16 δεν υποστηρίζεται από το json απόκρισης στο `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Το συγχρονισμένο `XMLHttpRequest` στο κύριο νήμα έχει καταργηθεί λόγω των επιζήμιων συνεπειών του στην εμπειρία τελικού χρήστη. Για περισσότερη βοήθεια, ανατρέξτε στη διεύθυνση https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Το `supportsSession()` καταργήθηκε. Χρησιμοποιήστε το `isSessionSupported()` και ελέγξτε εναλλακτικά την τιμή boolean που έχει επιλυθεί."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Χρόνος αποκλεισμού κύριου νήματος"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Τρίτο μέρος"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Σύνολο"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,50 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Αναφορά ροής χρήστη Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Authorization will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "The disableRemotePlayback attribute should be used in order to disable the default Cast integration instead of using -internal-media-controls-overlay-cast-button selector."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Η τιμή εμφάνισης CSS slider-vertical δεν έχει τυποποιηθεί και θα καταργηθεί."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resource requests whose URLs contained both removed whitespace \\(n|r|t) characters and less-than characters (<) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Ο αυτόματος εντοπισμός του συνόλου χαρακτήρων ISO-2022-JP έχει καταργηθεί και θα απενεργοποιηθεί σύντομα. Προσδιορίστε το σύνολο χαρακτήρων στην κεφαλίδα Τύπος περιεχομένου ή χρησιμοποιώντας μια μεταετικέτα (https://developer.mozilla.org/el-GR/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: nextHopProtocol in Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Η χαλάρωση της πολιτικής κοινής προέλευσης με ρύθμιση του document.domain έχει καταργηθεί και θα απενεργοποιηθεί από προεπιλογή. Αυτή η προειδοποίηση κατάργησης αφορά μια πρόσβαση διασταυρούμενων προελεύσεων που ενεργοποιήθηκε με τη ρύθμιση του document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Η ενεργοποίηση της συνάρτησης window.alerts από iframe διασταυρούμενων προελεύσεων έχει καταργηθεί και θα αποσυρθεί στο μέλλον."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Η ενεργοποίηση του window.confirm από iframe διασταυρούμενων προελεύσεων έχει καταργηθεί και θα αποσυρθεί στο μέλλον."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Τα συμβάντα σίγασης DOM, συμπεριλαμβανομένων των DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument και DOMCharacterDataModified έχουν καταργηθεί (https://w3c.github.io/uievents/#legacy-event-types) και θα αποσυρθούν. Εναλλακτικά, χρησιμοποιήστε το MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Υποστήριξη για δεδομένα: Τα URL στο SVGUseElement έχουν καταργηθεί και θα αποσυρθούν στο μέλλον."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "Τα getCurrentPosition() και watchPosition() δεν λειτουργούν πλέον σε μη ασφαλείς προελεύσεις. Για να χρησιμοποιήσετε αυτήν τη λειτουργία, θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη σελίδα https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "Τα getCurrentPosition() και watchPosition() καταργήθηκαν σε μη ασφαλείς προελεύσεις. Για να χρησιμοποιήσετε αυτήν τη λειτουργία, θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη σελίδα https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Βρέθηκε μια ετικέτα <h1> μέσα σε <article>, <aside>, <nav> ή <section> που δεν έχει καθορισμένο μέγεθος γραμματοσειράς. Το μέγεθος αυτού του κειμένου τίτλου θα αλλάξει σε αυτό το πρόγραμμα περιήγησης στο εγγύς μέλλον. Ανατρέξτε στη διεύθυνση https://developer.mozilla.org/el-GR/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 για περισσότερες πληροφορίες."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Το RTCPeerConnectionIceErrorEvent.hostCandidate καταργήθηκε. Αντ' αυτού, χρησιμοποιήστε το RTCPeerConnectionIceErrorEvent.address ή το RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Αυτή η μορφή για το αίτημα navigator.credentials.get() για ψηφιακά διαπιστευτήρια έχει καταργηθεί. Ενημερώστε την κλήση σας, για να χρησιμοποιήσετε τη νέα μορφή."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Η προέλευση εμπόρου και αυθαίρετα δεδομένα από το συμβάν service worker canmakepayment έχουν αποσυρθεί και θα καταργηθούν: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Το πεδίο dailyUpdateUrl του InterestGroups που μεταβιβάζεται στο joinAdInterestGroup() μετονομάστηκε σε updateUrl, ώστε να αντικατοπτρίζει με μεγαλύτερη ακρίβεια τη συμπεριφορά του."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Το Intl.v8BreakIterator καταργήθηκε. Εναλλακτικά, χρησιμοποιήστε το Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Η χρήση του SourceBuffer.abort() για ακύρωση της ασύγχρονης κατάργησης εύρους του στοιχείου remove() έχει καταργηθεί λόγω αλλαγής προδιαγραφών. Η υποστήριξη θα καταργηθεί μελλοντικά. Εναλλακτικά, θα πρέπει να χρησιμοποιήσετε τη λειτουργία αναμονής για το συμβάν updateend. Το abort() προορίζεται μόνο για την ακύρωση της ασύγχρονης προσάρτησης μέσου ή την επαναφορά κατάστασης συντακτικού αναλυτή."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Το Notification API δεν μπορεί πλέον να χρησιμοποιείται από μη ασφαλείς προελεύσεις. Θα πρέπει να εξετάσετε το ενδεχόμενο να αλλάξετε την εφαρμογή σας σε ασφαλή προέλευση, όπως HTTPS. Ανατρέξτε στη σελίδα https://goo.gle/chrome-insecure-origins για περισσότερες λεπτομέρειες."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Δεν επιτρέπεται πλέον να ζητείται άδεια για το Notification API από ένα iframe διασταυρούμενων προελεύσεων. Θα πρέπει να εξετάσετε το ενδεχόμενο να ζητήσετε άδεια από ένα πλαίσιο ανώτερου επιπέδου ή, εναλλακτικά, να ανοίξετε ένα νέο παράθυρο."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Η επιλογή imageOrientation: 'none' στο createImageBitmap έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το createImageBitmap με την επιλογή '\\\\{imageOrientation: 'from-image'\\\\}'."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Ο καθορισμός του overflow: visible σε ετικέτες img, video και canvas μπορεί να έχει ως αποτέλεσμα τη δημιουργία οπτικού περιεχομένου εκτός των ορίων του στοιχείου. Ανατρέξτε στη διεύθυνση https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "Το paymentManager.instruments καταργήθηκε. Χρησιμοποιήστε αντ' αυτού την έγκαιρη εγκατάσταση για τους δείκτες χειρισμού πληρωμών."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Η κλήση σας PaymentRequest παρέβλεψε την οδηγία connect-src της Πολιτικής ασφάλειας περιεχομένου (CSP). Αυτή η παράκαμψη καταργήθηκε. Προσθέστε το αναγνωριστικό τρόπου πληρωμής από το API PaymentRequest (στο πεδίο supportedMethods) στην οδηγία CSP connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "Το StorageType.persistent καταργήθηκε. Χρησιμοποιήστε το τυποποιημένο navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Το <source src> με γονικό στοιχείο <picture> δεν είναι έγκυρο και συνεπώς παραβλέφθηκε. Εναλλακτικά, χρησιμοποιήστε το <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "Το webkitCancelAnimationFrame εξαρτάται από τον προμηθευτή. Εναλλακτικά, χρησιμοποιήστε το βασικό cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "Το webkitRequestAnimationFrame εξαρτάται από τον προμηθευτή. Εναλλακτικά, χρησιμοποιήστε το βασικό requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Το HTMLVideoElement.webkitDisplayingFullscreen έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Το HTMLVideoElement.webkitEnterFullScreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Το HTMLVideoElement.webkitEnterFullscreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Το HTMLVideoElement.webkitExitFullScreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Το HTMLVideoElement.webkitExitFullscreen() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Το HTMLVideoElement.webkitSupportsFullscreen έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Το API chrome.privacy.websites.privacySandboxEnabled καταργείται αλλά θα παραμείνει ενεργό για συμβατότητα με παλιότερη έκδοση, έως την κυκλοφορία του M113. Εναλλακτικά, χρησιμοποιήστε τα chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled και chrome.privacy.websites.adMeasurementEnabled. Ανατρέξτε στη διεύθυνση https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Ο περιορισμός DtlsSrtpKeyAgreement καταργήθηκε. Έχετε καθορίσει μια τιμή false για αυτόν τον περιορισμό, η οποία ερμηνεύεται ως προσπάθεια χρήσης της μεθόδου SDES key negotiation που καταργήθηκε. Αυτή η λειτουργία καταργήθηκε, χρησιμοποιήστε εναλλακτικά μια υπηρεσία που υποστηρίζει το DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Ο περιορισμός DtlsSrtpKeyAgreement καταργήθηκε. Έχετε καθορίσει μια τιμή true για αυτόν τον περιορισμό, η οποία δεν είχε κάποια επίδραση, αλλά μπορείτε να καταργήσετε αυτόν τον περιορισμό για λόγους οργάνωσης."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Η μέθοδος getStats() που βασίζεται σε επανάκληση έχει καταργηθεί και θα αποσυρθεί. Εναλλακτικά, χρησιμοποιήστε τη μέθοδο getStats() που συμμορφώνεται με τις προδιαγραφές."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Το Range.expand() έχει καταργηθεί. Εναλλακτικά, χρησιμοποιήστε το Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Η επιλογή rtcpMuxPolicy καταργήθηκε και θα αποσυρθεί."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Το speechSynthesis.speak() χωρίς ενεργοποίηση χρήστη καταργήθηκε και θα αποσυρθεί."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Οι λειτουργίες αναμονής συμβάντος unload έχουν καταργηθεί και θα αφαιρεθούν."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 is not supported by response json in XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Το συγχρονισμένο XMLHttpRequest στο κύριο νήμα έχει καταργηθεί λόγω των επιζήμιων συνεπειών του στην εμπειρία τελικού χρήστη. Για περισσότερη βοήθεια, ανατρέξτε στη σελίδα https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Κινούμενη εικόνα"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Οι μετατοπίσεις διάταξης προκύπτουν, όταν τα στοιχεία μετακινούνται χωρίς αλληλεπίδραση με τον χρήστη. [Διερευνήστε τις αιτίες των μετατοπίσεων διάταξης](https://web.dev/articles/optimize-cls), όπως είναι η προσθήκη και η κατάργηση στοιχείων ή η αλλαγή των γραμματοσειρών τους κατά τη φόρτωση της σελίδας."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Αίτημα γραμματοσειράς"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Έγινε εισαγωγή iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Σύμπλεγμα μετατόπισης διάταξης @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Δεν ήταν δυνατός ο εντοπισμός αιτιών που σχετίζονται με τις μετατοπίσεις διάταξης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Δεν υπάρχουν μετατοπίσεις διάταξης"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Αιτίες για τη μετατόπιση διάταξης"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Κορυφαίες αιτίες για τη μετατόπιση διάταξης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Εικόνες χωρίς καθορισμένο μέγεθος"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Χειρότερο σύμπλεγμα"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Χειρότερο σύμπλεγμα μετατόπισης διάταξης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL κρυφής μνήμης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Ο μεγάλος συνολικός χρόνος της κρυφής μνήμης μπορεί να επιταχύνει τις επαναλαμβανόμενες επισκέψεις στη σελίδα σας. [Μάθετε περισσότερα](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Δεν υπάρχουν αιτήματα με αναποτελεσματικές πολιτικές κρυφής μνήμης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} ακόμα"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Αίτημα"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Χρήση αποδοτικών συνολικών χρόνων κρυφής μνήμης"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Ένα μεγάλο DOM μπορεί να αυξήσει τη χρήση της μνήμης, να προκαλέσει υπολογισμούς στιλ μεγαλύτερης διάρκειας και να δημιουργήσει επαναλήψεις ροών διάταξης υψηλού κόστους που επηρεάζουν την απόκριση της σελίδας. [Μάθετε πώς μπορείτε να αποφύγετε το υπερβολικό μέγεθος DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+    "message": "Ένα μεγάλο DOM μπορεί να αυξήσει τη διάρκεια των υπολογισμών στιλ και των επαναλήψεων ροών διάταξης και, συνεπώς, να επηρεάσει την απόκριση της σελίδας. Ένα μεγάλο DOM θα αυξήσει επίσης τη χρήση της μνήμης. [Μάθετε πώς μπορείτε να αποφύγετε ένα υπερβολικά μεγάλο μέγεθος DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Στοιχείο"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Μέγιστος αριθμός θυγατρικών στοιχείων"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Βάθος DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Στατιστικό στοιχείο"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Βελτιστοποίηση μεγέθους DOM"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Σύνολο στοιχείων"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Τιμή"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Το πρώτο αίτημα δικτύου είναι το πιο σημαντικό.  Μειώστε τον λανθάνοντα χρόνο αποφεύγοντας τις ανακατευθύνσεις, προκειμένου να διασφαλίσετε μια γρήγορη απόκριση διακομιστή, και ενεργοποιώντας τη συμπίεση κειμένου."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Δεν εφαρμόστηκε συμπίεση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Αποφεύγει τις ανακατευθύνσεις"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Εφαρμόζει συμπίεση κειμένου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Ανακατευθύνσεις"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Χρόνος απόκρισης διακομιστή"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Λανθάνων χρόνος αιτήματος εγγράφου"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Λήψη χωρίς συμπίεση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Διπλότυπα byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Πηγή"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Καταργήστε τις μεγάλες, διπλότυπες λειτουργικές μονάδες JavaScript από τα πακέτα, για να μειώσετε τα μη απαραίτητα byte που καταναλώνονται από τη δραστηριότητα δικτύου."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Διπλότυπο JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Μπορείτε να ορίσετε το [font-display](https://developer.chrome.com/blog/font-display) σε swap ή optional, για να διασφαλίσετε ότι το κείμενο θα είναι πάντα ορατό. Το swap μπορεί να βελτιστοποιηθεί περαιτέρω, για να περιοριστούν οι μετατοπίσεις διάταξης με [παρακάμψεις μετρήσεων γραμματοσειράς](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Γραμματοσειρά"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Προβολή γραμματοσειράς"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Χαμένος χρόνος"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(ανώνυμες)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Πολλά API, που συνήθως διαβάζουν τη γεωμετρία διάταξης, αναγκάζουν τη μηχανή απόδοσης να κάνει παύση της εκτέλεσης σεναρίου, προκειμένου να υπολογιστεί το στιλ και η διάταξη. Μάθετε περισσότερα σχετικά με την [επιβολή επανάληψης ροής](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) και τον μετριασμό της."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Ιχνηλάτηση στοίβας"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Επιβολή επανάληψης ροής"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Κορυφαία κλήση συνάρτησης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Συνολικός χρόνος επανάληψης ροής"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[χωρίς απόδοση]"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Η μείωση του χρόνου λήψης των εικόνων μπορεί να βελτιώσει τον αντιληπτό χρόνο φόρτωσης της σελίδας και του LCP. [Μάθετε περισσότερα σχετικά με τη βελτιστοποίηση του μεγέθους εικόνας](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} ({PH2} κατ' εκτίμηση)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Δεν υπάρχουν εικόνες με δυνατότητα βελτιστοποίησης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Βελτιστοποίηση μεγέθους αρχείου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} ακόμα"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Βελτίωση προβολής εικόνων"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Η αύξηση του συντελεστή συμπίεσης της εικόνας θα μπορούσε να βελτιώσει το μέγεθος λήψης αυτής της εικόνας. (Εκτ. {PH1})"
+    "message": "Η αύξηση του συντελεστή συμπίεσης της εικόνας θα μπορούσε να βελτιώσει το μέγεθος λήψης αυτής της εικόνας."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Η χρήση μιας σύγχρονης μορφής εικόνας (WebP, AVIF) ή η αύξηση της συμπίεσης εικόνας θα μπορούσε να βελτιώσει το μέγεθος λήψης αυτής της εικόνας. (Εκτ. {PH1})"
+    "message": "Η χρήση μιας σύγχρονης μορφής εικόνας (WebP, AVIF) ή η αύξηση της συμπίεσης εικόνας θα μπορούσε να βελτιώσει το μέγεθος λήψης αυτής της εικόνας."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Το συγκεκριμένο αρχείο εικόνας είναι μεγαλύτερο από όσο χρειάζεται ({PH2}) για τις διαστάσεις προβολής του ({PH3}). Χρησιμοποιήστε αποκριτικές εικόνες, για να μειώσετε το μέγεθος λήψης της εικόνας. (Εκτ. {PH1})"
+    "message": "Το συγκεκριμένο αρχείο εικόνας είναι μεγαλύτερο από όσο χρειάζεται ({PH1}) για τις διαστάσεις προβολής του ({PH2}). Χρησιμοποιήστε αποκριτικές εικόνες, για να μειώσετε το μέγεθος λήψης της εικόνας."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Η χρήση μορφών βίντεο αντί για GIF μπορεί να βελτιώσει το μέγεθος λήψης του περιεχομένου κινούμενων εικόνων. (Εκτ. {PH1})"
+    "message": "Η χρήση μορφών βίντεο αντί για GIF μπορεί να βελτιώσει το μέγεθος λήψης του περιεχομένου κινούμενων εικόνων."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Ξεκινήστε την έρευνα με τη μεγαλύτερη φάση. [Οι καθυστερήσεις μπορούν να ελαχιστοποιηθούν](https://web.dev/articles/optimize-inp#optimize_interactions). Για να μειώσετε τη διάρκεια επεξεργασίας, [βελτιστοποιήστε τα κόστη κύριου νήματος](https://web.dev/articles/optimize-long-tasks), συχνά σε JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Διάρκεια"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Καθυστέρηση εισόδου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Δεν ανιχνεύτηκαν αλληλεπιδράσεις"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Φάση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Καθυστέρηση παρουσίασης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Διάρκεια διεργασίας"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP κατά φάση"
@@ -2672,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Βελτιστοποιήστε το LCP κάνοντας την εικόνα LCP [ανακαλύψιμη](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) απευθείας από το HTML και [αποφεύγοντας την αργή φόρτωση](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high applied"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Απαιτείται η εφαρμογή της ιδιότητας fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "δεν εφαρμόστηκε η αργή φόρτωση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Η εικόνα LCP φορτώθηκε {PH1} μετά το νωρίτερο σημείο έναρξης."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Δεν εντοπίστηκε LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Δεν εντοπίστηκε πόρος LCP, επειδή το LCP δεν είναι εικόνα"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Το αίτημα είναι ανιχνεύσιμο στο αρχικό έγγραφο"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Ανακάλυψη αιτήματος LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Κάθε [φάση έχει συγκεκριμένες στρατηγικές βελτίωσης](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ιδανικά, το μεγαλύτερο μέρος του χρόνου LCP θα πρέπει να δαπανάται για τη φόρτωση των πόρων, όχι σε καθυστερήσεις."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Διάρκεια"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Καθυστέρηση απόδοσης στοιχείων"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75ο εκατοστημόριο δεδομένων πραγματικών χρηστών"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Δεν εντοπίστηκε LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Φάση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Καθυστέρηση φόρτωσης πόρου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Διάρκεια φόρτωσης πόρου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP κατά φάση"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Σενάριο"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Αχρησιμοποίητα byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Τα Polyfill και οι μετασχηματισμοί επιτρέπουν στα προγράμματα περιήγησης παλαιού τύπου να χρησιμοποιούν νέες λειτουργίες JavaScript. Ωστόσο, πολλές από αυτές δεν είναι απαραίτητες για σύγχρονα προγράμματα περιήγησης. Εξετάστε το ενδεχόμενο να τροποποιήσετε τη διαδικασία κατασκευής JavaScript, ώστε να μην μετατρέπονται οι λειτουργίες [Baseline](https://web.dev/articles/baseline-and-polyfills), εκτός εάν γνωρίζετε ότι πρέπει να υποστηρίζετε τα προγράμματα περιήγησης παλαιού τύπου. [Μάθετε γιατί οι περισσότεροι ιστότοποι μπορούν να αναπτύξουν κώδικα ES6+ χωρίς μετατροπή](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "JavaScript παλαιού τύπου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "Το HTTP/2 και το HTTP/3 προσφέρουν πολλά οφέλη σε σχέση με το HTTP/1.1, όπως πολυπλεξία. [Μάθετε περισσότερα σχετικά με τη χρήση του σύγχρονου HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Δεν πραγματοποιήθηκαν αιτήματα με χρήση HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Πρωτόκολλο"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Αίτημα"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Σύγχρονο HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "Για τη βελτίωση της φόρτωσης σελίδας, [αποφύγετε τη δημιουργία αλυσίδων κρίσιμων αιτημάτων](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), μειώνοντας το μήκος των αλυσίδων ή το μέγεθος λήψης των πόρων ή αναβάλλοντας τη λήψη των μη απαραίτητων πόρων."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Μέγιστος λανθάνων χρόνος κρίσιμης διαδρομής:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Καμία εργασία απόδοσης δεν έχει επηρεαστεί από τις εξαρτήσεις δικτύου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Δέντρο εξαρτήσεων δικτύου"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Για τη βελτίωση της φόρτωσης σελίδας, αποφύγετε τη δημιουργία αλυσίδων κρίσιμων αιτημάτων, μειώνοντας το μήκος των αλυσίδων ή το μέγεθος λήψης των πόρων ή αναβάλλοντας τη λήψη των μη απαραίτητων πόρων."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Τα αιτήματα αποκλείουν την αρχική απόδοση της σελίδας, κάτι που μπορεί να οδηγήσει σε καθυστέρηση της μέτρησης LCP. Η [αναβολή ή η ενσωμάτωση](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) μπορεί να μετακινήσει αυτά τα αιτήματα δικτύου εκτός της κρίσιμης διαδρομής."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Διάρκεια"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Δεν υπάρχουν αιτήματα αποκλεισμού απόδοσης για αυτή την πλοήγηση"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Αίτημα"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Αιτήματα αποκλεισμού απόδοσης"
@@ -2690,11 +2651,41 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Αν τα κόστη του εκ νέου υπολογισμού στιλ παραμένουν υψηλά, η βελτιστοποίηση επιλογέα μπορεί να τα μειώσει. [Βελτιστοποιήστε τους επιλογείς](https://developer.chrome.com/docs/devtools/performance/selector-stats) με υψηλό χρόνο που έχει παρέλθει και υψηλό ποσοστό slow-path. Το κόστος αντιστοίχισης μπορεί να μειωθεί με τη χρήση λιγότερων και απλούστερων επιλογέων και DOM μικρότερου μεγέθους και βάθους."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Χρόνος που παρήλθε"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Δεν βρέθηκαν δεδομένα επιλογέα CSS. Τα στατιστικά στοιχεία του επιλογέα CSS πρέπει να ενεργοποιηθούν στις ρυθμίσεις του πλαισίου απόδοσης."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Προσπάθειες αντιστοίχισης"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Πλήθος αντιστοιχίσεων"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Κόστος επιλογέων CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Κορυφαίοι επιλογείς"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Σύνολο"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Χρόνος κύριου νήματος"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Τρίτο μέρος"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Μέγεθος μεταφοράς"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Ο κώδικας τρίτου μέρους μπορεί να επηρεάσει σημαντικά την απόδοση φόρτωσης. [Μειώστε και αναβάλετε τη φόρτωση κώδικα τρίτου μέρους](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), για να δώσετε προτεραιότητα στο περιεχόμενο της σελίδας σας."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Δεν βρέθηκαν τρίτα μέρη"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Τρίτα μέρη"
@@ -2704,6 +2695,366 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Βελτιστοποίηση θύρας προβολής για κινητά"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Μόνο οι σελίδες που φορτώνονται μέσω αιτήματος GET είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Μόνο οι σελίδες με κωδικό κατάστασης 2XX μπορούν να αποθηκευτούν στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Το Chrome εντόπισε μια προσπάθεια εκτέλεσης JavaScript κατά την αποθήκευση στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Οι σελίδες που έχουν ζητήσει ένα AppBanner δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε από επισημάνσεις. Μεταβείτε στο chrome://flags/#back-forward-cache για να την ενεργοποιήσετε τοπικά σε αυτήν τη συσκευή."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε από τη γραμμή εντολής."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε λόγω ανεπαρκούς μνήμης."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός δεν υποστηρίζεται από εκπρόσωπο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε για προαπόδοση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Δεν είναι δυνατή η αποθήκευση της σελίδας στην κρυφή μνήμη επειδή έχει μια παρουσία BroadcastChannel με εγγεγραμμένες λειτουργίες αναμονής."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Οι σελίδες με την κεφαλίδα cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Έγινε σκόπιμα εκκαθάριση της προσωρινής μνήμης."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη προκειμένου να επιτραπεί η αποθήκευση μιας άλλης σελίδας στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Οι σελίδες που περιέχουν προσθήκες δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Δεν έχει καθοριστεί"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API FileChooser δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API πρόσβασης στο σύστημα αρχείων δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Οι σελίδες που χρησιμοποιούν διεκπεραιωτή συσκευής μέσων δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Γινόταν αναπαραγωγή από ένα Media Player κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API MediaSession και ορίζουν κατάσταση αναπαραγωγής δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API MediaSession και ορίζουν δείκτες χειρισμού ενεργειών δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω του αναγνώστη οθόνης."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SecurityHandler δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API Serial δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API WebAuthetication δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API WebBluetooth δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Οι σελίδες που χρησιμοποιούν το API WebUSB δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη επειδή τα cookie έχουν απενεργοποιηθεί σε μια σελίδα που χρησιμοποιεί το Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Οι σελίδες που χρησιμοποιούν ένα ειδικό worker ή worklet δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Η φόρτωση του εγγράφου δεν ολοκληρώθηκε πριν από την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Το banner εφαρμογής υπήρχε κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Η Διαχείριση κωδικών πρόσβασης Chrome υπήρχε κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Η διύλιση DOM βρισκόταν σε εξέλιξη κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Το εργαλείο προβολής διύλισης DOM υπήρχε κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω επεκτάσεων που χρησιμοποιούν ανταλλαγή μηνυμάτων API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Οι επεκτάσεις με σύνδεση μεγάλης διάρκειας θα πρέπει να κλείνουν τη σύνδεση προτού γίνει εισαγωγή τους στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Έγινε απόπειρα αποστολής μηνυμάτων σε πλαίσια στην κρυφή μνήμη πίσω-εμπρός, από επεκτάσεις με σύνδεση μεγάλης διάρκειας."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε λόγω επεκτάσεων."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Εμφανιζόταν βοηθητικό παράθυρο διαλόγου ως εκ νέου υποβολή φόρμας ή παράθυρο διαλόγου κωδικού πρόσβασης HTTP για τη σελίδα κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Η σελίδα εκτός σύνδεσης εμφανιζόταν κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Η γραμμή παρέμβασης ανεπαρκούς μνήμης υπήρχε κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Υπήρχαν αιτήματα αδειών κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Το πρόγραμμα αποκλεισμού αναδυόμενων παραθύρων υπήρχε κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Εμφανιζόντουσαν λεπτομέρειες Ασφαλούς περιήγησης κατά την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Σύμφωνα με την Ασφαλή περιήγηση αυτή η σελίδα είναι καταχρηστική και το αναδυόμενο αποκλείστηκε."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Ένα service worker ενεργοποιήθηκε ενώ η σελίδα βρισκόταν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω σφάλματος στο έγγραφο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Δεν είναι δυνατή η αποθήκευση σελίδων που χρησιμοποιούν FencedFrames στο bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη προκειμένου να επιτραπεί η αποθήκευση μιας άλλης σελίδας στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Οι σελίδες στις οποίες έχει εκχωρηθεί πρόσβαση για ροή μέσων δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Οι σελίδες που έχουν συγκεκριμένα είδη ενσωματωμένου περιεχομένου (π.χ. PDF) δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο IdleManager δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Οι σελίδες που έχουν ανοικτή σύνδεση IndexedDB δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω ενός συμβάντος IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Χρησιμοποιήθηκαν ακατάλληλα API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Οι σελίδες στις οποίες εισάγεται JavaScript από επεκτάσεις δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Οι σελίδες στις οποίες εισάγεται StyleSheet από επεκτάσεις δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Εσωτερικό σφάλμα."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός απενεργοποιήθηκε επειδή ορισμένα αιτήματα δικτύου JavaScript έλαβαν πόρο με κεφαλίδα Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη λόγω αιτήματος μηνύματος keepalive."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Οι σελίδες που χρησιμοποιούν το κλείδωμα πληκτρολογίου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Η φόρτωση της σελίδας δεν ολοκληρώθηκε πριν από την απομάκρυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Οι σελίδες των οποίων ο κύριος πόρος έχει το στοιχείο cache-control:no-cache δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Οι σελίδες των οποίων ο κύριος πόρος έχει το στοιχείο cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Η πλοήγηση ακυρώθηκε πριν να είναι δυνατή η επαναφορά της σελίδας από την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη επειδή μια ενεργή σύνδεση δικτύου έλαβε πάρα πολλά δεδομένα. Το Chrome περιορίζει την ποσότητα δεδομένων που μπορεί να λάβει μια σελίδα ενώ είναι αποθηκευμένη στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Οι σελίδες που έχουν αιτήματα ανάκτησης inflight () ή XHR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη πίσω-εμπρός επειδή ένα ενεργό αίτημα δικτύου περιλάμβανε ανακατεύθυνση."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη επειδή μια σύνδεση δικτύου ήταν ανοικτή για μεγάλο διάστημα. Το Chrome περιορίζει την ποσότητα χρόνου που μπορεί να λάβει δεδομένα μια σελίδα ενώ είναι αποθηκευμένη στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Οι σελίδες που δεν έχουν κεφαλίδα έγκυρης απόκρισης δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Η πλοήγηση έγινε σε πλαίσιο διαφορετικό από το κύριο πλαίσιο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Οι σελίδες με καταλογοποιημένες συναλλαγές DB σε εξέλιξη δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Οι σελίδες με αίτημα δικτύου in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Οι σελίδες με αίτημα δικτύου ανάκτησης in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Οι σελίδες με αίτημα δικτύου in-flight δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Οι σελίδες με αίτημα δικτύου in-flight XHR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο PaymentManager δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Οι σελίδες που χρησιμοποιούν τη λειτουργία picture-in-picture δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Οι σελίδες που εμφανίζουν τη διεπαφή χρήστη εκτύπωσης δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Η σελίδα άνοιξε με χρήση window.open() και μια άλλη καρτέλα περιέχει αναφορά σε αυτό ή η σελίδα άνοιξε ένα παράθυρο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Η διαδικασία της λειτουργία απόδοσης για τη σελίδα στην κρυφή μνήμη πίσω-εμπρός παρουσίασε σφάλμα."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Η διαδικασία της λειτουργίας απόδοσης για τη σελίδα στην κρυφή μνήμη πίσω-εμπρός τερματίστηκε."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες εγγραφής ήχου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες αισθητήρα δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες συγχρονισμού ή ανάκτησης στο παρασκήνιο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες MIDI δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες ειδοποίησης δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Οι σελίδες που έχουν ζητήσει πρόσβαση στον αποθηκευτικό χώρο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Οι σελίδες που έχουν ζητήσει άδειες εγγραφής βίντεο δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Μόνο οι σελίδες των οποίων ο συνδυασμός URL είναι HTTP/HTTPS μπορούν να αποθηκευτούν στην κρυφή μνήμη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Υποβλήθηκε αξίωση για αυτήν τη σελίδα από service worker κατά την αποθήκευση στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Ένα service worker προσπάθησε να στείλει στη σελίδα στην κρυφή μνήμη πίσω-εμπρός MessageEvent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Η εγγραφή του ServiceWorker καταργήθηκε ενώ η σελίδα βρισκόταν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Η σελίδα καταργήθηκε από την κρυφή μνήμη πίσω-εμπρός λόγω ενεργοποίησης service worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Έγινε επανεκκίνηση του Chrome και οι καταχωρίσεις της κρυφής μνήμης πίσω-εμπρός διαγράφηκαν."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SharedWorker δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SpeechRecognizer δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο SpeechSynthesis δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Ένα iframe στη σελίδα ξεκίνησε πλοήγηση που δεν ολοκληρώθηκε."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Οι σελίδες των οποίων ο δευτερεύων πόρος έχει το στοιχείο cache-control:no-cache δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Οι σελίδες των οποίων ο δευτερεύων πόρος έχει το στοιχείο cache-control:no-store δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Έγινε υπέρβαση του μέγιστου χρόνου στην κρυφή μνήμη πίσω-εμπρός από τη σελίδα και έληξε."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Το χρονικό όριο της σελίδας στην κρυφή μνήμη πίσω-εμπρός έληξε (ενδεχομένως λόγω δεικτών χειρισμού pagehide που εκτελούνται για μεγάλο χρονικό διάστημα)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Η σελίδα έχει δείκτη χειρισμού unload στο κύριο πλαίσιο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Η σελίδα έχει δείκτη χειρισμού unload στο δευτερεύον πλαίσιο."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Το πρόγραμμα περιήγησης άλλαξε την κεφαλίδα παράκαμψης παράγοντα χρήστη."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Οι σελίδες στις οποίες έχει εκχωρηθεί πρόσβαση για εγγραφή βίντεο ή ήχου δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebDatabase δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebHID δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Οι σελίδες που χρησιμοποιούν WebLocks δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebNfc δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebOTPService δεν είναι κατάλληλες για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Οι σελίδες με το στοιχείο WebRTC δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη επειδή έχει χρησιμοποιηθεί το WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebShare δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Οι σελίδες με το στοιχείο WebSocket δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη επειδή έχει χρησιμοποιηθεί το WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Οι σελίδες με το στοιχείο WebTransport δεν μπορούν να εισέλθουν στην κρυφή μνήμη πίσω-εμπρός."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Η κρυφή μνήμη πίσω-εμπρός είναι απενεργοποιημένη επειδή έχει χρησιμοποιηθεί το WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Οι σελίδες που χρησιμοποιούν το στοιχείο WebXR δεν είναι κατάλληλες προς το παρόν για την κρυφή μνήμη πίσω-εμπρός."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Για περιεχόμενο κινούμενης εικόνας, χρησιμοποιήστε το [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) για να ελαχιστοποιήσετε τη χρήση CPU όταν το περιεχόμενο είναι εκτός οθόνης."

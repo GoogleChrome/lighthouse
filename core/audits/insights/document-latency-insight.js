@@ -24,7 +24,8 @@ class DocumentLatencyInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      replacesAudits: ['redirects', 'server-response-time', 'uses-text-compression'],
     };
   }
 
@@ -39,7 +40,14 @@ class DocumentLatencyInsight extends Audit {
         return;
       }
 
-      return Audit.makeChecklistDetails(insight.data.checklist);
+      const details = Audit.makeChecklistDetails(insight.data.checklist);
+      details.debugData = {
+        type: 'debugdata',
+        redirectDuration: insight.data.redirectDuration,
+        serverResponseTime: insight.data.serverResponseTime,
+        uncompressedResponseBytes: insight.data.uncompressedResponseBytes,
+      };
+      return details;
     });
   }
 }

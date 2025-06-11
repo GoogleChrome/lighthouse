@@ -21,7 +21,7 @@ class Diagnostics extends Audit {
       title: 'Diagnostics',
       description: 'Collection of useful page vitals.',
       supportedModes: ['navigation'],
-      requiredArtifacts: ['URL', 'traces', 'devtoolsLogs'],
+      requiredArtifacts: ['URL', 'Trace', 'DevtoolsLog'],
     };
   }
 
@@ -31,8 +31,8 @@ class Diagnostics extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const tasks = await MainThreadTasks.request(trace, context);
     const records = await NetworkRecords.request(devtoolsLog, context);
     const analysis = await NetworkAnalysis.request(devtoolsLog, context);

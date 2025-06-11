@@ -43,6 +43,16 @@ const expectations = {
           ],
         },
       },
+      'font-display-insight': {
+        score: 0,
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/perf/lobster-v20-latin-regular.woff2',
+            },
+          ],
+        },
+      },
       // Disabled for now, see https://github.com/GoogleChrome/lighthouse/issues/11960
       // 'preload-fonts': {
       //   scoreDisplayMode: 'notApplicable',

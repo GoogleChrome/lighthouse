@@ -218,7 +218,6 @@ describe('Has inspector issues audit', () => {
         contentSecurityPolicyViolationType: 'kURLViolation',
         blockedURL: 'www.csp.com/url-violation',
       },
-      // These last two should be filtered out as they aren't supported yet
       {
         contentSecurityPolicyViolationType: 'kTrustedTypesSinkViolation',
         blockedURL: 'www.csp.com/sink-violation',
@@ -247,6 +246,12 @@ describe('Has inspector issues audit', () => {
           },
           {
             url: 'www.csp.com/url-violation',
+          },
+          {
+            url: 'www.csp.com/sink-violation',
+          },
+          {
+            url: 'www.csp.com/policy-violation',
           },
         ],
       },

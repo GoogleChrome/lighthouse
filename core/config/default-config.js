@@ -16,7 +16,9 @@ const UIStrings = {
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
   /** Title of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
-  insightGroupTitle: 'Insights',
+  insightsGroupTitle: 'Insights',
+  /** Description of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
+  insightsGroupDescription: 'These insights are also available in the Chrome DevTools Performance Panel - [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information.',
   /** Title of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
   firstPaintImprovementsGroupTitle: 'First Paint Improvements',
   /** Description of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
@@ -109,7 +111,6 @@ const defaultConfig = {
     // Artifacts which can be depended on come first.
     {id: 'DevtoolsLog', gatherer: 'devtools-log'},
     {id: 'Trace', gatherer: 'trace'},
-    {id: 'RootCauses', gatherer: 'root-causes'},
 
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'AnchorElements', gatherer: 'anchor-elements'},
@@ -310,18 +311,21 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/cache-insight',
     'insights/cls-culprits-insight',
     'insights/document-latency-insight',
     'insights/dom-size-insight',
+    'insights/duplicated-javascript-insight',
     'insights/font-display-insight',
     'insights/forced-reflow-insight',
     'insights/image-delivery-insight',
     'insights/interaction-to-next-paint-insight',
     'insights/lcp-discovery-insight',
     'insights/lcp-phases-insight',
-    'insights/long-critical-network-tree-insight',
+    'insights/legacy-javascript-insight',
+    'insights/modern-http-insight',
+    'insights/network-dependency-tree-insight',
     'insights/render-blocking-insight',
-    'insights/slow-css-selector-insight',
     'insights/third-parties-insight',
     'insights/viewport-insight',
   ],
@@ -330,7 +334,8 @@ const defaultConfig = {
       title: str_(UIStrings.metricGroupTitle),
     },
     'insights': {
-      title: str_(UIStrings.insightGroupTitle),
+      title: str_(UIStrings.insightsGroupTitle),
+      description: str_(UIStrings.insightsGroupDescription),
     },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
@@ -408,18 +413,21 @@ const defaultConfig = {
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
 
         // Insight audits.
+        {id: 'cache-insight', weight: 0, group: 'hidden'},
         {id: 'cls-culprits-insight', weight: 0, group: 'hidden'},
         {id: 'document-latency-insight', weight: 0, group: 'hidden'},
         {id: 'dom-size-insight', weight: 0, group: 'hidden'},
+        {id: 'duplicated-javascript-insight', weight: 0, group: 'hidden'},
         {id: 'font-display-insight', weight: 0, group: 'hidden'},
         {id: 'forced-reflow-insight', weight: 0, group: 'hidden'},
         {id: 'image-delivery-insight', weight: 0, group: 'hidden'},
         {id: 'interaction-to-next-paint-insight', weight: 0, group: 'hidden'},
         {id: 'lcp-discovery-insight', weight: 0, group: 'hidden'},
         {id: 'lcp-phases-insight', weight: 0, group: 'hidden'},
-        {id: 'long-critical-network-tree-insight', weight: 0, group: 'hidden'},
+        {id: 'legacy-javascript-insight', weight: 0, group: 'hidden'},
+        {id: 'modern-http-insight', weight: 0, group: 'hidden'},
+        {id: 'network-dependency-tree-insight', weight: 0, group: 'hidden'},
         {id: 'render-blocking-insight', weight: 0, group: 'hidden'},
-        {id: 'slow-css-selector-insight', weight: 0, group: 'hidden'},
         {id: 'third-parties-insight', weight: 0, group: 'hidden'},
         {id: 'viewport-insight', weight: 0, group: 'hidden'},
 

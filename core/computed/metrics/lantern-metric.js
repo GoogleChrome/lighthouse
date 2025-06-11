@@ -20,7 +20,7 @@ async function getComputationDataParamsFromDevtoolsLog(data, context) {
     throw new Error(`Lantern metrics can only be computed on navigations`);
   }
 
-  const graph = await PageDependencyGraph.request(data, context);
+  const graph = await PageDependencyGraph.request({...data, fromTrace: false}, context);
   const processedNavigation = await ProcessedNavigation.request(data.trace, context);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
@@ -38,14 +38,15 @@ async function getComputationDataParamsFromTrace(data, context) {
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
   const traceEngineResult = await TraceEngineResult.request(data, context);
-  const frameId = traceEngineResult.data.Meta.mainFrameId;
-  const navigationId = traceEngineResult.data.Meta.mainFrameNavigations[0].args.data?.navigationId;
+  const frameId = traceEngineResult.parsedTrace.Meta.mainFrameId;
+  const navigationId =
+    traceEngineResult.parsedTrace.Meta.mainFrameNavigations[0].args.data?.navigationId;
   if (!navigationId) {
     throw new Error(`Lantern metrics could not be calculated due to missing navigation id`);
   }
 
   const processedNavigation = Lantern.TraceEngineComputationData.createProcessedNavigation(
-    traceEngineResult.data, frameId, navigationId);
+    traceEngineResult.parsedTrace, frameId, navigationId);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};

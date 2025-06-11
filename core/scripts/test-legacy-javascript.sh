@@ -36,3 +36,4 @@ fi
 
 cd -
 node core/scripts/legacy-javascript/create-polyfill-size-estimation.js
+node core/scripts/legacy-javascript/create-polyfill-module-data.js

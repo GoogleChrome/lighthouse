@@ -35,6 +35,6 @@ class SpeedIndex extends NavigationMetric {
 
 const SpeedIndexComputed = makeComputedArtifact(
   SpeedIndex,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {SpeedIndexComputed as SpeedIndex};
