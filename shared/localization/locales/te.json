@@ -660,7 +660,10 @@
     "message": "యానిమేటెడ్ కంటెంట్ కోసం వీడియో ఫార్మాట్‌లను ఉపయోగించండి"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. బండిల్ చేయబడిన మీ JavaScript కోసం, లెగసీ బ్రౌజర్‌లకు సపోర్ట్‌ను కొనసాగిస్తూనే, ఆధునిక బ్రౌజర్‌లకు పంపబడే కోడ్ సైజును తగ్గించడానికి మాడ్యూల్/నోమాడ్యూల్ ఫీచర్ గుర్తింపును ఉపయోగించి ఆధునిక స్క్రిప్ట్ అమలు వ్యూహాన్ని అనుసరించండి. [ఆధునిక JavaScriptను ఉపయోగించడం ఎలాగో తెలుసుకోండి](https://web.dev/articles/publish-modern-javascript)"
+    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. మీరు లెగసీ బ్రౌజర్‌లకు సపోర్ట్ ఇవ్వాలని మీకు తెలిస్తే తప్ప, [బేస్‌లైన్](https://web.dev/baseline) ఫీచర్‌లను ట్రాన్స్‌పైల్ చేయకుండా మీ జావాస్క్రిప్ట్ బిల్డ్ ప్రాసెస్‌ను సవరించడాన్ని పరిగణించండి. [చాలా సైట్‌లు ట్రాన్స్‌పైలింగ్ లేకుండా ES6+ కోడ్‌ను ఎందుకు అమలు చేయగలవో తెలుసుకోండి](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "పేజీలో core-js తాలూకు వెర్షన్ 2 కనుగొనబడింది. పలు పనితీరు మెరుగుదలల కోసం మీరు వెర్షన్ 3కు అప్‌గ్రేడ్ చేయాలి."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "లెగసీ JavaScriptను మోడ్రన్ బ్రౌజర్‌లకు అందించడం మానివేయండి"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "వచనం కుదింపును ప్రారంభించండి"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "తీవ్రత"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`Content-Security-Policy` (CSP) హెడర్ కంట్రోల్‌లోని `X-Frame-Options` (XFO) హెడర్ లేదా `frame-ancestors` డైరెక్టివ్, ఇక్కడ పేజీని పొందుపరచవచ్చు. ఇవి కొన్ని లేదా అన్ని సైట్‌లను పేజీని పొందుపరచకుండా నిరోధించడం ద్వారా క్లిక్‌జాకింగ్ అటాక్‌లను తగ్గించగలవు. [క్లిక్‌జాకింగ్‌ను తగ్గించడం గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "ఫ్రేమ్ కంట్రోల్ పాలసీ ఏదీ కనుగొనబడలేదు"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "XFO లేదా CSP తో క్లిక్‌జాకింగ్‌ను తగ్గించండి"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "కింద పేర్కొన్న అతి ముఖ్యమైన రిక్వెస్ట్ చెయిన్‌లు ఏ రిసోర్స్‌లు అధిక ప్రాధాన్యతతో లోడ్ అయ్యాయో మీకు చూపిస్తాయి. పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి పరిశీలించండి. [అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను ఎలా నివారించాలో తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{`font-display` ఆరిజిన్‌కు చెందిన విలువను {fontOrigin} Lighthouse ఆటోమేటిక్‌గా చెక్ చేయలేకపోయింది.}other{`font-display` ఆరిజిన్‌కు చెందిన విలువలను {fontOrigin} Lighthouse ఆటోమేటిక్‌గా చెక్ చేయలేకపోయింది.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "డైరెక్టివ్"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "తీవ్రత"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "HSTS హెడర్‌ను రన్ చేయడం ద్వారా, HTTP కనెక్షన్‌లు డౌన్‌గ్రేడ్ అయ్యే ప్రమాదాన్ని తగ్గించవచ్చు, దీనితో, తెలియని దాడుల ముప్పును కూడా చాలా వరకు తగ్గించవచ్చు. దీన్ని దశలవారీగా రన్ చేయాలని మేము సిఫార్సు చేస్తున్నాము, అలాగే, ప్రారంభంలో తక్కువ వ్యవధి విలువలను ఉపయోగించండి. [బలమైన HSTS పాలసీని ఉపయోగించడం గురించి మరింత తెలుసుకోండి.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "చెల్లని సింటాక్స్"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` వ్యవధి చాలా తక్కువ"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "HSTS హెడర్ ఏదీ కనుగొనబడలేదు"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "`max-age` డైరెక్టివ్ ఏదీ లేదు"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "`preload` డైరెక్టివ్ ఏదీ దొరకలేదు"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "`includeSubDomains` డైరెక్టివ్ ఏదీ దొరకలేదు"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "బలమైన HSTS పాలసీని ఉపయోగించండి"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "ఆకార నిష్పత్తి (ఉండాల్సినది)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "తగిన రిజల్యూషన్‌తో ఇమేజ్‌లను అందిస్తుంది"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "లేఅవుట్ షిఫ్ట్ స్కోర్"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "అనుమతించబడింది"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "iframe ఇంజెక్ట్ చేయబడింది"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "లేట్ నెట్‌వర్క్ రిక్వెస్ట్ కారణంగా పేజీ లేఅవుట్ మార్చబడింది"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "మీడియా ఎలిమెంట్ సైజ్ తగినది కాదు"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "ఎఫెక్ట్‌లో ఉన్న సమయ పారామీటర్‌లకు సపోర్ట్ లేదు"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "డైరెక్టివ్"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "తీవ్రత"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "ఇతర డాక్యుమెంట్‌ల నుండి ఉన్నత స్థాయి విండోను రక్షించడానికి క్రాస్-ఆరిజిన్-ఓపెనర్-పాలసీ (COOP)ని ఉపయోగించవచ్చు ఉదాహరణకు పాప్-అప్‌ల వంటివి. [COOP హెడర్‌లను రన్ చేయడం గురించి మరింత తెలుసుకోండి.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "చెల్లని సింటాక్స్"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "COOP హెడర్ ఏదీ కనుగొనబడలేదు"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "COOP సహాయంతో ఆరిజిన్‌ను పూర్తిగా ఐసొలేట్ చేయండి"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "`optional` ఫాంట్‌లను ప్రీ - లోడ్ చేయండి, తద్వారా మొదటిసారిగా వచ్చే సందర్శకులు వాటిని ఉపయోగించగలరు. [ఫాంట్‌లను ప్రీ - లోడ్ చేయడం గురించి మరింత తెలుసుకోండి](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "రన్ అయ్యే సమయంలో పేజీ నావిగేషన్ కనుగొనబడింది. పేజీ నావిగేషన్‌లను ఆడిట్ చేయడానికి కాల వ్యవధి మోడ్‌ను ఉపయోగించడం సిఫార్సు చేయబడలేదు. మెరుగైన థర్డ్-పార్టీ ఆట్రిబ్యూషన్, మెయిన్ థ్రెడ్ డిటెక్షన్ కోసం పేజీ నావిగేషన్‌లను ఆడిట్ చేయడానికి నావిగేషన్ మోడ్‌ను ఉపయోగించండి."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "GET రిక్వెస్ట్ ద్వారా లోడ్ చేయబడిన పేజీలకు మాత్రమే వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "2XX స్టేటస్ కోడ్‌ను కలిగి ఉన్న పేజీలు మాత్రమే కాష్ చేయబడతాయి."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "కాష్‌లో ఉన్నప్పుడు JavaScriptను ఎగ్జిక్యూట్ చేయడానికి చేసిన ప్రయత్నాన్ని Chrome గుర్తించింది."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "AppBanner కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "యాక్టివ్‌గా ఉంచమని అందిన రిక్వెస్ట్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "ఫ్లాగ్‌లు వెనుకకు/ముందుకు కాష్‌ను డిజేబుల్ చేశాయి. chrome://flags/#back-forward-cache‌కు వెళ్లి, దాన్ని ఈ పరికరంలో లోకల్‌గా ఎనేబుల్ చేయండి."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "కమాండ్ లైన్ వెనుకకు/ముందుకు కాష్‌ను డిజేబుల్ చేసింది."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "తగినంత మెమరీ లేనందున వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "వెనుకకు/ముందుకు కాష్‌ను డెలిగేట్ సపోర్ట్ చేయదు."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "ప్రీరెండరర్ కోసం వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "రిజిస్టర్ అయిన లిజనర్‌లతో ఈ పేజీ BroadcastChannel సందర్భాన్ని కలిగి ఉంది కనుక, ఈ పేజీని కాష్ చేయడం సాధ్యం కాదు."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "cache-control:no-store హెడర్‌ను కలిగి ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "కాష్ ఉద్దేశపూర్వకంగా క్లియర్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "మరొక పేజీని కాష్ చేయడానికి ఈ పేజీ కాష్ నుండి తీసివేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "ప్లగ్ఇన్‌లను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "FileChooser APIని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "File System Access APIని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Media Device Dispatcherను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు మీడియా ప్లేయర్ ప్లే అవుతోంది."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "MediaSession APIని ఉపయోగించి, ప్లేబ్యాక్ స్టేటస్‌ను సెట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "MediaSession APIని ఉపయోగించే, యాక్షన్ హ్యాండ్లర్‌లను సెట్ చేసే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "స్క్రీన్ రీడర్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "SecurityHandlerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Serial APIని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthentication APIని ఉపయోగించే పేజీలకు బ్యాక్/ఫార్వర్డ్ కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "WebBluetooth APIని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "WebUSB APIని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "`Cache-Control: no-store`‌ను ఉపయోగించే పేజీలో కుక్కీలు డిజేబుల్ అయి ఉన్న కారణంగా వెనుకకు-ముందుకు కాష్ డిజేబుల్ అయింది."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "ప్రత్యేకమైన వర్కర్ లేదా వర్క్‌లెట్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "డాక్యుమెంట్ లోడ్ అవ్వడం పూర్తి కాకుండానే పేజీ నుండి నిష్క్రమించారు."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు యాప్ బ్యానర్ రన్ అవుతూ ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు Chrome Password Manager రన్ అవుతూ ఉండిపోయింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు DOM డిస్టిలేషన్ ప్రోగ్రెస్‌లో ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు DOM Distiller వ్యూయర్ రన్ అవుతూ ఉండిపోయింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "మెసేజింగ్ APIని ఉపయోగించే ఎక్స్‌టెన్షన్‌ల కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "దీర్ఘకాలిక కనెక్షన్‌ను కలిగి ఉన్న ఎక్స్‌టెన్షన్‌లు, వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ముందు కనెక్షన్‌ను నిలిపివేయాలి."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "దీర్ఘకాలిక కనెక్షన్‌ను కలిగి ఉన్న ఎక్స్‌టెన్షన్‌లు వెనుకకు/ముందుకు కాష్‌లో ఫ్రేమ్‌లకు మెసేజ్‌లను పంపే ప్రయత్నం చేశాయి."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "ఎక్స్‌టెన్షన్‌ల కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు ఫారమ్ తిరిగి సమర్పించడానికి సంబంధించిన సమాచారం లేదా HTTP పాస్‌వర్డ్ డైలాగ్ వంటి మోడల్ డైలాగ్ కనిపించింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు ఆఫ్‌లైన్ పేజీ చూపబడింది."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు మెమరీ నిండింది అని చూపే ఇంటర్వెన్షన్ బార్ రన్ అవుతూ ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు అనుమతికి సంబంధించిన రిక్వెస్ట్‌లు ఎదురయ్యాయి."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు పాప్‌అప్ బ్లాకర్ రన్ అవుతూ ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు సురక్షిత బ్రౌజింగ్ వివరాలు చూపబడ్డాయి."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "సురక్షిత బ్రౌజింగ్, ఈ పేజీ దుర్వినియోగమైనదిగా గుర్తించి, పాప్‌అప్‌ను బ్లాక్ చేసింది."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌లో ఉన్నప్పుడు ఒక సర్వీస్ వర్కర్ యాక్టివేట్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "డాక్యుమెంట్‌లో ఏర్పడిన ఎర్రర్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "FencedFramesను ఉపయోగిస్తున్న పేజీలను వెనుకకు/ముందుకు కాష్‌లో స్టోర్ చేయడం సాధ్యం కాదు."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "మరొక పేజీని కాష్ చేయడానికి ఈ పేజీ కాష్ నుండి తీసివేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "మీడియా స్ట్రీమ్ యాక్సెస్‌ను మంజూరు చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "పోర్టల్స్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "IdleManagerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "తెరిచి ఉన్న IndexedDB కనెక్షన్ ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "IndexedDB ఈవెంట్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "అర్హత లేని APIలు ఉపయోగించబడ్డాయి."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "ఎక్స్‌టెన్షన్‌ల ద్వారా `JavaScript` ఇంజెక్ట్ చేసిన పేజీలకు వెనుకకు-ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "ఎక్స్‌టెన్షన్‌ల ద్వారా `StyleSheet` ఇంజెక్ట్ చేసిన పేజీలకు వెనుకకు-ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "అంతర్గత ఎర్రర్."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "యాక్టివ్‌గా ఉంచమని అందిన రిక్వెస్ట్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "కీబోర్డ్ లాక్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "పేజీ లోడ్ అవ్వడం పూర్తి కాకుండానే పేజీ నుండి నిష్క్రమించారు."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "cache-control:no-cache ప్రధాన రిసోర్స్‌గా ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "ఏ పేజీల ప్రధాన రిసోర్స్ అయితే cache-control:no-storeను కలిగి ఉన్నాయో, అవి వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "వెనుకకు/ముందుకు కాష్ నుండి పేజీని రీస్టోర్ చేయడానికి ముందే నావిగేషన్ రద్దు చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "కాష్ నుండి ఈ పేజీ తీసివేయబడింది, ఎందుకంటే ప్రస్తుతం ఉన్న నెట్‌వర్క్ కనెక్షన్ చాలా ఎక్కువ డేటాను అందుకుంది. ఏదైనా పేజీ కాష్ చేయబడుతున్నప్పుడు ఆ పేజీ అందుకునే డేటా మొత్తాన్ని Chrome పరిమితం చేస్తుంది."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "ఇన్‌ఫ్లయిట్ ఫెచ్() లేదా XHR ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "వెనుకకు/ముందుకు కాష్ నుండి ఈ పేజీ తీసివేయబడింది, ఎందుకంటే ప్రస్తుతం ఉన్న నెట్‌వర్క్‌లో మళ్లింపు ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "కాష్ నుండి ఈ పేజీ తీసివేయబడింది, ఎందుకంటే నెట్‌వర్క్ కనెక్షన్ చాలా సేపు తెరిచి ఉంది. పేజీ కాష్ అయినప్పుడు, డేటాను పొందే సమయాన్ని Chrome పరిమితం చేస్తుంది."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "చెల్లుబాటు అయ్యే ప్రతిస్పందన హెడర్ లేని పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "నావిగేషన్ ప్రధాన ఫ్రేమ్‌లో కాకుండా వేరొక ఫ్రేమ్‌లో జరిగింది."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "పేజీలో, ఇండెక్స్ చేయబడిన DB లావాదేవీలు జరుగుతూ ఉంటే, వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి దానికి ప్రస్తుతం అర్హత ఉండదు."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "ఇన్-ఫ్లయిట్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "ఇన్-ఫ్లయిట్ ఫెచ్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "ఇన్-ఫ్లయిట్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "ఇన్-ఫ్లయిట్ XHR నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "PaymentManagerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "పిక్చర్-ఇన్-పిక్చర్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "పోర్టల్స్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "ప్రింటింగ్ UIని చూపించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "ఈ పేజీ '`window.open()`'ను ఉపయోగించి తెరవబడింది, అలాగే ఇది వేరొక ట్యాబ్ రెఫరెన్స్‌ను కలిగి ఉంది, లేదా ఆ పేజీ విండోను తెరిచింది."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "వెనుకకు/ముందుకు కాష్‌లో పేజీకి సంబంధించిన రెండరర్ ప్రాసెస్ క్రాష్ అయింది."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "వెనుకకు/ముందుకు కాష్‌లోని పేజీకి సంబంధించిన రెండరర్ ప్రాసెస్ ఆపివేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "ఆడియో క్యాప్చర్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "సెన్సార్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "బ్యాక్‌గ్రౌండ్ సింక్ కోసం లేదా బ్యాక్‌గ్రౌండ్‌లో అనుమతులను పొందడానికి రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "MIDI అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "నోటిఫికేషన్‌ల అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "స్టోరేజ్ యాక్సెస్ కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "వీడియో క్యాప్చర్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "HTTP / HTTPSను URL స్కీమ్‌గా కలిగి ఉన్న పేజీలు మాత్రమే కాష్ చేయబడతాయి."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "ఈ పేజీని వెనుకకు/ముందుకు కాష్ చేస్తున్నప్పుడు సర్వీస్ వర్కర్ ద్వారా పేజీ వినియోగించబడింది."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "సర్వీస్ వర్కర్, వెనుకకు/ముందుకు కాష్‌లో ఉన్న పేజీకి `MessageEvent`‌ను పంపడానికి ప్రయత్నించింది."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌లో ఉన్నప్పుడు ServiceWorker అన్‌రిజిస్టర్ చేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "సర్వీస్ వర్కర్‌కు సంబంధించిన యాక్టివేషన్ కారణంగా పేజీ వెనుకకు/ముందుకు కాష్ నుండి తీసివేయబడింది."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome రీస్టార్ట్ చేయబడింది, ఇంకా అది వెనుకకు/ముందుకు కాష్ ఎంట్రీలను క్లియర్ చేసింది."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "SharedWorkerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "SpeechRecognizerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "SpeechSynthesisను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "పేజీలోని iframe నావిగేషన్‌ను ప్రారంభించింది, కానీ అది పూర్తి కాలేదు."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "పేజీలు వేటి సబ్‌రిసోర్స్ అయితే cache-control:no-cacheను కలిగి ఉన్నాయో, అవి వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "పేజీలు వేటి సబ్‌రిసోర్స్ అయితే cache-control:no-storeను కలిగి ఉన్నాయో, అవి వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "ఈ పేజీ వెనుకకు/ముందుకు కాష్‌లో గరిష్ఠ సమయాన్ని మించిపోయింది, అలాగే దాని గడువు ముగిసింది."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేస్తున్నప్పుడు సమయం ముగిసింది (pagehide హ్యాండ్లర్‌లు ఎక్కువ సేపు రన్ అయిన కారణంగా ఇలా జరిగి ఉండవచ్చు)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "ఈ పేజీ, ప్రధాన ఫ్రేమ్‌లో అన్‌లోడ్ హ్యాండ్లర్‌ను కలిగి ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "ఈ పేజీ సబ్ ఫ్రేమ్‌లో అన్‌లోడ్ హ్యాండ్లర్ ఉంది."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "బ్రౌజర్, వెబ్‌సైట్ యాక్సెస్ సాధనం ఓవర్‌రైడ్ హెడర్‌ను మార్చింది."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "వీడియో లేదా ఆడియోను రికార్డ్ చేయడానికి యాక్సెస్‌ను మంజూరు చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "WebDatabaseను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "WebHIDని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "WebLockలను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "WebNfcని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "WebOTPServiceను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "WebRTCని కలిగిన పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "WebShareను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "WebSocket ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "WebTransportను కలిగి ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "WebXRను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "పాత బ్రౌజర్‌లతో అనుకూలంగా ఉండటానికి https:, http: URL స్కీమ్‌లను (`'strict-dynamic'`‌ను సపోర్ట్ చేసే బ్రౌజర్‌లు విస్మరించినది) జోడించడాన్ని పరిగణించండి."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "విస్మరించబడిన ఫీచర్ ఉపయోగించబడింది"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "CORS `Access-Control-Allow-Headers` హ్యాండ్లింగ్‌లో ప్రామాణీకరణ అనేది వైల్డ్ కార్డ్ చిహ్నం (*) ద్వారా కవర్ కాదు."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "ఆటోమేటిక్‌గా సెట్ చేయబడి ఉండే కాస్ట్ ఇంటిగ్రేషన్‌ను డిజేబుల్ చేయడానికి `-internal-media-controls-overlay-cast-button` ఎంపిక సాధనానికి బదులుగా `disableRemotePlayback` లక్షణాన్ని ఉపయోగించాలి."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "ఏ రిసోర్స్ రిక్వెస్ట్‌ల URLలలో అయితే తీసివేయబడిన వైట్‌స్పేస్ `(n|r|t)` అక్షరాలతో పాటు 'దీని కంటే తక్కువ' అక్షరాలు (`<`) కూడా ఉంటాయో, అవి బ్లాక్ చేయబడ్డాయి. ఈ రిసోర్స్‌లను లోడ్ చేయడానికి, ఎలిమెంట్ లక్షణం విలువల వంటి స్థలాల నుండి దయచేసి కొత్త లైన్‌లను తీసివేయండి, ఇంకా 'దీని కంటే తక్కువ' అక్షరాలను ఎన్‌కోడ్ చేయండి."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` విస్మరించబడింది, దీనికి బదులుగా స్టాండర్డైజ్ చేయబడిన APIని ఉపయోగించండి: నావిగేషన్ టైమింగ్ 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` విస్మరించబడింది, అందుకు బదులుగా స్టాండర్డైజ్ చేయబడిన APIని ఉపయోగించండి: పెయింట్ టైమింగ్."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` విస్మరించబడింది, దీనికి బదులుగా స్టాండర్డైజ్ చేయబడిన APIని ఉపయోగించండి: నావిగేషన్ టైమింగ్ 2లో `nextHopProtocol`."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "`(0|r|n)` అక్షరం ఉన్న కుక్కీలు కుదించబడటానికి బదులుగా తిరస్కరించబడతాయి."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "`document.domain`‌ను సెట్ చేయడం ద్వారా ఒకే ఆరిజిన్ పాలసీని సడలించడం అనేది విస్మరించబడింది, అది ఆటోమేటిక్‌గా డిజేబుల్ చేయబడుతుంది. `document.domain`‌ను సెట్ చేయడం ద్వారా ఎనేబుల్ చేయబడిన క్రాస్-ఆరిజిన్ యాక్సెస్‌కు సంబంధించినది ఈ విస్మరణ హెచ్చరిక."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "క్రాస్ ఆరిజిన్ iframeల నుండి window.alert‌ను ట్రిగ్గర్ చేయడం విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "క్రాస్ ఆరిజిన్ iframeల నుండి window.confirmను ట్రిగ్గర్ చేయడం విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "`DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, `DOMCharacterDataModified`‌తో సహా DOM మ్యూటేషన్ ఈవెంట్‌లు విస్మరించబడ్డాయి (https://w3c.github.io/uievents/#legacy-event-types), ఈ ఆప్షన్ తీసివేయబడుతుంది. దయచేసి బదులుగా `MutationObserver`‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "డేటా సపోర్ట్: SVG <use> ఎలిమెంట్‌లో ఉన్న URLలు విస్మరించబడ్డాయి, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "`document.domain`‌ను సెట్ చేయడం ద్వారా ఒకే ఆరిజిన్ పాలసీని సడలించడం అనేది విస్మరించబడింది, అది ఆటోమేటిక్‌గా డిజేబుల్ చేయబడుతుంది. ఈ ఫీచర్‌ను ఉపయోగించడం కొనసాగించడానికి, డాక్యుమెంట్, ఫ్రేమ్‌లకు సంబంధించిన HTTP ప్రతిస్పందనతో పాటు `Origin-Agent-Cluster: ?0` హెడర్‌ను పంపడం ద్వారా ఆరిజిన్ ఆధారిత ఏజెంట్ క్లస్టర్‌లకు దయచేసి సమ్మతి నిలిపివేయండి. మరిన్ని వివరాల కోసం https://developer.chrome.com/blog/immutable-document-domain/ లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "`Expect-CT` హెడర్ విస్మరించబడింది, అలాగే తీసివేయబడుతుంది. Chromeను ఉపయోగించే విషయంలో, ఏప్రిల్ 30, 2018 తర్వాత జారీ చేయబడిన, పబ్లిక్‌గా విశ్వసనీయమైన సర్టిఫికెట్‌లన్నింటికీ పారదర్శకత సర్టిఫికెట్ అవసరం అవుతుంది."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()`, `watchPosition()` ఇకపై సురక్షితం కాని ఆరిజిన్‌లలో పని చేయవు. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు మార్చే అంశాన్ని మీరు పరిశీలించాలి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "సురక్షితం కాని ఆరిజిన్‌లలో `getCurrentPosition()`, `watchPosition()` విస్మరించబడ్డాయి. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు మార్చే అంశాన్ని మీరు పరిశీలించాలి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` ఇకపై సురక్షితం కాని ఆరిజిన్‌లలో పని చేయదు. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు మార్చే అంశాన్ని మీరు పరిశీలించాలి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` విస్మరించబడింది. బదులుగా దయచేసి `RTCPeerConnectionIceErrorEvent.address` లేదా `RTCPeerConnectionIceErrorEvent.port`‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "`canmakepayment` సర్వీస్ వర్కర్ ఈవెంట్‌లోని వ్యాపారి ఆరిజిన్, ఇంకా ఆర్బిట్రరీ డేటా విస్మరించబడ్డాయి, అవి తీసివేయబడతాయి: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "వెబ్‌సైట్ దాని యూజర్‌లకు ఉన్న ప్రత్యేకమైన నెట్‌వర్క్ స్థానం కారణంగా మాత్రమే అది యాక్సెస్ చేయగల నెట్‌వర్క్ నుండి సబ్‌రిసోర్స్‌ను రిక్వెస్ట్ చేసింది. ఈ రిక్వెస్ట్‌లు పబ్లిక్ కాని పరికరాలను, సర్వర్‌లను ఇంటర్నెట్‌కు బహిర్గతం చేస్తాయి, దీని వలన క్రాస్-సైట్ రిక్వెస్ట్ ఫోర్జరీ (CSRF) దాడి, మరియు/లేదా సమాచారం లీక్ అయ్యే రిస్క్ పెరుగుతుంది. ఈ రిస్క్‌లను తగ్గించడానికి, సురక్షితం కాని కాంటెక్స్ట్‌ల నుండి పబ్లిక్ కాని సబ్‌రిసోర్స్‌లకు చేసిన రిక్వెస్ట్‌లను Chrome విస్మరిస్తుంది, వాటిని బ్లాక్ చేయడం ప్రారంభిస్తుంది."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "`InterestGroups`‌కు సంబంధించిన `dailyUpdateUrl` ఫీల్డ్, `joinAdInterestGroup()`‌కు పాస్ చేయబడింది, దాని పని తీరును మరింత ఖచ్చితంగా సూచించడానికి దాని పేరు `updateUrl`‌కు మార్చబడింది."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "`file:` URLల చివర `.css` ఫైల్ ఎక్స్‌టెన్షన్ ఉంటే మినహా, వాటి నుండి CSSను లోడ్ చేయడం సాధ్యపడదు."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "స్పెసిఫికేషన్‌లో మార్పు కారణంగా, `remove()`‌కు సంబంధించిన సింక్రనస్ కాని పరిధి తీసివేతను రద్దు చేయడానికి `SourceBuffer.abort()`‌ను ఉపయోగించడం విస్మరించబడింది. భవిష్యత్తులో సపోర్ట్ తీసివేయబడుతుంది. బదులుగా మీరు `updateend` ఈవెంట్‌ను వినాలి. సింక్రనస్ కాని మీడియా జోడింపును రద్దు చేయడానికి లేదా పార్సర్ స్టేట్‌ను రీసెట్ చేయడానికి మాత్రమే `abort()`‌ను ఉపయోగించవచ్చు."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "స్పెసిఫికేషన్‌లో మార్పు కారణంగా, బఫర్ చేయబడిన కోడెడ్ ఫ్రేమ్‌లలో ఏ ఫ్రేమ్‌కు సంబంధించిన అత్యధిక ప్రెజెంటేషన్ టైమ్ స్టాంప్ కంటే తక్కువకు అయినా `MediaSource.duration`‌ను సెట్ చేయడం అనేది విస్మరించబడింది. కుదించబడిన 'బఫర్ చేయబడిన మీడియా'ను పరోక్షంగా తీసివేయడానికి సపోర్ట్ భవిష్యత్తులో తీసివేయబడుతుంది. అందుకు బదులుగా, `newDuration < oldDuration` వద్ద ఉండే `sourceBuffers` అన్నింటిపై మీరు స్పష్టమైన `remove(newDuration, oldDuration)`‌ను అమలు చేయాలి."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "`MIDIOptions`‌లో sysex పేర్కొనబడనప్పటికీ, ఉపయోగించడానికి వెబ్ MIDI అనుమతిని అడుగుతుంది."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "పాత, ప్రామాణీకరించని `shadowroot` లక్షణం విస్మరించబడుతుంది, ఇంకా M119లో *ఇకపై పని చేయదు*. దయచేసి బదులుగా కొత్త, ప్రామాణీకరించిన `shadowrootmode` లక్షణాన్ని ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "నోటిఫికేషన్ APIని ఇకపై సురక్షితం కాని ఆరిజిన్‌ల నుండి ఉపయోగించడం కుదరకపోవచ్చు. మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు మార్చే అంశాన్ని మీరు పరిశీలించాలి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "నోటిఫికేషన్ APIకి అనుమతిని ఇకపై క్రాస్-ఆరిజిన్ iframe నుండి రిక్వెస్ట్ చేయడం కుదరకపోవచ్చు. టాప్-లెవెల్ ఫ్రేమ్ నుండి అనుమతిని రిక్వెస్ట్ చేయడాన్ని, లేదా అందుకు బదులుగా కొత్త విండోను తెరవడాన్ని మీరు పరిశీలించాలి."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "createImageBitmap‌లోని `imageOrientation: 'none'` ఆప్షన్ విస్మరించబడింది. దయచేసి బదులుగా \\{imageOrientation: 'from-image'\\} ఆప్షన్‌తో createImageBitmap‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "మీ పార్ట్‌నర్ వాడుకలో లేని (D)TLS వెర్షన్‌ను నెగోషియేట్ చేస్తున్నారు. దీన్ని పరిష్కరించడం కోసం దయచేసి మీ పార్ట్‌నర్‌ను సంప్రదించండి."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "`overflow: visible`ను img, వీడియో, కాన్వాస్ ట్యాగ్‌లలో పేర్కొనడం వలన అవి ఎలిమెంట్ పరిధికి వెలుపల విజువల్ కంటెంట్‌ను క్రియేట్ చేయవచ్చు. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md‌ని చూడండి."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` విస్మరించబడింది. బదులుగా పేమెంట్ హ్యాండ్లర్‌ల కోసం దయచేసి జస్ట్ ఇన్-టైమ్ ఇన్‌స్టాల్‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "మీ `PaymentRequest` కాల్, కంటెంట్-సెక్యూరిటీ-పాలసీ (CSP) `connect-src` డైరెక్టివ్‌ను బైపాస్ చేసింది. ఈ బైపాస్ విస్మరించబడింది. దయచేసి API `PaymentRequest` (`supportedMethods` ఫీల్డ్‌లో) నుండి CSP `connect-src` డైరెక్టివ్‌కు పేమెంట్ ఆప్షన్ ఐడెంటిఫైయర్‌ను జోడించండి."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` విస్మరించబడింది. దయచేసి బదులుగా ప్రామాణీకరించిన `navigator.storage`‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<picture>` పేరెంట్ గల `<source src>` చెల్లదు, కాబట్టి అది విస్మరించబడింది. అందుకు బదులుగా దయచేసి `<source srcset>`‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame, ప్రత్యేకంగా వెండార్‌కు మాత్రమే సంబంధించినది. దయచేసి బదులుగా స్టాండర్డ్ cancelAnimationFrame‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame, ప్రత్యేకంగా వెండార్‌కు మాత్రమే సంబంధించినది. దయచేసి బదులుగా స్టాండర్డ్ requestAnimationFrame‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen విస్మరించబడింది. దయచేసి బదులుగా Document.fullscreenElement‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() విస్మరించబడింది. దయచేసి బదులుగా Element.requestFullscreen()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() విస్మరించబడింది. దయచేసి బదులుగా Element.requestFullscreen()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() విస్మరించబడింది. దయచేసి బదులుగా Document.exitFullscreen()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() విస్మరించబడింది. దయచేసి బదులుగా Document.exitFullscreen()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen విస్మరించబడింది. దయచేసి బదులుగా Document.fullscreenEnabled‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "మేము `chrome.privacy.websites.privacySandboxEnabled` APIని విస్మరిస్తున్నాము, అయినప్పటికీ M113 రిలీజ్ అయ్యే వరకు పాత బ్రౌజర్‌లతో అనుకూలంగా ఉండటం కోసం ఇది యాక్టివ్‌గానే ఉంటుంది. దయచేసి బదులుగా `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled`, `chrome.privacy.websites.adMeasurementEnabled`‌ను ఉపయోగించండి. ఈ లింక్‌ను చూడండి https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "`DtlsSrtpKeyAgreement` పరిమితి తీసివేయబడింది. మీరు ఈ పరిమితికి `false` విలువను పేర్కొన్నారు, అంటే తీసివేసిన `SDES key negotiation` విధానాన్ని మీరు ఉపయోగించడానికి ప్రయత్నించారని అర్ఠం. ఈ ఫంక్షనాలిటీ తీసివేయబడింది; బదులుగా `DTLS key negotiation`‌ను సపోర్ట్ చేసే సర్వీస్‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "`DtlsSrtpKeyAgreement` పరిమితి తీసివేయబడింది. మీరు ఈ పరిమితికి `true` విలువను పేర్కొన్నారు, ఇది ఎటువంటి ప్రభావమూ చూపలేదు, కానీ స్పష్టంగా, సింపుల్‌గా ఉంచటానికి మీరు దీన్ని తీసివేయవచ్చు."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "కాల్‌బ్యాక్ ఆధారిత getStats() విస్మరించబడింది, ఈ ఆప్షన్ తీసివేయబడుతుంది. బదులుగా అవసరాలకు అనుకూలంగా ఉన్న getStats()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() విస్మరించబడింది. దయచేసి బదులుగా Selection.modify()‌ను ఉపయోగించండి."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "ఏ సబ్‌రిసోర్స్ రిక్వెస్ట్‌ల URLలలో అయితే పొందుపరిచిన ఆధారాలు (ఉదా. `https://user:pass@host/`) ఉన్నాయో, అవి బ్లాక్ చేయబడ్డాయి."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy` ఆప్షన్ విస్మరించబడింది, అలాగే అది తీసివేయబడుతుంది."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer`‌కు క్రాస్-ఆరిజిన్ ఐసోలేషన్ అవసరం అవుతుంది. మరిన్ని వివరాల కోసం https://developer.chrome.com/blog/enabling-shared-array-buffer/ లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "యూజర్ యాక్టివేషన్ లేని `speechSynthesis.speak()` విస్మరించబడింది, అలాగే అది తీసివేయబడుతుంది."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "`SharedArrayBuffer`‌ను ఉపయోగించడం కొనసాగించడానికి, ఎక్స్‌టెన్షన్‌లు క్రాస్-ఆరిజిన్ ఐసోలేషన్‌కు సమ్మతించాలి. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ లింక్‌లోని కంటెంట్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL విస్మరించబడింది. దయచేసి SQLite WebAssembly‌ని లేదా ఇండెక్స్ చేయబడిన డేటాబేస్‌ను ఉపయోగించండి"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "అనుమతికి సంబంధించిన వివరణ `window-placement` విస్మరించబడింది. బదులుగా `window-management`‌ను ఉపయోగించండి. మరింత సహాయం కోసం, https://bit.ly/window-placement-rename లింక్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "అనుమతికి సంబంధించిన పాలసీ `window-placement` విస్మరించబడింది. బదులుగా `window-management`‌ను ఉపయోగించండి. మరింత సహాయం కోసం, https://bit.ly/window-placement-rename లింక్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "`XMLHttpRequest`‌లో రెస్పాన్స్ json, UTF-16ను సపోర్ట్ చేయదు"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "ప్రధాన థ్రెడ్‌లో సింక్రనస్ `XMLHttpRequest` విస్మరించబడింది, ఎందుకంటే ఇది ఎండ్ యూజర్ అనుభవంపై ప్రతికూల ప్రభావం చూపుతోంది. మరింత సహాయం కోసం, https://xhr.spec.whatwg.org/ లింక్‌ను చూడండి."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` విస్మరించబడింది. దయచేసి `isSessionSupported()`‌ను ఉపయోగించి, బదులుగా పరిష్కరించబడిన బూలియన్ విలువను చెక్ చేయండి."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "ప్రధాన థ్రెడ్ బ్లాక్ చేయబడే సమయం"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "మూడవ పక్షం"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "మొత్తం"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse యూజర్ ఫ్లో రిపోర్ట్"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "CORS Access-Control-Allow-Headers హ్యాండ్లింగ్‌లో ప్రామాణీకరణ వైల్డ్ కార్డ్ చిహ్నం (*) ద్వారా కవర్ కాదు."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "కాస్ట్ ఇంటిగ్రేషన్ ఆటోమేటిక్ సెట్టింగ్‌ను డిజేబుల్ చేయడానికి -internal-media-controls-overlay-cast-button ఎంపిక సాధనానికి బదులుగా disableRemotePlayback ఫీచర్‌ను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS డిస్‌ప్లే విలువ slider-vertical ప్రామాణీకరించబడలేదు, ఇంకా అది తీసివేయబడుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "రిసోర్స్ రిక్వెస్ట్‌లు వేటి URLలు అయితే, తీసివేయబడిన వైట్‌స్పేస్ \\(n|r|t) అక్షరాలను, (<) అక్షరాలు కంటే తక్కువ ఉన్న వాటి రెండింటి కలయికను కలిగి ఉన్నాయో, అవి బ్లాక్ చేయబడ్డాయి. ఈ రిసోర్స్‌లను లోడ్ చేయడానికి, దయచేసి ఎలిమెంట్ లక్షణం విలువలు వంటి స్థలాల నుండి కొత్తలైన్‌లను తీసివేయండి, అంత కంటే తక్కువ అక్షరాలను ఎన్‌కోడ్ చేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "ISO-2022-JP క్యారెక్టర్‌ల సెట్‌ను ఆటోమేటిక్‌గా గుర్తించే ఫీచర్ నిలిపివేయబడింది, సమీప భవిష్యత్తులో ఇది డిజేబుల్ అవుతుంది. దయచేసి కంటెంట్ రకం హెడర్‌లో లేదా మెటా ట్యాగ్ (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)‌ను ఉపయోగించి క్యారెక్టర్‌ల సెట్‌ను పేర్కొనండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() విస్మరించబడింది, బదులుగా ప్రామాణిక APIని ఉపయోగించండి: నావిగేషన్ సమయం 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() విస్మరించబడింది, బదులుగా ప్రామాణిక APIని ఉపయోగించండి: పెయింట్ సమయం."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() విస్మరించబడింది, బదులుగా ప్రామాణిక APIని ఉపయోగించండి: నావిగేషన్ సమయం 2లో nextHopProtocol."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "\\(0|r|n) అక్షరాన్ని కలిగిన కుక్కీలు కుదించబడటానికి బదులుగా తిరస్కరించబడతాయి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "document.domain‌ను సెట్ చేసి, ఒకే ఆరిజిన్ పాలసీని సడలించడం విస్మరించబడింది, అలాగే ఆటోమేటిక్‌గా డిజేబుల్ చేయబడుతుంది. document.domain‌ను సెట్ చేసి ఎనేబుల్ చేసిన క్రాస్-ఆరిజిన్ యాక్సెస్ కోసం ఈ విస్మరణ హెచ్చరిక."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "క్రాస్ ఆరిజిన్ iframeల నుండి విండో అలర్ట్‌ను ట్రిగ్గర్ చేయడం విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "క్రాస్ ఆరిజిన్ iframeల నుండి window.confirmను ట్రిగ్గర్ చేయడం విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, ఇంకా DOMCharacterDataModified‌తో సహా DOM మ్యుటేషన్ ఈవెంట్‌లు విస్మరించబడ్డాయి (https://w3c.github.io/uievents/#legacy-event-types) అలాగే తీసివేయబడతాయి. దయచేసి బదులుగా MutationObserver‌ను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "డేటాకు సపోర్ట్: SVGUseElementలోని URLలు విస్మరించబడ్డాయి, భవిష్యత్తులో అవి తీసివేయబడతాయి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition(), watchPosition() ఇకపై సురక్షితం కాని ఆరిజిన్‌లలో పని చేయవు. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు స్విచ్ చేయడాన్ని పరిగణించండి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "సురక్షితం కాని ఆరిజిన్‌లలో getCurrentPosition(), watchPosition() విస్మరించబడ్డాయి. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు స్విచ్ చేయడాన్ని పరిగణించండి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() ఇకపై సురక్షితం కాని ఆరిజిన్‌లలో పని చేయదు. ఈ ఫీచర్‌ను ఉపయోగించడానికి, మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు స్విచ్ చేయడాన్ని పరిగణించండి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "<article>, <aside>, <nav>, లేదా <section> లోపల ఒక <h1> ట్యాగ్‌ను కనుగొన్నారు, దీనికి నిర్దిష్ట ఫాంట్-సైజ్ పేర్కొనబడలేదు. ఈ బ్రౌజర్‌లో ఈ హెడ్డింగ్ టెక్స్ట్ సైజ్ త్వరలో మారనుంది. మరింత సమాచారం కోసం https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate విస్మరించబడింది. బదులుగా దయచేసి RTCPeerConnectionIceErrorEvent.address లేదా RTCPeerConnectionIceErrorEvent.port ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "డిజిటల్ ఆధారాల navigator.credentials.get() రిక్వెస్ట్ కోసం ఈ ఫార్మాట్ విస్మరించబడింది, దయచేసి కొత్త ఫార్మాట్‌ను ఉపయోగించడానికి మీ కాల్‌ను అప్‌డేట్ చేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "canmakepayment సర్వీస్ వర్కర్ ఈవెంట్‌లోని వ్యాపారి ఆరిజిన్, ఏకపక్ష డేటా విస్మరించబడ్డాయి, తీసివేయబడతాయి: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "వెబ్‌సైట్ దాని యూజర్ యోక్క ప్రత్యేక నెట్‌వర్క్ స్థానం కారణంగా మాత్రమే యాక్సెస్ చేయగల నెట్‌వర్క్ నుండి సబ్‌రిసోర్స్‌లను రిక్వెస్ట్ చేసింది. ఈ రిక్వెస్ట్‌లు ప్రైవేట్ పరికరాలను, సర్వర్‌లను ఇంటర్నెట్‌కు బహిర్గతం చేస్తాయి, దీని వలన క్రాస్-సైట్ రిక్వెస్ట్ ఫోర్జరీ (CSRF) దాడి, మరియు/లేదా సమాచారాన్ని బహిర్గతం చేసే ప్రమాదం పెరుగుతుంది. ఈ ప్రమాదాలను తగ్గించడానికి, సురక్షితం కాని ఆరిజిన్‌ల నుండి ప్రారంభించి, ప్రైవేట్ సబ్‌రిసోర్స్‌ల కోసం చేసిన రిక్వెస్ట్‌లను Chrome విస్మరిస్తుంది, వాటిని బ్లాక్ చేయడం ప్రారంభిస్తుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "InterestGroups‌కు సంబంధించిన dailyUpdateUrl ఫీల్డ్, joinAdInterestGroup()‌కు పాస్ చేయబడింది, దాని పని తీరును మరింత ఖచ్చితంగా సూచించడానికి దాని పేరు updateUrl‌కు మార్చబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator విస్మరించబడింది. అందుకు బదులుగా దయచేసి Intl.Segmenter‌ను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "file: URLల చివర .css ఫైల్ ఎక్స్‌టెన్షన్ ఉంటే మినహా, వాటి నుండి CSSను లోడ్ చేయలేము."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "remove() యొక్క సింక్రనస్ కాని పరిధి తీసివేతను SourceBuffer.abort() ఉపయోగించి రద్దు చేయడం, నిర్దేశించిన మార్పు కారణంగా విస్మరించబడింది. భవిష్యత్తులో సపోర్ట్ తీసివేయబడుతుంది. బదులుగా మీరు updateend ఈవెంట్‌ను వినాలి. జతపరిచిన సింక్రనస్ కాని మీడియాను రద్దు చేయడానికి లేదా పార్సర్ స్టేట్‌ను రీసెట్ చేయడానికి మాత్రమే abort() ఉద్దేశించి ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "బఫర్ అయిన ఏ కోడెడ్ ఫ్రేమ్‌ల యొక్క ప్రదర్శించిన అత్యధిక టైమ్ స్టాంప్ కంటే MediaSource.duration‌ను తక్కువగా సెట్ చేయడం, నిర్దేశించిన మార్పు కారణంగా విస్మరించబడింది. బఫర్ అయిన మీడియా కుదింపును ఏమీ పేర్కొనకుండా తీసివేయడానికి మద్దతు, భవిష్యత్తులో తీసివేయబడుతుంది. బదులుగా మీరు newDuration < oldDuration దగ్గర అన్ని sourceBuffers‌లలో స్పష్టంగా remove(newDuration, oldDuration)‌ను అమలు చేయాలి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "MIDIOptions‌లో sysex పేర్కొనబడనప్పటికీ, ఉపయోగించడానికి వెబ్ MIDI అనుమతిని అడుగుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "నోటిఫికేషన్ API ఇకపై సురక్షితం కాని ఆరిజిన్‌ల నుండి ఉపయోగించబడకపోవచ్చు. మీ అప్లికేషన్‌ను HTTPS వంటి సురక్షితమైన ఆరిజిన్‌కు స్విచ్ చేయడాన్ని పరిగణించండి. మరిన్ని వివరాల కోసం https://goo.gle/chrome-insecure-origins లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "నోటిఫికేషన్ APIకి అనుమతిని ఇకపై క్రాస్-ఆరిజిన్ iframe నుండి రిక్వెస్ట్ చేయలేకపోవచ్చు. టాప్ లెవెల్ ఫ్రేమ్ నుండి అనుమతిని రిక్వెస్ట్ చేయడాన్ని, లేదా బదులుగా కొత్త విండోను తెరవడాన్ని పరిగణించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmapలో ఆప్షన్ imageOrientation: 'none' విస్మరించబడింది. దయచేసి బదులుగా '\\\\{imageOrientation: 'from-image'\\\\}' ఆప్షన్‌తో createImageBitmap‌ను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "మీ పార్ట్‌నర్ వాడుకలో లేని (D)TLS వెర్షన్‌ను ఉపయోగిస్తున్నారు. దీనిని పరిష్కరించడం గురించి దయచేసి మీ పార్ట్‌నర్‌తో సంప్రదించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "overflow: visibleను img, వీడియో, కాన్వాస్ ట్యాగ్‌లపై పేర్కొనడం వలన అవి ఎలిమెంట్ పరిధికి వెలుపల విజువల్ కంటెంట్‌ను ఉత్పత్తి చేయగలవు. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md. ని చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments విస్మరించబడింది. బదులుగా పేమెంట్ హ్యాండ్లర్ల కోసం దయచేసి జస్ట్ ఇన్-టైమ్ ఇన్‌స్టాల్‌ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "మీ PaymentRequest కాల్, కంటెంట్-సెక్యూరిటీ-పాలసీ (CSP) connect-src డైరెక్టివ్‌ని బైపాస్ చేసింది. ఈ బైపాస్ విస్మరించబడింది. దయచేసి API PaymentRequest (supportedMethods ఫీల్డ్‌లో) నుండి CSP connect-src డైరెక్టివ్‌కి పేమెంట్ ఆప్షన్ ఐడెంటిఫైయర్‌ని జోడించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent విస్మరించబడింది. బదులుగా దయచేసి ప్రామాణిక navigator.storage ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<picture> పేరెంట్ కలిగిన <source src> చెల్లదు, కాబట్టి విస్మరించబడింది. బదులుగా దయచేసి <source srcset> ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame అనేది వెండార్ ప్రత్యేకమైనది. దయచేసి బదులుగా ప్రామాణిక cancelAnimationFrameని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame అనేది వెండార్ ప్రత్యేకమైనది. దయచేసి బదులుగా ప్రామాణిక requestAnimationFrameని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen అనేది నిలిపివేయబడింది. దానికి బదులుగా దయచేసి Document.fullscreenElementని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() విస్మరించబడింది. దయచేసి బదులుగా Element.requestFullscreen()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() విస్మరించబడింది. దయచేసి బదులుగా Element.requestFullscreen()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() విస్మరించబడింది. దయచేసి బదులుగా Document.exitFullscreen()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() విస్మరించబడింది. దయచేసి బదులుగా Document.exitFullscreen()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen నిలిపివేయబడింది. బదులుగా, దయచేసి Document.fullscreenEnabledని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "మేము API chrome.privacy.websites.privacySandboxEnabled‌ను విస్మరిస్తున్నాము, అయినప్పటికీ M113 రిలీజ్ అయ్యే వరకు పాత బ్రౌజర్‌లతో అనుకూలంగా ఉండటం కోసం ఇది యాక్టివ్‌గానే ఉంటుంది. బదులుగా, దయచేసి chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled, chrome.privacy.websites.adMeasurementEnabled‌ను ఉపయోగించండి. ఈ లింక్‌ను చూడండి https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "పరిమితి DtlsSrtpKeyAgreement తీసివేయబడింది. మీరు ఈ పరిమితికి false విలువను పేర్కొన్నారు, అనగా తీసివేసిన SDES key negotiation విధానాన్ని మీరు ఉపయోగించడానికి ప్రయత్నించారని అర్ఠం. ఈ ఫంక్షనాలిటీ తీసివేయబడింది; బదులుగా DTLS key negotiation‌ను సపోర్ట్ చేసే సర్వీస్‌ను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "పరిమితి DtlsSrtpKeyAgreement తీసివేయబడింది. మీరు ఈ పరిమితికి true విలువను పేర్కొన్నారు, దీని వలన ఎటువంటి ప్రభావం ఉండదు, కానీ స్పష్టత కోసం మీరు దీనిని తీసివేయవచ్చు."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "కాల్‌బ్యాక్ ఆధారిత getStats() విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది. బదులుగా నిర్దేశ అనుకూల getStats()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() విస్మరించబడింది. దయచేసి బదులుగా Selection.modify()ని ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "సబ్‌రిసోర్స్ రిక్వెస్ట్‌లు వేటి URLలు అయితే పొందుపరిచిన ఆధారాలు (ఉదా. https://user:pass@host/) కలిగి ఉన్నాయో, అవి బ్లాక్ చేయబడ్డాయి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy ఆప్షన్ విస్మరించబడింది, అలాగే తీసివేయబడుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer‌కు క్రాస్-ఆరిజిన్ ఐసోలేషన్ అవసరం. మరిన్ని వివరాల కోసం https://developer.chrome.com/blog/enabling-shared-array-buffer/ లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "యూజర్ యాక్టివేషన్ లేని speechSynthesis.speak() విస్మరించబడింది, అలాగే తీసివేయబడుతుంది."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "అన్‌లోడ్ ఈవెంట్ లిజనర్లు విస్మరించబడ్డాయి, తీసివేయబడతాయి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "SharedArrayBuffer‌ను ఉపయోగించడం కొనసాగించడానికి, ఎక్స్‌టెన్షన్‌లు క్రాస్-ఆరిజిన్ ఐసోలేషన్‌ను ఎంపిక చేసుకోవాలి. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ లింక్‌ను చూడండి."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "XMLHttpRequest‌లోని JSON ప్రతిస్పందన ద్వారా UTF-16 సపోర్ట్ చేయబడదు"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "ప్రధాన థ్రెడ్‌లో సింక్రనస్ XMLHttpRequest విస్మరించబడింది, ఎందుకంటే ఇది ఎండ్ యూజర్ అనుభవంపై ప్రతికూల ప్రభావం చూపుతుంది. మరింత సహాయం కోసం, https://xhr.spec.whatwg.org/ లింక్‌లోని కంటెంట్‌ను రెఫర్ చేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "యానిమేషన్"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "ఎలిమెంట్‌లు ఏవైనా యూజర్ ఇంటరాక్షన్‌కు దూరంగా ఉన్నప్పుడు లేఅవుట్ షిఫ్ట్‌లు సంభవిస్తాయి. [లేఅవుట్ షిఫ్ట్‌ల కారణాలను పరిశోధించండి](https://web.dev/articles/optimize-cls), ఉదాహరణకు ఎలిమెంట్స్ జోడించబడటం, తీసివేయబడటం లేదా పేజీ లోడ్ అవుతున్న కొద్దీ వాటి ఫాంట్‌లు మారడం వంటివి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "ఫాంట్ రిక్వెస్ట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "iframe ఇంజెక్ట్ చేయబడింది"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "లేఅవుట్ షిఫ్ట్ క్లస్టర్ @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "లేఅవుట్ షిఫ్ట్ కారణాలు ఏవీ కనుగొనబడలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "లేఅవుట్ షిఫ్ట్‌లు ఏవీ లేవు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "లేఅవుట్ షిఫ్ట్‌కు కారణాలు"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "టాప్ లేఅవుట్ షిఫ్ట్ కారణాలను చూపండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "కొలతలు లేని ఇమేజ్‌లు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "పనికి రాని క్లస్టర్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "పనికి రాని లేఅవుట్ షిఫ్ట్ క్లస్టర్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "కాష్ TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "కాష్ జీవిత కాలం ఎక్కువ ఉంటే, మీ పేజీకి రిపీట్‌గా వచ్చే సందర్శనల సంఖ్యలో వేగం పుంజుకుంటుంది. [మరింత తెలుసుకోండి](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "అసమర్థమైన కాష్ పాలసీలతో రిక్వెస్ట్‌లు ఏవీ లేవు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} ఇతరులు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "రిక్వెస్ట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "సమర్థవంతమైన కాష్ జీవితకాలాలను ఉపయోగించండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "పెద్ద DOM వలన, స్టయిల్ కాలిక్యులేషన్‌ల వ్యవధి, లేఅవుట్ రీఫ్లోలను పెంచుతుంది, ఇది పేజీ ప్రతిస్పందనను ప్రభావితం చేస్తుంది. పెద్ద DOM మెమరీ వినియోగాన్ని కూడా పెంచుతుంది. [అధిక DOM సైజ్‌ను ఎలా నివారించాలో తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "ఎలిమెంట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "చాలా చైల్డ్ డైరెక్టరీలు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM డెప్త్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "గణాంకాలు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "DOM సైజ్‌ను ఆప్టిమైజ్ చేయండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "మొత్తం ఎలిమెంట్‌లు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "వాల్యూ"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "మీ మొదటి నెట్‌వర్క్ రిక్వెస్ట్ చాలా ముఖ్యమైనది.  మళ్లింపు‌లను నివారించడం, సర్వర్ ప్రతిస్పందన వేగంగా ఉండేలా చూసుకోవడం, అలాగే టెక్స్ట్ కంప్రెషన్‌ను ఎనేబుల్ చేయడం ద్వారా దాని ల్యాగ్‌ను తగ్గించండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "కంప్రెషన్ ఏదీ వర్తించబడలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "మళ్లింపులను నివారిస్తుంది"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "టెక్స్ట్ కంప్రెషన్‌ను వర్తింపజేస్తుంది"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "మళ్లింపులు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "సర్వర్ ప్రతిస్పందన సమయం"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "డాక్యుమెంట్ రిక్వెస్ట్ ల్యాగ్"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "అన్‌కంప్రెస్డ్ డౌన్‌లోడ్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "డూప్లికేట్ అవ్వని బైట్‌లు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "సోర్స్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "నెట్‌వర్క్ యాక్టివిటీలో అనవసరమైన బైట్‌ల వినియోగం తగ్గించడానికి బండిల్స్ నుండి పెద్దగా ఉండే, డూప్లికేట్ JavaScript మాడ్యూల్స్‌ను తీసివేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "డూప్లికేట్ చేయబడిన JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "టెక్స్ట్ స్థిరంగా కనిపించేలా చూడడానికి [font-display](https://developer.chrome.com/blog/font-display)ని swap లేదా optional సెట్ చేసి చూడండి. [ఫాంట్ మెట్రిక్ ఓవర్‌రైడ్‌ల](https://developer.chrome.com/blog/font-fallbacks)తో లేఅవుట్ షిఫ్ట్‌లను తగ్గించడానికి swapను మరింత ఆప్టిమైజ్ చేయవచ్చు."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "ఫాంట్"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "ఫాంట్ డిస్‌ప్లే"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "వృధా అయిన సమయం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(అజ్ఞాతం)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "సాధారణంగా లేఅవుట్ జామెట్రీని చదివే చాలా APIలు, స్టయిల్, లేఅవుట్‌ను కాలిక్యులేట్ చేయడానికి స్క్రిప్ట్ ఎగ్జిక్యూషన్‌ను పాజ్ చేయమని రెండరింగ్ ఇంజిన్‌ను ఫోర్స్ చేస్తాయి. [ఫోర్స్ చేయబడిన రీఫ్లో](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)‌ను, దాని ఉపశమనాల గురించి మరింత తెలుసుకోండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "స్టాక్ ట్రేస్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "ఫోర్స్ చేయబడిన రీఫ్లో"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "టాప్ ఫంక్షన్ కాల్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "మొత్తం రీఫ్లోకు పట్టిన సమయం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[unattributed]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "ఇమేజ్‌ల డౌన్‌లోడ్ సమయాన్ని తగ్గించడం ద్వారా పేజీ, LCP లోడ్ సమయాన్ని మెరుగుపరచవచ్చు. [ఇమేజ్ సైజ్‌ను ఆప్టిమైజ్ చేయడం గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (అంచనా {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "ఆప్టిమైజ్ చేయగల ఇమేజ్‌లు ఏవీ లేవు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "ఫైల్ సైజ్‌ను ఆప్టిమైజ్ చేయండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} ఇతరులు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "ఇమేజ్ డెలివరీని మెరుగుపరచండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "ఇమేజ్ కంప్రెషన్ ఫ్యాక్టర్‌ను పెంచడం వల్ల ఈ ఇమేజ్ డౌన్‌లోడ్ సైజ్‌ను మెరుగుపరచవచ్చు."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "ఆధునిక ఇమేజ్ ఫార్మాట్‌ను (WebP, AVIF) ఉపయోగించడం లేదా ఇమేజ్ కంప్రెషన్‌ను పెంచడం ద్వారా ఈ ఇమేజ్ డౌన్‌లోడ్ సైజ్‌ను మెరుగుపరచవచ్చు."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "ఈ ఇమేజ్ ఫైల్, దాన్ని డిస్‌ప్లే చేయడానికి ఉండాల్సిన డైమెన్షన్‌ల ({PH2}) కంటే పెద్దదిగా ({PH1}) ఉంది. ఇమేజ్ డౌన్‌లోడ్ సైజ్‌ను తగ్గించడానికి ఫ్లెక్సిబుల్ ఇమేజ్‌లను ఉపయోగించండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "GIFలకు బదులుగా వీడియో ఫార్మాట్‌లను ఉపయోగించడం ద్వారా యానిమేటెడ్ కంటెంట్ డౌన్‌లోడ్ సైజ్‌ను మెరుగుపరచవచ్చు."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "సుదీర్ఘమైన దశతో పరిశోధన ప్రారంభించండి. [ఆలస్యాలను తగ్గించుకోవచ్చు](https://web.dev/articles/optimize-inp#optimize_interactions). ప్రాసెసింగ్ వ్యవధిని తగ్గించడానికి, [మెయిన్ థ్రెడ్ ఖర్చులను ఆప్టిమైజ్ చేయండి](https://web.dev/articles/optimize-long-tasks), ఇవి సాధారణంగా JSకి చెందినవి అయి ఉంటాయి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "వ్యవధి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "ఇన్‌పుట్ ఆలస్యం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "ఇంటరాక్షన్‌లు ఏవీ లేవు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "ఫేజ్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "ప్రెజెంటేషన్‌లో ఆలస్యం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "ప్రాసెసింగ్ వ్యవధి"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "దశల వారీగా INP"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "HTML నుంచి LCP ఇమేజ్‌ను తక్షణమే [కనిపించగలిగేలా](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) చేయడం, అలాగే [ప్రాధాన్యతను బట్టి లోడింగ్‌ పద్దతిని నివారించడం ](https://web.dev/articles/lcp-lazy-loading) ద్వారా LCPని ఆప్టిమైజ్ చేయండి"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high applied"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high వర్తింపజేయాలి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "ప్రాధాన్యతను బట్టి లోడింగ్ వర్తించబడదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "మొట్టమొదటి ప్రారంభ స్థానం తర్వాత LCP ఇమేజ్ {PH1} లోడ్ చేసింది."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "LCP ఏదీ కనుగొనబడలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "LCP ఇమేజ్ కానందున LCP రిసోర్స్ కనుగొనబడలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "ఇనిషియల్ డాక్యుమెంట్‌లో రిక్వెస్ట్ కనిపించగలదు"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP రిక్వెస్ట్ డిస్కవరీ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "ప్రతి [దశలో నిర్దిష్ట మెరుగుదల వ్యూహాలు ఉన్నాయి](https://web.dev/articles/optimize-lcp#lcp-breakdown). ముఖ్యంగా, LCP సమయాన్ని ఎక్కువ భాగం రిసోర్స్‌లను లోడ్ చేయడంలో వెచ్చించాలి, ఆలస్యంలో కాదు."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "వ్యవధి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "ఎలిమెంట్ రెండర్ ల్యాగ్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "ఫీల్డ్ 75వ శాతం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "LCP ఏదీ కనుగొనబడలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "ఫేజ్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "రిసోర్స్ లోడ్ ల్యాగ్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "రిసోర్స్ లోడ్ వ్యవధి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "తొలి బైట్ రెస్పాన్స్ సమయం"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "ఫేజ్ ఆధారంగా LCP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "స్క్రిప్ట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "వృధా బైట్‌లు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. మీరు లెగసీ బ్రౌజర్‌లకు సపోర్ట్ ఇవ్వాలని మీకు తెలిస్తే తప్ప, [బేస్‌లైన్](https://web.dev/articles/baseline-and-polyfills) ఫీచర్‌లను ట్రాన్స్‌పైల్ చేయకుండా మీ జావాస్క్రిప్ట్ బిల్డ్ ప్రాసెస్‌ను సవరించడాన్ని పరిగణించండి. [చాలా సైట్‌లు ట్రాన్స్‌పైలింగ్ లేకుండా ES6+ కోడ్‌ను ఎందుకు అమలు చేయగలవో తెలుసుకోండి](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "లెగసీ JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/1.1 కంటే HTTP/2, HTTP/3లు, మల్టీప్లెక్సింగ్ వంటి అనేక ప్రయోజనాలను అందిస్తాయి. [ఆధునిక HTTP వినియోగం గురించి మరింత తెలుసుకోండి](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "HTTP/1.1 ను రిక్వెస్ట్‌లు ఏవీ ఉపయోగించలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "ప్రోటోకాల్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "రిక్వెస్ట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "ఆధునిక HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి చేయడం ద్వారా [అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను నివారించండి](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "గరిష్ఠ క్లిష్టమైన పాత్ ల్యాగ్:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "నెట్‌వర్క్ డిపెండెన్సీ‌ల ద్వారా రెండరింగ్ టాస్క్‌లు ఏవీ ప్రభావితం కాలేదు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "నెట్‌వర్క్ డిపెండెన్సీ ట్రీ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి చేయడం ద్వారా అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను నివారించండి."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "రిక్వెస్ట్‌లు పేజీకి సంబంధించిన ప్రారంభ రెండర్‌ను బ్లాక్ చేస్తున్నాయి, దీని వలన LCP ఆలస్యం కావచ్చు. [వాయిదా వేయడం లేదా ఇన్‌లైన్ చేయడం](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) ఈ నెట్‌వర్క్ రిక్వెస్ట్‌లను క్లిష్టమైన మార్గం నుండి తరలించగలదు."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "వ్యవధి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "ఈ నావిగేషన్ విషయంలో రెండర్ బ్లాకింగ్ రిక్వెస్ట్‌లు ఏవీ లేవు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "రిక్వెస్ట్"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "బ్లాకింగ్ రిక్వెస్ట్‌లను రెండర్ చేయండి"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "స్టయిల్‌ను తిరిగి లెక్కించడానికి అయ్యే ఖర్చు ఎక్కువగా ఉంటే, ఎంపిక సాధనం ఆప్టిమైజేషన్ దాన్ని తగ్గిస్తుంది. అధిక గడిచిన సమయం, అలాగే స్లో-పాత్‌ % రెండింటితో [ఎంపిక సాధనాలను ఆప్టిమైజ్ చేయండి](https://developer.chrome.com/docs/devtools/performance/selector-stats). సులభమైన ఎంపిక సాధనాలు, అతి తక్కువ ఎంపిక సాధనాలు, చిన్న DOM, అలాగే షాలో సైజ్ DOM ఇవన్నీ మ్యాచింగ్ ఖర్చులను తగ్గిస్తాయి."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "గడిచిన సమయం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "CSS ఎంపిక సాధనం డేటా ఏదీ లేదు. పనితీరు ప్యానెల్ సెట్టింగ్‌లలో CSS ఎంపిక సాధనం గణాంకాలను ఎనేబుల్ చేయాలి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "మ్యాచ్ ప్రయత్నాలు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "మ్యాచ్ సంఖ్య"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS ఎంపిక సాధనం ఖర్చులు"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "టాప్ ఎంపిక సాధనాలు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "మొత్తం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "ప్రధాన థ్రెడ్ సమయం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "3వ పార్టీ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "బదిలీ సైజ్"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "థర్డ్-పార్టీ కోడ్ గణనీయమైన స్థాయిలో లోడ్ పనితీరుపై ప్రభావం చూపవచ్చు. మీ పేజీకి సంబంధించిన కంటెంట్‌కు ప్రాధాన్యత ఇవ్వడానికి[థర్డ్-పార్టీ కోడ్‌ను తగ్గించండి, అలాగే లోడ్ చేయడం మినహాయించండి](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "3వ-పార్టీ కోడ్ గణనీయమైన స్థాయిలో లోడ్ పనితీరుపై ప్రభావం చూపవచ్చు. మీ పేజీకి సంబంధించిన కంటెంట్‌కు ప్రాధాన్యత ఇవ్వడానికి[3వ-పార్టీ కోడ్‌ను తగ్గించండి, అలాగే లోడ్ చేయడం మినహాయించండి](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "థర్డ్-పార్టీ‌లు ఏవీ లేవు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
-    "message": "థర్డ్-పార్టీలు"
+    "message": "3వ పార్టీలు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "పేజీకి సంబంధించిన వీక్షణ పోర్ట్ మొబైల్ కోసం ఆప్టిమైజ్ అవ్వలేదు, కాబట్టి ట్యాప్ ఇంటరాక్షన్‌లు [ 300 మి.సె వరకు ఆలస్యం](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) అవ్వొచ్చు."
+    "message": "మొబైల్ కోసం వీక్షణ పోర్ట్‌ను ఆప్టిమైజ్ చేయనట్లయితే ట్యాప్ ఇంటరాక్షన్‌లు [గరిష్ఠంగా 300 మి.సె. వరకు ఆలస్యం కావచ్చు](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "మొబైల్ కోసం వీక్షణ పోర్ట్ ఆప్టిమైజ్ అవ్వలేదు"
+    "message": "మొబైల్ కోసం వీక్షణ పోర్ట్‌ను ఆప్టిమైజ్ చేయండి"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "GET రిక్వెస్ట్ ద్వారా లోడ్ చేయబడిన పేజీలకు మాత్రమే వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి అర్హత ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "2XX స్టేటస్ కోడ్‌ను కలిగి ఉన్న పేజీలు మాత్రమే కాష్ చేయబడతాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "కాష్‌లో ఉన్నప్పుడు JavaScriptను ఎగ్జిక్యూట్ చేసే ప్రయత్నాన్ని Chrome గుర్తించింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "AppBanner కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "వెనుకకు/ముందుకు కాష్ ఫ్లాగ్‌ల ద్వారా డిజేబుల్ చేయబడింది. chrome://flags/#back-forward-cacheకు వెళ్లి, దాన్ని ఈ పరికరంలోనే ఎనేబుల్ చేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "కమాండ్ లైన్ ద్వారా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "తగినంత మెమరీ లేనందున వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "వెనుకకు/ముందుకు కాష్‌కు డెలిగేట్ సపోర్ట్ లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "ప్రీరెండరర్ కోసం వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "రిజిస్టర్ అయిన లిజనర్‌లతో ఈ పేజీ BroadcastChannel పర్యాయాన్ని కలిగి ఉంది కనుక, ఈ పేజీని కాష్ చేయడం కుదరదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "cache-control:no-store హెడర్‌ను కలిగి ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "కాష్ ఉద్దేశపూర్వకంగా క్లియర్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "మరొక పేజీని కాష్ చేయడానికి ఈ పేజీ కాష్ నుండి తీసివేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "ప్లగ్ఇన్‌లను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "నిర్వచించబడనిది"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "FileChooser APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "File System Access APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Media Device Dispatcherను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు మీడియా ప్లేయర్ ప్లే అవుతోంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "MediaSession APIను ఉపయోగించే, ఇంకా ప్లేబ్యాక్ స్థితిని సెట్ చేసే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "MediaSession APIను ఉపయోగించే, యాక్షన్ హ్యాండ్లర్‌లను సెట్ చేసే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "స్క్రీన్ రీడర్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "SecurityHandlerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Serial APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "WebAuthetication APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "WebBluetooth APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "WebUSB APIను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Cache-Control: no-store‌ను ఉపయోగించే పేజీలో కుక్కీలు డిజేబుల్ చేసి ఉన్నందున వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "డెడికేటెడ్ వర్కర్ లేదా వర్క్‌లెట్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "డాక్యుమెంట్ లోడ్ అవ్వడం పూర్తి కాకుండానే పేజీ నుండి నిష్క్రమించారు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు యాప్ బ్యానర్ రన్ అవుతూ ఉండింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు Chrome పాస్‌వర్డ్ మేనేజర్ రన్ అవుతూ ఉండింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు DOM డిస్టిలేషన్ ప్రోగ్రెస్‌లో ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు DOM Distiller వ్యూయర్ రన్ అవుతూ ఉండింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "మెసేజింగ్ APIను ఉపయోగించే ఎక్స్‌టెన్షన్‌ల కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "దీర్ఘకాలిక కనెక్షన్‌ను కలిగి ఉన్న ఎక్స్‌టెన్షన్‌లు వెనుకకు/ముందుకు కాష్‌లో స్టోర్ అవ్వకంటే ముందు అవి ఆ కనెక్షన్‌ను నిలిపివేయాలి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "దీర్ఘకాలిక కనెక్షన్‌ను కలిగి ఉన్న ఎక్స్‌టెన్షన్‌లు వెనుకకు/ముందుకు కాష్‌లో ఫ్రేమ్‌లకు మెసేజ్‌లను పంపడానికి ట్రై చేశాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "ఎక్స్‌టెన్షన్‌ల కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు ఫారమ్ తిరిగి సమర్పించడానికి సంబంధించిన సమాచారం లేదా HTTP పాస్‌వర్డ్ డైలాగ్ వంటి మోడల్ డైలాగ్ కనిపించింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు ఆఫ్‌లైన్ పేజీ చూపబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు మెమరీ నిండింది అనే చూపే ఇంటర్వెన్షన్ బార్ రన్ అవుతూ ఉండింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు అనుమతికి సంబంధించిన రిక్వెస్ట్‌లు ఎదురయ్యాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు పాప్‌అప్ బ్లాకర్ రన్ అవుతూ ఉండింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "పేజీ నుండి నిష్క్రమిస్తున్నప్పుడు సురక్షిత బ్రౌజింగ్ వివరాలు ప్రదర్శించబడ్డాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "సురక్షిత బ్రౌజింగ్, ఈ పేజీ దుర్వినియోగమైనదిగా గుర్తించి, పాప్‌‌అప్‌ను బ్లాక్ చేసింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌లో ఉన్నప్పుడు ఒక సర్వీస్ వర్కర్ యాక్టివేట్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "డాక్యుమెంట్‌లో ఉన్న ఎర్రర్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "FencedFramesను ఉపయోగిస్తున్న పేజీలను వెనుకకు/ముందుకు కాష్‌లో స్టోర్ చేయలేము."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "మరొక పేజీని కాష్ చేయడానికి ఈ పేజీ కాష్ నుండి తీసివేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "మీడియా స్ట్రీమ్ యాక్సెస్ కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "పొందుపరచబడిన కంటెంట్ తాలూకు నిర్దిష్ట రకాలను కలిగి ఉన్న పేజీలు (ఉదా. PDFలు) బ్యాక్/ఫార్వర్డ్ కాష్‌కు ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "IdleManagerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "ఓపెన్ IndexedDB కనెక్షన్ ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "IndexedDB ఈవెంట్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "అర్హత లేని APIలు ఉపయోగించబడ్డాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "ఎక్స్‌టెన్షన్‌ల ద్వారా JavaScript ఇంజెక్ట్ చేయబడిన పేజీలకు వెనుకకు-ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "ఎక్స్‌టెన్షన్‌ల ద్వారా StyleSheet ఇంజెక్ట్ చేసిన పేజీల కోసం వెనుకకు-ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "అంతర్గత ఎర్రర్."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది, ఎందుకంటే కొంత JavaScript నెట్‌వర్క్ రిక్వెస్ట్ Cache-Control: no-store హెడర్‌తో కూడిన రిసోర్స్‌ను అందుకుంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "'యాక్టివ్‌గా ఉంచ'మని పంపిన రిక్వెస్ట్ కారణంగా వెనుకకు/ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "కీబోర్డ్ లాక్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "పేజీ లోడ్ అవ్వడం పూర్తి కాకుండానే పేజీ నుండి నిష్క్రమించారు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "cache-control:no-cache, ప్రధాన రిసోర్స్‌గా ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "cache-control:no-store, ప్రధాన రిసోర్స్‌గా ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "వెనుకకు/ముందుకు కాష్ నుండి పేజీని రీస్టోర్ చేయడానికి ముందే నావిగేషన్ రద్దు చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "కాష్ నుండి ఈ పేజీ తీసివేయబడింది, ఎందుకంటే ప్రస్తుతం ఉన్న నెట్‌వర్క్ కనెక్షన్ చాలా ఎక్కువ డేటాను అందుకుంది. ఏదైనా పేజీ కాష్ చేయబడుతున్నప్పుడు ఆ పేజీ అందుకునే డేటా మొత్తాన్ని Chrome పరిమితం చేస్తుంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "ఇన్‌ఫ్లయిట్ ఫెచ్() లేదా XHR ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "యాక్టీవ్ నెట్‌వర్క్ రిక్వెస్ట్‌పై మళ్లింపు ఏర్పడింది, దీని వలన పేజీ వెనుకకు/ముందుకు కాష్ నుండి తీసివేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "కాష్ నుండి ఈ పేజీ తీసివేయబడింది, ఎందుకంటే నెట్‌వర్క్ కనెక్షన్ చాలా సేపు తెరిచి ఉంది. పేజీ కాష్ అయినప్పుడు డేటాను తిరిగి పొందేందుకు పట్టే సమయాన్ని Chrome పరిమితం చేస్తుంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "చెల్లుబాటు అయ్యే ప్రతిస్పందన హెడర్ లేని పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "నావిగేషన్ ప్రధాన ఫ్రేమ్‌లో కాకుండా వేరొక ఫ్రేమ్‌లో జరిగింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "ఇండెక్స్ చేయబడిన ఆన్‌గోయింగ్ DB లావాదేవీలను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "ఇన్-ఫ్లయిట్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "ఇన్-ఫ్లయిట్ ఫెచ్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "ఇన్-ఫ్లయిట్ నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "ఇన్-ఫ్లయిట్ XHR నెట్‌వర్క్ రిక్వెస్ట్‌ను కలిగి ఉన్న పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "PaymentManagerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "పిక్చర్-ఇన్-పిక్చర్‌ను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "ప్రింటింగ్ UIను చూపించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "ఈ పేజీ 'window.open()'ను ఉపయోగించి తెరవబడింది, అలాగే ఇది వేరొక ట్యాబ్ రెఫరెన్స్‌ను కలిగి ఉంది, లేదా ఆ పేజీ విండోను తెరిచింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "వెనుకకు/ముందుకు కాష్‌లో పేజీ కోసం రెండరర్ ప్రాసెస్ క్రాష్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "వెనుకకు/ముందుకు కాష్‌లోని పేజీ కోసం రెండరర్ ప్రాసెస్ ఆపివేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "ఆడియో క్యాప్చర్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "సెన్సార్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "బ్యాక్‌గ్రౌండ్ సింక్ కోసం లేదా బ్యాక్‌గ్రౌండ్‌లో అనుమతులను పొందడానికి రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "MIDI అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "నోటిఫికేషన్‌ల అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "స్టోరేజ్ యాక్సెస్ కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "వీడియో క్యాప్చర్ అనుమతుల కోసం రిక్వెస్ట్ చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "HTTP / HTTPS URL స్కీమ్ ఉన్న పేజీలు మాత్రమే కాష్ చేయబడతాయి."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "ఈ పేజీని వెనుకకు/ముందుకు కాష్ చేస్తున్నప్పుడు సర్వీస్ వర్కర్ ద్వారా పేజీ వినియోగించబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "సర్వీస్ వర్కర్, వెనుకకు/ముందుకు కాష్‌లో ఉన్న పేజీకి MessageEventను పంపడానికి ట్రై చేసింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌లో ఉన్నప్పుడు ServiceWorker రిజిస్టర్ చేయబడలేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "సర్వీస్ వర్కర్‌కు సంబంధించిన యాక్టివేషన్ కారణంగా పేజీ వెనుక/ముందుకు కాష్ నుండి తీసివేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome రీస్టార్ట్ చేయబడింది, ఇంకా అది వెనుకకు/ముందుకు కాష్ ఎంట్రీలను క్లియర్ చేసింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "SharedWorkerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "SpeechRecognizerను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "SpeechSynthesisను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "పేజీలోని iframe ఒక నావిగేషన్‌ను ప్రారంభించింది, కానీ అది పూర్తి కాలేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "cache-control:no-cache, సబ్‌రిసోర్స్‌గా ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "cache-control:no-store సబ్‌రిసోర్స్‌గా ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "ఈ పేజీ వెనుకకు/ముందుకు కాష్‌లో గరిష్ఠ సమయాన్ని దాటింది, ఇంకా దీని గడువు ముగిసింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "పేజీ వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయడానికి సమయం ముగిసింది (pagehide హ్యాండ్లర్‌లు ఎక్కువ సేపు రన్ అయిన కారణంగా ఇలా జరిగి ఉండవచ్చు)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "ఈ పేజీ, ప్రధాన ఫ్రేమ్‌లో అన్‌లోడ్ హ్యాండ్లర్‌ను కలిగి ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "ఈ పేజీ సబ్ ఫ్రేమ్‌లో అన్‌లోడ్ హ్యాండ్లర్ ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "బ్రౌజర్, వెబ్‌సైట్ యాక్సెస్ సాధనం ఓవర్‌రైడ్ హెడర్‌ను మార్చింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "వీడియో లేదా ఆడియోను రికార్డ్ చేయడానికి యాక్సెస్‌ను మంజూరు చేసిన పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "WebDatabaseను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "WebHIDను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "WebLocksను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "WebNfcని ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "WebOTPServiceను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "WebRTCని ఉపయోగించే పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "WebRTCని ఉపయోగించారు కనుక వెనుకకు-ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "WebShareను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "WebSockets ఉన్న పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "WebSocketను ఉపయోగించారు కనుక వెనుకకు-ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "WebTransportను ఉపయోగించే పేజీలు వెనుకకు/ముందుకు కాష్‌ను యాక్సెస్ చేయలేవు."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "WebTransportను ఉపయోగించారు కనుక వెనుకకు-ముందుకు కాష్ డిజేబుల్ చేయబడింది."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "WebXRను ఉపయోగించే పేజీలకు వెనుకకు/ముందుకు కాష్‌ను ఉపయోగించడానికి ప్రస్తుతం అర్హత లేదు."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "యానిమేట్ చేసిన కంటెంట్ కోసం, కంటెంట్ ఆఫ్‌స్క్రీన్‌లో ఉన్నప్పుడు CPU వినియోగాన్ని తగ్గించడానికి, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)ను ఉపయోగించండి."

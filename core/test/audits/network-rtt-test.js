@@ -11,7 +11,7 @@ const acceptableDevToolsLog = readJson('../fixtures/traces/progressive-app-m60.d
 
 describe('Network RTT audit', () => {
   it('should work', async () => {
-    const artifacts = {devtoolsLogs: {defaultPass: acceptableDevToolsLog}};
+    const artifacts = {DevtoolsLog: acceptableDevToolsLog};
     const result = await NetworkRTT.audit(artifacts, {computedCache: new Map()});
     result.details.items.forEach(item => (item.rtt = Math.round(item.rtt * 100) / 100));
 
@@ -32,7 +32,7 @@ describe('Network RTT audit', () => {
   });
 
   it('should return n/a if no network records', async () => {
-    const artifacts = {devtoolsLogs: {defaultPass: []}};
+    const artifacts = {DevtoolsLog: []};
     const result = await NetworkRTT.audit(artifacts, {computedCache: new Map()});
 
     expect(result).toEqual({

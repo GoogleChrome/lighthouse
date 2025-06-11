@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
-
 import {Audit as BaseAudit} from '../../audits/audit.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {initializeConfig, getConfigDisplayString} from '../../config/config.js';
@@ -13,6 +11,7 @@ import {LH_ROOT} from '../../../shared/root.js';
 import * as format from '../../../shared/localization/format.js';
 import defaultConfig from '../../config/default-config.js';
 import {nonSimulatedSettingsOverrides} from '../../config/constants.js';
+import {fnAny} from '../test-utils.js';
 
 describe('Config', () => {
   /** @type {LH.Gatherer.GatherMode} */
@@ -106,14 +105,14 @@ describe('Config', () => {
 
   it('should throw on invalid artifact definitions', async () => {
     const badGatherer = new BaseGatherer();
-    badGatherer.getArtifact = jestMock.fn();
+    badGatherer.getArtifact = fnAny();
     const config = {artifacts: [{id: 'BadGatherer', gatherer: {instance: badGatherer}}]};
     await expect(initializeConfig(gatherMode, config)).rejects.toThrow(/Gatherer for BadGather/);
   });
 
   it('should filter configuration by gatherMode', async () => {
     const timespanGatherer = new BaseGatherer();
-    timespanGatherer.getArtifact = jestMock.fn();
+    timespanGatherer.getArtifact = fnAny();
     timespanGatherer.meta = {supportedModes: ['timespan']};
 
     const config = {
@@ -186,11 +185,11 @@ describe('Config', () => {
     beforeEach(() => {
       const dependencySymbol = Symbol('dependency');
       dependencyGatherer = new BaseGatherer();
-      dependencyGatherer.getArtifact = jestMock.fn();
+      dependencyGatherer.getArtifact = fnAny();
       dependencyGatherer.meta = {symbol: dependencySymbol, supportedModes: ['snapshot']};
       // @ts-expect-error - we satisfy the interface on the next line
       dependentGatherer = new BaseGatherer();
-      dependentGatherer.getArtifact = jestMock.fn();
+      dependentGatherer.getArtifact = fnAny();
       dependentGatherer.meta = {
         supportedModes: ['snapshot'],
         dependencies: {ImageElements: dependencySymbol},
@@ -250,7 +249,7 @@ describe('Config', () => {
 
     beforeEach(() => {
       const gatherer = new BaseGatherer();
-      gatherer.getArtifact = jestMock.fn();
+      gatherer.getArtifact = fnAny();
       gatherer.meta = {supportedModes: ['navigation']};
 
       class ExtraAudit extends BaseAudit {
@@ -342,8 +341,8 @@ describe('Config', () => {
         'BFCacheFailures', // Has internal priority of 1
         'FullPageScreenshot', // Has internal priority of 1
         'ExtraArtifact', // Has default priority of 0
-        'traces', // Has default priority of 0
-        'devtoolsLogs', // Has default priority of 0
+        'ViewportDimensions', // Has default priority of 0
+        'TraceElements', // Has default priority of 0
       ]);
     });
 

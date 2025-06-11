@@ -7,6 +7,8 @@
 import a11y from './test-definitions/a11y.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
+import clickjackingMissingHeaders from './test-definitions/clickjacking-missing-headers.js';
+import clickjackingMitigationPresent from './test-definitions/clickjacking-mitigation-headers-present.js';
 import crash from './test-definitions/crash.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
 import cspBlockAll from './test-definitions/csp-block-all.js';
@@ -59,6 +61,7 @@ import screenshot from './test-definitions/screenshot.js';
 import seoFailing from './test-definitions/seo-failing.js';
 import seoPassing from './test-definitions/seo-passing.js';
 import seoStatus403 from './test-definitions/seo-status-403.js';
+import seoMixedLanguage from './test-definitions/seo-mixed-language.js';
 import serviceWorkerReloaded from './test-definitions/service-worker-reloaded.js';
 import shiftAttribution from './test-definitions/shift-attribution.js';
 import sourceMaps from './test-definitions/source-maps.js';
@@ -69,6 +72,8 @@ const smokeTests = [
   a11y,
   byteEfficiency,
   byteGzip,
+  clickjackingMissingHeaders,
+  clickjackingMitigationPresent,
   crash,
   cspAllowAll,
   cspBlockAll,
@@ -121,6 +126,7 @@ const smokeTests = [
   seoFailing,
   seoPassing,
   seoStatus403,
+  seoMixedLanguage,
   serviceWorkerReloaded,
   shiftAttribution,
   sourceMaps,

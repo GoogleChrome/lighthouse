@@ -660,7 +660,10 @@
     "message": "Izmantojiet video failu formātus animētam saturam"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Funkcionalitāšu un pārveidošanas kodi ļauj mantotos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. JavaScript pakai pielāgojiet modernu skripta izvietošanas stratēģiju, izmantojot moduļa/bez moduļa funkcijas noteikšanu, lai samazinātu uz moderniem pārlūkiem nosūtīta koda apjomu, vienlaikus nodrošinot atbalstu mantotiem pārlūkiem. [Uzziniet, kā izmantot modernu JavaScript](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Lapā tika konstatēta core-js 2. versija. Jums ir jāveic jaunināšana uz 3. versiju, lai iegūtu daudzus veiktspējas uzlabojumus."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Novērsiet mantotā JavaScript koda izmantošanu modernos pārlūkos"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Iespējojiet teksta saspiešanu"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Nozīmīgums"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) galvene vai `frame-ancestors` direktīva `Content-Security-Policy` (CSP) galvenē nosaka, kur var iegult lapu. Tās var mazināt “clickjacking” uzbrukumus, liedzot dažām vai visām vietnēm iegult lapu. [Uzziniet vairāk par “clickjacking” uzbrukumu novēršanu](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Netika atrasta ietvara kontroles politika"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Maziniet “clickjacking” uzbrukumus, izmantojot XFO vai CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Rādītājs “Kritisko pieprasījumu ķēdes” tālāk parāda, kuri resursi ir ielādēti ar augstāko prioritāti. Lai uzlabotu lapas ielādi, ieteicams samazināt ķēžu garumu, samazināt resursu lejupielādes apjomu vai atlikt nevajadzīgo resursu lejupielādi. [Uzziniet, kā izvairīties no kritisku pieprasījumu ķēdēm](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtību no šī avota: {fontOrigin}.}zero{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}one{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}other{Lighthouse nevarēja automātiski pārbaudīt `font-display` vērtības no šī avota: {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Direktīva"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Nozīmīgums"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "HSTS galvenes izvietošana ievērojami samazina risku, kas saistīts ar savienojumu pazemināšanu uz HTTP un noklausīšanās uzbrukumiem. Ieteicama pakāpeniska izlaišana, sākot ar zemu max-age vērtību. [Uzziniet vairāk par drošas HSTS politikas izmantošanu](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)."
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Nederīga sintakse"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` vērtība ir pārāk zema."
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Netika atrasta neviena HSTS galvene."
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Nav nevienas `max-age` direktīvas."
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Netika atrasta neviena `preload` direktīva."
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Netika atrasta neviena `includeSubDomains` direktīva."
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Stingras HSTS politikas izmantošana"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Malu attiecība (faktiskā)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Attēli tiek rādīti piemērotā izšķirtspējā"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Izkārtojuma nobīdes rādītājs"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Atļauts"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Tika iepludināts iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Tika pielāgots lapas izkārtojums novēlota tīkla pieprasījuma dēļ"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Multivides elementam nav skaidra lieluma"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efektam ir norādīti neatbalstīti laika parametri"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Direktīva"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Nozīmīgums"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Politiku par citas izcelsmes resursu atvēršanu (Cross-Origin-Opener-Policy — COOP) var izmantot, lai izolētu augšējā līmeņa logu no citiem dokumentiem, piemēram, uznirstošiem logiem. [Uzziniet vairāk par COOP galvenes izvietošanu](https://web.dev/articles/why-coop-coep#coop)."
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Nederīga sintakse"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Netika atrasta neviena COOP galvene."
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Nodrošiniet pareizu izcelsmes izolāciju, izmantojot COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Lai jaunie apmeklētāji varētu izmantot fontus ar atribūtu “`optional`”, ielādējiet tos iepriekš. [Uzziniet vairāk par fontu iepriekšēju ielādi](https://web.dev/articles/preload-optional-fonts)."
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Izpildes laikā tika konstatēta navigācija lapās. Nav ieteicams izmantot laika posma režīmu, lai pārbaudītu navigāciju lapās. Izmantojiet navigācijas režīmu, lai pārbaudītu navigāciju lapās un nodrošinātu labāku trešās puses attiecinājumu un galvenā pavediena noteikšanu."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Tikai lapas, kuras tiek ielādētas, saņemot GET pieprasījumu, var pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Kešatmiņā var saglabāt tikai lapas ar statusa kodu 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Pārlūkā Chrome tiks konstatēts mēģinājums izpildīt JavaScript kodu kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Lapas, kurās tiek pieprasīts AppBanner, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika saņemts saites darbības pārbaudes pieprasījums."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Pilnīgu saglabāšanu kešatmiņā atspējoja karodziņu iestatījumi. Lai šajā ierīcē to iespējotu lokāli, atveriet lapu chrome://flags/#back-forward-cache."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Komandrinda atspējoja pilnīgu saglabāšanu kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo atmiņā nav pietiekami daudz vietas."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Pilnīgu saglabāšanu kešatmiņā neatbalsta deleģētais elements."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Pirmsielādes atveidotājs atspējoja pilnīgu saglabāšanu kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Lapu nevar saglabāt kešatmiņā, jo tajā ir BroadcastChannel instance ar reģistrētiem uztvērējiem."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Lapas, kurās ir galvene cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Kešatmiņa tika mērķtiecīgi notīrīta."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Šīs lapas dati tika noņemti no kešatmiņas, lai kešatmiņā varētu saglabāt citu lapu."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Lapas ar spraudņiem pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Lapas, kurās tiek izmantota saskarne FileChooser API, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Lapas, kurās tiek izmantota saskarne File System Access API, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Lapas, kurās tiek izmantots multivides ierīču sūtītājs, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Pārejot prom, darbojās multivides atskaņotājs."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Lapas, kurās tiek izmantota saskarne MediaSession API un kurās ir iestatīts atskaņošanas stāvoklis, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Lapas, kurās tiek izmantota saskarne MediaSession API un kurās ir iestatīti darbību apdarinātāji, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota ekrāna lasītāja dēļ."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Lapas, kurās tiek izmantots apdarinātājs SecurityHandler, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Lapas, kurās tiek izmantota saskarne Serial API, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Nevar pilnīgi saglabāt kešatmiņā lapas, kurās tiek izmantota saskarne WebAuthentication API."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebBluetooth API, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebUSB API, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo lapā, kurā tiek izmantota direktīva `Cache-Control: no-store`, ir atspējoti sīkfaili."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Lapas, kurās tiek izmantots atsevišķs strādnis vai uzdevumu kopa, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokuments tika aizvērts, vēl pirms bija pabeigta tā ielāde."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Pārejot prom, tika rādīts lietotnes reklāmkarogs."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Pārejot prom, bija aktīvs Chrome paroļu pārvaldnieks."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Pārejot prom, notika DOM attīrīšana."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Pārejot prom, bija aktīvs DOM attīrītāja skatītājs."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo paplašinājumi izmantoja ziņojumapmaiņas API."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Paplašinājumiem ar ilgstošu savienojumu jāpārtrauc savienojums pirms pilnīgas saglabāšanas kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Izmantojot paplašinājumus ar ilgstošu savienojumu, tika mēģināts sūtīt ziņojumus uz ietvariem, kas pilnīgi saglabāti kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota paplašinājumu dēļ."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Pārejot prom, tika parādīts modāls lapas dialoglodziņš, piemēram, veidlapas atkārtotas iesniegšanas vai http paroļu dialoglodziņš."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Pārejot prom, tika rādīta bezsaistes lapa."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Pārejot prom, tika rādīta iejaukšanās josla par atmiņas trūkumu."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Pārejot prom, bija atļauju pieprasījumi."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Pārejot prom, bija aktīvs uznirstošo elementu bloķētājs."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Pārejot prom, tika parādīta drošas pārlūkošanas informācija."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Funkcijā “Droša pārlūkošana” šī lapa tika identificēta kā ļaunprātīga un tika bloķēts uznirstošais logs."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Kamēr noritēja lapas pilnīga saglabāšana kešatmiņā, tika aktivizēts pakalpojumu skripts."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota dokumenta kļūdas dēļ."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Lapas, kurās tiek izmantots elements FencedFrames, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Šīs lapas dati tika noņemti no kešatmiņas, lai kešatmiņā varētu saglabāt citu lapu."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Lapas, kurās ir piešķirta piekļuve multivides straumei, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Lapas, kurās tiek izmantoti portāli, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Lapas, kurās tiek izmantota saskarne IdleManager, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Lapas, kurās ir atvērts IndexedDB savienojums, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota IndexedDB notikuma dēļ."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Tika izmantotas nepiemērotas API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Pašlaik nevar pilnīgi saglabāt kešatmiņā lapas, kurās paplašinājumi iepludina `JavaScript` kodu."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Pašlaik nevar pilnīgi saglabāt kešatmiņā lapas, kurās paplašinājumi iepludina `StyleSheet`."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Iekšēja kļūda."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika saņemts saites darbības pārbaudes pieprasījums."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Lapas, kurās tiek izmantota tastatūras bloķēšana, pašlaik nevar pilnīgi saglabā kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Lapa tika aizvērta, vēl pirms bija pabeigta tās ielāde."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Lapas, kuru galvenā resursa direktīva ir cache-control:no-cache, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Lapas, kuru galvenā resursa direktīva ir cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Pāriešana tika pārtraukta pirms kešatmiņā pilnīgi saglabātas lapas atjaunošanas."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Lapas dati tika noņemti no kešatmiņas, jo aktīvajā tīkla savienojumā tika saņemts pārmērīgs daudzums datu. Pārlūkā Chrome tiek ierobežots datu daudzums, ko lapa var saņemt, kad tiek saglabāta kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Lapas, kurās ir aktīvi fetch() vai XHR notikumi, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Šīs lapas dati vairs nav pilnīgi saglabāti kešatmiņā, jo aktīvs tīkla savienojuma pieprasījums ietvēra novirzīšanu."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Šīs lapas dati tika noņemti no kešatmiņas, jo tīkla savienojums bija atvērts pārāk ilgi. Pārlūkā Chrome tiek ierobežots laiks, kurā lapa var saņemt datus, kamēr norit tās saglabāšana kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Lapas, kurām nav derīgas atbildes galvenes, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Pāriešana notika citā ietvarā, nevis galvenajā ietvarā."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Lapas, kurās notiek IndexedDB operācijas, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Lapas, kurās ir aktīvs tīkla pieprasījums, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Lapas, kurās ir aktīvs tīkla ienešanas pieprasījums, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Lapas, kurās ir aktīvs tīkla pieprasījums, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Lapas, kurās ir aktīvs XHR tīkla pieprasījums, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Lapas, kurās tiek izmantota saskarne PaymentManager, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Lapas, kurās tiek izmantota funkcija “Attēls attēlā”, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Lapas, kurās tiek izmantoti portāli, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Lapas, kurās tiek rādīta drukāšanas saskarne, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Lapa tika atvērta, izmantojot metodi `window.open()`, un citā cilnē ir atsauce uz šo lapu, vai arī lapa tika atvērta logā."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Kešatmiņā pilnīgi saglabātas lapas atveidotājs avarēja."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Kešatmiņā pilnīgi saglabātas lapas atveidotāja darbība tika pārtraukta."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Lapas, kurās tika pieprasītas audio ierakstīšanas atļaujas, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Lapas, kurās tika pieprasītas sensoru atļaujas, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Lapas, kurās tika pieprasītas atļaujas sinhronizācijai fonā vai ienešanai, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Lapas, kurās tika pieprasīta MIDI ierīču atļauja, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Lapas, kurās tika pieprasītas paziņojumu atļaujas, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Lapas, kurās tika pieprasīta piekļuve krātuvei, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Lapas, kurās tika pieprasītas video ierakstīšanas atļaujas, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Kešatmiņā var saglabāt tikai tādas lapas, kuru URL shēma ietver HTTP vai HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Kamēr noritēja lapas pilnīga saglabāšana kešatmiņā, lapu pieprasīja pakalpojuma skripts."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Pakalpojumu skripts mēģināja nosūtīt rekvizītu `MessageEvent` lapai, kas tiek pilnīgi saglabāta kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker reģistrācija tika atcelta, kamēr noritēja lapas pilnīga saglabāšana kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Šīs lapas dati vairs nav pilnīgi saglabāti kešatmiņā, jo tika aktivizēts pakalpojumu skripts."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Pārlūks Chrome tika restartēts, un kešatmiņā pilnīgi saglabātie ieraksti tika notīrīti."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Lapas, kurās tiek izmantota saskarne SharedWorker, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Lapas, kurās tiek izmantota klase SpeechRecognizer, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Lapas, kurās tiek izmantota saskarne SpeechSynthesis, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Lapas iframe ietvarā tika sākta pāriešana, bet tā netika pabeigta."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Lapas, kuru apakšresursa direktīva ir cache-control:no-cache, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Lapas, kuru apakšresursa direktīva ir cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Tika pārsniegts maksimālais laiks lapas pilnīgai saglabāšanai kešatmiņā, un lapas derīguma termiņš beidzās."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Sākot pilnīgu saglabāšanu kešatmiņā, lapā iestājās noildze (iespējams, to izraisīja ieilgusi lapas paslēpšanas notikumu apdarinātāju darbība)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Lapas galvenajā ietvarā ir ielādes atcelšanas apdarinātājs."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Lapas apakšietvarā ir ielādes atcelšanas apdarinātājs."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Pārlūkā tika mainīta lietotāja aģenta ignorēšanas galvene."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Lapas, kurās ir piešķirta piekļuves video vai audio ierakstīšanai, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebDatabase, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebHID, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebLocks, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebNfc, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebOTPService, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebRTC, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Lapas, kurās tiek izmantots starpniekserveris WebShare, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Lapas, kurās tiek izmantots protokols WebSocket, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebTransport, nevar pilnīgi saglabāt kešatmiņā."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Lapas, kurās tiek izmantota saskarne WebXR, pašlaik nevar pilnīgi saglabāt kešatmiņā."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Lai nodrošinātu atpakaļsaderību ar vecākām pārlūkprogrammām, varat pievienot URL shēmas “https:” un “http:” (pārlūkprogrammās, kas atbalsta atslēgvārdu “`'strict-dynamic'`”, šīs shēmas tiks ignorētas)."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Tiek izmantota novecojusi funkcija"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Galvenei “authorization” nevarēs izmantot aizstājējzīmi (*), citas izcelsmes resursu kopīgošanas mehānismam apstrādājot “`Access-Control-Allow-Headers`”."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Lai atspējotu noklusējuma Cast integrāciju, ir jāizmanto atribūts “`disableRemotePlayback`”, nevis atlasītājs “`-internal-media-controls-overlay-cast-button`”."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Resursu pieprasījumi, kuru vietrāžos URL bija ietvertas gan noņemtas baltstarpas rakstzīmes (`(n|r|t)`), gan rakstzīmes “mazāk nekā” (`<`), ir bloķēti. Lai ielādētu šos resursus, lūdzu, noņemiet jaunas rindas rakstzīmes un kodējiet rakstzīmes “mazāk nekā” tādās vietās kā elementu atribūtu vērtības."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "Metode “`chrome.loadTimes()`” vairs netiek izmantota, tās vietā izmantojiet standartizētu API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "Metode “`chrome.loadTimes()`” vairs netiek izmantota, tās vietā izmantojiet standartizētu API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "Metode “`chrome.loadTimes()`” vairs netiek izmantota, tās vietā izmantojiet standartizētu API: “`nextHopProtocol`” saskarnē Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Sīkfaili, kuros ir rakstzīme “`(0|r|n)`”, tiks noraidīti, nevis saīsināti."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Tās pašas izcelsmes politikas ierobežojumu noņemšana, iestatot “`document.domain`”, vairs netiek izmantota, un šī iespēja tiks atspējota pēc noklusējuma. Šis darbības pārtraukšanas brīdinājums ir saistīts ar citas izcelsmes piekļuvi, kas tika iespējota, iestatot “`document.domain`”."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Funkcijas window.alert aktivizēšanai no citas izcelsmes iframe ietvariem ir pārtraukts atbalsts, un nākotnē šī iespēja tiks noņemta."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Funkcijas window.confirm aktivizēšanai no citas izcelsmes iframe ietvariem ir pārtraukts atbalsts, un nākotnē šī iespēja tiks noņemta."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM mutācijas notikumi, tostarp `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` un `DOMCharacterDataModified`, ir novecojuši (https://w3c.github.io/uievents/#legacy-event-types) un tiks noņemti. To vietā izmantojiet `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Datu atbalsts: vietrāžiem URL ir pārtraukts atbalsts SVG elementā <use>, un nākotnē tie tiks noņemti."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Tās pašas izcelsmes politikas ierobežojumu noņemšana, iestatot “`document.domain`”, vairs netiek izmantota, un šī iespēja tiks atspējota pēc noklusējuma. Lai turpinātu izmantot šo funkciju, lūdzu, atsakieties no aģentu grupēšanas pēc izcelsmes, nosūtot galveni “`Origin-Agent-Cluster: ?0`” kopā ar HTTP atbildi dokumentam un ietvariem. Plašāku informāciju skatiet vietnē https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Galvene “`Expect-CT`” vairs netiek atbalstīta un tiks noņemta. Pārlūkā Chrome visiem sertifikātiem, kas izdoti pēc 2018. gada 30. aprīļa un publiski atzīti par uzticamiem, ir jāizmanto sertifikāta pārredzamība."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "Metodes “`getCurrentPosition()`” un “`watchPosition()`” vairs nedarbojas nedrošos avotos. Lai izmantotu šo funkciju, apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "Metodes “`getCurrentPosition()`” un “`watchPosition()`” vairs netiek izmantotas nedrošos avotos. Lai izmantotu šo funkciju, apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "Metode “`getUserMedia()`” vairs nedarbojas nedrošiem avotiem. Lai izmantotu šo funkciju, apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "Objekts “`RTCPeerConnectionIceErrorEvent.hostCandidate`” vairs netiek atbalstīts. Tā vietā izmantojiet “`RTCPeerConnectionIceErrorEvent.address`” vai “`RTCPeerConnectionIceErrorEvent.port`”."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Tirgotāja izcelsme un patvaļīgi noteikti dati no pakalpojumu skripta notikuma “`canmakepayment`” ir novecojuši un tiks noņemti: `topOrigin`, `paymentRequestOrigin`, `methodData` un `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Vietne pieprasīja apakšresursu no tīkla, kam varēja piekļūt tikai lietotāju priviliģētā tīkla stāvokļa dēļ. Šie pieprasījumi saista publiski nepieejamas ierīces un serverus ar internetu, palielinot starpvietņu pieprasījuma viltošanas uzbrukumu un/vai informācijas noplūdes risku. Lai samazinātu šos riskus, Chrome pārtrauc atbalstīt pieprasījumus publiski nepieejamiem apakšresursiem, ja tie aktivizēti nedrošā vidē, un sāks tos bloķēt."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "`InterestGroups` lauks `dailyUpdateUrl`, kas tiek iestatīts kā vērtība metodei `joinAdInterestGroup()`, ir pārdēvēts par `updateUrl`, lai precīzāk atspoguļotu tā darbību."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS nevar ielādēt no “`file:`” vietrāžiem URL, ja tie nebeidzas ar faila paplašinājumu “`.css`”."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Specifikācijas izmaiņu dēļ metodes “`SourceBuffer.abort()`” izmantošana, lai priekšlaikus pārtrauktu “`remove()`” asinhrono diapazona noņemšanu, ir novecojusi. Tiek plānots pārtraukt tās atbalstu. Tās vietā ieteicams izmantot notikuma “`updateend`” uztveršanu. Metode “`abort()`” ir paredzēta tikai asinhronas multivides līdzekļu pievienošanas priekšlaicīgai pārtraukšanai vai parsētāja statusa atiestatīšanai."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Specifikācijas izmaiņu dēļ vairs netiek atbalstīta “`MediaSource.duration`” iestatīšana zem lielākā parādīšanas laikspiedola buferī ievietotiem kodētiem ietvariem. Saīsināta, buferī ievietota multivides satura netiešas noņemšanas atbalsts tiks pārtraukts. Tās vietā izmantojiet tiešu metodi “`remove(newDuration, oldDuration)`” visiem objektiem “`sourceBuffers`”, ja tiek izpildīts nosacījums “`newDuration < oldDuration`”."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI vaicās izmantošanas atļauju, pat ja objektā “`MIDIOptions`” nav norādīta vērtība “sysex”."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Vecajam, nestandartizētajam atribūtam `shadowroot` ir pārtraukts atbalsts, un tas *vairs nedarbosies* versijā M119. Tā vietā izmantojiet jauno, standartizēto atribūtu `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Paziņojumu API vairs nevar izmantot no nedrošiem avotiem. Apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "No citas izcelsmes iframe ietvara vairs nevar pieprasīt atļauju saskarnei Paziņojumu API. Apsveriet iespēju pieprasīt atļauju no augšējā līmeņa ietvara vai atvērt jaunu logu."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Metodes createImageBitmap opcijai `imageOrientation: 'none'` ir pārtraukts atbalsts. Tās vietā izmantojiet metodi createImageBitmap ar opciju \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Jūsu partneris saskaņo novecojušu (D)TLS versiju. Lūdzu, sazinieties ar partneri, lai to novērstu."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Tagos “img”, “video” un “canvas” norādot vērtību “`overflow: visible`”, vizuāls saturs var tikt rādīts ārpus elementa robežām. Skatiet vietni https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "Saskarne `paymentManager.instruments` vairs netiek atbalstīta. Tās vietā maksājumu apdarinātājiem izmantojiet instalēšanu tieši laikā."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Ar jūsu `PaymentRequest` izsaukumu tika apieta Content-Security-Policy (satura drošības politikas — SDP) direktīva “`connect-src`”. Šādai apiešanai ir pārtraukts atbalsts. SDP direktīvai “`connect-src`” pievienojiet maksājuma veida identifikatoru no `PaymentRequest` API (laukā `supportedMethods`)."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "Saskarnei `StorageType.persistent` ir pārtraukts atbalsts. Tās vietā izmantojiet standartizēto elementu “`navigator.storage`”."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Elements `<source src>` ar galveno elementu `<picture>` nav derīgs, tādēļ tiks ignorēts. Tā vietā, lūdzu, izmantojiet `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "Metode webkitCancelAnimationFrame ir piesaistīta nodrošinātājam. Tās vietā izmantojiet standarta metodi cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "Metode webkitRequestAnimationFrame ir piesaistīta nodrošinātājam. Tās vietā izmantojiet standarta metodi requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitDisplayingFullscreen ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitEnterFullScreen() ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitEnterFullscreen() ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitExitFullScreen() ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitExitFullscreen() ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Saskarnei HTMLVideoElement.webkitSupportsFullscreen ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Plānojam pārtraukt atbalstu saskarnei API `chrome.privacy.websites.privacySandboxEnabled`, kaut gan atpakaļsaderības nolūkiem tā būs aktīva līdz laidiena M113 publicēšanai. Tās vietā izmantojiet `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` un `chrome.privacy.websites.adMeasurementEnabled`. Skatiet vietni https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Ierobežojums “`DtlsSrtpKeyAgreement`” ir noņemts. Jūs šim ierobežojumam esat noteicis vērtību “`false`”, un tas tiek interpretēts kā mēģinājums izmantot noņemto metodi “`SDES key negotiation`”. Šī funkcionalitāte ir noņemta. Tās vietā izmantojiet pakalpojumu, kas atbalsta metodi “`DTLS key negotiation`”."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Ierobežojums “`DtlsSrtpKeyAgreement`” ir noņemts. Jūs šim ierobežojumam esat noteicis vērtību “`true`”, taču tas nedarbojās. Skaidrības labad varat noņemt šo ierobežojumu."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Uz izsaukumu balstītajai metodei getStats() ir pārtraukts atbalsts, un tā tiks noņemta. Tās vietā izmantojiet specifikācijām atbilstošo metodi getStats()."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Saskarnei Range.expand() ir pārtraukts atbalsts. Tās vietā izmantojiet saskarni Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Apakšresursu pieprasījumi, kuru vietrāžos URL ir iegulti akreditācijas dati (piem., `https://user:pass@host/`), ir bloķēti."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Opcija “`rtcpMuxPolicy`” vairs nav pieejama un tiks noņemta."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "Objektam “`SharedArrayBuffer`” būs nepieciešama izolēšana no citas izcelsmes resursiem. Plašāku informāciju skatiet vietnē https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Metode “`speechSynthesis.speak()`” bez lietotāja aktivizācijas vairs netiek izmantota un tiks noņemta."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Lai turpinātu izmantot “`SharedArrayBuffer`”, paplašinājumiem ir jāizvēlas izolācija no citas izcelsmes resursiem. Plašāku informāciju skatiet vietnē https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Saskarne Web SQL vairs netiek izmantota. Izmantojiet SQLite WebAssembly vai Indexed Database."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Atļaujas deskriptoram `window-placement` ir pārtraukts atbalsts. Tā vietā izmantojiet deskriptoru `window-management`. Plašāku informāciju skatiet vietnē https://bit.ly/window-placement-rename"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Atļauju politikai `window-placement` ir pārtraukts atbalsts. Tās vietā izmantojiet politiku `window-management`. Plašāku informāciju skatiet vietnē https://bit.ly/window-placement-rename"
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Saskarnē “`XMLHttpRequest`” atbildes json failos netiek atbalstīts UTF-16."
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Sinhroniem saskarnes `XMLHttpRequest` pieprasījumiem galvenajā pavedienā ir pārtraukts atbalsts, jo tie negatīvi ietekmēja galalietotāju pieredzi. Plašāku informāciju skatiet vietnē https://xhr.spec.whatwg.org/"
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "Metode “`supportsSession()`” vairs netiek atbalstīta. Lūdzu, izmantojiet metodi “`isSessionSupported()`” un pārbaudiet saņemto Būla vērtību."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Galvenā pavediena bloķēšanas laiks"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Trešā puse"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Kopā"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse lietotāju plūsmas pārskats"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Authorization will not be covered by the wildcard symbol (*) in CORS Access-Control-Allow-Headers handling."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "The disableRemotePlayback attribute should be used in order to disable the default Cast integration instead of using -internal-media-controls-overlay-cast-button selector."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS izskata vērtība slider-vertical nav standartizēta un tiks noņemta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resource requests whose URLs contained both removed whitespace \\(n|r|t) characters and less-than characters (<) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "ISO-2022-JP rakstzīmju kopas automātiskā noteikšana vairs netiek atbalstīta un drīzumā tiks atspējota. Lūdzu, norādiet rakstzīmju kopu satura veida galvenē vai izmantojot metatagu (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() is deprecated, instead use standardized API: nextHopProtocol in Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies containing a \\(0|r|n) character will be rejected instead of truncated."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Tās pašas izcelsmes politikas ierobežojumu noņemšana, iestatot funkciju document.domain, vairs netiek izmantota, un šī iespēja tiks atspējota pēc noklusējuma. Šis darbības pārtraukšanas brīdinājums ir saistīts ar citas izcelsmes piekļuvi, kas tika iespējota, iestatot document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Funkcijas window.alert aktivizēšana no citas izcelsmes iframe ietvariem vairs netiek atbalstīta un nākotnē tiks noņemta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Funkcijas window.confirm aktivizēšana no citas izcelsmes iframe ietvariem vairs netiek atbalstīta un nākotnē tiks noņemta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOM mutācijas notikumi, tostarp DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument un DOMCharacterDataModified, ir novecojuši (https://w3c.github.io/uievents/#legacy-event-types) un tiks noņemti. To vietā izmantojiet MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Datu atbalsts: parametrā SVGUseElement vairs netiek atbalstīti vietrāži URL, un nākotnē tie tiks noņemti."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "Metodes getCurrentPosition() un watchPosition() vairs nedarbojas nedrošos avotos. Lai izmantotu šo funkciju, apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "Metodes getCurrentPosition() un watchPosition() vairs netiek izmantotas nedrošos avotos. Lai izmantotu šo funkciju, apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Ir atrasts <h1> tags, kas atrodas elementā <article>, <aside>, <nav> vai <section>, kam nav norādīts fonta lielums. Tuvākajā nākotnē šī pārlūkprogramma mainīs šī virsraksta teksta lielumu. Plašāku informāciju skatiet vietnē https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "Lauks RTCPeerConnectionIceErrorEvent.hostCandidate vairs netiek atbalstīts. Tā vietā izmantojiet lauku RTCPeerConnectionIceErrorEvent.address vai RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Šis digitālo akreditācijas datu pieprasījuma navigator.credentials.get() formāts vairs netiek atbalstīts. Lūdzu, atjauniniet savu izsaukumu, lai izmantotu jauno formātu."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Tirgotāja izcelsme un patvaļīgi noteikti dati no pakalpojumu skripta notikuma canmakepayment ir novecojuši un tiks noņemti: topOrigin, paymentRequestOrigin, methodData un modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "InterestGroups lauks dailyUpdateUrl, kuram iestatīta vērtība joinAdInterestGroup(), ir pārdēvēts par updateUrl, lai precīzāk atspoguļotu tā darbību."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Saskarne Intl.v8BreakIterator vairs netiek atbalstīta. Tās vietā, lūdzu, izmantojiet saskarni Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS cannot be loaded from file: URLs unless they end in a .css file extension."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Specifikācijas izmaiņu dēļ metodes SourceBuffer.abort() izmantošana, lai priekšlaikus pārtrauktu remove() asinhrono diapazona noņemšanu, ir novecojusi. Tiek plānots pārtraukt tai atbalstu. Tās vietā ieteicams izmantot notikuma “updateend” uztveršanu. Metode abort() ir paredzēta tikai asinhronas multivides līdzekļu pievienošanas priekšlaicīgai pārtraukšanai vai parsētāja statusa atiestatīšanai."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Setting MediaSource.duration below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit remove(newDuration, oldDuration) on all sourceBuffers, where newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Paziņojumu API vairs nevar izmantot no nedrošiem avotiem. Apsveriet iespēju lietojumprogrammā izmantot drošu avotu, piemēram, HTTPS. Plašāku informāciju skatiet vietnē https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "No citas izcelsmes iframe ietvara vairs nevar pieprasīt atļauju saskarnei Paziņojumu API. Apsveriet iespēju pieprasīt atļauju no augšējā līmeņa ietvara vai atvērt jaunu logu."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Metodes createImageBitmap opcija imageOrientation: 'none' vairs netiek atbalstīta. Tās vietā izmantojiet metodi createImageBitmap ar opciju '\\\\{imageOrientation: 'from-image'\\\\}'."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Tagos “img”, “video” un “canvas” norādot vērtību “overflow: visible”, vizuāls saturs var tikt rādīts ārpus elementa robežām. Skatiet lapu https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "Saskarnei paymentManager.instruments ir pārtraukts atbalsts. Tā vietā maksājumu apdarinātājiem izmantojiet instalēšanu tieši laikā."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Ar jūsu PaymentRequest izsaukumu tika apieta Content-Security-Policy (satura drošības politikas — SDP) direktīva “connect-src”. Šādai apiešanai ir pārtraukts atbalsts. SDP direktīvai “connect-src” pievienojiet maksājuma veida identifikatoru no PaymentRequest API (laukā supportedMethods)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "Saskarne StorageType.persistent vairs netiek atbalstīta. Tās vietā, lūdzu, izmantojiet standartizētu navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Elements <source src> ar galveno elementu <picture> nav derīgs, tādēļ tiks ignorēts. Tā vietā, lūdzu, izmantojiet <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "Metode webkitCancelAnimationFrame ir piesaistīta nodrošinātājam. Tās vietā izmantojiet standarta metodi cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "Metode webkitRequestAnimationFrame ir piesaistīta nodrošinātājam. Tās vietā izmantojiet standarta metodi requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Saskarne HTMLVideoElement.webkitDisplayingFullscreen vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Saskarne HTMLVideoElement.webkitEnterFullScreen() vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Saskarne HTMLVideoElement.webkitEnterFullscreen() vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Saskarne HTMLVideoElement.webkitExitFullScreen() vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Saskarne HTMLVideoElement.webkitExitFullscreen() vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Saskarne HTMLVideoElement.webkitSupportsFullscreen vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Plānojam pārtraukt atbalstu saskarnei API chrome.privacy.websites.privacySandboxEnabled, kaut gan atpakaļsaderības nolūkiem tā būs aktīva līdz laidiena M113 publicēšanai. Tās vietā izmantojiet chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled un chrome.privacy.websites.adMeasurementEnabled. Skatiet vietni https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Ierobežojums DtlsSrtpKeyAgreement ir noņemts. Jūs šim ierobežojumam esat noteicis vērtību “false”, un tas tiek interpretēts kā mēģinājums izmantot noņemto metodi SDES key negotiation. Šī funkcionalitāte ir noņemta. Tās vietā izmantojiet pakalpojumu, kas atbalsta metodi DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Ierobežojums DtlsSrtpKeyAgreement ir noņemts. Jūs šim ierobežojumam esat noteicis vērtību “true”, taču tas nedarbojās. Skaidrības labad varat noņemt šo ierobežojumu."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Uz izsaukumu balstītā metode getStats() vairs netiek atbalstīta un tiks noņemta. Tās vietā izmantojiet specifikācijām atbilstošo metodi getStats()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Saskarne Range.expand() vairs netiek atbalstīta. Tās vietā izmantojiet saskarni Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Subresource requests whose URLs contain embedded credentials (e.g. https://user:pass@host/) are blocked."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Opcija rtcpMuxPolicy vairs nav pieejama un tiks noņemta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer will require cross-origin isolation. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Metode speechSynthesis.speak() bez lietotāja aktivizācijas vairs netiek izmantota un tiks noņemta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Ielādes atcelšanas notikumu uztvērēju darbība ir pārtraukta, un tie tiks noņemti."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 is not supported by response json in XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Sinhronā saskarne XMLHttpRequest galvenajā pavedienā vairs netiek atbalstīta, jo tā negatīvi ietekmēja galalietotāju pieredzi. Plašāku informāciju skatiet vietnē https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animācija"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Izkārtojuma nobīdes rodas, ja elementi pārvietojas bez lietotāja mijiedarbības. [Izpētiet izkārtojuma nobīdes cēloņus](https://web.dev/articles/optimize-cls), piemēram, elementu pievienošanu un noņemšanu vai to fonta izmaiņas lapas ielādes laikā."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Fonta pieprasījums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Iepludināts iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Izkārtojuma nobīdes kopas sākuma laiks: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Nevarēja noteikt izkārtojuma nobīdes cēloņus"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Nav izkārtojuma nobīžu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Izkārtojuma nobīdes cēloņi"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Galvenie izkārtojuma nobīdes cēloņi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Attēli bez lieluma parametriem"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Vissliktākā kopa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Sliktākās izkārtojuma nobīdes kopa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Kešatmiņas TTL vērtība"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Iestatot ilgu kešatmiņas mūžu, lapas atkārtoti apmeklējumi varētu paātrināties. [Uzziniet vairāk](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Nav pieprasījumu ar neefektīvām kešatmiņas politikām"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "Vēl {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Pieprasījums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Efektīva kešatmiņas darbības ilguma izmantošana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "Liels DOM koks var paildzināt stila aprēķinus un izkārtojuma plūduma pārkārtošanu, ietekmējot lapas reaģētspēju. Liels DOM koks arī palielinās atmiņas lietojumu. [Uzziniet, kā izvairīties no pārmērīga DOM lieluma](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Elements"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Lielākā daļa pakārtoto elementu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM dziļums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistikas dati"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "DOM lieluma optimizācija"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Elementu kopskaits"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Vērtība"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Jūsu pirmais tīkla pieprasījums ir vissvarīgākais.  Samaziniet latentumu, novēršot novirzīšanu, nodrošinot ātru servera atbildi un iespējojot teksta saspiešanu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Saspiešana netika lietota."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Izvairās no novirzīšanas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Tiek lietota teksta saspiešana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Novirzīšana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Servera atbildes laiks"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Dokumenta pieprasījuma latentums"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Nesaspiestu datu lejupielāde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Dublētie baiti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Avots"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Noņemiet lielus, dublētus JavaScript moduļus no pakām, lai samazinātu nevajadzīgu baitu apjomu, ko patērē tīkla darbība."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "JavaScript kodu dublikāti"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Lai teksts vienmēr būtu redzams, ieteicams parametram [font-display](https://developer.chrome.com/blog/font-display) iestatīt vērtību swap vai optional. Lai mazinātu izkārtojuma nobīdes, swap var optimizēt vēl vairāk, izmantojot [fonta rādītāju ignorēšanu](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Fonts"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Fonta attēlojums"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Nelietderīgi izmantots laiks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonīmas)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Daudzi API, lasot izkārtojuma ģeometriju, liek renderēšanas programmai apturēt skripta izpildi, lai aprēķinātu stilu un izkārtojumu. Uzziniet vairāk par [plūduma piespiedu pārkārtošanu](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) un tās novēršanu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Steka trasējums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Plūduma piespiedu pārkārtošana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Visilgākais funkcijas izsaukums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Kopējais plūduma pārkārtošanas laiks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[neattiecināti]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Samazinot attēlu lejupielādes laiku, var tikt uzlabots lapas ielādes laiks un LCP. [Uzziniet vairāk par attēlu lieluma optimizāciju](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (apt. {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Nav optimizējamu attēlu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Faila lieluma optimizācija"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "Vēl {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Attēlu piegādes uzlabošana"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Attēla saspiešanas koeficienta palielināšana var uzlabot šī attēla lejupielādes lielumu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Modernu attēla formātu (WebP, AVIF) izmantošana vai attēlu saspiešanas koeficienta palielināšana varētu uzlabot šī attēla lejupielādes lielumu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Šī attēla faila lielums ({PH1}) pārsniedz attēlošanai vajadzīgo lielumu ({PH2}). Izmantojiet adaptīvos attēlus, lai samazinātu attēla lejupielādes lielumu."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Izmantojot video formātus, nevis GIF attēlus, var uzlabot animēta satura lejupielādes lielumu."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Vispirms izpētiet garāko posmu. [Aizkaves var samazināt](https://web.dev/articles/optimize-inp#optimize_interactions). Lai samazinātu apstrādes ilgumu, [optimizējiet galvenā pavediena izmaksas](https://web.dev/articles/optimize-long-tasks) (parasti JS)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Ilgums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Ievades aizkave"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Nav konstatēta mijiedarbība"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fāze"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Rādīšanas aizkave"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Apstrādes ilgums"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP pēc posma"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimizējiet LCP, padarot LCP attēlu nekavējoties [atklājamu](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) HTML struktūrā un [novēršot atlikto ielādi](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "Tiek lietota vērtība fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Jāizmanto vērtība fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "atliktā ielāde netiek lietota"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP attēls tika ielādēts {PH1} pēc agrākā sākumpunkta."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Netika konstatēts LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Netika konstatēts neviens LCP resurss, jo LCP nav attēls"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Pieprasījums ir atrodams sākotnējā dokumentā"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP pieprasījuma atklāšana"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Katram [posmam ir noteiktas uzlabošanas stratēģijas](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideālā gadījumā lielāko daļu LCP laika ir jāveido resursu ielādei, nevis aizkavei."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Ilgums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Elementa atveidošanas aizkave"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "Lauka 75. procentile"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Netika konstatēts LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fāze"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Resursa ielādes aizkave"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Resursa ielādes ilgums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Laiks līdz pirmajam baitam"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP pēc fāzes"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skripts"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Neizmantotie baiti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Pārlūka ielikumi un pārveidošanas kodi ļauj mantotos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. Ieteicams mainīt JavaScript būvēšanas procesu, lai netiktu transpilētas [pamata līmeņa](https://web.dev/articles/baseline-and-polyfills) funkcijas, ja vien nezināt, ka jums ir jāatbalsta mantotie pārlūki. [Uzziniet, kāpēc lielākajā daļā vietņu var izvietot ES6+ kodu bez transpilēšanas](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Mantotais JavaScript kods"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 un HTTP/3 sniedz daudzas priekšrocības salīdzinājumā ar HTTP/1.1, piemēram, multipleksēšanu. [Uzziniet vairāk par modernā HTTP izmantošanu](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Neviens pieprasījums neizmanto protokolu HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokols"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Pieprasījums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderns HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Novērsiet kritisko pieprasījumu ķēdes](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), samazinot ķēžu garumu, samazinot resursu lejupielādes apjomu vai atliekot nevajadzīgo resursu lejupielādi, lai uzlabotu lapas ielādi."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Maksimālā kritiskā ceļa latentums:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Nav neviena atveidošanas uzdevuma, ko ietekmētu tīkla atkarības"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Tīkla atkarību koks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Novērsiet kritisko pieprasījumu ķēdes, samazinot ķēžu garumu, samazinot resursu lejupielādes apjomu vai atliekot nevajadzīgo resursu lejupielādi, lai uzlabotu lapas ielādi."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Pieprasījumi bloķē lapas sākotnējo atveidi, un tas var aizkavēt LCP. [Atliekot vai iekļaujot](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) šos tīkla pieprasījumus, tos varat pārvietot ārpus kritiskā ceļa."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Ilgums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Šai navigācijai nav atveidošanas bloķēšanas pieprasījumu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Pieprasījums"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Atveidošanas bloķēšanas pieprasījumi"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Ja izmaksas par stila pārrēķināšanu saglabājas augstas, tās var samazināt atlasītāja optimizācija. [Optimizējiet atlasītājus](https://developer.chrome.com/docs/devtools/performance/selector-stats), iestatot augstu pagājušā laika vērtību un augstu lēna ceļa % vērtību. Atbilstības izmaksas arī var samazināt, izmantojot vienkāršāku atlasītāju, mazāku skaitu atlasītāju, mazāku DOM un DOM koku ar mazāku līmeņu skaitu."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Patērētais laiks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Netika atrasti CSS atlasītāja dati. Veiktspējas paneļa iestatījumos ir jāiespējo CSS atlasītāja statistika."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Mēģinājumi noteikt atbilstību"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Atbilstību skaits"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS atlasītāja izmaksas"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Visilgāk apstrādātie atlasītāji"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Kopā"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Galvenā pavediena laiks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Trešā puse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Pārsūtīto vienumu lielums"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Trešo pušu kods var ievērojami ietekmēt ielādes veiktspēju. Lai piešķirtu prioritāti savas lapas saturam, [ierobežojiet un atlieciet trešās puses koda ielādi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "Trešās puses kods var ievērojami ietekmēt ielādes veiktspēju. Lai piešķirtu prioritāti savas lapas saturam, [ierobežojiet un atlieciet trešās puses koda ielādi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Netika atrasts trešās puses saturs"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Trešās puses"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Lapas skatvieta nav optimizēta mobilajām ierīcēm, tāpēc mijiedarbība ar pieskārieniem var būt [aizkavēta līdz pat 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "Ja skatvieta nav optimizēta mobilajām ierīcēm, mijiedarbībā ar pieskārieniem var būt [aizkave līdz pat 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Skatvieta nav optimizēta mobilajām ierīcēm"
+    "message": "Skatvietas optimizācija mobilajām ierīcēm"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Tikai lapas, kuras tiek ielādētas, saņemot GET pieprasījumu, ir piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Kešatmiņā var saglabāt tikai lapas ar statusa kodu 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Pārlūkā Chrome tiks konstatēts mēģinājums izpildīt JavaScript kodu kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Lapas, kurās tiek pieprasīts AppBanner, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Pilnīgu saglabāšanu kešatmiņā atspējoja karodziņu iestatījumi. Lai šajā ierīcē to iespējotu lokāli, atveriet lapu chrome://flags/#back-forward-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Komandrinda atspējoja pilnīgu saglabāšanu kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo atmiņā pietrūka vietas."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Pilnīgu saglabāšanu kešatmiņā neatbalsta deleģētais elements"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Pirmsielādes atveidotājs atspējoja pilnīgu saglabāšanu kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Lapu nevar saglabāt kešatmiņā, jo tajā ir BroadcastChannel instance ar reģistrētiem klausītājiem."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Lapas, kurās ir galvene cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Kešatmiņa tika mērķtiecīgi notīrīta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Šīs lapas dati tika izlikti no kešatmiņas, lai kešatmiņā varētu saglabāt citu lapu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Lapas ar spraudņiem pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Nav definēts"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Lapas, kurās tiek izmantota saskarne FileChooser API, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Lapas, kurās tiek izmantota saskarne File System Access API, nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Lapas, kurās tiek izmantots multivides ierīču dispečers, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Pāriešanas brīdī darbojās multivides atskaņotājs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Lapas, kurās tiek izmantota saskarne MediaSession API un kurās ir iestatīts atskaņošanas stāvoklis, nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Lapas, kurās tiek izmantota saskarne MediaSession API un kurās ir iestatīti darbību apdarinātāji, nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota ekrāna lasītāja dēļ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Lapas, kurās tiek izmantots apdarinātājs SecurityHandler, nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Lapas, kurās tiek izmantota saskarne Serial API, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebAuthetication API, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebBluetooth API, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebUSB API, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo lapā, kurā tiek izmantota direktīva Cache-Control: no-store, ir atspējoti sīkfaili."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Lapas, kurās tiek izmantota saskarne DedicatedWorker vai Worklet, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokuments tika aizvērts vēl pirms bija pabeigta tā ielāde."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Pārejot prom, tika rādīts lietotnes reklāmkarogs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Pārejot prom, bija aktīvs Chrome paroļu pārvaldnieks."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Pārejot prom, notika DOM attīrīšana."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Pārejot prom, bija aktīvs DOM attīrītāja skatītājs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo paplašinājumi izmantoja ziņojumapmaiņas API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Paplašinājumiem ar ilgstošu savienojumu jāpārtrauc savienojums pirms pilnīgas saglabāšanas kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Izmantojot paplašinājumus ar ilgstošu savienojumu, tika mēģināts sūtīt ziņojumus uz ietvariem, kas pilnīgi saglabāti kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota paplašinājumu dēļ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Pārejot prom, tika parādīts modāls lapas dialoglodziņš, piemēram, veidlapas atkārtotas iesniegšanas vai http paroļu dialoglodziņš."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Pārejot prom, tika rādīta bezsaistes lapa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Pārejot prom, tika rādīta iejaukšanās josla par atmiņas trūkumu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Pārejot prom, bija atļauju pieprasījumi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Pārejot prom, bija aktīvs uznirstošo elementu bloķētājs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Pārejot prom, tika parādīta drošas pārlūkošanas informācija."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Funkcijā “Droša pārlūkošana” šī lapa tika identificēta kā ļaunprātīga un tika bloķēts uznirstošais logs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Kamēr noritēja lapas pilnīga saglabāšana kešatmiņā, tika aktivizēts pakalpojuma skripts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota dokumenta kļūdas dēļ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Lapas, kurās tiek izmantots elements FencedFrames, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Šīs lapas dati tika izlikti no kešatmiņas, lai kešatmiņā varētu saglabāt citu lapu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Lapas, kurās ir piešķirta piekļuve multivides straumei, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Lapas, kurās ir noteikta veida iegults saturs (piemēram, PDF faili), pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Lapas, kurās tiek izmantota saskarne IdleManager, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Lapas, kurās ir atvērts IndexedDB savienojums, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota IndexedDB notikuma dēļ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Tika izmantotas nepiemērotas API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Pašlaik nevar pilnīgi saglabāt kešatmiņā lapas, kurās paplašinājumi iepludina JavaScript."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Pašlaik nevar pilnīgi saglabāt kešatmiņā lapas, kurās paplašinājumi iepludina StyleSheet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Iekšēja kļūda."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo kāds JavaScript tīkla pieprasījums saņēma resursu ar galveni Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika saņemts saites darbības pārbaudes ziņojuma sūtīšanas pieprasījums."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Lapas, kurās tiek izmantota tastatūras bloķēšana, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Lapa tika aizvērta vēl pirms bija pabeigta tās ielāde."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Lapas, kuru galvenā resursa direktīva ir cache-control:no-cache, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Lapas, kuru galvenā resursa direktīva ir cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Pāriešana tika pārtraukta pirms kešatmiņā pilnīgi saglabātas lapas atjaunošanas."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Lapas dati tika izlikti no kešatmiņas, jo aktīvajā tīkla savienojumā tika saņemts pārmērīgs daudzums datu. Pārlūkā Chrome tiek ierobežots datu daudzums, ko lapa var saņemt, kad tiek saglabāta kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Lapas, kurās ir aktīvi ienešanas vai XHR notikumi, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Šīs lapas dati tika izlikti no kešatmiņas, jo aktīvs tīkla savienojuma pieprasījums ietvēra novirzīšanu."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Šīs lapas dati tika izlikti no kešatmiņas, jo tīkla savienojums bija atvērts pārāk ilgi. Pārlūkā Chrome tiek ierobežots laiks, kurā lapa var saņemt datus, kamēr norit tās saglabāšana kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Lapas, kurām nav derīgas atbildes galvenes, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Pāriešana notika citā ietvarā, nevis galvenajā ietvarā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Lapas, kurās notiek IndexedDB operācijas, pašlaik nav piemērotas pilnīgai saglabāšanai atmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Lapas, kurās ir aktīvs tīkla pieprasījums, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Lapas, kurās ir aktīvs tīkla ienešanas pieprasījums, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Lapas, kurās ir aktīvs tīkla pieprasījums, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Lapas, kurās ir aktīvs XHR tīkla pieprasījums, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Lapas, kurās tiek izmantota saskarne PaymentManager, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Lapas, kurās tiek izmantota funkcija “Attēls attēlā”, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Lapas, kurās rādīta drukāšanas saskarne, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Lapa tika atvērta, izmantojot metodi window.open(), un citā cilnē ir atsauce uz šo lapu, vai arī lapa tika atvērta logā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Kešatmiņā pilnīgi saglabātas lapas atveidotājs avarēja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Kešatmiņā pilnīgi saglabātas lapas atveidotāja darbība tika pārtraukta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Lapas, kurās tika pieprasītas audio ierakstīšanas atļaujas, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Lapas, kurās tika pieprasītas sensoru atļaujas, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Lapas, kurās tika pieprasītas atļaujas sinhronizācijai fonā vai ienešanai, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Lapas, kurās tika pieprasīta MIDI ierīču atļauja, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Lapas, kurās tika pieprasītas paziņojumu atļaujas, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Lapas, kurās tika pieprasīta piekļuve krātuvei, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Lapas, kurās tika pieprasītas video ierakstīšanas atļaujas, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Kešatmiņā var saglabāt tikai tādas lapas, kuru URL shēma ietver HTTP vai HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Kamēr noritēja lapas pilnīga saglabāšana kešatmiņā, lapu pieprasīja pakalpojuma skripts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Pakalpojuma skripts mēģināja nosūtīt rekvizītu MessageEvent lapai, kas tiek pilnīgi saglabāta kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker reģistrācija tika atcelta, kamēr noritēja lapas pilnīga saglabāšana kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Lapas dati tika izlikti no kešatmiņas, jo tika aktivizēts pakalpojuma skripts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Pārlūks Chrome tika restartēts, un kešatmiņā pilnīgi saglabātie ieraksti tika notīrīti."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Lapas, kurās tiek izmantota saskarne SharedWorker, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Lapas, kurās tiek izmantota saskarne SpeedRecognizer, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Lapas, kurās tiek izmantota saskarne SpeechSynthesis, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Lapas Iframe ietvarā tika sākta pāriešana, bet tā netika pabeigta."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Lapas, kuru apakšresursa direktīva ir cache-control:no-cache, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Lapas, kuru apakšresursa direktīva ir cache-control:no-store, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Tika pārsniegts maksimālais laiks lapas pilnīgai saglabāšanai kešatmiņā, un lapas derīguma termiņš beidzās."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Sākot pilnīgu saglabāšanu kešatmiņā, lapā iestājās noildze (iespējams, to izraisīja ieilgusi lapas paslēpšanas notikumu apdarinātāju darbība)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Lapas galvenajā ietvarā ir ielādēšanas atcelšanas apdarinātājs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Lapas apakšietvarā ir ielādēšanas atcelšanas apdarinātājs."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Pārlūkā tika mainīta lietotāja aģenta ignorēšanas galvene."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Lapas, kurās ir piešķirta piekļuves video vai audio ierakstīšanai, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Lapas, kurās tiek izmantots WebDatabase, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebHID, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebLocks, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebNfc, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebOTPService, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebRTC, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika izmantots protokols WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Lapas, kurās tiek izmantots starpniekserveris WebShare, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Lapas, kurās tiek izmantots protokols WebSocket, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika izmantots protokols WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebTransport, nevar pilnīgi saglabāt kešatmiņā."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Pilnīga saglabāšana kešatmiņā ir atspējota, jo tika izmantots protokols WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Lapas, kurās tiek izmantota saskarne WebXR, pašlaik nav piemērotas pilnīgai saglabāšanai kešatmiņā."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animētam saturam izmantojiet komponentu [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), lai samazinātu centrālā procesora lietojumu, kamēr saturs nav redzams ekrānā."

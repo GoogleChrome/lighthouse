@@ -14,15 +14,13 @@ describe('Performance: Resource summary audit', () => {
     context = {computedCache: new Map()};
 
     artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-          {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
-          {url: 'http://my-cdn.com/bin.js', resourceType: 'Script', transferSize: 25},
-          {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
-          {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+        {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
+        {url: 'http://my-cdn.com/bin.js', resourceType: 'Script', transferSize: 25},
+        {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
+        {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
+      ]),
       URL: {requestedUrl: 'http://example.com', mainDocumentUrl: 'http://example.com', finalDisplayedUrl: 'http://example.com'},
     };
   });

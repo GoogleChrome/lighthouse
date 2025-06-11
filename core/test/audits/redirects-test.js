@@ -153,13 +153,14 @@ describe('Performance: Redirects audit', () => {
 
     return {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: {
         requestedUrl: networkRecords[0].url,
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 
@@ -167,7 +168,7 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     const artifacts = mockArtifacts(FAILING_CLIENTSIDE, 'https://www.lisairish.com/');
 
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
     const fcp = traceEvents.find(e => e.name === 'firstContentfulPaint');
     const lcp = traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
@@ -275,7 +276,7 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     const artifacts = mockArtifacts(FAILING_SELF_REDIRECT, 'https://redirect.test/');
 
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
     const fcp = traceEvents.find(e => e.name === 'firstContentfulPaint');
     const lcp = traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
@@ -325,7 +326,7 @@ describe('Performance: Redirects audit', () => {
   it('throws when no navigation requests are found', async () => {
     const artifacts = mockArtifacts(SUCCESS_NOREDIRECT, 'https://www.google.com/');
     const context = {settings: {}, computedCache: new Map()};
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
     navStart.args.data.navigationId = 'NO_MATCHY';
 

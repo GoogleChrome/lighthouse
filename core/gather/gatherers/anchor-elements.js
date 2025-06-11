@@ -38,9 +38,48 @@ function collectAnchorElements() {
     return onclick.slice(0, 1024);
   }
 
+  /**
+   * @param {HTMLElement|SVGElement} node
+   * @return {string|null}
+   */
+  function getLangOfInnerText(node) {
+    let curNodeLang = null;
+
+    // If we find multiple languages within this element, return null.
+    for (const child of node.querySelectorAll('*')) {
+      if (!child.textContent) continue;
+
+      const childLang = child.closest('[lang]')?.getAttribute('lang');
+      if (!childLang) continue;
+
+      if (!curNodeLang) {
+        curNodeLang = childLang;
+        continue;
+      }
+
+      if (curNodeLang.split('-')[0] !== childLang.split('-')[0]) {
+        return null;
+      }
+    }
+
+    return curNodeLang ?? node.closest('[lang]')?.getAttribute('lang') ?? null;
+  }
+
   /** @type {Array<HTMLAnchorElement|SVGAElement>} */
   // @ts-expect-error - put into scope via stringification
   const anchorElements = getElementsInDocument('a'); // eslint-disable-line no-undef
+
+  // Check, if document has only one lang attribute in opening html or in body tag. If so,
+  // there is no need to run the `getLangOfInnerText()` function with multiple
+  // possible DOM traversals
+  /** @type {Array<HTMLElement|SVGElement>} */
+  // @ts-expect-error - put into scope via stringification
+  const langElements = getElementsInDocument('[lang]'); // eslint-disable-line no-undef
+  const documentHasSingleLang = langElements.length === 1 &&
+    (langElements[0].nodeName === 'BODY' || langElements[0].nodeName === 'HTML');
+  const singleLang = documentHasSingleLang ? langElements[0].getAttribute('lang') : null;
+
+  // TODO: consider Content-Language.
 
   return anchorElements.map(node => {
     if (node instanceof HTMLAnchorElement) {
@@ -51,6 +90,7 @@ function collectAnchorElements() {
         role: node.getAttribute('role') || '',
         name: node.name,
         text: node.innerText, // we don't want to return hidden text, so use innerText
+        textLang: singleLang ?? getLangOfInnerText(node) ?? undefined,
         rel: node.rel,
         target: node.target,
         id: node.getAttribute('id') || '',
@@ -66,6 +106,7 @@ function collectAnchorElements() {
       onclick: getTruncatedOnclick(node),
       role: node.getAttribute('role') || '',
       text: node.textContent || '',
+      textLang: singleLang ?? getLangOfInnerText(node) ?? undefined,
       rel: '',
       target: node.target.baseVal || '',
       id: node.getAttribute('id') || '',

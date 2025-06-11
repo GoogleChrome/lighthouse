@@ -38,11 +38,10 @@ function main() {
 
   // Listen for analytics events from main report.
   document.addEventListener('lh-analytics', e => {
-    const ce = /** @type {CustomEvent<{cmd: string, fields: UniversalAnalytics.FieldsObject}>} */
-      (e);
+    const ce = /** @type {CustomEvent<{name: string, data?: {}}>} */(e);
 
-    if (window.ga) {
-      window.ga(ce.detail.cmd, ce.detail.fields);
+    if ('gtag' in window) {
+      window.gtag('event', ce.detail.name, ce.detail.data ?? {});
     }
   });
 

@@ -61,7 +61,7 @@ class HTTPS extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'InspectorIssues'],
+      requiredArtifacts: ['DevtoolsLog', 'InspectorIssues'],
     };
   }
 
@@ -71,7 +71,7 @@ class HTTPS extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLogs = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
     const insecureURLs = networkRecords
       .filter(record => !NetworkRequest.isSecureRequest(record))
@@ -86,7 +86,7 @@ class HTTPS extends Audit {
       {key: 'resolution', valueType: 'text', label: str_(UIStrings.columnResolution)},
     ];
 
-    for (const details of artifacts.InspectorIssues.mixedContentIssue) {
+    for (const details of artifacts.InspectorIssues.mixedContentIssue ?? []) {
       let item = items.find(item => item.url === details.insecureURL);
       if (!item) {
         item = {url: details.insecureURL};

@@ -41,7 +41,14 @@ interface Result {
   /** List of top-level warnings for this Lighthouse run. */
   runWarnings: string[];
   /** A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. */
-  runtimeError?: {code: string, message: string};
+  runtimeError?: {
+    code: string;
+    message: string;
+    /** Error stack from any fatal error. */
+    errorStack?: string;
+    /** Artifact the threw the fatal error. */
+    artifactKey?: string;
+  };
   /** The User-Agent string of the browser used run Lighthouse for these results. */
   userAgent: string;
   /** Information about the environment in which Lighthouse was run. */

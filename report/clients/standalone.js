@@ -10,8 +10,6 @@
  * The renderer code is bundled and injected into the report HTML along with the JSON report.
  */
 
-/* global ga */
-
 import {renderReport} from '../renderer/api.js';
 import {Logger} from '../renderer/logger.js';
 
@@ -29,8 +27,12 @@ function __initLighthouseReport__() {
   document.body.append(reportRootEl);
 
   document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
-    // @ts-expect-error
-    if (window.ga) ga(e.detail.cmd, e.detail.fields);
+    const ce = /** @type {CustomEvent<{name: string, data?: {}}>} */(e);
+
+    if ('gtag' in window) {
+      // @ts-expect-error
+      window.gtag('event', ce.detail.name, ce.detail.data ?? {});
+    }
   });
 
   document.addEventListener('lh-log', /** @param {Event} e */ e => {

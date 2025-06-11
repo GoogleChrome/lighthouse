@@ -660,7 +660,10 @@
     "message": "Sử dụng các định dạng video cho nội dung động"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Đối với JavaScript trong gói của bạn, hãy áp dụng chiến lược triển khai tập lệnh hiện đại bằng cách dùng cơ chế phát hiện tính năng theo mô-đun/không theo mô-đun để giảm số lượng mã gửi đến trình duyệt hiện đại trong khi vẫn tiếp tục hỗ trợ cho trình duyệt cũ. [Tìm hiểu cách sử dụng JavaScript hiện đại](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/baseline), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Phát hiện phiên bản 2 của core-js trên trang này. Bạn nên nâng cấp lên phiên bản 3 để sử dụng nhiều cải tiến về hiệu suất."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Tránh phân phối JavaScript cũ tới các trình duyệt hiện đại"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Bật tính năng nén văn bản"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Mức độ nghiêm trọng"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Tiêu đề `X-Frame-Options` (XFO) hoặc lệnh `frame-ancestors` trong tiêu đề `Content-Security-Policy` (CSP) kiểm soát nơi có thể nhúng trang. Những tính năng này có thể giảm thiểu các cuộc tấn công clickjacking bằng cách chặn một số hoặc tất cả trang web nhúng trang đó. [Tìm hiểu thêm về cách giảm thiểu các cuộc tấn công clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Không tìm thấy chính sách kiểm soát khung"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Giảm thiểu các cuộc tấn công clickjacking bằng XFO hoặc CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Các Chuỗi yêu cầu quan trọng dưới đây cho bạn biết những tài nguyên được tải ở mức độ ưu tiên cao. Hãy cân nhắc giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang. [Tìm hiểu cách tránh tạo chuỗi yêu cầu quan trọng](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse không thể tự động kiểm tra `font-display` giá trị cho nguồn gốc {fontOrigin}.}other{Lighthouse không thể tự động kiểm tra `font-display` giá trị cho nguồn gốc {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Lệnh"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Mức độ nghiêm trọng"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Việc triển khai tiêu đề HSTS giúp giảm đáng kể nguy cơ bị tấn công nghe lén và hạ cấp kết nối HTTP. Bạn nên triển khai theo từng giai đoạn, bắt đầu từ max-age (thời gian tối đa mà các phản hồi đã tìm nạp được phép dùng lại) tối đa thấp. [Tìm hiểu thêm về việc sử dụng chính sách HSTS mạnh.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Cú pháp không hợp lệ"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` quá thấp"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Không tìm thấy tiêu đề Bảo mật truyền tải nghiêm ngặt HTTP (HSTS)"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Không có lệnh `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Không tìm thấy lệnh `preload` nào"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Không tìm thấy lệnh `includeSubDomains` nào"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Sử dụng chính sách HSTS mạnh"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Tỷ lệ khung hình (Thực tế)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Phân phối hình ảnh có độ phân giải phù hợp"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Điểm số về mức thay đổi bố cục"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Được phép"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "iframe được chèn"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Yêu cầu kết nối mạng chậm trễ đã điều chỉnh bố cục trang"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Phần tử nội dung đa phương tiện không có kích thước rõ ràng"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Hiệu ứng có tham số thời gian không được hỗ trợ"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Lệnh"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Mức độ nghiêm trọng"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Chính sách Cross-Origin-Opener-Policy (COOP) có thể được dùng để tách biệt cửa sổ cấp cao nhất với các tài liệu khác như cửa sổ bật lên. [Tìm hiểu thêm về việc triển khai tiêu đề COOP.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Cú pháp không hợp lệ"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Không tìm thấy tiêu đề COOP"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Đảm bảo tách biệt nguồn gốc theo cách phù hợp bằng COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Tải trước phông chữ có `optional` để khách truy cập lần đầu có thể sử dụng. [Tìm hiểu thêm về cách tải trước phông chữ](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Đã phát hiện thao tác điều hướng trang trong quá trình chạy. Bạn không nên sử dụng chế độ khoảng thời gian để kiểm tra các thao tác điều hướng trang. Sử dụng chế độ điều hướng để kiểm tra các thao tác điều hướng trang nhằm cải thiện việc phát hiện luồng chính và thuộc tính của bên thứ ba."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Chỉ những trang được tải qua yêu cầu GET mới đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Chỉ những trang có mã trạng thái là 2XX mới được lưu vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome đã phát hiện thấy một lần thử thực thi JavaScript khi đang ở bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Những trang đã yêu cầu AppBanner hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do có yêu cầu duy trì hoạt động."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do cờ. Hãy truy cập chrome://flags/#back-forward-cache để bật bộ nhớ đó trên thiết bị này."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do dòng lệnh."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do thiếu bộ nhớ."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Trang được uỷ quyền không hỗ trợ bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt đối với trình kết xuất trước."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Không thể lưu trang này vào bộ nhớ đệm vì trang có một thực thể BroadcastChannel chứa các trình nghe đã đăng ký."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Những trang có tiêu đề cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Bộ nhớ đệm này đã bị xoá một cách có chủ đích."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Những trang có chứa trình bổ trợ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Những trang sử dụng API FileChooser không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Những trang sử dụng API Truy cập hệ thống tệp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Những trang sử dụng Trình điều phối thiết bị truyền thông không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Một trình phát đa phương tiện đang phát khi rời khỏi."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Những trang sử dụng API MediaSession và đặt một trạng thái phát không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Những trang sử dụng API MediaSession và đặt các trình xử lý hành động hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do trình đọc màn hình."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Những trang sử dụng SecurityHandler không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Những trang sử dụng API nối tiếp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Những trang sử dụng WebAuthentication API không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Những trang sử dụng API WebBluetooth không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Những trang sử dụng API WebUSB không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các cookie bị tắt trên một trang sử dụng `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Những trang sử dụng một trình xử lý hoặc worklet riêng hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Tài liệu này chưa tải xong trước khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "App Banner xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Trình quản lý mật khẩu của Chrome xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Quy trình lọc DOM đang diễn ra trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích sử dụng API nhắn tin."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Các tiện ích có kết nối liên tục phải ngắt kết nối trước khi chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Các tiện ích có kết nối liên tục đã cố gắng gửi thông báo đến các khung trong bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Hộp thoại phương thức (chẳng hạn như gửi lại biểu mẫu) hoặc hộp thoại mật khẩu http xuất hiện trên trang trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Trang ngoại tuyến xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Thanh Out-Of-Memory Intervention xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Có yêu cầu cấp quyền trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Trình chặn cửa sổ bật lên xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Thông tin chi tiết về công cụ Duyệt web an toàn xuất hiện trong khi rời đi."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Công cụ Duyệt web an toàn coi trang này là một cửa sổ bật lên sai mục đích và bị chặn."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Một trình chạy dịch vụ đã được kích hoạt khi trang này đang ở bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do lỗi tài liệu."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Không lưu trữ được trang dùng FencedFrames vào bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Những trang đã cấp quyền truy cập luồng đa phương tiện hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Những trang sử dụng cổng thông tin hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Những trang sử dụng IdleManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Những trang có kết nối IndexedDB mở hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do sự kiện IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Các API được sử dụng không đủ điều kiện."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Các trang có `JavaScript` do tiện ích chèn vào hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Các trang có `StyleSheet` do tiện ích chèn vào hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Lỗi nội bộ."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do có yêu cầu duy trì hoạt động."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Những trang sử dụng tính năng Khoá bàn phím hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Trang này chưa tải xong trước khi rời khỏi."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Những trang có tài nguyên chính chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Những trang có tài nguyên chính chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Thao tác di chuyển đã bị huỷ trước khi có thể khôi phục trang từ bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng đang hoạt động đã nhận quá nhiều dữ liệu. Chrome giới hạn lượng dữ liệu mà một trang có thể nhận trong khi được lưu vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Những trang có tính năng tìm nạp() hoặc XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi vì một yêu cầu mạng đang hoạt động đã dẫn đến lệnh chuyển hướng."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng ở trạng thái mở quá lâu. Chrome giới hạn khoảng thời gian mà một trang có thể nhận dữ liệu trong khi được lưu vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Những trang không có tiêu đề phản hồi hợp lệ không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Thao tác di chuyển đã diễn ra trong một khung không phải khung chính."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Trang có các giao dịch đang diễn ra trên cơ sở dữ liệu đã lập chỉ mục hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Những trang có yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Những trang có một yêu cầu mạng tìm nạp đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Những trang có yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Những trang có một yêu cầu mạng XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Những trang sử dụng PaymentManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Những trang sử dụng tính năng Hình trong hình hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Những trang sử dụng cổng thông tin hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Những trang hiển thị Giao diện người dùng cho thao tác in hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Trang này đã được mở bằng \"`window.open()`\" và có một thẻ khác tham chiếu đến thành phần đó, hoặc trang này đã mở một cửa sổ."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã gặp sự cố."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Những trang đã yêu cầu quyền ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Những trang đã yêu cầu quyền truy cập cảm biến hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Những trang đã yêu cầu quyền tìm nạp hoặc đồng bộ hoá dưới nền hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Những trang đã yêu cầu quyền MIDI hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Những trang đã yêu cầu quyền gửi thông báo hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Những trang đã yêu cầu quyền truy cập bộ nhớ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Những trang đã yêu cầu quyền quay video hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Chỉ những trang có lược đồ URL là HTTP/HTTPS mới được lưu vào bộ nhớ đệm."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Trang này đã được một trình chạy dịch vụ xác nhận khi đang ở bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Một trình chạy dịch vụ đã cố gửi một `MessageEvent` cho trang trong bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorker đã bị huỷ đăng ký khi một trang đang ở bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi do việc kích hoạt một trình chạy dịch vụ."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome đã khởi động lại và xoá các mục trong bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Những trang sử dụng SharedWorker hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Những trang sử dụng SpeechRecognizer hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Những trang sử dụng SpeechSynthesis hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Một iframe trên trang này đã bắt đầu một thao tác di chuyển chưa hoàn tất."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Những trang có tài nguyên phụ chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Những trang có tài nguyên phụ chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Trang này đã vượt quá thời gian tối đa trong bộ nhớ đệm cho thao tác tiến/lùi và đã hết hạn."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Trang này đã hết thời gian chờ chuyển sang bộ nhớ đệm cho thao tác tiến/lùi (khả năng là do các trình xử lý ẩn trang chạy trong thời gian dài)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Trang này có một trình xử lý huỷ tải trong khung chính."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Trang này có một trình xử lý huỷ tải trong khung phụ."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Trình duyệt đã thay đổi tiêu đề ghi đè tác nhân người dùng."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Những trang đã cấp quyền quay video hoặc ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Những trang sử dụng WebDatabase hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Những trang sử dụng WebHID hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Những trang sử dụng WebLocks hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Những trang sử dụng WebNfc hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Những trang sử dụng WebOTPService hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Những trang có WebRTC không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Những trang sử dụng WebShare hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Những trang có WebSocket không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Những trang có WebTransport không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Những trang sử dụng WebXR hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Hãy cân nhắc thêm giao thức URL https: và http: (bị các trình duyệt hỗ trợ `'strict-dynamic'` bỏ qua) để đảm bảo khả năng tương thích ngược với những trình duyệt cũ."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "Đang dùng một tính năng không dùng nữa"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Ký tự đại diện (*) sẽ không bao gồm việc uỷ quyền khi xử lý `Access-Control-Allow-Headers` CORS."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Nên sử dụng thuộc tính `disableRemotePlayback`nhằm tắt chế độ tích hợp Truyền mặc định thay vì sử dụng bộ chọn `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Các yêu cầu tài nguyên có URL chứa cả ký tự `(n|r|t)` khoảng trắng đã bị xoá và ký tự nhỏ hơn (`<`) sẽ bị chặn. Vui lòng xoá các dòng mới và mã hoá ký tự nhỏ hơn khỏi các vị trí như giá trị thuộc tính phần tử để tải những tài nguyên như vậy."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: `nextHopProtocol` trong Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Cookie có chứa ký tự `(0|r|n)` sẽ bị từ chối thay vì cắt bớt."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Hệ thống không còn thiết lập `document.domain` để nới lỏng chính sách cùng nguồn gốc nữa và tính năng này sẽ bị tắt theo mặc định. Cảnh bảo về việc không dùng nữa này là dành cho quyền truy cập nhiều nguồn gốc đã được bật bằng cách thiết lập `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Tính năng kích hoạt window.alert qua các iframe trên nhiều nguồn gốc không được dùng nữa và sẽ bị loại bỏ trong tương lai."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Tính năng kích hoạt window.confirm qua các iframe trên nhiều nguồn gốc không được dùng nữa và sẽ bị loại bỏ trong tương lai."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Các Sự kiện đột biến DOM, trong đó có `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` và `DOMCharacterDataModified`, không được dùng nữa (https://w3c.github.io/uievents/#legacy-event-types) và sẽ bị loại bỏ. Thay vào đó, vui lòng sử dụng `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Hỗ trợ về dữ liệu: Các URL trong phần tử <use> của SVG không được dùng nữa và sẽ bị loại bỏ trong tương lai."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Hệ thống không còn thiết lập `document.domain` để nới lỏng chính sách cùng nguồn gốc nữa và tính năng này sẽ bị tắt theo mặc định. Để tiếp tục sử dụng tính năng này, vui lòng chọn không sử dụng cụm tác nhân dùng khoá gốc bằng cách gửi một tiêu đề `Origin-Agent-Cluster: ?0` kèm theo phản hồi HTTP cho tài liệu và khung. Xem https://developer.chrome.com/blog/immutable-document-domain/ để biết thêm chi tiết."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Tiêu đề `Expect-CT` không được dùng nữa và sẽ bị xoá. Chrome yêu cầu Tính minh bạch của chứng chỉ đối với tất cả chứng chỉ được tin cậy công khai cấp sau ngày 30 tháng 4 năm 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` và `watchPosition()` không còn hoạt động trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` và `watchPosition()` không còn được dùng trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` không còn hoạt động trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` không được dùng nữa. Thay vào đó, hãy sử dụng `RTCPeerConnectionIceErrorEvent.address` hoặc `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Nguồn gốc của bên bán và dữ liệu bất kỳ trong sự kiện `canmakepayment` của trình chạy dịch vụ không được dùng nữa và sẽ bị loại bỏ: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Trang web này đã yêu cầu một tài nguyên phụ qua một mạng mà trang web này chỉ truy cập được do có vị thế mạng đặc quyền của người dùng. Những yêu cầu như vậy làm lộ các thiết bị và máy chủ không công khai trên Internet, làm tăng nguy cơ bị tấn công giả mạo yêu cầu trên nhiều trang web (CSRF) và/hoặc rò rỉ thông tin. Để giảm thiểu những rủi ro này, Chrome sẽ ngừng yêu cầu các nguồn phụ không công khai khi được khởi tạo từ các ngữ cảnh không an toàn và sẽ bắt đầu chặn những yêu cầu đó."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Trường `dailyUpdateUrl` của `InterestGroups` được truyền đến `joinAdInterestGroup()` đã được đổi tên thành `updateUrl` để phản ánh chính xác hơn hành vi của trường này."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "Không tải được CSS qua các URL `file:` trừ phi chúng kết thúc bằng đuôi tệp `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Hệ thống không dùng `SourceBuffer.abort()` để huỷ việc xoá khoảng không đồng bộ của `remove()` nữa do thay đổi về quy cách. Sau này chế độ hỗ trợ cũng sẽ bị xoá. Thay vào đó, bạn nên nghe sự kiện `updateend`. Mục đích của `abort()` chỉ là huỷ lệnh thêm nội dung nghe nhìn không đồng bộ (asynchronous media append) hoặc đặt lại trạng thái của trình phân tích cú pháp."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Do thay đổi về quy cách, hệ thống không còn dùng chế độ đặt giá trị dưới dấu thời gian trình bày cao nhất cho `MediaSource.duration` nữa đối với mọi khung đã mã hoá và lưu vào vùng đệm. Chế độ hỗ trợ yêu cầu xoá tường minh cho nội dung phương tiện lưu trong bộ đệm bị cắt bớt sau này cũng sẽ bị xoá. Bạn nên triển khai lệnh `remove(newDuration, oldDuration)` tường minh trên mọi `sourceBuffers`, khi `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI sẽ yêu cầu cấp quyền sử dụng ngay cả khi `MIDIOptions` không chỉ rõ sysex."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Thuộc tính `shadowroot` cũ, không chuẩn hoá không được dùng nữa và sẽ *không còn hoạt động* trong M119. Thay vào đó, vui lòng sử dụng thuộc tính `shadowrootmode` mới và đã chuẩn hoá."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Có thể Notification API không còn được dùng qua các nguồn gốc không an toàn. Bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Có thể quyền cho Notification API không còn được yêu cầu qua một iframe nhiều nguồn gốc nữa. Thay vào đó, bạn nên cân nhắc việc yêu cầu quyền qua một khung cấp cao hoặc mở một cửa sổ mới."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Tuỳ chọn `imageOrientation: 'none'` trong createImageBitmap không được dùng nữa. Thay vào đó, vui lòng sử dụng createImageBitmap bằng tuỳ chọn \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Đối tác của bạn đang đàm phán một phiên bản (D)TLS đã lỗi thời. Vui lòng trao đổi với đối tác của bạn để khắc phục."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Việc chỉ định `overflow: visible` trên thẻ img, video và canvas có thể khiến các thẻ này tạo ra nội dung hình ảnh bên ngoài ranh giới thành phần. Xem tại https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` không được dùng nữa. Vui lòng sử dụng chế độ cài đặt đúng thời điểm cho trình xử lý thanh toán."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Lệnh gọi `PaymentRequest` của bạn đã bỏ qua chỉ thị `connect-src` của Chính sách bảo mật nội dung (CSP). Chế độ bỏ qua này không được dùng nữa. Vui lòng thêm giá trị nhận dạng phương thức thanh toán từ API `PaymentRequest` (trong trường `supportedMethods`) vào chỉ thị `connect-src` của CSP."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` không được dùng nữa. Vui lòng sử dụng `navigator.storage` đã chuẩn hoá."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` có phần tử mẹ `<picture>` không hợp lệ nên sẽ bị bỏ qua. Thay vào đó, vui lòng sử dụng `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame là phương thức tuỳ theo nhà cung cấp cụ thể. Thay vào đó, vui lòng sử dụng cancelAnimationFrame tiêu chuẩn."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame là phương thức tuỳ theo nhà cung cấp cụ thể. Thay vào đó, vui lòng sử dụng requestAnimationFrame tiêu chuẩn."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Chúng tôi sẽ không dùng API `chrome.privacy.websites.privacySandboxEnabled` nữa. Tuy nhiên, API này sẽ vẫn hoạt động nhằm đảm bảo khả năng tương thích ngược cho đến khi phát hành phiên bản M113. Thay vào đó, vui lòng sử dụng `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` và `chrome.privacy.websites.adMeasurementEnabled`. Truy cập vào https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Điều kiện hạn chế `DtlsSrtpKeyAgreement` đã bị xoá. Bạn đã chỉ định một giá trị `false` cho điều kiện hạn chế này, đây được coi là nỗ lực sử dụng phương thức `SDES key negotiation` đã bị xoá. Chức năng này đã bị xoá; thay vào đó, hãy sử dụng một dịch vụ có hỗ trợ `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Điều kiện hạn chế `DtlsSrtpKeyAgreement` đã bị xoá. Bạn đã chỉ định một giá trị `true` cho điều kiện hạn chế này, việc này không có tác dụng gì nhưng bạn có thể xoá điều kiện hạn chế này cho gọn gàng."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Phương thức getStats() dựa trên lệnh gọi lại không được dùng nữa và sẽ bị loại bỏ. Thay vào đó, hãy sử dụng getStats() tuân thủ quy cách."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() không được dùng nữa. Thay vào đó, vui lòng sử dụng Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Yêu cầu tài nguyên phụ có URL chứa thông tin xác thực được nhúng (ví dụ: `https://user:pass@host/`) sẽ bị chặn."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Tuỳ chọn `rtcpMuxPolicy` không được dùng nữa và sẽ bị xoá."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` sẽ đòi hỏi việc tách biệt nhiều nguồn gốc. Xem https://developer.chrome.com/blog/enabling-shared-array-buffer/ để biết thêm thông tin."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Khi không có hoạt động kích hoạt của người dùng, `speechSynthesis.speak()` không được dùng nữa và sẽ bị loại bỏ."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Các tiện ích phải chọn sử dụng chế độ tách biệt nhiều nguồn gốc để có thể tiếp tục sử dụng `SharedArrayBuffer`. Xem https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL không được dùng nữa. Vui lòng sử dụng SQLite WebAssembly hoặc Cơ sở dữ liệu được lập chỉ mục"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Bộ mô tả quyền `window-placement` không được dùng nữa. Thay vào đó, hãy sử dụng `window-management`. Để được trợ giúp thêm, hãy xem https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Chính sách quyền `window-placement` không được dùng nữa. Thay vào đó, hãy sử dụng `window-management`. Để được trợ giúp thêm, hãy xem https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "JSON phản hồi không hỗ trợ UTF-16 trong `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Tính năng `XMLHttpRequest` đồng bộ trên luồng chính không được dùng nữa do có tác động không tốt đối với trải nghiệm của người dùng cuối. Để được trợ giúp thêm, hãy xem https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` không được dùng nữa. Thay vào đó, hãy sử dụng `isSessionSupported()` và kiểm tra giá trị boolean đã phân giải."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Thời gian chặn chuỗi chính"
@@ -2402,11 +1937,14 @@
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Bên thứ ba"
   },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Tổng"
+  },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "core/lib/i18n/i18n.js | totalResourceType": {
-    "message": "Tổng"
+    "message": "Tổng"
   },
   "core/lib/lh-error.js | badTraceRecording": {
     "message": "Đã xảy ra lỗi khi ghi dấu vết quá trình tải trang của bạn. Vui lòng chạy lại Lighthouse. ({errorCode})"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Báo cáo luồng người dùng Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Ký tự đại diện (*) sẽ không bao gồm việc uỷ quyền khi xử lýAccess-Control-Allow-Headers CORS."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Nền sử dụng thuộc tính disableRemotePlaybacknhằm tắt chế độ tích hợp Truyền mặc định thay vì sử dụng bộ chọn -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Giá trị của giao diện CSS slider-vertical không được chuẩn hoá và sẽ bị xoá."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Các yêu cầu tài nguyên có URL chứa cả ký tự \\(n|r|t) khoảng trắng đã bị xoá và ký tự nhỏ hơn (<) sẽ bị chặn. Vui lòng xoá các dòng mới và mã hoá ký tự nhỏ hơn khỏi các vị trí như giá trị thuộc tính phần tử để tải những tài nguyên như vậy."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Tính năng tự động phát hiện bộ ký tự ISO-2022-JP không được dùng nữa và sẽ bị tắt trong tương lai gần. Vui lòng chỉ định bộ ký tự trong tiêu đề Loại nội dung hoặc bằng cách sử dụng thẻ meta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: nextHopProtocol trong Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookie có chứa ký tự \\(0|r|n) sẽ bị từ chối thay vì cắt bớt."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Hệ thống không còn thiết lập document.domain để nới lỏng chính sách cùng nguồn gốc nữa và tính năng này sẽ bị tắt theo mặc định. Cảnh bảo về việc không dùng nữa này là dành cho quyền truy cập nhiều nguồn gốc đã được bật bằng cách thiết lập document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Tính năng kích hoạt window.alert qua các iframe trên nhiều nguồn gốc không được dùng nữa và sẽ bị loại bỏ trong tương lai."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Tính năng kích hoạt window.confirm qua các iframe trên nhiều nguồn gốc không được dùng nữa và sẽ bị loại bỏ trong tương lai."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "Các Sự kiện đột biến DOM, trong đó có DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument và DOMCharacterDataModified, không được dùng nữa (https://w3c.github.io/uievents/#legacy-event-types) và sẽ bị loại bỏ. Thay vào đó, vui lòng sử dụng MutationObserver."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Hỗ trợ về dữ liệu: Các URL trong SVGUseElement không được dùng nữa và sẽ bị loại bỏ trong tương lai."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() và watchPosition() không còn hoạt động trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() và watchPosition() không được dùng nữa trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() không còn hoạt động trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "Đã tìm thấy thẻ <h1> trong <article>, <aside>, <nav> hoặc <section> không có cỡ chữ được chỉ định. Kích cỡ của văn bản tiêu đề này sẽ thay đổi trong trình duyệt này trong thời gian sắp tới. Hãy truy cập vào https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate không còn hoạt động. Thay vào đó, hãy sử dụng RTCPeerConnectionIceErrorEvent.address hoặc RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Định dạng này dùng cho yêu cầu cung cấp thông tin đăng nhập kỹ thuật số navigator.credentials.get() không còn được dùng nữa. Vui lòng cập nhật lệnh gọi để sử dụng định dạng mới."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Nguồn gốc của bên bán và dữ liệu bất kỳ trong sự kiện canmakepayment của trình chạy dịch vụ không được dùng nữa và sẽ bị loại bỏ: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Trang web này đã yêu cầu một tài nguyên phụ qua một mạng mà trang web này chỉ truy cập được do có vị thế mạng đặc quyền của người dùng. Những yêu cầu như vậy làm lộ các thiết bị và máy chủ không công khai trên Internet, làm tăng nguy cơ bị tấn công giả mạo yêu cầu trên nhiều trang web (CSRF) và/hoặc rò rỉ thông tin. Để giảm thiểu những rủi ro này, Chrome sẽ ngừng yêu cầu các nguồn phụ không công khai khi được khởi tạo từ các ngữ cảnh không an toàn và sẽ bắt đầu chặn những yêu cầu đó."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Trường dailyUpdateUrl của InterestGroups được truyền đến joinAdInterestGroup() đã được đổi tên thành updateUrl để phản ánh chính xác hơn hành vi của trường này."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator không được dùng nữa. Thay vào đó, hãy sử dụng Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "Không tải được CSS qua các URL file: trừ phi chúng kết thúc bằng đuôi tệp .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Hệ thống không dùng SourceBuffer.abort() để huỷ việc xoá khoảng không đồng bộ của remove() nữa do thay đổi về quy cách. Sau này chế độ hỗ trợ cũng sẽ bị xoá. Thay vào đó, bạn nên nghe sự kiện updateend. Mục đích của abort() chỉ là huỷ lệnh thêm nội dung nghe nhìn không đồng bộ (asynchronous media append) hoặc đặt lại trạng thái của trình phân tích cú pháp."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Do thay đổi về quy cách, hệ thống không còn dùng chế độ đặt giá trị dưới dấu thời gian trình bày cao nhất cho MediaSource.duration nữa đối với mọi khung đã mã hoá và lưu vào vùng đệm. Chế độ hỗ trợ yêu cầu xoá tường minh cho nội dung phương tiện lưu trong bộ đệm bị cắt bớt sau này cũng sẽ bị xoá. Bạn nên triển khai lệnh remove(newDuration, oldDuration) tường minh trên mọi sourceBuffers, khi newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI sẽ yêu cầu cấp quyền sử dụng ngay cả khi MIDIOptions không chỉ rõ sysex."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Có thể Notification API không được dùng nữa qua các nguồn gốc không an toàn. Bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Có thể quyền cho Notification API không còn được yêu cầu qua một iframe nhiều nguồn gốc nữa. Thay vào đó, bạn nên cân nhắc việc yêu cầu quyền qua một khung cấp cao hoặc mở một cửa sổ mới."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Tuỳ chọn imageOrientation: 'none' trong createImageBitmap không được dùng nữa. Thay vào đó, vui lòng sử dụng createImageBitmap bằng tuỳ chọn '\\\\{imageOrientation: 'from-image'\\\\}'."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Đối tác của bạn đang đàm phán một phiên bản (D)TLS đã lỗi thời. Vui lòng trao đổi với đối tác của bạn để khắc phục."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Việc chỉ định overflow: visible trên thẻ img, video và canvas có thể khiến các thẻ này tạo ra nội dung hình ảnh bên ngoài ranh giới thành phần. Xem tại https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments không được dùng nữa. Vui lòng sử dụng chế độ cài đặt đúng thời điểm cho trình xử lý thanh toán."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Lệnh gọi PaymentRequest của bạn đã bỏ qua chỉ thị connect-src của Chính sách bảo mật nội dung (CSP). Chế độ bỏ qua này không được dùng nữa. Vui lòng thêm giá trị nhận dạng phương thức thanh toán từ API PaymentRequest (trong trường supportedMethods) vào chỉ thị connect-src của CSP."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent không còn hoạt động. Thay vào đó, vui lòng sử dụng navigator.storage đã chuẩn hoá."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> có phần tử mẹ <picture> là không hợp lệ nên sẽ bị bỏ qua. Thay vào đó, vui lòng sử dụng <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame là phương thức có tiền tố nhà cung cấp. Thay vào đó, vui lòng sử dụng cancelAnimationFrame tiêu chuẩn."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame là phương thức có tiền tố nhà cung cấp. Thay vào đó, vui lòng sử dụng requestAnimationFrame tiêu chuẩn."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() không được dùng nữa. Thay vào đó, vui lòng sử dụng Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen không còn được dùng nữa. Thay vào đó, vui lòng sử dụng Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Chúng tôi sẽ không dùng API chrome.privacy.websites.privacySandboxEnabled nữa. Tuy nhiên, API này sẽ vẫn hoạt động nhằm đảm bảo khả năng tương thích ngược cho đến khi phát hành phiên bản M113. Thay vào đó, vui lòng sử dụng chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled và chrome.privacy.websites.adMeasurementEnabled. Truy cập vào https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Điều kiện hạn chế DtlsSrtpKeyAgreement đã bị xoá. Bạn đã chỉ định một giá trị false cho điều kiện hạn chế này, đây được coi là nỗ lực sử dụng phương thức SDES key negotiation đã bị xoá. Chức năng này đã bị xoá; thay vào đó, hãy sử dụng một dịch vụ có hỗ trợ DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Điều kiện hạn chế DtlsSrtpKeyAgreement đã bị xoá. Bạn đã chỉ định một giá trị true cho điều kiện hạn chế này, việc này không có tác dụng gì nhưng bạn có thể xoá điều kiện hạn chế này cho gọn gàng."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Phương thức getStats() dựa trên lệnh gọi lại không được dùng nữa và sẽ bị loại bỏ. Thay vào đó, hãy sử dụng getStats() tuân thủ quy cách."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() không được dùng nữa. Thay vào đó, vui lòng sử dụng Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Yêu cầu tài nguyên phụ có URL chứa thông tin xác thực được nhúng (ví dụ: https://user:pass@host/) sẽ bị chặn."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Tuỳ chọn rtcpMuxPolicy không được dùng nữa và sẽ bị xoá."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer sẽ đòi hỏi việc tách biệt nhiều nguồn gốc. Xem https://developer.chrome.com/blog/enabling-shared-array-buffer/ để biết thêm thông tin."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Khi không có hoạt động của người dùng, speechSynthesis.speak() không được dùng nữa và sẽ được loại bỏ."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Trình nghe sự kiện huỷ tải không dùng được nữa và sẽ bị loại bỏ."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Các tiện ích phải chọn sử dụng chế độ tách biệt nhiều nguồn gốc đẻ có thể tiếp tục sử dụng SharedArrayBuffer. Xem https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "JSON phản hồi không hỗ trợ UTF-16 trong XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Tính năng XMLHttpRequest đồng bộ trên luồng chính không được dùng nữa do có tác động không tốt đối với trải nghiệm của người dùng cuối. Để xem thêm thông tin trợ giúp, hãy tham khảo https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Ảnh động"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Bố cục thay đổi khi phần tử di chuyển mà không có sự tương tác của người dùng. [Hãy tìm hiểu nguyên nhân bố cục thay đổi](https://web.dev/articles/optimize-cls), chẳng hạn như phần tử được thêm, bị xoá hoặc phông chữ của phần tử thay đổi khi trang tải."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Yêu cầu phông chữ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "iframe được chèn"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Cụm thay đổi bố cục @ {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Không phát hiện ra nguyên nhân thay đổi bố cục"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Không có sự thay đổi bố cục"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Nguyên nhân làm thay đổi bố cục"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Nguyên nhân làm thay đổi bố cục thường gặp nhất"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Hình ảnh chưa xác định kích thước"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Cụm tệ nhất"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Cụm thay đổi bố cục tệ nhất"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Thời gian tồn tại (TTL) của bộ nhớ đệm"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Bộ nhớ đệm có thời gian hữu dụng dài có thể giúp tăng tốc số lượt truy cập lặp lại vào trang của bạn. [Tìm hiểu thêm](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Không yêu cầu nào có chính sách bộ nhớ đệm không hiệu quả"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} mục khác"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Yêu cầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Sử dụng thời gian hữu dụng của bộ nhớ đệm hiệu quả"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "DOM lớn có thể làm các phép tính về kiểu và quy trình trình bày lại bố cục dài hơn, ảnh hưởng đến tốc độ phản hồi của trang. DOM lớn cũng sẽ làm tăng mức sử dụng bộ nhớ. [Tìm hiểu cách tránh kích thước DOM quá lớn](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Phần tử"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Hầu hết trẻ em"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Chiều sâu DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Thống kê"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "Tối ưu hoá kích thước DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Tổng số phần tử"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Giá trị"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Yêu cầu mạng đầu tiên là quan trọng nhất.  Giảm độ trễ bằng cách tránh dùng đường liên kết chuyển hướng, đảm bảo máy chủ phản hồi nhanh và bật tính năng nén văn bản."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Không áp dụng tính năng nén"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Tránh chuyển hướng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Áp dụng tính năng nén văn bản"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Chuyển hướng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Thời gian phản hồi của máy chủ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Độ trễ khi yêu cầu tài liệu"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Tải xuống bản không nén"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Số byte trùng lặp"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Nguồn"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Xoá các mô-đun JavaScript trùng lặp lớn khỏi gói để giảm số byte mà hoạt động mạng tiêu thụ không cần thiết."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "JavaScript trùng lặp"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Hãy cân nhắc đặt [font-display](https://developer.chrome.com/blog/font-display) thành swap hoặc optional để đảm bảo văn bản hiển thị nhất quán. Có thể tối ưu hoá swap hơn nữa để giảm thiểu thay đổi bố cục bằng thuộc tính [ghi đè chỉ số phông chữ](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Phông chữ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Hiển thị phông chữ"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Thời gian bị lãng phí"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(ẩn danh)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Nhiều API, thường đọc hình học bố cục, buộc công cụ kết xuất phải tạm dừng thực thi tập lệnh để tính toán kiểu và bố cục. Tìm hiểu thêm về [chế độ buộc chỉnh lại luồng](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) và cách giảm thiểu tác động của chế độ này."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Dấu vết ngăn xếp"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Buộc chỉnh lại luồng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Lệnh gọi hàm hàng đầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Tổng thời gian chỉnh lại luồng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[chưa được phân bổ]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Việc giảm thời gian tải hình ảnh xuống có thể cải thiện thời gian tải trang và LCP được cảm nhận. [Tìm hiểu thêm về cách tối ưu hoá kích thước hình ảnh](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (Ước tính là {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Không có hình ảnh nào có thể tối ưu hoá"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Tối ưu hoá kích thước tệp"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} mục khác"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Cải thiện việc phân phối hình ảnh"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Việc tăng hệ số nén của hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Việc sử dụng định dạng hình ảnh hiện đại (WebP, AVIF) hoặc tăng độ nén của hình ảnh có thể cải thiện kích thước tải xuống của hình ảnh này."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Tệp hình ảnh này lớn hơn mức cần thiết ({PH1}) so với kích thước hiển thị ({PH2}). Hãy sử dụng hình ảnh thích ứng để giảm kích thước tải xuống của hình ảnh."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Việc sử dụng định dạng video thay vì GIF có thể cải thiện kích thước tải xuống của nội dung động."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Bắt đầu kiểm tra giai đoạn dài nhất. [Có thể giảm thiểu sự chậm trễ](https://web.dev/articles/optimize-inp#optimize_interactions). Để giảm thời gian xử lý, [hãy tối ưu hoá hiệu suất của luồng chính](https://web.dev/articles/optimize-long-tasks), thường là JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Thời lượng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Độ trễ khi nhập thông tin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Không phát hiện ra hoạt động tương tác nào"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Pha"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Độ trễ khi trình bày"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Thời gian xử lý"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP theo pha"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Tối ưu hoá LCP (Nội dung lớn nhất hiển thị) bằng cách giúp trình duyệt [có thể tìm thấy](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) hình ảnh LCP dựa vào HTML ngay lập tức và [tránh tải từng phần](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "Đã áp dụng giá trị \"high\" của thuộc tính fetchpriority"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Bạn nên áp dụng fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "chưa áp dụng phương thức tải từng phần"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Hình ảnh LCP được tải sau {PH1} kể từ thời điểm bắt đầu sớm nhất."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Không phát hiện ra LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Không phát hiện ra tài nguyên LCP vì LCP không phải là hình ảnh"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Có thể tìm thấy yêu cầu trong tài liệu ban đầu"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Phát hiện yêu cầu LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Mỗi [giai đoạn có một chiến lược cải thiện cụ thể](https://web.dev/articles/optimize-lcp#lcp-breakdown). Tốt nhất là thời gian hiển thị LCP (Nội dung lớn nhất hiển thị) nên được dùng để tải các tài nguyên thay vì bị chậm trễ."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Thời lượng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Độ trễ khi hiển thị phần tử"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "Nhóm 75 phần trăm của dữ liệu thực địa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Không phát hiện ra LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Pha"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Độ trễ khi tải tài nguyên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Thời lượng tải tài nguyên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Thời gian cho byte đầu tiên"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP theo pha"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Tập lệnh"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Số byte bị lãng phí"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/articles/baseline-and-polyfills), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "JavaScript cũ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 và HTTP/3 mang lại nhiều lợi ích hơn HTTP/1.1, chẳng hạn như ghép kênh. [Tìm hiểu thêm về cách sử dụng HTTP hiện đại](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Không có yêu cầu nào sử dụng HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Giao thức"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Yêu cầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "HTTP hiện đại"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Tránh tạo chuỗi các yêu cầu quan trọng](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Độ trễ tối đa của đường dẫn quan trọng:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Không có tác vụ kết xuất nào chịu ảnh hưởng của phần phụ thuộc mạng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Cây phần phụ thuộc mạng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Tránh tạo chuỗi các yêu cầu quan trọng bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Các yêu cầu đang chặn quá trình kết xuất ban đầu của trang, điều này có thể làm trễ LCP. [Việc hoãn hoặc dùng cùng dòng](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) có thể di chuyển các yêu cầu mạng này ra khỏi đường dẫn quan trọng."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Thời lượng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Không có yêu cầu chặn hiển thị cho thao tác điều hướng này"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Yêu cầu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Yêu cầu chặn quá trình hiển thị"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Nếu thấy chi phí của Tính toán lại kiểu vẫn cao, bạn có thể tối ưu hoá bộ chọn để giảm chi phí. [Tối ưu hoá bộ chọn](https://developer.chrome.com/docs/devtools/performance/selector-stats) có tỷ lệ phần trăm đường dẫn chậm và thời gian trôi qua đều cao. Bộ chọn đơn giản hơn, số lượng bộ chọn ít hơn, DOM nhỏ hơn và DOM nông hơn sẽ giúp giảm chi phí khớp."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Thời gian đã trôi qua"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Không tìm thấy dữ liệu về bộ chọn CSS. Bạn cần bật số liệu thống kê về bộ chọn CSS trong phần cài đặt bảng điều khiển hiệu suất."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Số lần khớp"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Số lượng trùng khớp"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Hiệu suất của Bộ chọn CSS"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Bộ chọn hàng đầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Tổng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Thời gian thực thi trên chuỗi chính"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Bên thứ ba"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Kích thước cần chuyển"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Mã của bên thứ ba có thể tác động đáng kể đến hiệu suất tải. [Giảm và trì hoãn việc tải mã của bên thứ ba](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) để ưu tiên nội dung trên trang của bạn."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Không tìm thấy bên thứ ba nào"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
-    "message": "Bên thứ ba"
+    "message": "bên thứ ba"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Khung nhìn của trang này chưa được tối ưu hoá cho thiết bị di động nên các tương tác nhấn có thể [bị chậm tới 300 mili giây](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "Hoạt động tương tác nhấn có thể [bị chậm tới 300 mili giây](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) nếu khung nhìn chưa được tối ưu hoá cho thiết bị di động."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Khung nhìn chưa được tối ưu hoá cho thiết bị di động"
+    "message": "Tối ưu hoá khung nhìn cho thiết bị di động"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Chỉ những trang được tải qua yêu cầu GET mới đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Chỉ những trang có mã trạng thái là 2XX mới có thể lưu vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome đã phát hiện thấy một lần thử thực thi JavaScript khi đang ở bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Những trang đã yêu cầu AppBanner hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do cờ. Hãy truy cập chrome://flags/#back-forward-cache để bật tính năng đó trên thiết bị này."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do dòng lệnh."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do thiếu bộ nhớ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Trang được uỷ quyền không hỗ trợ bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt đối với trình kết xuất trước."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Không thể lưu trang này vào bộ nhớ đệm vì trang có một thực thể BroadcastChannel chứa các trình nghe đã đăng ký."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Những trang có tiêu đề cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Bộ nhớ đệm này đã bị xoá một cách có chủ đích."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Những trang có chứa trình bổ trợ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Không xác định"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Những trang sử dụng API FileChooser không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Những trang sử dụng API Truy cập hệ thống tệp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Những trang sử dụng Trình điều phối thiết bị truyền thông không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Một trình phát đa phương tiện đang phát khi rời khỏi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Những trang sử dụng API MediaSession và đặt một trạng thái phát không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Những trang sử dụng API MediaSession và đặt các trình xử lý hành động hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do trình đọc màn hình."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Những trang sử dụng SecurityHandler không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Những trang sử dụng API nối tiếp không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Những trang sử dụng API WebAuthetication không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Những trang sử dụng API WebBluetooth không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Những trang sử dụng API WebUSB không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các cookie bị tắt trên một trang sử dụng Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Những trang sử dụng một trình xử lý hoặc worklet riêng hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Tài liệu này chưa tải xong trước khi rời khỏi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "App Banner đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Trình quản lý mật khẩu của Chrome đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Quy trình lọc DOM đang diễn ra trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích sử dụng API nhắn tin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Các tiện ích có kết nối liên tục phải ngắt kết nối trước khi chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Các tiện ích có kết nối liên tục đã cố gắng gửi thông báo đến các khung trong bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do các tiện ích."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Hộp thoại phương thức (chẳng hạn như gửi lại biểu mẫu) hoặc hộp thoại mật khẩu http đang xuất hiện trên trang trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Trang ngoại tuyến đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Thanh Out-Of-Memory Intervention đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Có yêu cầu cấp quyền trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Trình chặn cửa sổ bật lên đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Thông tin chi tiết về công cụ Duyệt web an toàn đang xuất hiện trong khi rời đi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Công cụ Duyệt web an toàn coi trang này là một cửa sổ bật lên sai mục đích và bị chặn."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Một trình chạy dịch vụ đã được kích hoạt khi trang này đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Đã tắt bộ nhớ đệm cho thao tác tiến/lùi do lỗi tài liệu"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Không lưu trữ được trang dùng FencedFrames vào bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm để cho phép lưu một trang khác vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Những trang đã cấp quyền truy cập luồng đa phương tiện hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Những trang có một số loại nội dung được nhúng nhất định (ví dụ: PDF) hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Những trang sử dụng IdleManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Những trang có kết nối IndexedDB mở hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do sự kiện IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Các API được sử dụng không đủ điều kiện."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Những trang có JavaScript được chèn vào bằng tiện ích hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Những trang có StyleSheet được chèn vào bằng tiện ích hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Lỗi nội bộ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt do một số yêu cầu mạng JavaScript nhận được tài nguyên có tiêu đề Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt do có yêu cầu duy trì hoạt động."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Những trang sử dụng tính năng Khóa bàn phím hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Trang này chưa tải xong trước khi rời khỏi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Những trang có tài nguyên chính chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Những trang có tài nguyên chính chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Hoạt động điều hướng đã bị huỷ trước khi có thể khôi phục trang từ bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng đang hoạt động đã nhận quá nhiều dữ liệu. Chrome giới hạn lượng dữ liệu mà một trang có thể nhận trong khi được lưu vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Những trang có tính năng tìm nạp() hoặc XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi vì một yêu cầu mạng đang hoạt động đã dẫn đến lệnh chuyển hướng."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm vì một kết nối mạng ở trạng thái mở quá lâu. Chrome giới hạn khoảng thời gian mà một trang có thể nhận dữ liệu trong khi được lưu vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Những trang không có tiêu đề phản hồi hợp lệ không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Hoạt động điều hướng đã diễn ra trong một khung không phải khung chính."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Trang có các giao dịch đang diễn ra trên cơ sở dữ liệu đã lập chỉ mục hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Những trang có một yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Những trang có một yêu cầu mạng tìm nạp đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Những trang có một yêu cầu mạng đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Những trang có một yêu cầu mạng XHR đang tiến hành hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Những trang sử dụng PaymentManager hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Những trang sử dụng tính năng Hình trong hình hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Những trang hiển thị Giao diện người dùng cho thao tác in hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Trang này đã được mở bằng \"window.open()\" và có một thẻ khác tham chiếu đến thành phần đó, hoặc trang này đã mở một cửa sổ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã gặp sự cố."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Quy trình kết xuất đồ hoạ cho trang trong bộ nhớ đệm cho thao tác tiến/lùi đã bị tắt."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Những trang đã yêu cầu quyền ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Những trang đã yêu cầu quyền truy cập cảm biến hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Những trang đã yêu cầu quyền tìm nạp hoặc đồng bộ hoá dưới nền hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Những trang đã yêu cầu quyền MIDI hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Những trang đã yêu cầu quyền thông báo hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Những trang đã yêu cầu quyền truy cập bộ nhớ hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Những trang đã yêu cầu quyền quay video hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Chỉ những trang có lược đồ URL là HTTP/HTTPS mới có thể lưu vào bộ nhớ đệm."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Trang này đã được một trình chạy dịch vụ xác nhận khi đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Một trình chạy dịch vụ đã cố gửi một MessageEvent cho trang trong bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker đã bị huỷ đăng ký khi một trang đang ở bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Trang này đã bị loại khỏi bộ nhớ đệm cho thao tác tiến/lùi do việc kích hoạt một trình chạy dịch vụ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome đã khởi động lại và xoá các mục trong bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Những trang sử dụng SharedWorker hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Những trang sử dụng SpeechRecognizer hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Những trang sử dụng SpeechSynthesis hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Một iframe trên trang này đã bắt đầu một hoạt động điều hướng chưa hoàn tất."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Những trang có tài nguyên phụ chứa cache-control:no-cache không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Những trang có tài nguyên phụ chứa cache-control:no-store không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Trang này đã vượt quá thời gian tối đa trong bộ nhớ đệm cho thao tác tiến/lùi và đã hết hạn."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Trang này đã hết thời gian chờ chuyển sang bộ nhớ đệm cho thao tác tiến/lùi (khả năng là do các trình xử lý ẩn trang chạy trong thời gian dài)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Trang này có một trình xử lý huỷ tải trong khung chính."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Trang này có một trình xử lý huỷ tải trong khung phụ."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Trình duyệt đã thay đổi tiêu đề ghi đè tác nhân người dùng."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Những trang đã cấp quyền quay video hoặc ghi âm hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Những trang sử dụng WebDatabase hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Những trang sử dụng WebHID hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Những trang sử dụng WebLocks hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Những trang sử dụng WebNfc hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Những trang sử dụng WebOTPService hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Những trang có WebRTC không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebRTC đã được dùng."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Những trang sử dụng WebShare hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Những trang có WebSocket không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebSocket đã được dùng."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Những trang có WebTransport không thể chuyển sang bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Bộ nhớ đệm cho thao tác tiến/lùi bị tắt vì WebTransport đã được dùng."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Những trang sử dụng WebXR hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Đối với nội dung động, hãy sử dụng [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) để giảm thiểu mức sử dụng CPU khi nội dung nằm ngoài màn hình."

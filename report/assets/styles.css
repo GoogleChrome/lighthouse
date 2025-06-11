@@ -105,8 +105,8 @@
   --plugin-icon-size: 65%;
   --report-background-color: #fff;
   --report-border-color-secondary: #ebebeb;
-  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --report-font-family-monospace: monospace, 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console';
+  --report-font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
   --report-font-size: 14px;
   --report-font-size-secondary: 12px;
   --report-icon-size: var(--score-icon-background-size);
@@ -155,7 +155,10 @@
   --fail-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="%23C7221F" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>');
   --error-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 15"><title>error</title><path d="M0 15H 3V 12H 0V" fill="%23FF4E42"/><path d="M0 9H 3V 0H 0V" fill="%23FF4E42"/></svg>');
 
-  --swap-locale-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>');
+  --swap-locale-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="%23000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>');
+
+  --insights-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="%23000000"><path d="M18 13V11H22V13H18ZM19.2 20L16 17.6L17.2 16L20.4 18.4L19.2 20ZM17.2 8L16 6.4L19.2 4L20.4 5.6L17.2 8ZM5 19V15H4C3.45 15 2.975 14.8083 2.575 14.425C2.19167 14.025 2 13.55 2 13V11C2 10.45 2.19167 9.98333 2.575 9.6C2.975 9.2 3.45 9 4 9H8L13 6V18L8 15H7V19H5ZM11 14.45V9.55L8.55 11H4V13H8.55L11 14.45ZM14 15.35V8.65C14.45 9.05 14.8083 9.54167 15.075 10.125C15.3583 10.6917 15.5 11.3167 15.5 12C15.5 12.6833 15.3583 13.3167 15.075 13.9C14.8083 14.4667 14.45 14.95 14 15.35Z"/></svg>');
+  --insights-icon-url-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="%239e9e9e"><path d="M18 13V11H22V13H18ZM19.2 20L16 17.6L17.2 16L20.4 18.4L19.2 20ZM17.2 8L16 6.4L19.2 4L20.4 5.6L17.2 8ZM5 19V15H4C3.45 15 2.975 14.8083 2.575 14.425C2.19167 14.025 2 13.55 2 13V11C2 10.45 2.19167 9.98333 2.575 9.6C2.975 9.2 3.45 9 4 9H8L13 6V18L8 15H7V19H5ZM11 14.45V9.55L8.55 11H4V13H8.55L11 14.45ZM14 15.35V8.65C14.45 9.05 14.8083 9.54167 15.075 10.125C15.3583 10.6917 15.5 11.3167 15.5 12C15.5 12.6833 15.3583 13.3167 15.075 13.9C14.8083 14.4667 14.45 14.95 14 15.35Z"/></svg>');
 }
 
 @media not print {
@@ -199,7 +202,38 @@
   }
 }
 
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media only screen and (max-width: 480px) {
+  .lh-vars {
+    --audit-group-margin-bottom: 20px;
+    --edge-gap-padding: var(--default-padding);
+    --env-name-min-width: 120px;
+    --gauge-circle-size-big: 96px;
+    --gauge-circle-size: 72px;
+    --gauge-label-font-size-big: 22px;
+    --gauge-label-font-size: 14px;
+    --gauge-label-line-height-big: 26px;
+    --gauge-label-line-height: 20px;
+    --gauge-percentage-font-size-big: 34px;
+    --gauge-percentage-font-size: 26px;
+    --gauge-wrapper-width: 112px;
+    --header-padding: 16px 0 16px 0;
+    --image-preview-size: 24px;
+    --plugin-icon-size: 75%;
+    --report-font-size: 14px;
+    --report-line-height: 20px;
+    --score-icon-margin-left: 2px;
+    --score-icon-size: 10px;
+    --topbar-height: 28px;
+    --topbar-logo-size: 20px;
+  }
+}
+
+@container lh-container (max-width: 480px) {
   .lh-vars {
     --audit-group-margin-bottom: 20px;
     --edge-gap-padding: var(--default-padding);
@@ -247,8 +281,6 @@
   --header-padding: 16px 0 16px 0;
   --screenshot-overlay-background: transparent;
   --plugin-icon-size: 75%;
-  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   --report-font-size: 12px;
   --report-line-height: 20px;
   --score-icon-margin-left: 2px;
@@ -321,14 +353,6 @@
   color: var(--report-text-color);
 }
 
-.lh-root :focus-visible {
-    outline: -webkit-focus-ring-color auto 3px;
-}
-.lh-root summary:focus {
-    outline: none;
-    box-shadow: 0 0 0 1px hsl(217, 89%, 61%);
-}
-
 .lh-root [hidden] {
   display: none !important;
 }
@@ -361,14 +385,17 @@
 
   With that sorted, the next challenge is appropriate column sizing and text wrapping inside our
   .lh-details tables. Even more fun.
-    * We don't want table headers ("Potential Savings (ms)") to wrap or their column values, but
-    we'd be happy for the URL column to wrap if the URLs are particularly long.
+    * We don't want table headers ("Est Savings (ms)") to wrap or their column values, but
+      we'd be happy for the URL column to wrap if the URLs are particularly long.
     * We want the narrow columns to remain narrow, providing the most column width for URL
     * We don't want the table to extend past 100% width.
     * Long URLs in the URL column can wrap. Util.getURLDisplayName maxes them out at 64 characters,
       but they do not get any overflow:ellipsis treatment.
   */
   word-break: break-word;
+
+  container-name: lh-container;
+  container-type: inline-size;
 }
 
 .lh-audit-group a,
@@ -392,8 +419,6 @@
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
   margin-left: var(--audit-description-padding-left);
-  /* whatever the .lh-details side margins are */
-  width: 100%;
 }
 
 .lh-audit__stackpack {
@@ -453,6 +478,7 @@
 .lh-report-icon--treemap::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="black"><path d="M3 5v14h19V5H3zm2 2h15v4H5V7zm0 10v-4h4v4H5zm6 0v-4h9v4h-9z"/></svg>');
 }
+
 .lh-report-icon--date::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 11h2v2H7v-2zm14-5v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6c0-1.1.9-2 2-2h1V2h2v2h8V2h2v2h1a2 2 0 012 2zM5 8h14V6H5v2zm14 12V10H5v10h14zm-4-7h2v-2h-2v2zm-4 0h2v-2h-2v2z"/></svg>');
 }
@@ -480,6 +506,35 @@
 .lh-report-icon--external::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path d="M3.15 11.9a1.01 1.01 0 0 1-.743-.307 1.01 1.01 0 0 1-.306-.743v-7.7c0-.292.102-.54.306-.744a1.01 1.01 0 0 1 .744-.306H7v1.05H3.15v7.7h7.7V7h1.05v3.85c0 .291-.103.54-.307.743a1.01 1.01 0 0 1-.743.307h-7.7Zm2.494-2.8-.743-.744 5.206-5.206H8.401V2.1h3.5v3.5h-1.05V3.893L5.644 9.1Z"/></svg>');
 }
+.lh-report-icon--experiment::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M4.50002 17C3.86136 17 3.40302 16.7187 3.12502 16.156C2.84702 15.5933 2.90936 15.069 3.31202 14.583L7.50002 9.5V4.5H6.75002C6.54202 4.5 6.36502 4.427 6.21902 4.281C6.07302 4.135 6.00002 3.958 6.00002 3.75C6.00002 3.542 6.07302 3.365 6.21902 3.219C6.36502 3.073 6.54202 3 6.75002 3H13.25C13.458 3 13.635 3.073 13.781 3.219C13.927 3.365 14 3.542 14 3.75C14 3.958 13.927 4.135 13.781 4.281C13.635 4.427 13.458 4.5 13.25 4.5H12.5V9.5L16.688 14.583C17.0767 15.069 17.132 15.5933 16.854 16.156C16.5767 16.7187 16.1254 17 15.5 17H4.50002ZM4.50002 15.5H15.5L11 10V4.5H9.00002V10L4.50002 15.5Z" fill="black"/></svg>');
+}
+
+/** These are still icons, but w/o the auto-color invert / opacity / etc. that come with .lh-report-icon */
+
+.lh-report-plain-icon {
+  display: flex;
+  align-items: center;
+}
+.lh-report-plain-icon::before {
+  content: "";
+  background-repeat: no-repeat;
+  width: var(--report-icon-size);
+  height: var(--report-icon-size);
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.lh-report-plain-icon--checklist-pass::before {
+  --icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8.938 13L13.896 8.062L12.833 7L8.938 10.875L7.167 9.125L6.104 10.188L8.938 13ZM10 18C8.90267 18 7.868 17.7917 6.896 17.375C5.924 16.9583 5.07333 16.3853 4.344 15.656C3.61467 14.9267 3.04167 14.076 2.625 13.104C2.20833 12.132 2 11.0973 2 10C2 8.88867 2.20833 7.85033 2.625 6.885C3.04167 5.92033 3.61467 5.07333 4.344 4.344C5.07333 3.61467 5.924 3.04167 6.896 2.625C7.868 2.20833 8.90267 2 10 2C11.1113 2 12.1497 2.20833 13.115 2.625C14.0797 3.04167 14.9267 3.61467 15.656 4.344C16.3853 5.07333 16.9583 5.92033 17.375 6.885C17.7917 7.85033 18 8.88867 18 10C18 11.0973 17.7917 12.132 17.375 13.104C16.9583 14.076 16.3853 14.9267 15.656 15.656C14.9267 16.3853 14.0797 16.9583 13.115 17.375C12.1497 17.7917 11.1113 18 10 18ZM10 16.5C11.8053 16.5 13.34 15.868 14.604 14.604C15.868 13.34 16.5 11.8053 16.5 10C16.5 8.19467 15.868 6.66 14.604 5.396C13.34 4.132 11.8053 3.5 10 3.5C8.19467 3.5 6.66 4.132 5.396 5.396C4.132 6.66 3.5 8.19467 3.5 10C3.5 11.8053 4.132 13.34 5.396 14.604C6.66 15.868 8.19467 16.5 10 16.5Z" fill="black"/></svg>');
+  background-color: var(--color-pass);
+  mask: var(--icon-url) center / contain no-repeat;
+}
+.lh-report-plain-icon--checklist-fail::before {
+  --icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5C14.1421 2.5 17.5 5.85786 17.5 10ZM16 10C16 13.3137 13.3137 16 10 16C8.6135 16 7.33683 15.5297 6.32083 14.7399L14.7399 6.32083C15.5297 7.33683 16 8.6135 16 10ZM5.26016 13.6793L13.6793 5.26016C12.6633 4.47033 11.3866 4 10 4C6.68629 4 4 6.68629 4 10C4 11.3866 4.47033 12.6633 5.26016 13.6793Z" fill="black"/></svg>');
+  background-color: var(--color-fail);
+  mask: var(--icon-url) center / contain no-repeat;
+}
 
 .lh-buttons {
   display: flex;
@@ -500,11 +555,24 @@
 }
 
 /* Node */
+.lh-node {
+  display: flow-root;
+}
+
 .lh-node__snippet {
   font-family: var(--report-font-family-monospace);
   color: var(--snippet-color);
   font-size: var(--report-monospace-font-size);
   line-height: 20px;
+}
+
+.lh-checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.lh-checklist-item {
+  margin: 10px 0 10px 0;
 }
 
 /* Score */
@@ -757,8 +825,37 @@
   grid-column-start: 2;
 }
 
-
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media screen and (max-width: 535px) {
+  .lh-metrics-container {
+    display: block;
+  }
+
+  .lh-metric {
+    border-bottom: none !important;
+  }
+  .lh-category:not(.lh--hoisted-meta) .lh-metric:nth-last-child(1) {
+    border-bottom: 1px solid var(--report-border-color-secondary) !important;
+  }
+
+  /* Change the grid to 3 columns for narrow viewport. */
+  .lh-metric__innerwrap {
+  /**
+   * Icon -- Metric Name -- Metric Value
+   */
+    grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
+  }
+  .lh-metric__value {
+    justify-self: end;
+    grid-column-start: unset;
+  }
+}
+
+@container lh-container (max-width: 535px) {
   .lh-metrics-container {
     display: block;
   }
@@ -887,6 +984,50 @@
   max-width: 120px;
 }
 
+/* Toggle Insights banner */
+.lh-perf-insights-toggle {
+  margin: calc(var(--default-padding) * 2) 0 var(--default-padding);
+  display: flex;
+  gap: var(--default-padding);
+  align-items: center;
+  background-color: rgba(30, 164, 70, 0.08);
+
+  padding: var(--toplevel-warning-padding);
+  border-radius: 8px;
+}
+
+.lh-perf-insights-toggle button {
+  cursor: pointer;
+  margin: 0;
+  flex: 1;
+}
+
+.lh-perf-toggle-text {
+  align-items: center;
+  flex: 5;
+}
+.lh-dark .lh-perf-toggle-text {
+  color: rgba(30, 164, 70, 1);
+}
+
+.lh-perf-toggle-text a {
+  color: var(--link-color);
+}
+
+.lh-perf-insights-icon {
+  margin: 4px;
+  background-repeat: no-repeat;
+  background-image: var(--insights-icon-url);
+  width: var(--report-icon-size);
+  height: var(--report-icon-size);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.lh-dark .lh-perf-insights-icon {
+  background-image: var(--insights-icon-url-dark);
+}
+
 /* Audit */
 
 .lh-audit {
@@ -976,8 +1117,12 @@
 }
 
 /* Report */
+.lh-list {
+  margin-right: calc(var(--default-padding) * 2);
+}
 .lh-list > :not(:last-child) {
   margin-bottom: calc(var(--default-padding) * 2);
+  border-bottom: 1px solid #A8C7FA;
 }
 
 .lh-header-container {
@@ -1364,6 +1509,11 @@
   height: var(--gauge-circle-size-big);
 }
 
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media screen and (max-width: 780px) {
   .lh-category-header__finalscreenshot {
     grid-template: 1fr 1fr / none
@@ -1373,9 +1523,29 @@
   }
 }
 
+@container lh-container (max-width: 780px) {
+  .lh-category-header__finalscreenshot {
+    grid-template: 1fr 1fr / none
+  }
+  .lh-category-headercol--separator {
+    display: none;
+  }
+}
+
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
+@media screen and (max-width: 964px) {
+  .lh-report {
+    margin-left: 0;
+    width: 100%;
+  }
+}
 
 /* 964 fits the min-width of the filmstrip */
-@media screen and (max-width: 964px) {
+@container lh-container (max-width: 964px) {
   .lh-report {
     margin-left: 0;
     width: 100%;
@@ -1395,6 +1565,9 @@
   }
   .lh-categories {
     margin-top: 0;
+  }
+  .lh-buttons {
+    display: none;
   }
 }
 
@@ -1485,7 +1658,10 @@
 }
 
 .lh-row--group ~ [data-entity]:not(.lh-row--group) ~ .lh-sub-item-row td:first-child {
-  padding-left: 40px;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 1px solid #A8C7FA;
+  display: block;
 }
 
 .lh-row--even {
@@ -1553,6 +1729,26 @@
 .lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
   width: 12%;
+}
+
+/** Tweak styling for tables in insight audits. */
+.lh-audit[id$="-insight"] .lh-table {
+  border: none;
+}
+
+.lh-audit[id$="-insight"] .lh-table thead th {
+  font-weight: bold;
+  color: unset;
+}
+
+.lh-audit[id$="-insight"] .lh-table th,
+.lh-audit[id$="-insight"] .lh-table td {
+  padding: calc(var(--default-padding) / 2);
+}
+
+.lh-audit[id$="-insight"] .lh-table .lh-row--even,
+.lh-audit[id$="-insight"] .lh-table tr:not(.lh-row--group):hover {
+  background-color: unset;
 }
 
 .lh-text__url-host {
@@ -1656,7 +1852,19 @@
   }
 }
 
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media screen and (max-width: 780px) {
+  /* no black outline if we're not confident the entire table can be displayed within bounds */
+  .lh-expandable-details[open] {
+    animation: none;
+  }
+}
+
+@container lh-container (max-width: 780px) {
   /* no black outline if we're not confident the entire table can be displayed within bounds */
   .lh-expandable-details[open] {
     animation: none;
@@ -1695,10 +1903,23 @@ details[open] .lh-clump-toggletext--hide { display: block;}
   text-align: initial;
   line-height: 1.4;
 }
-/* shrink tooltips to not be cutoff on left edge of narrow viewports
-   45vw is chosen to be ~= width of the left column of metrics
+
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
 */
 @media screen and (max-width: 535px) {
+  .lh-tooltip {
+    min-width: 45vw;
+    padding: 3vw;
+  }
+}
+
+/* shrink tooltips to not be cutoff on left edge of narrow container
+   45vw is chosen to be ~= width of the left column of metrics
+*/
+@container lh-container (max-width: 535px) {
   .lh-tooltip {
     min-width: 45vw;
     padding: 3vw;
@@ -1837,13 +2058,36 @@ details[open] .lh-clump-toggletext--hide { display: block;}
   left: 6px;
 }
 
-/* Change the grid for narrow viewport. */
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media screen and (max-width: 640px) {
   .lh-meta__items {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Change the grid for narrow container */
+@container lh-container (max-width: 640px) {
+  .lh-meta__items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/**
+* This media query is a temporary fallback for browsers that do not support `@container query`.
+* TODO: remove this media query when `@container query` is fully supported by browsers
+* See https://github.com/GoogleChrome/lighthouse/pull/16332
+*/
 @media screen and (max-width: 535px) {
+  .lh-meta__items {
+    display: block;
+  }
+}
+
+@container lh-container (max-width: 535px) {
   .lh-meta__items {
     display: block;
   }

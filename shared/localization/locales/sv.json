@@ -660,7 +660,10 @@
     "message": "Använd videoformat för animationer"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem behövs dock inte för moderna webbläsare. Om du har JavaScript-paket kan du använda en modern strategi för skriptimplementering där registrering av funktioner med eller utan moduler används för att minska mängden kod som skickas till moderna webbläsare, samtidigt som stöd för äldre webbläsare finns kvar. [Läs mer om hur du använder modern JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Version 2 av core-js hittades på sidan. Du bör uppgradera till version 3 för att få prestandaförbättringar."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Undvik att skicka äldre JavaScript till moderna webbläsare"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktivera textkomprimering"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Allvarlighetsgrad"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Sidhuvudet `X-Frame-Options` (XFO) eller direktivet `frame-ancestors` i sidhuvudet`Content-Security-Policy` (CSP) styr var en sida kan bäddas in. De kan minska risken för clickjacking-attacker genom att blockera vissa eller alla webbplatser från att bädda in sidan. [Läs mer om hur du skyddar dig mot clickjacking](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Ingen ramkontrollpolicy hittades"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Förhindra clickjacking med XFO eller CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Kedjorna av kritiska förfrågningar nedan visar vilka resurser som läses in med hög prioritet. Se om du kan förbättra sidhämtningstiden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser. [Läs mer om hur du undviker att kedja kritiska förfrågningar](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Det gick inte att kontrollera `font-display`-värdet för ursprunget {fontOrigin} automatiskt i Lighthouse.}other{Det gick inte att kontrollera `font-display`-värdena för ursprunget {fontOrigin} automatiskt i Lighthouse.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Allvarlighetsgrad"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Genom att använda HSTS-rubrik minskar du risken för nedgradering av HTTP-anslutningar och avlyssningsattacker avsevärt. Vi rekommenderar att du lanserar i etapper och börjar med en låg max-age. [Läs mer om att använda en stark HSTS-policy.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Ogiltig syntax"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` är för låg"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Ingen HSTS-rubrik hittades"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Inget `max-age`-direktiv"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Inget `preload`-direktiv hittades"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Inget `includeSubDomains`-direktiv hittades"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Använd en stark HSTS-policy"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Bildformat (faktiska)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Bilder visas med lämplig upplösning"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Resultat för layoutförskjutning"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Tillåts"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Injicerad iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "En sen nätverksbegäran justerade sidlayouten"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Medieelementet har ingen angiven storlek"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametrar som inte stöds"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Allvarlighetsgrad"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Cross-Origin-Opener-Policy (COOP) kan användas för att isolera fönstret på toppnivå från andra dokument, till exempel popup-fönster. [Läs mer om hur du implementerar COOP-rubriken.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Ogiltig syntax"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Ingen COOP-rubrik hittades"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Säkerställ korrekt isolering för ursprung med COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Läs in teckensnitt i förväg med `optional` så att förstagångsbesökare kan använda dem. [Läs mer om att läsa in teckensnitt i förväg](https://web.dev/articles/preload-optional-fonts)"
@@ -1676,357 +1739,6 @@
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "En sidnavigering upptäcktes under körningen. Vi rekommenderar inte att du använder tidsintervallsläget för att granska sidnavigeringar. Använd navigeringsläget för att granska sidnavigeringar för bättre attribution till tredje part och identifiering av huvudtråd."
   },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Bara sidor som lästs in via en GET-begäran kan placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Bara sidor med statuskoden 2XX kan cachelagras."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Ett försök att köra JavaScript i cacheminnet upptäcktes."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Sidor som har begärt en AppBanner kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Vilocacheminnet har inaktiverats på grund av en keepalive-begäran."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Vilocacheminnet har inaktiverats med hjälp av en flagga. Öppna chrome://flags/#back-forward-cache om du vill aktivera det lokalt på enheten."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Vilocacheminnet har inaktiverats från kommandoraden."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Vilocacheminnet har inaktiverats därför att minnet inte räckte till."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Vilocacheminnet stöds inte vid delegering."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Vilocacheminnet har inaktiverats för förrendering."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Sidan kan inte cachelagras eftersom den har en BroadcastChannel-instans med registrerade lyssnare."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Sidor med fältet cache-control:no-store i huvudet kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Cacheminnet rensades avsiktligen."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Sidan togs bort från cacheminnet så att en annan sida skulle kunna cachelagras."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Sidor som använder en plugin kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Sidor som använder FileChooser API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Sidor som använder File System Access API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Sidor som använder Media Device Dispatcher kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Uppspelning pågick i en mediespelare när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Sidor som använder MediaSession API och ställer in en uppspelningsstatus kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Sidor som använder MediaSession API och ställer in åtgärdshanterare kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Vilocacheminne har inaktiverats på grund av att skärmläsare används."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Sidor som använder SecurityHandler kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Sidor som använder Serial API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Sidor som använder WebAuthentication API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Sidor som använder WebBluetooth API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Sidor som använder WebUSB API kan inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Vilocacheminnet har inaktiverats eftersom cookies har inaktiverats på en sida där `Cache-Control: no-store` används."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Sidor som använder en dedikerad tjänstefunktion eller worklet kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokumentet lästes inte in helt innan användaren navigerade bort från det."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Appbanner visades när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Chrome Lösenordshantering kördes när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "DOM-destillering pågick när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer kördes när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Vilocacheminnet har inaktiverats på grund av att tillägg använder API:et för meddelanden."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Tillägg med långvarig anslutning ska koppla från innan lagras i vilocacheminne."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Tillägg med långvarig anslutning försökte skicka meddelanden till bildrutor i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Vilocacheminnet har inaktiverats på grund av tillägg."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "En modal dialogruta, till exempel en återsändning av ett formulär eller en dialogruta för http-autentisering, visades när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Offlinesidan visades när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Fältet Out-Of-Memory Intervention visades när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Det fanns en aktiv begäran om behörighet när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Popupblockerare kördes när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Information från Säker webbsökning visades när användaren navigerade bort från sidan."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Säker webbsökning identifierade den här sidan som olämplig och blockerade popupfönstret."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "En tjänstefunktion aktiverades medan sidan lagrades i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Vilocacheminnet har inaktiverats på grund av dokumentfel."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Det går inte att lagra sidor med FencedFrames i bfcache."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Sidan togs bort från cacheminnet så att en annan sida skulle kunna cachelagras."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Sidor med åtkomstbehörighet till en mediestream kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Sidor som använder en portal kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Sidor som använder IdleManager kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Sidor med en öppen IndexedDB-anslutning kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Vilocacheminnet har inaktiverats på grund av en IndexedDB-händelse."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Otillåtna API:er användes."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Sidor med `JavaScript` som injicerats av tillägg kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Sidor med ett `StyleSheet` som injicerats av tillägg kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Internt fel."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Vilocacheminnet har inaktiverats på grund av en keepalive-begäran."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Sidor som använder tangentbordslås kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Sidan hade inte lästs in helt innan användaren navigerade bort från den."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Sidor vars huvudresurs har cache-control:no-cache kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Sidor vars huvudresurs har cache-control:no-store kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Navigeringen avbröts innan sidan kunde återställas från vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Sidan togs bort från cacheminnet eftersom för mycket data skickades till den via en aktiv nätverksanslutning. Det finns en gräns för hur mycket data en cachelagrad sida får ta emot i Chrome."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Sidor med utestående fetch() eller XHR kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Sidan togs bort från vilocacheminnet eftersom en aktiv nätverksbegäran medförde en omdirigering."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Sidan togs bort från cacheminnet eftersom en nätverksanslutning förblev öppen för länge. Det finns en gräns för hur länge en cachelagrad sida får ta emot data i Chrome."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Sidor utan giltigt svarshuvud kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Navigeringen gjordes i en annan ram än den överordnade ramen."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Sidor med pågående transaktioner i en indexerad databas kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Sidor med en utestående nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Sidor med en utestående hämtningsbegäran i nätverket kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Sidor med en utestående nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Sidor med en utestående XHR-nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Sidor som använder PaymentManager kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Sidor som använder bild-i-bild kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Sidor som använder en portal kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Sidor där användargränssnittet för utskrift visas kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Sidan öppnades med `window.open()` och en annan flik refererar till den, eller också öppnade sidan ett fönster."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Renderingen av sidan i vilocacheminnet kraschade."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Renderingsprocessen för sidan i vilocacheminnet avslutades."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Sidor som har begärt behörighet att spela in ljud kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Sidor som har begärt sensorbehörighet kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Sidor som har begärt synkronisering i bakgrunden eller hämtningsbehörighet kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Sidor som har begärt MIDI-behörighet kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Sidor som har begärt aviseringsbehörighet kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Sidor som har begärt åtkomst till lagringsutrymme kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Sidor som har begärt behörighet till videoinspelning kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Bara sidor med webbprotokollet HTTP eller HTTPS kan cachelagras."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "En tjänstefunktion gjorde anspråk på sidan medan den lagrades i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "En tjänstefunktion försökte skicka `MessageEvent` till sidan i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "En ServiceWorker avregistrerades medan sidan lagrades i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Sidan togs bort från vilocacheminnet därför att en tjänstefunktion aktiverades."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome har startats om och vilocacheminnet nollställts."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Sidor som använder SharedWorker kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Sidor som använder SpeechRecognizer kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Sidor som använder SpeechSynthesis kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "En iframe på sidan initierade en navigering som aldrig slutfördes."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Sidor som har en underresurs med cache-control:no-cache kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Sidor som har en underresurs med cache-control:no-store kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Sidan finns inte kvar eftersom tidsgränsen för lagring i vilocacheminnet överskreds."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Tidsgränsen överskreds när sidan skulle lagras i vilocacheminnet (troligen på grund av en pagehide-hanterare som kördes under lång tid)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Det finns en unload-hanterare i sidans överordnade ram."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Sidan har en unload-hanterare i en underordnad ram."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Webbläsaren har ändrat fältet för åsidosättning av användaragent."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Sidor med behörighet att spela in video eller ljud kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Sidor som använder WebDatabase kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Sidor som använder WebHID kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Sidor som använder WebLocks kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Sidor som använder WebNfc kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Sidor som använder WebOTPService kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Sidor med WebRTC kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Sidor som använder WebShare kan för närvarande inte placeras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Sidor med WebSocket kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Sidor med WebTransport kan inte lagras i vilocacheminnet."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Sidor som använder WebXR kan för närvarande inte placeras i vilocacheminnet."
-  },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Du kan lägga till webbadresschemana https: och http: (ignoreras av webbläsare med stöd för `'strict-dynamic'`) för bakåtkompatibilitet med äldre webbläsare."
   },
@@ -2092,183 +1804,6 @@
   },
   "core/lib/deprecation-description.js | title": {
     "message": "En utfasad funktion användes"
-  },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Auktorisering omfattas inte av jokertecknet (*) i CORS `Access-Control-Allow-Headers`-hantering."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Attributet `disableRemotePlayback` ska användas för att inaktivera standardintegreringen av Cast i stället för väljaren `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Resursförfrågningar vars webbadresser innehöll både de borttagna blankstegstecknen `(n|r|t)` och mindre än-tecknen (`<`) blockeras. Ta bort radbrytningstecken och koda mindre än-tecken från t.ex. värden för elementattribut om du vill läsa in dessa resurser."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` är utfasat. Använd det standardiserade API:et Navigation Timing 2 i stället."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` är utfasat. Använd i stället det standardiserade API:et Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` är utfasat. Använd det standardiserade API:et `nextHopProtocol` i Navigation Timing 2 i stället."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Cookies som innehåller ett `(0|r|n)`-tecken avvisas i stället för att trunkeras."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Funktionen för att lätta på principen gällande samma ursprung genom att ange `document.domain` är utfasad och inaktiveras som standard. Denna varning om utfasning gäller åtkomst via korsursprung som aktiverades genom inställning av `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Aktivering av window.alert från iframes för korsursprung har fasats ut och kommer att tas bort."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Aktivering av window.confirm från iframes för korsursprung har fasats ut och kommer att tas bort."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM-mutationshändelser, inklusive `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` och `DOMCharacterDataModified`, har fasats ut (https://w3c.github.io/uievents/#legacy-event-types) och kommer att tas bort. Använd `MutationObserver` i stället."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Stöd för data: webbadresser i SVG-elementet <use> har fasats ut och tas bort i framtiden."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Funktionen för att lätta på principen gällande samma ursprung genom att ange `document.domain` är utfasad och inaktiveras som standard. Om du vill fortsätta använda den här funktionen ska du välja bort ursprungsbundna agentkluster genom att skicka en `Origin-Agent-Cluster: ?0`-rubrik tillsammans med HTTP-svaret för dokumentet och ramarna. Läs mer på https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Huvudet `Expect-CT` är utfasat och kommer att tas bort. Chrome kräver certifikattransparens för alla offentligt betrodda certifikat som utfärdats efter den 30 april 2018."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` och `watchPosition()` fungerar inte längre i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` och `watchPosition()` är utfasade i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` fungerar inte längre i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` är utfasat. Använd `RTCPeerConnectionIceErrorEvent.address` eller `RTCPeerConnectionIceErrorEvent.port` i stället."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Säljarursprunget och arbiträr data från tjänstefunktionens `canmakepayment`-händelse har fasats ut och tas bort: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Webbplatsen begärde en underresurs från ett nätverk som den enbart hade åtkomst till på grund av att användaren hade särskild nätverksbehörighet. Med dessa förfrågningar får enheter och servrar som inte är offentliga åtkomst till internet, vilket ökar risken för bedrägerier med begäran mellan webbplatser och/eller läckage av uppgifter. I syfte att minska dessa risker fasar Chrome ut förfrågningar till icke-offentliga underresurser som har startats i osäkra kontexter och kommer att blockera dem."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Fältet `dailyUpdateUrl` i `InterestGroups` som har vidarebefordrats till `joinAdInterestGroup()` har döpts om till `updateUrl` för att bättre motsvara dess beteende."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS går inte att läsas in från `file:`-webbadresser om de inte slutar med ett `.css`-filnamnstillägg."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Användning av `SourceBuffer.abort()` i syfte att avbryta borttagning av asynkrona intervall med `remove()` har fasats ut på grund av en ändring av specifikationen. Stödet tas bort i framtiden. Lyssna efter händelsen `updateend` i stället. `abort()` ska endast användas till att avbryta en asynkron mediebilaga eller återställa tolkningsläget."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Funktionen för att ställa in `MediaSource.duration` under den högsta visningstidsstämpeln för buffrade kodade ramar har fasats ut på grund av en ändring av specifikationen. Stödet för implicit borttagning av trunkerad buffrad media kommer att tas bort. Du ska i stället genomföra explicit `remove(newDuration, oldDuration)` för alla `sourceBuffers`, om `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Webb-MIDI ber om behörighet om användning även om SysEx inte har angetts i `MIDIOptions`."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Det äldre, icke-standardiserade attributet `shadowroot` har fasats ut och fungerar inte längre i M119. Använd det nya, standardiserade attributet `shadowrootmode` i stället."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification API får inte längre användas från osäkra ursprung. Vi rekommenderar att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Behörighet för aviserings-API:et kan inte längre begäras via en iframe för korsursprung. Vi rekommenderar att du begär behörighet från en ram på toppnivå eller öppnar ett nytt fönster i stället."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Alternativet `imageOrientation: 'none'` i createImageBitmap har fasats ut. Använd createImageBitmap med alternativet \\{imageOrientation: 'from-image'\\} i stället."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Partnern förhandlar med en föråldrad version av (D)TLS. Kontakta partnern om att åtgärda detta."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Om du anger `overflow: visible` för img-, video- och canvas-taggar kan det leda till att visuellt innehåll visas utanför elementets gränser. Läs mer på https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` har fasats ut. Använd just-in-time-installation för betalningshanterare i stället."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "`PaymentRequest`-anropet åsidosatte CSP-direktivet `connect-src`. Denna åsidosättning är utfasad. Lägg till betalningsmetodens identifierare från `PaymentRequest` API (i fältet `supportedMethods`) i CSP-direktivet `connect-src`."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` har fasats ut. Använd `navigator.storage` i stället."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>` med `<picture>` som överordnat element är ogiltigt och ignoreras därför. Använd `<source srcset>` i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame är leverantörsspecifik. Använd standardmetoden cancelAnimationFrame i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame är leverantörsspecifik. Använd standardmetoden requestAnimationFrame i stället"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen har fasats ut. Använd Docs.fullscreenElement i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() har fasats ut. Använd Element.requestFullscreen() i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() har fasats ut. Använd Element.requestFullscreen() i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() har fasats ut. Använd Document.exitFullscreen() i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() har fasats ut. Använd Document.exitFullscreen() i stället."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen har fasats ut. Använd Document.fullscreenEnabled i stället."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Vi fasar ut API:et `chrome.privacy.websites.privacySandboxEnabled`, men det förblir aktivt för bakåtkompatibilitet tills version M113 lanseras. Använd i stället `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` och `chrome.privacy.websites.adMeasurementEnabled`. Läs mer på https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Begränsningen `DtlsSrtpKeyAgreement` har tagits bort. Du har angett ett `false`-värde för denna begränsning, vilket tolkas som ett försök att använda den borttagna `SDES key negotiation`-metoden. Denna funktion har tagits bort. Använd i stället en tjänst med stöd för `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Begränsningen `DtlsSrtpKeyAgreement` har tagits bort. Du har angett ett `true`-värde för denna begränsning, vilket inte hade någon inverkan, men du kan ta bort begränsningen för att göra det tydligare."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Återanropsbaserade getStats() har fasats ut och kommer att tas bort. Använd getStats() som uppfyller specifikationerna i stället."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() har fasats ut. Använd Selection.modify() i stället."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Förfrågningar från underresurser vars webbadresser innehåller inbäddade användaruppgifter (t.ex. `https://user:pass@host/`) blockeras."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Alternativet `rtcpMuxPolicy` är utfasat och kommer att tas bort."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` kräver isolering för korsursprung. Läs mer på https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` utan användaraktivering har fasats ut och kommer att tas bort."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Tillägg måste isoleras för korsursprung om du vill fortsätta använda `SharedArrayBuffer`. Läs mer på https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Webb-SQL har fasats ut. Använd SQLite WebAssembly eller indexerade databaser"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Behörighetsbeskrivningen `window-placement` är utfasad. Använd `window-management` i stället. Besök https://bit.ly/window-placement-rename om du behöver hjälp."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Behörighetspolicyn `window-placement` är utfasad. Använd `window-management` i stället. Besök https://bit.ly/window-placement-rename om du behöver hjälp."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 stöds inte av json-svar i `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Synkron `XMLHttpRequest` i huvudtråden har fasats ut på grund av dess negativa effekt på slutanvändarens upplevelse. Besök https://xhr.spec.whatwg.org/ om du behöver hjälp."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` är utfasat. Använd `isSessionSupported()` och kontrollera det matchade booleska värdet i stället."
   },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Tidsåtgång för blockering av huvudtråd"
@@ -2401,6 +1936,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tredje part"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Totalt"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,26 +2159,377 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Rapport över användarflöde i Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Auktorisering omfattas inte av jokertecknet (*) i CORS Access-Control-Allow-Headers-hantering."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Attributet disableRemotePlayback ska användas för att inaktivera standardintegreringen av Cast i stället för väljaren -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS-utseendevärdet slider-vertical är inte standardiserat och kommer att tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resursförfrågningar vars webbadresser innehöll både de borttagna blankstegstecknen \\(n|r|t) och mindre än-tecknen (<) blockeras. Ta bort radbrytningstecken och koda mindre än-tecken från t.ex. värden för elementattribut om du vill läsa in dessa resurser."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
+    "message": "Automatisk identifiering av teckenuppsättningen ISO-2022-JP har fasats ut och inaktiveras inom kort. Ange teckenuppsättningen i rubriken för innehållstyp eller med en metatagg (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() är utfasad. Använd det standardiserade API:et Navigation Timing 2 i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() är utfasad. Använd i stället det standardiserade API:et Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() är utfasad. Använd det standardiserade API:et nextHopProtocol i Navigation Timing 2 i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Cookies som innehåller ett \\(0|r|n)-tecken avvisas i stället för att trunkeras."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Funktionen för att lätta på principen gällande samma ursprung genom att ange document.domain är utfasad och inaktiveras som standard. Denna varning om utfasning gäller åtkomst via korsursprung som aktiverades genom inställning av document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Aktivering av window.alert från iframes för korsursprung har fasats ut och kommer att tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Aktivering av window.confirm från iframes för korsursprung har fasats ut och kommer att tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
+    "message": "DOM-mutationshändelser, inklusive DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument och DOMCharacterDataModified, har fasats ut (https://w3c.github.io/uievents/#legacy-event-types) och kommer att tas bort. Använd MutationObserver i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Stöd för data: webbadresser i SVGUseElement har fasats ut och tas bort i framtiden."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() och watchPosition() fungerar inte längre i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() och watchPosition() är utfasade i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() fungerar inte längre i osäkra ursprung. Om du vill använda den här funktionen rekommenderar vi att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
+    "message": "En <h1>-tagg hittades i en <article>, <aside>, <nav> eller <section> som inte har en angiven teckensnittsstorlek. Storleken på den här rubriken ändras i webbläsaren inom en snar framtid. Mer information finns på https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate är utfasad. Använd RTCPeerConnectionIceErrorEvent.address eller RTCPeerConnectionIceErrorEvent.port i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
+    "message": "Det här formatet för GET-begäran navigator.credentials.get() om digitala certifikat har fasats ut. Uppdatera anropet så att det nya formatet används."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Säljarursprunget och arbiträr data från tjänstefunktionens canmakepayment-händelse har fasats ut och tas bort: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Webbplatsen begärde en underresurs från ett nätverk som den enbart hade åtkomst till på grund av att användaren hade särskild nätverksbehörighet. Med dessa förfrågningar får enheter och servrar som inte är offentliga åtkomst till internet, vilket ökar risken för bedrägerier med begäran mellan webbplatser och/eller läckage av uppgifter. I syfte att minska dessa risker fasar Chrome ut förfrågningar till icke-offentliga underresurser som har startats i osäkra kontexter och kommer att blockera dem."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Fältet dailyUpdateUrl i InterestGroups som vidarebefordrats till joinAdInterestGroup() har döpts om till updateUrl för att bättre motsvara dess beteende."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator är utfasad. Använd Intl.Segmenter i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS går inte att läsas in från file:-webbadresser om de inte slutar med ett .css-filnamnstillägg."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Användning av SourceBuffer.abort() i syfte att avbryta borttagning av asynkrona intervall med remove() har fasats ut på grund av en ändring av specifikation. Stödet tas bort i framtiden. Lyssna efter händelsen updateend i stället. abort() ska endast användas till att avbryta en asynkron mediebilaga eller återställa analyseringsläget."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Funktionen för att ställa in MediaSource.duration under den högsta visningstidsstämpeln för buffrade kodade ramar har fasats ut på grund av en ändring av specifikation. Stödet för implicit borttagning av trunkerad buffrad media tas bort i framtiden. Du ska i stället genomföra uttrycklig remove(newDuration, oldDuration) för alla sourceBuffers, om newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Webb-MIDI ber om behörighet om användning även om SysEx inte har angetts i MIDIOptions."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Aviserings-API:et får inte längre användas från osäkra ursprung. Vi rekommenderar att du flyttar appen till ett säkert ursprung, till exempel HTTPS. Läs mer på https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Behörighet för aviserings-API:et kan inte längre begäras via en iframe för korsursprung. Vi rekommenderar att du begär behörighet från en ram på toppnivå eller öppnar ett nytt fönster i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Alternativet imageOrientation: 'none' i createImageBitmap har fasats ut. Använd createImageBitmap med alternativet \\\\{imageOrientation: 'from-image'\\\\} i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Partnern förhandlar med en föråldrad version av (D)TLS. Kontakta partnern om att åtgärda detta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Om du anger overflow: visible för img-, video- och canvas-taggar kan det leda till att visuellt innehåll visas utanför elementets gränser. Läs mer på https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments är utfasat. Använd just-in-time-installation för betalningshanterare i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "PaymentRequest-anropet åsidosatte CSP-direktivet connect-src. Denna åsidosättning är utfasad. Lägg till betalningsmetodens identifierare från PaymentRequest API (i fältet supportedMethods) i CSP-direktivet connect-src."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent är utfasad. Använd navigator.storage i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src> med <picture> som överordnat element är ogiltigt och ignoreras därför. Använd <source srcset> i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame är leverantörsspecifik. Använd standardmetoden cancelAnimationFrame i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame är leverantörsspecifik. Använd standardmetoden requestAnimationFrame i stället"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen har fasats ut. Använd Docs.fullscreenElement i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() har fasats ut. Använd Element.requestFullscreen() i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() har fasats ut. Använd Element.requestFullscreen() i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() har fasats ut. Använd Document.exitFullscreen() i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() har fasats ut. Använd Document.exitFullscreen() i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen har fasats ut. Använd Document.fullscreenEnabled i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Vi fasar ut API:et chrome.privacy.websites.privacySandboxEnabled, men det förblir aktivt för bakåtkompatibilitet tills version M113 lanseras. Använd i stället chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled och chrome.privacy.websites.adMeasurementEnabled. Läs mer på https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Begränsningen DtlsSrtpKeyAgreement har tagits bort. Du har angett ett false-värde för denna begränsning, vilket tolkas som ett försök att använda den borttagna SDES key negotiation-metoden. Denna funktion har tagits bort. Använd i stället en tjänst med stöd för DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Begränsningen DtlsSrtpKeyAgreement har tagits bort. Du har angett ett true-värde för denna begränsning, vilket inte hade någon inverkan, men du kan ta bort begränsningen för att göra det tydligare."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Återanropsbaserade getStats() har utfasats ut och kommer att tas bort. Använd getStats() som uppfyller specifikationerna i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() har fasats ut. Använd Selection.modify() i stället."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Förfrågningar från underresurser vars webbadresser innehåller inbäddade användaruppgifter (t.ex. https://user:pass@host/) blockeras."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Alternativet rtcpMuxPolicy är utfasat och kommer att tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer kräver isolering för korsursprung. Läs mer på https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() utan användaraktivering har fasats ut och kommer att tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Borttagning av händelselyssnare har fasats ut och tas bort."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Tillägg måste isoleras för korsursprung om du vill fortsätta använda SharedArrayBuffer. Läs mer på https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 stöds inte av json-svar i XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Synkron XMLHttpRequest i huvudtråden har fasats ut på grund av dess negativa effekt på slutanvändarens upplevelse. Besök https://xhr.spec.whatwg.org/ om du behöver hjälp."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animation"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Layoutförskjutningar uppstår när element flyttas utan användarinteraktion. [Undersök orsakerna till layoutförändringar](https://web.dev/articles/optimize-cls), till exempel om element har lagts till, tagits bort eller om teckensnittet ändras för dem vid sidhämtningen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | fontRequest": {
+    "message": "Teckensnittsbegäran"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Injicerad iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Kluster med layoutförskjutningar på {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Det gick inte att identifiera några orsaker till layoutförskjutningar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Inga layoutförskjutningar"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Orsaker till layoutförskjutningar"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "De vanligaste orsakerna till layoutförskjutningar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
+    "message": "Bilder utan angiven storlek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Sämsta klustret"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Kluster med den sämsta layoutförskjutningen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Lagringstid i cacheminnet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Om filerna cachelagras under längre tid kan upprepade besök på sidan gå snabbare. [Läs mer](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Inga förfrågningar med ineffektiva cachepolicyer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} andra"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Begäran"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Använd effektiva cachelivslängder"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
+    "message": "En stor DOM kan förlänga tiden för formatberäkningar och flödesomformningar av layouten, vilket påverkar sidans responsivitet. En stor DOM ökar även minnesanvändningen. [Läs om hur du undviker en för stor DOM-storlek](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Flest underordnade element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM-djup"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Statistik"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
+    "message": "Optimera DOM-storlek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Totalt antal element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Värde"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Den första nätverksbegäran är den viktigaste.  Minska latensen genom att undvika omdirigeringar (så att servern svarar snabbt) och aktivera textkomprimering."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Ingen komprimering har tillämpats"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Undviker omdirigeringar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Tillämpar textkomprimering"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Omdirigeringar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Serversvarstid"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Fördröjning av dokumentbegäran"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Okomprimerad nedladdning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Dubbletter av bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Källa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Ta bort stora, duplicerade JavaScript-moduler från paket så att färre onödiga byte skickas via nätverket."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Duplicerad JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Du kan göra så att texten alltid är synlig genom att ställa in [font-display](https://developer.chrome.com/blog/font-display) på swap eller optional. swap kan optimeras ytterligare för att minska layoutförskjutningar med [åsidosättanden av teckensnittsvärden](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Teckensnitt"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Teckensnittsvisning"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Bortslösad tid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(anonym)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Många API:er, vanligtvis när de läser layoutgeometri, tvingar renderingsmotorn att pausa skriptkörningen för att beräkna format och layout. Läs mer om [framtvingad flödesomformning](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) och hur det kan begränsas."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Stackspårning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Framtvingad flödesomformning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Toppfunktionsanrop"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Total tid för flödesomformning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[utan attribut]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
+    "message": "Om du minskar nedladdningstiden för bilder kan du förbättra den upplevda hämtningstiden för sidan och LCP. [Läs mer om att optimera bildstorlek](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (uppsk. {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Inga bilder som kan optimeras"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimera filstorlek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} andra"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
+    "message": "Förbättra bildleveransen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
+    "message": "Om du ökar bildkomprimeringsfaktorn kan du minska nedladdningsstorleken för bilden."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
+    "message": "Du kan minska nedladdningsstorleken på den här bilden genom att använda ett modernt bildformat (WebP, AVIF) eller öka bildkomprimeringen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
+    "message": "Den här bildfilen är större än nödvändigt ({PH1}) för de visade måtten ({PH2}). Använd responsiva bilder för att minska nedladdningsstorleken för bilden."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
+    "message": "Om du använder videoformat i stället för giffar kan du minska nedladdningsstorleken för animerat innehåll."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
     "message": "Börja undersöka med den längsta fasen. [Fördröjningar kan minimeras](https://web.dev/articles/optimize-inp#optimize_interactions). För att minska bearbetningstiden kan du [optimera kostnaderna för huvudtrådar](https://web.dev/articles/optimize-long-tasks), ofta JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | duration": {
+    "message": "Längd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | inputDelay": {
+    "message": "Inmatningsfördröjning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | noInteractions": {
+    "message": "Inga interaktioner har identifierats"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | phase": {
+    "message": "Fas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | presentationDelay": {
+    "message": "Presentationsfördröjning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | processingDuration": {
+    "message": "Behandlingstid"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
     "message": "INP per fas"
@@ -2648,17 +2537,113 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimera LCP genom att göra LCP-bilden [synlig](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) från HTML direkt och [undvika uppskjuten inläsning](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high har tillämpats"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "fetchpriority=high bör tillämpas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "uppskjuten inläsning tillämpas inte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP-bilden läses in {PH1} efter den tidigaste startpunkten."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "Ingen LCP upptäcktes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Ingen LCP-resurs har identifierats eftersom LCP inte är en bild"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Begäran kan hittas i det ursprungliga dokumentet"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Upptäcka LCP-begäran"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
     "message": "Varje [fas har specifika förbättringsstrategier](https://web.dev/articles/optimize-lcp#lcp-breakdown). LCP-tiden bör helst användas till att läsa in resurser, inte till fördröjningar."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | duration": {
+    "message": "Längd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | elementRenderDelay": {
+    "message": "Fördröjning av elementrendering"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
+    "message": "75:e percentilen i fältet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
+    "message": "Ingen LCP upptäcktes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | phase": {
+    "message": "Fas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDelay": {
+    "message": "Fördröjning av resursinläsning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | resourceLoadDuration": {
+    "message": "Inläsningstid för resurs"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
     "message": "LCP per fas"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Bortkastade bytes"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem behövs dock inte för moderna webbläsare. Överväg att ändra JavaScript-byggprocessen så att du inte transpilerar [Baseline](https://web.dev/articles/baseline-and-polyfills)-funktioner, förutom om du vet att du måste ha stöd för äldre webbläsare. [Läs mer om varför de flesta webbplatser kan implementera ES6+-kod utan transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Äldre JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 och HTTP/3 ger många fördelar jämfört med HTTP/1.1, till exempel multiplexering. [Läs mer om hur du använder modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Inga begäranden använde HTTP/1.1"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokoll"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Begäran"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Modern HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Undvik att kedjekoppla kritiska begäranden](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjut upp nedladdningen av onödiga resurser för att förbättra sidhämtningstiden."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Högsta latens för kritisk kedja:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Inga renderingsuppgifter påverkades av nätverksberoenden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Nätverksberoendeträd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Undvik att kedjekoppla kritiska begäranden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser för att förbättra sidhämtningstiden."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
     "message": "Begäranden blockerar sidans första rendering, vilket kan fördröja LCP. [Använd uppskjutning eller infogning](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) för att flytta bort dessa nätverksbegäranden från den kritiska vägen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Längd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Inga renderingsblockerande begäranden för denna navigering"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Begäran"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Begäranden om renderingsblockering"
@@ -2666,20 +2651,410 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Om kostnaderna för att beräkna om stilar förblir höga kan du minska dem genom att optimera väljare. [Optimera väljare](https://developer.chrome.com/docs/devtools/performance/selector-stats) med både hög förfluten tid och hög procentandel långsam sökväg. Enklare väljare, färre väljare, en mindre DOM och en grundare DOM minskar alla matchningskostnader."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Förfluten tid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Ingen CSS-väljardata hittades. Statistik för CSS-väljare måste aktiveras i inställningarna för resultatpanelen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Matchningsförsök"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Antal matchningar"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Kostnader för CSS-väljare"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Vanligaste väljarna"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Totalt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Tid för huvudtråd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Tredje part"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Överföringsstorlek"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
     "message": "Kod från tredje part kan påverka inläsningsprestandan betydligt. [Minska och skjut upp inläsningen av kod från tredje part](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) för att prioritera sidans innehåll."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Inga tredje parter hittades"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Tredje part"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
-    "message": "Sidans visningsområde är inte mobiloptimerat, så tryckinteraktioner kan [fördröjas med upp till 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+    "message": "Tryckinteraktioner kan [fördröjas med upp till 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) om visningsområdet inte är optimerat för mobila enheter."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
-    "message": "Visningsområdet är inte optimerat för mobila enheter"
+    "message": "Optimera visningsområde för mobila enheter"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Bara sidor som lästs in via en GET-begäran kan placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Bara sidor med statuskoden 2XX kan cachelagras."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Ett försök att köra JavaScript i cacheminnet upptäcktes."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Sidor som har begärt en AppBanner kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Vilocacheminnet har inaktiverats med hjälp av en flagga. Öppna chrome://flags/#back-forward-cache om du vill aktivera det lokalt på enheten."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Vilocacheminnet har inaktiverats från kommandoraden."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Vilocacheminnet har inaktiverats därför att minnet inte räckte till."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Vilocacheminnet stöds inte vid delegering."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Vilocacheminnet har inaktiverats för förrendering."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Sidan kan inte cachelagras eftersom den har en BroadcastChannel-instans med registrerade lyssnare."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Sidor med fältet cache-control:no-store i huvudet kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Cacheminnet rensades avsiktligen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Sidan togs bort från cacheminnet så att en annan sida skulle kunna cachelagras."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Sidor som använder en plugin kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Odefinierad"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Sidor som använder FileChooser API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Sidor som använder File System Access API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Sidor som använder Media Device Dispatcher kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Uppspelning pågick i en mediespelare när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Sidor som använder MediaSession API och ställer in en uppspelningsstatus kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Sidor som använder MediaSession API och ställer in åtgärdshanterare kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Vilocacheminne har inaktiverats på grund av att skärmläsare används."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Sidor som använder SecurityHandler kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Sidor som använder Serial API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Sidor som använder WebAuthentication API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Sidor som använder WebBluetooth API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Sidor som använder WebUSB API kan inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Vilocacheminnet har inaktiverats eftersom cookies har inaktiverats på en sida där Cache-Control: no-store används."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Sidor som använder en dedikerad tjänstefunktion eller worklet kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokumentet lästes inte in helt innan användaren navigerade bort från det."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Appbanner visades när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chrome Lösenordshantering kördes när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM-destillering pågick när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer kördes när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Vilocacheminnet har inaktiverats på grund av att tillägg använder API:et för meddelanden."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Tillägg med långvarig anslutning ska koppla från innan lagras i vilocacheminne."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Tillägg med långvarig anslutning försökte skicka meddelanden till bildrutor i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Vilocacheminnet har inaktiverats på grund av tillägg."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "En modal dialogruta, till exempel en återsändning av ett formulär eller en dialogruta för http-autentisering, visades när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Offlinesidan visades när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Fältet Out-Of-Memory Intervention visades när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Det fanns en aktiv begäran om behörighet när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Popupblockerare kördes när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Information från Säker webbsökning visades när användaren navigerade bort från sidan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Säker webbsökning identifierade den här sidan som olämplig och blockerade popupfönstret."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "En tjänstefunktion aktiverades medan sidan lagrades i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Vilocacheminnet har inaktiverats på grund av dokumentfel."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Det går inte att lagra sidor med FencedFrames i bfcache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Sidan togs bort från cacheminnet så att en annan sida skulle kunna cachelagras."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Sidor med åtkomstbehörighet till en mediestream kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Sidor med vissa typer av inbäddat innehåll (t.ex. PDF-filer) kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Sidor som använder IdleManager kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Sidor med en öppen IndexedDB-anslutning kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Vilocacheminnet har inaktiverats på grund av en IndexedDB-händelse."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Otillåtna API:er användes."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Sidor med ett JavaScript som injicerats av ett tillägg kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Sidor med ett StyleSheet som injicerats av ett tillägg kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Internt fel."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Vilocacheminnet har inaktiverats eftersom en viss JavaScript-nätverksbegäran tog emot en resurs med rubriken Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Vilocacheminnet har inaktiverats på grund av en keepalive-begäran."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Sidor som använder tangentbordslås kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Sidan hade inte lästs in helt innan användaren navigerade bort från den."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Sidor vars huvudresurs har cache-control:no-cache kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Sidor vars huvudresurs har cache-control:no-store kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigeringen avbröts innan sidan kunde återställas från vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Sidan togs bort från cacheminnet eftersom för mycket data skickades till den via en aktiv nätverksanslutning. Det finns en gräns för hur mycket data en cachelagrad sida får ta emot i Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Sidor med utestående fetch() eller XHR kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Sidan togs bort från vilocacheminnet eftersom en aktiv nätverksbegäran medförde en omdirigering."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Sidan togs bort från cacheminnet eftersom en nätverksanslutning förblev öppen för länge. Det finns en gräns för hur länge en cachelagrad sida får ta emot data i Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Sidor utan giltigt svarshuvud kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Navigeringen gjordes i en annan ram än den överordnade ramen."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Sidor med pågående transaktioner i en indexerad databas kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Sidor med en utestående nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Sidor med en utestående hämtningsbegäran i nätverket kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Sidor med en utestående nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Sidor med en utestående XHR-nätverksbegäran kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Sidor som använder PaymentManager kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Sidor som använder bild-i-bild kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Sidor där användargränssnittet för utskrift visas kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Sidan öppnades med window.open() och en annan flik refererar till den, eller också öppnade sidan ett fönster."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Renderingen av sidan i vilocacheminnet kraschade."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Renderingsprocessen för sidan i vilocacheminnet avslutades."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Sidor som har begärt behörighet att spela in ljud kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Sidor som har begärt sensorbehörighet kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Sidor som har begärt synkronisering i bakgrunden eller hämtningsbehörighet kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Sidor som har begärt MIDI-behörighet kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Sidor som har begärt aviseringsbehörighet kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Sidor som har begärt åtkomst till lagringsutrymme kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Sidor som har begärt behörighet till videoinspelning kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Bara sidor med webbprotokollet HTTP eller HTTPS kan cachelagras."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "En tjänstefunktion gjorde anspråk på sidan medan den lagrades i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "En tjänstefunktion försökte skicka MessageEvent till sidan i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "En ServiceWorker avregistrerades medan sidan lagrades i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Sidan togs bort från vilocacheminnet därför att en tjänstefunktion aktiverades."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome har startats om och vilocacheminnet nollställts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Sidor som använder SharedWorker kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Sidor som använder SpeechRecognizer kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Sidor som använder SpeechSynthesis kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "En iframe på sidan initierade en navigering som aldrig slutfördes."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Sidor som har en underresurs med cache-control:no-cache kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Sidor som har en underresurs med cache-control:no-store kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Sidan finns inte kvar eftersom tidsgränsen för lagring i vilocacheminnet överskreds."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Tidsgränsen överskreds när sidan skulle lagras i vilocacheminnet (troligen på grund av en pagehide-hanterare som kördes under lång tid)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Det finns en unload-hanterare i sidans överordnade ram."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Sidan har en unload-hanterare i en underordnad ram."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Webbläsaren har ändrat fältet för åsidosättning av användaragent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Sidor med behörighet att spela in video eller ljud kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Sidor som använder WebDatabase kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Sidor som använder WebHID kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Sidor som använder WebLocks kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Sidor som använder WebNfc kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Sidor som använder WebOTPService kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Sidor med WebRTC kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Vilocacheminnet har inaktiverats eftersom WebRTC har använts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Sidor som använder WebShare kan för närvarande inte placeras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Sidor med WebSocket kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Vilocacheminnet har inaktiverats eftersom WebSocket har använts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Sidor med WebTransport kan inte lagras i vilocacheminnet."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Vilocacheminnet har inaktiverats eftersom WebTransport har använts."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Sidor som använder WebXR kan för närvarande inte placeras i vilocacheminnet."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "För animerat innehåll använder du [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) till att minimera CPU-användningen när innehållet inte visas på skärmen."

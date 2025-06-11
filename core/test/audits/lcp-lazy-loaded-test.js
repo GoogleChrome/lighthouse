@@ -46,39 +46,36 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         innerHeight: 500,
         innerWidth: 300,
       },
-      traces: {
-        defaultPass: createTestTrace({
-          largestContentfulPaint: 1000,
-          topLevelTasks: [{ts: 10, duration: 1000}],
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: mainDocumentUrl,
-            priority: 'High',
-            networkRequestTime: 100,
-            networkEndTime: 200,
-            timing: {sendEnd: 0},
-            frameId: rootFrame,
-          },
-          {
-            url: 'http://www.example.com/image.png',
-            priority: 'Low',
-            resourceType: 'Image',
-            networkRequestTime: 800,
-            networkEndTime: 900,
-            timing: {sendEnd: 0},
-            frameId: rootFrame,
-          },
-        ]),
-      },
+      Trace: createTestTrace({
+        largestContentfulPaint: 1000,
+        topLevelTasks: [{ts: 10, duration: 1000}],
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: mainDocumentUrl,
+          priority: 'High',
+          networkRequestTime: 100,
+          networkEndTime: 200,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+        {
+          url: 'http://www.example.com/image.png',
+          priority: 'Low',
+          resourceType: 'Image',
+          networkRequestTime: 800,
+          networkEndTime: 900,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+      ]),
       URL: {
         requestedUrl: mainDocumentUrl,
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -112,39 +109,36 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         innerHeight: 500,
         innerWidth: 300,
       },
-      traces: {
-        defaultPass: createTestTrace({
-          largestContentfulPaint: 1000,
-          topLevelTasks: [{ts: 10, duration: 1000}],
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: mainDocumentUrl,
-            priority: 'High',
-            networkRequestTime: 100,
-            networkEndTime: 200,
-            timing: {sendEnd: 0},
-            frameId: rootFrame,
-          },
-          {
-            url: 'http://www.example.com/image.png',
-            priority: 'Low',
-            resourceType: 'Image',
-            networkRequestTime: 800,
-            networkEndTime: 900,
-            timing: {sendEnd: 0},
-            frameId: rootFrame,
-          },
-        ]),
-      },
+      Trace: createTestTrace({
+        largestContentfulPaint: 1000,
+        topLevelTasks: [{ts: 10, duration: 1000}],
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: mainDocumentUrl,
+          priority: 'High',
+          networkRequestTime: 100,
+          networkEndTime: 200,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+        {
+          url: 'http://www.example.com/image.png',
+          priority: 'Low',
+          resourceType: 'Image',
+          networkRequestTime: 800,
+          networkEndTime: 900,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+      ]),
       URL: {
         requestedUrl: mainDocumentUrl,
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

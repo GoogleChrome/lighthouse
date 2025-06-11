@@ -16,7 +16,7 @@ import {makeComputedArtifact} from './computed-artifact.js';
  * @typedef ComputeInput
  * @property {string} scriptId
  * @property {Omit<LH.Crdp.Profiler.ScriptCoverage, 'url'>} scriptCoverage
- * @property {LH.Artifacts.Bundle=} bundle
+ * @property {LH.Artifacts.Bundle|null} bundle
  */
 
 /**

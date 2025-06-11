@@ -33,7 +33,7 @@ function generateArtifacts(records) {
   }
 
   return {
-    devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
+    DevtoolsLog: networkRecordsToDevtoolsLog(records),
     URL: {},
   };
 }

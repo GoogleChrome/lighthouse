@@ -25,7 +25,7 @@ function generateArtifacts(htmlContent, contentTypeValue = 'text/html') {
   const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
   const context = {computedCache: new Map()};
   return [{
-    devtoolsLogs: {[CharsetDefinedAudit.DEFAULT_PASS]: devtoolsLog},
+    DevtoolsLog: devtoolsLog,
     URL: {mainDocumentUrl},
     MainDocumentContent: htmlContent,
     MetaElements: [],

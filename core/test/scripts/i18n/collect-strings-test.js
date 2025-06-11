@@ -4,7 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import fs from 'fs';
+
 import * as collect from '../../../scripts/i18n/collect-strings.js';
+import {LH_ROOT} from '../../../../shared/root.js';
 
 /** @typedef {collect.CtcMessage & Required<Pick<collect.CtcMessage, 'placeholders'>>} CtcWithPlaceholders */
 
@@ -837,5 +840,22 @@ describe('PseudoLocalizer', () => {
         },
       },
     });
+  });
+});
+
+describe('collect', () => {
+  it('does not include CDT strings in ctc.json', () => {
+    const ctc =
+      JSON.parse(fs.readFileSync(`${LH_ROOT}/shared/localization/locales/en-US.ctc.json`, 'utf-8'));
+    const keys = Object.keys(ctc);
+    const files = keys.map(key => key.split('|')[0].trim());
+    const nodeModules = new Set();
+    for (const file of files) {
+      if (file.startsWith('node_modules')) {
+        nodeModules.add(file.split('/')[1]);
+      }
+    }
+
+    expect([...nodeModules]).toEqual(['lighthouse-stack-packs']);
   });
 });

@@ -50,7 +50,7 @@ class FontDisplay extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 3,
-      requiredArtifacts: ['devtoolsLogs', 'Stylesheets', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'Stylesheets', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -143,7 +143,7 @@ class FontDisplay extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLogs = artifacts.devtoolsLogs[this.DEFAULT_PASS];
+    const devtoolsLogs = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
     const {passingURLs, failingURLs} =
       FontDisplay.findFontDisplayDeclarations(artifacts, PASSING_FONT_DISPLAY_REGEX);

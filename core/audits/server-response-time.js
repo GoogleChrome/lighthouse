@@ -38,7 +38,7 @@ class ServerResponseTime extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 1,
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['DevtoolsLog', 'URL', 'GatherContext'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -62,7 +62,7 @@ class ServerResponseTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
 
     /** @type {LH.Artifacts.NetworkRequest} */
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
@@ -92,7 +92,6 @@ class ServerResponseTime extends Audit {
       numericValue: responseTime,
       numericUnit: 'millisecond',
       score: Number(passed),
-      scoreDisplayMode: passed ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       displayValue,
       details,
       metricSavings: {

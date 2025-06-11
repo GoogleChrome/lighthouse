@@ -220,7 +220,7 @@ When the `message` needs to be the same as another string but another property m
 
 In Lighthouse, this is done by having a different `description` for the strings, which is then copied to `meaning` in `resolveMessageCollisions()`. `meaning` cannot be manually set.
 
-For instance, the string "Potential Savings" currently refers to both saved KiB and saved milliseconds in different audits. The string is defined twice, each with a different `description` describing the units being saved, in case some locales' translations will use a different word choice depending on the unit.
+For instance, the string "Est Savings" currently refers to both saved KiB and saved milliseconds in different audits. The string is defined twice, each with a different `description` describing the units being saved, in case some locales' translations will use a different word choice depending on the unit.
 
 Internally, TC uses a message ID that's a hash of `message` and `meaning` to check for collisions. Somewhat confusingly, if two messages do have colliding IDs, then `message`, `meaning`, `description`, and `placeholders` are all required to match or an error is thrown. This is why all message properties could cause a collision but `meaning` is the only way to dedupe them.
 

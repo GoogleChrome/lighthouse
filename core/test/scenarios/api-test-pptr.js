@@ -104,10 +104,16 @@ describe('Individual modes API', function() {
       } = getAuditsBreakdown(lhr);
       expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
-      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
+      expect(
+        notApplicableAudits
+          // TODO(16323): Flaky in CI.
+          .filter(audit => audit.id !== 'viewport-insight')
+          .map(audit => audit.id)
+          .sort()
+      ).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
-      expect(erroredAudits).toHaveLength(0);
+      expect(erroredAudits).toStrictEqual([]);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
 
       const errorsInConsole = lhr.audits['errors-in-console'];

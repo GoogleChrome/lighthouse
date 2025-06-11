@@ -265,7 +265,7 @@ describe('Runner', () => {
       // Artifacts are still localizable.
       const artifacts = assetSaver.loadArtifacts(resolvedPath);
       expect(artifacts.LighthouseRunWarnings[0]).not.toBe('string');
-      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Potential savings of 2 KiB');
+      expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Est savings of 2 KiB');
       expect(artifacts.WarningAndErrorGatherer).toMatchObject({
         name: 'LighthouseError',
         code: 'UNSUPPORTED_OLD_CHROME',
@@ -297,7 +297,7 @@ describe('Runner', () => {
         {resolvedConfig: auditConfig, computedCache: new Map()});
 
       // Messages are now localized and formatted.
-      expect(lhr.runWarnings[0]).toBe('Potential savings of 2 KiB');
+      expect(lhr.runWarnings[0]).toBe('Est savings of 2 KiB');
       expect(lhr.audits['dummy-audit']).toMatchObject({
         scoreDisplayMode: 'error',
         // eslint-disable-next-line max-len
@@ -422,12 +422,11 @@ describe('Runner', () => {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
-          // requires traces[Audit.DEFAULT_PASS]
+          // requires Trace
           'user-timings',
         ],
         artifacts: [
           {id: 'Trace', gatherer: 'trace'},
-          {id: 'traces', gatherer: 'trace-compat'},
         ],
       });
 
@@ -435,7 +434,7 @@ describe('Runner', () => {
       const auditResult = results.lhr.audits['user-timings'];
       assert.strictEqual(auditResult.score, null);
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-      assert.ok(auditResult.errorMessage.includes('traces'));
+      assert.ok(auditResult.errorMessage.includes('Trace'));
     });
 
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
@@ -444,12 +443,11 @@ describe('Runner', () => {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
-          // requires devtoolsLogs[Audit.DEFAULT_PASS]
+          // requires DevtoolsLog
           'is-on-https',
         ],
         artifacts: [
           {id: 'DevtoolsLog', gatherer: 'devtools-log'},
-          {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
           {id: 'InspectorIssues', gatherer: 'inspector-issues'},
         ],
       });
@@ -458,7 +456,7 @@ describe('Runner', () => {
       const auditResult = results.lhr.audits['is-on-https'];
       assert.strictEqual(auditResult.score, null);
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-      assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
+      assert.strictEqual(auditResult.errorMessage, 'Required DevtoolsLog gatherer did not run.');
     });
 
     it('outputs an error audit result when missing a required artifact', async () => {
@@ -694,6 +692,8 @@ describe('Runner', () => {
         {id: 'DevtoolsLog', gatherer: 'devtools-log'},
         {id: 'traces', gatherer: 'trace-compat'},
         {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
+        {id: 'Scripts', gatherer: 'scripts'},
+        {id: 'SourceMaps', gatherer: 'source-maps'},
       ],
     });
 

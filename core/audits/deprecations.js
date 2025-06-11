@@ -58,7 +58,7 @@ class Deprecations extends Audit {
   static async audit(artifacts, context) {
     const bundles = await JSBundles.request(artifacts, context);
 
-    const deprecations = artifacts.InspectorIssues.deprecationIssue
+    const deprecations = (artifacts.InspectorIssues.deprecationIssue ?? [])
       .map(deprecation => {
         const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
         const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);

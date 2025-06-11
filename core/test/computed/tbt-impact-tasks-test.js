@@ -56,8 +56,10 @@ describe('TBTImpactTasks', () => {
           mainDocumentUrl,
           finalDisplayedUrl: mainDocumentUrl,
         },
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
     });
 
@@ -243,8 +245,10 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
@@ -292,8 +296,10 @@ describe('TBTImpactTasks', () => {
         trace,
         devtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+        SourceMaps: [],
         gatherContext: {gatherMode: 'navigation'},
         settings,
+        simulator: null,
       };
 
       const tasks = await TBTImpactTasks.request(metricComputationData, context);
