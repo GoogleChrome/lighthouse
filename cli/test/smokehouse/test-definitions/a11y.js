@@ -134,7 +134,6 @@ const expectations = {
         score: 1,
         details: {
           'type': 'table',
-          'headings': [],
           'items': [],
         },
       },
