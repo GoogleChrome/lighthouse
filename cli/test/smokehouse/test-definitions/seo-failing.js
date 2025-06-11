@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 const BASE_URL = 'http://localhost:10200/seo/';
@@ -44,9 +44,6 @@ const expectations = {
     requestedUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
     finalDisplayedUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
     audits: {
-      'viewport': {
-        score: 0,
-      },
       'document-title': {
         score: 0,
       },
@@ -55,11 +52,6 @@ const expectations = {
       },
       'http-status-code': {
         score: 1,
-      },
-      'font-size': {
-        score: 0,
-        explanation:
-        'Text is illegible because there\'s no viewport meta tag optimized for mobile screens.',
       },
       'crawlable-anchors': {
         score: 0,
@@ -71,11 +63,15 @@ const expectations = {
       },
       'link-text': {
         score: 0,
-        displayValue: '4 links found',
+        displayValue: '5 links found',
         details: {
-          items: {
-            length: 4,
-          },
+          items: [
+            {text: 'click this', textLang: undefined},
+            {text: 'click this', textLang: undefined},
+            {text: 'CLICK THIS', textLang: undefined},
+            {text: 'klicke hier', textLang: 'de'},
+            {text: 'click this', textLang: undefined},
+          ],
         },
       },
       'is-crawlable': {
@@ -91,14 +87,6 @@ const expectations = {
         details: {
           items: {
             length: 5,
-          },
-        },
-      },
-      'plugins': {
-        score: 0,
-        details: {
-          items: {
-            length: 3,
           },
         },
       },

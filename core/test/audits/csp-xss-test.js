@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Type} from 'csp_evaluator/dist/finding.js';
@@ -26,8 +26,8 @@ const STATIC_RESULTS = {
     severity: SEVERITY.high,
     description: {
       formattedDefault:
-        'Missing object-src allows the injection of plugins that execute unsafe scripts. ' +
-        'Consider setting object-src to \'none\' if you can.',
+        'Missing `object-src` allows the injection of plugins that execute unsafe scripts. ' +
+        'Consider setting `object-src` to `\'none\'` if you can.',
     },
     directive: 'object-src',
   },
@@ -35,9 +35,9 @@ const STATIC_RESULTS = {
     severity: SEVERITY.high,
     description: {
       formattedDefault:
-        'Missing base-uri allows injected <base> tags to set the base URL for all ' +
+        'Missing `base-uri` allows injected `<base>` tags to set the base URL for all ' +
         'relative URLs (e.g. scripts) to an attacker controlled domain. ' +
-        'Consider setting base-uri to \'none\' or \'self\'.',
+        'Consider setting `base-uri` to `\'none\'` or `\'self\'`.',
     },
     directive: 'base-uri',
   },
@@ -45,7 +45,7 @@ const STATIC_RESULTS = {
     severity: SEVERITY.medium,
     description: {
       formattedDefault:
-        'The page contains a CSP defined in a <meta> tag. ' +
+        'The page contains a CSP defined in a `<meta>` tag. ' +
         'Consider moving the CSP to an HTTP header or ' +
         'defining another strict CSP in an HTTP header.',
     },
@@ -55,7 +55,7 @@ const STATIC_RESULTS = {
     severity: SEVERITY.medium,
     description: {
       formattedDefault:
-        'Consider adding \'unsafe-inline\' (ignored by browsers supporting ' +
+        'Consider adding `\'unsafe-inline\'` (ignored by browsers supporting ' +
         'nonces/hashes) to be backward compatible with older browsers.',
     },
     directive: 'script-src',
@@ -65,16 +65,14 @@ const STATIC_RESULTS = {
 it('audit basic header', async () => {
   const artifacts = {
     MetaElements: [],
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {name: 'Content-Security-Policy', value: `script-src 'nonce-12345678'; foo-bar 'none'`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {name: 'Content-Security-Policy', value: `script-src 'nonce-12345678'; foo-bar 'none'`},
+        ],
+      },
+    ]),
     URL: {
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
@@ -118,18 +116,16 @@ it('marked N/A if no warnings found', async () => {
       finalDisplayedUrl: 'https://example.com',
     },
     MetaElements: [],
-    devtoolsLogs: {
-      defaultPass: networkRecordsToDevtoolsLog([
-        {
-          url: 'https://example.com',
-          responseHeaders: [
-            {
-              name: 'Content-Security-Policy',
-              value: `script-src 'none'; object-src 'none'; base-uri 'none'; report-uri https://csp.example.com`},
-          ],
-        },
-      ]),
-    },
+    DevtoolsLog: networkRecordsToDevtoolsLog([
+      {
+        url: 'https://example.com',
+        responseHeaders: [
+          {
+            name: 'Content-Security-Policy',
+            value: `script-src 'none'; object-src 'none'; base-uri 'none'; report-uri https://csp.example.com`},
+        ],
+      },
+    ]),
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
   expect(results.details.items).toHaveLength(0);
@@ -150,23 +146,21 @@ describe('getRawCsps', () => {
           content: `default-src 'none'`,
         },
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: `script-src 'none'`,
-              },
-              {
-                name: 'Content-Security-Policy',
-                value: `object-src 'none'`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: `script-src 'none'`,
+            },
+            {
+              name: 'Content-Security-Policy',
+              value: `object-src 'none'`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, cspMetaTags} =
       await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
@@ -187,23 +181,21 @@ describe('getRawCsps', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: `script-src 'none',default-src 'none'`,
-              },
-              {
-                name: 'Content-Security-Policy',
-                value: `object-src 'none'`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: `script-src 'none',default-src 'none'`,
+            },
+            {
+              name: 'Content-Security-Policy',
+              value: `object-src 'none'`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, cspMetaTags} =
       await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
@@ -223,23 +215,21 @@ describe('getRawCsps', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: ``,
-              },
-              {
-                name: 'Content-Security-Policy',
-                value: `object-src 'none'`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: ``,
+            },
+            {
+              name: 'Content-Security-Policy',
+              value: `object-src 'none'`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, cspMetaTags} =
       await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
@@ -257,23 +247,21 @@ describe('getRawCsps', () => {
         finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {
-            url: 'https://example.com',
-            responseHeaders: [
-              {
-                name: 'Content-Security-Policy',
-                value: '   \t',
-              },
-              {
-                name: 'Content-Security-Policy',
-                value: `object-src 'none'`,
-              },
-            ],
-          },
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: '   \t',
+            },
+            {
+              name: 'Content-Security-Policy',
+              value: `object-src 'none'`,
+            },
+          ],
+        },
+      ]),
     };
     const {cspHeaders, cspMetaTags} =
       await CspXss.getRawCsps(artifacts, {computedCache: new Map()});

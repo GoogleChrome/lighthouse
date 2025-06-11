@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable no-console */
@@ -9,14 +9,13 @@
 import path from 'path';
 import os from 'os';
 
-import psList from 'ps-list';
 import * as ChromeLauncher from 'chrome-launcher';
 import yargsParser from 'yargs-parser';
 import log from 'lighthouse-logger';
 import open from 'open';
 
 import * as Printer from './printer.js';
-import lighthouse, {legacyNavigation} from '../core/index.js';
+import lighthouse from '../core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../core/lib/asset-saver.js';
 import UrlUtils from '../core/lib/url-utils.js';
@@ -138,7 +137,7 @@ async function saveResults(runnerResult, flags) {
   const cwd = process.cwd();
 
   if (flags.lanternDataOutputPath) {
-    const devtoolsLog = runnerResult.artifacts.devtoolsLogs.defaultPass;
+    const devtoolsLog = runnerResult.artifacts.DevtoolsLog;
     await assetSaver.saveLanternNetworkData(devtoolsLog, flags.lanternDataOutputPath);
   }
 
@@ -177,36 +176,6 @@ async function saveResults(runnerResult, flags) {
 }
 
 /**
- * Attempt to kill the launched Chrome, if defined.
- * @param {ChromeLauncher.LaunchedChrome=} launchedChrome
- * @return {Promise<void>}
- */
-async function potentiallyKillChrome(launchedChrome) {
-  if (!launchedChrome) return;
-
-  /** @type {NodeJS.Timeout} */
-  let timeout;
-  const timeoutPromise = new Promise((_, reject) => {
-    timeout = setTimeout(reject, 5000, new Error('Timed out waiting to kill Chrome'));
-  });
-
-  return Promise.race([
-    launchedChrome.kill(),
-    timeoutPromise,
-  ]).catch(async err => {
-    const runningProcesses = await psList();
-    if (!runningProcesses.some(proc => proc.pid === launchedChrome.pid)) {
-      log.warn('CLI', 'Warning: Chrome process could not be killed because it already exited.');
-      return;
-    }
-
-    throw new Error(`Couldn't quit Chrome process. ${err}`);
-  }).finally(() => {
-    clearTimeout(timeout);
-  });
-}
-
-/**
  * @param {string} url
  * @param {LH.CliFlags} flags
  * @param {LH.Config|undefined} config
@@ -214,12 +183,10 @@ async function potentiallyKillChrome(launchedChrome) {
  */
 async function runLighthouse(url, flags, config) {
   /** @param {any} reason */
-  async function handleTheUnhandled(reason) {
+  function handleTheUnhandled(reason) {
     process.stderr.write(`Unhandled Rejection. Reason: ${reason}\n`);
-    await potentiallyKillChrome(launchedChrome).catch(() => {});
-    setTimeout(_ => {
-      process.exit(1);
-    }, 100);
+    launchedChrome?.kill();
+    process.exit(1);
   }
   process.on('unhandledRejection', handleTheUnhandled);
 
@@ -238,23 +205,16 @@ async function runLighthouse(url, flags, config) {
       flags.port = launchedChrome.port;
     }
 
-    if (flags.legacyNavigation) {
-      log.warn('CLI', 'Legacy navigation CLI is deprecated');
-      flags.channel = 'legacy-navigation-cli';
-    } else if (!flags.channel) {
-      flags.channel = 'cli';
-    }
+    flags.channel = 'cli';
 
-    const runnerResult = flags.legacyNavigation ?
-       await legacyNavigation(url, flags, config) :
-       await lighthouse(url, flags, config);
+    const runnerResult = await lighthouse(url, flags, config);
 
     // If in gatherMode only, there will be no runnerResult.
     if (runnerResult) {
       await saveResults(runnerResult, flags);
     }
 
-    await potentiallyKillChrome(launchedChrome);
+    launchedChrome?.kill();
     process.removeListener('unhandledRejection', handleTheUnhandled);
 
     // Runtime errors indicate something was *very* wrong with the page result.
@@ -272,7 +232,7 @@ async function runLighthouse(url, flags, config) {
 
     return runnerResult;
   } catch (err) {
-    await potentiallyKillChrome(launchedChrome).catch(() => {});
+    launchedChrome?.kill();
     return printErrorAndExit(err);
   }
 }

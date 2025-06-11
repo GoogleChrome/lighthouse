@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -10,7 +10,7 @@ import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
 import * as lighthouseRenderer from '../../clients/bundle.js';
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const sampleResultsStr =
   fs.readFileSync(LH_ROOT + '/core/test/results/sample_v2.json', 'utf-8');
@@ -25,7 +25,9 @@ describe('lighthouseRenderer bundle', () => {
 
     global.window = global.self = window;
     global.window.requestAnimationFrame = fn => fn();
+    global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
+    global.CustomEvent = window.CustomEvent;
     // Stub out matchMedia for Node.
     global.self.matchMedia = function() {
       return {
@@ -41,6 +43,7 @@ describe('lighthouseRenderer bundle', () => {
   after(() => {
     global.window = global.self = undefined;
     global.HTMLInputElement = undefined;
+    global.CustomEvent = undefined;
   });
 
   it('renders an LHR to DOM', () => {

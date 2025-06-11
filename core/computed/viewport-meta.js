@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import Parser from 'metaviewport-parser';
@@ -21,11 +21,13 @@ class ViewportMeta {
         hasViewportTag: false,
         isMobileOptimized: false,
         parserWarnings: [],
+        rawContentString: undefined,
       };
     }
 
     const warnings = [];
-    const parsedProps = Parser.parseMetaViewPortContent(viewportMeta.content || '');
+    const rawContentString = viewportMeta.content || '';
+    const parsedProps = Parser.parseMetaViewPortContent(rawContentString);
 
     if (Object.keys(parsedProps.unknownProperties).length) {
       warnings.push(`Invalid properties found: ${JSON.stringify(parsedProps.unknownProperties)}`);
@@ -35,12 +37,24 @@ class ViewportMeta {
     }
 
     const viewportProps = parsedProps.validProperties;
-    const isMobileOptimized = Boolean(viewportProps.width || viewportProps['initial-scale']);
+    const initialScale = Number(viewportProps['initial-scale']);
+
+    if (!isNaN(initialScale) && initialScale < 1) {
+      return {
+        hasViewportTag: true,
+        isMobileOptimized: false,
+        parserWarnings: warnings,
+        rawContentString,
+      };
+    }
+
+    const isMobileOptimized = Boolean(viewportProps.width || initialScale);
 
     return {
       hasViewportTag: true,
       isMobileOptimized,
       parserWarnings: warnings,
+      rawContentString,
     };
   }
 }
@@ -53,4 +67,5 @@ export {ViewportMetaComputed as ViewportMeta};
  * @property {boolean} hasViewportTag Whether the page has any viewport tag.
  * @property {boolean} isMobileOptimized Whether the viewport tag is optimized for mobile screens.
  * @property {Array<string>} parserWarnings Warnings if the parser encountered invalid content in the viewport tag.
+ * @property {string|undefined} rawContentString The `content` attribute value, if a viewport was defined.
  */

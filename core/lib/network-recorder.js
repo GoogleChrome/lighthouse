@@ -1,15 +1,16 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {EventEmitter} from 'events';
 
 import log from 'lighthouse-logger';
 
+import * as LH from '../../types/lh.js';
+import * as Lantern from './lantern/lantern.js';
 import {NetworkRequest} from './network-request.js';
-import {PageDependencyGraph} from '../computed/page-dependency-graph.js';
 
 /**
  * @typedef {{
@@ -80,6 +81,7 @@ class NetworkRecorder extends RequestEventEmitter {
       const request = new NetworkRequest();
       request.onRequestWillBeSent(data);
       request.sessionId = event.sessionId;
+      request.sessionTargetType = event.targetType;
       this.onRequestStarted(request);
       log.verbose('network', `request will be sent to ${request.url}`);
       return;
@@ -134,6 +136,18 @@ class NetworkRecorder extends RequestEventEmitter {
     if (!request) return;
     log.verbose('network', `${request.url} response received`);
     request.onResponseReceived(data);
+  }
+
+  /**
+   * @param {{params: LH.Crdp.Network.ResponseReceivedExtraInfoEvent, targetType: LH.Protocol.TargetType, sessionId?: string}} event
+   */
+  onResponseReceivedExtraInfo(event) {
+    const data = event.params;
+    const request = this._findRealRequestAndSetSession(
+      data.requestId, event.targetType, event.sessionId);
+    if (!request) return;
+    log.verbose('network', `${request.url} response received extra info`);
+    request.onResponseReceivedExtraInfo(data);
   }
 
   /**
@@ -194,6 +208,7 @@ class NetworkRecorder extends RequestEventEmitter {
       case 'Network.requestWillBeSent': return this.onRequestWillBeSent(event);
       case 'Network.requestServedFromCache': return this.onRequestServedFromCache(event);
       case 'Network.responseReceived': return this.onResponseReceived(event);
+      case 'Network.responseReceivedExtraInfo': return this.onResponseReceivedExtraInfo(event);
       case 'Network.dataReceived': return this.onDataReceived(event);
       case 'Network.loadingFinished': return this.onLoadingFinished(event);
       case 'Network.loadingFailed': return this.onLoadingFailed(event);
@@ -238,11 +253,11 @@ class NetworkRecorder extends RequestEventEmitter {
       return record.redirectSource;
     }
 
-    const initiatorURL = PageDependencyGraph.getNetworkInitiators(record)[0];
+    const initiatorURL = Lantern.Graph.PageDependencyGraph.getNetworkInitiators(record)[0];
     let candidates = recordsByURL.get(initiatorURL) || [];
     // The (valid) initiator must come before the initiated request.
     candidates = candidates.filter(c => {
-      return c.responseHeadersEndTime <= record.networkRequestTime &&
+      return c.responseHeadersEndTime <= record.rendererStartTime &&
           c.finished && !c.failed;
     });
     if (candidates.length > 1) {

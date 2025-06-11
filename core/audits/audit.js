@@ -1,15 +1,23 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import * as LH from '../../types/lh.js';
 import {isUnderTest} from '../lib/lh-env.js';
-import * as statistics from '../lib/statistics.js';
 import {Util} from '../../shared/util.js';
 
 const DEFAULT_PASS = 'defaultPass';
+
+/** @type {Record<keyof LH.Audit.ProductMetricSavings, number>} */
+const METRIC_SAVINGS_PRECISION = {
+  FCP: 50,
+  LCP: 50,
+  INP: 50,
+  TBT: 50,
+  CLS: 0.001,
+};
 
 /**
  * @typedef TableOptions
@@ -41,6 +49,7 @@ class Audit {
    * @return {string}
    */
   static get DEFAULT_PASS() {
+    // TODO(v13): remove.
     return DEFAULT_PASS;
   }
 
@@ -50,6 +59,7 @@ class Audit {
   static get SCORING_MODES() {
     return {
       NUMERIC: 'numeric',
+      METRIC_SAVINGS: 'metricSavings',
       BINARY: 'binary',
       MANUAL: 'manual',
       INFORMATIVE: 'informative',
@@ -105,14 +115,7 @@ class Audit {
    * @return {number}
    */
   static computeLogNormalScore(controlPoints, value) {
-    let percentile = statistics.getLogNormalScore(controlPoints, value);
-    // Add a boost to scores of 90+, linearly ramping from 0 at 0.9 to half a
-    // point (0.005) at 1. Expands scores in (0.9, 1] to (0.9, 1.005], so more top
-    // scores will be a perfect 1 after the two-digit `Math.floor()` rounding below.
-    if (percentile > 0.9) { // getLogNormalScore ensures `percentile` can't exceed 1.
-      percentile += 0.05 * (percentile - 0.9);
-    }
-    return Math.floor(percentile * 100) / 100;
+    return Util.computeLogNormalScore(controlPoints, value);
   }
 
   /**
@@ -136,6 +139,17 @@ class Audit {
       if (items.some(item => key in item)) continue;
       throw new Error(`"${heading.key}" is missing from items`);
     }
+  }
+
+  /**
+   * @param {LH.Audit.Details.Checklist['items']} items
+   * @return {LH.Audit.Details.Checklist}
+   */
+  static makeChecklistDetails(items) {
+    return {
+      type: 'checklist',
+      items,
+    };
   }
 
   /**
@@ -328,8 +342,13 @@ class Audit {
    * @return {number|null}
    */
   static _normalizeAuditScore(score, scoreDisplayMode, auditId) {
+    if (scoreDisplayMode === Audit.SCORING_MODES.INFORMATIVE) {
+      return 1;
+    }
+
     if (scoreDisplayMode !== Audit.SCORING_MODES.BINARY &&
-        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
+        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC &&
+        scoreDisplayMode !== Audit.SCORING_MODES.METRIC_SAVINGS) {
       return null;
     }
 
@@ -343,6 +362,34 @@ class Audit {
     score = clampTo2Decimals(score);
 
     return score;
+  }
+
+  /**
+   * @param {LH.Audit.ProductMetricSavings|undefined} metricSavings
+   * @return {LH.Audit.ProductMetricSavings|undefined}
+   */
+  static _quantizeMetricSavings(metricSavings) {
+    if (!metricSavings) return;
+
+    /** @type {LH.Audit.ProductMetricSavings} */
+    const normalizedMetricSavings = {...metricSavings};
+
+    // eslint-disable-next-line max-len
+    for (const key of /** @type {Array<keyof LH.Audit.ProductMetricSavings>} */ (Object.keys(metricSavings))) {
+      let value = metricSavings[key];
+      if (value === undefined) continue;
+
+      value = Math.max(value, 0);
+
+      const precision = METRIC_SAVINGS_PRECISION[key];
+      if (precision !== undefined) {
+        value = Math.round(value / precision) * precision;
+      }
+
+      normalizedMetricSavings[key] = value;
+    }
+
+    return normalizedMetricSavings;
   }
 
   /**
@@ -371,6 +418,7 @@ class Audit {
 
     // Default to binary scoring.
     let scoreDisplayMode = audit.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
+    let score = product.score;
 
     // But override if product contents require it.
     if (product.errorMessage !== undefined) {
@@ -379,9 +427,24 @@ class Audit {
     } else if (product.notApplicable) {
       // Audit was determined to not apply to the page.
       scoreDisplayMode = Audit.SCORING_MODES.NOT_APPLICABLE;
+    } else if (product.scoreDisplayMode) {
+      scoreDisplayMode = product.scoreDisplayMode;
     }
 
-    const score = Audit._normalizeAuditScore(product.score, scoreDisplayMode, audit.meta.id);
+    const metricSavings = Audit._quantizeMetricSavings(product.metricSavings);
+    const hasSomeSavings = Object.values(metricSavings || {}).some(v => v);
+
+    if (scoreDisplayMode === Audit.SCORING_MODES.METRIC_SAVINGS) {
+      if (score && score >= Util.PASS_THRESHOLD) {
+        score = 1;
+      } else if (hasSomeSavings) {
+        score = 0;
+      } else {
+        score = 0.5;
+      }
+    }
+
+    score = Audit._normalizeAuditScore(score, scoreDisplayMode, audit.meta.id);
 
     let auditTitle = audit.meta.title;
     if (audit.meta.failureTitle) {
@@ -411,9 +474,27 @@ class Audit {
       errorMessage: product.errorMessage,
       errorStack: product.errorStack,
       warnings: product.warnings,
+      scoringOptions: product.scoringOptions,
+      metricSavings,
 
       details: product.details,
+      guidanceLevel: audit.meta.guidanceLevel,
+      replacesAudits: audit.meta.replacesAudits,
     };
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @returns {LH.Artifacts.MetricComputationDataInput}
+   */
+  static makeMetricComputationDataInput(artifacts, context) {
+    const trace = artifacts.Trace ?? artifacts.traces[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog ?? artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const gatherContext = artifacts.GatherContext;
+    const {URL, SourceMaps} = artifacts;
+    // eslint-disable-next-line max-len
+    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL, SourceMaps, simulator: null};
   }
 }
 

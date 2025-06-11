@@ -1,10 +1,12 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
+
+import {initializeConfig} from '../config/config.js';
 
 /** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
 /** @typedef {import('@sentry/node').NodeClient} NodeClient */
@@ -15,12 +17,6 @@ const SENTRY_URL = 'https://a6bb0da87ee048cc9ae2a345fc09ab2e:63a7029f46f74265981
 
 // Per-run chance of capturing errors (if enabled).
 const SAMPLE_RATE = 0.01;
-
-/** @type {Array<{pattern: RegExp, rate: number}>} */
-const SAMPLED_ERRORS = [
-  // Error code based sampling. Delete if still unused after 2019-01-01.
-  // e.g.: {pattern: /No.*node with given id/, rate: 0.01},
-];
 
 const noop = () => { };
 
@@ -45,7 +41,7 @@ const sentryDelegate = {
 
 /**
  * When called, replaces noops with actual Sentry implementation.
- * @param {{url: string, flags: LH.CliFlags, environmentData: NodeOptions}} opts
+ * @param {{url: string, flags: LH.CliFlags, config?: LH.Config, environmentData: NodeOptions}} opts
  */
 async function init(opts) {
   // If error reporting is disabled, leave the functions as a noop
@@ -65,12 +61,26 @@ async function init(opts) {
       dsn: SENTRY_URL,
     });
 
+    /** @type {LH.Config.Settings | LH.CliFlags} */
+    let settings = opts.flags;
+    try {
+      const {resolvedConfig} = await initializeConfig('navigation', opts.config, opts.flags);
+      settings = resolvedConfig.settings;
+    } catch {
+      // The config failed validation (note - probably, we don't use a specific error type for that).
+      // The actual core lighthouse library will handle this error accordingly. As we are only using this
+      // for meta data, we can ignore here.
+    }
+    const baseTags = {
+      channel: settings.channel,
+      formFactor: settings.formFactor,
+      throttlingMethod: settings.throttlingMethod,
+    };
+    Sentry.setTags(baseTags);
+
     const extras = {
-      ...opts.flags.throttling,
-      channel: opts.flags.channel || 'cli',
+      ...settings.throttling,
       url: opts.url,
-      formFactor: opts.flags.formFactor,
-      throttlingMethod: opts.flags.throttlingMethod,
     };
     Sentry.setExtras(extras);
 
@@ -103,10 +113,6 @@ async function init(opts) {
         sentryExceptionCache.set(key, true);
       }
 
-      // Sample known errors that occur at a high frequency.
-      const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
-      if (sampledErrorMatch && sampledErrorMatch.rate <= Math.random()) return;
-
       // @ts-expect-error - properties added to protocol method LighthouseErrors.
       if (err.protocolMethod) {
         // Protocol errors all share same stack trace, so add more to fingerprint
@@ -126,9 +132,16 @@ async function init(opts) {
         if (opts.tags) {
           scope.setTags(opts.tags);
         }
-        if (opts.extra) {
-          scope.setExtras(opts.extra);
+
+        // Add extra details
+        let extra;
+        if (opts.extra) extra = {...opts.extra};
+        // @ts-expect-error Non-standard property
+        if (err.extra) extra = {...extra, ...err.extra};
+        if (extra) {
+          scope.setExtras(extra);
         }
+
         Sentry.captureException(err);
       });
     };

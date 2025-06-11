@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -34,6 +34,7 @@ const FAILING_THREE_REDIRECTS = [{
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},
+  transferSize: 1000,
 }];
 
 const FAILING_TWO_REDIRECTS = [{
@@ -54,6 +55,7 @@ const FAILING_TWO_REDIRECTS = [{
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 448},
+  transferSize: 1000,
 }];
 
 const SUCCESS_ONE_REDIRECT = [{
@@ -68,6 +70,7 @@ const SUCCESS_ONE_REDIRECT = [{
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 139},
+  transferSize: 1000,
 }];
 
 const SUCCESS_NOREDIRECT = [{
@@ -76,6 +79,7 @@ const SUCCESS_NOREDIRECT = [{
   priority: 'VeryHigh',
   url: 'https://www.google.com/',
   timing: {receiveHeadersEnd: 140},
+  transferSize: 1000,
 }];
 
 const FAILING_CLIENTSIDE = [
@@ -92,6 +96,7 @@ const FAILING_CLIENTSIDE = [
     priority: 'VeryHigh',
     url: 'https://lisairish.com/',
     timing: {receiveHeadersEnd: 447},
+    transferSize: 1000,
   },
   {
     requestId: '2',
@@ -99,6 +104,7 @@ const FAILING_CLIENTSIDE = [
     priority: 'VeryHigh',
     url: 'https://www.lisairish.com/',
     timing: {receiveHeadersEnd: 448},
+    transferSize: 1000,
   },
 ];
 
@@ -108,6 +114,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 0,
   responseHeadersEndTime: 500,
+  transferSize: 1000,
 },
 {
   requestId: '2',
@@ -115,6 +122,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 1000,
   responseHeadersEndTime: 1500,
+  transferSize: 1000,
 },
 {
   requestId: '3',
@@ -122,6 +130,7 @@ const FAILING_SELF_REDIRECT = [{
   priority: 'VeryHigh',
   networkRequestTime: 3000,
   responseHeadersEndTime: 3500,
+  transferSize: 1000,
 }];
 
 describe('Performance: Redirects audit', () => {
@@ -129,19 +138,29 @@ describe('Performance: Redirects audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;
 
-    const trace = createTestTrace({frameUrl, traceEnd: 5000});
+    const trace = createTestTrace({
+      frameUrl,
+      largestContentfulPaint: 15,
+      traceEnd: 5000,
+      networkRecords,
+    });
     const navStart = trace.traceEvents.find(e => e.name === 'navigationStart');
     navStart.args.data.navigationId = '1';
+    const fcp = trace.traceEvents.find(e => e.name === 'firstContentfulPaint');
+    fcp.args.data.navigationId = '1';
+    const lcp = trace.traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
+    lcp.args.data.navigationId = '1';
 
     return {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: {
         requestedUrl: networkRecords[0].url,
         mainDocumentUrl: finalDisplayedUrl,
         finalDisplayedUrl,
       },
+      SourceMaps: [],
     };
   };
 
@@ -149,8 +168,11 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     const artifacts = mockArtifacts(FAILING_CLIENTSIDE, 'https://www.lisairish.com/');
 
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
+    const fcp = traceEvents.find(e => e.name === 'firstContentfulPaint');
+    const lcp = traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
+
     const secondNavStart = JSON.parse(JSON.stringify(navStart));
     traceEvents.push(secondNavStart);
     navStart.args.data.isLoadingMainFrame = true;
@@ -160,10 +182,21 @@ describe('Performance: Redirects audit', () => {
     secondNavStart.args.data.documentLoaderURL = 'https://www.lisairish.com/';
     secondNavStart.args.data.navigationId = '2';
 
+    const secondFcp = JSON.parse(JSON.stringify(fcp));
+    traceEvents.push(secondFcp);
+    secondFcp.args.data.navigationId = '2';
+    secondFcp.ts += 2;
+
+    const secondLcp = JSON.parse(JSON.stringify(lcp));
+    traceEvents.push(secondLcp);
+    secondLcp.args.data.navigationId = '2';
+    secondFcp.ts += 2;
+
     const output = await RedirectsAudit.audit(artifacts, context);
     expect(output.details.items).toHaveLength(3);
-    expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.29`);
+    expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0`);
     expect(output.numericValue).toMatchInlineSnapshot(`2000`);
+    expect(output.metricSavings).toEqual({LCP: 2000, FCP: 2000});
   });
 
   it('uses lantern timings when throttlingMethod is simulate', async () => {
@@ -192,6 +225,7 @@ describe('Performance: Redirects audit', () => {
       ]
     `);
     expect(output.numericValue).toMatchInlineSnapshot(`1890`);
+    expect(output.metricSavings).toEqual({LCP: 1890, FCP: 1890});
   });
 
   it('fails when 3 redirects detected', () => {
@@ -199,8 +233,9 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       expect(output.details.items).toHaveLength(4);
-      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.2`);
+      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0`);
       expect(output.numericValue).toMatchInlineSnapshot(`3000`);
+      expect(output.metricSavings).toEqual({LCP: 3000, FCP: 3000});
     });
   });
 
@@ -209,20 +244,20 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       expect(output.details.items).toHaveLength(3);
-      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.29`);
+      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0`);
       expect(output.numericValue).toMatchInlineSnapshot(`2000`);
+      expect(output.metricSavings).toEqual({LCP: 2000, FCP: 2000});
     });
   });
 
-  it('passes when one redirect detected', () => {
+  it('fails when 1 redirect detected', () => {
     const artifacts = mockArtifacts(SUCCESS_ONE_REDIRECT, 'https://www.lisairish.com/');
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
-      // If === 1 redirect, perfect score is expected, regardless of latency
-      // We will still generate a table and show wasted time
       expect(output.details.items).toHaveLength(2);
-      expect(output.score).toEqual(1);
+      expect(output.score).toEqual(0);
       expect(output.numericValue).toMatchInlineSnapshot(`1000`);
+      expect(output.metricSavings).toEqual({LCP: 1000, FCP: 1000});
     });
   });
 
@@ -233,6 +268,7 @@ describe('Performance: Redirects audit', () => {
       assert.equal(output.score, 1);
       assert.equal(output.details.items.length, 0);
       assert.equal(output.numericValue, 0);
+      assert.deepStrictEqual(output.metricSavings, {LCP: 0, FCP: 0});
     });
   });
 
@@ -240,20 +276,38 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     const artifacts = mockArtifacts(FAILING_SELF_REDIRECT, 'https://redirect.test/');
 
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
+    const fcp = traceEvents.find(e => e.name === 'firstContentfulPaint');
+    const lcp = traceEvents.find(e => e.name === 'largestContentfulPaint::Candidate');
 
     const secondNavStart = JSON.parse(JSON.stringify(navStart));
     traceEvents.push(secondNavStart);
     secondNavStart.args.data.navigationId = '2';
 
+    const secondFcp = JSON.parse(JSON.stringify(fcp));
+    traceEvents.push(secondFcp);
+    secondFcp.args.data.navigationId = '2';
+
+    const secondLcp = JSON.parse(JSON.stringify(lcp));
+    traceEvents.push(secondLcp);
+    secondLcp.args.data.navigationId = '2';
+
     const thirdNavStart = JSON.parse(JSON.stringify(navStart));
     traceEvents.push(thirdNavStart);
     thirdNavStart.args.data.navigationId = '3';
 
+    const thirdFcp = JSON.parse(JSON.stringify(fcp));
+    traceEvents.push(thirdFcp);
+    thirdFcp.args.data.navigationId = '3';
+
+    const thirdLcp = JSON.parse(JSON.stringify(lcp));
+    traceEvents.push(thirdLcp);
+    thirdLcp.args.data.navigationId = '3';
+
     const output = await RedirectsAudit.audit(artifacts, context);
     expect(output).toMatchObject({
-      score: expect.toBeApproximately(0.2),
+      score: 0,
       numericValue: 3000,
       details: {
         items: [
@@ -262,13 +316,17 @@ describe('Performance: Redirects audit', () => {
           {url: 'https://redirect.test/', wastedMs: 0},
         ],
       },
+      metricSavings: {
+        LCP: 3000,
+        FCP: 3000,
+      },
     });
   });
 
   it('throws when no navigation requests are found', async () => {
     const artifacts = mockArtifacts(SUCCESS_NOREDIRECT, 'https://www.google.com/');
     const context = {settings: {}, computedCache: new Map()};
-    const traceEvents = artifacts.traces.defaultPass.traceEvents;
+    const traceEvents = artifacts.Trace.traceEvents;
     const navStart = traceEvents.find(e => e.name === 'navigationStart');
     navStart.args.data.navigationId = 'NO_MATCHY';
 

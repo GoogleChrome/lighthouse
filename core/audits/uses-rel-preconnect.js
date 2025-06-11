@@ -1,11 +1,10 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
-import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -14,6 +13,7 @@ import {LoadSimulator} from '../computed/load-simulator.js';
 import {ProcessedNavigation} from '../computed/processed-navigation.js';
 import {PageDependencyGraph} from '../computed/page-dependency-graph.js';
 import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest-contentful-paint.js';
+import {LanternFirstContentfulPaint} from '../computed/metrics/lantern-first-contentful-paint.js';
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
@@ -61,8 +61,9 @@ class UsesRelPreconnectAudit extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      guidanceLevel: 3,
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'LinkElements', 'SourceMaps'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
@@ -72,7 +73,7 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {boolean}
    */
   static hasValidTiming(record) {
-    return !!record.timing && record.timing.connectEnd > 0 && record.timing.connectStart > 0;
+    return !!record.timing && record.timing.connectEnd >= 0 && record.timing.connectStart >= 0;
   }
 
   /**
@@ -81,11 +82,27 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {boolean}
    */
   static hasAlreadyConnectedToOrigin(record) {
-    return (
-      !!record.timing &&
+    if (!record.timing) return false;
+
+    // When these values are given as -1, that means the page has
+    // a connection for this origin and paid these costs already.
+    if (
+      record.timing.dnsStart === -1 && record.timing.dnsEnd === -1 &&
+      record.timing.connectStart === -1 && record.timing.connectEnd === -1
+    ) {
+      return true;
+    }
+
+    // Less understood: if the connection setup took no time at all, consider
+    // it the same as the above. It is unclear if this is correct, or is even possible.
+    if (
       record.timing.dnsEnd - record.timing.dnsStart === 0 &&
       record.timing.connectEnd - record.timing.connectStart === 0
-    );
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -105,30 +122,40 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const settings = context.settings;
 
-    let maxWasted = 0;
+    let maxWastedLcp = 0;
+    let maxWastedFcp = 0;
     /** @type {Array<LH.IcuMessage>} */
     const warnings = [];
 
     const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
       await Promise.all([
         NetworkRecords.request(devtoolsLog, context),
-        MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
+        MainResource.request({devtoolsLog, URL}, context),
         LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(trace, context),
-        PageDependencyGraph.request({trace, devtoolsLog, URL: artifacts.URL}, context),
+        PageDependencyGraph.request(
+          {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
     const lcpGraph =
-      await LanternLargestContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
+      LanternLargestContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {
-      if (node.type === 'network' ) lcpGraphURLs.add(node.record.url);
+      if (node.type === 'network') lcpGraphURLs.add(node.request.url);
+    });
+
+    const fcpGraph =
+      LanternFirstContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
+    const fcpGraphURLs = new Set();
+    fcpGraph.traverse(node => {
+      if (node.type === 'network') fcpGraphURLs.add(node.request.url);
     });
 
     /** @type {Map<string, LH.Artifacts.NetworkRequest[]>}  */
@@ -200,7 +227,11 @@ class UsesRelPreconnectAudit extends Audit {
         return;
       }
 
-      maxWasted = Math.max(wastedMs, maxWasted);
+      maxWastedLcp = Math.max(wastedMs, maxWastedLcp);
+
+      if (fcpGraphURLs.has(firstRecordOfOrigin.url)) {
+        maxWastedFcp = Math.max(wastedMs, maxWastedLcp);
+      }
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
@@ -224,6 +255,7 @@ class UsesRelPreconnectAudit extends Audit {
         score: 1,
         warnings: preconnectLinks.length >= 3 ?
           [...warnings, str_(UIStrings.tooManyPreconnectLinksWarning)] : warnings,
+        metricSavings: {LCP: maxWastedLcp, FCP: maxWastedFcp},
       };
     }
 
@@ -234,17 +266,18 @@ class UsesRelPreconnectAudit extends Audit {
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results,
-      {overallSavingsMs: maxWasted, sortedBy: ['wastedMs']});
+      {overallSavingsMs: maxWastedLcp, sortedBy: ['wastedMs']});
 
     return {
-      score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),
-      numericValue: maxWasted,
+      score: results.length ? 0 : 1,
+      numericValue: maxWastedLcp,
       numericUnit: 'millisecond',
-      displayValue: maxWasted ?
-        str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
+      displayValue: maxWastedLcp ?
+        str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWastedLcp}) :
         '',
       warnings,
       details,
+      metricSavings: {LCP: maxWastedLcp, FCP: maxWastedFcp},
     };
   }
 }

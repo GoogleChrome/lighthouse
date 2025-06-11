@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: '/'
+    allow:
+      - "production"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+  - package-ecosystem: 'github-actions' # Necessary to update action hash
+    directory: '/'
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2

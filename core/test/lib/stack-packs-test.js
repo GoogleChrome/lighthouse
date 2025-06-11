@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
@@ -57,9 +57,11 @@ Array [
   "joomla",
   "magento",
   "next.js",
+  "nitropack",
   "nuxt",
   "octobercms",
   "react",
+  "wix",
   "wordpress",
   "wp-rocket",
 ]
@@ -99,7 +101,6 @@ Array [
     "id": "drupal",
     "keys": Array [
       "unused-css-rules",
-      "unused-javascript",
       "modern-image-formats",
       "offscreen-images",
       "total-byte-weight",
@@ -107,12 +108,15 @@ Array [
       "unminified-css",
       "unminified-javascript",
       "efficient-animated-content",
+      "unused-javascript",
       "uses-long-cache-ttl",
       "uses-optimized-images",
+      "uses-text-compression",
       "uses-responsive-images",
+      "prioritize-lcp-image",
       "server-response-time",
+      "redirects",
       "uses-rel-preconnect",
-      "font-display",
     ],
   },
   Object {
@@ -201,6 +205,24 @@ Array [
     ],
   },
   Object {
+    "id": "nitropack",
+    "keys": Array [
+      "unused-css-rules",
+      "modern-image-formats",
+      "offscreen-images",
+      "render-blocking-resources",
+      "unminified-css",
+      "unminified-javascript",
+      "unused-javascript",
+      "uses-long-cache-ttl",
+      "uses-optimized-images",
+      "uses-text-compression",
+      "uses-responsive-images",
+      "dom-size",
+      "font-display",
+    ],
+  },
+  Object {
     "id": "nuxt",
     "keys": Array [
       "modern-image-formats",
@@ -240,6 +262,16 @@ Array [
       "redirects",
       "user-timings",
       "dom-size",
+    ],
+  },
+  Object {
+    "id": "wix",
+    "keys": Array [
+      "modern-image-formats",
+      "render-blocking-resources",
+      "efficient-animated-content",
+      "unused-javascript",
+      "server-response-time",
     ],
   },
   Object {
@@ -295,6 +327,7 @@ Array [
     expect([...unrecognizedKeys]).toMatchInlineSnapshot(`
       Array [
         "unminified-warning",
+        "uses-rel-preload",
         "disable-bundling",
       ]
     `);

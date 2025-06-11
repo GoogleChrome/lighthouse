@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import UnsizedImagesAudit from '../../audits/unsized-images.js';
@@ -34,6 +34,7 @@ describe('Sized images audit', () => {
       },
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('passes when an image is a shadowroot image', async () => {
@@ -47,6 +48,7 @@ describe('Sized images audit', () => {
       },
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('passes when an image has absolute css position', async () => {
@@ -60,6 +62,7 @@ describe('Sized images audit', () => {
       },
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('passes when an image has fixed css position', async () => {
@@ -73,6 +76,7 @@ describe('Sized images audit', () => {
       },
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('passes when an image is a non-network SVG data url base64', async () => {
@@ -86,6 +90,7 @@ describe('Sized images audit', () => {
       src: 'data:image/svg+xml;base64,foo',
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('passes when an image is a non-network SVG data url with encoded characters', async () => {
@@ -99,6 +104,7 @@ describe('Sized images audit', () => {
       src: 'data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27200%27%20height=%27200%27/%3e',
     });
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   describe('has empty width', () => {
@@ -112,6 +118,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image only has css height', async () => {
@@ -124,6 +131,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image only has attribute height & css height', async () => {
@@ -136,6 +144,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails a network svg', async () => {
@@ -148,6 +157,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 
@@ -162,6 +172,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image only has css width', async () => {
@@ -174,6 +185,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image only has attribute width & css width', async () => {
@@ -186,6 +198,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 
@@ -199,6 +212,7 @@ describe('Sized images audit', () => {
       },
     });
     expect(result.score).toEqual(0);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   describe('has explicit width and height', () => {
@@ -212,6 +226,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has attribute width and attribute height', async () => {
@@ -224,6 +239,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css width and attribute height', async () => {
@@ -236,6 +252,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css width and css height', async () => {
@@ -248,6 +265,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css & attribute width and css height', async () => {
@@ -260,6 +278,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css & attribute width and attribute height', async () => {
@@ -272,6 +291,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css & attribute height and css width', async () => {
@@ -284,6 +304,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css & attribute height and attribute width', async () => {
@@ -296,6 +317,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has css & attribute height and css & attribute width', async () => {
@@ -308,6 +330,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has attribute width/height of zero', async () => {
@@ -326,6 +349,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image is unsized, but its parent is not displayed', async () => {
@@ -344,6 +368,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 
@@ -358,6 +383,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image has invalid height attribute', async () => {
@@ -370,6 +396,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image has non-explicit css width', async () => {
@@ -382,6 +409,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image has non-explicit css height', async () => {
@@ -394,6 +422,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has invalid width attribute, and explicit css width', async () => {
@@ -406,6 +435,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has invalid height attribute, and valid css height', async () => {
@@ -418,6 +448,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has nonexplicit css width, and valid attribute width', async () => {
@@ -430,6 +461,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has nonexplicit css height, and valid attribute height', async () => {
@@ -442,6 +474,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has nonexplicit css width & height, and valid attribute width & height', // eslint-disable-line max-len
@@ -455,6 +488,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when an image has invalid attribute width & height, and valid css width & height',
@@ -468,6 +502,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image has invalid attribute width & height, and nonexplicit css width & height', // eslint-disable-line max-len
@@ -481,6 +516,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 
@@ -496,6 +532,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('fails when an image only has non-explicit CSS aspect-ratio', async () => {
@@ -509,6 +546,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(0);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when CSS aspect-ratio and attribute width are explicit', async () => {
@@ -522,6 +560,7 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it('passes when CSS aspect-ratio and width are explicit', async () => {
@@ -535,15 +574,17 @@ describe('Sized images audit', () => {
         },
       });
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 
-  it('is not applicable when there are no images', async () => {
+  it('is applicable and passing when there are no images', async () => {
     const result = await UnsizedImagesAudit.audit({
       ImageElements: [],
     });
-    expect(result.notApplicable).toEqual(true);
+    expect(result.notApplicable).toBeUndefined();
     expect(result.score).toEqual(1);
+    expect(result.metricSavings).toEqual({CLS: 0});
   });
 
   it('can return multiple unsized images', async () => {
@@ -581,6 +622,7 @@ describe('Sized images audit', () => {
       ],
     });
     expect(result.score).toEqual(0);
+    expect(result.metricSavings).toEqual({CLS: 0});
     expect(result.details.items).toHaveLength(2);
     const srcs = result.details.items.map(item => item.url);
     expect(srcs).toEqual(['image1.png', 'image3.png']);
@@ -596,6 +638,7 @@ describe('Sized images audit', () => {
       });
       expect(result.details.items.length).toEqual(0);
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
 
     it(`passes because it's html-sized, even we cannot be conclusive about css-sized`, async () => {
@@ -606,6 +649,7 @@ describe('Sized images audit', () => {
       });
       expect(result.details.items.length).toEqual(0);
       expect(result.score).toEqual(1);
+      expect(result.metricSavings).toEqual({CLS: 0});
     });
   });
 });

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -10,10 +10,10 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 
-class Trace extends FRGatherer {
+class Trace extends BaseGatherer {
   /** @type {LH.Trace} */
   _trace = {traceEvents: []};
 
@@ -56,14 +56,20 @@ class Trace extends FRGatherer {
       'disabled-by-default-devtools.timeline.frame',
       'latencyInfo',
 
-      // A bug introduced in M92 causes these categories to crash targets on Linux.
-      // See https://github.com/GoogleChrome/lighthouse/issues/12835 for full investigation.
+      // Enhanced traces.
+      'disabled-by-default-devtools.target-rundown',
+      'disabled-by-default-devtools.v8-source-rundown-sources',
+      'disabled-by-default-devtools.v8-source-rundown',
+
+      // Not used by Lighthouse (yet) but included for users that want JS samples when looking at
+      // a trace collected by Lighthouse (e.g. "View Trace" workflow in DevTools)
+      // TODO: Re-enable after investigating b/325659693
       // 'disabled-by-default-v8.cpu_profiler',
     ];
   }
 
   /**
-   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {LH.Gatherer.ProtocolSession} session
    * @return {Promise<LH.Trace>}
    */
   static async endTraceAndCollectEvents(session) {
@@ -98,7 +104,7 @@ class Trace extends FRGatherer {
   };
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    */
   async startSensitiveInstrumentation({driver, gatherMode, settings}) {
     const traceCategories = Trace.getDefaultTraceCategories()
@@ -116,10 +122,14 @@ class Trace extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    */
   async stopSensitiveInstrumentation({driver}) {
     this._trace = await Trace.endTraceAndCollectEvents(driver.defaultSession);
+  }
+
+  getDebugData() {
+    return this._trace;
   }
 
   getArtifact() {

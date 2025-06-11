@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import idbKeyval from 'idb-keyval';
@@ -15,24 +15,11 @@ import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {renderFlowReport} from '../../../flow-report/api';
 
+const dom = new DOM(document, document.documentElement);
+
 /* global logger ReportGenerator */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
-
-/**
- * Guaranteed context.querySelector. Always returns an element or throws if
- * nothing matches query.
- * @template {string} T
- * @param {T} query
- * @param {ParentNode} context
- */
-function find(query, context) {
-  const result = context.querySelector(query);
-  if (result === null) {
-    throw new Error(`query ${query} not found`);
-  }
-  return result;
-}
 
 /**
  * Class that manages viewing Lighthouse reports.
@@ -72,11 +59,11 @@ export class LighthouseReportViewer {
   _addEventListeners() {
     document.addEventListener('paste', this._onPaste);
 
-    const gistUrlInput = find('.js-gist-url', document);
+    const gistUrlInput = dom.find('.js-gist-url');
     gistUrlInput.addEventListener('change', this._onUrlInputChange);
 
     // Hidden file input to trigger manual file selector.
-    const fileInput = find('input#hidden-file-input', document);
+    const fileInput = dom.find('input#hidden-file-input');
     fileInput.addEventListener('change', e => {
       if (!e.target) {
         return;
@@ -91,7 +78,7 @@ export class LighthouseReportViewer {
       inputTarget.value = '';
     });
 
-    const selectFileEl = find('.viewer-placeholder__file-button', document);
+    const selectFileEl = dom.find('.viewer-placeholder__file-button');
     selectFileEl.addEventListener('click', _ => {
       fileInput.click();
     });
@@ -110,9 +97,10 @@ export class LighthouseReportViewer {
     const jsonurl = params.get('jsonurl');
     const gzip = params.get('gzip') === '1';
 
-    if (location.hash) {
+    const hash = window.__hash ?? location.hash;
+    if (hash) {
       try {
-        const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
+        const hashParams = JSON.parse(TextEncoding.fromBase64(hash.substr(1), {gzip}));
         if (hashParams.lhr) {
           this._replaceReportHtml(hashParams.lhr);
           return Promise.resolve();
@@ -227,15 +215,16 @@ export class LighthouseReportViewer {
       return;
     }
 
-    // @ts-expect-error Legacy use of report renderer
-    const dom = new DOM(document);
-    const renderer = new ReportRenderer(dom);
+    rootEl.classList.add('lh-root', 'lh-vars');
+    const reportDom = new DOM(document, rootEl);
+    const renderer = new ReportRenderer(reportDom);
 
-    renderer.renderReport(json, rootEl);
+    renderer.renderReport(json, rootEl, {
+      occupyEntireViewport: true,
+    });
 
-    const features = new ViewerUIFeatures(dom, {
+    const features = new ViewerUIFeatures(reportDom, {
       saveGist: saveGistCallback,
-      /** @param {LH.Result} newLhr */
       refresh: newLhr => {
         this._replaceReportHtml(newLhr);
       },
@@ -269,11 +258,11 @@ export class LighthouseReportViewer {
   // TODO: Really, `json` should really have type `unknown` and
   // we can have _validateReportJson verify that it's an LH.Result
   _replaceReportHtml(json) {
-    const container = find('main', document);
+    const container = dom.find('main');
 
     // Reset container content.
-    container.innerHTML = '';
-    const rootEl = document.createElement('div');
+    container.textContent = '';
+    const rootEl = dom.createElement('div');
     container.append(rootEl);
 
     // Only give gist-saving callback if current report isn't from a gist.
@@ -285,10 +274,10 @@ export class LighthouseReportViewer {
     try {
       if (this._isFlowReport(json)) {
         this._renderFlowResult(json, rootEl, saveGistCallback);
-        window.ga('send', 'event', 'report', 'flow-report');
+        if (window.gtag) window.gtag('event', 'report', {type: 'flow-report'});
       } else {
         this._renderLhr(json, rootEl, saveGistCallback);
-        window.ga('send', 'event', 'report', 'report');
+        if (window.gtag) window.gtag('event', 'report', {type: 'report'});
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
@@ -297,7 +286,7 @@ export class LighthouseReportViewer {
       }
     } catch (e) {
       logger.error(`Error rendering report: ${e.stack}`);
-      container.innerHTML = '';
+      container.textContent = '';
       throw e;
     } finally {
       this._reportIsFromGist = this._reportIsFromPSI = this._reportIsFromJSON = false;
@@ -309,8 +298,8 @@ export class LighthouseReportViewer {
       placeholder.remove();
     }
 
-    if (window.ga) {
-      window.ga('send', 'event', 'report', 'view');
+    if (window.gtag) {
+      window.gtag('event', 'view');
     }
   }
 
@@ -362,15 +351,15 @@ export class LighthouseReportViewer {
    * @private
    */
   async _onSaveJson(reportJson) {
-    if (window.ga) {
-      window.ga('send', 'event', 'report', 'share');
+    if (window.gtag) {
+      window.gtag('event', 'report', {type: 'share'});
     }
 
     // TODO: find and reuse existing json gist if one exists.
     try {
       const id = await this._github.createGist(reportJson);
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'created');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'created'});
       }
       history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
       return id;
@@ -393,8 +382,8 @@ export class LighthouseReportViewer {
       const url = new URL(e.clipboardData.getData('text'));
       this._loadFromGistURL(url.href);
 
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'paste-link');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'paste-link'});
       }
     } catch (err) {
       // noop
@@ -405,8 +394,8 @@ export class LighthouseReportViewer {
       const json = JSON.parse(e.clipboardData.getData('text'));
       this._replaceReportHtml(json);
 
-      if (window.ga) {
-        window.ga('send', 'event', 'report', 'paste');
+      if (window.gtag) {
+        window.gtag('event', 'report', {type: 'paste'});
       }
     } catch (err) {
     }
@@ -470,8 +459,8 @@ export class LighthouseReportViewer {
         if (self.opener && !self.opener.closed) {
           self.opener.postMessage({rendered: true}, '*');
         }
-        if (window.ga) {
-          window.ga('send', 'event', 'report', 'open in viewer');
+        if (window.gtag) {
+          window.gtag('event', 'report', {type: 'open in viewer'});
         }
       }
     });

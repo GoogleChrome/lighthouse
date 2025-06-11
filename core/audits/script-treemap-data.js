@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -16,9 +16,10 @@
 
 import {Audit} from './audit.js';
 import {JSBundles} from '../computed/js-bundles.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import {UnusedJavascriptSummary} from '../computed/unused-javascript-summary.js';
 import {ModuleDuplication} from '../computed/module-duplication.js';
-import {isInline} from '../lib/script-helpers.js';
+import {getRequestForScript, isInline} from '../lib/script-helpers.js';
 
 class ScriptTreemapDataAudit extends Audit {
   /**
@@ -31,7 +32,7 @@ class ScriptTreemapDataAudit extends Audit {
       title: 'Script Treemap Data',
       description: 'Used for treemap app',
       requiredArtifacts:
-        ['traces', 'devtoolsLogs', 'SourceMaps', 'Scripts', 'JsUsage', 'URL'],
+        ['Trace', 'DevtoolsLog', 'SourceMaps', 'Scripts', 'JsUsage', 'URL', 'SourceMaps'],
     };
   }
 
@@ -54,6 +55,7 @@ class ScriptTreemapDataAudit extends Audit {
       return {
         name,
         resourceBytes: 0,
+        encodedBytes: undefined,
       };
     }
 
@@ -114,8 +116,12 @@ class ScriptTreemapDataAudit extends Audit {
      */
     function collapseAll(node) {
       while (node.children && node.children.length === 1) {
-        node.name += '/' + node.children[0].name;
-        node.children = node.children[0].children;
+        const child = node.children[0];
+        node.name += '/' + child.name;
+        if (child.duplicatedNormalizedModuleName) {
+          node.duplicatedNormalizedModuleName = child.duplicatedNormalizedModuleName;
+        }
+        node.children = child.children;
       }
 
       if (node.children) {
@@ -163,6 +169,9 @@ class ScriptTreemapDataAudit extends Audit {
    * @return {Promise<LH.Treemap.Node[]>}
    */
   static async makeNodes(artifacts, context) {
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+
     /** @type {LH.Treemap.Node[]} */
     const nodes = [];
     /** @type {Map<string, LH.Treemap.Node>} */
@@ -174,7 +183,7 @@ class ScriptTreemapDataAudit extends Audit {
       if (script.scriptLanguage !== 'JavaScript') continue;
 
       const name = script.url;
-      const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
+      const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId) ?? null;
       const scriptCoverage = /** @type {LH.Artifacts['JsUsage'][string] | undefined} */
         (artifacts.JsUsage[script.scriptId]);
       const unusedJavascriptSummary = scriptCoverage ?
@@ -230,6 +239,7 @@ class ScriptTreemapDataAudit extends Audit {
         node = {
           name,
           resourceBytes: unusedJavascriptSummary?.totalBytes ?? script.length ?? 0,
+          encodedBytes: undefined,
           unusedBytes: unusedJavascriptSummary?.wastedBytes,
         };
       }
@@ -242,6 +252,7 @@ class ScriptTreemapDataAudit extends Audit {
           htmlNode = {
             name,
             resourceBytes: 0,
+            encodedBytes: undefined,
             unusedBytes: undefined,
             children: [],
           };
@@ -257,6 +268,29 @@ class ScriptTreemapDataAudit extends Audit {
       } else {
         // Non-inline scripts each have their own top-level node.
         nodes.push(node);
+
+        const networkRecord = getRequestForScript(networkRecords, script);
+        if (networkRecord) {
+          const bodyTransferSize =
+            networkRecord.transferSize - networkRecord.responseHeadersTransferSize;
+          node.encodedBytes = bodyTransferSize;
+        } else {
+          node.encodedBytes = node.resourceBytes;
+        }
+      }
+    }
+
+    // For the HTML nodes, set encodedBytes to be the size of all the inline
+    // scripts multiplied by the average compression ratio of the HTML document.
+    for (const [frameId, node] of htmlNodesByFrameId) {
+      const record =
+        networkRecords.find(r => r.resourceType === 'Document' && r.frameId === frameId);
+      if (record) {
+        const inlineScriptsPct = node.resourceBytes / record.resourceSize;
+        const bodyTransferSize = record.transferSize - record.responseHeadersTransferSize;
+        node.encodedBytes = Math.floor(bodyTransferSize * inlineScriptsPct);
+      } else {
+        node.encodedBytes = node.resourceBytes;
       }
     }
 

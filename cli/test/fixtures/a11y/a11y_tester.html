@@ -1,8 +1,8 @@
 <!doctype html>
 <!--
- * Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
 -->
 
 <html>
@@ -11,6 +11,10 @@
     <meta name="viewport" content="user-scalable=no, maximum-scale=1.0">
   </head>
   <body>
+    <p>skip-link</p>
+    <section>
+      <a href="#foo" style="position: absolute; margin: -10000px" id="skip-link">foo bar</a>
+    </section>
     <p>accesskeys</p>
     <section>
       <button id="accesskeys1" accesskey="s">Foo</button>
@@ -23,6 +27,26 @@
         role="alert"
         aria-checked="true">
       </div>
+    </section>
+    <p>aria-allowed-role</p>
+    <section>
+      <aside id="aria-allowed-role" role="doc-foreword"></aside>
+    </section>
+    <p>aria-command-name</p>
+    <section>
+      <div id="aria-command-name" role="button"></div>
+    </section>
+    <p>aria-conditional-attr</p>
+    <section>
+      <input id="aria-conditional-attr" type="checkbox" aria-checked="true">
+    </section>
+    <p>aria-dialog-name</p>
+    <section>
+      <div role="alertdialog" id="aria-dialog-name" aria-label=""></div>
+    </section>
+    <p>aria-deprecated-role</p>
+    <section>
+      <div role="directory" id="aria-deprecated-role"></div>
     </section>
     <p>aria-hidden-focus</p>
     <section>
@@ -44,10 +68,6 @@
         <div id="aria-treeitem-name" role="treeitem"></div>
       </div>
     </section>
-    <p>aria-command-name</p>
-    <section>
-      <div id="aria-command-name" role="button"></div>
-    </section>
     <p>aria-tooltip-name</p>
     <section>
       <div id="aria-tooltip-name" role="tooltip"></div>
@@ -55,6 +75,10 @@
     <p>aria-progressbar-name</p>
     <section>
       <div id="aria-progressbar-name" role="progressbar">text-in-a-box</div>
+    </section>
+    <p>aria-prohibited-attr</p>
+    <section>
+      <div id="aria-prohibited-attr" role="presentation" aria-label="Label"></div>
     </section>
     <p>aria-required-attr</p>
     <section>
@@ -83,6 +107,12 @@
     <p>aria-roles</p>
     <section>
       <div role="foo"></div>
+    </section>
+    <p>aria-text</p>
+    <section>
+      <span role="text" id="aria-text">
+        <a href="google.com">Not announced</a>
+      </span>
     </section>
     <p>aria-valid-attr</p>
     <section>
@@ -124,16 +154,15 @@
         <dd></dd>
       </div>
     </section>
-    <p>duplicate-id-active</p>
-    <section>
-      <textarea id="duplicate-id-active" aria-label="text1"></textarea>
-      <textarea id="duplicate-id-active" aria-label="text2"></textarea>
-    </section>
     <p>duplicate-id-aria</p>
     <section>
       <div id="duplicate-id-aria" class="duplicate-id-aria"></span>
       <div id="duplicate-id-aria"></div>
       <input type="text" aria-labelledby="duplicate-id-aria"/>
+    </section>
+    <p>empty-heading</p>
+    <section>
+      <h1 id="empty-heading"></h1>
     </section>
     <p>form-field-multiple-labels</p>
     <section>
@@ -150,12 +179,23 @@
       <h1>top header</h1>
       <h3>sub-sub-header</h3>
     </section>
+    <p>identical-links-same-purpose</p>
+    <section>
+      <a id="identical-links-same-purpose-1" href="https://example.com/" aria-label="a link"></a>
+      <a id="identical-links-same-purpose-2" href="https://google.com/" aria-label="a link"></a>
+    </section>
     <p>image-alt</p>
     <section>
       <img
         id="image-alt"
         src="./bogus.jpg">
       </img>
+    </section>
+    <p>image-redundant-alt</p>
+    <section>
+      <ul>
+        <li><img id="image-redundant-alt" alt="foo bar" />foo bar</li>
+      </ul>
     </section>
     <p>input-button-name</p>
     <section>
@@ -175,10 +215,27 @@
           type="text">
       </form>
     </section>
+    <p>label-content-name-mismatch</p>
+    <section>
+        <button id="label-content-name-mismatch" aria-label="foo">foo bar</button>
+    </section>
     <p>layout-table</p>
     <section>
       <table id="layout-table">
       </table>
+    </section>
+    <p>link-in-text-block</p>
+    <section>
+      <p>
+          paragraph text
+          <a
+            style="text-decoration: none; color: blue"
+            href="#"
+            id="link-in-text-block">
+            link text
+          </a>
+          paragraph text
+      </p>
     </section>
     <p>link-name</p>
     <section>
@@ -198,6 +255,10 @@
     <section>
       <object id="object-alt" data="data:text/html,data"></object>
     </section>
+    <p>select-name</p>
+    <section>
+      <select id="select-name"></select>
+    </section>
     <p>tabindex</p>
     <section>
       <div
@@ -205,12 +266,24 @@
         tabindex="10">
       </div>
     </section>
+    <p>table-duplicate-name</p>
+    <section>
+      <table id="table-duplicate-name" summary="i'm a table">
+        <caption>i'm a table</caption>
+        <tr><td>foo</td><td>foo</td><tr>
+      </table>
+    </section>
     <p>table-fake-caption</p>
     <section>
       <table id="table-fake-caption" role="grid">
         <tr><td colspan="2">FOO</td></tr>
         <tr><td>foo</td><td>foo</td><tr>
       </table>
+    </section>
+    <p>target-size</p>
+    <section>
+      <button id="target-size-1">+</button>
+      <span role="button" tabindex="0" id="target-size-2">o</span>
     </section>
     <p>td-has-header</p>
     <section>

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -30,7 +30,6 @@ const config = {
       // unsized-images is not a byte-efficiency audit but can easily leverage the variety of images present in
       // byte-efficiency tests & thus makes sense to test together.
       'unsized-images',
-      'script-elements-test-audit',
     ],
     throttlingMethod: 'devtools',
   },
@@ -40,7 +39,6 @@ const config = {
       // Lower the threshold so we don't need huge resources to make a test.
       unusedThreshold: 2000,
     }},
-    'script-elements-test-audit',
   ],
 };
 
@@ -50,71 +48,6 @@ const config = {
  */
 const expectations = {
   artifacts: {
-    ScriptElements: [
-      {
-        type: null,
-        src: null,
-        async: false,
-        defer: false,
-        source: 'head',
-        // Only do a single assertion for `devtoolsNodePath`: this can be flaky for elements
-        // deep in the DOM, and the sample LHR test has plenty of places that would catch
-        // a regression in `devtoolsNodePath` calculation. Keep just one for the benefit
-        // of other smoke test runners.
-        node: {
-          devtoolsNodePath: '2,HTML,0,HEAD,3,SCRIPT',
-        },
-      },
-      {
-        type: 'application/javascript',
-        src: 'http://localhost:10200/byte-efficiency/script.js',
-        async: false,
-        defer: false,
-        source: 'head',
-      },
-      {
-        type: null,
-        src: 'http://localhost:10200/byte-efficiency/bundle.js',
-        async: false,
-        defer: false,
-        source: 'head',
-      },
-      {
-        type: null,
-        src: null,
-        async: false,
-        defer: false,
-        source: 'body',
-      },
-      {
-        type: null,
-        src: null,
-        async: false,
-        defer: false,
-        source: 'body',
-      },
-      {
-        type: null,
-        src: null,
-        async: false,
-        defer: false,
-        source: 'body',
-      },
-      {
-        type: null,
-        src: null,
-        async: false,
-        defer: false,
-        source: 'body',
-      },
-      {
-        type: null,
-        src: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
-        async: true,
-        defer: false,
-        source: 'body',
-      },
-    ],
     Scripts: {
       _includes: [
         {
@@ -163,10 +96,8 @@ const expectations = {
       'uses-http2': {
         score: 1,
         details: {
-          items: {
-            // localhost gets a free pass on uses-h2
-            length: 0,
-          },
+          // localhost gets a free pass on uses-h2
+          items: [],
         },
       },
       'unminified-css': {
@@ -182,30 +113,30 @@ const expectations = {
         details: {
           // the specific ms value is not meaningful for this smoketest
           // *some largish amount* of savings should be reported
-          overallSavingsMs: '>500',
+          overallSavingsMs: '>100',
           overallSavingsBytes: '>45000',
           items: [
             {
               url: 'http://localhost:10200/byte-efficiency/script.js',
-              wastedBytes: '46555 +/- 100',
+              wastedBytes: '45816 +/- 100',
               wastedPercent: '87 +/- 5',
             },
             {
               // /some-custom-url.js,
               url: 'inline: \n  function unusedFunction() {\n    // U…',
-              wastedBytes: '6690 +/- 100',
+              wastedBytes: '6630 +/- 100',
               wastedPercent: '99.6 +/- 0.1',
             },
             {
               url: 'inline: \n  // Used block #1\n  // FILLER DATA JU…',
-              wastedBytes: '6569 +/- 100',
+              wastedBytes: '6510 +/- 100',
               wastedPercent: 100,
             },
             {
               url: 'http://localhost:10200/byte-efficiency/bundle.js',
               totalBytes: '12962 +/- 1000',
-              wastedBytes: '2349 +/- 100',
-              wastedPercent: '19 +/- 5',
+              wastedBytes: '2303 +/- 100',
+              wastedPercent: '18 +/- 5',
             },
           ],
         },
@@ -220,10 +151,13 @@ const expectations = {
       },
       'unused-javascript': {
         score: '<1',
-        details: {
+        metricSavings: {
           // the specific ms value here is not meaningful for this smoketest
           // *some* savings should be reported
-          overallSavingsMs: '>0',
+          FCP: '>0',
+        },
+        details: {
+          overallSavingsMs: '>=0',
           overallSavingsBytes: '35000 +/- 1000',
           items: [
             {
@@ -243,7 +177,7 @@ const expectations = {
               wastedBytes: '5827 +/- 200',
               subItems: {
                 items: [
-                  {source: '…./b.js', sourceBytes: '4417 +/- 50', sourceWastedBytes: '2191 +/- 50'},
+                  {source: '…./b.js', sourceBytes: '4347 +/- 50', sourceWastedBytes: '2156 +/- 50'},
                   {source: '…./c.js', sourceBytes: '2200 +/- 50', sourceWastedBytes: '2182 +/- 50'},
                   {source: '…webpack/bootstrap', sourceBytes: '2809 +/- 50', sourceWastedBytes: '1259 +/- 50'},
                 ],
@@ -285,7 +219,7 @@ const expectations = {
         details: {
           // the specific ms value is not meaningful for this smoketest
           // *some largish amount* of savings should be reported
-          overallSavingsMs: '>700',
+          overallSavingsMs: '>100',
           overallSavingsBytes: '>50000',
           items: {
             length: 3,

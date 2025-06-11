@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import {ByteEfficiencyAudit} from '../audits/byte-efficiency/byte-efficiency-audit.js';
 import {NetworkRecords} from './network-records.js';
 import {Util} from '../../shared/util.js';
+import {estimateCompressedContentSize} from '../lib/script-helpers.js';
 
 const PREVIEW_LENGTH = 100;
 
@@ -70,15 +70,15 @@ class UnusedCSS {
       usedUncompressedBytes += usedRule.endOffset - usedRule.startOffset;
     }
 
-    const totalTransferredBytes = ByteEfficiencyAudit.estimateTransferSize(
+    const compressedSize = estimateCompressedContentSize(
         stylesheetInfo.networkRecord, totalUncompressedBytes, 'Stylesheet');
     const percentUnused = (totalUncompressedBytes - usedUncompressedBytes) / totalUncompressedBytes;
-    const wastedBytes = Math.round(percentUnused * totalTransferredBytes);
+    const wastedBytes = Math.round(percentUnused * compressedSize);
 
     return {
       wastedBytes,
       wastedPercent: percentUnused * 100,
-      totalBytes: totalTransferredBytes,
+      totalBytes: compressedSize,
     };
   }
 
@@ -134,15 +134,15 @@ class UnusedCSS {
   }
 
   /**
-   * @param {{CSSUsage: LH.Artifacts['CSSUsage'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{Stylesheets: LH.Artifacts['Stylesheets'], CSSUsage: LH.Artifacts['CSSUsage'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Audit.ByteEfficiencyItem[]>}
   */
   static async compute_(data, context) {
-    const {CSSUsage, devtoolsLog} = data;
+    const {CSSUsage, Stylesheets, devtoolsLog} = data;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const indexedSheets = UnusedCSS.indexStylesheetsById(CSSUsage.stylesheets, networkRecords);
-    UnusedCSS.indexUsedRules(CSSUsage.rules, indexedSheets);
+    const indexedSheets = UnusedCSS.indexStylesheetsById(Stylesheets, networkRecords);
+    UnusedCSS.indexUsedRules(CSSUsage, indexedSheets);
 
     const items = Object.keys(indexedSheets)
       .map(sheetId => UnusedCSS.mapSheetToResult(indexedSheets[sheetId]));
@@ -150,5 +150,6 @@ class UnusedCSS {
   }
 }
 
-const UnusedCSSComputed = makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);
+const UnusedCSSComputed = makeComputedArtifact(UnusedCSS,
+  ['Stylesheets', 'CSSUsage', 'devtoolsLog']);
 export {UnusedCSSComputed as UnusedCSS};

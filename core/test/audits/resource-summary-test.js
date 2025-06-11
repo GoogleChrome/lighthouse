@@ -11,18 +11,16 @@ describe('Performance: Resource summary audit', () => {
   let artifacts;
   let context;
   beforeEach(() => {
-    context = {computedCache: new Map(), settings: {budgets: null}};
+    context = {computedCache: new Map()};
 
     artifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-          {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
-          {url: 'http://my-cdn.com/bin.js', resourceType: 'Script', transferSize: 25},
-          {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
-          {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+        {url: 'http://example.com/app.js', resourceType: 'Script', transferSize: 10},
+        {url: 'http://my-cdn.com/bin.js', resourceType: 'Script', transferSize: 25},
+        {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
+        {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
+      ]),
       URL: {requestedUrl: 'http://example.com', mainDocumentUrl: 'http://example.com', finalDisplayedUrl: 'http://example.com'},
     };
   });
@@ -33,12 +31,7 @@ describe('Performance: Resource summary audit', () => {
 
   it('has the correct score', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
-    expect(result.score).toBe(1);
-  });
-
-  it('has the correct display value', async () => {
-    const result = await ResourceSummaryAudit.audit(artifacts, context);
-    expect(result.displayValue).toBeDisplayString('5 requests • 0 KiB');
+    expect(result.score).toBe(null);
   });
 
   it('includes the correct properties for each table item', async () => {
@@ -68,20 +61,6 @@ describe('Performance: Resource summary audit', () => {
         .find(item => item.resourceType === 'third-party');
       expect(thirdParty.transferSize).toBe(145);
       expect(thirdParty.requestCount).toBe(3);
-    });
-
-    it('uses firstPartyHostnames if provided', async () => {
-      context.settings.budgets = [{
-        path: '/',
-        options: {
-          firstPartyHostnames: ['example.com', 'my-cdn.com'],
-        },
-      }];
-      const result = await ResourceSummaryAudit.audit(artifacts, context);
-      const thirdParty = result.details.items
-        .find(item => item.resourceType === 'third-party');
-      expect(thirdParty.transferSize).toBe(120);
-      expect(thirdParty.requestCount).toBe(2);
     });
   });
 

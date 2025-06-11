@@ -1,23 +1,25 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../lib/lantern/lantern.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {NetworkNode} from '../../lib/dependency-graph/network-node.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import {readJson} from '../test-utils.js';
 
 const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 function createNetworkNode() {
-  return new NetworkNode({
+  const record = {
     requestId: '1',
     protocol: 'http',
     parsedURL: {scheme: 'http', securityOrigin: 'https://pwa.rocks'},
-  });
+  };
+  return new Lantern.Graph.NetworkNode(NetworkRequest.asLanternNetworkRequest(record));
 }
 
 describe('Simulator artifact', () => {
@@ -30,9 +32,9 @@ describe('Simulator artifact', () => {
     }, context);
 
     assert.equal(Math.round(simulator._rtt), 3);
-    assert.equal(Math.round(simulator._throughput / 1024), 1590);
-    assert.equal(simulator._cpuSlowdownMultiplier, 1);
-    assert.equal(simulator._layoutTaskMultiplier, 1);
+    assert.equal(Math.round(simulator.throughput / 1024), 1590);
+    assert.equal(simulator.cpuSlowdownMultiplier, 1);
+    assert.equal(simulator.layoutTaskMultiplier, 1);
   });
 
   it('returns a simulator for "devtools" throttling', async () => {
@@ -45,9 +47,9 @@ describe('Simulator artifact', () => {
     }, context);
 
     assert.equal(simulator._rtt, 100);
-    assert.equal(simulator._throughput / 1024, 1000);
-    assert.equal(simulator._cpuSlowdownMultiplier, 1);
-    assert.equal(simulator._layoutTaskMultiplier, 1);
+    assert.equal(simulator.throughput / 1024, 1000);
+    assert.equal(simulator.cpuSlowdownMultiplier, 1);
+    assert.equal(simulator.layoutTaskMultiplier, 1);
   });
 
   it('returns a simulator for "simulate" throttling', async () => {
@@ -57,12 +59,12 @@ describe('Simulator artifact', () => {
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
 
     assert.equal(simulator._rtt, 120);
-    assert.equal(simulator._throughput / 1024, 1000);
-    assert.equal(simulator._cpuSlowdownMultiplier, 3);
-    assert.equal(simulator._layoutTaskMultiplier, 1.5);
+    assert.equal(simulator.throughput / 1024, 1000);
+    assert.equal(simulator.cpuSlowdownMultiplier, 3);
+    assert.equal(simulator.layoutTaskMultiplier, 1.5);
     simulator.simulate(createNetworkNode());
 
-    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator._connectionPool._options;
+    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator.connectionPool.options;
     expect(additionalRttByOrigin.get('https://pwa.rocks')).toMatchInlineSnapshot(
       `0.3960000176447025`
     );
@@ -88,7 +90,7 @@ describe('Simulator artifact', () => {
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
     const result = simulator.simulate(createNetworkNode());
 
-    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator._connectionPool._options;
+    const {additionalRttByOrigin, serverResponseTimeByOrigin} = simulator.connectionPool.options;
     // Make sure we passed through the right RTT
     expect(additionalRttByOrigin).toEqual(new Map([
       ['https://pwa.rocks', 1000],

@@ -1,13 +1,12 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
 import * as Artifacts_ from './artifacts.js';
 import Audit_ from './audit.js';
-import Budget_ from './lhr/budget.js';
 import Config_ from './config.js';
 import {Protocol as _Crdp} from 'devtools-protocol/types/protocol.js';
 import {ProtocolMapping as _CrdpMappings} from 'devtools-protocol/types/protocol-mapping.js';
@@ -35,8 +34,6 @@ export import Puppeteer = Puppeteer_;
 // artifacts.d.ts
 export import Artifacts = Artifacts_.Artifacts;
 export import BaseArtifacts = Artifacts_.BaseArtifacts;
-export import FRArtifacts = Artifacts_.FRArtifacts;
-export import FRBaseArtifacts = Artifacts_.FRBaseArtifacts;
 export import GathererArtifacts = Artifacts_.GathererArtifacts;
 export import DevtoolsLog = Artifacts_.DevtoolsLog;
 export import Trace = Artifacts_.Trace;
@@ -44,7 +41,6 @@ export import TraceCpuProfile = Artifacts_.TraceCpuProfile;
 export import TraceEvent = Artifacts_.TraceEvent;
 
 export import Audit = Audit_;
-export import Budget = Budget_;
 export import Config = Config_;
 export import Crdp = _Crdp;
 export import CrdpEvents = _CrdpMappings.Events;

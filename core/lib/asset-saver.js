@@ -1,37 +1,79 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
 import path from 'path';
 import stream from 'stream';
 import url from 'url';
+import {createGzip, gunzipSync} from 'zlib';
 
 import log from 'lighthouse-logger';
 
-import {Simulator} from './dependency-graph/simulator/simulator.js';
+import * as Lantern from './lantern/lantern.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
 import {MetricTraceEvents} from './traces/metric-trace-events.js';
 import {NetworkAnalysis} from '../computed/network-analysis.js';
 import {LoadSimulator} from '../computed/load-simulator.js';
 import {LighthouseError} from '../lib/lh-error.js';
-import {LH_ROOT} from '../../root.js';
+import {LH_ROOT} from '../../shared/root.js';
 
 const optionsFilename = 'options.json';
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
 const devtoolsLogSuffix = '.devtoolslog.json';
+const defaultPrefix = 'defaultPass';
+const errorPrefix = 'pageLoadError-defaultPass';
 const stepDirectoryRegex = /^step(\d+)$/;
 
 /**
  * @typedef {object} PreparedAssets
- * @property {string} passName
- * @property {LH.Trace} traceData
- * @property {LH.DevtoolsLog} devtoolsLog
+ * @property {LH.Trace} [traceData]
+ * @property {LH.DevtoolsLog} [devtoolsLog]
  */
 
+/**
+ * @param {import('stream').PipelineSource<any>} contents
+ * @param {string} path
+ * @param {boolean} gzip
+ */
+async function writeJson(contents, path, gzip) {
+  const writeStream = fs.createWriteStream(gzip ? path + '.gz' : path);
+  if (gzip) {
+    await stream.promises.pipeline(contents, createGzip(), writeStream);
+  } else {
+    await stream.promises.pipeline(contents, writeStream);
+  }
+}
+
+/**
+ * Prefers reading a gzipped file (.gz) if present.
+ * @param {string} filename
+ * @param {(this: any, key: string, value: any) => any=} reviver
+ */
+function readJson(filename, reviver) {
+  if (fs.existsSync(filename + '.gz')) {
+    filename = filename + '.gz';
+  }
+
+  if (!filename.endsWith('.json.gz')) {
+    return JSON.parse(fs.readFileSync(filename, 'utf8'), reviver);
+  }
+
+  const buffer = gunzipSync(fs.readFileSync(filename));
+  return JSON.parse(buffer.toString('utf8'), reviver);
+}
+
+/**
+ * @param {string} filename
+ * @param {string} suffix
+ * @returns
+ */
+function endsWithSuffix(filename, suffix) {
+  return filename.endsWith(suffix) || filename.endsWith(suffix + '.gz');
+}
 
 /**
  * Load artifacts object from files located within basePath
@@ -47,32 +89,34 @@ function loadArtifacts(basePath) {
   }
 
   // load artifacts.json using a reviver to deserialize any LighthouseErrors in artifacts.
-  const artifactsStr = fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8');
   /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(artifactsStr, LighthouseError.parseReviver);
+  const artifacts = readJson(path.join(basePath, artifactsFilename), LighthouseError.parseReviver);
 
   const filenames = fs.readdirSync(basePath);
 
-  // load devtoolsLogs
-  artifacts.devtoolsLogs = {};
-  filenames.filter(f => f.endsWith(devtoolsLogSuffix)).forEach(filename => {
-    const passName = filename.replace(devtoolsLogSuffix, '');
-    const devtoolsLog = JSON.parse(fs.readFileSync(path.join(basePath, filename), 'utf8'));
-    artifacts.devtoolsLogs[passName] = devtoolsLog;
-    if (passName === 'defaultPass') {
+  filenames.filter(f => endsWithSuffix(f, devtoolsLogSuffix)).forEach(filename => {
+    if (!artifacts.devtoolsLogs) artifacts.devtoolsLogs = {};
+    const prefix = filename.replace(devtoolsLogSuffix + '.gz', '').replace(devtoolsLogSuffix, '');
+    const devtoolsLog = readJson(path.join(basePath, filename));
+    artifacts.devtoolsLogs[prefix] = devtoolsLog;
+    if (prefix === defaultPrefix) {
       artifacts.DevtoolsLog = devtoolsLog;
+    }
+    if (prefix === errorPrefix) {
+      artifacts.DevtoolsLogError = devtoolsLog;
     }
   });
 
-  // load traces
-  artifacts.traces = {};
-  filenames.filter(f => f.endsWith(traceSuffix)).forEach(filename => {
-    const file = fs.readFileSync(path.join(basePath, filename), {encoding: 'utf-8'});
-    const trace = JSON.parse(file);
-    const passName = filename.replace(traceSuffix, '');
-    artifacts.traces[passName] = Array.isArray(trace) ? {traceEvents: trace} : trace;
-    if (passName === 'defaultPass') {
-      artifacts.Trace = artifacts.traces[passName];
+  filenames.filter(f => endsWithSuffix(f, traceSuffix)).forEach(filename => {
+    if (!artifacts.traces) artifacts.traces = {};
+    const trace = readJson(path.join(basePath, filename));
+    const prefix = filename.replace(traceSuffix + '.gz', '').replace(traceSuffix, '');
+    artifacts.traces[prefix] = Array.isArray(trace) ? {traceEvents: trace} : trace;
+    if (prefix === defaultPrefix) {
+      artifacts.Trace = artifacts.traces[prefix];
+    }
+    if (prefix === errorPrefix) {
+      artifacts.TraceError = artifacts.traces[prefix];
     }
   });
 
@@ -195,12 +239,13 @@ async function saveFlowArtifacts(flowArtifacts, basePath) {
 
 /**
  * Save artifacts object mostly to single file located at basePath/artifacts.json.
- * Also save the traces & devtoolsLogs to their own files
+ * Also save the traces & devtoolsLogs to their own files, with optional compression.
  * @param {LH.Artifacts} artifacts
  * @param {string} basePath
+ * @param {{gzip?: boolean}} options
  * @return {Promise<void>}
  */
-async function saveArtifacts(artifacts, basePath) {
+async function saveArtifacts(artifacts, basePath, options = {}) {
   const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
   log.time(status);
   fs.mkdirSync(basePath, {recursive: true});
@@ -208,30 +253,54 @@ async function saveArtifacts(artifacts, basePath) {
   // Delete any previous artifacts in this directory.
   const filenames = fs.readdirSync(basePath);
   for (const filename of filenames) {
-    if (filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
-        filename === artifactsFilename) {
+    const isPreviousFile =
+      filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
+      filename.endsWith(traceSuffix + '.gz') || filename.endsWith(devtoolsLogSuffix + '.gz') ||
+      filename === artifactsFilename || filename === artifactsFilename + '.gz';
+    if (isPreviousFile) {
       fs.unlinkSync(`${basePath}/${filename}`);
     }
   }
 
-  // `DevtoolsLog` and `Trace` will always be the 'defaultPass' version.
-  // We don't need to save them twice, so extract them here.
-  // eslint-disable-next-line no-unused-vars
-  const {traces, devtoolsLogs, DevtoolsLog, Trace, ...restArtifacts} = artifacts;
+  // `devtoolsLogs` and `traces` are duplicate compat artifacts.
+  // We don't need to save them twice, so extract them here. TODO(v13): remove
+  const {
+    // eslint-disable-next-line no-unused-vars
+    traces,
+    // eslint-disable-next-line no-unused-vars
+    devtoolsLogs,
+    DevtoolsLog,
+    Trace,
+    DevtoolsLogError,
+    TraceError,
+    ...restArtifacts
+  } = artifacts;
 
-  // save traces
-  for (const [passName, trace] of Object.entries(traces)) {
-    await saveTrace(trace, `${basePath}/${passName}${traceSuffix}`);
+  if (Trace) {
+    await saveTrace(Trace, `${basePath}/${defaultPrefix}${traceSuffix}`, options);
   }
 
-  // save devtools log
-  for (const [passName, devtoolsLog] of Object.entries(devtoolsLogs)) {
-    await saveDevtoolsLog(devtoolsLog, `${basePath}/${passName}${devtoolsLogSuffix}`);
+  if (TraceError) {
+    await saveTrace(TraceError, `${basePath}/${errorPrefix}${traceSuffix}`, options);
+  }
+
+  if (DevtoolsLog) {
+    await saveDevtoolsLog(
+      DevtoolsLog, `${basePath}/${defaultPrefix}${devtoolsLogSuffix}`, options);
+  }
+
+  if (DevtoolsLogError) {
+    await saveDevtoolsLog(
+      DevtoolsLogError, `${basePath}/${errorPrefix}${devtoolsLogSuffix}`, options);
   }
 
   // save everything else, using a replacer to serialize LighthouseErrors in the artifacts.
-  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2) + '\n';
-  fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
+  await writeJson(function* () {
+    yield restArtifactsString;
+    yield '\n';
+  }, `${basePath}/${artifactsFilename}`, !!options.gzip);
+
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);
 }
@@ -246,30 +315,46 @@ function saveLhr(lhr, basePath) {
 }
 
 /**
- * Filter traces and extract screenshots to prepare for saving.
+ * Filter trace and extract screenshots to prepare for saving.
+ * @param {LH.Trace} trace
+ * @param {LH.Result['audits']} [audits]
+ * @return {LH.Trace}
+ */
+function prepareTraceAsset(trace, audits) {
+  if (!trace) return trace;
+
+  const traceData = Object.assign({}, trace);
+  if (audits) {
+    const evts = new MetricTraceEvents(traceData.traceEvents, audits).generateFakeEvents();
+    traceData.traceEvents = traceData.traceEvents.concat(evts);
+  }
+  return traceData;
+}
+
+/**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Result['audits']} [audits]
  * @return {Promise<Array<PreparedAssets>>}
  */
 async function prepareAssets(artifacts, audits) {
-  const passNames = Object.keys(artifacts.traces);
   /** @type {Array<PreparedAssets>} */
   const assets = [];
 
-  for (const passName of passNames) {
-    const trace = artifacts.traces[passName];
-    const devtoolsLog = artifacts.devtoolsLogs[passName];
-
-    const traceData = Object.assign({}, trace);
-    if (audits) {
-      const evts = new MetricTraceEvents(traceData.traceEvents, audits).generateFakeEvents();
-      traceData.traceEvents = traceData.traceEvents.concat(evts);
-    }
-
+  const devtoolsLog = artifacts.DevtoolsLog;
+  const traceData = prepareTraceAsset(artifacts.Trace, audits);
+  if (traceData || devtoolsLog) {
     assets.push({
-      passName,
       traceData,
       devtoolsLog,
+    });
+  }
+
+  const devtoolsLogError = artifacts.DevtoolsLogError;
+  const traceErrorData = prepareTraceAsset(artifacts.TraceError, audits);
+  if (devtoolsLogError || traceErrorData) {
+    assets.push({
+      traceData: traceErrorData,
+      devtoolsLog: devtoolsLogError,
     });
   }
 
@@ -335,28 +420,26 @@ function* traceJsonGenerator(traceData) {
  * Save a trace as JSON by streaming to disk at traceFilename.
  * @param {LH.Trace} traceData
  * @param {string} traceFilename
+ * @param {{gzip?: boolean}=} options
  * @return {Promise<void>}
  */
-async function saveTrace(traceData, traceFilename) {
+function saveTrace(traceData, traceFilename, options = {}) {
   const traceIter = traceJsonGenerator(traceData);
-  const writeStream = fs.createWriteStream(traceFilename);
-
-  return stream.promises.pipeline(traceIter, writeStream);
+  return writeJson(traceIter, traceFilename, !!options.gzip);
 }
 
 /**
  * Save a devtoolsLog as JSON by streaming to disk at devtoolLogFilename.
  * @param {LH.DevtoolsLog} devtoolsLog
  * @param {string} devtoolLogFilename
+ * @param {{gzip?: boolean}=} options
  * @return {Promise<void>}
  */
-function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
-  const writeStream = fs.createWriteStream(devtoolLogFilename);
-
-  return stream.promises.pipeline(function* () {
+function saveDevtoolsLog(devtoolsLog, devtoolLogFilename, options = {}) {
+  return writeJson(function* () {
     yield* arrayOfObjectsJsonGenerator(devtoolsLog);
     yield '\n';
-  }, writeStream);
+  }, devtoolLogFilename, !!options.gzip);
 }
 
 /**
@@ -366,7 +449,7 @@ function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
 async function saveLanternDebugTraces(pathWithBasename) {
   if (!process.env.LANTERN_DEBUG) return;
 
-  for (const [label, nodeTimings] of Simulator.ALL_NODE_TIMINGS) {
+  for (const [label, nodeTimings] of Lantern.Simulation.Simulator.allNodeTimings) {
     if (lanternTraceSaver.simulationNamesToIgnore.includes(label)) continue;
 
     const traceFilename = `${pathWithBasename}-${label}${traceSuffix}`;
@@ -384,14 +467,18 @@ async function saveLanternDebugTraces(pathWithBasename) {
  */
 async function saveAssets(artifacts, audits, pathWithBasename) {
   const allAssets = await prepareAssets(artifacts, audits);
-  const saveAll = allAssets.map(async (passAssets, index) => {
-    const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
-    fs.writeFileSync(devtoolsLogFilename, JSON.stringify(passAssets.devtoolsLog, null, 2));
-    log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
+  const saveAll = allAssets.map(async (assets, index) => {
+    if (assets.devtoolsLog) {
+      const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
+      await saveDevtoolsLog(assets.devtoolsLog, devtoolsLogFilename);
+      log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
+    }
 
-    const traceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
-    await saveTrace(passAssets.traceData, traceFilename);
-    log.log('saveAssets', 'trace file streamed to disk: ' + traceFilename);
+    if (assets.traceData) {
+      const traceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
+      await saveTrace(assets.traceData, traceFilename);
+      log.log('saveAssets', 'trace file streamed to disk: ' + traceFilename);
+    }
   });
 
   await Promise.all(saveAll);
@@ -428,18 +515,30 @@ function normalizeTimingEntries(timings) {
 }
 
 /**
+ * @param {string} errorStack
+ * @return {string}
+ */
+function elideErrorStack(errorStack) {
+  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+  return errorStack
+    // Make paths relative to the repo root.
+    .replaceAll(baseCallFrameUrl.pathname, '')
+    // Remove line/col info.
+    .replaceAll(/:\d+:\d+/g, '');
+}
+
+/**
  * @param {LH.Result} lhr
  */
-function elideAuditErrorStacks(lhr) {
-  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+function elideLhrErrorStacks(lhr) {
   for (const auditResult of Object.values(lhr.audits)) {
     if (auditResult.errorStack) {
-      auditResult.errorStack = auditResult.errorStack
-        // Make paths relative to the repo root.
-        .replaceAll(baseCallFrameUrl.pathname, '')
-        // Remove line/col info.
-        .replaceAll(/:\d+:\d+/g, '');
+      auditResult.errorStack = elideErrorStack(auditResult.errorStack);
     }
+  }
+
+  if (lhr.runtimeError?.errorStack) {
+    lhr.runtimeError.errorStack = elideErrorStack(lhr.runtimeError.errorStack);
   }
 }
 
@@ -456,5 +555,5 @@ export {
   saveLanternNetworkData,
   stringifyReplacer,
   normalizeTimingEntries,
-  elideAuditErrorStacks,
+  elideLhrErrorStacks,
 };

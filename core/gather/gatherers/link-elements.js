@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import LinkHeader from 'http-link-header';
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import DevtoolsLog from './devtools-log.js';
 import {MainResource} from '../../computed/main-resource.js';
@@ -93,22 +93,15 @@ function getLinkElementsInDOM() {
 }
 /* c8 ignore stop */
 
-class LinkElements extends FRGatherer {
-  constructor() {
-    super();
-    /**
-     * This needs to be in the constructor.
-     * https://github.com/GoogleChrome/lighthouse/issues/12134
-     * @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>}
-     */
-    this.meta = {
-      supportedModes: ['timespan', 'navigation'],
-      dependencies: {DevtoolsLog: DevtoolsLog.symbol},
-    };
-  }
+class LinkElements extends BaseGatherer {
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+  };
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
   static getLinkElementsInDOM(context) {
@@ -125,7 +118,7 @@ class LinkElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
@@ -172,11 +165,11 @@ class LinkElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
+   * @param {LH.Gatherer.Context<'DevtoolsLog'>} context
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
-  async _getArtifact(context, devtoolsLog) {
+  async getArtifact(context) {
+    const devtoolsLog = context.dependencies.DevtoolsLog;
     const fromDOM = await LinkElements.getLinkElementsInDOM(context);
     const fromHeaders = await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
     const linkElements = fromDOM.concat(fromHeaders);
@@ -187,23 +180,6 @@ class LinkElements extends FRGatherer {
     }
 
     return linkElements;
-  }
-
-  /**
-   * @param {LH.Gatherer.PassContext} context
-   * @param {LH.Gatherer.LoadData} loadData
-   * @return {Promise<LH.Artifacts['LinkElements']>}
-   */
-  async afterPass(context, loadData) {
-    return this._getArtifact({...context, dependencies: {}}, loadData.devtoolsLog);
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
-   * @return {Promise<LH.Artifacts['LinkElements']>}
-   */
-  async getArtifact(context) {
-    return this._getArtifact(context, context.dependencies.DevtoolsLog);
   }
 }
 

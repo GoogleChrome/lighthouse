@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -10,6 +10,7 @@ import CrawlableAnchorsAudit from '../../../audits/seo/crawlable-anchors.js';
 
 function runAudit({
   rawHref = '',
+  href = rawHref,
   role = '',
   onclick = '',
   name = '',
@@ -26,6 +27,7 @@ function runAudit({
   const {score} = CrawlableAnchorsAudit.audit({
     AnchorElements: [{
       rawHref,
+      href,
       name,
       listeners,
       onclick,
@@ -43,7 +45,7 @@ function runAudit({
 
 describe('SEO: Crawlable anchors audit', () => {
   it('allows crawlable anchors', () => {
-    assert.equal(runAudit({rawHref: '#top'}), 1, 'hash fragment identifier');
+    assert.equal(runAudit({rawHref: '#top', href: 'https://example.com#top'}), 1, 'hash fragment identifier');
     assert.equal(runAudit({rawHref: 'mailto:name@example.com'}), 1, 'email link with a mailto URI');
     assert.equal(runAudit({rawHref: 'https://example.com'}), 1, 'absolute HTTPs URL');
     assert.equal(runAudit({rawHref: 'foo'}), 1, 'relative URL');
@@ -59,6 +61,7 @@ describe('SEO: Crawlable anchors audit', () => {
     }), 1, 'relative link which specifies a query string');
 
     assert.equal(runAudit({rawHref: 'ftp://'}), 0, 'invalid FTP links fails');
+    assert.equal(runAudit({rawHref: '', href: 'https://example.com'}), 1, 'empty attribute that links to current page');
   });
 
   it('allows anchors acting as an ID anchor', () => {
@@ -82,6 +85,7 @@ describe('SEO: Crawlable anchors audit', () => {
   it('handles anchor elements which use event listeners', () => {
     const auditResultMixtureOfListeners = runAudit({
       rawHref: '/validPath',
+      href: 'https://example.com/validPath',
       listeners: [{type: 'nope'}, {type: 'another'}, {type: 'click'}],
     });
     assert.equal(auditResultMixtureOfListeners, 1, 'valid href with any event listener is a pass');
@@ -102,9 +106,9 @@ describe('SEO: Crawlable anchors audit', () => {
     assert.equal(runAudit({}), 0, 'link with no meaningful attributes and no event handlers');
     assert.equal(runAudit({rawHref: 'file:///image.png'}), 0, 'hyperlink with a `file:` URI');
     assert.equal(runAudit({name: ' '}), 0, 'name attribute with only space characters');
-    assert.equal(runAudit({rawHref: ' '}), 0, 'href attribute with only space characters');
+    assert.equal(runAudit({rawHref: ' '}), 1, 'href attribute with only space characters');
     const assertionMessage = 'onclick attribute with only space characters';
-    assert.equal(runAudit({rawHref: ' ', onclick: ' '}), 0, assertionMessage);
+    assert.equal(runAudit({rawHref: ' ', onclick: ' '}), 1, assertionMessage);
   });
 
   it('handles javascript:void expressions in the onclick attribute', () => {
@@ -141,7 +145,7 @@ describe('SEO: Crawlable anchors audit', () => {
     ];
 
     for (const onclickVariation of expectedAuditPasses) {
-      const auditResult = runAudit({rawHref: '/validPath', onclick: onclickVariation});
+      const auditResult = runAudit({rawHref: '/validPath', href: 'https://example.com/validPath', onclick: onclickVariation});
       assert.equal(auditResult, 1, `'${onclickVariation}' should pass the audit`);
     }
   });

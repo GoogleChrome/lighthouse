@@ -1,14 +1,11 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Driver} from '../../../legacy/gather/driver.js';
-import {Connection} from '../../../legacy/gather/connections/connection.js';
 import SourceMaps from '../../../gather/gatherers/source-maps.js';
-import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
+import {createMockDriver} from '../mock-driver.js';
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -20,52 +17,44 @@ const mapJson = JSON.stringify({
 });
 
 describe('SourceMaps gatherer', () => {
-  before(() => timers.useFakeTimers());
-  after(() => timers.dispose());
-
   /**
-   * `scriptParsedEvent` mocks the `sourceMapURL` and `url` seen from the protocol.
+   * `script` mocks the `sourceMapURL` and `url` seen from the protocol.
    * `map` mocks the (JSON) of the source maps that `Runtime.evaluate` returns.
    * `resolvedSourceMapUrl` is used to assert that the SourceMaps gatherer is using the expected
    *                        url to fetch the source map.
    * `fetchError` mocks an error that happens in the page. Only fetch error message make sense.
-   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, status?: number, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndEvents
+   * @param {Array<{script: LH.Artifacts.Script, map: string, status?: number, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndScripts
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
-  async function runSourceMaps(mapsAndEvents) {
+  async function runSourceMaps(mapsAndScripts) {
     // pre-condition: should only define map or fetchError, not both.
-    for (const {map, fetchError} of mapsAndEvents) {
+    for (const {map, fetchError} of mapsAndScripts) {
       if (map && fetchError) {
         throw new Error('should only define map or fetchError, not both.');
       }
     }
 
-    const onMock = createMockOnFn();
-    const sendCommandMock = createMockSendCommandFn()
-      .mockResponse('Debugger.enable', {})
-      .mockResponse('Debugger.disable', {})
-      .mockResponse('Network.enable', {});
-    const fetchMock = fnAny();
+    const driver = createMockDriver();
 
-    for (const mapAndEvents of mapsAndEvents) {
+    const Scripts = [];
+
+    for (const mapAndScript of mapsAndScripts) {
       const {
-        scriptParsedEvent,
+        script,
         map,
         status = null,
         resolvedSourceMapUrl,
         fetchError,
-      } = mapAndEvents;
-      onMock.mockEvent('protocolevent', {
-        method: 'Debugger.scriptParsed',
-        params: scriptParsedEvent,
-      });
+      } = mapAndScript;
 
-      if (scriptParsedEvent.sourceMapURL.startsWith('data:')) {
+      Scripts.push(script);
+
+      if (script.sourceMapURL.startsWith('data:')) {
         // Only the source maps that need to be fetched use the `fetchMock` code path.
         continue;
       }
 
-      fetchMock.mockImplementationOnce(async (sourceMapUrl) => {
+      driver.fetcher.fetchResource.mockImplementationOnce(async (sourceMapUrl) => {
         // Check that the source map url was resolved correctly.
         if (resolvedSourceMapUrl) {
           expect(sourceMapUrl).toBe(resolvedSourceMapUrl);
@@ -78,25 +67,9 @@ describe('SourceMaps gatherer', () => {
         return {content: map, status};
       });
     }
-    const connectionStub = new Connection();
-    connectionStub.sendCommand = sendCommandMock;
-    connectionStub.on = onMock;
-
-    const driver = new Driver(connectionStub);
-    driver.fetcher.fetchResource = fetchMock;
 
     const sourceMaps = new SourceMaps();
-
-    await sourceMaps.startInstrumentation({driver});
-    await sourceMaps.startSensitiveInstrumentation({driver});
-
-    // Needed for protocol events to emit.
-    await flushAllTimersAndMicrotasks(1);
-
-    await sourceMaps.stopSensitiveInstrumentation({driver});
-    await sourceMaps.stopInstrumentation({driver});
-
-    return sourceMaps.getArtifact({driver});
+    return sourceMaps.getArtifact({driver, dependencies: {Scripts}});
   }
 
   function makeJsonDataUrl(data) {
@@ -106,8 +79,8 @@ describe('SourceMaps gatherer', () => {
   it('ignores script with no source map url', async () => {
     const artifact = await runSourceMaps([
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/script.js',
+        script: {
+          name: 'http://www.example.com/script.js',
           sourceMapURL: '',
         },
         map: null,
@@ -119,8 +92,8 @@ describe('SourceMaps gatherer', () => {
   it('fetches map for script with source map url', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle.js',
+        script: {
+          name: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         map: mapJson,
@@ -130,8 +103,8 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
-        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].script.name,
+        sourceMapUrl: mapsAndEvents[0].script.sourceMapURL,
         map: JSON.parse(mapsAndEvents[0].map),
       },
     ]);
@@ -140,24 +113,24 @@ describe('SourceMaps gatherer', () => {
   it('fetches map for script with relative source map url', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/path/bundle.js',
+        script: {
+          name: 'http://www.example.com/path/bundle.js',
           sourceMapURL: 'bundle.js.map',
         },
         map: mapJson,
         resolvedSourceMapUrl: 'http://www.example.com/path/bundle.js.map',
       },
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/path/bundle.js',
+        script: {
+          name: 'http://www.example.com/path/bundle.js',
           sourceMapURL: '../bundle.js.map',
         },
         map: mapJson,
         resolvedSourceMapUrl: 'http://www.example.com/bundle.js.map',
       },
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/path/bundle.js',
+        script: {
+          name: 'http://www.example.com/path/bundle.js',
           sourceMapURL: 'http://www.example-2.com/path/bundle.js',
         },
         map: mapJson,
@@ -167,18 +140,18 @@ describe('SourceMaps gatherer', () => {
     const artifacts = await runSourceMaps(mapsAndEvents);
     expect(artifacts).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        scriptUrl: mapsAndEvents[0].script.name,
         sourceMapUrl: 'http://www.example.com/path/bundle.js.map',
         map: JSON.parse(mapsAndEvents[0].map),
       },
       {
-        scriptUrl: mapsAndEvents[1].scriptParsedEvent.url,
+        scriptUrl: mapsAndEvents[1].script.name,
         sourceMapUrl: 'http://www.example.com/bundle.js.map',
         map: JSON.parse(mapsAndEvents[1].map),
       },
       {
-        scriptUrl: mapsAndEvents[2].scriptParsedEvent.url,
-        sourceMapUrl: mapsAndEvents[2].scriptParsedEvent.sourceMapURL,
+        scriptUrl: mapsAndEvents[2].script.name,
+        sourceMapUrl: mapsAndEvents[2].script.sourceMapURL,
         map: JSON.parse(mapsAndEvents[2].map),
       },
     ]);
@@ -187,8 +160,8 @@ describe('SourceMaps gatherer', () => {
   it('throws an error message when fetching map returns bad status code', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle.js',
+        script: {
+          name: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         status: 404,
@@ -198,8 +171,8 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
-        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].script.name,
+        sourceMapUrl: mapsAndEvents[0].script.sourceMapURL,
         errorMessage: 'Error: Failed fetching source map (404)',
         map: undefined,
       },
@@ -209,8 +182,8 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when fetching map fails', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle.js',
+        script: {
+          name: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         fetchError: 'Failed fetching source map',
@@ -219,8 +192,8 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
-        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].script.name,
+        sourceMapUrl: mapsAndEvents[0].script.sourceMapURL,
         errorMessage: 'Error: Failed fetching source map',
         map: undefined,
       },
@@ -230,8 +203,8 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when map url cannot be resolved', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle.js',
+        script: {
+          name: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://',
         },
       },
@@ -239,7 +212,7 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        scriptUrl: mapsAndEvents[0].script.name,
         sourceMapUrl: undefined,
         errorMessage: 'Could not resolve map url: http://',
         map: undefined,
@@ -250,15 +223,15 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when parsing map fails', async () => {
     const mapsAndEvents = [
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle.js',
+        script: {
+          name: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         map: '{{}',
       },
       {
-        scriptParsedEvent: {
-          url: 'http://www.example.com/bundle-2.js',
+        script: {
+          name: 'http://www.example.com/bundle-2.js',
           sourceMapURL: makeJsonDataUrl('{};'),
         },
       },
@@ -266,15 +239,19 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
-        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
-        errorMessage: 'SyntaxError: Unexpected token { in JSON at position 1',
+        scriptUrl: mapsAndEvents[0].script.name,
+        sourceMapUrl: mapsAndEvents[0].script.sourceMapURL,
+        // This message was changed in Node 20, check for old and new versions.
+        // eslint-disable-next-line max-len
+        errorMessage: expect.stringMatching(/(Expected property name|Unexpected token).*at position 1/),
         map: undefined,
       },
       {
-        scriptUrl: mapsAndEvents[1].scriptParsedEvent.url,
+        scriptUrl: mapsAndEvents[1].script.name,
         sourceMapUrl: undefined,
-        errorMessage: 'SyntaxError: Unexpected token ; in JSON at position 2',
+        // This message was changed in Node 20, check for old and new versions.
+        // eslint-disable-next-line max-len
+        errorMessage: expect.stringMatching(/(Unexpected non-whitespace|Unexpected token).*at position 2/),
         map: undefined,
       },
     ]);

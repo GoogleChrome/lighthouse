@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {FunctionComponent} from 'preact';
@@ -136,6 +136,7 @@ describe('SummaryTooltip', () => {
         {result: {score: 0, scoreDisplayMode: 'binary', title: 'Audit 1'}, weight: 1, group: 'group'},
         {result: {score: 0, scoreDisplayMode: 'binary', title: 'Audit 2'}, weight: 2, group: 'group'},
         {result: {score: 0, scoreDisplayMode: 'binary', title: 'Audit 3'}, weight: 3, group: 'group'},
+        {result: {score: 0, scoreDisplayMode: 'binary', title: 'Audit 4'}, weight: 0, group: 'group'},
         /* eslint-enable max-len */
       ],
     };
@@ -161,9 +162,10 @@ describe('SummaryTooltip', () => {
       auditRefs: [
         /* eslint-disable max-len */
         {result: {score: 0.75, scoreDisplayMode: 'numeric', title: 'Metric 1'}, weight: 1, group: 'metrics'},
-        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 1', details: {type: 'opportunity', overallSavingsMs: 500}}, weight: 0, group: 'opportunities'},
-        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 2', details: {type: 'opportunity', overallSavingsMs: 1000}}, weight: 0, group: 'opportunities'},
-        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 3', details: {type: 'opportunity', overallSavingsMs: 100}}, weight: 0, group: 'opportunities'},
+        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 1', metricSavings: {LCP: 500}}, weight: 0, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 2', metricSavings: {LCP: 1000}}, weight: 0, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'numeric', title: 'Audit 3', metricSavings: {LCP: 100, FCP: 10_000}}, weight: 0, group: 'diagnostics'},
+        {result: {score: 0.5, scoreDisplayMode: 'numeric', title: 'Audit 4', metricSavings: {LCP: 10_000}}, weight: 0, group: 'diagnostics'},
         /* eslint-enable max-len */
       ],
     };

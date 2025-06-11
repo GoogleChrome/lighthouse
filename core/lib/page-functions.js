@@ -1,8 +1,10 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
+
+import {createRequire} from 'module';
 
 import {Util} from '../../shared/util.js';
 
@@ -50,7 +52,7 @@ function wrapRuntimeEvalErrorInBrowser(err) {
 
 /**
  * @template {string} T
- * @param {T} selector Optional simple CSS selector to filter nodes on.
+ * @param {T=} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
  * @return {Array<ParseSelector<T>>}
  */
@@ -513,16 +515,89 @@ function truncate(string, characterLimit) {
   return Util.truncate(string, characterLimit);
 }
 
-/** @type {string} */
-const truncateRawString = truncate.toString();
-truncate.toString = () => `function truncate(string, characterLimit) {
+function isBundledEnvironment() {
+  // If we're in DevTools or LightRider, we are definitely bundled.
+  // TODO: refactor and delete `global.isDevtools`.
+  if (global.isDevtools || global.isLightrider) return true;
+
+  const require = createRequire(import.meta.url);
+
+  try {
+    // Not foolproof, but `lighthouse-logger` is a dependency of lighthouse that should always be resolvable.
+    // `require.resolve` will only throw in atypical/bundled environments.
+    require.resolve('lighthouse-logger');
+    return false;
+  } catch (err) {
+    return true;
+  }
+}
+
+// This is to support bundled lighthouse.
+// esbuild calls every function with a builtin `__name` (since we set keepNames: true),
+// whose purpose is to store the real name of the function so that esbuild can rename it to avoid
+// collisions. Anywhere we inject dynamically generated code at runtime for the browser to process,
+// we must manually include this function (because esbuild only does so once at the top scope of
+// the bundle, which is irrelevant for code executed in the browser).
+// When minified, esbuild will mangle the name of this wrapper function, so we need to determine what it
+// is at runtime in order to recreate it within the page.
+const esbuildFunctionWrapperString = createEsbuildFunctionWrapper();
+
+function createEsbuildFunctionWrapper() {
+  if (!isBundledEnvironment()) {
+    return '';
+  }
+
+  const functionAsString = (()=>{
+    // eslint-disable-next-line no-unused-vars
+    const a = ()=>{};
+  }).toString()
+    // When not minified, esbuild annotates the call to this function wrapper with PURE.
+    // We know further that the name of the wrapper function should be `__name`, but let's not
+    // hardcode that. Remove the PURE annotation to simplify the regex.
+    .replace('/* @__PURE__ */', '');
+  const functionStringMatch = functionAsString.match(/=\s*([\w_]+)\(/);
+  if (!functionStringMatch) {
+    throw new Error('Could not determine esbuild function wrapper name');
+  }
+
+  /**
+   * @param {Function} fn
+   * @param {string} value
+   */
+  const esbuildFunctionWrapper = (fn, value) =>
+    Object.defineProperty(fn, 'name', {value, configurable: true});
+  const wrapperFnName = functionStringMatch[1];
+  return `let ${wrapperFnName}=${esbuildFunctionWrapper}`;
+}
+
+/**
+ * @param {Function} fn
+ * @return {string}
+ */
+function getRuntimeFunctionName(fn) {
+  const match = fn.toString().match(/function ([\w$]+)/);
+  if (!match) throw new Error(`could not find function name for: ${fn}`);
+  return match[1];
+}
+
+// We setup a number of our page functions to automatically include their dependencies.
+// Because of esbuild bundling, we must refer to the actual (mangled) runtime function name.
+/** @type {Record<string, string>} */
+const names = {
+  truncate: getRuntimeFunctionName(truncate),
+  getNodeLabel: getRuntimeFunctionName(getNodeLabel),
+  getOuterHTMLSnippet: getRuntimeFunctionName(getOuterHTMLSnippet),
+  getNodeDetails: getRuntimeFunctionName(getNodeDetails),
+};
+
+truncate.toString = () => `function ${names.truncate}(string, characterLimit) {
   const Util = { ${Util.truncate} };
-  return (${truncateRawString})(string, characterLimit);
+  return Util.truncate(string, characterLimit);
 }`;
 
 /** @type {string} */
 const getNodeLabelRawString = getNodeLabel.toString();
-getNodeLabel.toString = () => `function getNodeLabel(element) {
+getNodeLabel.toString = () => `function ${names.getNodeLabel}(element) {
   ${truncate};
   return (${getNodeLabelRawString})(element);
 }`;
@@ -530,14 +605,14 @@ getNodeLabel.toString = () => `function getNodeLabel(element) {
 /** @type {string} */
 const getOuterHTMLSnippetRawString = getOuterHTMLSnippet.toString();
 // eslint-disable-next-line max-len
-getOuterHTMLSnippet.toString = () => `function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
+getOuterHTMLSnippet.toString = () => `function ${names.getOuterHTMLSnippet}(element, ignoreAttrs = [], snippetCharacterLimit = 500) {
   ${truncate};
   return (${getOuterHTMLSnippetRawString})(element, ignoreAttrs, snippetCharacterLimit);
 }`;
 
 /** @type {string} */
 const getNodeDetailsRawString = getNodeDetails.toString();
-getNodeDetails.toString = () => `function getNodeDetails(element) {
+getNodeDetails.toString = () => `function ${names.getNodeDetails}(element) {
   ${truncate};
   ${getNodePath};
   ${getNodeSelector};
@@ -560,4 +635,6 @@ export const pageFunctions = {
   wrapRequestIdleCallback,
   getBoundingClientRect,
   truncate,
+  esbuildFunctionWrapperString,
+  getRuntimeFunctionName,
 };

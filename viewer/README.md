@@ -41,7 +41,7 @@ e.g., `http://localhost:7333/?jsonurl=https://gist.githubusercontent.com/Kikobea
 
 Pass target URL `psiurl` query parameter.
 
-e.g., `http://localhost:7333/?psiurl=https://www.example.com&category=pwa&category=seo`
+e.g., `http://localhost:7333/?psiurl=https://www.example.com&category=seo`
 
 The following query parameters are also supported as options:
 

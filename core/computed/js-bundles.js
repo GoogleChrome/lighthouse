@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
@@ -99,7 +99,7 @@ class JSBundles {
 
       const compiledUrl = SourceMap.scriptUrl || 'compiled.js';
       const mapUrl = SourceMap.sourceMapUrl || 'compiled.js.map';
-      const map = new SDK.TextSourceMap(compiledUrl, mapUrl, rawMap);
+      const map = new SDK.SourceMap(compiledUrl, mapUrl, rawMap);
 
       const sizes = computeGeneratedFileSizes(map, script.length || 0, script.content || '');
 

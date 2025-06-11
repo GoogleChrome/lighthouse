@@ -1,15 +1,16 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
 
 import puppeteer from 'puppeteer';
+import {getChromePath} from 'chrome-launcher';
 
 import {Server} from '../../cli/test/fixtures/static-server.js';
-import {LH_ROOT} from '../../root.js';
+import {LH_ROOT} from '../../shared/root.js';
 
 const debugOptions = JSON.parse(
   fs.readFileSync(LH_ROOT + '/treemap/app/debug.json', 'utf-8')
@@ -30,7 +31,7 @@ describe('Lighthouse Treemap', () => {
   let browser;
   /** @type {import('puppeteer').Page} */
   let page;
-  /** @type {Error[]} */
+  /** @type {Array<string|Promise<string>>} */
   let pageErrors = [];
 
   let server;
@@ -49,20 +50,49 @@ describe('Lighthouse Treemap', () => {
   beforeEach(async () => {
     if (!browser) {
       browser = await puppeteer.launch({
-        headless: true,
+        headless: process.env.DEBUG ? false : 'new',
+        executablePath: getChromePath(),
       });
     }
     page = await browser.newPage();
-    page.on('pageerror', pageError => pageErrors.push(pageError));
+    page.on('pageerror', e => pageErrors.push(`${e.message} ${e.stack}`));
+    page.on('console', (e) => {
+      if (e.type() === 'error' || e.type() === 'warning') {
+        const describe = (jsHandle) => {
+          return jsHandle.executionContext().evaluate((obj) => {
+            return JSON.stringify(obj, null, 2);
+          }, jsHandle);
+        };
+        const promise = Promise.all(e.args().map(describe)).then(args => {
+          return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
+        });
+        pageErrors.push(promise);
+      }
+    });
   });
 
-  afterEach(async () => {
-    await page.close();
-
-    // Fails if any unexpected errors ocurred.
-    // If a test expects an error, it will clear this array.
-    expect(pageErrors).toMatchObject([]);
+  async function claimErrors() {
+    const theErrors = pageErrors;
     pageErrors = [];
+    return await Promise.all(theErrors);
+  }
+
+  async function ensureNoErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
+    const errors = (await claimErrors()).filter(error => {
+      // Filters out a cookie deprecation error that only occurs on ToT
+      // This error comes from gtag.js
+      // https://support.google.com/tagmanager/thread/288419928/error-failed-to-execute-getvalue-on-cookiedeprecationlabel?hl=en
+      return !error.match(
+        /Failed to execute 'getValue' on 'CookieDeprecationLabel': Illegal invocation/);
+    });
+    expect(errors).toHaveLength(0);
+  }
+
+  afterEach(async () => {
+    await ensureNoErrors();
+    await page.close();
   });
 
   describe('Recieves options', () => {
@@ -147,7 +177,7 @@ describe('Lighthouse Treemap', () => {
         timeout: 30000,
       });
 
-      await page.click('#view-mode--unused-bytes');
+      await page.select('.view-mode-selector', '1'); // unused bytes
       await page.waitForSelector('.lh-treemap--view-mode--unused-bytes');
 
       // Identify the JS data.

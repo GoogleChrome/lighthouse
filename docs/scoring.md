@@ -4,14 +4,6 @@
 
 ➡️ Please read [Lighthouse Performance Scoring at developer.chrome.com](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/).
 
-## How is the PWA (Progressive Web App) score calculated?
-
-The PWA category doesn't get a 0-100 score, but instead is evaluated in 3 separate groups (Fast and reliable, Installable, and PWA Optimized). In order to satisfy each grouping (and get the associated badge), every audit within the group must be passing.
-
-![Lighthouse PWA badge - states](https://user-images.githubusercontent.com/39191/80662283-c292d280-8a45-11ea-84e8-7f8248657acf.png)
-
-Note on https redirects: some metrics in this category have issues with https redirects because of TLS-handshake errors. More specifically you will run into this when using the ```simplehttp2server``` npm package. Subsequent metrics will fail after the https redirects (see [#1217](https://github.com/GoogleChrome/lighthouse/issues/1217), [#5910](https://github.com/GoogleChrome/lighthouse/issues/5910)).
-
 ## How is the Best Practices score calculated?
 
 All audits in the Best Practices category are equally weighted. Therefore, implementing each audit correctly will increase your overall score by ~6 points.

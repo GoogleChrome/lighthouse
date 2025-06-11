@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2022 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -235,28 +235,6 @@ describe('Metric: Responsiveness', () => {
     };
     await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
       .rejects.toThrow(`unexpected responsiveness interactionType 'brainWave'`);
-  });
-
-  it('returns a fallback timing event if provided with the old trace event format', async () => {
-    const interactionEvents = [{
-      ts: 500,
-      maxDuration: 200,
-    }];
-    const trace = makeTrace(interactionEvents);
-    for (const event of trace.traceEvents) {
-      if (event.name !== 'EventTiming') continue;
-      event.args.data = {};
-    }
-
-    const metricInputData = {
-      trace,
-      settings: {throttlingMethod: 'provided'},
-    };
-    const event = await Responsiveness.request(metricInputData, {computedCache: new Map()});
-    expect(event).toEqual({
-      name: 'FallbackTiming',
-      duration: 200,
-    });
   });
 
   it('only finds interaction events from the same frame as the responsiveness event', async () => {

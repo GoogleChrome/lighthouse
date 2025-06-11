@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -44,6 +44,7 @@ describe('Deprecations audit', () => {
             },
           },
           {
+            // Does not exist anymore.
             type: 'EventPath',
             sourceCodeLocation: {
               url: URL,
@@ -52,7 +53,7 @@ describe('Deprecations audit', () => {
             },
           },
           {
-            type: 'PrefixedVideoDisplayingFullscreen',
+            type: 'RTCPeerConnectionGetStatsLegacyNonCompliant',
             sourceCodeLocation: {
               url: URL,
               lineNumber: 101,
@@ -73,18 +74,18 @@ describe('Deprecations audit', () => {
     assert.equal(auditResult.details.items[0].source.line, 123);
     assert.equal(auditResult.details.items[0].source.column, 99);
     assert.equal(auditResult.details.items[1].value, 'Deprecation message 456');
-    expect(auditResult.details.items[2].value).toBeDisplayString(
-      '`Event.path` is deprecated and will be removed. Please use `Event.composedPath()` instead.');
-    expect(auditResult.details.items[2].subItems.items[0]).toMatchObject({
-      text: expect.toBeDisplayString('Check the feature status page for more details.'),
-      url: 'https://chromestatus.com/feature/5726124632965120',
-    });
-    expect(auditResult.details.items[2].subItems.items[1]).toMatchObject({
-      text: expect.toBeDisplayString('This change will go into effect with milestone 109.'),
-      url: 'https://chromiumdash.appspot.com/schedule',
-    });
+    expect(auditResult.details.items[2].value).toEqual('EventPath');
+    expect(auditResult.details.items[2].subItems).toEqual(undefined);
     expect(auditResult.details.items[3].value).toBeDisplayString(
       // eslint-disable-next-line max-len
-      'HTMLVideoElement.webkitDisplayingFullscreen is deprecated. Please use Document.fullscreenElement instead.');
+      'The callback-based getStats() is deprecated and will be removed. Use the spec-compliant getStats() instead.');
+    expect(auditResult.details.items[3].subItems.items[0]).toMatchObject({
+      text: expect.toBeDisplayString('Check the feature status page for more details.'),
+      url: 'https://chromestatus.com/feature/4631626228695040',
+    });
+    expect(auditResult.details.items[3].subItems.items[1]).toMatchObject({
+      text: expect.toBeDisplayString('This change will go into effect with milestone 117.'),
+      url: 'https://chromiumdash.appspot.com/schedule',
+    });
   });
 });

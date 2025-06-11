@@ -1,9 +1,10 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {MainResource} from './main-resource.js';
@@ -14,8 +15,8 @@ class CriticalRequestChains {
    * For now, we use network priorities as a proxy for "render-blocking"/critical-ness.
    * It's imperfect, but there is not a higher-fidelity signal available yet.
    * @see https://docs.google.com/document/d/1bCDuq9H1ih9iNjgzyAL0gpwNFiEP4TZS-YLRp_RuMlc
-   * @param {LH.Artifacts.NetworkRequest} request
-   * @param {LH.Artifacts.NetworkRequest} mainResource
+   * @param {Lantern.Types.NetworkRequest} request
+   * @param {Lantern.Types.NetworkRequest} mainResource
    * @return {boolean}
    */
   static isCritical(request, mainResource) {
@@ -105,19 +106,18 @@ class CriticalRequestChains {
     graph.traverse((node, traversalPath) => {
       seenNodes.add(node);
       if (node.type !== 'network') return;
-      if (!CriticalRequestChains.isCritical(node.record, mainResource)) return;
+      if (!CriticalRequestChains.isCritical(node.request, mainResource)) return;
 
       const networkPath = traversalPath
-        .filter(/** @return {n is LH.Gatherer.Simulation.GraphNetworkNode} */
-          n => n.type === 'network')
+        .filter(n => n.type === 'network')
         .reverse()
-        .map(node => node.record);
+        .map(node => node.rawRequest);
 
       // Ignore if some ancestor is not a critical request.
       if (networkPath.some(r => !CriticalRequestChains.isCritical(r, mainResource))) return;
 
       // Ignore non-network things (like data urls).
-      if (NetworkRequest.isNonNetworkRequest(node.record)) return;
+      if (NetworkRequest.isNonNetworkRequest(node.request)) return;
 
       addChain(networkPath);
     }, getNextNodes);
@@ -126,18 +126,18 @@ class CriticalRequestChains {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}} data
+   * @param {{URL: LH.Artifacts['URL'], SourceMaps: LH.Artifacts['SourceMaps'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
   static async compute_(data, context) {
     const mainResource = await MainResource.request(data, context);
-    const graph = await PageDependencyGraph.request(data, context);
+    const graph = await PageDependencyGraph.request({...data, fromTrace: false}, context);
 
     return CriticalRequestChains.extractChainsFromGraph(mainResource, graph);
   }
 }
 
-const CriticalRequestChainsComputed =
-  makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+const CriticalRequestChainsComputed = makeComputedArtifact(CriticalRequestChains,
+  ['URL', 'SourceMaps', 'devtoolsLog', 'trace', 'settings']);
 export {CriticalRequestChainsComputed as CriticalRequestChains};

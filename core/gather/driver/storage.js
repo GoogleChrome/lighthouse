@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
@@ -34,11 +34,12 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 
 /**
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {string} url
+ * @param {LH.Config.Settings['clearStorageTypes']} clearStorageTypes
  * @return {Promise<LH.IcuMessage[]>}
  */
-async function clearDataForOrigin(session, url) {
+async function clearDataForOrigin(session, url, clearStorageTypes) {
   const status = {msg: 'Cleaning origin data', id: 'lh:storage:clearDataForOrigin'};
   log.time(status);
 
@@ -46,17 +47,7 @@ async function clearDataForOrigin(session, url) {
 
   const origin = new URL(url).origin;
 
-  // Clear some types of storage.
-  // Cookies are not cleared, so the user isn't logged out.
-  // indexeddb, websql, and localstorage are not cleared to prevent loss of potentially important data.
-  //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
-  const typesToClear = [
-    // 'cookies',
-    'file_systems',
-    'shader_cache',
-    'service_workers',
-    'cache_storage',
-  ].join(',');
+  const typesToClear = clearStorageTypes.join(',');
 
   // `Storage.clearDataForOrigin` is one of our PROTOCOL_TIMEOUT culprits and this command is also
   // run in the context of PAGE_HUNG to cleanup. We'll keep the timeout low and just warn if it fails.
@@ -82,7 +73,7 @@ async function clearDataForOrigin(session, url) {
 }
 
 /**
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {string} url
  * @return {Promise<LH.IcuMessage | undefined>}
  */
@@ -112,7 +103,7 @@ async function getImportantStorageWarning(session, url) {
 
 /**
  * Clear the network cache on disk and in memory.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @return {Promise<LH.IcuMessage[]>}
  */
 async function clearBrowserCaches(session) {

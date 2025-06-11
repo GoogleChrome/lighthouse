@@ -1,18 +1,7 @@
 <!--
 @license
-Copyright 2018 The Lighthouse Authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS-IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2018 Google LLC
+SPDX-License-Identifier: Apache-2.0
 -->
 
 <!-- Lighthouse run warnings -->
@@ -105,41 +94,6 @@ limitations under the License.
   </div>
 </template>
 
-<!-- Lighthouse perf opportunity -->
-<template id="opportunity">
-  <div class="lh-audit lh-audit--load-opportunity">
-    <details class="lh-expandable-details">
-        <summary>
-          <div class="lh-audit__header">
-            <div class="lh-load-opportunity__cols">
-              <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-                <span class="lh-audit__score-icon"></span>
-                <div class="lh-audit__title"></div>
-              </div>
-              <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
-                <div class="lh-load-opportunity__sparkline">
-                  <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
-                </div>
-                <div class="lh-audit__display-text"></div>
-                <div class="lh-chevron-container"></div>
-              </div>
-            </div>
-          </div>
-        </summary>
-      <div class="lh-audit__description"></div>
-      <div class="lh-audit__stackpacks"></div>
-    </details>
-  </div>
-</template>
-
-<!-- Lighthouse perf opportunity header -->
-<template id="opportunityHeader">
-  <div class="lh-load-opportunity__header lh-load-opportunity__cols">
-    <div class="lh-load-opportunity__col lh-load-opportunity__col--one"></div>
-    <div class="lh-load-opportunity__col lh-load-opportunity__col--two"></div>
-  </div>
-</template>
-
 <!-- Lighthouse score container -->
 <template id="scoresWrapper">
   <style>
@@ -168,7 +122,7 @@ limitations under the License.
       border-bottom: 1px solid var(--color-gray-200);
       padding-top: var(--score-container-padding);
       padding-bottom: 4px;
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
     }
 
@@ -202,10 +156,8 @@ limitations under the License.
       position: absolute;
       grid-column: 1;
       bottom: -1px;
-    }
-
-    .lh-gauge__wrapper:first-of-type {
-      contain: none;
+      left: 0px;
+      right: 0px;
     }
   </style>
   <div class="lh-scores-wrapper">
@@ -282,7 +234,7 @@ limitations under the License.
     }
     .lh-tools__button.lh-active + .lh-tools__dropdown {
       opacity: 1;
-      clip: rect(-1px, 194px, 242px, -3px);
+      clip: rect(-1px, 194px, 270px, -3px);
       visibility: visible;
     }
     .lh-tools__dropdown {
@@ -341,17 +293,30 @@ limitations under the License.
     }
     .lh-tool-locale__button.lh-active + .lh-tools-locale__selector-wrapper {
       opacity: 1;
-      clip: rect(-1px, 194px, 242px, -3px);
+      clip: rect(-1px, 255px, 242px, -3px);
       visibility: visible;
       margin: 0 4px;
     }
 
+    /**
+    * This media query is a temporary fallback for browsers that do not support `@container query`.
+    * TODO: remove this media query when `@container query` is fully supported by browsers
+    * See https://github.com/GoogleChrome/lighthouse/pull/16332
+    */
     @media screen and (max-width: 964px) {
       .lh-tools__dropdown {
         right: 0;
         left: initial;
       }
     }
+
+    @container lh-container (max-width: 964px) {
+      .lh-tools__dropdown {
+        right: 0;
+        left: initial;
+      }
+    }
+
     @media print {
       .lh-topbar {
         position: static;
@@ -399,6 +364,8 @@ limitations under the License.
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--download" data-i18n="dropdownSaveJSON" data-action="save-json"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--open" data-i18n="dropdownViewer" data-action="open-viewer"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--open" data-i18n="dropdownSaveGist" data-action="save-gist"></a>
+        <!-- Only enabled if Options.onViewTrace is set and we are on simulated throttling. -->
+        <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--open lh-hidden" data-i18n="dropdownViewUnthrottledTrace" data-action="view-unthrottled-trace"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--dark" data-i18n="dropdownDarkTheme" data-action="toggle-dark"></a>
       </div>
     </div>
@@ -526,6 +493,28 @@ limitations under the License.
   </a>
 </template>
 
+<!-- Lighthouse score gauge - explodey version -->
+<template id="explodeyGauge">
+  <div class="lh-exp-gauge-component">
+    <div class="lh-exp-gauge__wrapper" target="_blank">
+      <div class="lh-exp-gauge__svg-wrapper">
+        <svg class="lh-exp-gauge">
+          <g class="lh-exp-gauge__inner">
+            <circle class="lh-exp-gauge__bg" />
+            <circle class="lh-exp-gauge__base lh-exp-gauge--faded" />
+            <circle class="lh-exp-gauge__arc" />
+            <text class="lh-exp-gauge__percentage"></text>
+          </g>
+          <g class="lh-exp-gauge__outer">
+            <circle class="lh-cover" />
+          </g>
+          <text class="lh-exp-gauge__label" text-anchor="middle" x="0" y="60"></text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</template>
+
 <!-- Lighthouse category fraction -->
 <template id="fraction">
   <a class="lh-fraction__wrapper">
@@ -535,101 +524,6 @@ limitations under the License.
       </div>
     </div>
     <div class="lh-fraction__label"></div>
-  </a>
-</template>
-
-
-<!-- Lighthouse PWA badge gauge -->
-<template id="gaugePwa">
-  <style>
-    .lh-gauge--pwa .lh-gauge--pwa__component {
-      display: none;
-    }
-    .lh-gauge--pwa__wrapper:not(.lh-badged--all) .lh-gauge--pwa__logo > path {
-      /* Gray logo unless everything is passing. */
-      fill: #B0B0B0;
-    }
-
-    .lh-gauge--pwa__disc {
-      fill: var(--color-gray-200);
-    }
-
-    .lh-gauge--pwa__logo--primary-color {
-      fill: #304FFE;
-    }
-
-    .lh-gauge--pwa__logo--secondary-color {
-      fill: #3D3D3D;
-    }
-    .lh-dark .lh-gauge--pwa__logo--secondary-color {
-      fill: #D8B6B6;
-    }
-
-    /* No passing groups. */
-    .lh-gauge--pwa__wrapper:not([class*='lh-badged--']) .lh-gauge--pwa__na-line {
-      display: inline;
-    }
-    /* Just optimized. Same n/a line as no passing groups. */
-    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized:not(.lh-badged--pwa-installable) .lh-gauge--pwa__na-line {
-      display: inline;
-    }
-
-    /* Just installable. */
-    .lh-gauge--pwa__wrapper.lh-badged--pwa-installable .lh-gauge--pwa__installable-badge {
-      display: inline;
-    }
-
-    /* All passing groups. */
-    .lh-gauge--pwa__wrapper.lh-badged--all .lh-gauge--pwa__check-circle {
-      display: inline;
-    }
-  </style>
-
-  <a class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
-    <svg viewBox="0 0 60 60" class="lh-gauge lh-gauge--pwa">
-      <defs>
-        <linearGradient id="lh-gauge--pwa__check-circle__gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-          <stop stop-color="#00C852" offset="0%"></stop>
-          <stop stop-color="#009688" offset="100%"></stop>
-        </linearGradient>
-        <linearGradient id="lh-gauge--pwa__installable__shadow-gradient" x1="76.056%" x2="24.111%" y1="82.995%" y2="24.735%">
-          <stop stop-color="#A5D6A7" offset="0%"></stop>
-          <stop stop-color="#80CBC4" offset="100%"></stop>
-        </linearGradient>
-
-        <g id="lh-gauge--pwa__installable-badge">
-          <circle fill="#FFFFFF" cx="10" cy="10" r="10"></circle>
-          <path fill="#009688" d="M10 4.167A5.835 5.835 0 0 0 4.167 10 5.835 5.835 0 0 0 10 15.833 5.835 5.835 0 0 0 15.833 10 5.835 5.835 0 0 0 10 4.167zm2.917 6.416h-2.334v2.334H9.417v-2.334H7.083V9.417h2.334V7.083h1.166v2.334h2.334v1.166z"/>
-        </g>
-      </defs>
-
-      <g stroke="none" fill-rule="nonzero">
-        <!-- Background and PWA logo (color by default) -->
-        <circle class="lh-gauge--pwa__disc" cx="30" cy="30" r="30"></circle>
-        <g class="lh-gauge--pwa__logo">
-          <path class="lh-gauge--pwa__logo--secondary-color" d="M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z"/>
-          <path class="lh-gauge--pwa__logo--primary-color" d="M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z"/>
-          <path class="lh-gauge--pwa__logo--secondary-color" fill-rule="nonzero" d="M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z"/>
-        </g>
-
-        <!-- No badges. -->
-        <rect class="lh-gauge--pwa__component lh-gauge--pwa__na-line" fill="#FFFFFF" x="20" y="32" width="20" height="4" rx="2"></rect>
-
-        <!-- Just installable. -->
-        <g class="lh-gauge--pwa__component lh-gauge--pwa__installable-badge" transform="translate(20, 29)">
-          <path fill="url(#lh-gauge--pwa__installable__shadow-gradient)" d="M33.629 19.487c-4.272 5.453-10.391 9.39-17.415 10.869L3 17.142 17.142 3 33.63 19.487z"/>
-          <use href="#lh-gauge--pwa__installable-badge" />
-        </g>
-
-        <!-- Full PWA. -->
-        <g class="lh-gauge--pwa__component lh-gauge--pwa__check-circle" transform="translate(18, 28)">
-          <circle fill="#FFFFFF" cx="12" cy="12" r="12"></circle>
-          <path fill="url(#lh-gauge--pwa__check-circle__gradient)" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
-        </g>
-      </g>
-    </svg>
-
-    <div class="lh-gauge__label"></div>
   </a>
 </template>
 
@@ -668,6 +562,9 @@ limitations under the License.
         height: 26px;
         line-height: 26px;
         white-space: nowrap;
+      }
+      .lh-crc .lh-crc-node__longest {
+        color: var(--color-average-secondary);
       }
       .lh-crc .lh-crc-node__tree-value {
         margin-left: 10px;

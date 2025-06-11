@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -11,7 +11,7 @@ import jestMock from 'jest-mock';
 import {JSDOM} from 'jsdom';
 import * as preact from 'preact';
 
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 // These modules aren't imported correctly if these directories aren't defined to use ES modules.
 // Similar to this, which was resolved but their fix didn't work for us:
@@ -37,11 +37,13 @@ const rootHooks = {
 
     // Use JSDOM types as necessary.
     global.Blob = window.Blob;
+    global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
+    global.CustomEvent = window.CustomEvent;
 
     // Functions not implemented in JSDOM.
     window.Element.prototype.scrollIntoView = jestMock.fn();
-    global.self.matchMedia = jestMock.fn<any, any>(() => ({
+    global.self.matchMedia = jestMock.fn<any>(() => ({
       addListener: jestMock.fn(),
     }));
 

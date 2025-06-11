@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2022 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
@@ -13,8 +13,7 @@ import {MainThreadTasks} from '../lib/tracehouse/main-thread-tasks.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
-import ExperimentalInteractionToNextPaint from './metrics/experimental-interaction-to-next-paint.js';
-import {LighthouseError} from '../lib/lh-error.js';
+import InteractionToNextPaint from './metrics/interaction-to-next-paint.js';
 
 /** @typedef {import('../computed/metrics/responsiveness.js').EventTimingEvent} EventTimingEvent */
 /** @typedef {import('../lib/tracehouse/main-thread-tasks.js').TaskNode} TaskNode */
@@ -27,11 +26,11 @@ const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did during a key user interaction. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize work during key interaction',
   /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).',
+  description: 'This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/articles/inp).',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before responding to user input. Ideally fits within a ~40 character limit. */
   inputDelay: 'Input delay',
   /** Label for a column in a data table; entries will be information on the time taken by code processing user input that delays a response to the user. Ideally fits within a ~40 character limit. */
-  processingTime: 'Processing time',
+  processingDuration: 'Processing duration',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before presenting a response to user input on screen. Ideally fits within a ~40 character limit. */
   presentationDelay: 'Presentation delay',
   /**
@@ -58,9 +57,10 @@ class WorkDuringInteraction extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['timespan'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'TraceElements'],
+      guidanceLevel: 1,
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'TraceElements'],
     };
   }
 
@@ -115,7 +115,7 @@ class WorkDuringInteraction extends Audit {
     const endTs = startTs + interactionData.duration * 1000;
     return {
       inputDelay: {startTs, endTs: processingStartTs},
-      processingTime: {startTs: processingStartTs, endTs: processingEndTs},
+      processingDuration: {startTs: processingStartTs, endTs: processingEndTs},
       presentationDelay: {startTs: processingEndTs, endTs},
     };
   }
@@ -224,22 +224,23 @@ class WorkDuringInteraction extends Audit {
     const {settings} = context;
     // TODO: responsiveness isn't yet supported by lantern.
     if (settings.throttlingMethod === 'simulate') {
-      return {score: null, notApplicable: true};
+      return {
+        score: null,
+        notApplicable: true,
+        metricSavings: {INP: 0},
+      };
     }
 
-    const trace = artifacts.traces[WorkDuringInteraction.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const metricData = {trace, settings};
     const interactionEvent = await Responsiveness.request(metricData, context);
     // If no interaction, diagnostic audit is n/a.
     if (interactionEvent === null) {
-      return {score: null, notApplicable: true};
-    }
-    // TODO: remove workaround once 103.0.5052.0 is sufficiently released.
-    if (interactionEvent.name === 'FallbackTiming') {
-      throw new LighthouseError(
-        LighthouseError.errors.UNSUPPORTED_OLD_CHROME,
-        {featureName: 'detailed EventTiming trace events'}
-      );
+      return {
+        score: null,
+        notApplicable: true,
+        metricSavings: {INP: 0},
+      };
     }
 
     const auditDetailsItems = [];
@@ -247,7 +248,7 @@ class WorkDuringInteraction extends Audit {
     const traceElementItem = WorkDuringInteraction.getTraceElementTable(artifacts.TraceElements);
     if (traceElementItem) auditDetailsItems.push(traceElementItem);
 
-    const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     // Network records will usually be empty for timespans.
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const processedTrace = await ProcessedTrace.request(trace, context);
@@ -264,12 +265,19 @@ class WorkDuringInteraction extends Audit {
 
     const duration = interactionEvent.args.data.duration;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: duration, interactionType});
+
+    const passed = duration < InteractionToNextPaint.defaultOptions.p10;
+
     return {
-      score: duration < ExperimentalInteractionToNextPaint.defaultOptions.p10 ? 1 : 0,
+      score: passed ? 1 : 0,
+      scoreDisplayMode: passed ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       displayValue,
       details: {
         type: 'list',
         items: auditDetailsItems,
+      },
+      metricSavings: {
+        INP: duration,
       },
     };
   }

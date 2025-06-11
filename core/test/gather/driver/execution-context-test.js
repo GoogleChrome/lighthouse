@@ -1,30 +1,17 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {ExecutionContext} from '../../../gather/driver/execution-context.js';
 import {
-  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   fnAny,
   timers,
 } from '../../test-utils.js';
-
-// This can be removed when FR becomes the default.
-const createMockSendCommandFn =
-  mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
-
-/** @return {LH.Gatherer.FRProtocolSession} */
-function createMockSession() {
-  /** @type {any} */
-  const session = {};
-  session.hasNextProtocolTimeout = fnAny().mockReturnValue(false);
-  session.setNextProtocolTimeout = fnAny();
-  return session;
-}
+import {createMockSession} from '../mock-driver.js';
 
 /** @param {string} s */
 function trimTrailingWhitespace(s) {
@@ -32,8 +19,7 @@ function trimTrailingWhitespace(s) {
 }
 
 describe('ExecutionContext', () => {
-  /** @type {LH.Gatherer.FRProtocolSession} */
-  let sessionMock;
+  let sessionMock = createMockSession();
   /** @type {(executionContext: ExecutionContext, id: number) => Promise<void>} */
   let forceNewContextId;
 
@@ -41,7 +27,7 @@ describe('ExecutionContext', () => {
     sessionMock = createMockSession();
 
     forceNewContextId = async (executionContext, executionContextId) => {
-      executionContext._session.sendCommand = createMockSendCommandFn()
+      sessionMock.sendCommand
         .mockResponse('Page.enable')
         .mockResponse('Runtime.enable')
         .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: '1337'}}})
@@ -53,12 +39,11 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on frame navigations', async () => {
-    const onMock = sessionMock.on = fnAny();
-
     const executionContext = new ExecutionContext(sessionMock);
 
-    const frameListener = onMock.mock.calls.find(call => call[0] === 'Page.frameNavigated');
-    expect(frameListener).toBeDefined();
+    const frameListener = sessionMock.on.mock.calls
+      .find(call => call[0] === 'Page.frameNavigated') ?? [];
+    expect(frameListener[1]).toBeDefined();
 
     await forceNewContextId(executionContext, 42);
     expect(executionContext.getContextId()).toEqual(42);
@@ -67,13 +52,11 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on execution context destroyed', async () => {
-    const onMock = sessionMock.on = fnAny();
-
     const executionContext = new ExecutionContext(sessionMock);
 
-    const executionDestroyed = onMock.mock.calls
-      .find(call => call[0] === 'Runtime.executionContextDestroyed');
-    expect(executionDestroyed).toBeDefined();
+    const executionDestroyed = sessionMock.on.mock.calls
+      .find(call => call[0] === 'Runtime.executionContextDestroyed') ?? [];
+    expect(executionDestroyed[1]).toBeDefined();
 
     await forceNewContextId(executionContext, 42);
     expect(executionContext.getContextId()).toEqual(42);
@@ -90,19 +73,17 @@ describe('.evaluateAsync', () => {
   before(() => timers.useFakeTimers());
   after(() => timers.dispose());
 
-  /** @type {LH.Gatherer.FRProtocolSession} */
-  let sessionMock;
+  let sessionMock = createMockSession();
   /** @type {ExecutionContext} */
   let executionContext;
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = fnAny();
-    executionContext = new ExecutionContext(sessionMock);
+    executionContext = new ExecutionContext(sessionMock.asSession());
   });
 
   it('evaluates an expression', async () => {
-    const sendCommand = (sessionMock.sendCommand = createMockSendCommandFn().mockResponse(
+    const sendCommand = (sessionMock.sendCommand.mockResponse(
       'Runtime.evaluate',
       {result: {value: 2}}
     ));
@@ -115,7 +96,7 @@ describe('.evaluateAsync', () => {
   it('uses a high default timeout', async () => {
     const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = fnAny();
     sessionMock.hasNextProtocolTimeout = fnAny().mockReturnValue(false);
-    sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
+    sessionMock.sendCommand.mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
 
@@ -130,7 +111,7 @@ describe('.evaluateAsync', () => {
     const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = fnAny();
     sessionMock.hasNextProtocolTimeout = fnAny().mockReturnValue(true);
     sessionMock.getNextProtocolTimeout = fnAny().mockReturnValue(expectedTimeout);
-    sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
+    sessionMock.sendCommand.mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
 
@@ -140,39 +121,60 @@ describe('.evaluateAsync', () => {
     await expect(evaluatePromise).rejects.toBeTruthy();
   });
 
+  it('uses the specific timeout given (isolation)', async () => {
+    const expectedTimeout = 5000;
+    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = fnAny();
+    sessionMock.hasNextProtocolTimeout = fnAny().mockReturnValue(true);
+    sessionMock.getNextProtocolTimeout = fnAny().mockReturnValue(expectedTimeout);
+    sessionMock.sendCommand
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: '1337'}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 1});
+
+    const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1', {
+      useIsolation: true,
+    }));
+
+    await flushAllTimersAndMicrotasks();
+    expect(setNextProtocolTimeout).toHaveBeenCalledWith(expectedTimeout);
+    expect(evaluatePromise).toBeDone();
+    await expect(evaluatePromise).rejects.toBeTruthy();
+  });
+
   it('evaluates an expression in isolation', async () => {
-    let sendCommand = (sessionMock.sendCommand = createMockSendCommandFn()
+    sessionMock.sendCommand
       .mockResponse('Page.enable')
       .mockResponse('Runtime.enable')
       .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
-      .mockResponse('Runtime.evaluate', {result: {value: 2}}));
+      .mockResponse('Runtime.evaluate', {result: {value: 2}})
+      .mockResponse('Runtime.evaluate', {result: {value: 2}});
 
     const value = await executionContext.evaluateAsync('1 + 1', {useIsolation: true});
     expect(value).toEqual(2);
 
     // Check that we used the correct frame when creating the isolated context
-    const createWorldArgs = sendCommand.findInvocation('Page.createIsolatedWorld');
-    expect(createWorldArgs).toMatchObject({frameId: '1337'});
+    let createWorldInvocations =
+      sessionMock.sendCommand.findAllInvocations('Page.createIsolatedWorld');
+    expect(createWorldInvocations[0]).toMatchObject({frameId: '1337'});
 
     // Check that we used the isolated context when evaluating
-    const evaluateArgs = sendCommand.findInvocation('Runtime.evaluate');
+    const evaluateArgs = sessionMock.sendCommand.findInvocation('Runtime.evaluate');
     expect(evaluateArgs).toMatchObject({contextId: 1});
 
     // Make sure we cached the isolated context from last time
-    sendCommand = sessionMock.sendCommand = createMockSendCommandFn().mockResponse(
-      'Runtime.evaluate',
-      {result: {value: 2}}
-    );
+    createWorldInvocations = sessionMock.sendCommand.findAllInvocations('Page.createIsolatedWorld');
+    expect(createWorldInvocations).toHaveLength(1);
+
     await executionContext.evaluateAsync('1 + 1', {useIsolation: true});
-    expect(sessionMock.sendCommand).not.toHaveBeenCalledWith(
-      'Page.createIsolatedWorld',
-      expect.anything()
-    );
+
+    createWorldInvocations = sessionMock.sendCommand.findAllInvocations('Page.createIsolatedWorld');
+    expect(createWorldInvocations).toHaveLength(1);
   });
 
   it('recovers from isolation failures', async () => {
-    sessionMock.sendCommand = createMockSendCommandFn()
+    sessionMock.sendCommand
       .mockResponse('Page.enable')
       .mockResponse('Runtime.enable')
       .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: '1337'}}})
@@ -205,7 +207,7 @@ describe('.evaluateAsync', () => {
           '    at _lighthouse-eval.js:83:8',
       },
     };
-    sessionMock.sendCommand = createMockSendCommandFn()
+    sessionMock.sendCommand
       .mockResponse('Page.enable')
       .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
@@ -221,19 +223,17 @@ describe('.evaluateAsync', () => {
 });
 
 describe('.evaluate', () => {
-  /** @type {LH.Gatherer.FRProtocolSession} */
-  let sessionMock;
+  let sessionMock = createMockSession();
   /** @type {ExecutionContext} */
   let executionContext;
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = fnAny();
-    executionContext = new ExecutionContext(sessionMock);
+    executionContext = new ExecutionContext(sessionMock.asSession());
   });
 
   it('transforms parameters into an expression given to Runtime.evaluate', async () => {
-    const mockFn = sessionMock.sendCommand = createMockSendCommandFn()
+    const mockFn = sessionMock.sendCommand
       .mockResponse('Runtime.evaluate', {result: {value: 1}});
 
     /** @param {number} value */
@@ -252,6 +252,7 @@ const performance = globalThis.__nativePerformance || globalThis.performance;
 const fetch = globalThis.__nativeFetch || globalThis.fetch;
         globalThis.__lighthouseExecutionContextUniqueIdentifier =
           undefined;
+
         return new Promise(function (resolve) {
           return Promise.resolve()
             .then(_ => (() => {
@@ -360,7 +361,8 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
 
     const code = mockFn.mock.calls[0][0];
     expect(trimTrailingWhitespace(code)).toEqual(`(() => {
-      function abs(val) {
+
+function abs(val) {
       return Math.abs(val);
     }
 function square(val) {

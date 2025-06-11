@@ -8,20 +8,9 @@ import {Audit} from './audit.js';
 import {ResourceSummary as ComputedResourceSummary} from '../computed/resource-summary.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
-const UIStrings = {
-  /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
-  title: 'Keep request counts low and transfer sizes small',
-  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file. ' +
-    '[Learn more about performance budgets](https://web.dev/use-lighthouse-for-performance-budgets/).',
-  /** [ICU Syntax] Label for an audit identifying the number of requests and kibibytes used to load the page. */
-  displayValue: `{requestCount, plural, ` +
-    `=1 {1 request • {byteCount, number, bytes} KiB} ` +
-    `other {# requests • {byteCount, number, bytes} KiB}}`,
-};
+const str_ = i18n.createIcuMessageFn(import.meta.url);
 
-const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+/** @typedef {import('../computed/resource-summary.js').ResourceType} ResourceType */
 
 class ResourceSummary extends Audit {
   /**
@@ -30,10 +19,10 @@ class ResourceSummary extends Audit {
   static get meta() {
     return {
       id: 'resource-summary',
-      title: str_(UIStrings.title),
-      description: str_(UIStrings.description),
+      title: 'Resources Summary',
+      description: 'Aggregates all network requests and groups them by type',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'URL'],
     };
   }
 
@@ -43,9 +32,9 @@ class ResourceSummary extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const summary = await ComputedResourceSummary
-      .request({devtoolsLog, URL: artifacts.URL, budgets: context.settings.budgets}, context);
+      .request({devtoolsLog, URL: artifacts.URL}, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -54,8 +43,7 @@ class ResourceSummary extends Audit {
       {key: 'transferSize', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
-
-    /** @type {Record<LH.Budget.ResourceType, LH.IcuMessage>} */
+    /** @type {Record<ResourceType, LH.IcuMessage>} */
     const strMappings = {
       'total': str_(i18n.UIStrings.totalResourceType),
       'document': str_(i18n.UIStrings.documentResourceType),
@@ -68,7 +56,7 @@ class ResourceSummary extends Audit {
       'third-party': str_(i18n.UIStrings.thirdPartyResourceType),
     };
 
-    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
+    const types = /** @type {Array<ResourceType>} */ (Object.keys(summary));
     const rows = types.map(type => {
       return {
         // ResourceType is included as an "id" for ease of use.
@@ -91,14 +79,9 @@ class ResourceSummary extends Audit {
 
     return {
       details: tableDetails,
-      score: 1,
-      displayValue: str_(UIStrings.displayValue, {
-        requestCount: summary.total.count,
-        byteCount: summary.total.transferSize,
-      }),
+      score: null,
     };
   }
 }
 
 export default ResourceSummary;
-export {UIStrings};

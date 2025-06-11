@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -75,8 +75,8 @@ describe('OffscreenImages audit', () => {
       ImageElements: [
         generateImage({size: generateSize(100, 100), x: 0, y: 0}),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
@@ -116,8 +116,8 @@ describe('OffscreenImages audit', () => {
           src: urlC,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     const auditResult = await UnusedImages.audit_(artifacts, [recordA, recordB, recordC], context);
@@ -197,8 +197,8 @@ describe('OffscreenImages audit', () => {
           src: url('G'),
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
@@ -241,8 +241,8 @@ describe('OffscreenImages audit', () => {
           src: url('B'),
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
@@ -280,8 +280,8 @@ describe('OffscreenImages audit', () => {
           src: url('B'),
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
@@ -298,8 +298,8 @@ describe('OffscreenImages audit', () => {
       ImageElements: [
         generateImage({size: generateSize(0, 0), x: 0, y: 0, networkRecord}),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
@@ -348,8 +348,8 @@ describe('OffscreenImages audit', () => {
           src: urlB,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
@@ -367,8 +367,8 @@ describe('OffscreenImages audit', () => {
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({topLevelTasks}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
@@ -385,8 +385,8 @@ describe('OffscreenImages audit', () => {
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
       ],
-      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({traceEnd: 2000}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
@@ -403,8 +403,8 @@ describe('OffscreenImages audit', () => {
         // Offscreen to the bottom.
         generateImage({size: generateSize(100, 100), x: 0, y: 5000, networkRecord}),
       ],
-      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({traceEnd: 2000}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
@@ -433,7 +433,8 @@ describe('OffscreenImages audit', () => {
       priority: 'High',
       timing: {receiveHeadersEnd: 2.5},
     };
-    const devtoolsLog = networkRecordsToDevtoolsLog([recordA, recordB]);
+    const networkRecords = [recordA, recordB];
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const topLevelTasks = [
       {ts: 1975, duration: 50},
@@ -457,13 +458,18 @@ describe('OffscreenImages audit', () => {
           src: recordB.url,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: createTestTrace({
+        largestContentfulPaint: 15,
+        topLevelTasks,
+        networkRecords,
+      }),
+      DevtoolsLog: devtoolsLog,
       URL: {
         requestedUrl: recordA.url,
         mainDocumentUrl: recordA.url,
         finalDisplayedUrl: recordA.url,
       },
+      SourceMaps: [],
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -494,7 +500,8 @@ describe('OffscreenImages audit', () => {
       priority: 'High',
       timing: {receiveHeadersEnd: 1.5},
     };
-    const devtoolsLog = networkRecordsToDevtoolsLog([recordA, recordB]);
+    const networkRecords = [recordA, recordB];
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     // Enough tasks to spread out graph.
     const topLevelTasks = [
@@ -521,13 +528,18 @@ describe('OffscreenImages audit', () => {
           src: recordB.url,
         }),
       ],
-      traces: {defaultPass: createTestTrace({topLevelTasks})},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: createTestTrace({
+        largestContentfulPaint: 15,
+        topLevelTasks,
+        networkRecords,
+      }),
+      DevtoolsLog: devtoolsLog,
       URL: {
         requestedUrl: recordA.url,
         mainDocumentUrl: recordA.url,
         finalDisplayedUrl: recordA.url,
       },
+      SourceMaps: [],
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -564,13 +576,16 @@ describe('OffscreenImages audit', () => {
           src: 'b',
         }),
       ],
-      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({traceEnd: 2000, networkRecords}),
+      DevtoolsLog: null,
+      URL: null,
+      SourceMaps: [],
     };
 
     try {
       await UnusedImages.audit_(artifacts, networkRecords, context);
     } catch (err) {
+      console.log(err.message);
       assert.ok(err.message.includes('Did not provide necessary metric computation data'));
       return;
     }
@@ -587,6 +602,7 @@ describe('OffscreenImages audit', () => {
       priority: 'High',
       timing: {receiveHeadersEnd: 1.25},
     };
+    const networkRecords = [networkRecord];
 
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
@@ -598,8 +614,8 @@ describe('OffscreenImages audit', () => {
           networkRecord,
         }),
       ],
-      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
-      devtoolsLogs: {},
+      Trace: createTestTrace({traceEnd: 2000, networkRecords}),
+      DevtoolsLog: [],
     };
 
     return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {

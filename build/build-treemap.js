@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {createRequire} from 'module';
 
 import {GhPagesApp} from './gh-pages-app.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT} from '../shared/root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
 import {locales} from '../shared/localization/locales.js';
 import {UIStrings} from '../treemap/app/src/util.js';
@@ -48,7 +48,6 @@ async function main() {
     appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
-      {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
       {path: 'styles/*'},
     ],
     javascripts: [
@@ -56,12 +55,8 @@ async function main() {
       {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
       {path: require.resolve('event-target-shim/umd')},
       {path: require.resolve('webtreemap-cdt')},
-      {path: require.resolve('tabulator-tables/dist/js/tabulator_core.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/sort.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
       {path: require.resolve('pako/dist/pako_inflate.js')},
-      {path: 'src/main.js', rollup: true},
+      {path: 'src/main.js', esbuild: true},
     ],
     assets: [
       {path: 'images/**/*', destDir: 'images'},

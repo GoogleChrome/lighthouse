@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -24,7 +24,7 @@ import {expect} from 'expect';
 import * as td from 'testdouble';
 import jestSnapshot from 'jest-snapshot';
 
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 import './expect-setup.js';
 import {timers} from './fake-timers.js';
 
@@ -35,7 +35,7 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = jestSnapshot;
 process.env.TZ = 'UTC';
 
 // Expected to be set by lh-env.js
-process.env.NODE_TEST = 'test';
+process.env.NODE_ENV = 'test';
 
 global.expect = expect;
 
@@ -63,7 +63,8 @@ function getSnapshotState(testFile) {
   const snapshotDir = path.join(path.dirname(testFile), '__snapshots__');
   const snapshotFile = path.join(snapshotDir, path.basename(testFile) + '.snap');
   snapshotState = new SnapshotState(snapshotFile, {
-    updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'new',
+    rootDir: snapshotDir,
+    updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'none',
     prettierPath: '',
     snapshotFormat: {},
   });
@@ -98,6 +99,7 @@ expect.extend({
 
     const title = makeTestTitle(test);
     const snapshotState = getSnapshotState(test.file);
+
     const context = {snapshotState, currentTestName: title};
     // @ts-expect-error - this is enough for snapshots to work.
     const matcher = toMatchSnapshot.bind(context);
@@ -119,7 +121,6 @@ expect.extend({
     const context = {snapshotState, currentTestName: title};
     // @ts-expect-error - this is enough for snapshots to work.
     const matcher = toMatchInlineSnapshot.bind(context);
-    // @ts-expect-error - not sure why these types are so wrong
     const result = matcher(actual, expected);
     // @ts-expect-error - not sure why these types are so wrong
     if (!result.pass) snapshotTestFailed = true;
@@ -146,6 +147,17 @@ const rootHooks = {
 
     // Needed so `expect` extension method can access information about the current test.
     mochaCurrentTest = this.currentTest;
+
+    // If a test is retried the snapshot indices will start where the previous attempt left off.
+    // This can lead to several problems including the test passing where it should be failing.
+    //
+    // Jest itself clears the snapshot state on retries although they seem to execute retries after
+    // all tests finish and not immediately after the initial test failure.
+    // https://github.com/jestjs/jest/pull/8629
+    if (this.currentTest.retries() && this.currentTest.file) {
+      const snapshotState = getSnapshotState(this.currentTest.file);
+      snapshotState.clear();
+    }
   },
   /** @this {Mocha.Context} */
   afterEach() {
@@ -158,7 +170,7 @@ const rootHooks = {
       failedTests.push({
         file: path.relative(LH_ROOT, file),
         title,
-        error: this.currentTest.err?.toString(),
+        error: this.currentTest.err?.stack ?? this.currentTest.err?.toString(),
       });
     }
   },

@@ -1,20 +1,33 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import EventEmitter from 'events';
+
+import log from 'lighthouse-logger';
 
 import {LighthouseError} from '../lib/lh-error.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
+const PPTR_BUFFER = 50;
+
+/**
+ * Puppeteer timeouts must fit into an int32 and the maximum timeout for `setTimeout` is a *signed*
+ * int32. However, this also needs to account for the puppeteer buffer we add to the timeout later.
+ *
+ * So this is defined as the max *signed* int32 minus PPTR_BUFFER.
+ *
+ * In human terms, this timeout is ~25 days which is as good as infinity for all practical purposes.
+ */
+const MAX_TIMEOUT = 2147483647 - PPTR_BUFFER;
 
 /** @typedef {LH.Protocol.StrictEventEmitterClass<LH.CrdpEvents>} CrdpEventMessageEmitter */
 const CrdpEventEmitter = /** @type {CrdpEventMessageEmitter} */ (EventEmitter);
 
-/** @implements {LH.Gatherer.FRProtocolSession} */
+/** @implements {LH.Gatherer.ProtocolSession} */
 class ProtocolSession extends CrdpEventEmitter {
   /**
    * @param {LH.Puppeteer.CDPSession} cdpSession
@@ -29,7 +42,24 @@ class ProtocolSession extends CrdpEventEmitter {
     this._nextProtocolTimeout = undefined;
 
     this._handleProtocolEvent = this._handleProtocolEvent.bind(this);
+    // @ts-expect-error Puppeteer expects the handler params to be type `unknown`
     this._cdpSession.on('*', this._handleProtocolEvent);
+
+    // If the target crashes, we can't continue gathering.
+    // FWIW, if the target unexpectedly detaches (eg the user closed the tab), pptr will
+    // catch that and reject in this._cdpSession.send, which is caught by us.
+    /** @param {Error} _ */
+    let rej = _ => {}; // Poor man's Promise.withResolvers()
+    this._targetCrashedPromise = /** @type {Promise<never>} */ (
+      new Promise((_, theRej) => rej = theRej));
+    this.on('Inspector.targetCrashed', async () => {
+      log.error('TargetManager', 'Inspector.targetCrashed');
+      // Manually detach so no more CDP traffic is attempted.
+      // Don't await, else our rejection will be a 'Target closed' protocol error on cross-talk
+      // CDP calls.
+      void this.dispose();
+      rej(new LighthouseError(LighthouseError.errors.TARGET_CRASHED));
+    });
   }
 
   id() {
@@ -69,6 +99,7 @@ class ProtocolSession extends CrdpEventEmitter {
    * @param {number} ms
    */
   setNextProtocolTimeout(ms) {
+    if (ms > MAX_TIMEOUT) ms = MAX_TIMEOUT;
     this._nextProtocolTimeout = ms;
   }
 
@@ -82,19 +113,25 @@ class ProtocolSession extends CrdpEventEmitter {
     const timeoutMs = this.getNextProtocolTimeout();
     this._nextProtocolTimeout = undefined;
 
-    /** @type {NodeJS.Timer|undefined} */
+    /** @type {NodeJS.Timeout|undefined} */
     let timeout;
     const timeoutPromise = new Promise((resolve, reject) => {
-      if (timeoutMs === Infinity) return;
-
+      // Unexpected setTimeout invocation to preserve the error stack. https://github.com/GoogleChrome/lighthouse/issues/13332
       // eslint-disable-next-line max-len
       timeout = setTimeout(reject, timeoutMs, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });
 
-    const resultPromise = this._cdpSession.send(method, ...params);
-    const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
+    const resultPromise = this._cdpSession.send(method, ...params, {
+      // Add 50ms to the Puppeteer timeout to ensure the Lighthouse timeout finishes first.
+      timeout: timeoutMs + PPTR_BUFFER,
+    }).catch((error) => {
+      log.formatProtocol('method <= browser ERR', {method}, 'error');
+      throw LighthouseError.fromProtocolMessage(method, error);
+    });
+    const resultWithTimeoutPromise =
+      Promise.race([resultPromise, timeoutPromise, this._targetCrashedPromise]);
 
     return resultWithTimeoutPromise.finally(() => {
       if (timeout) clearTimeout(timeout);
@@ -102,12 +139,29 @@ class ProtocolSession extends CrdpEventEmitter {
   }
 
   /**
+   * Send and if there's an error response, do not reject.
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} params
+   * @return {Promise<void>}
+   */
+  sendCommandAndIgnore(method, ...params) {
+    return this.sendCommand(method, ...params)
+      .catch(e => log.verbose('session', method, e.message)).then(_ => void 0);
+  }
+
+  /**
    * Disposes of a session so that it can no longer talk to Chrome.
    * @return {Promise<void>}
    */
   async dispose() {
+    // @ts-expect-error Puppeteer expects the handler params to be type `unknown`
     this._cdpSession.off('*', this._handleProtocolEvent);
-    await this._cdpSession.detach();
+    await this._cdpSession.detach().catch(e => log.verbose('session', 'detach failed', e.message));
+  }
+
+  onCrashPromise() {
+    return this._targetCrashedPromise;
   }
 }
 

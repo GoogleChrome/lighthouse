@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable no-console */
@@ -15,7 +15,7 @@ import {swapFlowLocale} from '../shared/localization/swap-flow-locale.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {defaultSettings} from '../core/config/constants.js';
 import lighthouse from '../core/index.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
 
 /** @type {LH.Result} */
@@ -23,7 +23,7 @@ const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
-  `${LH_ROOT}/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
+  `${LH_ROOT}/core/test/fixtures/user-flows/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');
@@ -119,7 +119,7 @@ function addPluginCategory(sampleLhr) {
 }
 
 /**
- * Drops the LHR to only one, solo category (performance), and removes budgets.
+ * Drops the LHR to only one, solo category (performance).
  * @param {LH.Result} sampleLhr
  */
 function tweakLhrForPsi(sampleLhr) {
@@ -128,11 +128,6 @@ function tweakLhrForPsi(sampleLhr) {
   clone.categories = {
     'performance': clone.categories.performance,
   };
-  // no budgets in PSI
-  delete clone.audits['performance-budget'];
-  clone.categories.performance.auditRefs = clone.categories.performance.auditRefs.filter(audit => {
-    return !audit.id.endsWith('-budget');
-  });
   return clone;
 }
 
@@ -142,7 +137,7 @@ function tweakLhrForPsi(sampleLhr) {
  * @return {Promise<LH.Result>}
  */
 async function generateErrorLHR() {
-  /** @type {LH.BaseArtifacts} */
+  /** @type {Partial<LH.Artifacts>} */
   const artifacts = {
     fetchTime: '2019-06-26T23:56:58.381Z',
     LighthouseRunWarnings: [
@@ -161,15 +156,15 @@ async function generateErrorLHR() {
     GatherContext: {gatherMode: 'navigation'},
     Timing: [],
     PageLoadError: null,
-    devtoolsLogs: {},
-    traces: {},
+    DevtoolsLog: [],
+    Trace: {traceEvents: []},
   };
 
-  // Save artifacts to disk then run `lighthouse -G` with them.
+  // Save artifacts to disk then run `lighthouse -A` with them.
   const TMP = `${DIST}/.tmp/`;
   fs.mkdirSync(TMP, {recursive: true});
   fs.writeFileSync(`${TMP}/artifacts.json`, JSON.stringify(artifacts), 'utf-8');
-  const errorRunnerResult = await lighthouse(artifacts.URL.requestedUrl, {auditMode: TMP});
+  const errorRunnerResult = await lighthouse(undefined, {auditMode: TMP});
 
   if (!errorRunnerResult) throw new Error('Failed to run lighthouse on empty artifacts');
   const errorLhr = errorRunnerResult.lhr;

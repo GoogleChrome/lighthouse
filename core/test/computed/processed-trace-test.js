@@ -1,21 +1,21 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {ProcessedTrace} from '../../computed/processed-trace.js';
 import {readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaTrace = readJson('../fixtures/artifacts/progressive-app/trace.json', import.meta);
 
 describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {
     const context = {computedCache: new Map()};
     const processedTrace = await ProcessedTrace.request(pwaTrace, context);
 
-    expect(processedTrace.processEvents.length).toEqual(12865);
-    expect(processedTrace.mainThreadEvents.length).toEqual(7629);
+    expect(processedTrace.processEvents.length).toEqual(118854);
+    expect(processedTrace.mainThreadEvents.length).toEqual(55691);
 
     delete processedTrace.processEvents;
     delete processedTrace.mainThreadEvents;
@@ -25,29 +25,32 @@ describe('ProcessedTrace', () => {
 
     expect(processedTrace).toMatchObject({
       mainFrameInfo: {
-        frameId: '0x25a638821e30',
-        startingPid: 44277,
+        frameId: '4445FED303BABCB702B8DAAA715B1202',
+        startingPid: 87728,
       },
       timeOriginEvt: {
         args: {
-          frame: '0x25a638821e30',
+          frame: '4445FED303BABCB702B8DAAA715B1202',
         },
         cat: 'blink.user_timing',
         name: 'navigationStart',
         ph: 'R',
-        pid: 44277,
-        tid: 775,
-        ts: 225414172015,
-        tts: 455539,
+        pid: 87730,
+        tid: 259,
+        ts: 376405981564,
+        tts: 36028,
       },
-      frames: [],
+      frames: [{
+        id: '4445FED303BABCB702B8DAAA715B1202',
+        url: 'https://squoosh.app/',
+      }],
       timestamps: {
-        timeOrigin: 225414172015,
-        traceEnd: 225426711887,
+        timeOrigin: 376405981564,
+        traceEnd: 376417286238,
       },
       timings: {
         timeOrigin: 0,
-        traceEnd: 12539.872,
+        traceEnd: 11304.674,
       },
     });
   });

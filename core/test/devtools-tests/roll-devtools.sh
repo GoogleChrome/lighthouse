@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 ##
-# @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-# Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+# @license
+# Copyright 2020 Google LLC
+# SPDX-License-Identifier: Apache-2.0
 ##
 
 set -euo pipefail
@@ -11,6 +11,7 @@ set -euo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../../.."
 BUILD_FOLDER="${BUILD_FOLDER:-LighthouseIntegration}"
+CI="${CI:-}"
 
 roll_devtools() {
   # Roll devtools. Besides giving DevTools the latest lighthouse source files,
@@ -29,10 +30,10 @@ roll_devtools
 # `yarn devtools` deleted.
 gclient sync --delete_unversioned_trees --reset
 
-if git config user.email | grep -q '@google.com'; then
-  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false use_goma=true'
+if [[ "$CI" ]]; then
+  gn gen "out/$BUILD_FOLDER" --args='is_debug=false'
 else
-  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false'
+  gn gen "out/$BUILD_FOLDER" --args='is_debug=true devtools_skip_typecheck=true'
 fi
 
 # Build devtools. By default, this creates `out/LighthouseIntegration/gen/front_end`.

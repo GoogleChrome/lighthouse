@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -13,6 +13,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
+import {TBTImpactTasks} from '../../computed/tbt-impact-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -52,8 +53,10 @@ class DOMSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['DOMStats'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
+      guidanceLevel: 1,
+      requiredArtifacts: ['DOMStats', 'URL', 'GatherContext'],
+      __internalOptionalArtifacts: ['Trace', 'DevtoolsLog', 'SourceMaps'],
     };
   }
 
@@ -69,13 +72,53 @@ class DOMSize extends Audit {
     };
   }
 
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<number|undefined>}
+   */
+  static async computeTbtImpact(artifacts, context) {
+    let tbtImpact = 0;
+
+    // We still want to surface this audit in snapshot mode, but since we don't compute TBT
+    // the impact should always be undefined.
+    const {GatherContext, DevtoolsLog, Trace} = artifacts;
+    if (GatherContext.gatherMode !== 'navigation') {
+      return undefined;
+    }
+
+    // Since the artifacts are optional, it's still possible for them to be missing in navigation mode.
+    // Navigation mode does compute TBT so we should surface a numerical savings of 0.
+    if (!DevtoolsLog || !Trace) {
+      return 0;
+    }
+
+    const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
+
+    try {
+      // The TBT impact of style/layout tasks is correlated to the DOM size.
+      // Even in situations where the page forces a style recalc, the DOM size is partially to blame
+      // for any time spent blocking the main thread.
+      //
+      // `tbtImpact` should be exactly 0 for small DOMs since `selfTbtImpact` accounts for the blocking
+      // time and not the main thread time.
+      const tbtImpactTasks = await TBTImpactTasks.request(metricComputationData, context);
+      for (const task of tbtImpactTasks) {
+        if (task.group.id !== 'styleLayout') continue;
+        tbtImpact += task.selfTbtImpact;
+      }
+    } catch {}
+
+    return Math.round(tbtImpact);
+  }
+
 
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {LH.Audit.Product}
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const stats = artifacts.DOMStats;
 
     const score = Audit.computeLogNormalScore(
@@ -120,12 +163,17 @@ class DOMSize extends Audit {
       },
     ];
 
+    const tbtImpact = await this.computeTbtImpact(artifacts, context);
+
     return {
       score,
       numericValue: stats.totalBodyElements,
       numericUnit: 'element',
       displayValue: str_(UIStrings.displayValue, {itemCount: stats.totalBodyElements}),
       details: Audit.makeTableDetails(headings, items),
+      metricSavings: {
+        TBT: tbtImpact,
+      },
     };
   }
 }

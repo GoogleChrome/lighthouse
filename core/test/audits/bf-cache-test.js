@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2022 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import BFCache from '../../audits/bf-cache.js';
@@ -10,6 +10,7 @@ describe('BFCache audit', () => {
   it('fails if there are actionable failure reasons', async () => {
     /** @type {any} */
     const artifacts = {
+      HostProduct: 'Chrome/109.0.5000.0',
       BFCacheFailures: [{
         notRestoredReasonsTree: {
           PageSupportNeeded: {
@@ -62,6 +63,7 @@ describe('BFCache audit', () => {
   it('fails if there are only non-actionable failures', async () => {
     /** @type {any} */
     const artifacts = {
+      HostProduct: 'Chrome/109.0.5000.0',
       BFCacheFailures: [{
         notRestoredReasonsTree: {
           PageSupportNeeded: {},
@@ -84,9 +86,39 @@ describe('BFCache audit', () => {
     expect(result.details.items).toHaveLength(2);
   });
 
+  it('is n/a if using old headless', async () => {
+    /** @type {any} */
+    const artifacts = {
+      HostProduct: 'HeadlessChrome/109.0.5000.0',
+      BFCacheFailures: [{
+        notRestoredReasonsTree: {
+          PageSupportNeeded: {},
+          Circumstantial: {
+            BackForwardCacheDisabled: ['https://example.com'],
+          },
+          SupportPending: {
+            CacheControlNoStore: ['https://frame.com'],
+          },
+        },
+      }],
+    };
+
+    const result = await BFCache.audit(artifacts);
+
+    expect(result.displayValue).toBeUndefined();
+    expect(result.score).toEqual(null);
+    expect(result.details).toBeUndefined();
+
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings?.[0]).toBeDisplayString(
+      /Back\/forward cache cannot be tested in old Headless/
+    );
+  });
+
   it('passes if there are no failures', async () => {
     /** @type {any} */
     const artifacts = {
+      HostProduct: 'Chrome/109.0.5000.0',
       BFCacheFailures: [{
         notRestoredReasonsTree: {
           PageSupportNeeded: {},

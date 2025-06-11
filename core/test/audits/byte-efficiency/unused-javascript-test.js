@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -30,7 +30,9 @@ function getScriptId(url) {
  * @param {LH.Crdp.Network.ResourceType} resourceType
  */
 function generateRecord(url, transferSize, resourceType) {
-  return {url, transferSize, resourceType};
+  return {url, transferSize, resourceType, responseHeaders: [
+    {name: 'Content-Encoding', value: 'gzip'},
+  ]};
 }
 
 /**
@@ -38,7 +40,7 @@ function generateRecord(url, transferSize, resourceType) {
  * @param {Array<[number, number, number]>} ranges
  * @return {Crdp.Profiler.ScriptCoverage}
  */
-function generateUsage(url, ranges) {
+function generateCoverage(url, ranges) {
   const functions = ranges.map(range => {
     return {
       ranges: [
@@ -54,7 +56,19 @@ function generateUsage(url, ranges) {
   return {scriptId: getScriptId(url), url, functions};
 }
 
-function makeJsUsage(...usages) {
+/**
+ * @param {string} url
+ * @param {Array<[number, number, number]>} ranges
+ * @return {{script: LH.Artifacts.Script, coverage: Crdp.Profiler.ScriptCoverage}}
+ */
+function generateScriptWithCoverage(url, ranges) {
+  const length = Math.max(...ranges.map(r => r[1]));
+  const script = createScript({url, scriptId: getScriptId(url), length});
+  const coverage = generateCoverage(url, ranges);
+  return {script, coverage};
+}
+
+function makeJsUsage(usages) {
   return usages.reduce((acc, cur) => {
     acc[cur.scriptId] = cur;
     return acc;
@@ -63,11 +77,14 @@ function makeJsUsage(...usages) {
 
 describe('UnusedJavaScript audit', () => {
   const domain = 'https://www.google.com';
-  const scriptUnknown = generateUsage(domain, [[0, 3000, false]]);
-  const scriptA = generateUsage(`${domain}/scriptA.js`, [[0, 100, true]]);
-  const scriptB = generateUsage(`${domain}/scriptB.js`, [[0, 200, true], [0, 50, false]]);
-  const inlineA = generateUsage(`${domain}/inline.html`, [[0, 5000, true], [5000, 6000, false]]);
-  const inlineB = generateUsage(`${domain}/inline.html`, [[0, 15000, true], [0, 5000, false]]);
+  const scriptUnknown = {coverage: generateCoverage(domain, [[0, 3000, false]])};
+  /* eslint-disable max-len */
+  const scriptA = generateScriptWithCoverage(`${domain}/scriptA.js`, [[0, 100, true]]);
+  const scriptB = generateScriptWithCoverage(`${domain}/scriptB.js`, [[0, 200, true], [0, 50, false]]);
+  const inlineA = generateScriptWithCoverage(`${domain}/inline.html`, [[0, 5000, true], [5000, 6000, false]]);
+  const inlineB = generateScriptWithCoverage(`${domain}/inline.html`, [[0, 15000, true], [0, 5000, false]]);
+  /* eslint-enable max-len */
+  const all = [scriptA, scriptB, scriptUnknown, inlineA, inlineB];
   const recordA = generateRecord(`${domain}/scriptA.js`, 35000, 'Script');
   const recordB = generateRecord(`${domain}/scriptB.js`, 50000, 'Script');
   const recordInline = generateRecord(`${domain}/inline.html`, 1000000, 'Document');
@@ -82,10 +99,9 @@ describe('UnusedJavaScript audit', () => {
     };
     const networkRecords = [recordA, recordB, recordInline];
     const artifacts = {
-      Scripts: [scriptA, scriptB, scriptUnknown, inlineA, inlineB]
-        .map((usage) => createScript({...usage, functions: undefined})),
-      JsUsage: makeJsUsage(scriptA, scriptB, scriptUnknown, inlineA, inlineB),
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      Scripts: all.map((s) => s.script).filter(Boolean),
+      JsUsage: makeJsUsage(all.map((s) => s.coverage)),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       SourceMaps: [],
     };
     const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
@@ -125,8 +141,8 @@ describe('UnusedJavaScript audit', () => {
     const url = 'https://squoosh.app/main-app.js';
     const networkRecords = [generateRecord(url, content.length, 'Script')];
     const artifacts = {
-      JsUsage: makeJsUsage(usage),
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+      JsUsage: makeJsUsage([usage]),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       SourceMaps: [{scriptId: 'squoosh', scriptUrl: url, map}],
       Scripts: [{scriptId: 'squoosh', url, content}].map(createScript),
     };
@@ -139,7 +155,7 @@ describe('UnusedJavaScript audit', () => {
             "items": Array [
               Object {
                 "source": "(unmapped)",
-                "sourceBytes": 10062,
+                "sourceBytes": 10061,
                 "sourceWastedBytes": 3760,
               },
               Object {
@@ -165,7 +181,7 @@ describe('UnusedJavaScript audit', () => {
             ],
             "type": "subitems",
           },
-          "totalBytes": 83748,
+          "totalBytes": 83742,
           "url": "https://squoosh.app/main-app.js",
           "wastedBytes": 6961,
           "wastedPercent": 8.312435814764395,

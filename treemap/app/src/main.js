@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-env browser */
 
-/* globals webtreemap strings Tabulator Cell Row */
+/* globals webtreemap strings */
 
 import {TreemapUtil} from './util.js';
 import {DragAndDrop} from '../../../viewer/app/src/drag-and-drop.js';
@@ -14,11 +14,13 @@ import {GithubApi} from '../../../viewer/app/src/github-api.js';
 import {I18nFormatter} from '../../../report/renderer/i18n-formatter.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
+import {DOM} from '../../../report/renderer/dom.js';
 
 /** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
 
-const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
-const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
+const dom = new DOM(document, document.documentElement);
+
+const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024 * 0.5;
 
 const logEl = document.querySelector('div#lh-log');
 if (!logEl) {
@@ -30,16 +32,6 @@ window.logger = logger;
 
 /** @type {TreemapViewer} */
 let treemapViewer;
-
-// Make scrolling in Tabulator more performant.
-// @ts-expect-error
-Cell.prototype.clearHeight = () => {};
-// @ts-expect-error
-Row.prototype.calcHeight = function() {
-  this.height = 24;
-  this.outerHeight = 24;
-  this.heightStyled = '24px';
-};
 
 class TreemapViewer {
   /**
@@ -53,6 +45,15 @@ class TreemapViewer {
     if (!scriptTreemapData || scriptTreemapData.type !== 'treemap-data') {
       throw new Error('missing script-treemap-data');
     }
+
+    // Since ~Apr 2025, script-treemap-data contains transfer size data. If present,
+    // the app displays all byte sizes in terms of transfer size. Otherwise, resource
+    // size is used.
+    this.showTransferSize = scriptTreemapData.nodes.every(node => node.encodedBytes !== undefined);
+    /** @type {'encodedBytes'|'resourceBytes'} */
+    this.defaultPartitionBy = this.showTransferSize ? 'encodedBytes' : 'resourceBytes';
+    // DevTools RPP doesn't have unused bytes in the info it sends.
+    this.showUnusedBytes = scriptTreemapData.nodes.some(node => node.unusedBytes !== undefined);
 
     /** @type {{[group: string]: LH.Treemap.Node[]}} */
     this.depthOneNodesByGroup = {
@@ -74,6 +75,14 @@ class TreemapViewer {
 
     /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
     this.nodeToPathMap = new WeakMap();
+
+    /**
+     * Used to store the size and unused bytes of each node, multiplied by
+     * compression ratio depending on the state of `this.showTransferSize`.
+     * Used to avoid mutating the input data.
+     * @type {WeakMap<LH.Treemap.Node, {size: number, resourceBytes: number, encodedBytes?: number, unusedBytes?: number}>}
+     */
+    this.nodeToSizesMap = new WeakMap();
 
     // Priority breakdown:
     // 1) `mainDocumentUrl`: This is what we want post-10.0 for navigation reports.
@@ -104,6 +113,8 @@ class TreemapViewer {
       } catch {}
     }
 
+    this.initialViewModeId = options.initialView;
+
     /* eslint-disable no-unused-expressions */
     /** @type {LH.Treemap.Node} */
     this.currentTreemapRoot;
@@ -115,30 +126,59 @@ class TreemapViewer {
     this.viewModes;
     /** @type {RenderState=} */
     this.previousRenderState;
-    /** @type {WeakMap<HTMLElement, NodeWithElement>} */
+    /** @type {WeakMap<HTMLElement, NodeWithElement|NodeWithElement[]>} */
     this.tableRowToNodeMap = new WeakMap();
     /** @type {WebTreeMap} */
     this.treemap;
     /*  eslint-enable no-unused-expressions */
 
-    this.createHeader();
-    this.toggleTable(window.innerWidth >= 600);
-    this.initListeners();
-    this.setSelector({type: 'group', value: 'scripts'});
-    this.render();
-  }
-
-  createHeader() {
-    const urlEl = TreemapUtil.find('a.lh-header--url');
+    const urlEl = dom.find('a.lh-header--url');
     urlEl.textContent = this.documentUrl.toString();
     urlEl.href = this.documentUrl.toString();
 
-    this.createBundleSelector();
+    this.viewModeSelector = this.createViewModeSelector();
+    this.bundleSelector = this.createBundleSelector();
+    this.toggleTable(window.innerWidth >= 600);
+    this.initListeners();
+    this.setSelector({type: 'group', value: 'scripts'});
+    const rootBytesEl = dom.find('span.lh-header--url-bytes');
+    rootBytesEl.textContent =
+      TreemapUtil.i18n.formatBytesWithBestUnit(this.getNodeSizes(this.currentTreemapRoot).size);
+    rootBytesEl.title = this.showTransferSize ?
+      TreemapUtil.strings.transferBytesLabel :
+      TreemapUtil.strings.resourceBytesLabel;
+    this.render();
+  }
+
+  createViewModeSelector() {
+    const viewModeSelectorEl = dom.find('select.view-mode-selector');
+    viewModeSelectorEl.textContent = ''; // Clear just in case document was saved with Ctrl+S.
+
+    viewModeSelectorEl.addEventListener('change', () => {
+      const index = Number(viewModeSelectorEl.value);
+      const viewMode = this.viewModes[index];
+      this.setViewMode(viewMode);
+      this.render();
+    });
+
+    return viewModeSelectorEl;
+  }
+
+  updateViewModeSelector() {
+    this.viewModeSelector.textContent = '';
+    for (const [i, viewMode] of this.viewModes.entries()) {
+      const optionEl = dom.createChildOf(this.viewModeSelector, 'option');
+      optionEl.value = String(i);
+      optionEl.textContent = `${viewMode.label} (${viewMode.subLabel})`;
+      optionEl.disabled = !viewMode.enabled;
+    }
+    this.viewModeSelector.selectedIndex =
+      this.viewModes.findIndex(mode => mode.id === this.currentViewMode.id) ?? 0;
   }
 
   createBundleSelector() {
-    const bundleSelectorEl = TreemapUtil.find('select.bundle-selector');
-    bundleSelectorEl.innerHTML = ''; // Clear just in case document was saved with Ctrl+S.
+    const bundleSelectorEl = dom.find('select.bundle-selector');
+    bundleSelectorEl.textContent = ''; // Clear just in case document was saved with Ctrl+S.
 
     /** @type {LH.Treemap.Selector[]} */
     const selectors = [];
@@ -148,7 +188,7 @@ class TreemapViewer {
      * @param {string} text
      */
     function makeOption(selector, text) {
-      const optionEl = TreemapUtil.createChildOf(bundleSelectorEl, 'option');
+      const optionEl = dom.createChildOf(bundleSelectorEl, 'option');
       optionEl.value = String(selectors.length);
       selectors.push(selector);
       optionEl.textContent = text;
@@ -183,13 +223,14 @@ class TreemapViewer {
 
   initListeners() {
     const options = {signal: this.abortController.signal};
-    const treemapEl = TreemapUtil.find('.lh-treemap');
+    const treemapEl = dom.find('.lh-treemap');
 
     const resizeObserver = new ResizeObserver(() => this.resize());
     resizeObserver.observe(treemapEl);
 
     treemapEl.addEventListener('click', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
@@ -208,6 +249,7 @@ class TreemapViewer {
 
     treemapEl.addEventListener('mouseover', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
@@ -216,32 +258,45 @@ class TreemapViewer {
 
     treemapEl.addEventListener('mouseout', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
+
       const nodeEl = e.target.closest('.webtreemap-node');
       if (!nodeEl) return;
 
       nodeEl.classList.remove('webtreemap-node--hover');
     }, options);
 
-    TreemapUtil.find('.lh-table').addEventListener('mouseover', e => {
+    dom.find('.lh-table').addEventListener('mouseover', e => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
 
-      const el = target.closest('.tabulator-row');
+      const el = target.closest('.lh-table-row');
       if (!(el instanceof HTMLElement)) return;
 
-      const node = this.tableRowToNodeMap.get(el);
-      if (!node || !node.dom) return;
+      const nodes = this.tableRowToNodeMap.get(el);
+      if (!nodes) return;
 
-      node.dom.classList.add('webtreemap-node--hover');
-      el.addEventListener('mouseout', () => {
-        for (const hoverEl of treemapEl.querySelectorAll('.webtreemap-node--hover')) {
-          hoverEl.classList.remove('webtreemap-node--hover');
-        }
-      }, {once: true});
+      for (const node of Array.isArray(nodes) ? nodes : [nodes]) {
+        if (!node.dom) continue;
+
+        // TODO: make this bi-directional.
+        node.dom.classList.add('webtreemap-node--hover');
+        el.addEventListener('mouseout', () => {
+          for (const hoverEl of treemapEl.querySelectorAll('.webtreemap-node--hover')) {
+            hoverEl.classList.remove('webtreemap-node--hover');
+          }
+        }, {once: true});
+      }
     }, options);
 
-    const toggleTableBtn = TreemapUtil.find('.lh-button--toggle-table');
+    const toggleTableBtn = dom.find('.lh-button--toggle-table');
     toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable(), options);
+  }
+
+  applyActiveViewModeClass() {
+    for (const viewMode of this.viewModes) {
+      const isMatch = viewMode.id === this.currentViewMode.id;
+      this.el.classList.toggle(`lh-treemap--view-mode--${viewMode.id}`, isMatch);
+    }
   }
 
   /**
@@ -253,23 +308,30 @@ class TreemapViewer {
     return {
       name: this.documentUrl.toString(),
       resourceBytes: children.reduce((acc, cur) => cur.resourceBytes + acc, 0),
+      encodedBytes: children.reduce((acc, cur) => (cur.encodedBytes ?? 0) + acc, 0),
       unusedBytes: children.reduce((acc, cur) => (cur.unusedBytes || 0) + acc, 0),
       children,
     };
   }
 
   createViewModes() {
+    const rootSize = this.getNodeSizes(this.currentTreemapRoot).size;
+    const app = this;
+
     /**
      * @param {LH.Treemap.Node} root
      * @return {LH.Treemap.ViewMode|undefined}
      */
     function createUnusedBytesViewMode(root) {
-      if (root.unusedBytes === undefined) return;
+      if (!app.showUnusedBytes) return;
+
+      const sizes = app.getNodeSizes(root);
+      if (sizes.unusedBytes === undefined) return;
 
       return {
         id: 'unused-bytes',
         label: TreemapUtil.strings.unusedBytesLabel,
-        subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(root.unusedBytes),
+        subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(sizes.unusedBytes),
         enabled: true,
       };
     }
@@ -302,7 +364,7 @@ class TreemapViewer {
 
         const bytes = [];
         for (const {node} of nodesWithSameModuleName) {
-          bytes.push(node.resourceBytes);
+          bytes.push(this.getNodeSizes(node).size);
         }
 
         // Sum all but the largest copy.
@@ -322,9 +384,6 @@ class TreemapViewer {
 
       let enabled = true;
       if (highlights.length === 0) enabled = false;
-      if (potentialByteSavings / root.resourceBytes < DUPLICATED_MODULES_IGNORE_ROOT_RATIO) {
-        enabled = false;
-      }
 
       return {
         id: 'duplicate-modules',
@@ -342,8 +401,7 @@ class TreemapViewer {
     viewModes.push({
       id: 'all',
       label: TreemapUtil.strings.allLabel,
-      subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(
-        this.currentTreemapRoot.resourceBytes),
+      subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(rootSize),
       enabled: true,
     });
 
@@ -389,7 +447,8 @@ class TreemapViewer {
     const currentViewModeIsDisabled = this.currentViewMode &&
       this.viewModes.find(v => v.id === this.currentViewMode.id && !v.enabled);
     if (!this.currentViewMode || currentViewModeIsDisabled) {
-      this.currentViewMode = this.viewModes[0];
+      this.currentViewMode =
+        this.viewModes.find(v => v.id === this.initialViewModeId && v.enabled) ?? this.viewModes[0];
     }
   }
 
@@ -409,8 +468,10 @@ class TreemapViewer {
     if (rootChanged) {
       this.nodeToPathMap = new Map();
       TreemapUtil.walk(this.currentTreemapRoot, (node, path) => this.nodeToPathMap.set(node, path));
-      renderViewModeButtons(this.viewModes);
+      this.updateViewModeSelector();
 
+      // Setup the partitioning.
+      const partitionBy = this.currentViewMode.partitionBy ?? this.defaultPartitionBy;
       TreemapUtil.walk(this.currentTreemapRoot, node => {
         // webtreemap will store `dom` on the data to speed up operations.
         // However, when we change the underlying data representation, we need to delete
@@ -418,8 +479,16 @@ class TreemapViewer {
         // for example, switching between "All JavaScript" and a specific bundle.
         delete node.dom;
 
-        // @ts-ignore: webtreemap uses `size` to partition the treemap.
-        node.size = node[this.currentViewMode.partitionBy || 'resourceBytes'] || 0;
+        const sizes = this.getNodeSizes(node);
+        let size = 0;
+        if (partitionBy === 'encodedBytes' || partitionBy === 'resourceBytes') {
+          size = sizes.size;
+        } else {
+          size = node[partitionBy] ?? 0;
+        }
+
+        // @ts-expect-error: webtreemap uses `size` to partition the treemap.
+        node.size = size;
       });
       webtreemap.sort(this.currentTreemapRoot);
 
@@ -428,16 +497,31 @@ class TreemapViewer {
         spacing: 10,
         caption: node => this.makeCaption(node),
       });
-      this.el.innerHTML = '';
+      this.el.textContent = '';
       this.treemap.render(this.el);
-      TreemapUtil.find('.webtreemap-node').classList.add('webtreemap-node--root');
+      dom.find('.webtreemap-node').classList.add('webtreemap-node--root');
 
-      this.createTable();
+      // For the "All" selector, delete the root node caption since it duplicates the
+      // information in the header.
+      if (this.selector.type === 'group') {
+        dom.find('.webtreemap-caption', this.el).remove();
+      }
+
+      // Format the captions.
+      // The webtreemap `caption` option can only return strings, but we need to
+      // style portions of the caption differently.
+      for (const el of dom.findAll('.webtreemap-caption', this.el)) {
+        const parts = (el.textContent || '').split(' · ', 2);
+        el.textContent = '';
+        dom.createChildOf(el, 'span', 'lh-text-bold').textContent = parts[0];
+        dom.createChildOf(el, 'span', 'lh-text-dim').textContent = parts[1];
+      }
     }
 
     if (rootChanged || viewChanged) {
+      this.createTable();
       this.updateColors();
-      applyActiveClass(this.currentViewMode.id, this.el);
+      this.applyActiveViewModeClass();
     }
 
     this.previousRenderState = {
@@ -447,10 +531,10 @@ class TreemapViewer {
   }
 
   createTable() {
-    const tableEl = TreemapUtil.find('.lh-table');
-    tableEl.innerHTML = '';
+    const tableEl = dom.find('.lh-table');
+    tableEl.textContent = '';
 
-    /** @type {Array<{node: NodeWithElement, name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
+    /** @type {Array<{node: NodeWithElement, name: string, bundleNode?: LH.Treemap.Node, size: number, unusedBytes?: number}>} */
     const data = [];
     TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
       if (node.children) return;
@@ -462,7 +546,7 @@ class TreemapViewer {
       if (bundleNode) {
         const bundleNodePath = this.nodeToPathMap.get(bundleNode);
         const amountToTrim = bundleNodePath ? bundleNodePath.length : 0; // should never be 0.
-        name = `(bundle) ${path.slice(amountToTrim).join('/')}`;
+        name = path.slice(amountToTrim).join('/');
       } else {
         // Elide the first path component, which is common to all nodes.
         if (path[0] === this.currentTreemapRoot.name) {
@@ -472,110 +556,144 @@ class TreemapViewer {
         }
       }
 
+      const sizes = this.getNodeSizes(node);
       data.push({
         node,
         name,
         bundleNode,
-        resourceBytes: node.resourceBytes,
-        unusedBytes: node.unusedBytes,
+        size: sizes.size,
+        unusedBytes: sizes.unusedBytes,
       });
     });
 
-    /** @param {'resourceBytes'|'unusedBytes'} field */
-    const makeBytesTooltip = (field) => {
-      /** @param {Tabulator.CellComponent} cell */
-      const fn = (cell) => {
-        /** @type {typeof data[number]} */
-        const dataRow = cell.getRow().getData();
-        const value = dataRow[field];
-        if (value === undefined) return '';
+    /** @param {typeof data[0]} row */
+    const makeNameTooltip = (row) => {
+      /** @type {typeof data[number]} */
+      if (!row.bundleNode) return '';
 
-        return TreemapUtil.i18n.formatBytes(value);
-      };
-      return fn;
+      return `${row.bundleNode.name} ${row.name}`;
     };
 
-    /** @param {Tabulator.CellComponent} cell */
-    const makeNameTooltip = (cell) => {
-      /** @type {typeof data[number]} */
-      const dataRow = cell.getRow().getData();
-      if (!dataRow.bundleNode) return '';
+    /** @param {typeof data[0]} row */
+    const makeCoverageTooltip = (row) => {
+      if (!row.unusedBytes) return '';
 
-      return `${dataRow.bundleNode.name} ${dataRow.name}`;
-    };
-
-    /** @param {Tabulator.CellComponent} cell */
-    const makeCoverageTooltip = (cell) => {
-      /** @type {typeof data[number]} */
-      const dataRow = cell.getRow().getData();
-      if (!dataRow.unusedBytes) return '';
-
-      const percent = dataRow.unusedBytes / dataRow.resourceBytes;
+      const percent = row.unusedBytes / row.size;
       return `${TreemapUtil.i18n.formatPercent(percent)} bytes unused`;
     };
 
-    const gridEl = document.createElement('div');
-    tableEl.append(gridEl);
+    let cachedMaxSize = 0;
 
-    const children = this.currentTreemapRoot.children || [];
-    const maxSize = Math.max(...children.map(node => node.resourceBytes));
+    const sortByKey = this.currentViewMode.id === 'unused-bytes' ? 'unusedBytes' : 'size';
+    data.sort((a, b) => {
+      return (b[sortByKey] ?? 0) - (a[sortByKey] ?? 0);
+    });
+
+    const headerEl = dom.createChildOf(tableEl, 'div', 'lh-table-header');
+    dom.createChildOf(headerEl, 'div').textContent = TreemapUtil.strings.tableColumnName;
+
+    let bytesColumnLabel = this.showTransferSize ?
+      TreemapUtil.strings.transferBytesLabel :
+      TreemapUtil.strings.resourceBytesLabel;
+    if (this.currentViewMode.id === 'unused-bytes') {
+      bytesColumnLabel = TreemapUtil.strings.unusedBytesLabel;
+    } else if (this.currentViewMode.id === 'duplicate-modules') {
+      bytesColumnLabel = TreemapUtil.strings.duplicatedBytesLabel;
+    }
+    dom.createChildOf(headerEl, 'div').textContent = bytesColumnLabel;
 
     this.tableRowToNodeMap = new WeakMap();
-    this.table = new Tabulator(gridEl, {
-      data,
-      height: '100%',
-      layout: 'fitColumns',
-      tooltips: true,
-      addRowPos: 'top',
-      resizableColumns: true,
-      initialSort: [
-        {column: 'resourceBytes', dir: 'desc'},
-      ],
-      columns: [
-        // eslint-disable-next-line max-len
-        {title: TreemapUtil.strings.tableColumnName, field: 'name', widthGrow: 5, tooltip: makeNameTooltip},
-        // eslint-disable-next-line max-len
-        {title: TreemapUtil.strings.resourceBytesLabel, field: 'resourceBytes', headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('resourceBytes'), formatter: cell => {
-          const value = cell.getValue();
-          return TreemapUtil.i18n.formatBytesWithBestUnit(value);
-        }},
-        // eslint-disable-next-line max-len
-        {title: TreemapUtil.strings.unusedBytesLabel, field: 'unusedBytes', widthGrow: 1, sorterParams: {alignEmptyValues: 'bottom'}, headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('unusedBytes'), formatter: cell => {
-          const value = cell.getValue();
-          if (value === undefined) return '';
-          return TreemapUtil.i18n.formatBytesWithBestUnit(value);
-        }},
-        // eslint-disable-next-line max-len
-        {title: TreemapUtil.strings.coverageColumnName, widthGrow: 3, headerSort: false, tooltip: makeCoverageTooltip, formatter: cell => {
-          /** @type {typeof data[number]} */
-          const dataRow = cell.getRow().getData();
 
-          const el = TreemapUtil.createElement('div', 'lh-coverage-bar');
-          if (dataRow.unusedBytes === undefined) return el;
+    if (this.currentViewMode.id === 'duplicate-modules') {
+      /** @type {Map<string, Array<typeof data[0]>>} */
+      const dataByDupeModule = new Map();
+      for (const row of data) {
+        const dupeName = row.node.duplicatedNormalizedModuleName;
+        if (!dupeName) continue;
 
-          el.style.setProperty('--max', String(maxSize));
-          el.style.setProperty('--used', String(dataRow.resourceBytes - dataRow.unusedBytes));
-          el.style.setProperty('--unused', String(dataRow.unusedBytes));
+        const grouped = dataByDupeModule.get(dupeName) ?? [];
+        dataByDupeModule.set(dupeName, grouped);
+        grouped.push(row);
+      }
 
-          TreemapUtil.createChildOf(el, 'div', 'lh-coverage-bar--used');
-          TreemapUtil.createChildOf(el, 'div', 'lh-coverage-bar--unused');
+      for (const [dupeName, rows] of dataByDupeModule) {
+        const duplicateBytes = rows
+          .sort((a, b) => b.size - a.size)
+          .slice(1)
+          .reduce((acc, cur) => acc + cur.size, 0);
 
-          return el;
-        }},
-      ],
-      rowFormatter: (row) => {
-        this.tableRowToNodeMap.set(row.getElement(), row.getData().node);
-      },
-    });
+        const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row');
+
+        const cell1 = dom.createChildOf(rowEl, 'div');
+        cell1.textContent = dupeName;
+
+        const cell2 = dom.createChildOf(rowEl, 'div');
+        cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(duplicateBytes);
+        cell2.title = TreemapUtil.i18n.formatBytes(duplicateBytes);
+
+        for (const row of rows) {
+          const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row lh-table-subrow');
+          this.tableRowToNodeMap.set(rowEl, row.node);
+
+          const cell1 = dom.createChildOf(rowEl, 'div');
+          cell1.textContent = row.bundleNode?.name ?? '';
+
+          const cell2 = dom.createChildOf(rowEl, 'div');
+          if (row === rows[0]) {
+            cell2.textContent = '--';
+          } else {
+            cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(row.size);
+            cell2.title = TreemapUtil.i18n.formatBytes(row.size);
+          }
+        }
+
+        this.tableRowToNodeMap.set(rowEl, rows.map(row => row.node));
+
+        dom.createChildOf(tableEl, 'div', 'lh-table-separator');
+      }
+
+      return;
+    }
+
+    for (const row of data) {
+      const rowEl = dom.createChildOf(tableEl, 'div', 'lh-table-row');
+      this.tableRowToNodeMap.set(rowEl, row.node);
+
+      const cell1 = dom.createChildOf(rowEl, 'div');
+      cell1.textContent = row.name;
+      cell1.title = makeNameTooltip(row);
+
+      const bytes = this.currentViewMode.id === 'unused-bytes' ?
+        row.unusedBytes ?? 0 :
+        row.size;
+      const cell2 = dom.createChildOf(rowEl, 'div');
+      cell2.textContent = TreemapUtil.i18n.formatBytesWithBestUnit(bytes);
+      cell2.title = TreemapUtil.i18n.formatBytes(bytes);
+
+      if (this.currentViewMode.id === 'unused-bytes') {
+        cachedMaxSize = cachedMaxSize || Math.max(...data.map(node => node.size));
+
+        const el = dom.createChildOf(tableEl, 'div', 'lh-coverage-bar');
+        el.title = makeCoverageTooltip(row);
+        el.style.setProperty('--max', String(cachedMaxSize));
+        el.style.setProperty('--used', String(row.size - bytes));
+        el.style.setProperty('--unused', String(row.unusedBytes));
+
+        dom.createChildOf(el, 'div', 'lh-coverage-bar--used');
+        dom.createChildOf(el, 'div', 'lh-coverage-bar--unused');
+      }
+
+      dom.createChildOf(tableEl, 'div', 'lh-table-separator');
+    }
   }
 
   /**
    * @param {boolean=} show
    */
   toggleTable(show) {
-    const mainEl = TreemapUtil.find('main');
+    const mainEl = dom.find('main');
     mainEl.classList.toggle('lh-main--show-table', show);
-    const buttonEl = TreemapUtil.find('.lh-button--toggle-table');
+    const buttonEl = dom.find('.lh-button--toggle-table');
     buttonEl.classList.toggle('lh-button--active', show);
   }
 
@@ -584,7 +702,6 @@ class TreemapViewer {
 
     this.treemap.layout(this.currentTreemapRoot, this.el);
     this.updateColors();
-    if (this.table) this.table.redraw();
   }
 
   /**
@@ -592,13 +709,15 @@ class TreemapViewer {
    * @param {LH.Treemap.Node} node
    */
   makeCaption(node) {
-    const partitionBy = this.currentViewMode.partitionBy || 'resourceBytes';
+    const partitionBy = this.currentViewMode.partitionBy || this.defaultPartitionBy;
     const partitionByStr = {
       resourceBytes: TreemapUtil.strings.resourceBytesLabel,
+      encodedBytes: TreemapUtil.strings.transferBytesLabel,
       unusedBytes: TreemapUtil.strings.unusedBytesLabel,
     }[partitionBy];
-    const bytes = node[partitionBy];
-    const total = this.currentTreemapRoot[partitionBy];
+
+    const bytes = this.getNodeSizes(node)[partitionBy];
+    const total = this.getNodeSizes(this.currentTreemapRoot)[partitionBy];
 
     const parts = [
       TreemapUtil.elide(node.name || '', 60),
@@ -620,28 +739,34 @@ class TreemapViewer {
 
   /**
    * @param {number} hue
+   * @param {number|null} depth
    */
-  getColorFromHue(hue) {
-    return TreemapUtil.hsl(hue, 60, 90);
+  getColorFromHue(hue, depth = null) {
+    if (depth === null) {
+      return TreemapUtil.hsl(hue, 60, 90);
+    }
+
+    return TreemapUtil.hsl(hue, 20 + depth * 5, 90 - depth * 5);
   }
 
   updateColors() {
-    TreemapUtil.walk(this.currentTreemapRoot, node => {
+    TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
+      if (!node.dom) return;
+
       // Color a depth one node and all children the same color.
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
       const hue = depthOneNode &&
         this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
-      const depthOneNodeColor = hue !== undefined ? this.getColorFromHue(hue) : 'white';
-
-      if (!node.dom) return;
 
       let backgroundColor;
       if (this.currentViewMode.highlights) {
         // A view can set nodes to highlight. If so, don't color anything else.
-        const path = this.nodeToPathMap.get(node);
-        const highlight = path && this.currentViewMode.highlights
+        const highlight = this.currentViewMode.highlights
           .find(highlight => TreemapUtil.pathsAreEqual(path, highlight.path));
         if (highlight) {
+          const depthOneNodeColor = hue !== undefined ?
+            this.getColorFromHue(hue, null) :
+            'white';
           backgroundColor = highlight.color || depthOneNodeColor;
         } else {
           backgroundColor = 'white';
@@ -650,6 +775,9 @@ class TreemapViewer {
         return;
       }
 
+      const depthOneNodeColor = hue !== undefined ?
+        this.getColorFromHue(hue, path.length) :
+        'white';
       node.dom.style.backgroundColor = depthOneNodeColor;
 
       // Shade the element to communicate coverage.
@@ -659,55 +787,73 @@ class TreemapViewer {
       }
     });
   }
-}
 
-/**
- * @param {LH.Treemap.ViewMode[]} viewModes
- */
-function renderViewModeButtons(viewModes) {
   /**
-   * @param {LH.Treemap.ViewMode} viewMode
+   * @param {LH.Treemap.Node} node
    */
-  function render(viewMode) {
-    const viewModeEl = TreemapUtil.createChildOf(viewModesEl, 'div', 'view-mode');
-    if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
-    viewModeEl.id = `view-mode--${viewMode.id}`;
+  getNodeCompressionRatio(node) {
+    if (node.encodedBytes) {
+      return node.encodedBytes / node.resourceBytes;
+    }
 
-    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button');
-    inputEl.id = `view-mode--${viewMode.id}__label`;
-    inputEl.type = 'radio';
-    inputEl.name = 'view-mode';
-    inputEl.disabled = !viewMode.enabled;
+    const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
+    if (depthOneNode?.encodedBytes) {
+      return depthOneNode.encodedBytes / depthOneNode.resourceBytes;
+    }
 
-    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
-    labelEl.htmlFor = inputEl.id;
-    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
-    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
-      ` (${viewMode.subLabel})`;
-
-    inputEl.addEventListener('click', () => {
-      treemapViewer.setViewMode(viewMode);
-      treemapViewer.render();
-    });
+    return 1;
   }
 
-  const viewModesEl = TreemapUtil.find('.lh-modes');
-  viewModesEl.innerHTML = '';
-  viewModes.forEach(render);
-}
+  /**
+   * @param {LH.Treemap.Node} node
+   * @param {number} compressionRatio
+   */
+  getNodeDisplaySize(node, compressionRatio) {
+    if (!this.showTransferSize) {
+      return node.resourceBytes;
+    }
 
-/**
- * @param {string} currentViewModeId
- * @param {HTMLElement} el
- */
-function applyActiveClass(currentViewModeId, el) {
-  const viewModesEl = TreemapUtil.find('.lh-modes');
-  for (const viewModeEl of viewModesEl.querySelectorAll('.view-mode')) {
-    if (!(viewModeEl instanceof HTMLElement)) continue;
+    if (node.encodedBytes !== undefined) {
+      return node.encodedBytes;
+    }
 
-    const isMatch = viewModeEl.id === `view-mode--${currentViewModeId}`;
-    viewModeEl.classList.toggle('view-mode--active', isMatch);
-    el.classList.toggle(`lh-treemap--${viewModeEl.id}`, isMatch);
+    return node.resourceBytes * compressionRatio;
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   * @param {number} compressionRatio
+   */
+  getNodeUnusedBytes(node, compressionRatio) {
+    if (node.unusedBytes === undefined) {
+      return;
+    }
+
+    if (!this.showTransferSize) {
+      return node.unusedBytes;
+    }
+
+    return node.unusedBytes * compressionRatio;
+  }
+
+  /**
+   * @param {LH.Treemap.Node} node
+   */
+  getNodeSizes(node) {
+    let sizes = this.nodeToSizesMap.get(node);
+
+    if (!sizes) {
+      const compressionRatio = this.getNodeCompressionRatio(node);
+      sizes = {
+        size: this.getNodeDisplaySize(node, compressionRatio) ?? 0,
+        resourceBytes: node.resourceBytes,
+        encodedBytes: node.encodedBytes,
+        unusedBytes: this.getNodeUnusedBytes(node, compressionRatio),
+      };
+      this.nodeToSizesMap.set(node, sizes);
+    }
+
+    return sizes;
   }
 }
 
@@ -721,7 +867,7 @@ function injectOptions(options) {
     scriptEl.remove();
   }
 
-  scriptEl = TreemapUtil.createChildOf(document.head, 'script', 'lh-injectedoptions');
+  scriptEl = dom.createChildOf(document.head, 'script', 'lh-injectedoptions');
   scriptEl.textContent = `
     window.__treemapOptions = ${JSON.stringify(options)};
   `;
@@ -742,7 +888,7 @@ class LighthouseTreemap {
     document.addEventListener('paste', this._onPaste);
 
     // Hidden file input to trigger manual file selector.
-    const fileInput = TreemapUtil.find('input#hidden-file-input', document);
+    const fileInput = dom.find('input#hidden-file-input', document);
     fileInput.addEventListener('change', e => {
       if (!e.target) {
         return;
@@ -758,7 +904,7 @@ class LighthouseTreemap {
     });
 
     // A click on the visual placeholder will trigger the hidden file input.
-    const placeholderTarget = TreemapUtil.find('.treemap-placeholder-inner', document);
+    const placeholderTarget = dom.find('.treemap-placeholder-inner', document);
     placeholderTarget.addEventListener('click', e => {
       const target = /** @type {?Element} */ (e.target);
 
@@ -772,8 +918,8 @@ class LighthouseTreemap {
    * @param {LH.Treemap.Options} options
    */
   init(options) {
-    TreemapUtil.find('.treemap-placeholder').classList.add('hidden');
-    TreemapUtil.find('main').classList.remove('hidden');
+    dom.find('.treemap-placeholder').classList.add('hidden');
+    dom.find('main').classList.remove('hidden');
 
     const locale = options.lhr.configSettings.locale;
     document.documentElement.lang = locale;
@@ -792,11 +938,11 @@ class LighthouseTreemap {
     }
 
     if (treemapViewer) {
-      TreemapUtil.find('.lh-treemap').innerHTML = '';
-      TreemapUtil.find('.lh-table').innerHTML = '';
+      dom.find('.lh-treemap').textContent = '';
+      dom.find('.lh-table').textContent = '';
       treemapViewer.abortController.abort();
     }
-    treemapViewer = new TreemapViewer(options, TreemapUtil.find('div.lh-treemap'));
+    treemapViewer = new TreemapViewer(options, dom.find('div.lh-treemap'));
 
     injectOptions(options);
 
@@ -831,14 +977,12 @@ class LighthouseTreemap {
       throw new Error('provided Lighthouse result is missing audit: `script-treemap-data`');
     }
 
-    if (lhr === json.lhr) {
-      // Special case: file was {lhr: ...} and potentially has other properties.
-      // LH.Treemap.Options only has `lhr` currently, but may have more in the future.
-      return json;
+    let initialView;
+    if (json && typeof json === 'object' && typeof json.initialView === 'string') {
+      initialView = json.initialView;
     }
 
-    // json was exactly a LHR, or a PSI result object aka {lighthouseResult}
-    return {lhr};
+    return {lhr, initialView};
   }
 
   /**
@@ -929,8 +1073,9 @@ async function main() {
   const app = new LighthouseTreemap();
   const queryParams = new URLSearchParams(window.location.search);
   const gzip = queryParams.get('gzip') === '1';
-  const hashParams = location.hash ?
-    JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip})) :
+  const hash = window.__hash ?? location.hash;
+  const hashParams = hash ?
+    JSON.parse(TextEncoding.fromBase64(hash.substr(1), {gzip})) :
     {};
   /** @type {Record<string, any>} */
   const params = {
@@ -947,7 +1092,7 @@ async function main() {
     const options = app.coerceToOptions(json);
     app.init(options);
   } else if (params.lhr) {
-    const options = app.coerceToOptions(params.lhr);
+    const options = app.coerceToOptions(params);
     app.init(options);
   } else if (params.gist) {
     const json = await app._github.getGistFileContentAsJson(params.gist || '');

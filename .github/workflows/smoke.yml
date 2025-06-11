@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
 jobs:
   # `smoke` runs as a matrix across 6 jobs:
   #  * The smoke tests are split into 3 batches, to parallelize.
@@ -18,6 +21,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
       SHARD_TOTAL: 3
@@ -27,39 +31,45 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
         fetch-depth: 2
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
-    - name: Define ToT chrome path
-      if: matrix.chrome-channel == 'ToT'
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
       if: matrix.chrome-channel == 'ToT'
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn reset-link
 
-    - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+        yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
+
+    # TODO(15841): remove when using trace by default, and we want to remove CDT graph impl.
+    - name: Run smoke tests (lantern + trace)
+      if: matrix.smoke-test-shard == 1 && matrix.chrome-channel == 'ToT'
+      run: |
+        yarn smoke --debug -j=2 --retries=2 lantern
+      env:
+        INTERNAL_LANTERN_USE_TRACE: 1
 
     - name: Upload test coverage to Codecov
       if: matrix.chrome-channel == 'ToT'
-      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
+      uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d
       with:
         flags: smoke
         file: ./smoke-coverage.lcov
@@ -69,10 +79,10 @@ jobs:
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
-        path: .tmp/smokehouse-ci-failures/
+        path: .tmp/smokehouse-failures/
 
   smoke-windows:
     strategy:
@@ -85,15 +95,16 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    # Use Node 18 here earlier than everywhere else, see https://github.com/GoogleChrome/lighthouse/issues/15160#issuecomment-1589913408
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - name: Define ToT chrome path
-      run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\chrome-win\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+      run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\.tmp\chrome-tot\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
@@ -104,65 +115,17 @@ jobs:
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
-      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif offline lantern metrics
+      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif lantern metrics
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Smokehouse (windows)
-        path: .tmp/smokehouse-ci-failures/
-
-  smoke-legacy:
-    strategy:
-      matrix:
-        smoke-test-shard: [1, 2, 3]
-      # e.g. if set 1 fails, continue with set 2 anyway
-      fail-fast: false
-    runs-on: ubuntu-latest
-    env:
-      # The total number of shards. Set dynamically when length of *single* matrix variable is
-      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
-      FORCE_COLOR: true
-    name: Legacy Navigation ${{ matrix.smoke-test-shard }}/3
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
-
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
-    - run: yarn reset-link
-
-    - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
-
-    - name: Install Chrome ToT
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
-
-    - run: sudo apt-get install xvfb
-    - name: yarn smoke --legacy-navigation
-      run: xvfb-run --auto-servernum yarn smoke --debug --legacy-navigation -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code
-
-    - name: Upload failures
-      if: failure()
-      uses: actions/upload-artifact@v1
-      with:
-        name: Smokehouse (legacy)
-        path: .tmp/smokehouse-ci-failures/
+        path: .tmp/smokehouse-failures/
 
   smoke-bundle:
     strategy:
@@ -172,6 +135,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
       SHARD_TOTAL: 3
@@ -180,82 +144,33 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn build-devtools
 
-    - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     - name: Install Chrome ToT
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
 
-    - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: yarn test-bundle --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --retries=2
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Smokehouse (bundled)
-        path: .tmp/smokehouse-ci-failures/
-
-  smoke-bundle-legacy:
-    strategy:
-      matrix:
-        smoke-test-shard: [1, 2, 3]
-      # e.g. if set 1 fails, continue with set 2 anyway
-      fail-fast: false
-    runs-on: ubuntu-latest
-    env:
-      # The total number of shards. Set dynamically when length of *single* matrix variable is
-      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
-      FORCE_COLOR: true
-    name: Bundled Legacy Navigation ${{ matrix.smoke-test-shard }}/3
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
-
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
-    - run: yarn build-devtools
-
-    - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
-
-    - name: Install Chrome ToT
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
-
-    - run: sudo apt-get install xvfb
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --legacy-navigation --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code
-
-    - name: Upload dist
-      if: failure()
-      uses: actions/upload-artifact@v1
-      with:
-        name: Smokehouse (bundled)
-        path: .tmp/smokehouse-ci-failures/
+        path: .tmp/smokehouse-failures/

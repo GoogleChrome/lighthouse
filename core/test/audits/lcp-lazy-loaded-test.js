@@ -1,10 +1,13 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import LargestContentfulPaintLazyLoaded from '../../audits/lcp-lazy-loaded.js';
+import {defaultSettings} from '../../config/constants.js';
+import {createTestTrace, rootFrame} from '../create-test-trace.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const SAMPLE_NODE = {
   devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
@@ -12,6 +15,8 @@ const SAMPLE_NODE = {
   nodeLabel: 'My Test Label',
   snippet: '<img class="test-class">',
 };
+const mainDocumentUrl = 'http://www.example.com';
+
 function generateImage(loading, clientRectTop) {
   return {
     src: 'test',
@@ -25,6 +30,7 @@ function generateImage(loading, clientRectTop) {
     node: SAMPLE_NODE,
   };
 }
+
 describe('Performance: lcp-lazy-loaded audit', () => {
   it('correctly surfaces the lazy loaded LCP element', async () => {
     const artifacts = {
@@ -40,10 +46,49 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         innerHeight: 500,
         innerWidth: 300,
       },
+      Trace: createTestTrace({
+        largestContentfulPaint: 1000,
+        topLevelTasks: [{ts: 10, duration: 1000}],
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: mainDocumentUrl,
+          priority: 'High',
+          networkRequestTime: 100,
+          networkEndTime: 200,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+        {
+          url: 'http://www.example.com/image.png',
+          priority: 'Low',
+          resourceType: 'Image',
+          networkRequestTime: 800,
+          networkEndTime: 900,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+      ]),
+      URL: {
+        requestedUrl: mainDocumentUrl,
+        mainDocumentUrl,
+        finalDisplayedUrl: mainDocumentUrl,
+      },
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+
+    const context = {
+      computedCache: new Map(),
+      settings,
+    };
+
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.score).toEqual(0);
+    expect(auditResult.metricSavings).toEqual({LCP: 150});
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node.path).toEqual('1,HTML,1,BODY,3,DIV,2,IMG');
     expect(auditResult.details.items[0].node.nodeLabel).toEqual('My Test Label');
@@ -64,9 +109,49 @@ describe('Performance: lcp-lazy-loaded audit', () => {
         innerHeight: 500,
         innerWidth: 300,
       },
+      Trace: createTestTrace({
+        largestContentfulPaint: 1000,
+        topLevelTasks: [{ts: 10, duration: 1000}],
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {
+          url: mainDocumentUrl,
+          priority: 'High',
+          networkRequestTime: 100,
+          networkEndTime: 200,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+        {
+          url: 'http://www.example.com/image.png',
+          priority: 'Low',
+          resourceType: 'Image',
+          networkRequestTime: 800,
+          networkEndTime: 900,
+          timing: {sendEnd: 0},
+          frameId: rootFrame,
+        },
+      ]),
+      URL: {
+        requestedUrl: mainDocumentUrl,
+        mainDocumentUrl,
+        finalDisplayedUrl: mainDocumentUrl,
+      },
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+
+    const context = {
+      computedCache: new Map(),
+      settings,
+    };
+
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.score).toEqual(1);
+    expect(auditResult.metricSavings).toEqual({LCP: 0});
     expect(auditResult.details.items).toHaveLength(1);
   });
 
@@ -86,6 +171,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
       },
     };
     const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    expect(auditResult.metricSavings).toEqual({LCP: 0});
     expect(auditResult.notApplicable).toEqual(true);
   });
 
@@ -97,6 +183,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
 
     const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
     expect(auditResult.score).toEqual(null);
+    expect(auditResult.metricSavings).toEqual({LCP: 0});
     expect(auditResult.notApplicable).toEqual(true);
   });
 
@@ -119,6 +206,9 @@ describe('Performance: lcp-lazy-loaded audit', () => {
     expect(auditResult).toEqual({
       score: null,
       notApplicable: true,
+      metricSavings: {
+        LCP: 0,
+      },
     });
   });
 });

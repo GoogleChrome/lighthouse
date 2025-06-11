@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -9,8 +9,6 @@
  * file created by ReportGenerator.
  * The renderer code is bundled and injected into the report HTML along with the JSON report.
  */
-
-/* global ga */
 
 import {renderReport} from '../renderer/api.js';
 import {Logger} from '../renderer/logger.js';
@@ -21,6 +19,7 @@ function __initLighthouseReport__() {
   const lhr = window.__LIGHTHOUSE_JSON__;
 
   const reportRootEl = renderReport(lhr, {
+    occupyEntireViewport: true,
     getStandaloneReportHTML() {
       return document.documentElement.outerHTML;
     },
@@ -28,8 +27,12 @@ function __initLighthouseReport__() {
   document.body.append(reportRootEl);
 
   document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
-    // @ts-expect-error
-    if (window.ga) ga(e.detail.cmd, e.detail.fields);
+    const ce = /** @type {CustomEvent<{name: string, data?: {}}>} */(e);
+
+    if ('gtag' in window) {
+      // @ts-expect-error
+      window.gtag('event', ce.detail.name, ce.detail.data ?? {});
+    }
   });
 
   document.addEventListener('lh-log', /** @param {Event} e */ e => {

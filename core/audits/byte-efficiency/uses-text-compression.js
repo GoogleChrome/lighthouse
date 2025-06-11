@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 /*
  * @fileoverview Audit a page to ensure that resources loaded with
@@ -36,8 +36,10 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       id: 'uses-text-compression',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ResponseCompression', 'GatherContext', 'devtoolsLogs', 'traces', 'URL'],
+      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
+      guidanceLevel: 3,
+      requiredArtifacts: ['ResponseCompression', 'GatherContext', 'DevtoolsLog', 'Trace', 'URL',
+        'SourceMaps'],
     };
   }
 
@@ -58,12 +60,18 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       const gzipSize = record.gzipSize;
       const gzipSavings = originalSize - gzipSize;
 
-      // we require at least 10% savings off the original size AND at least 1400 bytes
-      // if the savings is smaller than either, we don't care
-      if (1 - gzipSize / originalSize < IGNORE_THRESHOLD_IN_PERCENT ||
-          gzipSavings < IGNORE_THRESHOLD_IN_BYTES ||
-          record.transferSize < gzipSize
-      ) {
+      // Not every resource is smaller when compressed.
+      if (record.transferSize < gzipSize) {
+        return;
+      }
+
+      // If savings is small, let's be generous and not surface the minor savings.
+      if (gzipSavings < IGNORE_THRESHOLD_IN_BYTES) {
+        return;
+      }
+
+      // Require at least 20kb of savings ... or some percentage of total resource size.
+      if (gzipSavings < 20_000 && 1 - gzipSize / originalSize < IGNORE_THRESHOLD_IN_PERCENT) {
         return;
       }
 

@@ -20,10 +20,7 @@ cd /tmp/lighthouse-local-test
 
 npm init -y
 npm install "$LH_ROOT/lighthouse-$VERSION.tgz"
-# --force to ignore potentially off peer dependency on Lighthouse itself. This just ignores whatever
-# Lighthouse version pubads declares, and defers to the version installed above.
-npm install lighthouse-plugin-publisher-ads@next --force
-npm explore lighthouse -- npm run fast -- http://example.com
+npm explore lighthouse -- npm run fast -- http://example.com --chrome-flags=--headless=new
 
 # Packaged smokehouse/lighthouse using root's static-server and test fixtures.
 # This is because we don't have access to any of the dev dependencies.

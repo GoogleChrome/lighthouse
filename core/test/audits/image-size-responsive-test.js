@@ -1,12 +1,13 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
 import ImageSizeResponsiveAudit from '../../audits/image-size-responsive.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const WIDTH = 800;
 const HEIGHT = 600;
@@ -31,11 +32,19 @@ function generateImage(clientSize, naturalDimensions, props, src) {
   };
 }
 
+function generateDevToolsLogs() {
+  const networkRecords = [
+    {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
+  ];
+  const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
+  return {[ImageSizeResponsiveAudit.DEFAULT_PASS]: devtoolsLogs};
+}
+
 describe('Images: size audit', () => {
   function testImage(condition, data, src = 'https://google.com/logo.png') {
     const description = `identifies when an image ${condition}`;
-    it(description, () => {
-      const result = ImageSizeResponsiveAudit.audit({
+    it(description, async () => {
+      const result = await ImageSizeResponsiveAudit.audit({
         ImageElements: [
           generateImage(
             {displayedWidth: data.clientSize[0], displayedHeight: data.clientSize[1]},
@@ -49,7 +58,8 @@ describe('Images: size audit', () => {
           innerHeight: HEIGHT,
           devicePixelRatio: data.devicePixelRatio || 1,
         },
-      });
+        devtoolsLogs: generateDevToolsLogs(),
+      }, {computedCache: new Map()});
       let details = '';
       if (result.score === 0) {
         const {displayedSize: displayed, actualSize: actual, expectedSize: expected} =
@@ -379,8 +389,8 @@ describe('Images: size audit', () => {
     });
   });
 
-  it('de-dupes images', () => {
-    const result = ImageSizeResponsiveAudit.audit({
+  it('de-dupes images', async () => {
+    const result = await ImageSizeResponsiveAudit.audit({
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
@@ -400,13 +410,14 @@ describe('Images: size audit', () => {
         innerHeight: HEIGHT,
         devicePixelRatio: 1,
       },
-    });
+      devtoolsLogs: generateDevToolsLogs(),
+    }, {computedCache: new Map()});
     assert.equal(result.details.items.length, 1);
     assert.equal(result.details.items[0].expectedSize, '160 x 80');
   });
 
-  it('sorts images by size delta', () => {
-    const result = ImageSizeResponsiveAudit.audit({
+  it('sorts images by size delta', async () => {
+    const result = await ImageSizeResponsiveAudit.audit({
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
@@ -432,14 +443,15 @@ describe('Images: size audit', () => {
         innerHeight: HEIGHT,
         devicePixelRatio: 1,
       },
-    });
+      devtoolsLogs: generateDevToolsLogs(),
+    }, {computedCache: new Map()});
     assert.equal(result.details.items.length, 3);
     const srcs = result.details.items.map(item => item.url);
     assert.deepEqual(srcs, ['image2.png', 'image3.png', 'image1.png']);
   });
 
-  it('shows the right expected size', () => {
-    const result = ImageSizeResponsiveAudit.audit({
+  it('shows the right expected size', async () => {
+    const result = await ImageSizeResponsiveAudit.audit({
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
@@ -451,7 +463,8 @@ describe('Images: size audit', () => {
         innerHeight: HEIGHT,
         devicePixelRatio: 2.71,
       },
-    });
+      devtoolsLogs: generateDevToolsLogs(),
+    }, {computedCache: new Map()});
     assert.equal(result.details.items.length, 1);
     assert.equal(result.details.items[0].expectedSize, '160 x 80');
   });

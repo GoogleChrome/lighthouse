@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 import {spawnSync} from 'child_process';
 
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const indexPath = `${LH_ROOT}/cli/index.js`;
 
@@ -76,7 +76,8 @@ describe('CLI Tests', function() {
       const ret = spawnSync('node', [indexPath, 'https://www.google.com',
         '--extra-headers', '{notjson}'], {encoding: 'utf8'});
 
-      assert.ok(ret.stderr.includes('Unexpected token'));
+      // This message was changed in Node 20, check for old and new versions.
+      assert.ok(/(Unexpected token|Expected property name)/.test(ret.stderr));
       assert.equal(ret.status, 1);
     });
   });

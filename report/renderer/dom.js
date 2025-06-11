@@ -1,23 +1,13 @@
 /**
  * @license
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-env browser */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
+/** @typedef {SVGElementTagNameMap & {[id: string]: SVGElement}} SVGElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
 import {Util} from '../../shared/util.js';
@@ -38,6 +28,8 @@ export class DOM {
     /** @type {HTMLElement} */
     // For legacy Report API users, this'll be undefined, but set in renderReport
     this.rootEl = rootEl;
+    /** @type {WeakMap<Element, Element>} */
+    this._swappableSections = new WeakMap();
   }
 
   /**
@@ -70,6 +62,17 @@ export class DOM {
       }
     }
     return element;
+  }
+
+  /**
+   * @template {string} T
+   * @param {T} name
+   * @param {string=} className
+   * @return {SVGElementByTagName[T]}
+   */
+  createSVGElement(name, className) {
+    return /** @type {SVGElementByTagName[T]} */ (
+      this._document.createElementNS('http://www.w3.org/2000/svg', name, className));
   }
 
   /**
@@ -250,23 +253,38 @@ export class DOM {
   }
 
   /**
-   * Guaranteed context.querySelector. Always returns an element or throws if
+   * Typed and guaranteed context.querySelector. Always returns an element or throws if
    * nothing matches query.
+   *
    * @template {string} T
    * @param {T} query
    * @param {ParentNode} context
    * @return {ParseSelector<T>}
    */
-  find(query, context) {
-    const result = context.querySelector(query);
+  find(query, context = this.rootEl ?? this._document) {
+    const result = this.maybeFind(query, context);
     if (result === null) {
       throw new Error(`query ${query} not found`);
     }
 
+    return result;
+  }
+
+  /**
+   * Typed context.querySelector.
+   *
+   * @template {string} T
+   * @param {T} query
+   * @param {ParentNode} context
+   * @return {ParseSelector<T> | null}
+   */
+  maybeFind(query, context = this.rootEl ?? this._document) {
+    const result = context.querySelector(query);
+
     // Because we control the report layout and templates, use the simpler
     // `typed-query-selector` types that don't require differentiating between
     // e.g. HTMLAnchorElement and SVGAElement. See https://github.com/GoogleChrome/lighthouse/issues/12011
-    return /** @type {ParseSelector<T>} */ (result);
+    return /** @type {ParseSelector<T> | null} */ (result);
   }
 
   /**
@@ -306,5 +324,35 @@ export class DOM {
     // cleanup.
     this._document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  }
+
+  /**
+   * @param {Element} section1
+   * @param {Element} section2
+   */
+  registerSwappableSections(section1, section2) {
+    this._swappableSections.set(section1, section2);
+    this._swappableSections.set(section2, section1);
+  }
+
+  /**
+   * @param {Element} section
+   */
+  swapSectionIfPossible(section) {
+    const newSection = this._swappableSections.get(section);
+    if (!newSection) return;
+
+    const parent = section.parentNode;
+    if (!parent) return;
+
+    // LH Report enforces that only the first instance of a component will include the styles.
+    // If these single-instance happen to be in `section` then they could be lost once `section` is
+    // removed from the DOM.
+    // Therefore we need to transfer any styles that only exist in `section` into `newSection`.
+    const stylesToTransfer = section.querySelectorAll('style');
+    newSection.append(...stylesToTransfer);
+
+    parent.insertBefore(newSection, section);
+    section.remove();
   }
 }

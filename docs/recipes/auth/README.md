@@ -22,6 +22,7 @@ The server responds with different HTML for each of these pages and session stat
 # be in root lighthouse directory
 yarn # install global project deps
 yarn build-report
+yarn build-pack
 cd docs/recipes/auth
 yarn # install deps related to just this recipe
 yarn start # start the server on http://localhost:10632
@@ -45,8 +46,8 @@ Puppeteer - a browser automation tool - can be used to programmatically setup a 
 First, launch Chrome and create a new page:
 ```js
 const browser = await puppeteer.launch({
-  // Optional, if you want to see the tests in action.
-  headless: false,
+  // Set to false if you want to see the script in action.
+  headless: 'new',
   slowMo: 50,
 });
 const page = await browser.newPage();

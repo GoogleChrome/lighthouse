@@ -1,32 +1,34 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-env browser */
 
-/** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
-/** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 /** @typedef {import('../../../report/renderer/i18n-formatter').I18nFormatter} I18nFormatter */
 
 const UIStrings = {
   /** Label for a button that alternates between showing or hiding a table. */
-  toggleTableButtonLabel: 'Toggle Table',
+  toggleTableButtonLabel: 'Toggle table',
   /** Text for an option in a dropdown menu. When selected, the app shows information for all scripts that were found in a web page. */
-  allScriptsDropdownLabel: 'All Scripts',
+  allScriptsDropdownLabel: 'All scripts',
   /** Label for a table column where the values are URLs, JS module names, or arbitrary identifiers. For simplicity, just 'name' is used. */
   tableColumnName: 'Name',
   /** Label for column giving the size of a file in bytes. */
-  resourceBytesLabel: 'Resource Bytes',
+  resourceBytesLabel: 'Resource bytes',
+  /** Label for column giving the size of a file in bytes. */
+  transferBytesLabel: 'Transfer bytes',
   /** Label for a value associated with how many bytes of a script are not executed. */
-  unusedBytesLabel: 'Unused Bytes',
+  unusedBytesLabel: 'Unused bytes',
+  /** Label for a value associated with how many bytes of a script are duplicated. */
+  duplicatedBytesLabel: 'Duplicated bytes',
   /** Label for a column where the values represent how much of a file is used bytes vs unused bytes (coverage). */
   coverageColumnName: 'Coverage',
   /** Label for a button that shows everything (or rather, does not highlight any specific mode such as: unused bytes, duplicate bytes, etc). */
   allLabel: 'All',
   /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
-  duplicateModulesLabel: 'Duplicate Modules',
+  duplicateModulesLabel: 'Duplicate modules',
 };
 
 class TreemapUtil {
@@ -104,52 +106,6 @@ class TreemapUtil {
   static elideSameOrigin(url, fromRelativeUrl) {
     if (url.origin !== fromRelativeUrl.origin) return url.toString();
     return url.toString().replace(fromRelativeUrl.origin, '');
-  }
-
-  /**
-   * @template {string} T
-   * @param {T} name
-   * @param {string=} className
-   * @return {HTMLElementByTagName[T]}
-   */
-  static createElement(name, className) {
-    const element = document.createElement(name);
-    if (className) {
-      element.className = className;
-    }
-    return element;
-  }
-
-  /**
-   * @template {string} T
-   * @param {Element} parentElem
-   * @param {T} elementName
-   * @param {string=} className
-   * @return {HTMLElementByTagName[T]}
-   */
-  static createChildOf(parentElem, elementName, className) {
-    const element = this.createElement(elementName, className);
-    parentElem.append(element);
-    return element;
-  }
-
-  /**
-   * Guaranteed context.querySelector. Always returns an element or throws if
-   * nothing matches query.
-   * @template {string} T
-   * @param {T} query
-   * @param {ParentNode=} context
-   * @return {ParseSelector<T>}
-   */
-  static find(query, context = document) {
-    const result = context.querySelector(query);
-    if (result === null) {
-      throw new Error(`query ${query} not found`);
-    }
-    // Because we control the treemap layout and templates, use the simpler
-    // `typed-query-selector` types that don't require differentiating between
-    // e.g. HTMLAnchorElement and SVGAElement. See https://github.com/GoogleChrome/lighthouse/issues/12011
-    return /** @type {ParseSelector<T>} */ (result);
   }
 
   /**

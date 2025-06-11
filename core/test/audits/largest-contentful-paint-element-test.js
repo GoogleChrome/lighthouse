@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import LargestContentfulPaintElementAudit from '../../audits/largest-contentful-paint-element.js';
@@ -22,7 +22,8 @@ function mockNetworkRecords() {
     isLinkPreload: false,
     networkRequestTime: 0,
     networkEndTime: 500,
-    timing: {sendEnd: 0, receiveHeadersEnd: 500},
+    responseHeadersEndTime: 500,
+    responseHeadersTransferSize: 400,
     transferSize: 400,
     url: requestedUrl,
     frameId: 'ROOT_FRAME',
@@ -68,6 +69,7 @@ function mockNetworkRecords() {
 
 describe('Performance: largest-contentful-paint-element audit', () => {
   it('correctly surfaces the LCP element', async () => {
+    const networkRecords = mockNetworkRecords();
     const artifacts = {
       TraceElements: [{
         traceEventType: 'largest-contentful-paint',
@@ -80,29 +82,28 @@ describe('Performance: largest-contentful-paint-element audit', () => {
         type: 'text',
       }],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 8000,
-        }),
-      },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(mockNetworkRecords()),
-      },
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+        networkRecords,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {
         requestedUrl,
         mainDocumentUrl,
         finalDisplayedUrl: mainDocumentUrl,
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const context = {settings: artifacts.settings, computedCache: new Map()};
     const auditResult = await LargestContentfulPaintElementAudit.audit(artifacts, context);
 
-    expect(auditResult.score).toEqual(1);
-    expect(auditResult.notApplicable).toEqual(false);
-    expect(auditResult.displayValue).toBeDisplayString('1 element found');
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.notApplicable).toBeUndefined();
+    expect(auditResult.displayValue).toBeDisplayString('5,340\xa0ms');
+    expect(auditResult.metricSavings).toEqual({LCP: 2837}); // calculated LCP - 2500 (p10 mobile)
     expect(auditResult.details.items).toHaveLength(2);
     expect(auditResult.details.items[0].items).toHaveLength(1);
     expect(auditResult.details.items[0].items[0].node.path).toEqual('1,HTML,3,BODY,5,DIV,0,HEADER');
@@ -114,26 +115,58 @@ describe('Performance: largest-contentful-paint-element audit', () => {
     expect(auditResult.details.items[1].items[0].phase).toBeDisplayString('TTFB');
     expect(auditResult.details.items[1].items[0].timing).toBeCloseTo(800, 0.1);
     expect(auditResult.details.items[1].items[1].phase).toBeDisplayString('Load Delay');
-    expect(auditResult.details.items[1].items[1].timing).toBeCloseTo(651, 0.1);
+    expect(auditResult.details.items[1].items[1].timing).toBeCloseTo(534.2, 0.1);
     expect(auditResult.details.items[1].items[2].phase).toBeDisplayString('Load Time');
-    expect(auditResult.details.items[1].items[2].timing).toBeCloseTo(1813.7, 0.1);
+    expect(auditResult.details.items[1].items[2].timing).toBeCloseTo(1667.8, 0.1);
     expect(auditResult.details.items[1].items[3].phase).toBeDisplayString('Render Delay');
-    expect(auditResult.details.items[1].items[3].timing).toBeCloseTo(2539.2, 0.1);
+    expect(auditResult.details.items[1].items[3].timing).toBeCloseTo(2334.9, 0.1);
   });
 
   it('doesn\'t throw an error when there is nothing to show', async () => {
     const artifacts = {
       TraceElements: [],
       settings: JSON.parse(JSON.stringify(defaultSettings)),
-      traces: {
-        defaultPass: createTestTrace({
-          traceEnd: 6000,
-          largestContentfulPaint: 4500,
-        }),
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 4500,
+      }),
+      DevtoolsLog: networkRecordsToDevtoolsLog(mockNetworkRecords()),
+      URL: {
+        requestedUrl,
+        mainDocumentUrl,
+        finalDisplayedUrl: mainDocumentUrl,
       },
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog(mockNetworkRecords()),
-      },
+      GatherContext: {gatherMode: 'navigation'},
+    };
+
+    const context = {settings: artifacts.settings, computedCache: new Map()};
+    const auditResult = await LargestContentfulPaintElementAudit.audit(artifacts, context);
+
+    expect(auditResult.score).toEqual(null);
+    expect(auditResult.notApplicable).toEqual(true);
+    expect(auditResult.displayValue).toBeUndefined();
+    expect(auditResult.metricSavings).toEqual({LCP: 0});
+    expect(auditResult.details).toBeUndefined();
+  });
+
+  it('doesn\'t throw an error when the phase table gets an error', async () => {
+    const artifacts = {
+      TraceElements: [{
+        traceEventType: 'largest-contentful-paint',
+        node: {
+          devtoolsNodePath: '1,HTML,3,BODY,5,DIV,0,HEADER',
+          selector: 'div.l-header > div.chorus-emc__content',
+          nodeLabel: 'My Test Label',
+          snippet: '<h1 class="test-class">',
+        },
+        type: 'text',
+      }],
+      settings: JSON.parse(JSON.stringify(defaultSettings)),
+      Trace: createTestTrace({
+        traceEnd: 6000,
+        largestContentfulPaint: 8000,
+      }),
+      DevtoolsLog: [],
       URL: {
         requestedUrl,
         mainDocumentUrl,
@@ -146,9 +179,12 @@ describe('Performance: largest-contentful-paint-element audit', () => {
     const auditResult = await LargestContentfulPaintElementAudit.audit(artifacts, context);
 
     expect(auditResult.score).toEqual(1);
-    expect(auditResult.notApplicable).toEqual(true);
-    expect(auditResult.displayValue).toBeDisplayString('0 elements found');
+    expect(auditResult.notApplicable).toBeUndefined();
+    expect(auditResult.displayValue).toBeUndefined();
     expect(auditResult.details.items).toHaveLength(1);
-    expect(auditResult.details.items[0].items).toHaveLength(0);
+    expect(auditResult.details.items[0].items).toHaveLength(1);
+    expect(auditResult.details.items[0].items[0].node.path).toEqual('1,HTML,3,BODY,5,DIV,0,HEADER');
+    expect(auditResult.details.items[0].items[0].node.nodeLabel).toEqual('My Test Label');
+    expect(auditResult.details.items[0].items[0].node.snippet).toEqual('<h1 class="test-class">');
   });
 });

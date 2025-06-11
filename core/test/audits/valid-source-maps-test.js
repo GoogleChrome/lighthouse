@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {createScript, loadSourceMapFixture} from '../test-utils.js';
@@ -28,11 +28,9 @@ describe('Valid source maps audit', () => {
       URL: {finalDisplayedUrl: 'https://example.com'},
       Scripts: [],
       SourceMaps: [],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+      ]),
     };
     const context = {settings: {}, computedCache: new Map()};
     const auditResult = await ValidSourceMaps.audit(artifacts, context);
@@ -50,13 +48,11 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: largeBundle.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://example.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -75,13 +71,11 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for large, first-party JS (script2.min.js)
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://example.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -103,13 +97,11 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for small, first-party JS (script2.min.js)
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://example.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -127,13 +119,11 @@ describe('Valid source maps audit', () => {
       SourceMaps: [
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://d36mpcpuzc4ztk.cloudfront.net/script2.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://d36mpcpuzc4ztk.cloudfront.net/script2.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -156,13 +146,11 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleNormal.map},
         {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: bundleWithMissingContent.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://example.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -193,13 +181,11 @@ describe('Valid source maps audit', () => {
       SourceMaps: [
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleWithMissingContent.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://example.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};
@@ -229,13 +215,11 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for large, unrecognized third-party JS (script2.min.js)
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://foobarbaz.com/script2.min.js'},
-        ]),
-      },
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'https://example.com'},
+        {url: 'https://example.com/script1.min.js'},
+        {url: 'https://foobarbaz.com/script2.min.js'},
+      ]),
     };
 
     const context = {settings: {}, computedCache: new Map()};

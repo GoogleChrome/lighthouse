@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -13,21 +13,16 @@
 import {Buffer} from 'buffer';
 import {gzip} from 'zlib';
 
-import FRGatherer from '../../base-gatherer.js';
+import log from 'lighthouse-logger';
+
+import BaseGatherer from '../../base-gatherer.js';
 import UrlUtils from '../../../lib/url-utils.js';
-import {Sentry} from '../../../lib/sentry.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import DevtoolsLog from '../devtools-log.js';
 import {fetchResponseBodyFromCache} from '../../driver/network.js';
 import {NetworkRecords} from '../../../computed/network-records.js';
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
-const compressionHeaders = [
-  'content-encoding',
-  'x-original-content-encoding',
-  'x-content-encoding-over-network',
-];
-const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
 /** @type {LH.Crdp.Network.ResourceType[]} */
 const textResourceTypes = [
@@ -39,7 +34,7 @@ const textResourceTypes = [
   NetworkRequest.TYPES.EventSource,
 ];
 
-class ResponseCompression extends FRGatherer {
+class ResponseCompression extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
@@ -55,7 +50,7 @@ class ResponseCompression extends FRGatherer {
     const unoptimizedResponses = [];
 
     networkRecords.forEach(record => {
-      if (record.isOutOfProcessIframe) return;
+      if (record.sessionTargetType !== 'page') return;
 
       const mimeType = record.mimeType;
       const resourceType = record.resourceType || NetworkRequest.TYPES.Other;
@@ -70,12 +65,7 @@ class ResponseCompression extends FRGatherer {
         return;
       }
 
-      const isContentEncoded = (record.responseHeaders || []).find(header =>
-        compressionHeaders.includes(header.name.toLowerCase()) &&
-        compressionTypes.includes(header.value)
-      );
-
-      if (!isContentEncoded) {
+      if (!NetworkRequest.isContentEncoded(record)) {
         unoptimizedResponses.push({
           requestId: record.requestId,
           url: record.url,
@@ -91,11 +81,11 @@ class ResponseCompression extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
    * @return {Promise<LH.Artifacts['ResponseCompression']>}
    */
-  async _getArtifact(context, networkRecords) {
+  async getCompressibleRecords(context, networkRecords) {
     const session = context.driver.defaultSession;
     const textRecords = ResponseCompression.filterUnoptimizedResponses(networkRecords);
 
@@ -119,12 +109,13 @@ class ResponseCompression extends FRGatherer {
           });
         });
       }).catch(err => {
-        Sentry.captureException(err, {
-          tags: {gatherer: 'ResponseCompression'},
-          extra: {url: UrlUtils.elideDataURI(record.url)},
-          level: 'warning',
-        });
+        const isExpectedError = err?.message?.includes('No resource with given identifier found');
+        if (!isExpectedError) {
+          err.extra = {url: UrlUtils.elideDataURI(record.url)};
+          throw err;
+        }
 
+        log.error('ResponseCompression', err.message);
         record.gzipSize = undefined;
         return record;
       });
@@ -132,22 +123,13 @@ class ResponseCompression extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @param {LH.Gatherer.Context<'DevtoolsLog'>} context
    * @return {Promise<LH.Artifacts['ResponseCompression']>}
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    return this._getArtifact(context, networkRecords);
-  }
-
-  /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
-   * @return {Promise<LH.Artifacts['ResponseCompression']>}
-   */
-  async afterPass(passContext, loadData) {
-    return this._getArtifact({...passContext, dependencies: {}}, loadData.networkRecords);
+    return this.getCompressibleRecords(context, networkRecords);
   }
 }
 

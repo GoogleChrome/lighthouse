@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -13,6 +13,7 @@ import {EventEmitter} from 'events';
 
 import log from 'lighthouse-logger';
 
+import * as LH from '../../../types/lh.js';
 import {NetworkRecorder} from '../../lib/network-recorder.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import UrlUtils from '../../lib/url-utils.js';
@@ -30,15 +31,14 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
   /** @type {Array<LH.Crdp.Page.Frame>} */
   _frameNavigations = [];
 
-  // TODO(FR-COMPAT): switch to real TargetManager when legacy removed.
-  /** @param {LH.Gatherer.FRTransitionalDriver['targetManager']} targetManager */
+  /** @param {LH.Gatherer.Driver['targetManager']} targetManager */
   constructor(targetManager) {
     super();
 
-    /** @type {LH.Gatherer.FRTransitionalDriver['targetManager']} */
+    /** @type {LH.Gatherer.Driver['targetManager']} */
     this._targetManager = targetManager;
 
-    /** @type {LH.Gatherer.FRProtocolSession} */
+    /** @type {LH.Gatherer.ProtocolSession} */
     this._session = targetManager.rootSession();
 
     /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
@@ -129,7 +129,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * Returns whether the network is completely idle (i.e. there are 0 inflight network requests).
    */
   isIdle() {
-    return this._isActiveIdlePeriod(0);
+    return this._isIdlePeriod(0);
   }
 
   /**
@@ -144,10 +144,13 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
     const rootFrameRequest = requests.find(r => r.resourceType === 'Document');
     const rootFrameId = rootFrameRequest?.frameId;
 
-    return this._isActiveIdlePeriod(
+    return this._isIdlePeriod(
       0,
+      // Return true if it should be a candidate for critical.
       request =>
         request.frameId === rootFrameId &&
+        // WebSocket and Server-sent Events are typically long-lived and shouldn't be considered critical.
+        request.resourceType !== 'WebSocket' && request.resourceType !== 'EventSource' &&
         (request.priority === 'VeryHigh' || request.priority === 'High')
     );
   }
@@ -156,7 +159,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * Returns whether the network is semi-idle (i.e. there are 2 or fewer inflight network requests).
    */
   is2Idle() {
-    return this._isActiveIdlePeriod(2);
+    return this._isIdlePeriod(2);
   }
 
   /**
@@ -166,7 +169,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
    * @param {(request: NetworkRequest) => boolean} [requestFilter]
    * @return {boolean}
    */
-  _isActiveIdlePeriod(allowedRequests, requestFilter) {
+  _isIdlePeriod(allowedRequests, requestFilter) {
     if (!this._networkRecorder) return false;
     const requests = this._networkRecorder.getRawRecords();
     let inflightRequests = 0;
@@ -174,7 +177,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
     for (let i = 0; i < requests.length; i++) {
       const request = requests[i];
       if (request.finished) continue;
-      if (requestFilter && !requestFilter(request)) continue;
+      if (requestFilter?.(request) === false) continue;
       if (NetworkRequest.isNonNetworkRequest(request)) continue;
       inflightRequests++;
     }
@@ -202,9 +205,10 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
+   * The time periods returned are in ms.
    * @param {Array<LH.Artifacts.NetworkRequest>} requests
    * @param {number} allowedConcurrentRequests
-   * @param {number=} endTime
+   * @param {number=} endTime In ms
    * @return {Array<{start: number, end: number}>}
    */
   static findNetworkQuietPeriods(requests, allowedConcurrentRequests, endTime = Infinity) {
@@ -215,10 +219,9 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
       if (UrlUtils.isNonNetworkProtocol(request.protocol)) return;
       if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
-      // convert the network timestamp to ms
-      timeBoundaries.push({time: request.networkRequestTime * 1000, isStart: true});
+      timeBoundaries.push({time: request.networkRequestTime, isStart: true});
       if (request.finished) {
-        timeBoundaries.push({time: request.networkEndTime * 1000, isStart: false});
+        timeBoundaries.push({time: request.networkEndTime, isStart: false});
       }
     });
 

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -14,13 +14,44 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'autocomplete',
+    // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
+    'preload-fonts',
+    'uses-rel-preload',
   ],
   categories: {
+    // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
+    // config is awkward - easier to omit the property here. Will defer to default config.
+    'performance': {
+      auditRefs: [
+        {id: 'uses-rel-preload', weight: 0, group: 'diagnostics'},
+
+        // TODO: Remove this when insights aren't hidden by default
+        // Insight audits.
+        {id: 'cache-insight', weight: 0, group: 'insights'},
+        {id: 'cls-culprits-insight', weight: 0, group: 'insights'},
+        {id: 'document-latency-insight', weight: 0, group: 'insights'},
+        {id: 'dom-size-insight', weight: 0, group: 'insights'},
+        {id: 'duplicated-javascript-insight', weight: 0, group: 'insights'},
+        {id: 'font-display-insight', weight: 0, group: 'insights'},
+        {id: 'forced-reflow-insight', weight: 0, group: 'insights'},
+        {id: 'image-delivery-insight', weight: 0, group: 'insights'},
+        {id: 'interaction-to-next-paint-insight', weight: 0, group: 'insights'},
+        {id: 'lcp-discovery-insight', weight: 0, group: 'insights'},
+        {id: 'lcp-phases-insight', weight: 0, group: 'insights'},
+        {id: 'legacy-javascript-insight', weight: 0, group: 'insights'},
+        {id: 'modern-http-insight', weight: 0, group: 'insights'},
+        {id: 'network-dependency-tree-insight', weight: 0, group: 'insights'},
+        {id: 'render-blocking-insight', weight: 0, group: 'insights'},
+        {id: 'third-parties-insight', weight: 0, group: 'insights'},
+        {id: 'viewport-insight', weight: 0, group: 'insights'},
+      ],
+    },
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
     // config is awkward - easier to omit the property here. Will defer to default config.
     'best-practices': {
       auditRefs: [
         {id: 'autocomplete', weight: 0, group: 'best-practices-ux'},
+        {id: 'preload-fonts', weight: 0, group: 'best-practices-ux'},
       ],
     },
   },

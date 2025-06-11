@@ -1,13 +1,14 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 
-import * as rollupPlugins from './rollup-plugins.js';
-import {LH_ROOT} from '../root.js';
+import * as plugins from './esbuild-plugins.js';
+import {LH_ROOT} from '../shared/root.js';
+import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
@@ -15,11 +16,13 @@ const smokehouseLibFilename = './cli/test/smokehouse/frontends/lib.js';
 const smokehouseCliFilename = `${LH_ROOT}/cli/test/smokehouse/lighthouse-runners/cli.js`;
 
 async function main() {
-  const bundle = await rollup({
-    input: smokehouseLibFilename,
-    context: 'globalThis',
+  await esbuild.build({
+    entryPoints: [smokehouseLibFilename],
+    outfile: bundleOutFile,
+    format: 'cjs',
+    bundle: true,
     plugins: [
-      rollupPlugins.shim({
+      plugins.replaceModules({
         [smokehouseCliFilename]:
           'export function runLighthouse() { throw new Error("not supported"); }',
         'module': `
@@ -31,20 +34,20 @@ async function main() {
             };
           };
         `,
+        // Our node modules polyfill plugin does not support assert/strict.
+        'assert/strict': `
+          import assert from 'assert';
+          export default assert;
+        `,
       }),
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-      rollupPlugins.commonjs(),
-      rollupPlugins.nodePolyfills(),
-      rollupPlugins.nodeResolve(),
+      plugins.bulkLoader([
+        plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+        plugins.partialLoaders.rmGetModuleDirectory,
+      ]),
+      nodeModulesPolyfillPlugin(),
+      plugins.ignoreBuiltins(),
     ],
   });
-
-  await bundle.write({
-    file: bundleOutFile,
-    format: 'commonjs',
-  });
-  await bundle.close();
 }
 
 await main();

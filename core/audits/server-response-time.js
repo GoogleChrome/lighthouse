@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
@@ -37,16 +37,23 @@ class ServerResponseTime extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'GatherContext'],
+      guidanceLevel: 1,
+      requiredArtifacts: ['DevtoolsLog', 'URL', 'GatherContext'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
   /**
    * @param {LH.Artifacts.NetworkRequest} record
+   * @return {number|null}
    */
   static calculateResponseTime(record) {
-    const timing = record.timing;
-    return timing ? timing.receiveHeadersEnd - timing.sendEnd : 0;
+    // Lightrider does not have timings for sendEnd, but we do have this timing which should be
+    // close to the response time.
+    if (global.isLightrider && record.lrStatistics) return record.lrStatistics.requestMs;
+
+    if (!record.timing) return null;
+    return record.timing.receiveHeadersStart - record.timing.sendEnd;
   }
 
   /**
@@ -55,12 +62,16 @@ class ServerResponseTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
 
     /** @type {LH.Artifacts.NetworkRequest} */
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
     const responseTime = ServerResponseTime.calculateResponseTime(mainResource);
+    if (responseTime === null) {
+      throw new Error('no timing found for main resource');
+    }
+
     const passed = responseTime < TOO_SLOW_THRESHOLD_MS;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
 

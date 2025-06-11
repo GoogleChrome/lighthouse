@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -9,7 +9,7 @@ import path from 'path';
 import assert from 'assert/strict';
 
 import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
@@ -23,8 +23,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: pwaTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: pwaTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -50,8 +50,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: noScreenshotsTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: noScreenshotsTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -63,8 +63,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: noScreenshotsTrace},
-      devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
+      Trace: noScreenshotsTrace,
+      DevtoolsLog: [], // empty devtools logs to test just thumbnails without TTI behavior
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -77,8 +77,8 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: pwaTrace},
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
     };
 
     const context = {settings, options, computedCache: new Map()};
@@ -92,7 +92,7 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: pwaTrace},
+      Trace: pwaTrace,
     };
 
     const context = {settings, options: {}, computedCache: new Map()};
@@ -113,7 +113,7 @@ describe('Screenshot thumbnails', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: infiniteTrace},
+      Trace: infiniteTrace,
     };
     const context = {settings, options: {}, computedCache: new Map()};
 

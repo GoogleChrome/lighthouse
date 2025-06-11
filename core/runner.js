@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -9,10 +9,8 @@ import path from 'path';
 
 
 import log from 'lighthouse-logger';
-import isDeepEqual from 'lodash/isEqual.js';
+import {isEqual} from 'lodash-es';
 
-import {Driver} from './legacy/gather/driver.js';
-import {GatherRunner} from './legacy/gather/gather-runner.js';
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
 import * as format from '../shared/localization/format.js';
@@ -21,22 +19,19 @@ import * as assetSaver from './lib/asset-saver.js';
 import {Sentry} from './lib/sentry.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
-import {lighthouseVersion} from '../root.js';
-import {getModuleDirectory} from '../esm-utils.js';
+import {lighthouseVersion} from '../shared/root.js';
+import {getModuleDirectory} from '../shared/esm-utils.js';
 import {EntityClassification} from './computed/entity-classification.js';
 import UrlUtils from './lib/url-utils.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 
-/** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
-/** @typedef {LH.Config.LegacyResolvedConfig} Config */
 
 class Runner {
   /**
-   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
    * @param {LH.Artifacts} artifacts
-   * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
+   * @param {{resolvedConfig: LH.Config.ResolvedConfig, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async audit(artifacts, options) {
@@ -111,7 +106,6 @@ class Runner {
           networkUserAgent: artifacts.NetworkUserAgent,
           hostUserAgent: artifacts.HostUserAgent,
           benchmarkIndex: artifacts.BenchmarkIndex,
-          benchmarkIndexes: artifacts.BenchmarkIndexes,
           credits,
         },
         audits: auditResultsById,
@@ -153,8 +147,9 @@ class Runner {
    * @param {LH.Artifacts.ComputedContext} context
    */
   static async getEntityClassification(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     if (!devtoolsLog) return;
+
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
 
@@ -188,9 +183,8 @@ class Runner {
    * -G and -A will run partial lighthouse pipelines,
    * and -GA will run everything plus save artifacts and lhr to disk.
    *
-   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
-   * @param {(runnerData: {resolvedConfig: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
-   * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
+   * @param {(runnerData: {resolvedConfig: LH.Config.ResolvedConfig}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{resolvedConfig: LH.Config.ResolvedConfig, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.Artifacts>}
    */
   static async gather(gatherFn, options) {
@@ -205,33 +199,27 @@ class Runner {
         data: sentryContext,
       });
 
-      /** @type {LH.Artifacts} */
-      let artifacts;
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
         const path = this._getDataSavePath(settings);
-        artifacts = assetSaver.loadArtifacts(path);
-      } else {
-        const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
-        log.time(runnerStatus, 'verbose');
+        return assetSaver.loadArtifacts(path);
+      }
 
-        artifacts = await gatherFn({
-          resolvedConfig: options.resolvedConfig,
-          driverMock: options.driverMock,
-        });
+      const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
+      log.time(runnerStatus, 'verbose');
 
-        log.timeEnd(runnerStatus);
+      const artifacts = await gatherFn({resolvedConfig: options.resolvedConfig});
+      log.timeEnd(runnerStatus);
 
-        // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.
-        // We need to clear the timing entries at the end of gathering.
-        // Set artifacts.Timing again to ensure lh:runner:gather is included.
-        artifacts.Timing = log.takeTimeEntries();
+      // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.
+      // We need to clear the timing entries at the end of gathering.
+      // Set artifacts.Timing again to ensure lh:runner:gather is included.
+      artifacts.Timing = log.takeTimeEntries();
 
-        // -G means save these to disk (e.g. ./latest-run).
-        if (settings.gatherMode) {
-          const path = this._getDataSavePath(settings);
-          await assetSaver.saveArtifacts(artifacts, path);
-        }
+      // -G means save these to disk (e.g. ./latest-run).
+      if (settings.gatherMode) {
+        const path = this._getDataSavePath(settings);
+        await assetSaver.saveArtifacts(artifacts, path);
       }
 
       return artifacts;
@@ -292,28 +280,6 @@ class Runner {
   }
 
   /**
-   * Establish connection, load page and collect all required artifacts
-   * @param {string} requestedUrl
-   * @param {{resolvedConfig: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
-   * @param {Connection} connection
-   * @return {Promise<LH.Artifacts>}
-   */
-  static async _gatherArtifactsFromBrowser(requestedUrl, runnerOpts, connection) {
-    if (!runnerOpts.resolvedConfig.passes) {
-      throw new Error('No browser artifacts are either provided or requested.');
-    }
-    const driver = runnerOpts.driverMock || new Driver(connection);
-    const gatherOpts = {
-      driver,
-      requestedUrl,
-      settings: runnerOpts.resolvedConfig.settings,
-      computedCache: runnerOpts.computedCache,
-    };
-    const artifacts = await GatherRunner.run(runnerOpts.resolvedConfig.passes, gatherOpts);
-    return artifacts;
-  }
-
-  /**
    * Run all audits with specified settings and artifacts.
    * @param {LH.Config.Settings} settings
    * @param {Array<LH.Config.AuditDefn>} audits
@@ -333,7 +299,6 @@ class Runner {
         auditMode: undefined,
         output: undefined,
         channel: undefined,
-        budgets: undefined,
       };
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
@@ -344,14 +309,16 @@ class Runner {
         ...Object.keys(normalizedAuditSettings),
       ]);
       for (const k of keys) {
-        if (!isDeepEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
+        if (!isEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
           throw new Error(
-            `Cannot change settings between gathering and auditing. Difference found at: ${k}`);
+            `Cannot change settings between gathering and auditing…
+Difference found at: \`${k}\`: ${JSON.stringify(normalizedGatherSettings[k], null, 2)}
+vs: ${JSON.stringify(normalizedAuditSettings[k], null, 2)}`);
         }
       }
 
-      // Call `isDeepEqual` on the entire thing, just in case something was missed.
-      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
+      // Call `isEqual` on the entire thing, just in case something was missed.
+      if (!isEqual(normalizedGatherSettings, normalizedAuditSettings)) {
         throw new Error('Cannot change settings between gathering and auditing');
       }
     }
@@ -396,15 +363,18 @@ class Runner {
 
     let auditResult;
     try {
+      if (artifacts.PageLoadError) throw artifacts.PageLoadError;
+
       // Return an early error if an artifact required for the audit is missing or an error.
       for (const artifactName of audit.meta.requiredArtifacts) {
         const noArtifact = artifacts[artifactName] === undefined;
 
         // If trace/devtoolsLog required, check that DEFAULT_PASS trace/devtoolsLog exists.
         // NOTE: for now, not a pass-specific check of traces or devtoolsLogs.
-        const noRequiredTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        const noRequiredTrace = artifactName === 'traces' &&
+          !artifacts.traces?.[Audit.DEFAULT_PASS];
         const noRequiredDevtoolsLog = artifactName === 'devtoolsLogs' &&
-            !artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+          !artifacts.devtoolsLogs?.[Audit.DEFAULT_PASS];
 
         if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
@@ -416,18 +386,13 @@ class Runner {
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
-          // @ts-expect-error: TODO why is this a type error now?
           const artifactError = artifacts[artifactName];
-
-          Sentry.captureException(artifactError, {
-            tags: {gatherer: artifactName},
-            level: 'error',
-          });
 
           log.warn('Runner', `${artifactName} gatherer, required by audit ${audit.meta.id},` +
             ` encountered an error: ${artifactError.message}`);
 
-          // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
+          // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry.
+          // The artifact error was already sent to Sentry in `collectPhaseArtifacts`.
           const error = new LighthouseError(LighthouseError.errors.ERRORED_REQUIRED_ARTIFACT,
               {artifactName, errorMessage: artifactError.message}, {cause: artifactError});
           // @ts-expect-error Non-standard property added to Error
@@ -484,21 +449,27 @@ class Runner {
    * @return {LH.RawIcu<LH.Result['runtimeError']>|undefined}
    */
   static getArtifactRuntimeError(artifacts) {
+    /** @type {Array<[string, LighthouseError|object]>} */
     const possibleErrorArtifacts = [
-      artifacts.PageLoadError, // Preferentially use `PageLoadError`, if it exists.
-      ...Object.values(artifacts), // Otherwise check amongst all artifacts.
+      ['PageLoadError', artifacts.PageLoadError], // Preferentially use `PageLoadError`, if it exists.
+      ...Object.entries(artifacts), // Otherwise check amongst all artifacts.
     ];
 
-    for (const possibleErrorArtifact of possibleErrorArtifacts) {
+    for (const [artifactKey, possibleErrorArtifact] of possibleErrorArtifacts) {
       const isError = possibleErrorArtifact instanceof LighthouseError;
 
       // eslint-disable-next-line max-len
       if (isError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
+        // Prefer the stack trace closest to the error.
+        const stack =
+          /** @type {any} */ (possibleErrorArtifact.cause)?.stack ?? possibleErrorArtifact.stack;
 
         return {
           code: possibleErrorArtifact.code,
           message: errorMessage,
+          errorStack: stack,
+          artifactKey,
         };
       }
     }
@@ -518,6 +489,7 @@ class Runner {
       'multi-check-audit.js',
       'byte-efficiency/byte-efficiency-audit.js',
       'manual/manual-audit.js',
+      'insights/insight-audit.js',
     ];
 
     const fileList = [
@@ -533,6 +505,7 @@ class Runner {
       ...fs.readdirSync(path.join(moduleDir, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
       ...fs.readdirSync(path.join(moduleDir, './audits/manual')).map(f => `manual/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/insights')).map(f => `insights/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);

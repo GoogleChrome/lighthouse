@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -20,36 +20,49 @@ describe('ViewportMeta computed artifact', () => {
   /* eslint-disable-next-line max-len */
   it('is not mobile optimized when HTML contains a non-mobile friendly viewport meta tag', async () => {
     const viewport = 'maximum-scale=1';
-    const {hasViewportTag, isMobileOptimized} =
+    const {hasViewportTag, isMobileOptimized, rawContentString} =
       await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(hasViewportTag, true);
     assert.equal(isMobileOptimized, false);
+    assert.equal(rawContentString, viewport);
   });
 
   it('is not mobile optimized when HTML contains an invalid viewport meta tag key', async () => {
     const viewport = 'nonsense=true';
-    const {hasViewportTag, isMobileOptimized} =
+    const {hasViewportTag, isMobileOptimized, rawContentString} =
       await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(hasViewportTag, true);
     assert.equal(isMobileOptimized, false);
+    assert.equal(rawContentString, viewport);
   });
 
   it('is not mobile optimized when HTML contains an invalid viewport meta tag value', async () => {
     const viewport = 'initial-scale=microscopic';
-    const {isMobileOptimized, parserWarnings} =
+    const {isMobileOptimized, parserWarnings, rawContentString} =
       await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(isMobileOptimized, false);
+    assert.equal(rawContentString, viewport);
     assert.equal(parserWarnings[0], 'Invalid values found: {"initial-scale":"microscopic"}');
   });
 
   /* eslint-disable-next-line max-len */
   it('is not mobile optimized when HTML contains an invalid viewport meta tag key and value', async () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
-    const {isMobileOptimized, parserWarnings} =
+    const {isMobileOptimized, parserWarnings, rawContentString} =
       await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(isMobileOptimized, false);
+    assert.equal(rawContentString, viewport);
     assert.equal(parserWarnings[0], 'Invalid properties found: {"nonsense":"true"}');
     assert.equal(parserWarnings[1], 'Invalid values found: {"initial-scale":"microscopic"}');
+  });
+
+  // eslint-disable-next-line max-len
+  it('is not mobile optimized when a viewport contains an initial-scale value lower than 1', async () => {
+    const viewport = 'width=device-width, initial-scale=0.9';
+    const {isMobileOptimized, rawContentString} =
+      await ViewportMeta.compute_(makeMetaElements(viewport));
+    assert.equal(isMobileOptimized, false);
+    assert.equal(rawContentString, viewport);
   });
 
   it('is mobile optimized when a valid viewport is provided', async () => {
@@ -61,16 +74,20 @@ describe('ViewportMeta computed artifact', () => {
     ];
 
     await Promise.all(viewports.map(async viewport => {
-      const {isMobileOptimized} =
+      const {isMobileOptimized, rawContentString} =
         await ViewportMeta.compute_(makeMetaElements(viewport));
       assert.equal(isMobileOptimized, true);
+      assert.equal(rawContentString, viewport);
     }));
   });
 
   it('recognizes interactive-widget property', async () => {
     const viewport = 'width=device-width, interactive-widget=resizes-content';
-    const {parserWarnings} = await ViewportMeta.compute_(makeMetaElements(viewport));
-    assert.equal(parserWarnings[0], undefined);
+    const {parserWarnings, rawContentString} =
+        await ViewportMeta.compute_(makeMetaElements(viewport));
+    assert.equal(rawContentString, viewport);
+    assert.equal(parserWarnings.length, 0);
+    assert.equal(rawContentString, viewport);
   });
 
   it('doesn\'t throw when viewport contains "invalid" iOS properties', async () => {
@@ -79,11 +96,11 @@ describe('ViewportMeta computed artifact', () => {
       'width=device-width, viewport-fit=cover',
     ];
     await Promise.all(viewports.map(async viewport => {
-      const {isMobileOptimized, parserWarnings} =
+      const {isMobileOptimized, parserWarnings, rawContentString} =
         await ViewportMeta.compute_(makeMetaElements(viewport));
       assert.equal(isMobileOptimized, true);
-      assert.equal(parserWarnings[0], undefined);
+      assert.equal(parserWarnings.length, 0);
+      assert.equal(rawContentString, viewport);
     }));
   });
 });
-

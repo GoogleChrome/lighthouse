@@ -1,16 +1,13 @@
 {
   "type": "module",
   "name": "lighthouse-logger",
-  "version": "1.4.2",
+  "version": "2.0.1",
   "license": "Apache-2.0",
-  "main": "./dist/index.cjs",
-  "exports": {
-    "require": "./dist/index.cjs",
-    "import": "./index.js"
-  },
+  "main": "./index.js",
+  "repository": "GoogleChrome/lighthouse",
   "scripts": {
-    "prepack": "yarn build-cjs",
-    "build-cjs": "npx rollup --format=cjs --file=dist/index.cjs -- index.js"
+    "prepack": "yarn build-types",
+    "build-types": "npx tsc index.js --allowJs --emitDeclarationOnly --declaration"
   },
   "dependencies": {
     "debug": "^2.6.9",

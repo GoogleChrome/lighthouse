@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable no-console */
@@ -10,7 +10,7 @@ import fs from 'fs';
 
 import ts from 'typescript';
 
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT} from '../shared/root.js';
 
 /**
  * @typedef Modification
@@ -33,66 +33,54 @@ const modifications = [
     template: [
       'const Common = require(\'../Common.js\');',
       'const Platform = require(\'../Platform.js\');',
+      `
+        const BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        const BASE64_CODES = new Uint8Array(123);
+        for (let index = 0; index < BASE64_CHARS.length; ++index) {
+          BASE64_CODES[BASE64_CHARS.charCodeAt(index)] = index;
+        }
+      `,
       '%sourceFilePrinted%',
-      'module.exports = TextSourceMap;',
+      'module.exports = SourceMap;',
+      'SourceMap.parseSourceMap = parseSourceMap;',
     ].join('\n'),
     rawCodeToReplace: {
-      /* Original:
-
-        let url = Common.ParsedURL.ParsedURL.completeURL(this.#baseURL, href) || href;
-        const source = sourceMap.sourcesContent && sourceMap.sourcesContent[i];
-        if (url === this.#compiledURLInternal && source) {
-          url = Common.ParsedURL.ParsedURL.concatenate(url, '? [sm]');
-        }
-        if (this.#sourceInfos.has(url)) {
-          continue;
-        }
-        this.#sourceInfos.set(url, new TextSourceMap.SourceInfo(source || null, null));
-        sourcesList.push(url);
-      ----
-      If a source file is the same as the compiled url and there is a sourcesContent,
-      then `entry.sourceURL` (what is returned from .mappings) will have `? [sm]` appended.
-      This is useful in DevTools - to show that a sources panel tab not a real network resource -
-      but for us it is not wanted. The sizing function uses `entry.sourceURL` to index the byte
-      counts, and is further used in the details to specify a file within a source map.
-      */
-      [`url = Common.ParsedURL.ParsedURL.concatenate(url, '? [sm]');`]: '',
       // Use normal console.warn so we don't need to import CDT's logger.
       'Common.Console.Console.instance().warn': 'console.warn',
-      // Similar to the reason for removing `url += Common.UIString('? [sm]')`.
       // The entries in `.mappings` should not have their url property modified.
+      // The sizing function uses `entry.sourceURL` to index the byte
+      // counts, and is further used in the details to specify a file within a source map.
       'Common.ParsedURL.ParsedURL.completeURL(this.#baseURL, href)': `''`,
-      // Replace i18n function with a very simple templating function.
-      'i18n.i18n.getLocalizedString.bind(undefined, str_)': (
-        /** @param {string} template @param {object} vars */
-        function(template, vars) {
-          let result = template;
-          for (const [key, value] of Object.entries(vars)) {
-            result = result.replace(new RegExp('{' + key + '}'), value);
-          }
-          return result;
-        }).toString(),
       // Add some types.
       // eslint-disable-next-line max-len
       'mappings(): SourceMapEntry[] {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings(): SourceMapEntry[] {',
+      // Disable scopes. LH doesn't need this.
+      // eslint-disable-next-line max-len
+      'Root.Runtime.experiments.isEnabled(Root.Runtime.ExperimentName.USE_SOURCE_MAP_SCOPES)': 'false',
+      'Common.Base64.BASE64_CODES': 'BASE64_CODES',
+      '* Implements Source Map V3 model.': [
+        '* @param {string} compiledURL',
+        '* @param {string} sourceMappingURL',
+        '* @param {object} payload',
+        '* Implements Source Map V3 model.',
+      ].join('\n   '),
     },
     classesToRemove: [],
     methodsToRemove: [
       // Not needed.
+      'compatibleForURL',
       'load',
-      // Not needed.
-      'sourceContentProvider',
+      'reverseMapTextRanges',
+      'augmentWithScopes',
+      'parseBloombergScopes',
     ],
     variablesToRemove: [
       'Common',
-      'CompilerSourceMappingContentProvider_js_1',
-      'i18n',
-      'i18nString',
-      'PageResourceLoader_js_1',
       'Platform',
-      'str_',
+      'SourceMapFunctionRanges_js_1',
+      'SourceMapScopes_js_1',
+      'SourceMapScopesInfo_js_1',
       'TextUtils',
-      'UIStrings',
     ],
   },
   {
@@ -233,15 +221,24 @@ function doModification(modification) {
     sourceFilePrinted += printer.printNode(ts.EmitHint.Unspecified, node, sourceFile) + '\n';
   });
 
+  const content = modification.template.replace('%sourceFilePrinted%', () => sourceFilePrinted);
+  writeGeneratedFile(modification.output, content);
+}
+
+/**
+ * @param {string} outputPath
+ * @param {string} contents
+ */
+function writeGeneratedFile(outputPath, contents) {
   const modifiedFile = [
     '// @ts-nocheck\n',
     '// generated by yarn build-cdt-lib\n',
     '/* eslint-disable */\n',
     '"use strict";\n',
-    modification.template.replace('%sourceFilePrinted%', () => sourceFilePrinted),
+    contents,
   ].join('');
 
-  fs.writeFileSync(modification.output, modifiedFile);
+  fs.writeFileSync(outputPath, modifiedFile);
 }
 
 modifications.forEach(doModification);

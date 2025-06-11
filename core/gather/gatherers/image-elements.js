@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 /**
   * @fileoverview Gathers all images used on the page with their src, size,
@@ -11,7 +11,7 @@
 
 import log from 'lighthouse-logger';
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import * as FontSize from './seo/font-size.js';
 
@@ -235,7 +235,7 @@ function getPixelArea(element) {
   return element.displayedHeight * element.displayedWidth;
 }
 
-class ImageElements extends FRGatherer {
+class ImageElements extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
@@ -248,7 +248,7 @@ class ImageElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalDriver} driver
+   * @param {LH.Gatherer.Driver} driver
    * @param {LH.Artifacts.ImageElement} element
    */
   async fetchElementWithSizeInformation(driver, element) {
@@ -276,7 +276,7 @@ class ImageElements extends FRGatherer {
    * Images might be sized via CSS. In order to compute unsized-images failures, we need to collect
    * matched CSS rules to see if this is the case.
    * @url http://go/dwoqq (googlers only)
-   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {LH.Gatherer.ProtocolSession} session
    * @param {string} devtoolsNodePath
    * @param {LH.Artifacts.ImageElement} element
    */
@@ -302,7 +302,7 @@ class ImageElements extends FRGatherer {
 
   /**
    *
-   * @param {LH.Gatherer.FRTransitionalDriver} driver
+   * @param {LH.Gatherer.Driver} driver
    * @param {LH.Artifacts.ImageElement[]} elements
    */
   async collectExtraDetails(driver, elements) {
@@ -334,7 +334,7 @@ class ImageElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<LH.Artifacts['ImageElements']>}
    */
   async getArtifact(context) {

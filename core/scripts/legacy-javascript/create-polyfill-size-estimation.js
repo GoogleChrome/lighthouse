@@ -1,7 +1,6 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable no-console */
@@ -30,13 +29,13 @@ import fs from 'fs';
 import prettyJSONStringify from 'pretty-json-stringify';
 
 import {makeHash} from './hash.js';
-import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
 import {JSBundles} from '../../computed/js-bundles.js';
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
+import {getCoreJsPolyfillData} from '../../lib/legacy-javascript/legacy-javascript.js';
 
 const hash = makeHash();
 const VARIANT_DIR = `${LH_ROOT}/core/scripts/legacy-javascript/variants/${hash}`;
-const OUTPUT_PATH = `${LH_ROOT}/core/audits/byte-efficiency/polyfill-graph-data.json`;
+const OUTPUT_PATH = `${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`;
 const COMMON_MODULE = 'commonCoreJs';
 
 /**
@@ -54,10 +53,10 @@ function getPolyfillDependencies() {
   /** @type {Map<string, string[]>} */
   const polyfillDependencies = new Map();
 
-  for (const {name, coreJs3Module} of LegacyJavascript.getCoreJsPolyfillData()) {
-    const folder = coreJs3Module.replace(/[^a-zA-Z0-9]+/g, '-');
+  for (const {name} of getCoreJsPolyfillData()) {
+    const folder = name.replace(/[^a-zA-Z0-9]+/g, '-');
     const bundleMapPath =
-      `${VARIANT_DIR}/core-js-3-only-polyfill/${folder}/main.bundle.min.js.map`;
+      `${VARIANT_DIR}/core-js-3-only-polyfill/${folder}/main.bundle.browserify.min.js.map`;
     /** @type {LH.Artifacts.RawSourceMap} */
     const bundleMap = JSON.parse(fs.readFileSync(bundleMapPath, 'utf-8'));
     polyfillDependencies.set(name, bundleMap.sources.filter(s => s.startsWith('node_modules')));
@@ -81,8 +80,8 @@ async function main() {
     polyfillDependencies.set(name, modulesCommonFlattened);
   }
 
-  const bundlePath =
-    `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.min.js`;
+  // eslint-disable-next-line max-len
+  const bundlePath = `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.browserify.min.js`;
   const bundleContents = fs.readFileSync(bundlePath, 'utf-8');
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
   /** @type {Pick<LH.Artifacts, 'Scripts'|'SourceMaps'>} */

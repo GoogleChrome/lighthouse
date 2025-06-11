@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @type {LH.Config} */
@@ -12,14 +12,12 @@ const config = {
       title: 'Performance',
       auditRefs: [
         {id: 'oopif-iframe-test-audit', weight: 0},
-        {id: 'script-elements-test-audit', weight: 0},
       ],
     },
   },
   audits: [
     // Include an audit that *forces* the IFrameElements artifact to be used for our test.
     {path: 'oopif-iframe-test-audit'},
-    {path: 'script-elements-test-audit'},
   ],
   settings: {
     // This test runs in CI and hits the outside network of a live site.
@@ -86,7 +84,6 @@ const expectations = {
         isPositionFixed: false,
       },
     ],
-    ScriptElements: [],
     Scripts: [],
   },
 };

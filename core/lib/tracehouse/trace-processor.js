@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -9,7 +9,7 @@
  * various tools. This artifact will take a trace and then:
  *
  * 1. Find the TracingStartedInPage and navigationStart events of our intended tab & frame.
- * 2. Find the firstContentfulPaint and marked firstMeaningfulPaint events
+ * 2. Find the firstContentfulPaint and marked largestContentfulPaint events
  * 3. Isolate only the trace events from the tab's process (including all threads like compositor)
  *      * Sort those trace events in chronological order (as order isn't guaranteed)
  * 4. Return all those items in one handy bundle.
@@ -403,6 +403,9 @@ class TraceProcessor {
    */
   static getMainThreadTopLevelEvents(trace, startTime = 0, endTime = Infinity) {
     const topLevelEvents = [];
+    /** @type {ToplevelEvent|undefined} */
+    let prevToplevel = undefined;
+
     // note: mainThreadEvents is already sorted by event start
     for (const event of trace.mainThreadEvents) {
       if (!this.isScheduleableTask(event) || !event.dur) continue;
@@ -411,11 +414,21 @@ class TraceProcessor {
       const end = (event.ts + event.dur - trace.timeOriginEvt.ts) / 1000;
       if (start > endTime || end < startTime) continue;
 
-      topLevelEvents.push({
+      // Temporary fix for a Chrome bug where some RunTask events can be overlapping.
+      // We correct that here be ensuring each RunTask ends at least 1 microsecond before the next
+      // https://github.com/GoogleChrome/lighthouse/issues/15896
+      // https://issues.chromium.org/issues/329678173
+      if (prevToplevel && start < prevToplevel.end) {
+        prevToplevel.end = start - 0.001;
+      }
+
+      prevToplevel = {
         start,
         end,
         duration: event.dur / 1000,
-      });
+      };
+
+      topLevelEvents.push(prevToplevel);
     }
 
     return topLevelEvents;
@@ -822,7 +835,6 @@ class TraceProcessor {
         firstPaint: frameTimings.timings.firstPaint,
         firstContentfulPaint: frameTimings.timings.firstContentfulPaint,
         firstContentfulPaintAllFrames: getTiming(fcpAllFramesEvt.ts),
-        firstMeaningfulPaint: frameTimings.timings.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timings.largestContentfulPaint,
         largestContentfulPaintAllFrames: maybeGetTiming(lcpAllFramesEvt?.ts),
         load: frameTimings.timings.load,
@@ -834,7 +846,6 @@ class TraceProcessor {
         firstPaint: frameTimings.timestamps.firstPaint,
         firstContentfulPaint: frameTimings.timestamps.firstContentfulPaint,
         firstContentfulPaintAllFrames: fcpAllFramesEvt.ts,
-        firstMeaningfulPaint: frameTimings.timestamps.firstMeaningfulPaint,
         largestContentfulPaint: frameTimings.timestamps.largestContentfulPaint,
         largestContentfulPaintAllFrames: lcpAllFramesEvt?.ts,
         load: frameTimings.timestamps.load,
@@ -844,12 +855,10 @@ class TraceProcessor {
       firstPaintEvt: frameTimings.firstPaintEvt,
       firstContentfulPaintEvt: frameTimings.firstContentfulPaintEvt,
       firstContentfulPaintAllFramesEvt: fcpAllFramesEvt,
-      firstMeaningfulPaintEvt: frameTimings.firstMeaningfulPaintEvt,
       largestContentfulPaintEvt: frameTimings.largestContentfulPaintEvt,
       largestContentfulPaintAllFramesEvt: lcpAllFramesEvt,
       loadEvt: frameTimings.loadEvt,
       domContentLoadedEvt: frameTimings.domContentLoadedEvt,
-      fmpFellBack: frameTimings.fmpFellBack,
       lcpInvalidated: frameTimings.lcpInvalidated,
     };
   }
@@ -957,28 +966,6 @@ class TraceProcessor {
       throw this.createNoFirstContentfulPaintError();
     }
 
-    // fMP will follow at/after the FP
-    let firstMeaningfulPaint = frameEvents.find(
-      e => e.name === 'firstMeaningfulPaint' && e.ts > timeOriginEvt.ts
-    );
-    let fmpFellBack = false;
-
-    // If there was no firstMeaningfulPaint event found in the trace, the network idle detection
-    // may have not been triggered before Lighthouse finished tracing.
-    // In this case, we'll use the last firstMeaningfulPaintCandidate we can find.
-    // However, if no candidates were found (a bogus trace, likely), we fail.
-    if (!firstMeaningfulPaint) {
-      const fmpCand = 'firstMeaningfulPaintCandidate';
-      fmpFellBack = true;
-      log.verbose('TraceProcessor',
-        `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
-      const lastCandidate = frameEvents.filter(e => e.name === fmpCand).pop();
-      if (!lastCandidate) {
-        log.verbose('TraceProcessor', 'No `firstMeaningfulPaintCandidate` events found in trace');
-      }
-      firstMeaningfulPaint = lastCandidate;
-    }
-
     // This function accepts events spanning multiple frames, but this usage will only provide events from the main frame.
     const lcpResult = this.computeValidLCPAllFrames(frameEvents, timeOriginEvt);
 
@@ -994,7 +981,6 @@ class TraceProcessor {
       timeOrigin: timeOriginEvt.ts,
       firstPaint: getTimestamp(firstPaint),
       firstContentfulPaint: firstContentfulPaint.ts,
-      firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
       largestContentfulPaint: getTimestamp(lcpResult.lcp),
       load: getTimestamp(load),
       domContentLoaded: getTimestamp(domContentLoaded),
@@ -1009,7 +995,6 @@ class TraceProcessor {
       timeOrigin: 0,
       firstPaint: maybeGetTiming(timestamps.firstPaint),
       firstContentfulPaint: getTiming(timestamps.firstContentfulPaint),
-      firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
       largestContentfulPaint: maybeGetTiming(timestamps.largestContentfulPaint),
       load: maybeGetTiming(timestamps.load),
       domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
@@ -1021,11 +1006,9 @@ class TraceProcessor {
       timeOriginEvt: timeOriginEvt,
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
-      firstMeaningfulPaintEvt: firstMeaningfulPaint,
       largestContentfulPaintEvt: lcpResult.lcp,
       loadEvt: load,
       domContentLoadedEvt: domContentLoaded,
-      fmpFellBack,
       lcpInvalidated: lcpResult.invalidated,
     };
   }

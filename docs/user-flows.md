@@ -142,7 +142,7 @@ writeFileSync('report.html', await flow.generateReport());
 <img src="https://user-images.githubusercontent.com/39191/170560932-f10c8465-de49-4e75-be6c-1cf408cf84f6.png" height=240>
 
 
-So far we've seen individual Lighthouse modes in action. The true power of flows comes from combining these building blocks into a comprehensive flow to capture the user's entire experience. Analyzing a multi-step user flow is currently only available [using the Lighthouse Node API along with Puppeteer](https://web.dev/lighthouse-user-flows/).
+So far we've seen individual Lighthouse modes in action. The true power of flows comes from combining these building blocks into a comprehensive flow to capture the user's entire experience. Analyzing a multi-step user flow is currently only available [using the Lighthouse Node API along with Puppeteer](https://web.dev/articles/lighthouse-user-flows).
 
 When mapping a user flow onto the Lighthouse modes, strive for each report to have a narrow focus. This will make debugging much easier when you have issues to fix!
 
@@ -155,22 +155,9 @@ The below example codifies a user flow for an ecommerce site where the user navi
 ### Complete user Flow Code
 
 ```js
-import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import * as pptrTestingLibrary from 'pptr-testing-library';
 import {startFlow} from 'lighthouse';
-
-const {getDocument, queries} = pptrTestingLibrary;
-
-async function search(page) {
-  const $document = await getDocument(page);
-  const $searchBox = await queries.getByLabelText($document, /type to search/i);
-  await $searchBox.type('Xbox Series X');
-  await Promise.all([
-    $searchBox.press('Enter'),
-    page.waitForNavigation({waitUntil: ['load', 'networkidle2']}),
-  ]);
-}
+import {writeFileSync} from 'fs';
 
 // Setup the browser and Lighthouse.
 const browser = await puppeteer.launch();
@@ -178,21 +165,27 @@ const page = await browser.newPage();
 const flow = await startFlow(page);
 
 // Phase 1 - Navigate to the landing page.
-await flow.navigate('https://www.bestbuy.com');
+await flow.navigate('https://web.dev/');
 
 // Phase 2 - Interact with the page and submit the search form.
 await flow.startTimespan();
-await search(page);
+
+await page.click('button[search-open]');
+const searchBox = await page.waitForSelector('devsite-search[search-active] input');
+await searchBox.type('CLS');
+await searchBox.press('Enter');
+
+// Ensure search results have rendered before moving on.
+const link = await page.waitForSelector('devsite-content a[href="https://web.dev/articles/cls"]');
+
 await flow.endTimespan();
 
 // Phase 3 - Analyze the new state.
 await flow.snapshot();
 
-// Phase 4 - Navigate to a detail page.
+// Phase 4 - Navigate to the article.
 await flow.navigate(async () => {
-  const $document = await getDocument(page);
-  const $link = await queries.getByText($document, /Xbox Series X 1TB Console/);
-  $link.click();
+  await link.click();
 });
 
 // Get the comprehensive flow report.

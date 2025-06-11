@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import path from 'path';
@@ -21,11 +21,11 @@ import {
   mergeConfigFragmentArrayByKey,
 } from '../../config/config-helpers.js';
 import {Runner} from '../../runner.js';
-import {Gatherer} from '../../gather/gatherers/gatherer.js';
+import BaseGatherer from '../../gather/base-gatherer.js';
 import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
 import UserTimingsAudit from '../../audits/user-timings.js';
-import {LH_ROOT} from '../../../root.js';
-import {getModuleDirectory} from '../../../esm-utils.js';
+import {LH_ROOT} from '../../../shared/root.js';
+import {getModuleDirectory} from '../../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
 const moduleDir = getModuleDirectory(import.meta);
@@ -142,10 +142,9 @@ describe('.deepClone', () => {
 
 describe('.deepCloneConfigJson', () => {
   it('should clone a config deeply', () => {
-    const TimingGatherer = new Gatherer();
+    const TimingGatherer = new BaseGatherer();
     const input = {
       artifacts: [{id: 'Timing', gatherer: TimingGatherer}],
-      passes: [{passName: 'defaultPass', gatherers: []}],
       audits: [{path: 'user-timings'}],
       categories: {random: {auditRefs: [{id: 'user-timings'}]}},
     };
@@ -154,27 +153,15 @@ describe('.deepCloneConfigJson', () => {
     expect(output).not.toBe(input);
     expect(output).toEqual(input);
     output.artifacts[0].id = 'NewName';
-    output.passes[0].passName = 'newName';
     output.audits[0].path = 'new-audit';
     output.categories.random.auditRefs[0].id = 'new-audit';
     expect(input.artifacts[0].id).toEqual('Timing');
-    expect(input.passes[0].passName).toEqual('defaultPass');
     expect(input.audits[0].path).toEqual('user-timings');
     expect(input.categories.random.auditRefs[0].id).toEqual('user-timings');
   });
 
-  it('should preserve gatherer implementations in passes', () => {
-    const TimingGatherer = new Gatherer();
-    const input = {
-      passes: [{passName: 'defaultPass', gatherers: [TimingGatherer]}],
-    };
-
-    const output = deepCloneConfigJson(input);
-    expect(output.passes[0].gatherers[0]).toEqual(TimingGatherer);
-  });
-
   it('should preserve gatherer implementations in artifacts', () => {
-    const TimingGatherer = new Gatherer();
+    const TimingGatherer = new BaseGatherer();
     const input = {
       artifacts: [{id: 'Timing', gatherer: TimingGatherer}],
     };
@@ -274,29 +261,25 @@ describe('.resolveSettings', () => {
     expect(settings).not.toHaveProperty('nonsense');
   });
 
-  describe('budgets', () => {
-    it('initializes budgets', () => {
-      const settings = resolveSettings({
-        budgets: [
-          {
-            path: '/',
-            resourceCounts: [{resourceType: 'image', budget: 500}],
-          },
-        ],
-      });
-
-      expect(settings).toMatchObject({
-        budgets: [
-          {
-            path: '/',
-            resourceCounts: [{resourceType: 'image', budget: 500}],
-          },
-        ],
-      });
+  describe('sets UA string', () => {
+    it('to default value if provided value is undefined', () => {
+      const settings = resolveSettings({}, {emulatedUserAgent: undefined});
+      expect(settings.emulatedUserAgent).toMatch(/^Mozilla\/5.*moto.*Chrome/);
     });
 
-    it('validates budgets', () => {
-      expect(() => resolveSettings({budgets: ['invalid']})).toThrow(/Budget file is not/);
+    it('to default value if provided value is true', () => {
+      const settings = resolveSettings({}, {emulatedUserAgent: true});
+      expect(settings.emulatedUserAgent).toMatch(/^Mozilla\/5.*moto.*Chrome/);
+    });
+
+    it('to false if provided value is false', () => {
+      const settings = resolveSettings({}, {emulatedUserAgent: false});
+      expect(settings.emulatedUserAgent).toEqual(false);
+    });
+
+    it('to the provided string value if present', () => {
+      const settings = resolveSettings({}, {emulatedUserAgent: 'Random UA'});
+      expect(settings.emulatedUserAgent).toEqual('Random UA');
     });
   });
 
@@ -341,8 +324,17 @@ describe('.resolveSettings', () => {
 describe('.resolveGathererToDefn', () => {
   const coreList = Runner.getGathererList();
 
-  it('should expand gatherer path short-hand', async () => {
+  it('should expand core gatherer', async () => {
     const result = await resolveGathererToDefn('image-elements', coreList);
+    expect(result).toEqual({
+      path: 'image-elements',
+      implementation: ImageElementsGatherer,
+      instance: expect.any(ImageElementsGatherer),
+    });
+  });
+
+  it('should expand gatherer path short-hand', async () => {
+    const result = await resolveGathererToDefn({path: 'image-elements'}, coreList);
     expect(result).toEqual({
       path: 'image-elements',
       implementation: ImageElementsGatherer,
@@ -360,6 +352,19 @@ describe('.resolveGathererToDefn', () => {
     });
   });
 
+  it('should find custom gatherers', async () => {
+    const result1 =
+      await resolveGathererToDefn('../fixtures/valid-custom-gatherer', [], moduleDir);
+    const result2 =
+      await resolveGathererToDefn('../fixtures/valid-custom-gatherer.js', [], moduleDir);
+    const result3 =
+      await resolveGathererToDefn('../fixtures/valid-custom-gatherer.cjs', [], moduleDir);
+
+    expect(result1).toMatchObject({path: '../fixtures/valid-custom-gatherer'});
+    expect(result2).toMatchObject({path: '../fixtures/valid-custom-gatherer.js'});
+    expect(result3).toMatchObject({path: '../fixtures/valid-custom-gatherer.cjs'});
+  });
+
   it('should expand gatherer impl short-hand', async () => {
     const result = await resolveGathererToDefn({implementation: ImageElementsGatherer}, coreList);
     expect(result).toEqual({
@@ -368,16 +373,58 @@ describe('.resolveGathererToDefn', () => {
     });
   });
 
+  it('should expand gatherer instance short-hand', async () => {
+    const result = await resolveGathererToDefn({instance: new ImageElementsGatherer()}, coreList);
+    expect(result).toEqual({
+      instance: expect.any(ImageElementsGatherer),
+    });
+  });
+
+  it('should expand gatherer instance directly', async () => {
+    const result = await resolveGathererToDefn(new ImageElementsGatherer(), coreList);
+    expect(result).toEqual({
+      instance: expect.any(ImageElementsGatherer),
+    });
+  });
+
   it('throws for invalid gathererDefn', async () => {
     await expect(resolveGathererToDefn({})).rejects.toThrow(/Invalid Gatherer type/);
+  });
+
+  it('throws for invalid path type', async () => {
+    await expect(resolveGathererToDefn({path: 1234})).rejects.toThrow(/Invalid Gatherer type/);
+  });
+
+  it('throws but not for missing gatherer when it has a node dependency error', async () => {
+    const resultPromise =
+      resolveGathererToDefn('../fixtures/invalid-gatherers/require-error.js', [], moduleDir);
+    await expect(resultPromise).rejects.toThrow(/no such file or directory/);
   });
 });
 
 describe('.resolveAuditsToDefns', () => {
-  it('should expand audit short-hand', async () => {
+  it('should expand core audit', async () => {
     const result = await resolveAuditsToDefns(['user-timings']);
 
     expect(result).toEqual([{path: 'user-timings', options: {}, implementation: UserTimingsAudit}]);
+  });
+
+  it('should expand audit path short-hand', async () => {
+    const result = await resolveAuditsToDefns([{path: 'user-timings'}]);
+
+    expect(result).toEqual([{path: 'user-timings', options: {}, implementation: UserTimingsAudit}]);
+  });
+
+  it('should expand audit impl short-hand', async () => {
+    const result = await resolveAuditsToDefns([{implementation: UserTimingsAudit}]);
+
+    expect(result).toEqual([{options: {}, implementation: UserTimingsAudit}]);
+  });
+
+  it('should expand audit impl directly', async () => {
+    const result = await resolveAuditsToDefns([UserTimingsAudit]);
+
+    expect(result).toEqual([{options: {}, implementation: UserTimingsAudit}]);
   });
 
   it('should find relative to configDir', async () => {
@@ -386,6 +433,19 @@ describe('.resolveAuditsToDefns', () => {
 
     expect(result).toEqual([
       {path: 'audits/user-timings', options: {}, implementation: UserTimingsAudit},
+    ]);
+  });
+
+  it('should find custom audits', async () => {
+    const result = await resolveAuditsToDefns([
+      '../fixtures/valid-custom-audit',
+      '../fixtures/valid-custom-audit.js',
+      '../fixtures/valid-custom-audit.cjs',
+    ], moduleDir);
+    expect(result).toMatchObject([
+      {path: '../fixtures/valid-custom-audit', options: {}},
+      {path: '../fixtures/valid-custom-audit.js', options: {}},
+      {path: '../fixtures/valid-custom-audit.cjs', options: {}},
     ]);
   });
 
@@ -409,7 +469,14 @@ describe('.resolveAuditsToDefns', () => {
   });
 
   it('throws for invalid auditDefns', async () => {
-    await expect(resolveAuditsToDefns([new Gatherer()])).rejects.toThrow(/Invalid Audit type/);
+    await expect(resolveAuditsToDefns([new BaseGatherer()])).rejects.toThrow(/Invalid Audit type/);
+  });
+
+  it('throws but not for missing audit when it has a node dependency error', async () => {
+    const resultPromise = resolveAuditsToDefns([
+      '../fixtures/invalid-audits/require-error.js',
+    ], moduleDir);
+    await expect(resultPromise).rejects.toThrow(/no such file or directory/);
   });
 });
 
@@ -424,6 +491,12 @@ describe('.resolveModulePath', () => {
     const pluginName = 'chrome-launcher';
     const pathToPlugin = resolveModulePath(pluginName, null, 'plugin');
     expect(pathToPlugin).toEqual(require.resolve(pluginName));
+  });
+
+  it('throws for unknown resource', async () => {
+    expect(() => {
+      resolveModulePath('unknown', null, 'audit');
+    }).toThrow(/Unable to locate audit: `unknown`/);
   });
 
   describe('plugin paths to a file', () => {

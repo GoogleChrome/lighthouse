@@ -1,13 +1,14 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
 import BootupTime from '../../audits/bootup-time.js';
-import {readJson} from '../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
+import {defaultSettings} from '../../config/constants.js';
 
 const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const acceptableDevtoolsLogs = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -18,12 +19,17 @@ describe('Performance: bootup-time audit', () => {
 
   it('should compute the correct BootupTime values', () => {
     const artifacts = Object.assign({
-      traces: {[BootupTime.DEFAULT_PASS]: acceptableTrace},
-      devtoolsLogs: {[BootupTime.DEFAULT_PASS]: acceptableDevtoolsLogs},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLogs,
+      URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLogs),
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     });
-    const computedCache = new Map();
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+    const context = {options: auditOptions, settings, computedCache: new Map()};
 
-    return BootupTime.audit(artifacts, {options: auditOptions, computedCache}).then(output => {
+    return BootupTime.audit(artifacts, context).then(output => {
       expect(output.details.items).toMatchInlineSnapshot(`
 Array [
   Object {
@@ -68,17 +74,21 @@ Array [
       assert.equal(Math.round(output.numericValue), 229);
       assert.equal(output.details.items.length, 6);
       assert.equal(output.score, 1);
+      assert.deepStrictEqual(output.metricSavings, {TBT: 41.604711667016595});
     });
   }, 10000);
 
   it('should compute the correct values when simulated', async () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevtoolsLogs},
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevtoolsLogs,
+      URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLogs),
+      GatherContext: {gatherMode: 'navigation'},
     });
 
     const options = auditOptions;
-    const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 3}};
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttling.cpuSlowdownMultiplier = 3;
     const computedCache = new Map();
     const output = await BootupTime.audit(artifacts, {options, settings, computedCache});
 
@@ -148,19 +158,29 @@ Array [
 `);
     assert.equal(output.score, 0.98);
     assert.equal(Math.round(output.numericValue), 720);
+    assert.deepStrictEqual(output.metricSavings, {TBT: 0});
   });
 
   it('should get no data when no events are present', () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: errorTrace},
-      devtoolsLogs: {defaultPass: []},
+      Trace: errorTrace,
+      DevtoolsLog: [],
+      URL: {
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
+      },
+      GatherContext: {gatherMode: 'navigation'},
     });
-    const computedCache = new Map();
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+    const context = {options: auditOptions, settings, computedCache: new Map()};
 
-    return BootupTime.audit(artifacts, {options: auditOptions, computedCache}).then(output => {
+    return BootupTime.audit(artifacts, context).then(output => {
       assert.equal(output.details.items.length, 0);
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.numericValue), 0);
+      assert.deepStrictEqual(output.metricSavings, {TBT: 0});
     });
   });
 });

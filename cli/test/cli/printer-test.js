@@ -1,11 +1,12 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 import fs from 'fs';
+import path from 'path';
 
 import {readJson} from '../../../core/test/test-utils.js';
 import * as Printer from '../../printer.js';
@@ -34,11 +35,9 @@ describe('Printer', () => {
   });
 
   it('throws for invalid paths', () => {
-    const path = '!/#@.json';
+    const path = '//#@.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write(report, 'html', path).catch(err => {
-      assert.ok(err.code === 'ENOENT');
-    });
+    return assert.rejects(Printer.write(report, 'html', path));
   });
 
   it('returns output modes', () => {
@@ -47,6 +46,22 @@ describe('Printer', () => {
     assert.ok(modes.length > 1);
     modes.forEach(mode => {
       assert.strictEqual(typeof mode, 'string');
+    });
+  });
+
+  it('creates missing directories when writing to file', () => {
+    const dirPath = './non/existent/directory/.test-file.json';
+    const report = JSON.stringify(sampleResults);
+    const dir = path.dirname(dirPath);
+    if (fs.existsSync(dir)) {
+      fs.rmdirSync(dir, {recursive: true});
+    }
+    return Printer.write(report, 'json', dirPath).then(_ => {
+      assert.ok(fs.existsSync(dir), `Directory ${dir} should exist now`);
+      const fileContents = fs.readFileSync(dirPath, 'utf8');
+      assert.ok(/lighthouseVersion/gim.test(fileContents));
+      fs.unlinkSync(dirPath);
+      fs.rmdirSync(dir, {recursive: true});
     });
   });
 });

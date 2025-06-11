@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {LCPBreakdown} from '../../../computed/metrics/lcp-breakdown.js';
@@ -12,8 +12,8 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const textLcpTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
 const textLcpDevtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
-const imageLcpTrace = readJson('../../fixtures/traces/amp-m86.trace.json', import.meta);
-const imageLcpDevtoolsLog = readJson('../../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
+const imageLcpTrace = readJson('../../fixtures/artifacts/amp/trace.json.gz', import.meta);
+const imageLcpDevtoolsLog = readJson('../../fixtures/artifacts/amp/devtoolslog.json.gz', import.meta);
 
 const requestedUrl = 'http://example.com:3000';
 const mainDocumentUrl = 'http://www.example.com:3000';
@@ -27,6 +27,7 @@ function mockData(networkRecords) {
     trace: createTestTrace({
       traceEnd: 6000,
       largestContentfulPaint: 4500,
+      networkRecords,
     }),
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {
@@ -35,6 +36,8 @@ function mockData(networkRecords) {
       finalDisplayedUrl: mainDocumentUrl,
     },
     gatherContext: {gatherMode: 'navigation'},
+    simulator: null,
+    SourceMaps: [],
   };
 }
 
@@ -46,6 +49,7 @@ function mockNetworkRecords() {
     networkRequestTime: 0,
     networkEndTime: 500,
     timing: {sendEnd: 0, receiveHeadersEnd: 500},
+    responseHeadersTransferSize: 400,
     transferSize: 400,
     url: requestedUrl,
     frameId: 'ROOT_FRAME',
@@ -96,14 +100,22 @@ describe('LCPBreakdown', () => {
       trace: imageLcpTrace,
       devtoolsLog: imageLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(imageLcpDevtoolsLog),
+      SourceMaps: [],
       gatherContext: {gatherMode: 'navigation'},
+      simulator: null,
     };
 
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
-    expect(result.ttfb).toBeCloseTo(2393.7, 0.1);
-    expect(result.loadStart).toBeCloseTo(5449.0, 0.1);
-    expect(result.loadEnd).toBeCloseTo(5572.1, 0.1);
+    expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
+    // TODO(15841): investigate difference.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      expect(result.loadStart).toBeCloseTo(3429.1, 0.1);
+      expect(result.loadEnd).toBeCloseTo(3812.8, 0.1);
+    } else {
+      expect(result.loadStart).toBeCloseTo(3558.6, 0.1);
+      expect(result.loadEnd).toBeCloseTo(3956.8, 0.1);
+    }
   });
 
   it('returns breakdown for a real trace with text LCP', async () => {
@@ -112,7 +124,9 @@ describe('LCPBreakdown', () => {
       trace: textLcpTrace,
       devtoolsLog: textLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(textLcpDevtoolsLog),
+      SourceMaps: [],
       gatherContext: {gatherMode: 'navigation'},
+      simulator: null,
     };
 
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});

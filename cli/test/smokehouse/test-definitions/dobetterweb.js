@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @type {LH.Config} */
@@ -123,6 +123,15 @@ const expectations = {
       },
       {
         rel: 'stylesheet',
+        href: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        hrefRaw: '',
+        hreflang: '',
+        as: '',
+        crossOrigin: null,
+        source: 'head',
+      },
+      {
+        rel: 'stylesheet',
         href: 'http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200',
         hrefRaw: './dbw_tester.css?scriptActivated&delay=200',
         hreflang: '',
@@ -147,63 +156,6 @@ const expectations = {
         property: 'og:description',
       },
     ],
-    TagsBlockingFirstPaint: [
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-        },
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-        },
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-        },
-
-      },
-      {
-        tag: {
-          tagName: 'LINK',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-          mediaChanges: [
-            {
-              href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-              media: 'not-matching',
-              matches: false,
-            },
-            {
-              href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-              media: 'screen',
-              matches: true,
-            },
-          ],
-        },
-      },
-      {
-        tag: {
-          tagName: 'SCRIPT',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
-        },
-      },
-      {
-        tag: {
-          tagName: 'SCRIPT',
-          url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
-        },
-      },
-    ],
-    GlobalListeners: [{
-      type: 'unload',
-      scriptId: /^\d+$/,
-      lineNumber: '>300',
-      columnNumber: '>30',
-    }],
     DevtoolsLog: {
       _includes: [
         // Ensure we are getting async call stacks.
@@ -269,44 +221,42 @@ const expectations = {
       'errors-in-console': {
         score: 0,
         details: {
-          items: {
-            0: {
+          items: [
+            {
               source: 'exception',
               description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
-            1: {
+            {
               source: 'console.error',
               description: 'Error! Error!',
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
-            2: {
+            {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200'},
             },
-            3: {
+            {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
-            4: {
+            {
               // In the DT runner, the initial page load before staring Lighthouse will prevent this error.
               _excludeRunner: 'devtools',
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
             },
-            // In legacy Lighthouse this audit will have additional duplicate failures which are a mistake.
-            // Fraggle Rock ordering of gatherer `stopInstrumentation` and `getArtifact` fixes the re-request issue.
-          },
+          ],
         },
       },
       'geolocation-on-start': {
         score: 0,
       },
       'no-document-write': {
-        score: 0,
+        score: 0.5,
         details: {
           items: {
             length: 3,
@@ -318,32 +268,32 @@ const expectations = {
       },
       'render-blocking-resources': {
         score: '<1',
-        numericValue: '>100',
+        numericValue: '>=50',
         details: {
           items: [
             {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            },
-            {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
+              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
             },
             {
               url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
             },
             {
+              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
+            },
+            {
               url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
             },
             {
-              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
             },
           ],
         },
       },
       'uses-passive-event-listeners': {
-        score: 0,
+        score: 0.5,
         details: {
           items: {
           // Note: Originally this was 7 but M56 defaults document-level
@@ -360,21 +310,8 @@ const expectations = {
         details: {
           items: [
             {
-              // This feature was removed in M110.
-              // TODO: Remove this expectation once M110 reaches stable.
-              _maxChromiumVersion: '109',
-              value: /`window.webkitStorageInfo` is deprecated/,
-              source: {
-                type: 'source-location',
-                url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
-                urlProvider: 'network',
-                line: '>0',
-                column: 9,
-              },
-              subItems: undefined,
-            },
-            {
-              value: /Synchronous `XMLHttpRequest` on the main thread is deprecated/,
+              // For some reason CDT .json locale files strip out backticks. LH doesn't.
+              value: /Synchronous `?XMLHttpRequest`? on the main thread is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -383,6 +320,16 @@ const expectations = {
                 column: 6,
               },
               subItems: undefined,
+            },
+            {
+              value: /Unload event listeners are deprecated and will be removed/,
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>0',
+                column: 9,
+              },
             },
           ],
         },
@@ -444,7 +391,7 @@ const expectations = {
       },
       'dom-size': {
         score: 1,
-        numericValue: 153,
+        numericValue: 151,
         details: {
           items: [
             {
@@ -452,7 +399,7 @@ const expectations = {
               value: {
                 type: 'numeric',
                 granularity: 1,
-                value: 153,
+                value: 151,
               },
             },
             {
@@ -475,38 +422,12 @@ const expectations = {
           ],
         },
       },
-      'no-unload-listeners': {
-        score: 0,
-        details: {
-          items: [{
-            source: {
-              type: 'source-location',
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-              urlProvider: 'network',
-              line: '>300',
-              column: '>30',
-            },
-          }],
-        },
-      },
       'bf-cache': {
         details: {
           items: [
             {
               reason: 'The page has an unload handler in the main frame.',
               failureType: 'Actionable',
-              subItems: {
-                items: [{
-                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-                }],
-              },
-            },
-            {
-              // Support for this was added in M109
-              // https://crbug.com/1350944
-              _maxChromiumVersion: '108',
-              reason: 'Pages that have requested notifications permissions are not currently eligible for back/forward cache.',
-              failureType: 'Pending browser support',
               subItems: {
                 items: [{
                   frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -525,28 +446,12 @@ const expectations = {
                 }],
               },
             },
-            {
-              // The DevTools runner uses Puppeteer to launch Chrome which disables BFCache by default.
-              // https://github.com/puppeteer/puppeteer/issues/8197
-              //
-              // If we ignore the Puppeteer args and force BFCache to be enabled, it causes thew viewport to be sized incorrectly for other tests.
-              // These viewport issues are not present when Lighthouse is run from DevTools manually.
-              // TODO: Investigate why BFCache causes viewport issues only in our DevTools smoke tests.
-              _runner: 'devtools',
-              reason: 'Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device.',
-              failureType: 'Not actionable',
-              subItems: {
-                items: [{
-                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-                }],
-              },
-            },
           ],
         },
       },
       'prioritize-lcp-image': {
         // In CI, there can sometimes be slight savings.
-        numericValue: '<=50',
+        numericValue: '<=200',
         details: {
           items: [{
             node: {
@@ -554,7 +459,7 @@ const expectations = {
               nodeLabel: 'Do better web tester page',
             },
             url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp',
-            wastedMs: '<=50',
+            wastedMs: '<=200',
           }],
           debugData: {
             initiatorPath: [{
@@ -576,16 +481,27 @@ const expectations = {
       },
       'network-rtt': {
         details: {
-          items: [
-            {origin: 'http://localhost:10200', rtt: '>0'},
-          ],
+          items: {
+            _includes: [
+              {origin: 'http://localhost:10200', rtt: '>0'},
+              {origin: 'http://[::1]:10503', rtt: '>0'},
+            ],
+            _excludes: [{}],
+          },
         },
       },
       'network-server-latency': {
         details: {
-          items: [
-            {origin: 'http://localhost:10200', serverResponseTime: '>0'},
-          ],
+          items: {
+            _includes: [
+              {origin: 'http://localhost:10200', serverResponseTime: '>0'},
+              // The response time estimate is based on just 1 request which can force Lighthouse
+              // to report a response time of 0 sometimes.
+              // https://github.com/GoogleChrome/lighthouse/pull/15729#issuecomment-1877869991
+              {origin: 'http://[::1]:10503', serverResponseTime: '>=0'},
+            ],
+            _excludes: [{}],
+          },
         },
       },
       'metrics': {
@@ -593,13 +509,13 @@ const expectations = {
         _excludeRunner: 'devtools',
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
-          lcpLoadStart: '7750+/-500',
-          lcpLoadEnd: '7750+/-500',
+          lcpLoadStart: '>5000',
+          lcpLoadEnd: '>5000',
         }}},
       },
       'largest-contentful-paint-element': {
-        score: null,
-        displayValue: '1 element found',
+        score: 0,
+        displayValue: /\d+\xa0ms/,
         details: {
           items: [
             {
@@ -620,6 +536,21 @@ const expectations = {
               ],
             },
           ],
+        },
+      },
+      'third-party-cookies': {
+        score: 0,
+        displayValue: '1 cookie found',
+        details: {
+          items: [
+            {name: 'Foo', url: /^http:\/\/\[::1\]:10503\/dobetterweb\/empty_module\.js/},
+          ],
+        },
+      },
+      'viewport': {
+        score: 1,
+        details: {
+          viewportContent: 'width=device-width, initial-scale=1, minimum-scale=1',
         },
       },
     },

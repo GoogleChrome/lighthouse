@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 /**
  * @fileoverview Checks to see if the aspect ratio of the images used on
@@ -59,7 +59,16 @@ class ImageAspectRatio extends Audit {
     const displayedAspectRatio = image.displayedWidth / image.displayedHeight;
 
     const targetDisplayHeight = image.displayedWidth / actualAspectRatio;
-    const doRatiosMatch = Math.abs(targetDisplayHeight - image.displayedHeight) < THRESHOLD_PX;
+    const targetDisplayWidth = image.displayedHeight * actualAspectRatio;
+
+    // Small rounding errors in aspect ratio can lead to large differences in target width/height
+    // if the aspect ratio is close to 0.
+    //
+    // In these cases, we should compare the smaller dimension because any rounding errors will
+    // affect that dimension less.
+    const doRatiosMatch = targetDisplayHeight < targetDisplayWidth
+      ? Math.abs(targetDisplayHeight - image.displayedHeight) < THRESHOLD_PX
+      : Math.abs(targetDisplayWidth - image.displayedWidth) < THRESHOLD_PX;
 
     return {
       url,

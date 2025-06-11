@@ -1,22 +1,23 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import {createRequire} from 'module';
+import {gunzipSync} from 'zlib';
 
 import * as td from 'testdouble';
 import jestMock from 'jest-mock';
 
-import {LH_ROOT} from '../../root.js';
+import {LH_ROOT} from '../../shared/root.js';
 import * as mockCommands from './gather/mock-commands.js';
 import {NetworkRecorder} from '../lib/network-recorder.js';
 import {timers} from './test-env/fake-timers.js';
-import {getModuleDirectory} from '../../esm-utils.js';
+import {getModuleDirectory} from '../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
 
@@ -111,10 +112,10 @@ function loadSourceMapAndUsageFixture(name) {
  * @return {{devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}}
  */
 function loadTraceFixture(name) {
-  const dir = `${LH_ROOT}/core/test/fixtures/traces`;
+  const dir = `${LH_ROOT}/core/test/fixtures/artifacts/${name}`;
   return {
-    devtoolsLog: JSON.parse(fs.readFileSync(`${dir}/${name}.devtools.log.json`, 'utf-8')),
-    trace: JSON.parse(fs.readFileSync(`${dir}/${name}.json`, 'utf-8')),
+    devtoolsLog: JSON.parse(fs.readFileSync(`${dir}/devtoolslog.json`, 'utf-8')),
+    trace: JSON.parse(fs.readFileSync(`${dir}/trace.json`, 'utf-8')),
   };
 }
 
@@ -206,7 +207,7 @@ async function makeMocksForGatherRunner() {
   });
   await td.replaceEsm('../gather/driver/prepare.js', {
     prepareTargetForNavigationMode: jestMock.fn(),
-    prepareTargetForIndividualNavigation: jestMock.fn().mockResolvedValue({warnings: []}),
+    prepareTargetForIndividualNavigation: fnAny().mockResolvedValue({warnings: []}),
     enableAsyncStacks: jestMock.fn().mockReturnValue(jestMock.fn()),
   });
   await td.replaceEsm('../gather/driver/storage.js', {
@@ -215,7 +216,7 @@ async function makeMocksForGatherRunner() {
     getImportantStorageWarning: jestMock.fn(),
   });
   await td.replaceEsm('../gather/driver/navigation.js', {
-    gotoURL: jestMock.fn().mockResolvedValue({
+    gotoURL: fnAny().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],
     }),
@@ -224,9 +225,11 @@ async function makeMocksForGatherRunner() {
 
 /**
  * Same as jestMock.fn(), but uses `any` instead of `unknown`.
+ * This makes it simpler to override existing properties in test files that are
+ * typechecked.
  */
 const fnAny = () => {
-  return /** @type {Mock<any, any>} */ (jestMock.fn());
+  return /** @type {Mock<any>} */ (jestMock.fn());
 };
 
 /**
@@ -287,7 +290,7 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
  *
  * @param {string} modulePath
  * @param {ImportMeta} importMeta
- * @return {Promise<Record<string, Mock<any, any>>>}
+ * @return {Promise<Record<string, Mock<any>>>}
  */
 async function importMock(modulePath, importMeta) {
   const mock = await import(new URL(modulePath, importMeta.url).href);
@@ -303,7 +306,7 @@ async function importMock(modulePath, importMeta) {
  *
  * @param {string} modulePath
  * @param {ImportMeta} importMeta
- * @return {Record<string, Mock<any, any>>}
+ * @return {Record<string, Mock<any>>}
  */
 function requireMock(modulePath, importMeta) {
   const dir = path.dirname(url.fileURLToPath(importMeta.url));
@@ -318,6 +321,7 @@ function requireMock(modulePath, importMeta) {
 /**
  * Return parsed json object.
  * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
+ * Supports `.json.gz`
  *
  * Note: Do not use this in core/ outside tests or scripts, as it
  * will not be inlined when bundled. Instead, use `fs.readFileSync`.
@@ -328,6 +332,9 @@ function requireMock(modulePath, importMeta) {
 function readJson(filePath, importMeta) {
   const dir = importMeta ? getModuleDirectory(importMeta) : LH_ROOT;
   filePath = path.resolve(dir, filePath);
+  if (filePath.endsWith('.gz')) {
+    return JSON.parse(gunzipSync(fs.readFileSync(filePath)).toString('utf-8'));
+  }
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 

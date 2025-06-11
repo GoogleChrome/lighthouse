@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -9,7 +9,7 @@ import path from 'path';
 import {createRequire} from 'module';
 
 import {inlineFs} from '../../plugins/inline-fs.js';
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const require = createRequire(import.meta.url);
 
@@ -342,17 +342,18 @@ describeSkipOnWindows('inline-fs', () => {
       it('warns and skips when missing encoding', async () => {
         const content = `const myTextContent = fs.readFileSync('${tmpPath}');`;
         const result = await inlineFs(content, filepath);
-        expect(result).toEqual({
-          code: null,
-          warnings: [{
-            text: 'fs.readFileSync() must have two arguments',
-            location: {
-              file: filepath,
-              line: 1,
-              column: 22,
-            },
-          }],
+
+        // These expectations are deconstructed because the warning text can have slight
+        // variations depending on the node version (18 vs 20).
+        // TODO: Use a simpler expectation when support for Node 18 is dropped.
+        expect(result.code).toBeNull();
+        expect(result.warnings).toHaveLength(1);
+        expect(result.warnings[0].location).toEqual({
+          file: filepath,
+          line: 1,
+          column: 22,
         });
+        expect(result.warnings[0].text).toMatch(/^fs\.readFileSync\(\) must have two arguments/);
       });
 
       it('warns and skips on unsupported encoding', async () => {

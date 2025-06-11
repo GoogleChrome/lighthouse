@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Util} from '../../shared/util.js';
@@ -34,6 +34,10 @@ function upgradeLhrForCompatibility(lhr) {
     // eslint-disable-next-line max-len
     if (audit.scoreDisplayMode === 'not_applicable' || audit.scoreDisplayMode === 'not-applicable') {
       audit.scoreDisplayMode = 'notApplicable';
+    }
+
+    if (audit.scoreDisplayMode === 'informative') {
+      audit.score = 1;
     }
 
     if (audit.details) {
@@ -104,19 +108,62 @@ function upgradeLhrForCompatibility(lhr) {
     }
   }
 
-  // This backcompat converts old LHRs (<9.0.0) to use the new "hidden" group.
-  // Old LHRs used "no group" to identify audits that should be hidden in performance instead of the "hidden" group.
-  // Newer LHRs use "no group" to identify opportunities and diagnostics whose groups are assigned by details type.
+  // This backcompat converts old LHRs to use the "hidden" and "diagnostics" groups.
+  // <9.0.0 LHRs used "no group" to identify audits that should be hidden in performance instead of the "hidden" group.
+  // <9.0.0 LHRs used "load-opportunities" for opportunity audits that are now grouped under "diagnostics".
+  // >=9.0.0 && <12.0.0 LHRs use "no group" to identify opportunities and diagnostics whose groups are assigned by details type.
+  // >=12.0.0 LHRs use the "hidden" group to identify hidden audits and "diagnostics" to identify diagnostics. "no group" is meaningless.
   const [majorVersion] = lhr.lighthouseVersion.split('.').map(Number);
   const perfCategory = lhr.categories['performance'];
-  if (majorVersion < 9 && perfCategory) {
-    if (!lhr.categoryGroups) lhr.categoryGroups = {};
-    lhr.categoryGroups['hidden'] = {title: ''};
+  if (perfCategory) {
+    if (majorVersion < 9) {
+      if (!lhr.categoryGroups) lhr.categoryGroups = {};
+      lhr.categoryGroups['hidden'] = {title: ''};
+      for (const auditRef of perfCategory.auditRefs) {
+        if (!auditRef.group) {
+          auditRef.group = 'hidden';
+        } else if (auditRef.group === 'load-opportunities') {
+          auditRef.group = 'diagnostics';
+        }
+      }
+    } else if (majorVersion < 12) {
+      for (const auditRef of perfCategory.auditRefs) {
+        if (!auditRef.group) {
+          auditRef.group = 'diagnostics';
+        }
+      }
+    }
+  }
+
+  if (majorVersion < 12 && perfCategory) {
+    /** @type {Map<string, string[]>} */
+    const metricRelevanceMap = new Map();
+
     for (const auditRef of perfCategory.auditRefs) {
-      if (!auditRef.group) {
-        auditRef.group = 'hidden';
-      } else if (['load-opportunities', 'diagnostics'].includes(auditRef.group)) {
-        delete auditRef.group;
+      /** @type {string[]|undefined} */
+      // @ts-expect-error Removed in v12
+      const relevantAudits = auditRef.relevantAudits;
+      if (!relevantAudits || !auditRef.acronym) continue;
+
+      for (const auditId of relevantAudits) {
+        const acronyms = metricRelevanceMap.get(auditId) || [];
+        acronyms.push(auditRef.acronym);
+        metricRelevanceMap.set(auditId, acronyms);
+      }
+    }
+
+    for (const [auditId, acronyms] of metricRelevanceMap) {
+      if (!acronyms.length) continue;
+
+      const audit = lhr.audits[auditId];
+      if (!audit) continue;
+
+      // Old versions can still define metric savings, let's not mess with it.
+      if (audit.metricSavings) continue;
+
+      audit.metricSavings = {};
+      for (const acronym of acronyms) {
+        audit.metricSavings[acronym] = 0;
       }
     }
   }

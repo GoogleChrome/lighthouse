@@ -1,18 +1,7 @@
 /**
  * @license
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @typedef {import('./dom.js').DOM} DOM */
@@ -49,22 +38,12 @@ export class CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @return {Element}
+   * @return {HTMLElement}
    */
   renderAudit(audit) {
-    const component = this.dom.createComponent('audit');
-    return this.populateAuditValues(audit, component);
-  }
-
-  /**
-   * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
-   * @param {LH.ReportResult.AuditRef} audit
-   * @param {DocumentFragment} component
-   * @return {!Element}
-   */
-  populateAuditValues(audit, component) {
     const strings = Globals.strings;
-    const auditEl = this.dom.find('.lh-audit', component);
+    const component = this.dom.createComponent('audit');
+    const auditEl = this.dom.find('div.lh-audit', component);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
 
@@ -308,14 +287,14 @@ export class CategoryRenderer {
    * Take a set of audits and render in a top-level, expandable clump that starts
    * in a collapsed state.
    * @param {Exclude<TopLevelClumpId, 'failed'>} clumpId
-   * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, description?: string}} clumpOpts
+   * @param {{auditRefsOrEls: Array<LH.ReportResult.AuditRef | HTMLElement>, description?: string, openByDefault?: boolean}} clumpOpts
    * @return {!Element}
    */
-  renderClump(clumpId, {auditRefs, description}) {
+  renderClump(clumpId, {auditRefsOrEls, description, openByDefault}) {
     const clumpComponent = this.dom.createComponent('clump');
     const clumpElement = this.dom.find('.lh-clump', clumpComponent);
 
-    if (clumpId === 'warning') {
+    if (openByDefault) {
       clumpElement.setAttribute('open', '');
     }
 
@@ -324,10 +303,16 @@ export class CategoryRenderer {
     this.dom.find('.lh-audit-group__title', headerEl).textContent = title;
 
     const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
-    itemCountEl.textContent = `(${auditRefs.length})`;
+    itemCountEl.textContent = `(${auditRefsOrEls.length})`;
 
     // Add all audit results to the clump.
-    const auditElements = auditRefs.map(this.renderAudit.bind(this));
+    const auditElements = auditRefsOrEls.map(audit => {
+      if (audit instanceof HTMLElement) {
+        return audit;
+      } else {
+        return this.renderAudit(audit);
+      }
+    });
     clumpElement.append(...auditElements);
 
     const el = this.dom.find('.lh-audit-group', clumpComponent);
@@ -545,6 +530,7 @@ export class CategoryRenderer {
 
     // Sort audits into clumps.
     for (const auditRef of category.auditRefs) {
+      if (auditRef.group === 'hidden') continue;
       const clumpId = this._getClumpIdForAuditRef(auditRef);
       const clump = /** @type {Array<LH.ReportResult.AuditRef>} */ (clumps.get(clumpId)); // already defined
       clump.push(auditRef);
@@ -558,6 +544,7 @@ export class CategoryRenderer {
       });
     }
 
+    const numFailingAudits = clumps.get('failed')?.length;
     // Render each clump.
     for (const [clumpId, auditRefs] of clumps) {
       if (auditRefs.length === 0) continue;
@@ -570,7 +557,14 @@ export class CategoryRenderer {
       }
 
       const description = clumpId === 'manual' ? category.manualDescription : undefined;
-      const clumpElem = this.renderClump(clumpId, {auditRefs, description});
+      // Expand on warning, or manual audits when there are no failing audits.
+      const openByDefault =
+        clumpId === 'warning' || (clumpId === 'manual' && numFailingAudits === 0);
+      const clumpElem = this.renderClump(clumpId, {
+        auditRefsOrEls: auditRefs,
+        description,
+        openByDefault,
+      });
       element.append(clumpElem);
     }
 

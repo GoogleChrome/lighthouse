@@ -118,8 +118,6 @@ All pruning checks:
 
 - `_minChromiumVersion`
 - `_maxChromiumVersion`
-- `_legacyOnly`
-- `_fraggleRockOnly`
 - `_runner` (set to same value provided to CLI --runner flag, ex: `'devtools'`)
 - `_excludeRunner` (set to same value provided to CLI --runner flag, ex: `'devtools'`)
 

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import ScriptTreemapData_ from '../../audits/script-treemap-data.js';
@@ -24,7 +24,7 @@ const ScriptTreemapData = {
  * @param {LH.Crdp.Network.ResourceType} resourceType
  */
 function generateRecord(url, resourceSize, resourceType) {
-  return {url, resourceSize, resourceType};
+  return {url, resourceSize, transferSize: resourceSize * 0.6, resourceType};
 }
 
 describe('ScriptTreemapData audit', () => {
@@ -48,7 +48,7 @@ describe('ScriptTreemapData audit', () => {
       const artifacts = {
         URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
         JsUsage: {[usage.scriptId]: usage},
-        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
         SourceMaps: [{scriptId: 'squoosh', scriptUrl, map}],
         Scripts: [
           {scriptId: 'squoosh', url: scriptUrl, content},
@@ -65,26 +65,28 @@ describe('ScriptTreemapData audit', () => {
 
     it('has nodes', () => {
       expect(treemapData.nodes.find((s) => s.name === 'https://sqoosh.app/no-map-or-usage.js')).
-        toMatchInlineSnapshot(`
-        Object {
-          "name": "https://sqoosh.app/no-map-or-usage.js",
-          "resourceBytes": 5,
-          "unusedBytes": undefined,
-        }
-      `);
+toMatchInlineSnapshot(`
+Object {
+  "encodedBytes": 3,
+  "name": "https://sqoosh.app/no-map-or-usage.js",
+  "resourceBytes": 5,
+  "unusedBytes": undefined,
+}
+`);
 
       const bundleNode = treemapData.nodes.find(s => s.name === 'https://squoosh.app/main-app.js');
       // @ts-expect-error
       const unmapped = bundleNode.children.find(m => m.name === '(unmapped)');
       expect(unmapped).toMatchInlineSnapshot(`
-        Object {
-          "name": "(unmapped)",
-          "resourceBytes": 10061,
-          "unusedBytes": 3760,
-        }
-      `);
+Object {
+  "encodedBytes": undefined,
+  "name": "(unmapped)",
+  "resourceBytes": 10061,
+  "unusedBytes": 3760,
+}
+`);
 
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6673`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6724`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
   });
@@ -108,7 +110,7 @@ describe('ScriptTreemapData audit', () => {
         URL: {requestedUrl: mainUrl, finalDisplayedUrl: mainUrl},
         // Audit should still work even without usage data.
         JsUsage: {},
-        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
         SourceMaps: [
           {scriptId: '1', scriptUrl: scriptUrl1, map},
           {scriptId: '2', scriptUrl: scriptUrl2, map},
@@ -127,12 +129,12 @@ describe('ScriptTreemapData audit', () => {
     });
 
     it('has nodes', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`70077`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73797`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
 
     it('finds duplicates', () => {
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`70077`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`73797`);
       // @ts-ignore all these children exist.
       const leafNode = treemapData.nodes[0].
         children[0].

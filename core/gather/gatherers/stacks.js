@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -16,10 +16,10 @@ import {createRequire} from 'module';
 
 import log from 'lighthouse-logger';
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 
 
-// This is removed by rollup, because the only usage is to resolve a module path
+// This is removed by esbuild (if minified), because the only usage is to resolve a module path
 // but that is replaced by the inline-fs plugin, leaving `require` unused.
 const require = /* #__PURE__ */ createRequire(import.meta.url);
 
@@ -85,8 +85,8 @@ async function detectLibraries() {
 /* c8 ignore stop */
 
 
-/** @implements {LH.Gatherer.FRGathererInstance} */
-class Stacks extends FRGatherer {
+/** @implements {LH.Gatherer.GathererInstance} */
+class Stacks extends BaseGatherer {
   constructor() {
     super();
 
@@ -97,7 +97,7 @@ class Stacks extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalDriver['executionContext']} executionContext
+   * @param {LH.Gatherer.Driver['executionContext']} executionContext
    * @return {Promise<LH.Artifacts['Stacks']>}
    */
   static async collectStacks(executionContext) {
@@ -122,7 +122,7 @@ class Stacks extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<LH.Artifacts['Stacks']>}
    */
   async getArtifact(context) {

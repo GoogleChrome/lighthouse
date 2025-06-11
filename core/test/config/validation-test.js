@@ -1,15 +1,15 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-import {defaultSettings, defaultNavigationConfig} from '../../config/constants.js';
+import {defaultSettings} from '../../config/constants.js';
 import defaultConfig from '../../config/default-config.js';
 import {Audit as BaseAudit} from '../../audits/audit.js';
-import BaseFRGatherer from '../../gather/base-gatherer.js';
-import {Gatherer as BaseLegacyGatherer} from '../../gather/gatherers/gatherer.js';
+import BaseGatherer from '../../gather/base-gatherer.js';
 import * as validation from '../../config/validation.js';
+import LinkElements from '../../gather/gatherers/link-elements.js';
 
 /** @typedef {LH.Gatherer.GathererMeta['supportedModes']} SupportedModes */
 
@@ -29,17 +29,7 @@ beforeEach(() => {
   ExampleAudit = ExampleAudit_;
 });
 
-describe('Fraggle Rock Config Validation', () => {
-  describe('isFRGathererDefn', () => {
-    it('should identify fraggle rock gatherer definitions', () => {
-      expect(validation.isFRGathererDefn({instance: new BaseFRGatherer()})).toBe(true);
-    });
-
-    it('should identify legacy gatherer definitions', () => {
-      expect(validation.isFRGathererDefn({instance: new BaseLegacyGatherer()})).toBe(false);
-    });
-  });
-
+describe('Config Validation', () => {
   describe('isValidArtifactDependency', () => {
     /** @type {Array<{dependent: SupportedModes, dependency: SupportedModes, isValid: boolean}>} */
     const combinations = [
@@ -56,9 +46,9 @@ describe('Fraggle Rock Config Validation', () => {
 
     for (const {dependent, dependency, isValid} of combinations) {
       it(`should identify ${dependent.join(',')} / ${dependency.join(',')} correctly`, () => {
-        const dependentDefn = {instance: new BaseFRGatherer()};
+        const dependentDefn = {instance: new BaseGatherer()};
         dependentDefn.instance.meta.supportedModes = dependent;
-        const dependencyDefn = {instance: new BaseFRGatherer()};
+        const dependencyDefn = {instance: new BaseGatherer()};
         dependencyDefn.instance.meta.supportedModes = dependency;
         expect(validation.isValidArtifactDependency(dependentDefn, dependencyDefn)).toBe(isValid);
       });
@@ -80,53 +70,64 @@ describe('Fraggle Rock Config Validation', () => {
     });
   });
 
-  describe('.assertValidFRGatherer', () => {
+  describe('.assertValidArtifacts', () => {
+    it('should throw if multiple artifacts have the same id', async () => {
+      const instance = new BaseGatherer();
+      instance.meta.supportedModes = ['navigation'];
+      instance.getArtifact = () => {};
+
+      const artifacts = [
+        {id: 'Artifact1', gatherer: {instance}},
+        {id: 'Artifact1', gatherer: {instance}},
+      ];
+      const invocation = () => validation.assertValidArtifacts(artifacts);
+      expect(invocation).toThrow(/Config defined multiple/);
+    });
+
+    it('should throw if dependencies are out of order', async () => {
+      const dependentGatherer = new LinkElements();
+
+      /** @type {LH.Config.AnyArtifactDefn[]} */
+      const artifacts = [
+        {
+          id: 'LinkElements',
+          gatherer: {instance: dependentGatherer},
+          dependencies: {DevtoolsLog: {id: 'DevtoolsLog'}},
+        },
+        {id: 'DevtoolsLog', gatherer: {instance: new BaseGatherer()}},
+      ];
+      const invocation = () => validation.assertValidArtifacts(artifacts);
+      expect(invocation).toThrow(/Failed to find dependency/);
+    });
+  });
+
+  describe('.assertValidArtifact', () => {
     it('should throw if gatherer does not have a meta object', () => {
-      const gatherer = new BaseFRGatherer();
+      const gatherer = new BaseGatherer();
       // @ts-expect-error - We are intentionally creating a malformed input.
       gatherer.meta = undefined;
 
       const gathererDefn = {instance: gatherer};
-      const invocation = () => validation.assertValidFRGatherer(gathererDefn);
+      const artifactDefn = {id: 'NewArtifact', gatherer: gathererDefn};
+      const invocation = () => validation.assertValidArtifact(artifactDefn);
       expect(invocation).toThrow(/did not provide a meta/);
     });
 
     it('should throw if gatherer does not have a supported modes', () => {
-      const gathererDefn = {instance: new BaseFRGatherer()};
-      const invocation = () => validation.assertValidFRGatherer(gathererDefn);
+      const gathererDefn = {instance: new BaseGatherer()};
+      const artifactDefn = {id: 'NewArtifact', gatherer: gathererDefn};
+      const invocation = () => validation.assertValidArtifact(artifactDefn);
       expect(invocation).toThrow(/did not support any gather modes/);
     });
 
     it('should throw if gatherer does define getArtifact', () => {
-      const gatherer = new BaseFRGatherer();
+      const gatherer = new BaseGatherer();
       gatherer.meta = {supportedModes: ['navigation']};
 
       const gathererDefn = {instance: gatherer};
-      const invocation = () => validation.assertValidFRGatherer(gathererDefn);
+      const artifactDefn = {id: 'NewArtifact', gatherer: gathererDefn};
+      const invocation = () => validation.assertValidArtifact(artifactDefn);
       expect(invocation).toThrow(/did not define.*getArtifact/);
-    });
-  });
-
-  describe('.assertValidFRNavigations', () => {
-    it('should add warning if navigations uses non-fatal loadFailureMode', () => {
-      /** @type {Array<LH.Config.NavigationDefn>} */
-      const navigations = [{...defaultNavigationConfig, loadFailureMode: 'warn', artifacts: []}];
-      const {warnings} = validation.assertValidFRNavigations(navigations);
-      expect(warnings).toHaveLength(1);
-      expect(warnings[0]).toContain('but had a failure mode');
-      expect(navigations[0].loadFailureMode).toEqual('fatal');
-    });
-
-
-    it('should throw if navigations do not have unique ids', () => {
-      /** @type {Array<LH.Config.NavigationDefn>} */
-      const navigations = [
-        {...defaultNavigationConfig, id: 'first', artifacts: []},
-        {...defaultNavigationConfig, id: 'second', artifacts: []},
-        {...defaultNavigationConfig, id: 'first', artifacts: []},
-      ];
-      const invocation = () => validation.assertValidFRNavigations(navigations);
-      expect(invocation).toThrow(/must have unique.*but "first" was repeated/);
     });
   });
 
@@ -145,12 +146,28 @@ describe('Fraggle Rock Config Validation', () => {
       expect(invocation).toThrow(/has no audit.*method/);
     });
 
+    it('should throw if audit id is missing', () => {
+      // @ts-expect-error - We are intentionally creating a malformed input.
+      ExampleAudit.meta.id = undefined;
+      const audit = {implementation: ExampleAudit, options: {}};
+      const invocation = () => validation.assertValidAudit(audit);
+      expect(invocation).toThrow(/has no meta.id/);
+    });
+
     it('should throw if title is missing', () => {
       // @ts-expect-error - We are intentionally creating a malformed input.
       ExampleAudit.meta.title = undefined;
       const audit = {implementation: ExampleAudit, options: {}};
       const invocation = () => validation.assertValidAudit(audit);
       expect(invocation).toThrow(/has no meta.title/);
+    });
+
+    it('should throw if audit description is missing', () => {
+      // @ts-expect-error - We are intentionally creating a malformed input.
+      ExampleAudit.meta.description = undefined;
+      const audit = {implementation: ExampleAudit, options: {}};
+      const invocation = () => validation.assertValidAudit(audit);
+      expect(invocation).toThrow(/has no meta.description/);
     });
 
     it('should throw if failureTitle is missing', () => {
@@ -234,6 +251,13 @@ describe('Fraggle Rock Config Validation', () => {
       const settings = {...defaultSettings};
       // @ts-expect-error - We are intentionally creating a malformed input.
       delete settings.formFactor;
+      expect(() => validation.assertValidSettings(settings)).toThrow();
+    });
+
+    it('should throw if an audit in onlyAudits is also in skipAudits', () => {
+      const settings = {...defaultSettings};
+      settings.onlyAudits = ['viewport'];
+      settings.skipAudits = ['viewport', 'is-on-https'];
       expect(() => validation.assertValidSettings(settings)).toThrow();
     });
 

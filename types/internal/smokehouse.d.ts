@@ -1,12 +1,13 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Artifacts} from '../artifacts.js';
 import Config from '../config.js';
 import LHResult from '../lhr/lhr.js';
+import {LocalConsole} from '../../cli/test/smokehouse/lib/local-console.js';
 
 declare global {
   module Smokehouse {
@@ -33,7 +34,7 @@ declare global {
     }
 
     export interface TestDfn {
-      /** Identification of test. Can be used for group selection (e.g. `yarn smoke pwa` will run all tests with `id.includes('pwa')`). */
+      /** Identification of test. Can be used for group selection (e.g. `yarn smoke csp` will run all tests with `id.includes('csp')`). */
       id: string;
       /** Expected test results. */
       expectations: ExpectedRunnerResult;
@@ -53,19 +54,22 @@ declare global {
       {expectations: Smokehouse.ExpectedRunnerResult | Array<Smokehouse.ExpectedRunnerResult>}
 
     export type LighthouseRunner =
-      {runnerName?: string} & ((url: string, config?: Config, runnerOptions?: {isDebug?: boolean; useLegacyNavigation?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts, log: string}>);
+      {runnerName?: string} & ((url: string, config?: Config, logger?: LocalConsole, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts}>);
 
     export interface SmokehouseOptions {
-      /** If true, performs extra logging from the test runs. */
-      isDebug?: boolean;
-      /** If true, use the legacy navigation runner. */
-      useLegacyNavigation?: boolean;
+      /** Options to pass to the specific Lighthouse runner. */
+      testRunnerOptions?: {
+        /** If true, performs extra logging from the test runs. */
+        isDebug?: boolean;
+        /** Launch Chrome in the new headless mode (`--headless=new`), rather than the typical desktop headful mode. */
+        headless?: boolean;
+      };
       /** Manually set the number of jobs to run at once. `1` runs all tests serially. */
-      jobs?: number;
+      jobs: number;
       /** The number of times to retry failing tests before accepting. Defaults to 0. */
-      retries?: number;
+      retries: number;
       /** A function that runs Lighthouse with the given options. Defaults to running Lighthouse via the CLI. */
-      lighthouseRunner?: LighthouseRunner;
+      lighthouseRunner: LighthouseRunner;
       /** A function that gets a list of URLs requested to the server since the last fetch. */
       takeNetworkRequestUrls?: () => string[];
       /** A function run once before all smoke tests. */

@@ -1,13 +1,14 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {Sentry} from '../../lib/sentry.js';
+import defaultConfig from '../../config/default-config.js';
 
 describe('Sentry', () => {
   let sentryNodeMock;
@@ -18,6 +19,7 @@ describe('Sentry', () => {
     await td.replaceEsm('@sentry/node', (sentryNodeMock = {
       init: jestMock.fn().mockReturnValue({install: jestMock.fn()}),
       setExtras: jestMock.fn(),
+      setTags: jestMock.fn(),
       captureException: jestMock.fn(),
       withScope: (fn) => fn({
         setLevel: () => {},
@@ -63,8 +65,13 @@ describe('Sentry', () => {
         url: 'http://example.com',
         flags: {
           enableErrorReporting: true,
-          formFactor: 'desktop',
+          formFactor: 'mobile',
           throttlingMethod: 'devtools',
+        },
+        config: {
+          settings: {
+            channel: 'test',
+          },
         },
         environmentData: {},
       });
@@ -72,9 +79,12 @@ describe('Sentry', () => {
       expect(sentryNodeMock.init).toHaveBeenCalled();
       expect(sentryNodeMock.setExtras).toHaveBeenCalled();
       expect(sentryNodeMock.setExtras.mock.calls[0][0]).toEqual({
-        channel: 'cli',
         url: 'http://example.com',
-        formFactor: 'desktop',
+        ...defaultConfig.settings.throttling,
+      });
+      expect(sentryNodeMock.setTags.mock.calls[0][0]).toEqual({
+        channel: 'test',
+        formFactor: 'mobile',
         throttlingMethod: 'devtools',
       });
     });

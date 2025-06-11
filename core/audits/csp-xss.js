@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
@@ -21,7 +21,7 @@ const UIStrings = {
   /** Summary text for the results of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed if no CSP is being enforced. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
   noCsp: 'No CSP found in enforcement mode',
   /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
-  metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
+  metaTagMessage: 'The page contains a CSP defined in a `<meta>` tag. ' +
     'Consider moving the CSP to an HTTP header or ' +
     'defining another strict CSP in an HTTP header.',
   /** Label for a column in a data table; entries will be a directive of a CSP. "CSP" stands for "Content Security Policy". */
@@ -44,7 +44,7 @@ class CspXss extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'MetaElements', 'URL'],
     };
   }
 
@@ -54,7 +54,7 @@ class CspXss extends Audit {
    * @return {Promise<{cspHeaders: string[], cspMetaTags: string[]}>}
    */
   static async getRawCsps(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
     const cspMetaTags = artifacts.MetaElements

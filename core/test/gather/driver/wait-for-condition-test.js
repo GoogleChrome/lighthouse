@@ -1,23 +1,20 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
 
 import * as wait from '../../../gather/driver/wait-for-condition.js';
 import {
-  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   createDecomposedPromise,
   fnAny,
   timers,
 } from '../../test-utils.js';
-
-const {createMockOnceFn} = mockCommands;
-
+import {createMockSession} from '../mock-driver.js';
 
 function createMockWaitForFn() {
   const {promise, resolve, reject} = createDecomposedPromise();
@@ -256,18 +253,11 @@ describe('waitForFcp()', () => {
   let session;
 
   beforeEach(() => {
-    session = {
-      on: fnAny(),
-      once: fnAny(),
-      off: fnAny(),
-      sendCommand: fnAny(),
-    };
+    session = createMockSession();
   });
 
 
   it('should not resolve until FCP fires', async () => {
-    session.on = session.once = createMockOnceFn();
-
     const waitPromise = makePromiseInspectable(wait.waitForFcp(session, 0, 60 * 1000).promise);
     const listener = session.on.findListener('Page.lifecycleEvent');
 
@@ -285,8 +275,6 @@ describe('waitForFcp()', () => {
   });
 
   it('should wait for pauseAfterFcpMs after FCP', async () => {
-    session.on = session.once = createMockOnceFn();
-
     const waitPromise = makePromiseInspectable(wait.waitForFcp(session, 5000, 60 * 1000).promise);
     const listener = session.on.findListener('Page.lifecycleEvent');
 
@@ -305,8 +293,6 @@ describe('waitForFcp()', () => {
   });
 
   it('should timeout', async () => {
-    session.on = session.once = createMockOnceFn();
-
     const waitPromise = makePromiseInspectable(wait.waitForFcp(session, 0, 5000).promise);
 
     await flushAllTimersAndMicrotasks();
@@ -319,9 +305,6 @@ describe('waitForFcp()', () => {
   });
 
   it('should be cancellable', async () => {
-    session.on = session.once = createMockOnceFn();
-    session.off = fnAny();
-
     const {promise: rawPromise, cancel} = wait.waitForFcp(session, 0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);
 

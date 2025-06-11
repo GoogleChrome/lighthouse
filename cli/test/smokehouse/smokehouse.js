@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -11,8 +11,6 @@
  */
 
 /* eslint-disable no-console */
-
-/** @typedef {import('./lib/child-process-error.js').ChildProcessError} ChildProcessError */
 
 /**
  * @typedef Run
@@ -39,6 +37,7 @@ import {runLighthouse as cliLighthouseRunner} from './lighthouse-runners/cli.js'
 import {getAssertionReport} from './report-assert.js';
 import {LocalConsole} from './lib/local-console.js';
 import {ConcurrentMapper} from './lib/concurrent-mapper.js';
+import {ChildProcessError} from './lib/child-process-error.js';
 
 // The number of concurrent (`!runSerially`) tests to run if `jobs` isn't set.
 const DEFAULT_CONCURRENT_RUNS = 5;
@@ -47,13 +46,12 @@ const DEFAULT_RETRIES = 0;
 /**
  * Runs the selected smoke tests. Returns whether all assertions pass.
  * @param {Array<Smokehouse.TestDfn>} smokeTestDefns
- * @param {Smokehouse.SmokehouseOptions} smokehouseOptions
+ * @param {Partial<Smokehouse.SmokehouseOptions>} smokehouseOptions
  * @return {Promise<{success: boolean, testResults: SmokehouseResult[]}>}
  */
 async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const {
-    isDebug,
-    useLegacyNavigation,
+    testRunnerOptions,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
     lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
@@ -75,8 +73,8 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const concurrentMapper = new ConcurrentMapper();
 
   const testOptions = {
-    isDebug,
-    useLegacyNavigation,
+    testRunnerOptions,
+    jobs,
     retries,
     lighthouseRunner,
     takeNetworkRequestUrls,
@@ -134,38 +132,17 @@ function purpleify(str) {
 }
 
 /**
- * @param {LH.Config=} config
- * @return {LH.Config|undefined}
- */
-function convertToLegacyConfig(config) {
-  if (!config) return config;
-
-  return {
-    ...config,
-    passes: [{
-      passName: 'defaultPass',
-      pauseAfterFcpMs: config.settings?.pauseAfterFcpMs,
-      pauseAfterLoadMs: config.settings?.pauseAfterLoadMs,
-      networkQuietThresholdMs: config.settings?.networkQuietThresholdMs,
-      cpuQuietThresholdMs: config.settings?.cpuQuietThresholdMs,
-      blankPage: config.settings?.blankPage,
-    }],
-  };
-}
-
-/**
  * Run Lighthouse in the selected runner.
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{isDebug?: boolean, useLegacyNavigation?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
+ * @param {Smokehouse.SmokehouseOptions} testOptions
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
-  const {id, expectations} = smokeTestDefn;
+  const {id, expectations, config} = smokeTestDefn;
   const {
     lighthouseRunner,
     retries,
-    isDebug,
-    useLegacyNavigation,
+    testRunnerOptions,
     takeNetworkRequestUrls,
   } = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
@@ -184,16 +161,24 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       bufferedConsole.log(`  Retrying run (${i} out of ${retries} retries)…`);
     }
 
-    let config = smokeTestDefn.config;
-    if (useLegacyNavigation) {
-      config = convertToLegacyConfig(config);
-    }
+    const logger = new LocalConsole();
 
     // Run Lighthouse.
     try {
+      // Each individual runner has internal timeouts, but we've had bugs where
+      // that didn't cover some edge case. So to be safe give a (long) timeout here.
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() =>
+          reject(new Error('Timed out waiting for provided lighthouseRunner')), 1000 * 120);
+      });
+      const timedResult = await Promise.race([
+        lighthouseRunner(requestedUrl, config, logger, testRunnerOptions),
+        timeoutPromise,
+      ]);
       result = {
-        ...await lighthouseRunner(requestedUrl, config, {isDebug, useLegacyNavigation}),
+        ...timedResult,
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
+        log: logger.getLog(),
       };
 
       if (!result.lhr?.audits || !result.artifacts) {
@@ -206,14 +191,15 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       if (takeNetworkRequestUrls) takeNetworkRequestUrls();
 
       logChildProcessError(bufferedConsole, e);
+      bufferedConsole.log('Timed out. log from lighthouseRunner:');
+      bufferedConsole.log(logger.getLog());
       continue; // Retry, if possible.
     }
 
     // Assert result.
     report = getAssertionReport(result, expectations, {
       runner: lighthouseRunner.runnerName,
-      isDebug,
-      useLegacyNavigation,
+      ...testRunnerOptions,
     });
 
     runs.push({
@@ -268,11 +254,18 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
  * @param {ChildProcessError|Error} err
  */
 function logChildProcessError(localConsole, err) {
-  if ('stdout' in err && 'stderr' in err) {
+  if (err instanceof ChildProcessError) {
     localConsole.adoptStdStrings(err);
   }
 
   localConsole.log(log.redify(err.stack || err.message));
+  if (err.cause) {
+    if (err.cause instanceof Error) {
+      localConsole.log(log.redify(`[cause] ${err.cause.stack || err.cause.message}`));
+    } else {
+      localConsole.log(log.redify(`[cause] ${err.cause}`));
+    }
+  }
 }
 
 /**
@@ -333,4 +326,6 @@ function getShardedDefinitions(testDefns, shardArg) {
 export {
   runSmokehouse,
   getShardedDefinitions,
+  DEFAULT_RETRIES,
+  DEFAULT_CONCURRENT_RUNS,
 };

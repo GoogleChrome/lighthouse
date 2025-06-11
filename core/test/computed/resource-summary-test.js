@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -17,7 +17,6 @@ function mockArtifacts(networkRecords) {
       mainDocumentUrl: networkRecords[0].url,
       finalDisplayedUrl: networkRecords[0].url,
     },
-    budgets: null,
   };
 }
 
@@ -74,13 +73,6 @@ describe('Resource summary computed', () => {
   });
 
   it('ignores records with non-network protocols', async () => {
-    artifacts.budgets = [{
-      path: '/',
-      options: {
-        firstPartyHostnames: ['example.com'],
-      },
-    }];
-
     artifacts = mockArtifacts([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
       {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10,
@@ -110,7 +102,6 @@ describe('Resource summary computed', () => {
 
     describe('when firstPartyHostnames is not set', () => {
       it('the root domain and all subdomains are considered first-party', async () => {
-        artifacts.budgets = null;
         const result = await ResourceSummary.request(artifacts, context);
         expect(result['third-party'].transferSize).toBe(25 + 50 + 70);
         expect(result['third-party'].count).toBe(3);
@@ -122,100 +113,9 @@ describe('Resource summary computed', () => {
           {url: 'http://es.shopping-mall.co.uk/file.html', resourceType: 'Script', transferSize: 7},
           {url: 'http://co.uk', resourceType: 'Script', transferSize: 10},
         ]);
-        artifacts.budgets = null;
         const result = await ResourceSummary.request(artifacts, context);
         expect(result['third-party'].transferSize).toBe(10);
         expect(result['third-party'].count).toBe(1);
-      });
-    });
-
-    describe('when firstPartyHostnames is set', () => {
-      const allResourcesSize = 30 + 10 + 25 + 50 + 70;
-      const allResourcesCount = 5;
-      it('handles subdomain hostnames correctly', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['cdn.example.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 10);
-        expect(result['third-party'].count).toBe(allResourcesCount - 1);
-      });
-
-      it('handles wildcard expressions correctly', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            // Matches example.com and cdn.example.com
-            firstPartyHostnames: ['*.example.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 30 - 10);
-        expect(result['third-party'].count).toBe(allResourcesCount - 2);
-      });
-
-      it('handles root domain hostname correctly', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            // Matches example.com; does not match cdn.example.com
-            firstPartyHostnames: ['example.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 30);
-        expect(result['third-party'].count).toBe(allResourcesCount - 1);
-      });
-
-      it('handles multiple hostnames correctly', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['example.com', 'my-cdn.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 30 - 25);
-        expect(result['third-party'].count).toBe(allResourcesCount - 2);
-      });
-
-      it('handles duplication of hostnames', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['my-cdn.com', 'my-cdn.com', 'my-cdn.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 25);
-        expect(result['third-party'].count).toBe(allResourcesCount - 1);
-      });
-
-      it('handles logical duplication of hostnames', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['example.com', '*.example.com', 'cdn.example.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(allResourcesSize - 30 - 10);
-        expect(result['third-party'].count).toBe(allResourcesCount - 2);
-      });
-
-      it('handles using top-level domains as firstPartyHostnames correctly', async () => {
-        artifacts.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['*.com'],
-          },
-        }];
-        const result = await ResourceSummary.request(artifacts, context);
-        expect(result['third-party'].transferSize).toBe(0);
-        expect(result['third-party'].count).toBe(0);
       });
     });
   });

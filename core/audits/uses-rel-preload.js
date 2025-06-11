@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from '../lib/lantern/lantern.js';
 import UrlUtils from '../lib/url-utils.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {Audit} from './audit.js';
-import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import {CriticalRequestChains} from '../computed/critical-request-chains.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {MainResource} from '../computed/main-resource.js';
@@ -43,8 +43,9 @@ class UsesRelPreloadAudit extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      guidanceLevel: 3,
+      requiredArtifacts: ['DevtoolsLog', 'Trace', 'URL', 'SourceMaps'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
@@ -61,8 +62,8 @@ class UsesRelPreloadAudit extends Audit {
       if (node.type !== 'network') return;
       // Don't include the node itself or any CPU nodes in the initiatorPath
       const path = traversalPath.slice(1).filter(initiator => initiator.type === 'network');
-      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.record, mainResource, path)) return;
-      urls.add(node.record.url);
+      if (!UsesRelPreloadAudit.shouldPreloadRequest(node.request, mainResource, path)) return;
+      urls.add(node.request.url);
     });
 
     return urls;
@@ -75,9 +76,10 @@ class UsesRelPreloadAudit extends Audit {
    * @return {Set<string>}
    */
   static getURLsFailedToPreload(graph) {
+    // TODO: add `fromPrefetchCache` to Lantern.Types.NetworkRequest, then use node.request here instead of rawRequest.
     /** @type {Array<LH.Artifacts.NetworkRequest>} */
     const requests = [];
-    graph.traverse(node => node.type === 'network' && requests.push(node.record));
+    graph.traverse(node => node.type === 'network' && requests.push(node.rawRequest));
 
     const preloadRequests = requests.filter(req => req.isLinkPreload);
     const preloadURLsByFrame = new Map();
@@ -109,8 +111,8 @@ class UsesRelPreloadAudit extends Audit {
    * Critical requests deeper than depth 2 are more likely to be a case-by-case basis such that it
    * would be a little risky to recommend blindly.
    *
-   * @param {LH.Artifacts.NetworkRequest} request
-   * @param {LH.Artifacts.NetworkRequest} mainResource
+   * @param {Lantern.Types.NetworkRequest} request
+   * @param {Lantern.Types.NetworkRequest} mainResource
    * @param {Array<LH.Gatherer.Simulation.GraphNode>} initiatorPath
    * @return {boolean}
    */
@@ -143,9 +145,9 @@ class UsesRelPreloadAudit extends Audit {
       return {wastedMs: 0, results: []};
     }
 
-    // Preload changes the ordering of requests, simulate the original graph with flexible ordering
+    // Preload changes the ordering of requests, simulate the original graph
     // to have a reasonable baseline for comparison.
-    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
+    const simulationBeforeChanges = simulator.simulate(graph);
     const modifiedGraph = graph.cloneWithRelationships();
 
     /** @type {Array<LH.Gatherer.Simulation.GraphNetworkNode>} */
@@ -157,7 +159,7 @@ class UsesRelPreloadAudit extends Audit {
 
       if (node.isMainDocument()) {
         mainDocumentNode = node;
-      } else if (node.record && urls.has(node.record.url)) {
+      } else if (node.request && urls.has(node.request.url)) {
         nodesToPreload.push(node);
       }
     });
@@ -174,22 +176,22 @@ class UsesRelPreloadAudit extends Audit {
       node.addDependency(mainDocumentNode);
     }
 
-    // Once we've modified the dependencies, simulate the new graph with flexible ordering.
-    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
-    const originalNodesByRecord = Array.from(simulationBeforeChanges.nodeTimings.keys())
-        // @ts-expect-error we don't care if all nodes without a record collect on `undefined`
-        .reduce((map, node) => map.set(node.record, node), new Map());
+    // Once we've modified the dependencies, simulate the new graph.
+    const simulationAfterChanges = simulator.simulate(modifiedGraph);
+    const originalNodesByRequest = Array.from(simulationBeforeChanges.nodeTimings.keys())
+        // @ts-expect-error we don't care if all nodes without a request collect on `undefined`
+        .reduce((map, node) => map.set(node.request, node), new Map());
 
     const results = [];
     for (const node of nodesToPreload) {
-      const originalNode = originalNodesByRecord.get(node.record);
+      const originalNode = originalNodesByRequest.get(node.request);
       const timingAfter = simulationAfterChanges.nodeTimings.get(node);
       const timingBefore = simulationBeforeChanges.nodeTimings.get(originalNode);
       if (!timingBefore || !timingAfter) throw new Error('Missing preload node');
 
       const wastedMs = Math.round(timingBefore.endTime - timingAfter.endTime);
       if (wastedMs < THRESHOLD_IN_MS) continue;
-      results.push({url: node.record.url, wastedMs});
+      results.push({url: node.request.url, wastedMs});
     }
 
     if (!results.length) {
@@ -209,15 +211,17 @@ class UsesRelPreloadAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit_(artifacts, context) {
-    const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+  static async audit(artifacts, context) {
+    const settings = context.settings;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const simulatorOptions = {devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
-      PageDependencyGraph.request({trace, devtoolsLog, URL}, context),
+      PageDependencyGraph.request(
+        {settings, trace, devtoolsLog, URL, SourceMaps, fromTrace: false}, context),
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
@@ -243,7 +247,7 @@ class UsesRelPreloadAudit extends Audit {
       {overallSavingsMs: wastedMs, sortedBy: ['wastedMs']});
 
     return {
-      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
+      score: results.length ? 0 : 1,
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ?
@@ -252,16 +256,6 @@ class UsesRelPreloadAudit extends Audit {
       details,
       warnings,
     };
-  }
-
-  /**
-   * @return {Promise<LH.Audit.Product>}
-   */
-  static async audit() {
-    // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
-    // is resolved.
-    return {score: 1, notApplicable: true,
-      details: Audit.makeOpportunityDetails([], [], {overallSavingsMs: 0})};
   }
 }
 

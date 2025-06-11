@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -15,16 +15,15 @@ import {execSync} from 'child_process';
 import {createRequire} from 'module';
 
 import esMain from 'es-main';
-import {rollup} from 'rollup';
-// @ts-expect-error: plugin has no types.
-import PubAdsPlugin from 'lighthouse-plugin-publisher-ads';
+import esbuild from 'esbuild';
 // @ts-expect-error: plugin has no types.
 import SoftNavPlugin from 'lighthouse-plugin-soft-navigation';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT} from '../shared/root.js';
 import {readJson} from '../core/test/test-utils.js';
+import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const require = createRequire(import.meta.url);
 
@@ -36,10 +35,7 @@ const require = createRequire(import.meta.url);
 const GIT_READABLE_REF =
   execSync(process.env.CI ? 'git rev-parse HEAD' : 'git describe').toString().trim();
 
-// HACK: manually include the lighthouse-plugin-publisher-ads audits.
-/** @type {Array<string>} */
-// @ts-expect-error
-const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
+// HACK: manually include plugin audits.
 /** @type {Array<string>} */
 // @ts-expect-error
 const softNavAudits = SoftNavPlugin.audits.map(a => a.path);
@@ -50,9 +46,6 @@ const isDevtools = file =>
 /** @param {string} file */
 const isLightrider = file => path.basename(file).includes('lightrider');
 
-// Set to true for source maps.
-const DEBUG = false;
-
 const today = (() => {
   const date = new Date();
   const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
@@ -60,6 +53,7 @@ const today = (() => {
   const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
   return `${month} ${day} ${year}`;
 })();
+/* eslint-disable max-len */
 const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
@@ -68,10 +62,14 @@ const banner = `
  * ${pkg.description}
  *
  * @homepage ${pkg.homepage}
- * @author   ${pkg.author}
+ * @author   Copyright ${new Date().getFullYear()} ${pkg.author}
  * @license  ${pkg.license}
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 `.trim();
+/* eslint-enable max-len */
 
 /**
  * Bundle starting at entryPath, writing the minified result to distPath.
@@ -81,10 +79,6 @@ const banner = `
  * @return {Promise<void>}
  */
 async function buildBundle(entryPath, distPath, opts = {minify: true}) {
-  if (fs.existsSync(LH_ROOT + '/lighthouse-logger/node_modules')) {
-    throw new Error('delete `lighthouse-logger/node_modules` because it messes up rollup bundle');
-  }
-
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
   const dynamicModulePaths = [
@@ -94,10 +88,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   // Include plugins.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
-    pubAdsAudits.forEach(pubAdAudit => {
-      dynamicModulePaths.push(pubAdAudit);
-    });
     dynamicModulePaths.push('lighthouse-plugin-soft-navigation');
     softNavAudits.forEach(softNavAudit => {
       dynamicModulePaths.push(softNavAudit);
@@ -111,14 +101,23 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    [require.resolve('../core/legacy/gather/connections/cri.js')]:
-      'export const CriConnection = {}',
+    // zlib's decompression code is very large and we don't need it.
+    // We export empty functions, instead of an empty module, simply to silence warnings
+    // about no exports.
+    '__zlib-lib/inflate': `
+      export function inflateInit2() {};
+      export function inflate() {};
+      export function inflateEnd() {};
+      export function inflateReset() {};
+    `,
   };
 
   const modulesToIgnore = [
     'puppeteer-core',
-    'intl-pluralrules',
-    'intl',
+    // ScreenRecorder.js imports `child_process` functions that are unavailable in bundled environments.
+    // This module is imported dynamically in a function we never use, so safe to ignore:
+    // https://github.com/puppeteer/puppeteer/blob/35f9c6d1e699ea37e89ef3bbb7940f5599df4724/packages/puppeteer-core/src/api/Page.ts#L2365-L2369
+    'puppeteer-core/lib/esm/puppeteer/node/ScreenRecorder.js',
     'pako/lib/zlib/inflate.js',
     '@sentry/node',
     'source-map',
@@ -128,55 +127,42 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    shimsObj[require.resolve('../report/generator/report-assets.js')] =
+    shimsObj[`${LH_ROOT}/report/generator/report-assets.js`] =
       'export const reportAssets = {}';
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    shimsObj['./locales.js'] = 'export const locales = {};';
+    shimsObj[`${LH_ROOT}/shared/localization/locales.js`] = 'export const locales = {};';
+  }
+
+  // Don't bundle third-party-web (CDT provides its own copy). This prevents duplications of 40+ KB.
+  if (isDevtools(entryPath)) {
+    shimsObj['third-party-web/nostats-subset.js'] = 'export default {};';
   }
 
   for (const modulePath of modulesToIgnore) {
     shimsObj[modulePath] = 'export default {}';
   }
 
-  const bundle = await rollup({
-    input: entryPath,
-    context: 'globalThis',
+  await esbuild.build({
+    entryPoints: [entryPath],
+    outfile: distPath,
+    write: false,
+    format: 'iife',
+    charset: 'utf8',
+    bundle: true,
+    minify: opts.minify,
+    treeShaking: true,
+    sourcemap: 'linked',
+    banner: {js: banner},
+    lineLimit: 1000,
+    // Because of page-functions!
+    keepNames: true,
+    inject: ['./build/process-global.js'],
+    /** @type {esbuild.Plugin[]} */
     plugins: [
-      rollupPlugins.replace({
-        delimiters: ['', ''],
-        values: {
-          '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
-          // This package exports to default in a way that causes Rollup to get confused,
-          // resulting in MessageFormat being undefined.
-          'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
-          // Below we replace lighthouse-logger with a local copy, which is ES modules. Need
-          // to change every require of the package to reflect this.
-          'require(\'lighthouse-logger\');': 'require(\'lighthouse-logger\').default;',
-          // Rollup doesn't replace this, so let's manually change it to false.
-          'require.main === module': 'false',
-          // TODO: Use globalThis directly.
-          'global.isLightrider': 'globalThis.isLightrider',
-          'global.isDevtools': 'globalThis.isDevtools',
-          // For some reason, `shim` doesn't work to force this module to return false, so instead
-          // just replace usages of it with false.
-          'esMain(import.meta)': 'false',
-          'import esMain from \'es-main\'': '',
-          // By default Rollup converts `import.meta` to a big mess of `document.currentScript && ...`,
-          // and uses the output name as the url. Instead, do a simpler conversion and use the
-          // module path.
-          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
-        },
-      }),
-      rollupPlugins.alias({
-        entries: {
-          'debug': require.resolve('debug/src/browser.js'),
-          'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
-        },
-      }),
-      rollupPlugins.shim({
+      plugins.replaceModules({
         ...shimsObj,
         'url': `
           export const URL = globalThis.URL;
@@ -192,59 +178,94 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
             };
           };
         `,
+      }, {
+        // buildBundle is used in a lot of different contexts. Some share the same modules
+        // that need to be replaced, but others don't use those modules at all.
+        disableUnusedError: true,
       }),
-      rollupPlugins.json(),
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({
-        verbose: Boolean(process.env.DEBUG),
-        ignorePaths: [
-          require.resolve('puppeteer-core/lib/esm/puppeteer/common/Page.js'),
-        ],
-      }),
-      rollupPlugins.commonjs({
-        // https://github.com/rollup/plugins/issues/922
-        ignoreGlobal: true,
-      }),
-      rollupPlugins.nodePolyfills(),
-      rollupPlugins.nodeResolve({preferBuiltins: true}),
-      // Rollup sees the usages of these functions in page functions (ex: see AnchorElements)
-      // and treats them as globals. Because the names are "taken" by the global, Rollup renames
-      // the actual functions (getNodeDetails$1). The page functions expect a certain name, so
-      // here we undo what Rollup did.
-      rollupPlugins.postprocess([
-        [/getBoundingClientRect\$1/, 'getBoundingClientRect'],
-        [/getElementsInDocument\$1/, 'getElementsInDocument'],
-        [/getNodeDetails\$1/, 'getNodeDetails'],
-        [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
-        [/isPositionFixed\$1/, 'isPositionFixed'],
+      nodeModulesPolyfillPlugin(),
+      plugins.bulkLoader([
+        // TODO: when we used rollup, various things were tree-shaken out before inlineFs did its
+        // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it
+        // did before. Some of those new cases emit warnings. Safe to ignore, but should be
+        // resolved eventually.
+        plugins.partialLoaders.inlineFs({
+          verbose: Boolean(process.env.DEBUG),
+        }),
+        plugins.partialLoaders.rmGetModuleDirectory,
+        plugins.partialLoaders.replaceText({
+          '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          // TODO: Use globalThis directly.
+          'global.isLightrider': 'globalThis.isLightrider',
+          'global.isDevtools': 'globalThis.isDevtools',
+          // By default esbuild converts `import.meta` to an empty object.
+          // We need at least the url property for i18n things.
+          /** @param {string} id */
+          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
+        }),
       ]),
-      opts.minify && rollupPlugins.terser({
-        ecma: 2019,
-        output: {
-          comments: (node, comment) => {
-            const text = comment.value;
-            if (text.includes('The Lighthouse Authors') && comment.line > 1) return false;
-            return /@ts-nocheck - Prevent tsc|@preserve|@license|@cc_on|^!/i.test(text);
-          },
-          max_line_len: 1000,
+      {
+        name: 'alias',
+        setup({onResolve}) {
+          onResolve({filter: /\.*/}, (args) => {
+            /** @type {Record<string, string>} */
+            const entries = {
+              'debug': require.resolve('debug/src/browser.js'),
+              'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
+            };
+            if (args.path in entries) {
+              return {path: entries[args.path]};
+            }
+          });
         },
-        // The config relies on class names for gatherers.
-        keep_classnames: true,
-        // Runtime.evaluate errors if function names are elided.
-        keep_fnames: true,
-      }),
+      },
+      {
+        name: 'postprocess',
+        setup({onEnd}) {
+          onEnd(async (result) => {
+            if (result.errors.length) {
+              return;
+            }
+
+            const codeFile = result.outputFiles?.find(file => file.path.endsWith('.js'));
+            const mapFile = result.outputFiles?.find(file => file.path.endsWith('.js.map'));
+            if (!codeFile) {
+              throw new Error('missing output');
+            }
+
+            // Just make sure the above shimming worked.
+            let code = codeFile.text;
+            if (code.includes('inflate_fast')) {
+              throw new Error('Expected zlib inflate code to have been removed');
+            }
+
+            // Get rid of our extra license comments.
+            // All comments would have been moved to the end of the file, so removing some will not break
+            // source maps.
+            // https://stackoverflow.com/a/35923766
+            const re = /\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\/\n/g;
+            let hasSeenFirst = false;
+            code = code.replace(re, (match) => {
+              if (match.includes('@license') && match.match(/Lighthouse Authors|Google/)) {
+                if (hasSeenFirst) {
+                  return '';
+                }
+
+                hasSeenFirst = true;
+              }
+
+              return match;
+            });
+
+            await fs.promises.writeFile(codeFile.path, code);
+            if (mapFile) {
+              await fs.promises.writeFile(mapFile.path, mapFile.text);
+            }
+          });
+        },
+      },
     ],
   });
-
-  await bundle.write({
-    file: distPath,
-    banner,
-    format: 'iife',
-    sourcemap: DEBUG,
-    // Suppress code splitting.
-    inlineDynamicImports: true,
-  });
-  await bundle.close();
 }
 
 /**

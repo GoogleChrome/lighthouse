@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2022 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2022 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @type {LH.Config} */
@@ -12,14 +12,12 @@ const config = {
       title: 'Performance',
       auditRefs: [
         {id: 'oopif-iframe-test-audit', weight: 0},
-        {id: 'script-elements-test-audit', weight: 0},
       ],
     },
   },
   audits: [
     // Include an audit that *forces* the IFrameElements artifact to be used for our test.
     {path: 'oopif-iframe-test-audit'},
-    {path: 'script-elements-test-audit'},
   ],
   settings: {
     // This test runs in CI and hits the outside network of a live site.
@@ -44,32 +42,34 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
-            // Multiple session attach handling fixed in M105
-            // https://chromiumdash.appspot.com/commit/f42337f1d623ec913397610ccf01b5526e9e919d
-            _minChromiumVersion: '105',
             _includes: [
-              {url: 'http://localhost:10200/oopif-scripts.html'},
-              {url: 'http://localhost:10200/oopif-simple-page.html'},
-              {url: 'http://localhost:10503/oopif-simple-page.html'},
-              // simple-script.js is included many times
-              // 2 * (1 from <script>, 1 from fetch) = 4
-              // Note, the network records from the workers are _not_ captured! If they
-              // were, then we would see 8 simple-script.js
-              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Script'},
-              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Script'},
-              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Fetch'},
-              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Fetch'},
-              {url: 'http://localhost:10200/simple-worker.js'},
-              {url: 'http://localhost:10503/simple-worker.js'},
-              // These requests are emitted in workers so Lighthouse doesn't capture them.
-              // For some reason, legacy navigations in DevTools still pick them up.
-              // https://github.com/GoogleChrome/lighthouse/issues/14211
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-worker.mjs'},
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-worker.mjs'},
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-script.js?esm', resourceType: 'Script'},
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-script.js?esm', resourceType: 'Script'},
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-script.js?importScripts', resourceType: 'Other'},
-              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-script.js?importScripts', resourceType: 'Other'},
+              {url: 'http://localhost:10200/oopif-scripts.html', sessionTargetType: 'page'},
+              {url: 'http://localhost:10200/oopif-simple-page.html', sessionTargetType: 'page'},
+              {url: 'http://localhost:10503/oopif-simple-page.html', sessionTargetType: 'iframe'},
+
+              // From in-process iframe
+              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Script', sessionTargetType: 'page'},
+              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Fetch', sessionTargetType: 'page'},
+              // The target type of worker requests can vary depending on the Chrome version and if
+              // the field trial config is being used.
+              {url: 'http://localhost:10200/simple-worker.js', sessionTargetType: /(page|worker)/},
+              {url: 'http://localhost:10200/simple-worker.mjs', sessionTargetType: /(page|worker)/},
+              // From in-process iframe -> simple-worker.js
+              {url: 'http://localhost:10200/simple-script.js?importScripts', resourceType: 'Other', sessionTargetType: 'worker'},
+              // From in-process iframe -> simple-worker.mjs
+              {url: 'http://localhost:10200/simple-script.js?esm', resourceType: 'Script', sessionTargetType: 'worker'},
+
+              // From OOPIF
+              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Script', sessionTargetType: 'iframe'},
+              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Fetch', sessionTargetType: 'iframe'},
+              // The target type of worker requests can vary depending on the Chrome version and if
+              // the field trial config is being used.
+              {url: 'http://localhost:10503/simple-worker.js', sessionTargetType: /(iframe|worker)/},
+              {url: 'http://localhost:10503/simple-worker.mjs', sessionTargetType: /(iframe|worker)/},
+              // From OOPIF -> simple-worker.js
+              {url: 'http://localhost:10503/simple-script.js?importScripts', resourceType: 'Other', sessionTargetType: 'worker'},
+              // From OOPIF -> simple-worker.mjs
+              {url: 'http://localhost:10503/simple-script.js?esm', resourceType: 'Script', sessionTargetType: 'worker'},
             ],
             // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
             _excludes: [
@@ -101,16 +101,9 @@ const expectations = {
         isPositionFixed: true,
       },
     ],
-    // Only `:10200/oopif-simple-page.html`'s inclusion of `simple-script.js` shows here.
-    // All other scripts are filtered out because of our "OOPIF" filter (including anything
-    // that is just in another process, like a worker).
-    ScriptElements: [
-      {
-        src: 'http://localhost:10200/simple-script.js',
-        source: 'network',
-      },
-    ],
-    // Same here, except we get inline scripts of the iframe.
+    // Only `:10200/oopif-simple-page.html`'s inclusion of `simple-script.js` shows here,
+    // as well as inline scripts of the iframe.
+    // All other scripts are filtered out because of our "OOPIF" filter.
     Scripts: {
       _includes: [
         {

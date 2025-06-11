@@ -1,13 +1,16 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {ProcessedTrace} from '../processed-trace.js';
+import * as RectHelpers from '../../lib/rect-helpers.js';
+import * as TraceEngine from '../../lib/trace-engine.js';
+import {Sentry} from '../../lib/sentry.js';
 
-/** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number, impactedNodes?: LH.Artifacts.TraceImpactedNode[]}} LayoutShiftEvent */
+/** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number, impactedNodes?: LH.Artifacts.TraceImpactedNode[], event: LH.TraceEvent}} LayoutShiftEvent */
 
 const RECENT_INPUT_WINDOW = 500;
 
@@ -66,10 +69,54 @@ class CumulativeLayoutShift {
         isMainFrame: event.args.data.is_main_frame,
         weightedScore: event.args.data.weighted_score_delta,
         impactedNodes: event.args.data.impacted_nodes,
+        event,
       });
     }
 
     return layoutShiftEvents;
+  }
+
+  /**
+   * Each layout shift event has a 'score' which is the amount added to the CLS as a result of the given shift(s).
+   * We calculate the score per element by taking the 'score' of each layout shift event and
+   * distributing it between all the nodes that were shifted, proportianal to the impact region of
+   * each shifted element.
+   *
+   * @param {LayoutShiftEvent[]} layoutShiftEvents
+   * @return {Map<number, number>}
+   */
+  static getImpactByNodeId(layoutShiftEvents) {
+    /** @type {Map<number, number>} */
+    const impactByNodeId = new Map();
+
+    for (const event of layoutShiftEvents) {
+      if (!event.impactedNodes) continue;
+
+      let totalAreaOfImpact = 0;
+      /** @type {Map<number, number>} */
+      const pixelsMovedPerNode = new Map();
+
+      for (const node of event.impactedNodes) {
+        if (!node.node_id || !node.old_rect || !node.new_rect) continue;
+
+        const oldRect = RectHelpers.traceRectToLHRect(node.old_rect);
+        const newRect = RectHelpers.traceRectToLHRect(node.new_rect);
+        const areaOfImpact = RectHelpers.getRectArea(oldRect) +
+          RectHelpers.getRectArea(newRect) -
+          RectHelpers.getRectOverlapArea(oldRect, newRect);
+
+        pixelsMovedPerNode.set(node.node_id, areaOfImpact);
+        totalAreaOfImpact += areaOfImpact;
+      }
+
+      for (const [nodeId, pixelsMoved] of pixelsMovedPerNode.entries()) {
+        let clsContribution = impactByNodeId.get(nodeId) || 0;
+        clsContribution += (pixelsMoved / totalAreaOfImpact) * event.weightedScore;
+        impactByNodeId.set(nodeId, clsContribution);
+      }
+    }
+
+    return impactByNodeId;
   }
 
   /**
@@ -102,34 +149,95 @@ class CumulativeLayoutShift {
   }
 
   /**
-   * Sum all layout shift events from the entire trace.
-   * @param {Array<LayoutShiftEvent>} layoutShiftEvents
-   * @return {number}
+   * @param {LayoutShiftEvent[]} allFrameShiftEvents
+   * @param {LayoutShiftEvent[]} mainFrameShiftEvents
    */
-  static calculateTotalCumulativeLayoutShift(layoutShiftEvents) {
-    return layoutShiftEvents.reduce((sum, e) => sum += e.weightedScore, 0);
+  static async computeWithSharedTraceEngine(allFrameShiftEvents, mainFrameShiftEvents) {
+    /** @param {LH.TraceEvent[]} events */
+    const run = async (events) => {
+      const processor = new TraceEngine.TraceProcessor({
+        LayoutShifts: TraceEngine.TraceHandlers.LayoutShifts,
+        Screenshots: TraceEngine.TraceHandlers.Screenshots,
+      });
+      // eslint-disable-next-line max-len
+      await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
+        events
+      ), {});
+      if (!processor.parsedTrace) {
+        throw new Error('null trace engine result');
+      }
+      return processor.parsedTrace.LayoutShifts.sessionMaxScore;
+    };
+    const cumulativeLayoutShift = await run(allFrameShiftEvents.map(e => e.event));
+    const cumulativeLayoutShiftMainFrame = await run(mainFrameShiftEvents.map(e => e.event));
+    return {cumulativeLayoutShift, cumulativeLayoutShiftMainFrame};
   }
 
   /**
    * @param {LH.Trace} trace
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<{cumulativeLayoutShift: number, cumulativeLayoutShiftMainFrame: number, totalCumulativeLayoutShift: number}>}
+   * @return {Promise<{cumulativeLayoutShift: number, cumulativeLayoutShiftMainFrame: number, impactByNodeId: Map<number, number>, newEngineResult?: {cumulativeLayoutShift: number, cumulativeLayoutShiftMainFrame: number}, newEngineResultDiffered: boolean}>}
    */
   static async compute_(trace, context) {
     const processedTrace = await ProcessedTrace.request(trace, context);
 
     const allFrameShiftEvents =
         CumulativeLayoutShift.getLayoutShiftEvents(processedTrace);
+    const impactByNodeId = CumulativeLayoutShift.getImpactByNodeId(allFrameShiftEvents);
     const mainFrameShiftEvents = allFrameShiftEvents.filter(e => e.isMainFrame);
+    const cumulativeLayoutShift = CumulativeLayoutShift.calculate(allFrameShiftEvents);
+    const cumulativeLayoutShiftMainFrame = CumulativeLayoutShift.calculate(mainFrameShiftEvents);
 
-    // The original Cumulative Layout Shift metric, the sum of all main-frame shift events.
-    const totalCumulativeLayoutShift =
-        CumulativeLayoutShift.calculateTotalCumulativeLayoutShift(mainFrameShiftEvents);
+    // Run with the new trace engine, and only throw an error if we are running our unit tests.
+    // Otherwise, simply report any differences or errors to Sentry.
+    // TODO: TraceEngine always drops `had_recent_input` events, but Lighthouse is more lenient.
+    //       See comment in `getLayoutShiftEvents`. We need to upstream this.
+    let newEngineResult;
+    let newEngineResultDiffered = false;
+    let tryNewTraceEngine = true;
+    if (allFrameShiftEvents.some(e => e.event.args.data?.had_recent_input)) {
+      tryNewTraceEngine = false;
+    }
+    if (tryNewTraceEngine) {
+      try {
+        newEngineResult =
+          await this.computeWithSharedTraceEngine(allFrameShiftEvents, mainFrameShiftEvents);
+        newEngineResultDiffered =
+          newEngineResult.cumulativeLayoutShift !== cumulativeLayoutShift ||
+          newEngineResult.cumulativeLayoutShiftMainFrame !== cumulativeLayoutShiftMainFrame;
+        if (newEngineResultDiffered) {
+          newEngineResultDiffered = true;
+          const expected = JSON.stringify({cumulativeLayoutShift, cumulativeLayoutShiftMainFrame});
+          const got = JSON.stringify(newEngineResult);
+          throw new Error(`new trace engine differed. expected: ${expected}, got: ${got}`);
+        }
+      } catch (err) {
+        console.error(err);
+        newEngineResultDiffered = true;
+
+        const error = new Error('Error when using new trace engine', {cause: err});
+        // @ts-expect-error Check for running from tests.
+        if (global.expect) {
+          throw error;
+        } else {
+          Sentry.captureException(error, {
+            tags: {computed: 'new-trace-engine'},
+            level: 'error',
+            extra: {
+              // Not sure if Sentry handles `cause`, so just in case add the info in a second place.
+              errorMsg: err.toString(),
+            },
+          });
+        }
+      }
+    }
 
     return {
-      cumulativeLayoutShift: CumulativeLayoutShift.calculate(allFrameShiftEvents),
-      cumulativeLayoutShiftMainFrame: CumulativeLayoutShift.calculate(mainFrameShiftEvents),
-      totalCumulativeLayoutShift,
+      cumulativeLayoutShift,
+      cumulativeLayoutShiftMainFrame,
+      impactByNodeId,
+      newEngineResult,
+      newEngineResultDiffered,
     };
   }
 }

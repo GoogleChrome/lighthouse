@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -10,8 +10,8 @@
  * @property {LH.Puppeteer.Page} page
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
- * @property {LH.FRBaseArtifacts} baseArtifacts
- * @property {LH.Gatherer.FRGatherPhase} phase
+ * @property {LH.BaseArtifacts} baseArtifacts
+ * @property {LH.Gatherer.GatherPhase} phase
  * @property {LH.Gatherer.GatherMode} gatherMode
  * @property {Map<string, LH.ArbitraryEqualityMap>} computedCache
  * @property {LH.Config.Settings} settings
@@ -21,9 +21,11 @@
 
 /** @typedef {Record<CollectPhaseArtifactOptions['phase'], IntermediateArtifacts>} ArtifactState */
 
-/** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
+/** @typedef {LH.Gatherer.Context<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
 import log from 'lighthouse-logger';
+
+import {Sentry} from '../lib/sentry.js';
 
 /**
  *
@@ -31,7 +33,10 @@ import log from 'lighthouse-logger';
  * @param {Error} error
  */
 function createDependencyError(dependency, error) {
-  return new Error(`Dependency "${dependency.id}" failed with exception: ${error.message}`);
+  const err = new Error(`Dependency "${dependency.id}" failed with exception: ${error.message}`);
+  // @ts-expect-error - We already reported the original error to Sentry, don't do it again.
+  err.expected = true;
+  return err;
 }
 
 /** @return {ArtifactState} */
@@ -115,7 +120,13 @@ async function collectPhaseArtifacts(options) {
       return artifact;
     });
 
-    await artifactPromise.catch(() => {});
+    await artifactPromise.catch((err) => {
+      Sentry.captureException(err, {
+        tags: {gatherer: artifactDefn.id, phase},
+        level: 'error',
+      });
+      log.error(artifactDefn.id, err.message);
+    });
     artifactState[phase][artifactDefn.id] = artifactPromise;
   }
 }

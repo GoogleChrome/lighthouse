@@ -1,52 +1,16 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import log from 'lighthouse-logger';
+
+import * as Lantern from '../lib/lantern/lantern.js';
 import {makeComputedArtifact} from './computed-artifact.js';
-import {NetworkAnalyzer} from '../lib/dependency-graph/simulator/network-analyzer.js';
 import {NetworkRecords} from './network-records.js';
 
 class NetworkAnalysis {
-  /**
-   * @param {Array<LH.Artifacts.NetworkRequest>} records
-   * @return {LH.Util.StrictOmit<LH.Artifacts.NetworkAnalysis, 'throughput'>}
-   */
-  static computeRTTAndServerResponseTime(records) {
-    // First pass compute the estimated observed RTT to each origin's servers.
-    /** @type {Map<string, number>} */
-    const rttByOrigin = new Map();
-    for (const [origin, summary] of NetworkAnalyzer.estimateRTTByOrigin(records).entries()) {
-      rttByOrigin.set(origin, summary.min);
-    }
-
-    // We'll use the minimum RTT as the assumed connection latency since we care about how much addt'l
-    // latency each origin introduces as Lantern will be simulating with its own connection latency.
-    const minimumRtt = Math.min(...Array.from(rttByOrigin.values()));
-    // We'll use the observed RTT information to help estimate the server response time
-    const responseTimeSummaries = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
-      rttByOrigin,
-    });
-
-    /** @type {Map<string, number>} */
-    const additionalRttByOrigin = new Map();
-    /** @type {Map<string, number>} */
-    const serverResponseTimeByOrigin = new Map();
-    for (const [origin, summary] of responseTimeSummaries.entries()) {
-      // Not all origins have usable timing data, we'll default to using no additional latency.
-      const rttForOrigin = rttByOrigin.get(origin) || minimumRtt;
-      additionalRttByOrigin.set(origin, rttForOrigin - minimumRtt);
-      serverResponseTimeByOrigin.set(origin, summary.median);
-    }
-
-    return {
-      rtt: minimumRtt,
-      additionalRttByOrigin,
-      serverResponseTimeByOrigin,
-    };
-  }
-
   /**
    * @param {LH.DevtoolsLog} devtoolsLog
    * @param {LH.Artifacts.ComputedContext} context
@@ -54,9 +18,17 @@ class NetworkAnalysis {
    */
   static async compute_(devtoolsLog, context) {
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const throughput = NetworkAnalyzer.estimateThroughput(records);
-    const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    return {throughput, ...rttAndServerResponseTime};
+    const analysis = Lantern.Core.NetworkAnalyzer.analyze(records);
+    if (!analysis) {
+      log.error('NetworkAnalysis', 'Network analysis failed due to lack of transfer data');
+      return {
+        throughput: 0,
+        rtt: Number.POSITIVE_INFINITY,
+        additionalRttByOrigin: new Map(),
+        serverResponseTimeByOrigin: new Map(),
+      };
+    }
+    return analysis;
   }
 }
 

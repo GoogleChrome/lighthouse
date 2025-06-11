@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
@@ -41,21 +41,23 @@ class TimeToFirstByte extends NavigationMetric {
    * @return {Promise<LH.Artifacts.Metric>}
    */
   static async computeObservedMetric(data, context) {
+    const mainResource = await MainResource.request(data, context);
+    if (!mainResource.timing) {
+      throw new Error('missing timing for main resource');
+    }
+
     const {processedNavigation} = data;
     const timeOriginTs = processedNavigation.timestamps.timeOrigin;
-    const mainResource = await MainResource.request(data, context);
-
-    // Technically TTFB is the start of the response headers not the end.
-    // That signal isn't available to us so we use header end time as a best guess.
-    const timestamp = mainResource.responseHeadersEndTime * 1000;
+    const timestampMs =
+      mainResource.timing.requestTime * 1000 + mainResource.timing.receiveHeadersStart;
+    const timestamp = timestampMs * 1000;
     const timing = (timestamp - timeOriginTs) / 1000;
-
     return {timing, timestamp};
   }
 }
 
 const TimeToFirstByteComputed = makeComputedArtifact(
   TimeToFirstByte,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {TimeToFirstByteComputed as TimeToFirstByte};

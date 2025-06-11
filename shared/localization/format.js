@@ -1,16 +1,29 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
 
 import IntlMessageFormat from 'intl-messageformat';
 
-import {getModuleDirectory} from '../../esm-utils.js';
+import {getModuleDirectory} from '../esm-utils.js';
 import {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} from '../type-verifiers.js';
 import {locales} from './locales.js';
+
+// From @formatjs/icu-messageformat-parser - copy here so we don't need to bundle all that.
+const TYPE = /** @type {const} */ ({
+  literal: 0,
+  argument: 1,
+  number: 2,
+  date: 3,
+  time: 4,
+  select: 5,
+  plural: 6,
+  pound: 7,
+  tag: 8,
+});
 
 const moduleDir = getModuleDirectory(import.meta);
 
@@ -30,11 +43,11 @@ const CANONICAL_LOCALES = fs.readdirSync(moduleDir + '/locales/')
   .map(locale => locale.replace('.json', ''))
   .sort();
 
-/** @typedef {import('intl-messageformat-parser').Element} MessageElement */
-/** @typedef {import('intl-messageformat-parser').ArgumentElement} ArgumentElement */
+/** @typedef {import('@formatjs/icu-messageformat-parser').MessageFormatElement} MessageFormatElement */
 
 const MESSAGE_I18N_ID_REGEX = / | [^\s]+$/;
 
+/** @type {Partial<import('intl-messageformat').Formats>} */
 const formats = {
   number: {
     bytes: {
@@ -57,40 +70,39 @@ const formats = {
 };
 
 /**
- * Function to retrieve all 'argumentElement's from an ICU message. An argumentElement
- * is an ICU element with an argument in it, like '{varName}' or '{varName, number, bytes}'. This
- * differs from 'messageElement's which are just arbitrary text in a message.
+ * Function to retrieve all elements from an ICU message AST that are associated
+ * with a named input, like '{varName}' or '{varName, number, bytes}'. This
+ * differs from literal message types which are just arbitrary text.
  *
- * Notes:
- *  This function will recursively inspect plural elements for nested argumentElements.
+ * This function recursively inspects plural elements for nested elements,
+ * but since the output is a Map they are deduplicated.
+ * e.g. "=1{hello {icu}} =other{hello {icu}}" will produce one element in the output,
+ * with "icu" as its key.
  *
- *  We need to find all the elements from the plural format sections, but
- *  they need to be deduplicated. I.e. "=1{hello {icu}} =other{hello {icu}}"
- *  the variable "icu" would appear twice if it wasn't de duplicated. And they cannot
- *  be stored in a set because they are not equal since their locations are different,
- *  thus they are stored via a Map keyed on the "id" which is the ICU varName.
+ * TODO: don't do that deduplication because messages within a plural message could be number
+ * messages with different styles.
  *
- * @param {Array<MessageElement>} icuElements
- * @param {Map<string, ArgumentElement>} [seenElementsById]
- * @return {Map<string, ArgumentElement>}
+ * @param {Array<MessageFormatElement>} icuElements
+ * @param {Map<string, MessageFormatElement>} [customElements]
+ * @return {Map<string, MessageFormatElement>}
  */
-function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map()) {
+function collectAllCustomElementsFromICU(icuElements, customElements = new Map()) {
   for (const el of icuElements) {
-    // We are only interested in elements that need ICU formatting (argumentElements)
-    if (el.type !== 'argumentElement') continue;
+    if (el.type === TYPE.literal || el.type === TYPE.pound) continue;
 
-    seenElementsById.set(el.id, el);
+    customElements.set(el.value, el);
 
     // Plurals need to be inspected recursively
-    if (!el.format || el.format.type !== 'pluralFormat') continue;
-    // Look at all options of the plural (=1{} =other{}...)
-    for (const option of el.format.options) {
-      // Run collections on each option's elements
-      collectAllCustomElementsFromICU(option.value.elements, seenElementsById);
+    if (el.type === TYPE.plural) {
+      // Look at all options of the plural (=1{} =other{}...)
+      for (const option of Object.values(el.options)) {
+        // Run collections on each option's elements
+        collectAllCustomElementsFromICU(option.value, customElements);
+      }
     }
   }
 
-  return seenElementsById;
+  return customElements;
 }
 
 /**
@@ -103,15 +115,14 @@ function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map
  * @return {Record<string, string | number>}
  */
 function _preformatValues(messageFormatter, values = {}, lhlMessage) {
-  const elementMap = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
-  const argumentElements = [...elementMap.values()];
+  const customElements = collectAllCustomElementsFromICU(messageFormatter.getAst());
 
   /** @type {Record<string, string | number>} */
   const formattedValues = {};
 
-  for (const {id, format} of argumentElements) {
+  for (const [id, element] of customElements) {
     // Throw an error if a message's value isn't provided
-    if (id && (id in values) === false) {
+    if (!(id in values)) {
       throw new Error(`ICU Message "${lhlMessage}" contains a value reference ("${id}") ` +
         `that wasn't provided`);
     }
@@ -119,7 +130,7 @@ function _preformatValues(messageFormatter, values = {}, lhlMessage) {
     const value = values[id];
 
     // Direct `{id}` replacement and non-numeric values need no formatting.
-    if (!format || format.type !== 'numberFormat') {
+    if (element.type !== TYPE.number) {
       formattedValues[id] = value;
       continue;
     }
@@ -130,13 +141,13 @@ function _preformatValues(messageFormatter, values = {}, lhlMessage) {
     }
 
     // Format values for known styles.
-    if (format.style === 'milliseconds') {
+    if (element.style === 'milliseconds') {
       // Round all milliseconds to the nearest 10.
       formattedValues[id] = Math.round(value / 10) * 10;
-    } else if (format.style === 'seconds' && id === 'timeInMs') {
+    } else if (element.style === 'seconds' && id === 'timeInMs') {
       // Convert all seconds to the correct unit (currently only for `timeInMs`).
       formattedValues[id] = Math.round(value / 100) / 10;
-    } else if (format.style === 'bytes') {
+    } else if (element.style === 'bytes') {
       // Replace all the bytes with KB.
       formattedValues[id] = value / 1024;
     } else {
@@ -163,6 +174,19 @@ function _preformatValues(messageFormatter, values = {}, lhlMessage) {
 }
 
 /**
+ * Our strings were made when \ was the escape character, but now it is '. To avoid churn,
+ * let's convert to the new style in memory.
+ * @param {string} message
+ * @return {string}
+ */
+function escapeIcuMessage(message) {
+  return message
+    .replace(/'/g, `''`)
+    .replace(/\\{/g, `'{`)
+    .replace(/\\}/g, `'}`);
+}
+
+/**
  * Format string `message` by localizing `values` and inserting them. `message`
  * is assumed to already be in the given locale.
  * If you need to localize a messagem `getFormatted` is probably what you want.
@@ -172,19 +196,31 @@ function _preformatValues(messageFormatter, values = {}, lhlMessage) {
  * @return {string}
  */
 function formatMessage(message, values, locale) {
+  message = escapeIcuMessage(message);
+
   // Parsing and formatting can be slow. Don't attempt if the string can't
   // contain ICU placeholders, in which case formatting is already complete.
-  if (!message.includes('{') && values === undefined) return message;
 
   // When using accented english, force the use of a different locale for number formatting.
   const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
 
-  const formatter = new IntlMessageFormat(message, localeForMessageFormat, formats);
+  // This package is not correctly bundled.
+  /** @type {typeof IntlMessageFormat} */
+  // @ts-expect-error bundler woes
+  const IntlMessageFormatCtor = IntlMessageFormat.IntlMessageFormat || IntlMessageFormat;
+  const formatter = new IntlMessageFormatCtor(message, localeForMessageFormat, formats, {
+    ignoreTag: true,
+  });
 
   // Preformat values for the message format like KB and milliseconds.
   const valuesForMessageFormat = _preformatValues(formatter, values, message);
 
-  return formatter.format(valuesForMessageFormat);
+  const formattedResult = formatter.format(valuesForMessageFormat);
+  // We only format to strings.
+  if (typeof formattedResult !== 'string') {
+    throw new Error('unexpected formatted result');
+  }
+  return formattedResult;
 }
 
 /**
@@ -459,4 +495,5 @@ export {
   getIcuMessageIdParts,
   getAvailableLocales,
   getCanonicalLocales,
+  escapeIcuMessage,
 };

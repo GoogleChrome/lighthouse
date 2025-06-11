@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from '../audit.js';
@@ -12,7 +12,7 @@ const UIStrings = {
   /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Cumulative Layout Shift measures the movement of visible ' +
                'elements within the viewport. ' +
-               '[Learn more about the Cumulative Layout Shift metric](https://web.dev/cls/).',
+               '[Learn more about the Cumulative Layout Shift metric](https://web.dev/articles/cls).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -30,7 +30,7 @@ class CumulativeLayoutShift extends Audit {
       title: str_(i18n.UIStrings.cumulativeLayoutShiftMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['Trace'],
     };
   }
 
@@ -39,7 +39,7 @@ class CumulativeLayoutShift extends Audit {
    */
   static get defaultOptions() {
     return {
-      // https://web.dev/cls/#what-is-a-good-cls-score
+      // https://web.dev/articles/cls#what_is_a_good_cls_score
       // This 0.1 target score was determined through both manual evaluation and large-scale analysis.
       // see https://www.desmos.com/calculator/ksp7q91nop
       p10: 0.1,
@@ -53,8 +53,12 @@ class CumulativeLayoutShift extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const {cumulativeLayoutShift, ...rest} = await ComputedCLS.request(trace, context);
+    const trace = artifacts.Trace;
+
+    // impactByNodeId is unused but we don't want it on debug data
+    // eslint-disable-next-line no-unused-vars
+    const {cumulativeLayoutShift, impactByNodeId, ...rest} =
+      await ComputedCLS.request(trace, context);
 
     /** @type {LH.Audit.Details.DebugData} */
     const details = {
@@ -62,11 +66,14 @@ class CumulativeLayoutShift extends Audit {
       items: [rest],
     };
 
+    const scoringOptions = {p10: context.options.p10, median: context.options.median};
+
     return {
       score: Audit.computeLogNormalScore(
-        {p10: context.options.p10, median: context.options.median},
+        scoringOptions,
         cumulativeLayoutShift
       ),
+      scoringOptions,
       numericValue: cumulativeLayoutShift,
       numericUnit: 'unitless',
       displayValue: cumulativeLayoutShift.toLocaleString(context.settings.locale),

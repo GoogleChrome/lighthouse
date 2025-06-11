@@ -1,26 +1,25 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import path from 'path';
 import {createRequire} from 'module';
 import url from 'url';
 
-import isDeepEqual from 'lodash/isEqual.js';
+import {isEqual} from 'lodash-es';
 
 import * as constants from './constants.js';
-import {Budget} from './budget.js';
 import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as validation from './validation.js';
-import {getModuleDirectory} from '../../esm-utils.js';
+import {getModuleDirectory} from '../../shared/esm-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
+/** @typedef {typeof import('../gather/base-gatherer.js').default} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
@@ -70,7 +69,7 @@ const mergeOptionsOfItems = function(items) {
  *    - `null` is treated similarly to `undefined` for whether a value should be overridden.
  *    - `overwriteArrays` controls array extension behavior:
  *        - true: Arrays are overwritten without any merging or concatenation.
- *        - false: Arrays are concatenated and de-duped by isDeepEqual.
+ *        - false: Arrays are concatenated and de-duped by isEqual.
  *    - Objects are recursively merged.
  *    - If the `settings` key is encountered while traversing an object, its arrays are *always*
  *      overridden, not concatenated. (`overwriteArrays` is flipped to `true`)
@@ -91,7 +90,7 @@ function _mergeConfigFragment(base, extension, overwriteArrays = false) {
     if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
     const merged = base.slice();
     extension.forEach(item => {
-      if (!merged.some(candidate => isDeepEqual(candidate, item))) merged.push(item);
+      if (!merged.some(candidate => isEqual(candidate, item))) merged.push(item);
     });
 
     return merged;
@@ -160,7 +159,7 @@ function mergeConfigFragmentArrayByKey(baseArray, extensionArray, keyFn) {
  *  - {instance: myGathererInstance}
  *
  * @param {LH.Config.GathererJson} gatherer
- * @return {{instance?: Gatherer, implementation?: GathererConstructor, path?: string}} passes
+ * @return {{instance?: Gatherer, implementation?: GathererConstructor, path?: string}}
  */
 function expandGathererShorthand(gatherer) {
   if (typeof gatherer === 'string') {
@@ -178,7 +177,7 @@ function expandGathererShorthand(gatherer) {
   } else if (typeof gatherer === 'function') {
     // just GathererConstructor
     return {implementation: gatherer};
-  } else if (gatherer && typeof gatherer.beforePass === 'function') {
+  } else if (gatherer && typeof gatherer.getArtifact === 'function') {
     // just GathererInstance
     return {instance: gatherer};
   } else {
@@ -254,7 +253,7 @@ async function requireWrapper(requirePath) {
  * @param {string} gathererPath
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {Promise<LH.Config.GathererDefn>}
+ * @return {Promise<LH.Config.AnyGathererDefn>}
  */
 async function requireGatherer(gathererPath, coreGathererList, configDir) {
   const coreGatherer = coreGathererList.find(a => a === `${gathererPath}.js`);
@@ -287,7 +286,7 @@ function requireAudit(auditPath, coreAuditList, configDir) {
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
     if (isBundledEnvironment()) {
-      // This is for pubads bundling.
+      // This is for plugin bundling.
       requirePath = auditPath;
     } else {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
@@ -347,9 +346,6 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
     true
   );
 
-  if (settingsWithFlags.budgets) {
-    settingsWithFlags.budgets = Budget.initializeBudget(settingsWithFlags.budgets);
-  }
   // Locale is special and comes only from flags/settings/lookupLocale.
   settingsWithFlags.locale = locale;
 
@@ -399,7 +395,7 @@ async function mergePlugins(config, configDir, flags) {
  * @param {LH.Config.GathererJson} gathererJson
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {Promise<LH.Config.GathererDefn>}
+ * @return {Promise<LH.Config.AnyGathererDefn>}
  */
 async function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
   const gathererDefn = expandGathererShorthand(gathererJson);
@@ -595,13 +591,6 @@ function deepCloneConfigJson(json) {
 
   // Copy arrays that could contain non-serializable properties to allow for programmatic
   // injection of audit and gatherer implementations.
-  if (Array.isArray(cloned.passes) && Array.isArray(json.passes)) {
-    for (let i = 0; i < cloned.passes.length; i++) {
-      const pass = cloned.passes[i];
-      pass.gatherers = (json.passes[i].gatherers || []).map(gatherer => shallowClone(gatherer));
-    }
-  }
-
   if (Array.isArray(json.audits)) {
     cloned.audits = json.audits.map(audit => shallowClone(audit));
   }

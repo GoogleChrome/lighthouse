@@ -1,24 +1,17 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
+import Trace from './gather/gatherers/trace.js';
 import {Runner} from './runner.js';
-import {CriConnection} from './legacy/gather/connections/cri.js';
-import {LegacyResolvedConfig} from './legacy/config/config.js';
-import UrlUtils from './lib/url-utils.js';
-import {Driver} from './legacy/gather/driver.js';
 import {UserFlow, auditGatherSteps} from './user-flow.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {startTimespanGather} from './gather/timespan-runner.js';
 import {snapshotGather} from './gather/snapshot-runner.js';
 import {navigationGather} from './gather/navigation-runner.js';
 import * as LH from '../types/lh.js';
-
-/** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 
 /*
  * The relationship between these root modules:
@@ -45,36 +38,6 @@ import * as LH from '../types/lh.js';
  */
 async function lighthouse(url, flags = {}, config, page) {
   return navigation(page, url, {config, flags});
-}
-
-/**
- * Run Lighthouse using the legacy navigation runner.
- * This is left in place for any clients that don't support FR navigations yet (e.g. Lightrider)
- * @deprecated
- * @param {string=} url The URL to test. Optional if running in auditMode.
- * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
- *   they will override any settings in the config.
- * @param {LH.Config=} config Configuration for the Lighthouse run. If
- *   not present, the default config is used.
- * @param {Connection=} userConnection
- * @return {Promise<LH.RunnerResult|undefined>}
- */
-async function legacyNavigation(url, flags = {}, config, userConnection) {
-  // set logging preferences, assume quiet
-  flags.logLevel = flags.logLevel || 'error';
-  log.setLevel(flags.logLevel);
-
-  const resolvedConfig = await LegacyResolvedConfig.fromJson(config, flags);
-  const computedCache = new Map();
-  const options = {resolvedConfig, computedCache};
-  const connection = userConnection || new CriConnection(flags.port, flags.hostname);
-
-  // kick off a lighthouse run
-  const artifacts = await Runner.gather(() => {
-    const requestedUrl = UrlUtils.normalizeUrl(url);
-    return Runner._gatherArtifactsFromBrowser(requestedUrl, options, connection);
-  }, options);
-  return Runner.audit(artifacts, options);
 }
 
 /**
@@ -150,7 +113,7 @@ function getAuditList() {
   return Runner.getAuditList();
 }
 
-const traceCategories = Driver.traceCategories;
+const traceCategories = Trace.getDefaultTraceCategories();
 
 export default lighthouse;
 export {Audit} from './audits/audit.js';
@@ -160,7 +123,6 @@ export {default as defaultConfig} from './config/default-config.js';
 export {default as desktopConfig} from './config/desktop-config.js';
 export * from '../types/lh.js';
 export {
-  legacyNavigation,
   startFlow,
   navigation,
   startTimespan,

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* global document */
@@ -16,13 +16,13 @@ import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
 import log from 'lighthouse-logger';
 
-import {LH_ROOT} from '../../root.js';
+import {LH_ROOT} from '../../shared/root.js';
 import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
 
 /* eslint-disable max-len */
-const ARTIFACTS_PATH = `${LH_ROOT}/core/test/fixtures/fraggle-rock/artifacts/`;
-const FLOW_RESULT_PATH = `${LH_ROOT}/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`;
+const ARTIFACTS_PATH = `${LH_ROOT}/core/test/fixtures/user-flows/artifacts/`;
+const FLOW_RESULT_PATH = `${LH_ROOT}/core/test/fixtures/user-flows/reports/sample-flow-result.json`;
 const FLOW_REPORT_PATH = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
 /* eslint-enable max-len */
 
@@ -66,7 +66,7 @@ async function waitForImagesToLoad(page) {
     assert.deepStrictEqual(completeImages, firstRunImages);
 
     // Next check we haven't added any new images in the quiet window.
-    await page.waitForTimeout(QUIET_WINDOW);
+    await new Promise(r => setTimeout(r, QUIET_WINDOW));
     const secondRunImages = await getImageLoadingStates();
     assert.deepStrictEqual(secondRunImages, firstRunImages);
   }, TIMEOUT);
@@ -152,7 +152,7 @@ async function generateFlowResult() {
   // Normalize some data so it doesn't change on every update.
   for (const {lhr} of flowResult.steps) {
     assetSaver.normalizeTimingEntries(lhr.timing.entries);
-    assetSaver.elideAuditErrorStacks(lhr);
+    assetSaver.elideLhrErrorStacks(lhr);
     lhr.timing.total = lhr.timing.entries.length;
   }
 

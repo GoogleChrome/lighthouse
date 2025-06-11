@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -28,7 +28,7 @@ import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
 import {runLighthouse} from './run.js';
 import {askPermission} from './sentry-prompt.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT} from '../shared/root.js';
 import {Sentry} from '../core/lib/sentry.js';
 
 const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
@@ -79,13 +79,6 @@ async function begin() {
     config = (await import(`../core/config/${cliFlags.preset}-config.js`)).default;
   }
 
-  if (cliFlags.budgetPath) {
-    cliFlags.budgetPath = path.resolve(process.cwd(), cliFlags.budgetPath);
-    /** @type {Array<LH.Budget>} */
-    const parsedBudget = JSON.parse(fs.readFileSync(cliFlags.budgetPath, 'utf8'));
-    cliFlags.budgets = parsedBudget;
-  }
-
   // set logging preferences
   cliFlags.logLevel = 'info';
   if (cliFlags.verbose) {
@@ -124,6 +117,7 @@ async function begin() {
     await Sentry.init({
       url: urlUnderTest,
       flags: cliFlags,
+      config,
       environmentData: {
         serverName: 'redacted', // prevent sentry from using hostname
         environment: isDev() ? 'development' : 'production',

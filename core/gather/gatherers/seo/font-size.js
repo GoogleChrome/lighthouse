@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -15,14 +15,13 @@
  * This gatherer collects stylesheet metadata by itself, instead of relying on the styles gatherer which is slow (because it parses the stylesheet content).
  */
 
-import FRGatherer from '../../base-gatherer.js';
+import BaseGatherer from '../../base-gatherer.js';
 
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 // limit number of protocol calls to make sure that gatherer doesn't take more than 1-2s
 const MAX_NODES_SOURCE_RULE_FETCHED = 50; // number of nodes to fetch the source font-size rule
 
-/** @typedef {import('../../../legacy/gather/driver.js')} Driver */
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} NodeFontData */
 /** @typedef {Map<number, {fontSize: number, textLength: number}>} BackendIdsToFontData */
 
@@ -117,7 +116,7 @@ function getTextLength(text) {
 }
 
 /**
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {number} nodeId text node
  * @return {Promise<NodeFontData['cssRule']|undefined>}
  */
@@ -139,14 +138,14 @@ async function fetchSourceRule(session, nodeId) {
   };
 }
 
-class FontSize extends FRGatherer {
+class FontSize extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
   };
 
   /**
-   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {LH.Gatherer.ProtocolSession} session
    * @param {Array<NodeFontData>} failingNodes
    */
   static async fetchFailingNodeSourceRules(session, failingNodes) {
@@ -222,8 +221,9 @@ class FontSize extends FRGatherer {
 
         const nodeIndex = doc.layout.nodeIndex[layoutIndex];
         const styles = doc.layout.styles[layoutIndex];
-        const [fontSizeStringId] = styles;
+        const [fontSizeStringId, visibilityStringId] = styles;
         const fontSize = getFloat(fontSizeStringId);
+        const visibility = getString(visibilityStringId);
 
         const parentIndex = nodes.parentIndex[nodeIndex];
         const grandParentIndex = nodes.parentIndex[parentIndex];
@@ -235,6 +235,7 @@ class FontSize extends FRGatherer {
           nodeIndex,
           backendNodeId: nodes.backendNodeId[nodeIndex],
           fontSize,
+          visibility,
           textLength: getTextLength(text),
           parentNode: {
             ...parentNode,
@@ -258,24 +259,31 @@ class FontSize extends FRGatherer {
     let failingTextLength = 0;
 
     for (const textNodeData of this.getTextNodesInLayoutFromSnapshot(snapshot)) {
-      totalTextLength += textNodeData.textLength;
-      if (textNodeData.fontSize < MINIMAL_LEGIBLE_FONT_SIZE_PX) {
-        // Once a bad TextNode is identified, its parent Node is needed.
-        failingTextLength += textNodeData.textLength;
-        failingNodes.push({
-          nodeId: 0, // Set later in fetchFailingNodeSourceRules.
-          parentNode: textNodeData.parentNode,
-          textLength: textNodeData.textLength,
-          fontSize: textNodeData.fontSize,
-        });
+      if (textNodeData.visibility === 'hidden') {
+        continue;
       }
+
+      totalTextLength += textNodeData.textLength;
+
+      if (textNodeData.fontSize >= MINIMAL_LEGIBLE_FONT_SIZE_PX) {
+        continue;
+      }
+
+      // Once a bad TextNode is identified, its parent Node is needed.
+      failingTextLength += textNodeData.textLength;
+      failingNodes.push({
+        nodeId: 0, // Set later in fetchFailingNodeSourceRules.
+        parentNode: textNodeData.parentNode,
+        textLength: textNodeData.textLength,
+        fontSize: textNodeData.fontSize,
+      });
     }
 
     return {totalTextLength, failingTextLength, failingNodes};
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    * @return {Promise<LH.Artifacts.FontSize>} font-size analysis
    */
   async getArtifact(passContext) {
@@ -295,7 +303,7 @@ class FontSize extends FRGatherer {
 
     // Get the computed font-size style of every node.
     const snapshot = await session.sendCommand('DOMSnapshot.captureSnapshot', {
-      computedStyles: ['font-size'],
+      computedStyles: ['font-size', 'visibility'],
     });
 
     const {

@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -9,6 +9,7 @@ import assert from 'assert/strict';
 import {NetworkRecorder} from '../../lib/network-recorder.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {readJson} from '../test-utils.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
 const prefetchedScriptDevtoolsLog = readJson('../fixtures/prefetched-script.devtoolslog.json', import.meta);
@@ -165,20 +166,33 @@ describe('network recorder', function() {
     expect(records).toMatchObject([{url: 'http://example.com', networkRequestTime: 1, networkEndTime: 2}]);
   });
 
-  it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
-    global.isLightrider = true;
-    const records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
-    global.isLightrider = false;
-
-    expect(records.find(r => r.url === 'https://www.paulirish.com/'))
-    .toMatchObject({
-      resourceSize: 75221,
-      transferSize: 22889,
+  describe('Lightrider', () => {
+    let records;
+    before(() => {
+      global.isLightrider = true;
+      records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
     });
-    expect(records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js'))
-    .toMatchObject({
-      resourceSize: 9736,
-      transferSize: 4730,
+
+    it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
+      expect(records.find(r => r.url === 'https://www.paulirish.com/'))
+      .toMatchObject({
+        resourceSize: 75221,
+        transferSize: 22889,
+      });
+      expect(records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js'))
+      .toMatchObject({
+        resourceSize: 9736,
+        transferSize: 4730,
+      });
+    });
+
+    it('should use respect X-Original-Content-Encoding', () => {
+      const record = records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js');
+      expect(NetworkRequest.isContentEncoded(record)).toBe(true);
+    });
+
+    after(() => {
+      global.isLightrider = false;
     });
   });
 
@@ -191,6 +205,19 @@ describe('network recorder', function() {
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
     expect(records).toMatchObject([
       {url: 'http://example.com', sessionTargetType: 'page', sessionId: undefined},
+      {url: 'http://iframe.com', sessionTargetType: 'iframe', sessionId: 'session2'},
+    ]);
+  });
+
+  it('should set sessionId and sessionTargetType of from just request event', () => {
+    const devtoolsLogs = networkRecordsToDevtoolsLog([
+      {url: 'http://iframe.com', sessionId: 'session2', sessionTargetType: 'iframe'},
+    ]);
+    const requestWillBeSentLog =
+      devtoolsLogs.filter(entry => entry.method === 'Network.requestWillBeSent');
+
+    const records = NetworkRecorder.recordsFromLogs(requestWillBeSentLog);
+    expect(records).toMatchObject([
       {url: 'http://iframe.com', sessionTargetType: 'iframe', sessionId: 'session2'},
     ]);
   });
@@ -560,7 +587,7 @@ describe('network recorder', function() {
         localizedFailDescription: 'net::ERR_ABORTED',
         rendererStartTime: 500,
         networkRequestTime: 500,
-        responseHeadersEndTime: -1,
+        responseHeadersEndTime: 500,
         networkEndTime: 501,
         transferSize: 0,
         resourceSize: 0,

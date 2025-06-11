@@ -52,7 +52,8 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 16 LTS (16.x) or later._
+> [!NOTE]
+> Lighthouse requires Node 18.20 or later.
 
 **Installation**:
 
@@ -102,9 +103,8 @@ Configuration:
   --gather-mode, -G              Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.
   --audit-mode, -A               Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)
   --only-audits                  Only run the specified audits  [array]
-  --only-categories              Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo  [array]
+  --only-categories              Only run the specified categories. Available categories: accessibility, best-practices, performance, seo  [array]
   --skip-audits                  Run everything except these audits  [array]
-  --budget-path                  The path to the budget.json file for LightWallet.  [string]
   --disable-full-page-screenshot Disables collection of the full page screenshot, which can be quite large  [boolean]
 
 Output:
@@ -147,7 +147,7 @@ Examples:
   lighthouse <url> --quiet --chrome-flags="--headless"                                             Launch Headless Chrome, turn off logging
   lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\", \"x-men\":\"wolverine\"}"        Stringify'd JSON HTTP Header key/value pairs to send in requests
   lighthouse <url> --extra-headers=./path/to/file.json                                             Path to JSON file of HTTP Header key/value pairs to send in requests
-  lighthouse <url> --only-categories=performance,pwa                                               Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo
+  lighthouse <url> --only-categories=performance,seo                                               Only run the specified categories. Available categories: accessibility, best-practices, performance, seo
 
 For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
 ```
@@ -227,7 +227,8 @@ top of any Lighthouse HTML report and open the report in the
 In the Viewer, reports can be shared by clicking the share icon in the top
 right corner and signing in to GitHub.
 
-> **Note**: shared reports are stashed as a secret Gist in GitHub, under your account.
+> [!NOTE]
+>  shared reports are stashed as a secret Gist in GitHub, under your account.
 
 ## Docs & Recipes
 
@@ -241,7 +242,6 @@ Useful documentation, examples, and recipes to get you started.
 - [Developing Plugins](./docs/plugins.md)
 - [Making a New Audit](./docs/new-audits.md)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
-- [Setting a performance budget](./docs/performance-budgets.md)
 - [Lighthouse Architecture](./docs/architecture.md)
 
 **Recipes**
@@ -337,7 +337,7 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 
-* **[Alertdesk](https://www.alertdesk.com/)** - Alertdesk is based on Lighthouse and helps you to keep track of your site’s quality & performance. Run daily quality & performance tests from both Mobile and Desktop and dive into the powerful & intuitive reports. You can also monitor your uptime (every minute - 24/7) & domain health. Alertdesk is a paid product with a free 14-day trial.
+* **[PageVitals](https://pagevitals.com)** - PageVitals combines Lighthouse, CrUX and field testing to monitor the performance of websites. See how your website performs over time and get alerted if it gets too slow. Drill down and find the real cause of any performance issue. PageVitals is a paid product with a free 14-day trial.
 
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
@@ -358,6 +358,14 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[Lighthouse Metrics](https://lighthouse-metrics.com/)** - Lighthouse Metrics gives you global performance insights with a single test. You can also monitor your websites on a daily or hourly base. Lighthouse Metrics offers free global one-time tests and performance monitoring as a paid feature with a free 14-day trial.
 
 * **[Auditzy](https://auditzy.com)** - Auditzy™ is a robust website auditing & monitoring tool which lets you analyze your web page(s) pre-user journey. Analyze the Competitor Health Metric, Core Web Vitals, and Technology. Compare your web pages with your competitors to understand where you are leading or lagging. Real-time notification with Slack. Have Seamless Collaboration with Multiple Teams. Automate your Audits hourly, daily, weekly, and so on. It has a free trial with pay as you go plans.
+
+* **[Lighthouse Metrics China](http://lighthousemetricschina.com)** - The first Lighthouse metrics tool specifically designed for China. Experience unparalleled website monitoring capabilities with Lighthouse. Gain insights into the fluctuations of your scores and metrics within the realm of the [Great Firewall of China](https://www.chinafirewalltest.co), enabling a comprehensive understanding of the factors influencing each change. Lighthouse Metrics China offers both free and paid plans.
+
+* **[DeploymentHawk](https://deploymenthawk.com)** - DeploymentHawk is an automated site auditing tool powered by Lighthouse. Effortlessly catch performance, accessibility, and SEO issues before they impact your users. DeploymentHawk is a paid product with a free 7-day trial.
+
+* **[Guardius](https://guardius.io)** - Guardius is a DevOps and DevSecOps SaaS platform that integrates Lighthouse to deliver automated web performance analysis. It not only provides metrics evaluation and automatic scanning but also enables performance comparisons across different periods and ongoing observation over time. Additionally, Guardius offers predefined and customized alerts tailored to your specific requirements. A free version of Guardius is available for users to explore its features.
+
+* **[Sonā](https://getsona.io)** - Powered by Lighthouse amongst others, Sonā delivers in-depth insights into your website’s health. Track changes over time, share reports, and receive actionable recommendations to improve performance, accessibility, SEO, best practices, and security. Sonā is free during its beta period.
 
 ## Lighthouse Integrations in non-Web Perf services
 
@@ -396,6 +404,7 @@ Other awesome open source projects that use Lighthouse.
 * **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
 * **[lighthouse-jest-example](https://github.com/justinribeiro/lighthouse-jest-example)** - Gather performance metrics via Lighthouse and assert results with Jest; uses Puppeteer to start Chrome with network emulation settings defined by WebPageTest.
 * **[lighthouse-lambda](https://github.com/Otterseer/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
+* **[lighthouse-matchers](https://github.com/ackama/lighthouse-matchers)** - Provides RSpec matchers for executing and evaluating Google Chrome Lighthouse audit scores.
 * **[lighthouse-mocha-example](https://github.com/rishichawda/lighthouse-mocha-example)** - Run Lighthouse performance tests with Mocha and chrome-launcher.
 * **[lighthouse-monitor](https://github.com/verivox/lighthouse-monitor)** - Run Lighthouse against all your URLs. Send metrics to any backend you want, save all reports with automatic data retention, and compare any two results in a web UI.
 * **[lighthouse-persist](https://github.com/foo-software/lighthouse-persist)** - Run Lighthouse and upload HTML reports to an AWS S3 bucket.
@@ -406,6 +415,7 @@ Other awesome open source projects that use Lighthouse.
 * **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
 * **[cypress-audit](https://github.com/mfrachet/cypress-audit)** - Run Lighthouse and Pa11y audits directly in your E2E test suites.
 * **[laravel-lighthouse](https://github.com/adityadees/laravel-lighthouse)** - Google Lighthouse wrapper for laravel framework to run Google Lighthouse CLI with custom option and can automatically save result in your server directory.
+* **[Neodymium](https://github.com/Xceptance/neodymium/wiki/Accessibility)** - The Neodymium test automation framework integrates Lighthouse for accessibility and Web Vitals verification, allowing programmatic validation and assertion of all audit values.
 
 ## FAQ
 

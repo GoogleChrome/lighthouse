@@ -1,5 +1,4 @@
 import {Logger as _Logger} from '../../report/renderer/logger.js';
-import {FirebaseNamespace} from '@firebase/app-types';
 import Treemap_ from '../../types/lhr/treemap';
 import * as Settings from '../../types/lhr/settings';
 import 'google.analytics';
@@ -44,7 +43,6 @@ declare global {
     sort(data: any): void;
   };
   var logger: _Logger;
-  var firebase: Required<FirebaseNamespace>;
   var idbKeyval: typeof import('idb-keyval');
   // `strings` is generated in build/build-treemap.js
   var strings: Record<Settings.Locale, typeof TreemapUtil['UIStrings']>;
@@ -52,6 +50,8 @@ declare global {
   interface Window {
     logger: _Logger;
     __treemapOptions?: LH.Treemap.Options;
+    __hash?: string;
+    // TODO: use gtag
     ga: UniversalAnalytics.ga;
   }
 

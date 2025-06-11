@@ -1,8 +1,10 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
+
+import log from 'lighthouse-logger';
 
 import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
@@ -10,6 +12,8 @@ import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRecords} from '../computed/network-records.js';
 import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
+import {TBTImpactTasks} from '../computed/tbt-impact-tasks.js';
+import {Sentry} from '../lib/sentry.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -43,8 +47,9 @@ class BootupTime extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
+      guidanceLevel: 1,
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
     };
   }
 
@@ -64,18 +69,49 @@ class BootupTime extends Audit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
+   * @return {Promise<number>}
+   */
+  static async getTbtImpact(artifacts, context) {
+    let tbtImpact = 0;
+
+    try {
+      const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
+      const tasks = await TBTImpactTasks.request(metricComputationData, context);
+      for (const task of tasks) {
+        const groupId = task.group.id;
+        if (groupId !== 'scriptEvaluation' && groupId !== 'scriptParseCompile') continue;
+        tbtImpact += task.selfTbtImpact;
+      }
+    } catch (err) {
+      Sentry.captureException(err, {
+        tags: {audit: this.meta.id},
+        level: 'error',
+      });
+      log.error(this.meta.id, err.message);
+    }
+
+    return tbtImpact;
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const settings = context.settings || {};
-    const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
 
     const executionTimings = getExecutionTimingsByURL(tasks, networkRecords);
+    // Exclude our own tasks.
+    executionTimings.delete('_lighthouse-eval.js');
+
+    const tbtImpact = await this.getTbtImpact(artifacts, context);
 
     let hadExcessiveChromeExtension = false;
     let totalBootupTime = 0;
@@ -136,12 +172,16 @@ class BootupTime extends Audit {
 
     return {
       score,
+      notApplicable: !results.length,
       numericValue: totalBootupTime,
       numericUnit: 'millisecond',
       displayValue: totalBootupTime > 0 ?
         str_(i18n.UIStrings.seconds, {timeInMs: totalBootupTime}) : '',
       details,
       runWarnings,
+      metricSavings: {
+        TBT: tbtImpact,
+      },
     };
   }
 }

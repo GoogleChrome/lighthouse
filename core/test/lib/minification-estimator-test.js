@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
@@ -9,7 +9,7 @@ import assert from 'assert/strict';
 import {createRequire} from 'module';
 
 import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js'; // eslint-disable-line max-len
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const require = createRequire(import.meta.url);
 
@@ -261,6 +261,12 @@ describe('minification estimator', () => {
       // Handles braces outside template literal (2 spaces + 4 spaces)
       const outerBraces = '{  foo:{bar:`baz ${bam.get({}    )}`}}';
       expect(computeJSTokenLength(outerBraces)).toEqual(outerBraces.length - 6);
+    });
+
+    it('should handle else keyword followed by a regex pattern in scripts', () => {
+      const script = '} else/^hello!/.test(n)?(d=element.parseFromString("Hi/Hello there!")';
+      const minified = '}else/^hello!/.test(n)?(d=element.parseFromString("Hi/Hello there!")';
+      expect(computeJSTokenLength(script)).toEqual(minified.length);
     });
   });
 });

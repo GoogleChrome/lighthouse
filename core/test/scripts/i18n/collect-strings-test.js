@@ -1,10 +1,13 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import fs from 'fs';
+
 import * as collect from '../../../scripts/i18n/collect-strings.js';
+import {LH_ROOT} from '../../../../shared/root.js';
 
 /** @typedef {collect.CtcMessage & Required<Pick<collect.CtcMessage, 'placeholders'>>} CtcWithPlaceholders */
 
@@ -293,7 +296,7 @@ describe('parseUIStrings', () => {
        */
       exampleString: 'Hello World {variable}',
       /**
-       * A description without an @tag and
+       * A description without an tag and
        * across multiple lines.
        */
       exampleString2: 'Just a plain string',
@@ -317,7 +320,7 @@ describe('parseUIStrings', () => {
       },
       exampleString2: {
         message: 'Just a plain string',
-        description: 'A description without an @tag and across multiple lines.',
+        description: 'A description without an tag and across multiple lines.',
         examples: {},
       },
       exampleString3: {
@@ -337,7 +340,7 @@ describe('#_lhlValidityChecks', () => {
   it('errors when using non-supported custom-formatted ICU format', () => {
     const message = 'Hello World took {var, badFormat, milliseconds}.';
     expect(() => collect.convertMessageToCtc(message)).toThrow(
-      /Did not find the expected syntax \(one of 'number', 'date', 'time', 'plural', 'selectordinal', 'select'\) in message "Hello World took {var, badFormat, milliseconds}."$/);
+      /\[INVALID_ARGUMENT_TYPE\] Did not find the expected syntax in message: Hello World took {var, badFormat, milliseconds}.$/);
   });
 
   it('errors when there is content outside of a plural argument', () => {
@@ -370,14 +373,14 @@ describe('#_lhlValidityChecks', () => {
       /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}}'\)$/);
   });
 
-  it('errors when there is content outside of nested plural aguments', () => {
+  it('errors when there is content outside of nested plural arguments', () => {
     const message = `{user_gender, select,
       female {Ms. {name} received {count, plural, =1 {one award.} other {# awards.}}}
       male {Mr. {name} received {count, plural, =1 {one award.} other {# awards.}}}
       other {{name} received {count, plural, =1 {one award.} other {# awards.}}}
     }`;
     expect(() => collect.convertMessageToCtc(message, {name: 'Elbert'})).toThrow(
-      /Content cannot appear outside plural or select ICU messages.*\(message: 'Ms. {name} received {count, plural, =1 {one award.} other {# awards.}}'\)$/);
+      /Content cannot appear outside plural or select ICU messages.*\(message: '{user_gender, select/);
   });
   /* eslint-enable max-len */
 });
@@ -516,23 +519,29 @@ describe('Convert Message to Placeholder', () => {
     });
   });
 
+  it('converts custom-formatted ICU to placholders (repeated)', () => {
+    const message = 'the time is {timeInMs, number, milliseconds}. ' +
+      'I repeat, the time is {timeInMs, number, milliseconds}.';
+    const res = collect.convertMessageToCtc(message);
+    const expectation = 'the time is $CUSTOM_ICU_0$. I repeat, the time is $CUSTOM_ICU_0$.';
+    expect(res.message).toBe(expectation);
+    expect(res.placeholders).toEqual({
+      CUSTOM_ICU_0: {
+        content: '{timeInMs, number, milliseconds}',
+        example: '499',
+      },
+    });
+  });
+
   it('replaces within ICU plural', () => {
     const message = '{var, select, male{time: {timeInSec, number, seconds}} ' +
       'female{time: {timeInSec, number, seconds}} other{time: {timeInSec, number, seconds}}}';
     const expectation = '{var, select, male{time: $CUSTOM_ICU_0$} ' +
-      'female{time: $CUSTOM_ICU_1$} other{time: $CUSTOM_ICU_2$}}';
+      'female{time: $CUSTOM_ICU_0$} other{time: $CUSTOM_ICU_0$}}';
     const res = collect.convertMessageToCtc(message);
     expect(res.message).toEqual(expectation);
     expect(res.placeholders).toEqual({
       CUSTOM_ICU_0: {
-        content: '{timeInSec, number, seconds}',
-        example: '2.4',
-      },
-      CUSTOM_ICU_1: {
-        content: '{timeInSec, number, seconds}',
-        example: '2.4',
-      },
-      CUSTOM_ICU_2: {
         content: '{timeInSec, number, seconds}',
         example: '2.4',
       },
@@ -558,11 +567,24 @@ describe('Convert Message to Placeholder', () => {
     });
   });
 
+  it('converts direct ICU with examples to placeholders (repeated)', () => {
+    const message = 'Hello {name}. Nice to meet you, {name}';
+    const res = collect.convertMessageToCtc(message, {name: 'Mary'});
+    const expectation = 'Hello $ICU_0$. Nice to meet you, $ICU_0$';
+    expect(res.message).toBe(expectation);
+    expect(res.placeholders).toEqual({
+      ICU_0: {
+        content: '{name}',
+        example: 'Mary',
+      },
+    });
+  });
+
   it('errors when example given without variable', () => {
     const message = 'Hello name.';
     expect(() => collect.convertMessageToCtc(message, {name: 'Mary'}))
       // eslint-disable-next-line max-len
-      .toThrow(/Example 'name' provided, but has not corresponding ICU replacement in message "Hello name."/);
+      .toThrow(/Example 'name' provided, but has no corresponding ICU replacement in message "Hello name."/);
   });
 
   it('errors when direct ICU has no examples', () => {
@@ -818,5 +840,22 @@ describe('PseudoLocalizer', () => {
         },
       },
     });
+  });
+});
+
+describe('collect', () => {
+  it('does not include CDT strings in ctc.json', () => {
+    const ctc =
+      JSON.parse(fs.readFileSync(`${LH_ROOT}/shared/localization/locales/en-US.ctc.json`, 'utf-8'));
+    const keys = Object.keys(ctc);
+    const files = keys.map(key => key.split('|')[0].trim());
+    const nodeModules = new Set();
+    for (const file of files) {
+      if (file.startsWith('node_modules')) {
+        nodeModules.add(file.split('/')[1]);
+      }
+    }
+
+    expect([...nodeModules]).toEqual(['lighthouse-stack-packs']);
   });
 });

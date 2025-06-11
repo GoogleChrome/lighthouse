@@ -1,14 +1,14 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
 import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -38,12 +38,10 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: pwaTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
-      },
+      Trace: pwaTrace,
+      DevtoolsLog: pwaDevtoolsLog,
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -55,12 +53,10 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates a modern trace correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [FcpAudit.DEFAULT_PASS]: frameTrace,
-      },
-      devtoolsLogs: {
-        [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
-      },
+      Trace: frameTrace,
+      DevtoolsLog: frameDevtoolsLog,
+      URL: getURLArtifactFromDevtoolsLog(frameDevtoolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

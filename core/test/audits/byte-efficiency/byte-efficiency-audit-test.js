@@ -1,27 +1,25 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
 
+import * as Lantern from '../../../lib/lantern/lantern.js';
 import {ByteEfficiencyAudit as ByteEfficiencyAudit_} from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
-import {NetworkNode} from '../../../lib/dependency-graph/network-node.js';
-import {CPUNode} from '../../../lib/dependency-graph/cpu-node.js';
-import {Simulator} from '../../../lib/dependency-graph/simulator/simulator.js';
-import {PageDependencyGraph} from '../../../computed/page-dependency-graph.js';
 import {LoadSimulator} from '../../../computed/load-simulator.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
+import {createTestTrace, rootFrame} from '../../create-test-trace.js';
+import {defaultSettings} from '../../../config/constants.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
-const traceM78 = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLogM78 = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/paul/trace.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/paul/devtoolslog.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
-  let graph;
-  let simulator;
+  let simulator = null;
+  let metricComputationInput;
 
   const ByteEfficiencyAudit = class extends ByteEfficiencyAudit_ {
     static get meta() {
@@ -30,150 +28,157 @@ describe('Byte efficiency base audit', () => {
   };
 
   beforeEach(() => {
-    const networkRecord = {
-      requestId: 1,
-      url: 'http://example.com/',
-      protocol: 'http',
-      parsedURL: {scheme: 'http', securityOrigin: 'http://example.com'},
-      transferSize: 400000,
-      timing: {receiveHeadersEnd: 0},
+    const mainDocumentUrl = 'http://example.com/';
+    const networkRecords = [
+      {
+        requestId: '1',
+        url: mainDocumentUrl,
+        protocol: 'http',
+        transferSize: 400_000,
+        priority: 'VeryHigh',
+        resourceType: 'Document',
+        frameId: rootFrame,
+        timing: {sendEnd: 0},
+      },
+      {
+        requestId: '2',
+        url: 'http://example.com/script.js',
+        protocol: 'http',
+        transferSize: 400_000,
+        priority: 'High',
+        resourceType: 'Script',
+        frameId: rootFrame,
+        timing: {sendEnd: 0},
+      },
+      {
+        requestId: '3',
+        url: 'http://www.example.com/image.png',
+        protocol: 'http',
+        transferSize: 200_000,
+        priority: 'High',
+        resourceType: 'Image',
+        frameId: rootFrame,
+        timing: {sendEnd: 0},
+      },
+    ];
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
+
+    const trace = createTestTrace({
+      frameUrl: mainDocumentUrl,
+      // add a CPU node to force improvement to TTI
+      topLevelTasks: [{ts: 0, duration: 100_000}],
+      largestContentfulPaint: 3000,
+      networkRecords,
+    });
+
+    metricComputationInput = {
+      trace,
+      devtoolsLog,
+      gatherContext: {gatherMode: 'navigation'},
+      URL: {
+        requestedUrl: mainDocumentUrl,
+        mainDocumentUrl,
+        finalDisplayedUrl: mainDocumentUrl,
+      },
+      settings: JSON.parse(JSON.stringify(defaultSettings)),
+      simulator: null,
+      SourceMaps: [],
     };
 
-    graph = new NetworkNode(networkRecord);
-    // add a CPU node to force improvement to TTI
-    graph.addDependent(new CPUNode({tid: 1, ts: 0, dur: 100 * 1000}));
-    simulator = new Simulator({});
+    simulator = new Lantern.Simulation.Simulator({});
   });
 
   const baseHeadings = [
     {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
   ];
 
-  describe('#estimateTransferSize', () => {
-    const estimate = ByteEfficiencyAudit.estimateTransferSize;
-
-    it('should estimate by resource type compression ratio when no network info available', () => {
-      assert.equal(estimate(undefined, 1000, 'Stylesheet'), 200);
-      assert.equal(estimate(undefined, 1000, 'Script'), 330);
-      assert.equal(estimate(undefined, 1000, 'Document'), 330);
-      assert.equal(estimate(undefined, 1000, ''), 500);
-    });
-
-    it('should return transferSize when asset matches', () => {
-      const resourceType = 'Stylesheet';
-      const result = estimate({transferSize: 1234, resourceType}, 10000, 'Stylesheet');
-      assert.equal(result, 1234);
-    });
-
-    it('should estimate by network compression ratio when asset does not match', () => {
-      const resourceType = 'Other';
-      const result = estimate({resourceSize: 2000, transferSize: 1000, resourceType}, 100);
-      assert.equal(result, 50);
-    });
-
-    it('should not error when missing resource size', () => {
-      const resourceType = 'Other';
-      const result = estimate({transferSize: 1000, resourceType}, 100);
-      assert.equal(result, 100);
-    });
-
-    it('should not error when resource size is 0', () => {
-      const resourceType = 'Other';
-      const result = estimate({transferSize: 1000, resourceSize: 0, resourceType}, 100);
-      assert.equal(result, 100);
-    });
-  });
-
-  it('should format details', () => {
-    const result = ByteEfficiencyAudit.createAuditProduct({
+  it('should format details', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
     assert.deepEqual(result.details.items, []);
   });
 
-  it('should set the numericValue', () => {
-    const result = ByteEfficiencyAudit.createAuditProduct(
+  it('should set the numericValue', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct(
       {
         headings: baseHeadings,
         items: [
           {url: 'http://example.com/', wastedBytes: 200 * 1000},
         ],
       },
-      graph,
       simulator,
-      {gatherMode: 'navigation'}
+      metricComputationInput,
+      {computedCache: new Map()}
     );
 
     // 900ms savings comes from the graph calculation
     assert.equal(result.numericValue, 900);
   });
 
-  it('should score the wastedMs', () => {
-    const perfectResult = ByteEfficiencyAudit.createAuditProduct({
+  it('should estimate the FCP & LCP impact', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
+      headings: baseHeadings,
+      items: [
+        {url: 'http://example.com/', wastedBytes: 200_000},
+        {url: 'http://example.com/script.js', wastedBytes: 100_000},
+      ],
+    }, simulator, metricComputationInput, {computedCache: new Map()});
+
+    assert.equal(result.metricSavings.FCP, 900);
+    assert.equal(result.metricSavings.LCP, 900);
+  });
+
+  it('should use LCP request savings if larger than LCP graph savings', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
+      headings: baseHeadings,
+      items: [
+        {url: 'http://example.com/', wastedBytes: 200_000},
+        {url: 'http://www.example.com/image.png', wastedBytes: 500_000},
+      ],
+    }, simulator, metricComputationInput, {computedCache: new Map()});
+
+    assert.equal(result.metricSavings.FCP, 900);
+    assert.equal(result.metricSavings.LCP, 2380);
+  });
+
+  it('should fail if there are any results regardless of wastedMs', async () => {
+    const perfectResult = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
-    const goodResult = ByteEfficiencyAudit.createAuditProduct({
+    const goodResult = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
-    const averageResult = ByteEfficiencyAudit.createAuditProduct({
+    const averageResult = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
-    const failingResult = ByteEfficiencyAudit.createAuditProduct({
+    const failingResult = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
-    assert.equal(perfectResult.score, 1, 'scores perfect wastedMs');
-    assert.ok(goodResult.score > 0.75 && goodResult.score < 1, 'scores good wastedMs');
-    assert.ok(averageResult.score > 0.5 && averageResult.score < 0.75, 'scores average wastedMs');
-    assert.ok(failingResult.score < 0.5, 'scores failing wastedMs');
+    assert.equal(perfectResult.score, 0, 'scores perfect wastedMs');
+    assert.equal(goodResult.score, 0, 'scores good wastedMs');
+    assert.equal(averageResult.score, 0, 'scores average wastedMs');
+    assert.equal(failingResult.score, 0, 'scores failing wastedMs');
   });
 
-  it('should score negative wastedMs as perfect', () => {
-    const negativeResult = ByteEfficiencyAudit.createAuditProduct({
-      headings: baseHeadings,
-      items: [{url: 'http://example.com/', wastedBytes: -1 * 1000}],
-    }, graph, simulator, {gatherMode: 'timespan'});
-
-    assert.equal(negativeResult.score, 1);
-    assert.ok(negativeResult.numericValue < 0);
-    assert.equal(negativeResult.numericValue, negativeResult.details.overallSavingsMs);
-  });
-
-  it('should throw on invalid graph', () => {
-    assert.throws(() => {
-      ByteEfficiencyAudit.createAuditProduct({
-        headings: baseHeadings,
-        items: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
-      }, null, simulator, {gatherMode: 'navigation'});
-    });
-  });
-
-  it('should not throw on invalid graph in timespan mode', () => {
-    assert.doesNotThrow(() => {
-      ByteEfficiencyAudit.createAuditProduct({
-        headings: baseHeadings,
-        items: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
-      }, null, simulator, {gatherMode: 'timespan'});
-    });
-  });
-
-  it('should populate KiB', () => {
-    const result = ByteEfficiencyAudit.createAuditProduct({
+  it('should populate KiB', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
         {wastedBytes: 1986, totalBytes: 5436},
       ],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
     assert.equal(result.details.items[0].wastedBytes, 2048);
     assert.equal(result.details.items[0].totalBytes, 4096);
@@ -181,54 +186,54 @@ describe('Byte efficiency base audit', () => {
     assert.equal(result.details.items[1].totalBytes, 5436);
   });
 
-  it('should sort on wastedBytes', () => {
-    const result = ByteEfficiencyAudit.createAuditProduct({
+  it('should sort on wastedBytes', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 450, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 400, totalBytes: 450, wastedPercent: 50},
       ],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
     assert.equal(result.details.items[0].wastedBytes, 450);
     assert.equal(result.details.items[1].wastedBytes, 400);
     assert.equal(result.details.items[2].wastedBytes, 350);
   });
 
-  it('should create a display value', () => {
-    const result = ByteEfficiencyAudit.createAuditProduct({
+  it('should create a display value', async () => {
+    const result = await ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [
         {wastedBytes: 512, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 512, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 1024, totalBytes: 1200, wastedPercent: 50},
       ],
-    }, graph, simulator, {gatherMode: 'navigation'});
+    }, simulator, metricComputationInput, {computedCache: new Map()});
 
     expect(result.displayValue).toBeDisplayString(/savings of 2/);
   });
 
-  it('should work on real graphs', async () => {
+  it('should work on real artifacts', async () => {
     const throttling = {rttMs: 150, throughputKbps: 1600, cpuSlowdownMultiplier: 1};
     const settings = {throttlingMethod: 'simulate', throttling};
     const computedCache = new Map();
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
-    const simulator = await LoadSimulator.request({devtoolsLog, settings, URL}, {computedCache});
-    const result = ByteEfficiencyAudit.createAuditProduct(
+    const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
+    const result = await ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],
         items: [
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
+          {url: 'https://www.paulirish.com/assets/wikipedia-flamechart.jpg', wastedBytes: 30 * 1024},
         ],
       },
-      graph,
       simulator,
-      {gatherMode: 'navigation'}
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, URL, gatherContext: {gatherMode: 'navigation'}, settings, SourceMaps: [], simulator: null},
+      {computedCache: new Map()}
     );
 
-    assert.equal(result.numericValue, 300);
+    assert.equal(result.numericValue, 160);
   });
 
   it('should create load simulator with the specified settings', async () => {
@@ -243,9 +248,10 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      SourceMaps: [],
     };
     const computedCache = new Map();
 
@@ -255,78 +261,13 @@ describe('Byte efficiency base audit', () => {
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
     expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`730`);
+    expect(result.numericValue).toMatchInlineSnapshot(`1220`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
     expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchInlineSnapshot(`21500`);
-  });
-
-  it('should compute TTI savings differently from load savings', async () => {
-    class MockAudit extends ByteEfficiencyAudit {
-      static audit_(artifacts, records) {
-        return {
-          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize * 0.5})),
-          headings: [],
-        };
-      }
-    }
-
-    class MockTtiAudit extends MockAudit {
-      static computeWasteWithTTIGraph(results, graph, simulator) {
-        return ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
-          {includeLoad: false});
-      }
-    }
-
-    const artifacts = {
-      GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: traceM78},
-      devtoolsLogs: {defaultPass: devtoolsLogM78},
-      URL: getURLArtifactFromDevtoolsLog(devtoolsLogM78),
-    };
-    const computedCache = new Map();
-
-    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
-    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
-    const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    const resultTti = await MockTtiAudit.audit(artifacts, {settings, computedCache});
-    expect(resultTti.numericValue).toBeLessThan(result.numericValue);
-    expect(result.numericValue).toMatchInlineSnapshot(`2280`);
-    expect(resultTti.numericValue).toMatchInlineSnapshot(`110`);
-  });
-
-  it('should allow overriding of computeWasteWithTTIGraph', async () => {
-    class MockAudit extends ByteEfficiencyAudit {
-      static audit_(artifacts, records) {
-        return {
-          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize * 0.5})),
-          headings: [],
-        };
-      }
-    }
-
-    class MockOverrideAudit extends MockAudit {
-      static computeWasteWithTTIGraph(results, graph, simulator) {
-        return 0.5 * ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator);
-      }
-    }
-
-    const artifacts = {
-      GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
-      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
-    };
-    const computedCache = new Map();
-
-    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
-    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
-    const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    const resultOverride = await MockOverrideAudit.audit(artifacts, {settings, computedCache});
-    expect(resultOverride.numericValue).toEqual(result.numericValue * 0.5);
+    expect(result.numericValue).toMatchInlineSnapshot(`13580`);
   });
 
   it('should compute savings with throughput in timespan mode', async () => {
@@ -341,8 +282,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
@@ -350,7 +291,7 @@ describe('Byte efficiency base audit', () => {
     const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
     const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toBeCloseTo(914.2695);
+    expect(result.details.overallSavingsMs).toEqual(1400);
   });
 
   it('should return n/a if no network records in timespan mode', async () => {
@@ -365,8 +306,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: []},
+      Trace: trace,
+      DevtoolsLog: [],
       URL: {},
     };
     const computedCache = new Map();
@@ -392,8 +333,8 @@ describe('Byte efficiency base audit', () => {
 
     const artifacts = {
       GatherContext: {gatherMode: 'timespan'},
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
+      Trace: trace,
+      DevtoolsLog: devtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
@@ -407,7 +348,7 @@ describe('Byte efficiency base audit', () => {
     };
     const settings = {throttlingMethod: 'devtools', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toBeCloseTo(575, 1);
+    expect(result.details.overallSavingsMs).toEqual(40);
   });
 
   describe('#scoreForWastedMs', () => {

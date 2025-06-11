@@ -8,6 +8,7 @@ on:
 env:
   DEPOT_TOOLS_PATH: ${{ github.workspace }}/depot-tools
   DEVTOOLS_PATH: ${{ github.workspace }}/devtools-frontend
+  PUPPETEER_SKIP_DOWNLOAD: 1
 
 jobs:
   build:
@@ -20,14 +21,14 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
 
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         path: lighthouse
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -51,8 +52,8 @@ jobs:
         # 3) every change to file in Lighthouse repo important to running these tests.
         #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-11-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
-        restore-keys: ${{ runner.os }}-11
+        key: ${{ runner.os }}-13-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-13
     - name: Set GHA_DEVTOOLS_CACHE_HIT
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
@@ -86,14 +87,14 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         path: lighthouse
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
@@ -103,6 +104,10 @@ jobs:
     # For vpython.
     - name: Download depot tools
       run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
+
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -126,19 +131,20 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     env:
+      CHROME_PATH: ${{ github.workspace }}/lighthouse/.tmp/chrome-tot/chrome
       FORCE_COLOR: true
     name: DevTools smoke ${{ matrix.smoke-test-shard }}/${{ strategy.job-total }}
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         path: lighthouse
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -158,21 +164,22 @@ jobs:
     - run: yarn build-report
       working-directory: ${{ github.workspace }}/lighthouse
 
-    - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
     - name: Install Chrome ToT
-      working-directory: /home/runner
-      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2
+      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --debug
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures
       if: failure()
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Smokehouse (devtools smoke)
-        path: ${{ github.workspace }}/lighthouse/.tmp/smokehouse-ci-failures/
+        path: ${{ github.workspace }}/lighthouse/.tmp/smokehouse-failures/

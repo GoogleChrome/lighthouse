@@ -1,80 +1,130 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from '../audit.js';
 import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
-const BLOCKLIST = new Set([
+/** @type {Record<string, Set<string>>} */
+const nonDescriptiveLinkTexts = {
   // English
-  'click here',
-  'click this',
-  'go',
-  'here',
-  'information',
-  'learn more',
-  'more',
-  'more info',
-  'more information',
-  'right here',
-  'read more',
-  'see more',
-  'start',
-  'this',
+  'en': new Set([
+    'click here',
+    'click this',
+    'go',
+    'here',
+    'information',
+    'learn more',
+    'more',
+    'more info',
+    'more information',
+    'right here',
+    'read more',
+    'see more',
+    'start',
+    'this',
+  ]),
   // Japanese
-  'ここをクリック',
-  'こちらをクリック',
-  'リンク',
-  '続きを読む',
-  '続く',
-  '全文表示',
+  'ja': new Set([
+    'ここをクリック',
+    'こちらをクリック',
+    'リンク',
+    '続きを読む',
+    '続く',
+    '全文表示',
+  ]),
   // Spanish
-  'click aquí',
-  'click aqui',
-  'clicka aquí',
-  'clicka aqui',
-  'pincha aquí',
-  'pincha aqui',
-  'aquí',
-  'aqui',
-  'más',
-  'mas',
-  'más información',
-  'más informacion',
-  'mas información',
-  'mas informacion',
-  'este',
-  'enlace',
-  'este enlace',
-  'empezar',
+  'es': new Set([
+    'click aquí',
+    'click aqui',
+    'clicka aquí',
+    'clicka aqui',
+    'pincha aquí',
+    'pincha aqui',
+    'aquí',
+    'aqui',
+    'más',
+    'mas',
+    'más información',
+    'más informacion',
+    'mas información',
+    'mas informacion',
+    'este',
+    'enlace',
+    'este enlace',
+    'empezar',
+  ]),
   // Portuguese
-  'clique aqui',
-  'ir',
-  'mais informação',
-  'mais informações',
-  'mais',
-  'veja mais',
+  'pt': new Set([
+    'clique aqui',
+    'ir',
+    'mais informação',
+    'mais informações',
+    'mais',
+    'veja mais',
+  ]),
   // Korean
-  '여기',
-  '여기를 클릭',
-  '클릭',
-  '링크',
-  '자세히',
-  '자세히 보기',
-  '계속',
-  '이동',
-  '전체 보기',
+  'ko': new Set([
+    '여기',
+    '여기를 클릭',
+    '클릭',
+    '링크',
+    '자세히',
+    '자세히 보기',
+    '계속',
+    '이동',
+    '전체 보기',
+  ]),
   // Swedish
-  'här',
-  'klicka här',
-  'läs mer',
-  'mer',
-  'mer info',
-  'mer information',
-]);
+  'sv': new Set([
+    'här',
+    'klicka här',
+    'läs mer',
+    'mer',
+    'mer info',
+    'mer information',
+  ]),
+  // German
+  'de': new Set([
+    'klicke hier',
+    'hier klicken',
+    'hier',
+    'mehr',
+    'siehe',
+    'dies',
+    'das',
+    'weiterlesen',
+  ]),
+  // Tamil
+  'ta': new Set([
+    'அடுத்த பக்கம்',
+    'மறுபக்கம்',
+    'முந்தைய பக்கம்',
+    'முன்பக்கம்',
+    'மேலும் அறிக',
+    'மேலும் தகவலுக்கு',
+    'மேலும் தரவுகளுக்கு',
+    'தயவுசெய்து இங்கே அழுத்தவும்',
+    'இங்கே கிளிக் செய்யவும்',
+  ]),
+  // Persian
+  'fa': new Set([
+    'اطلاعات بیشتر',
+    'اطلاعات',
+    'این',
+    'اینجا بزنید',
+    'اینجا کلیک کنید',
+    'اینجا',
+    'برو',
+    'بیشتر بخوانید',
+    'بیشتر بدانید',
+    'بیشتر',
+    'شروع',
+  ]),
+};
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tests if each link on a page contains a sufficient description of what a user will find when they click it. Generic, non-descriptive text like "click here" doesn't give an indication of what the link leads to. This descriptive title is shown when all links on the page have sufficient textual descriptions. */
@@ -113,8 +163,9 @@ class LinkText extends Audit {
    */
   static audit(artifacts) {
     const failingLinks = artifacts.AnchorElements
-      .filter(link => link.href && !link.rel.includes('nofollow'))
       .filter(link => {
+        if (!link.href || link.rel.includes('nofollow')) return false;
+
         const href = link.href.toLowerCase();
         if (
           href.startsWith('javascript:') ||
@@ -126,12 +177,30 @@ class LinkText extends Audit {
           return false;
         }
 
-        return BLOCKLIST.has(link.text.trim().toLowerCase());
+        const searchTerm = link.text.trim().toLowerCase();
+        if (searchTerm) {
+          // Use language if detected, otherwise look at everything.
+          if (link.textLang) {
+            const lang = link.textLang.split('-')[0];
+            if (nonDescriptiveLinkTexts[lang] && nonDescriptiveLinkTexts[lang].has(searchTerm)) {
+              return true;
+            }
+          } else {
+            for (const texts of Object.values(nonDescriptiveLinkTexts)) {
+              if (texts.has(searchTerm)) {
+                return true;
+              }
+            }
+          }
+        }
+
+        return false;
       })
       .map(link => {
         return {
           href: link.href,
           text: link.text.trim(),
+          textLang: link.textLang,
         };
       });
 

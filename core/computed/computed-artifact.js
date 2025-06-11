@@ -1,12 +1,13 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
 
 import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
+import {isUnderTest} from '../lib/lh-env.js';
 
 /**
  * Decorate computableArtifact with a caching `request()` method which will
@@ -14,7 +15,11 @@ import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
  * @template {{name: string, compute_(dependencies: unknown, context: LH.Artifacts.ComputedContext): Promise<unknown>}} C
  * @template {Array<keyof LH.Util.FirstParamType<C['compute_']>>} K
  * @param {C} computableArtifact
- * @param {(K & ([keyof LH.Util.FirstParamType<C['compute_']>] extends [K[number]] ? unknown : never)) | null} keys List of properties of `dependencies` used by `compute_`; other properties are filtered out. Use `null` to allow all properties. Ensures that only required properties are used for caching result.
+ * @param {(K & ([keyof LH.Util.FirstParamType<C['compute_']>] extends [K[number]] ? unknown : never)) | null} keys
+ *        List of properties of `dependencies` used by `compute_`; other properties are filtered out.
+ *        Use `null` to allow all properties. Ensures that only required properties are used for caching result.
+ *        For optional properties of `dependencies`, undefined cannot be used and if found is treated as an error.
+ *        This is to guard against developer mistakes. For optional properties, make it nullable instead.
  */
 function makeComputedArtifact(computableArtifact, keys) {
   // tsc (3.1) has more difficulty with template inter-references in jsdoc, so
@@ -27,13 +32,29 @@ function makeComputedArtifact(computableArtifact, keys) {
    * @return {ReturnType<C['compute_']>}
    */
   const request = (dependencies, context) => {
+    const computedName = computableArtifact.name;
+
+    // Guard against missing properties. Optional properties must be passed as null - if missing or
+    // undefined, throw an error.
+    for (const key of keys || []) {
+      if (dependencies && typeof dependencies === 'object' && dependencies[key] === undefined) {
+        // eslint-disable-next-line max-len
+        const err = new Error(`missing required key "${String(key)}" for computed artifact ${computableArtifact.name}`);
+        if (isUnderTest) {
+          throw err;
+        } else {
+          // For now, simply log in production.
+          log.error(`lh:computed:${computedName}`, err);
+        }
+      }
+    }
+
     const pickedDependencies = keys ?
       Object.fromEntries(keys.map(key => [key, dependencies[key]])) :
       dependencies;
 
     // NOTE: break immutability solely for this caching-controller function.
     const computedCache = /** @type {Map<string, ArbitraryEqualityMap>} */ (context.computedCache);
-    const computedName = computableArtifact.name;
 
     const cache = computedCache.get(computedName) || new ArbitraryEqualityMap();
     computedCache.set(computedName, cache);

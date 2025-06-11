@@ -5,11 +5,15 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
 jobs:
   # `basics` includes all non-smoke and non-unit CI
   basics:
     runs-on: ubuntu-latest
     env:
+      CHROME_PATH: ${{ github.workspace }}/.tmp/chrome-tot/chrome
       FORCE_COLOR: true
 
     # A few steps are duplicated across all jobs. Can be done better when this feature lands:
@@ -17,7 +21,7 @@ jobs:
     #   https://github.com/actions/runner/issues/438
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 100
     - run: bash core/scripts/github-actions-commit-range.sh
@@ -25,30 +29,29 @@ jobs:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn type-check
     - run: yarn build-all
 
-    # Run pptr tests using ToT Chrome instead of stable default.
-    - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
-    - name: Install Chrome ToT
-      working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+    # Since Ubuntu 23, dev builds of Chromium need this.
+    # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+    - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
-    # Run tests that require headfull Chrome.
-    - run: sudo apt-get install xvfb
+    # Run pptr tests using ToT Chrome instead of stable default.
+    - name: Install Chrome ToT
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh
+
     - name: yarn test-clients
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
     - name: yarn test-docs
-      run: xvfb-run --auto-servernum yarn test-docs
+      run: yarn test-docs
     - name: yarn test-treemap
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
+      run: bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
 
     - run: yarn diff:sample-json
     - run: yarn diff:flow-sample-json
@@ -57,6 +60,7 @@ jobs:
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
+    - run: yarn generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code
@@ -75,7 +79,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
 
     - name: Upload dist
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/

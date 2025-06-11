@@ -1,11 +1,10 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
-import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {ProcessedTrace} from '../computed/processed-trace.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -29,9 +28,10 @@ class Redirects extends Audit {
       id: 'redirects',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['URL', 'GatherContext', 'devtoolsLogs', 'traces'],
+      guidanceLevel: 2,
+      requiredArtifacts: ['URL', 'GatherContext', 'DevtoolsLog', 'Trace', 'SourceMaps'],
     };
   }
 
@@ -84,25 +84,26 @@ class Redirects extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
+    const {URL, SourceMaps} = artifacts;
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
+    const metricComputationData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
 
     /** @type {Map<string, LH.Gatherer.Simulation.NodeTiming>} */
     const nodeTimingsById = new Map();
     for (const [node, timing] of metricResult.pessimisticEstimate.nodeTimings.entries()) {
       if (node.type === 'network') {
-        nodeTimingsById.set(node.record.requestId, timing);
+        nodeTimingsById.set(node.request.requestId, timing);
       }
     }
-
-    const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);
 
     let totalWastedMs = 0;
     const tableRows = [];
@@ -144,16 +145,17 @@ class Redirects extends Audit {
       {overallSavingsMs: totalWastedMs});
 
     return {
-      // We award a passing grade if you only have 1 redirect
-      // TODO(phulce): reconsider if cases like the example in https://github.com/GoogleChrome/lighthouse/issues/8984
-      // should fail this audit.
-      score: documentRequests.length <= 2 ? 1 : ByteEfficiencyAudit.scoreForWastedMs(totalWastedMs),
+      score: tableRows.length ? 0 : 1,
       numericValue: totalWastedMs,
       numericUnit: 'millisecond',
       displayValue: totalWastedMs ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: totalWastedMs}) :
         '',
       details,
+      metricSavings: {
+        LCP: totalWastedMs,
+        FCP: totalWastedMs,
+      },
     };
   }
 }

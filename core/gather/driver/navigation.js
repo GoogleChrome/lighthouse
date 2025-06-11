@@ -1,12 +1,11 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
 
-import {NetworkMonitor} from './network-monitor.js';
 import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js'; // eslint-disable-line max-len
 import * as constants from '../../config/constants.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -40,7 +39,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
-/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & LH.Config.SharedPassNavigationJson & Partial<Pick<LH.Config.Settings, 'maxWaitForFcp'|'maxWaitForLoad'|'debugNavigation'>>} NavigationOptions */
+/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & Partial<LH.Config.Settings>} NavigationOptions */
 
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
@@ -77,7 +76,7 @@ function resolveWaitForFullyLoadedOptions(options) {
  * Typical use of this method involves navigating to a neutral page such as `about:blank` in between
  * navigations.
  *
- * @param {LH.Gatherer.FRTransitionalDriver} driver
+ * @param {LH.Gatherer.Driver} driver
  * @param {LH.NavigationRequestor} requestor
  * @param {NavigationOptions} options
  * @return {Promise<{requestedUrl: string, mainDocumentUrl: string, warnings: Array<LH.IcuMessage>}>}
@@ -89,10 +88,9 @@ async function gotoURL(driver, requestor, options) {
   log.time(status);
 
   const session = driver.defaultSession;
-  const networkMonitor = new NetworkMonitor(driver.targetManager);
+  const networkMonitor = driver.networkMonitor;
 
   // Enable the events and network monitor needed to track navigation progress.
-  await networkMonitor.enable();
   await session.sendCommand('Page.enable');
   await session.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
 
@@ -124,7 +122,10 @@ async function gotoURL(driver, requestor, options) {
     throw new Error('Cannot wait for FCP without waiting for page load');
   }
 
-  const waitConditions = await Promise.all(waitConditionPromises);
+  const waitConditions = await Promise.race([
+    session.onCrashPromise(),
+    Promise.all(waitConditionPromises),
+  ]);
   const timedOut = waitConditions.some(condition => condition.timedOut);
   const navigationUrls = await networkMonitor.getNavigationUrls();
 
@@ -144,7 +145,6 @@ async function gotoURL(driver, requestor, options) {
 
   // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
   await waitForNavigationTriggered;
-  await networkMonitor.disable();
 
   if (options.debugNavigation) {
     await waitForUserToContinue(driver);

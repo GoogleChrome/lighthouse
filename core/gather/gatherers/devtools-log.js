@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -10,9 +10,9 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 
-class DevtoolsLog extends FRGatherer {
+class DevtoolsLog extends BaseGatherer {
   static symbol = Symbol('DevtoolsLog');
 
   /** @type {LH.Gatherer.GathererMeta} */
@@ -31,7 +31,7 @@ class DevtoolsLog extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    */
   async startSensitiveInstrumentation({driver}) {
     this._messageLog.reset();
@@ -42,11 +42,18 @@ class DevtoolsLog extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    */
   async stopSensitiveInstrumentation({driver}) {
     this._messageLog.endRecording();
     driver.targetManager.off('protocolevent', this._onProtocolMessage);
+  }
+
+  /**
+   * @return {LH.Artifacts['DevtoolsLog']}
+   */
+  getDebugData() {
+    return this._messageLog.messages;
   }
 
   /**

@@ -1,0 +1,59 @@
+<!--
+ * Copyright 2023 The Lighthouse Authors. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+-->
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <style>
+    p {
+      background-color: white;
+    }
+  
+    div {
+      width: 150px;
+    }
+    div,span,img {
+      margin: 10px;
+      padding: 5px;
+    }
+    /* Want a LCP, but not any image or text visible! */
+    img {
+      opacity: 0.001;
+    }
+    span {
+      display: inline-block;
+    }
+
+    [id*='red'],span[id*='red'] {
+      background-color: #8a4343;
+    }
+    [id*='green'],span[id*='green'] {
+      background-color: #427f36;
+    }
+  </style>
+</head>
+
+<body>
+  <p id="textEl"></p>
+
+  <script>
+    const params = new URLSearchParams(document.location.search);
+    if (params.has('grow')) {
+      textEl.style.backgroundColor = 'lightgrey';
+      let padding = 1;
+      setInterval(() => {
+        if (padding > 300) return;
+  
+        textEl.style.paddingTop = padding + 'px';
+        padding += 1;
+      }, 50);
+    }
+  </script>
+
+  <div id="el-1-red" role="treeitem"></div>
+  <div id="red">
+    <span id="green"><img id="el-2-green" src="launcher-icon-4x.png" width="50" height="50"></span>
+  </div>
+</body>

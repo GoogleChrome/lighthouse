@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -9,8 +9,10 @@ import assert from 'assert/strict';
 import {Interactive} from '../../../computed/metrics/interactive.js';
 import {getURLArtifactFromDevtoolsLog, loadTraceFixture} from '../../test-utils.js';
 
-const {trace, devtoolsLog} = loadTraceFixture('progressive-app-m60');
+const {trace, devtoolsLog} = loadTraceFixture('progressive-app');
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+/** @type {LH.Artifacts['SourceMaps']} */
+const SourceMaps = [];
 
 /**
  * Simple wrapper to just coerce return type to LanternMetric.
@@ -37,8 +39,8 @@ function generateNetworkRecords(partialRecords, timeOrigin) {
       statusCode: item.statusCode || 200,
       requestMethod: item.requestMethod || 'GET',
       finished: typeof item.finished === 'undefined' ? true : item.finished,
-      networkRequestTime: (item.start + timeOriginInMs) / 1000,
-      networkEndTime: item.end === -1 ? -1 : (item.end + timeOriginInMs) / 1000,
+      networkRequestTime: item.start + timeOriginInMs,
+      networkEndTime: item.end === -1 ? -1 : item.end + timeOriginInMs,
     };
     return /** @type {LH.Artifacts.NetworkRequest} */ (record);
   });
@@ -49,19 +51,25 @@ describe('Metrics: TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute a simulated value', async () => {
+    // TODO(15841): investigate difference.
+    if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
+      return;
+    }
+
     const settings = /** @type {LH.Config.Settings} */ (
       {throttlingMethod: 'simulate'}
     );
     const context = {settings, computedCache: new Map()};
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL}, context);
+    // eslint-disable-next-line max-len
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
 
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
+      pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 20);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
@@ -71,11 +79,11 @@ describe('Metrics: TTI', () => {
       {throttlingMethod: 'provided', formFactor: 'desktop'}
     );
     const context = {settings, computedCache: new Map()};
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    // eslint-disable-next-line max-len
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
 
-    assert.equal(Math.round(result.timing), 1582);
-    assert.equal(result.timestamp, 225415754204);
+    assert.equal(Math.round(result.timing), 224);
+    assert.equal(result.timestamp, 376406205074);
   });
 
   it('should compute an observed value (mobile)', async () => {
@@ -83,11 +91,11 @@ describe('Metrics: TTI', () => {
       {throttlingMethod: 'provided', formFactor: 'mobile'}
     );
     const context = {settings, computedCache: new Map()};
-    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    // eslint-disable-next-line max-len
+    const result = await getResult({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null}, context);
 
-    assert.equal(Math.round(result.timing), 1582);
-    assert.equal(result.timestamp, 225415754204);
+    assert.equal(Math.round(result.timing), 224);
+    assert.equal(result.timestamp, 376406205074);
   });
 
   describe('#findOverlappingQuietPeriods', () => {
@@ -105,7 +113,7 @@ describe('Metrics: TTI', () => {
       assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
 
-    it('should throw when trace ended too soon after FMP', () => {
+    it('should throw when trace ended too soon after FCP', () => {
       const timeOrigin = 220023532;
       const firstContentfulPaint = 2500 * 1000 + timeOrigin;
       const traceEnd = 5000 * 1000 + timeOrigin;
@@ -190,7 +198,7 @@ describe('Metrics: TTI', () => {
       );
 
       const cpu = [
-        // quiet period before FMP
+        // quiet period before FCP
         {start: 9000, end: 9900},
         {start: 11000, end: 13000},
         // quiet period during network activity

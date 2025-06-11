@@ -1,18 +1,7 @@
 /**
  * @license
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -25,46 +14,26 @@ import {Globals} from './report-globals.js';
 /** @typedef {import('./dom.js').DOM} DOM */
 /** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /**
- * @typedef CRCSegment
- * @property {LH.Audit.Details.SimpleCriticalRequestNode[string]} node
+ * @typedef NetworkSegment
+ * @property {LH.Audit.Details.SimpleCriticalRequestNode[string]|LH.Audit.Details.NetworkNode[string]} node
  * @property {boolean} isLastChild
  * @property {boolean} hasChildren
- * @property {number} startTime
- * @property {number} transferSize
  * @property {boolean[]} treeMarkers
  */
 
 class CriticalRequestChainRenderer {
   /**
-   * Create render context for critical-request-chain tree display.
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} tree
-   * @return {{tree: LH.Audit.Details.SimpleCriticalRequestNode, startTime: number, transferSize: number}}
-   */
-  static initTree(tree) {
-    let startTime = 0;
-    const rootNodes = Object.keys(tree);
-    if (rootNodes.length > 0) {
-      const node = tree[rootNodes[0]];
-      startTime = node.request.startTime;
-    }
-
-    return {tree, startTime, transferSize: 0};
-  }
-
-  /**
    * Helper to create context for each critical-request-chain node based on its
    * parent. Calculates if this node is the last child, whether it has any
    * children itself and what the tree looks like all the way back up to the root,
    * so the tree markers can be drawn correctly.
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} parent
+   * @param {LH.Audit.Details.SimpleCriticalRequestNode|LH.Audit.Details.NetworkNode} parent
    * @param {string} id
-   * @param {number} startTime
-   * @param {number} transferSize
    * @param {Array<boolean>=} treeMarkers
    * @param {boolean=} parentIsLastChild
-   * @return {CRCSegment}
+   * @return {NetworkSegment}
    */
-  static createSegment(parent, id, startTime, transferSize, treeMarkers, parentIsLastChild) {
+  static createSegment(parent, id, treeMarkers, parentIsLastChild) {
     const node = parent[id];
     const siblings = Object.keys(parent);
     const isLastChild = siblings.indexOf(id) === (siblings.length - 1);
@@ -82,8 +51,6 @@ class CriticalRequestChainRenderer {
       node,
       isLastChild,
       hasChildren,
-      startTime,
-      transferSize: transferSize + node.request.transferSize,
       treeMarkers: newTreeMarkers,
     };
   }
@@ -91,15 +58,42 @@ class CriticalRequestChainRenderer {
   /**
    * Creates the DOM for a tree segment.
    * @param {DOM} dom
-   * @param {CRCSegment} segment
+   * @param {NetworkSegment} segment
    * @param {DetailsRenderer} detailsRenderer
    * @return {Node}
    */
   static createChainNode(dom, segment, detailsRenderer) {
     const chainEl = dom.createComponent('crcChain');
 
+    // This can be either the duration or the chain end time depending on the detail type.
+    let nodeTiming;
+    let nodeTransferSize;
+    let nodeUrl;
+    let alwaysShowTiming;
+    let highlightLongest;
+
+    // `segment.node.request` indicates that this is a legacy critical request chain details node.
+    // For historical reasons, the legacy CRC will only show details for leaf nodes and will show
+    // the leaf node request duration rather than the duration of the entire tree.
+    if ('request' in segment.node) {
+      nodeTransferSize = segment.node.request.transferSize;
+      nodeUrl = segment.node.request.url;
+      nodeTiming = (segment.node.request.endTime - segment.node.request.startTime) * 1000;
+      alwaysShowTiming = false;
+    } else {
+      nodeTransferSize = segment.node.transferSize;
+      nodeUrl = segment.node.url;
+      nodeTiming = segment.node.navStartToEndTime;
+      alwaysShowTiming = true;
+      highlightLongest = segment.node.isLongest;
+    }
+
     // Hovering over request shows full URL.
-    dom.find('.lh-crc-node', chainEl).setAttribute('title', segment.node.request.url);
+    const nodeEl = dom.find('.lh-crc-node', chainEl);
+    nodeEl.setAttribute('title', nodeUrl);
+    if (highlightLongest) {
+      nodeEl.classList.add('lh-crc-node__longest');
+    }
 
     const treeMarkeEl = dom.find('.lh-crc-node__tree-marker', chainEl);
 
@@ -128,18 +122,17 @@ class CriticalRequestChainRenderer {
     );
 
     // Fill in url, host, and request size information.
-    const url = segment.node.request.url;
-    const linkEl = detailsRenderer.renderTextURL(url);
+    const linkEl = detailsRenderer.renderTextURL(nodeUrl);
     const treevalEl = dom.find('.lh-crc-node__tree-value', chainEl);
     treevalEl.append(linkEl);
 
-    if (!segment.hasChildren) {
-      const {startTime, endTime, transferSize} = segment.node.request;
+
+    if (!segment.hasChildren || alwaysShowTiming) {
       const span = dom.createElement('span', 'lh-crc-node__chain-duration');
       span.textContent =
-        ' - ' + Globals.i18n.formatMilliseconds((endTime - startTime) * 1000) + ', ';
-      const span2 = dom.createElement('span', 'lh-crc-node__chain-duration');
-      span2.textContent = Globals.i18n.formatBytesToKiB(transferSize, 0.01);
+        ' - ' + Globals.i18n.formatMilliseconds(nodeTiming) + ', ';
+      const span2 = dom.createElement('span', 'lh-crc-node__chain-size');
+      span2.textContent = Globals.i18n.formatBytesToKiB(nodeTransferSize, 0.01);
 
       treevalEl.append(span, span2);
     }
@@ -150,26 +143,24 @@ class CriticalRequestChainRenderer {
   /**
    * Recursively builds a tree from segments.
    * @param {DOM} dom
-   * @param {DocumentFragment} tmpl
-   * @param {CRCSegment} segment
+   * @param {NetworkSegment} segment
    * @param {Element} elem Parent element.
-   * @param {LH.Audit.Details.CriticalRequestChain} details
    * @param {DetailsRenderer} detailsRenderer
    */
-  static buildTree(dom, tmpl, segment, elem, details, detailsRenderer) {
+  static buildTree(dom, segment, elem, detailsRenderer) {
     elem.append(CRCRenderer.createChainNode(dom, segment, detailsRenderer));
     if (segment.node.children) {
       for (const key of Object.keys(segment.node.children)) {
         const childSegment = CRCRenderer.createSegment(segment.node.children, key,
-          segment.startTime, segment.transferSize, segment.treeMarkers, segment.isLastChild);
-        CRCRenderer.buildTree(dom, tmpl, childSegment, elem, details, detailsRenderer);
+          segment.treeMarkers, segment.isLastChild);
+        CRCRenderer.buildTree(dom, childSegment, elem, detailsRenderer);
       }
     }
   }
 
   /**
    * @param {DOM} dom
-   * @param {LH.Audit.Details.CriticalRequestChain} details
+   * @param {LH.Audit.Details.CriticalRequestChain|LH.Audit.Details.NetworkTree} details
    * @param {DetailsRenderer} detailsRenderer
    * @return {Element}
    */
@@ -185,10 +176,10 @@ class CriticalRequestChainRenderer {
         Globals.i18n.formatMilliseconds(details.longestChain.duration);
 
     // Construct visual tree.
-    const root = CRCRenderer.initTree(details.chains);
-    for (const key of Object.keys(root.tree)) {
-      const segment = CRCRenderer.createSegment(root.tree, key, root.startTime, root.transferSize);
-      CRCRenderer.buildTree(dom, tmpl, segment, containerEl, details, detailsRenderer);
+    const tree = details.chains;
+    for (const key of Object.keys(tree)) {
+      const segment = CRCRenderer.createSegment(tree, key);
+      CRCRenderer.buildTree(dom, segment, containerEl, detailsRenderer);
     }
 
     return dom.find('.lh-crc-container', tmpl);

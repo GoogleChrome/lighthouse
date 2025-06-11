@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* global getNodeDetails */
@@ -12,10 +12,9 @@
  * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import * as RectHelpers from '../../lib/rect-helpers.js';
 import {Sentry} from '../../lib/sentry.js';
 import Trace from './trace.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
@@ -23,8 +22,13 @@ import {ProcessedNavigation} from '../../computed/processed-navigation.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
+import {ExecutionContext} from '../driver/execution-context.js';
+import {TraceEngineResult} from '../../computed/trace-engine-result.js';
+import SourceMaps from './source-maps.js';
 
-/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
+/** @typedef {{nodeId: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
+
+const MAX_LAYOUT_SHIFTS = 15;
 
 /**
  * @this {HTMLElement}
@@ -41,11 +45,11 @@ function getNodeDetailsData() {
 }
 /* c8 ignore stop */
 
-class TraceElements extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+class TraceElements extends BaseGatherer {
+  /** @type {LH.Gatherer.GathererMeta<'Trace'|'SourceMaps'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol},
+    dependencies: {Trace: Trace.symbol, SourceMaps: SourceMaps.symbol},
   };
 
   /** @type {Map<string, string>} */
@@ -62,87 +66,151 @@ class TraceElements extends FRGatherer {
   }
 
   /**
-   * @param {Array<number>} rect
-   * @return {LH.Artifacts.Rect}
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
+   * @param {string|undefined} navigationId
+   * @return {Promise<Array<{nodeId: number}>>}
    */
-  static traceRectToLHRect(rect) {
-    const rectArgs = {
-      x: rect[0],
-      y: rect[1],
-      width: rect[2],
-      height: rect[3],
-    };
-    return RectHelpers.addRectTopAndBottom(rectArgs);
-  }
+  static async getTraceEngineElements(traceEngineResult, navigationId) {
+    // Can only resolve elements for the latest insight set, which should correspond
+    // to the current navigation id (if present). Can't resolve elements for pages
+    // that are gone.
+    const insightSet = [...traceEngineResult.insights.values()].at(-1);
+    if (!insightSet) {
+      return [];
+    }
 
-  /**
-   * This function finds the top (up to 5) elements that contribute to the CLS score of the page.
-   * Each layout shift event has a 'score' which is the amount added to the CLS as a result of the given shift(s).
-   * We calculate the score per element by taking the 'score' of each layout shift event and
-   * distributing it between all the nodes that were shifted, proportianal to the impact region of
-   * each shifted element.
-   * @param {LH.Artifacts.ProcessedTrace} processedTrace
-   * @return {Array<TraceElementData>}
-   */
-  static getTopLayoutShiftElements(processedTrace) {
-    /** @type {Map<number, number>} */
-    const clsPerNode = new Map();
-    const shiftEvents = CumulativeLayoutShift.getLayoutShiftEvents(processedTrace);
+    if (navigationId) {
+      if (insightSet.navigation?.args.data?.navigationId !== navigationId) {
+        return [];
+      }
+    } else {
+      if (insightSet.navigation) {
+        return [];
+      }
+    }
 
-    shiftEvents.forEach((event) => {
-      if (!event || !event.impactedNodes) {
+    /**
+     * Execute `cb(obj, key)` on every object property (non-objects only), recursively.
+     * @param {any} obj
+     * @param {(obj: Record<string, unknown>, key: string) => void} cb
+     * @param {Set<object>} seen
+     */
+    function recursiveObjectEnumerate(obj, cb, seen) {
+      if (seen.has(seen)) {
         return;
       }
 
-      let totalAreaOfImpact = 0;
-      /** @type {Map<number, number>} */
-      const pixelsMovedPerNode = new Map();
+      seen.add(obj);
 
-      event.impactedNodes.forEach(node => {
-        if (!node.node_id || !node.old_rect || !node.new_rect) {
-          return;
+      if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+        if (obj instanceof Map) {
+          for (const [key, val] of obj) {
+            if (typeof val === 'object') {
+              recursiveObjectEnumerate(val, cb, seen);
+            } else {
+              cb(val, key);
+            }
+          }
+        } else {
+          Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'object') {
+              recursiveObjectEnumerate(obj[key], cb, seen);
+            } else {
+              cb(obj[key], key);
+            }
+          });
+        }
+      } else if (Array.isArray(obj)) {
+        obj.forEach(item => {
+          if (typeof item === 'object' || Array.isArray(item)) {
+            recursiveObjectEnumerate(item, cb, seen);
+          }
+        });
+      }
+    }
+
+    /** @type {number[]} */
+    const nodeIds = [];
+    recursiveObjectEnumerate(insightSet.model, (val, key) => {
+      const keys = ['nodeId', 'node_id', 'backendNodeId'];
+      if (typeof val === 'number' && keys.includes(key)) {
+        nodeIds.push(val);
+      }
+    }, new Set());
+
+    // TODO: handle digging into Map in recursiveObjectEnumerate.
+    for (const shift of insightSet.model.CLSCulprits.shifts.values()) {
+      nodeIds.push(...shift.unsizedImages.map(s => s.backendNodeId));
+    }
+
+    return [...new Set(nodeIds)].map(id => ({nodeId: id}));
+  }
+
+  /**
+   * We want to a single representative node to represent the shift, so let's pick
+   * the one with the largest impact (size x distance moved).
+   *
+   * @param {LH.Artifacts.TraceImpactedNode[]} impactedNodes
+   * @param {Map<number, number>} impactByNodeId
+   * @return {number|undefined}
+   */
+  static getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId) {
+    let biggestImpactNodeId;
+    let biggestImpactNodeScore = Number.NEGATIVE_INFINITY;
+    for (const node of impactedNodes) {
+      const impactScore = impactByNodeId.get(node.node_id);
+      if (impactScore !== undefined && impactScore > biggestImpactNodeScore) {
+        biggestImpactNodeId = node.node_id;
+        biggestImpactNodeScore = impactScore;
+      }
+    }
+    return biggestImpactNodeId;
+  }
+
+  /**
+   * This function finds the top (up to 15) layout shifts on the page, and returns
+   * the id of the largest impacted node of each shift, along with any related nodes
+   * that may have caused the shift.
+   *
+   * @param {LH.Trace} trace
+   * @param {LH.Artifacts.TraceEngineResult['parsedTrace']} traceEngineResult
+   * @param {LH.Gatherer.Context} context
+   * @return {Promise<Array<{nodeId: number}>>}
+   */
+  static async getTopLayoutShifts(trace, traceEngineResult, context) {
+    const {impactByNodeId} = await CumulativeLayoutShift.request(trace, context);
+    const clusters = traceEngineResult.LayoutShifts.clusters ?? [];
+    const layoutShiftEvents =
+      /** @type {import('../../lib/trace-engine.js').SaneSyntheticLayoutShift[]} */(
+        clusters.flatMap(c => c.events)
+      );
+
+    return layoutShiftEvents
+      .sort((a, b) => b.args.data.weighted_score_delta - a.args.data.weighted_score_delta)
+      .slice(0, MAX_LAYOUT_SHIFTS)
+      .flatMap(event => {
+        const nodeIds = [];
+        const impactedNodes = event.args.data.impacted_nodes || [];
+        const biggestImpactedNodeId =
+          this.getBiggestImpactNodeForShiftEvent(impactedNodes, impactByNodeId);
+        if (biggestImpactedNodeId !== undefined) {
+          nodeIds.push(biggestImpactedNodeId);
         }
 
-        const oldRect = TraceElements.traceRectToLHRect(node.old_rect);
-        const newRect = TraceElements.traceRectToLHRect(node.new_rect);
-        const areaOfImpact = RectHelpers.getRectArea(oldRect) +
-          RectHelpers.getRectArea(newRect) -
-          RectHelpers.getRectOverlapArea(oldRect, newRect);
-
-        pixelsMovedPerNode.set(node.node_id, areaOfImpact);
-        totalAreaOfImpact += areaOfImpact;
+        return nodeIds.map(nodeId => ({nodeId}));
       });
-
-      for (const [nodeId, pixelsMoved] of pixelsMovedPerNode.entries()) {
-        let clsContribution = clsPerNode.get(nodeId) || 0;
-        clsContribution += (pixelsMoved / totalAreaOfImpact) * event.weightedScore;
-        clsPerNode.set(nodeId, clsContribution);
-      }
-    });
-
-    const topFive = [...clsPerNode.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([nodeId, clsContribution]) => {
-      return {
-        nodeId: nodeId,
-        score: clsContribution,
-      };
-    });
-
-    return topFive;
   }
 
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<TraceElementData|undefined>}
    */
   static async getResponsivenessElement(trace, context) {
     const {settings} = context;
     try {
       const responsivenessEvent = await Responsiveness.request({trace, settings}, context);
-      if (!responsivenessEvent || responsivenessEvent.name === 'FallbackTiming') return;
+      if (!responsivenessEvent) return;
       return {nodeId: responsivenessEvent.args.data.nodeId};
     } catch {
       // Don't let responsiveness errors sink the rest of the gatherer.
@@ -205,7 +273,7 @@ class TraceElements extends FRGatherer {
 
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    * @return {Promise<{nodeId: number, type: string} | undefined>}
    */
   static async getLcpElement(trace, context) {
@@ -233,7 +301,7 @@ class TraceElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    */
   async startInstrumentation(context) {
     await context.driver.defaultSession.sendCommand('Animation.enable');
@@ -241,7 +309,7 @@ class TraceElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Gatherer.Context} context
    */
   async stopInstrumentation(context) {
     context.driver.defaultSession.off('Animation.animationStarted', this._onAnimationStarted);
@@ -249,63 +317,88 @@ class TraceElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   * @param {LH.Trace|undefined} trace
-   * @return {Promise<LH.Artifacts['TraceElements']>}
+   * @param {LH.Gatherer.ProtocolSession} session
+   * @param {number} backendNodeId
    */
-  async _getArtifact(context, trace) {
-    const session = context.driver.defaultSession;
-    if (!trace) {
-      throw new Error('Trace is missing!');
+  async getNodeDetails(session, backendNodeId) {
+    try {
+      const objectId = await resolveNodeIdToObjectId(session, backendNodeId);
+      if (!objectId) return null;
+
+      const deps = ExecutionContext.serializeDeps([
+        pageFunctions.getNodeDetails,
+        getNodeDetailsData,
+      ]);
+      return await session.sendCommand('Runtime.callFunctionOn', {
+        objectId,
+        functionDeclaration: `function () {
+          ${deps}
+          return getNodeDetailsData.call(this);
+        }`,
+        returnByValue: true,
+        awaitPromise: true,
+      });
+    } catch (err) {
+      Sentry.captureException(err, {
+        tags: {gatherer: 'TraceElements'},
+        level: 'error',
+      });
     }
+
+    return null;
+  }
+
+  /**
+   * @param {LH.Gatherer.Context<'Trace'|'SourceMaps'>} context
+   * @return {Promise<LH.Artifacts.TraceElement[]>}
+   */
+  async getArtifact(context) {
+    const session = context.driver.defaultSession;
+
+    const trace = context.dependencies.Trace;
+    const SourceMaps = context.dependencies.SourceMaps;
+    const settings = context.settings;
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;
+    const navigationId = processedTrace.timeOriginEvt.args.data?.navigationId;
 
+    const traceEngineData = await TraceElements.getTraceEngineElements(
+      traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
-    const clsNodeData = TraceElements.getTopLayoutShiftElements(processedTrace);
+    const shiftsData = await TraceElements.getTopLayoutShifts(
+      trace, traceEngineResult.parsedTrace, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
+      ['trace-engine', traceEngineData],
       ['largest-contentful-paint', lcpNodeData ? [lcpNodeData] : []],
-      ['layout-shift', clsNodeData],
+      ['layout-shift', shiftsData],
       ['animation', animatedElementData],
       ['responsiveness', responsivenessElementData ? [responsivenessElementData] : []],
     ]);
 
+    /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
+    const callFunctionOnCache = new Map();
+    /** @type {LH.Artifacts.TraceElement[]} */
     const traceElements = [];
     for (const [traceEventType, backendNodeData] of backendNodeDataMap) {
       for (let i = 0; i < backendNodeData.length; i++) {
         const backendNodeId = backendNodeData[i].nodeId;
-        let response;
-        try {
-          const objectId = await resolveNodeIdToObjectId(session, backendNodeId);
-          if (!objectId) continue;
-          response = await session.sendCommand('Runtime.callFunctionOn', {
-            objectId,
-            functionDeclaration: `function () {
-              ${getNodeDetailsData.toString()};
-              ${pageFunctions.getNodeDetails};
-              return getNodeDetailsData.call(this);
-            }`,
-            returnByValue: true,
-            awaitPromise: true,
-          });
-        } catch (err) {
-          Sentry.captureException(err, {
-            tags: {gatherer: this.name},
-            level: 'error',
-          });
-          continue;
+        let response = callFunctionOnCache.get(backendNodeId);
+        if (response === undefined) {
+          response = await this.getNodeDetails(session, backendNodeId);
+          callFunctionOnCache.set(backendNodeId, response);
         }
 
         if (response?.result?.value) {
           traceElements.push({
-            traceEventType,
             ...response.result.value,
-            score: backendNodeData[i].score,
+            traceEventType,
             animations: backendNodeData[i].animations,
             nodeId: backendNodeId,
             type: backendNodeData[i].type,
@@ -315,25 +408,6 @@ class TraceElements extends FRGatherer {
     }
 
     return traceElements;
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
-   * @return {Promise<LH.Artifacts.TraceElement[]>}
-   */
-  async getArtifact(context) {
-    return this._getArtifact(context, context.dependencies.Trace);
-  }
-
-  /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
-   * @return {Promise<LH.Artifacts.TraceElement[]>}
-   */
-  async afterPass(passContext, loadData) {
-    const context = {...passContext, dependencies: {}};
-    await this.stopInstrumentation(context);
-    return this._getArtifact(context, loadData.trace);
   }
 }
 

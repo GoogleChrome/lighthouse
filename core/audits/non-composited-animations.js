@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -110,6 +110,7 @@ class NonCompositedAnimations extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
+      guidanceLevel: 2,
       requiredArtifacts: ['TraceElements', 'HostUserAgent'],
     };
   }
@@ -125,6 +126,7 @@ class NonCompositedAnimations extends Audit {
       return {
         score: 1,
         notApplicable: true,
+        metricSavings: {CLS: 0},
       };
     }
 
@@ -195,6 +197,12 @@ class NonCompositedAnimations extends Audit {
     return {
       score: results.length === 0 ? 1 : 0,
       notApplicable: results.length === 0,
+      metricSavings: {
+        // We do not have enough information to accurately predict the impact of individual animations on CLS.
+        // It is also not worth the effort since only a small percentage of sites have their CLS affected by non-composited animations.
+        // https://github.com/GoogleChrome/lighthouse/pull/15099#issuecomment-1558107906
+        CLS: 0,
+      },
       details,
       displayValue,
     };

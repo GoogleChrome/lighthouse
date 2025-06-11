@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {FunctionComponent} from 'preact';
@@ -39,13 +39,6 @@ function getScoreToBeGained(audit: ScoredAuditRef): number {
   return audit.weight * (1 - audit.result.score);
 }
 
-function getOverallSavings(audit: LH.ReportResult.AuditRef): number {
-  return (
-    audit.result.details &&
-    audit.result.details.overallSavingsMs
-  ) || 0;
-}
-
 const SummaryTooltipAudit: FunctionComponent<{audit: LH.ReportResult.AuditRef}> = ({audit}) => {
   const rating = ReportUtils.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
   return (
@@ -63,10 +56,10 @@ const SummaryTooltipAudits: FunctionComponent<{category: LH.ReportResult.Categor
     return audit.result.score !== null &&
       // Metrics should not be displayed in this group.
       audit.group !== 'metrics' &&
-      // Audits in performance group "hidden" should not be counted.
-      (audit.group !== 'hidden' || category.id !== 'performance') &&
-      // We don't want unweighted audits except for opportunities with potential savings.
-      (audit.weight > 0 || getOverallSavings(audit) > 0) &&
+      // Audits in group "hidden" should not be counted.
+      audit.group !== 'hidden' &&
+      // We don't want unweighted audits except for performance diagnostics.
+      (audit.weight > 0 || audit.group === 'diagnostics') &&
       // Passing audits should never be high impact.
       !ReportUtils.showAsPassed(audit.result);
   }
@@ -79,7 +72,12 @@ const SummaryTooltipAudits: FunctionComponent<{category: LH.ReportResult.Categor
       const remainingScoreA = getScoreToBeGained(a);
       const remainingScoreB = getScoreToBeGained(b);
       if (remainingScoreA !== remainingScoreB) return remainingScoreB - remainingScoreA;
-      return getOverallSavings(b) - getOverallSavings(a);
+      if (a.result.score !== b.result.score) return a.result.score - b.result.score;
+
+      // TODO: Sort using overall impact from metric savings, not just LCP
+      const aLcpSavings = a.result.metricSavings?.LCP || 0;
+      const bLcpSavings = b.result.metricSavings?.LCP || 0;
+      return bLcpSavings - aLcpSavings;
     })
     .splice(0, MAX_TOOLTIP_AUDITS);
   if (!audits.length) return null;

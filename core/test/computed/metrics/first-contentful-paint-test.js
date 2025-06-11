@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -9,8 +9,8 @@ import assert from 'assert/strict';
 import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
@@ -21,16 +21,16 @@ describe('Metrics: FCP', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
       context);
 
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+      optimisticNodeTimings: result.optimisticEstimate.nodeTimings.size,
+      pessimisticNodeTimings: result.pessimisticEstimate.nodeTimings.size,
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 3);
-    assert.equal(result.pessimisticEstimate.nodeTimings.size, 3);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });
@@ -38,20 +38,32 @@ describe('Metrics: FCP', () => {
   it('should compute an observed value (desktop)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await FirstContentfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await FirstContentfulPaint.request(
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
       context);
 
-    assert.equal(Math.round(result.timing), 499);
-    assert.equal(result.timestamp, 225414670885);
+    await expect(result).toMatchInlineSnapshot(`
+Object {
+  "timestamp": 376406173872,
+  "timing": 192.308,
+}
+`);
   });
 
   it('should compute an observed value (mobile)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {gatherContext, trace, devtoolsLog, settings}, context);
+      // eslint-disable-next-line max-len
+      {gatherContext, trace, devtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
+      context);
 
-    assert.equal(Math.round(result.timing), 499);
-    assert.equal(result.timestamp, 225414670885);
+    await expect(result).toMatchInlineSnapshot(`
+Object {
+  "timestamp": 376406173872,
+  "timing": 192.308,
+}
+`);
   });
 });

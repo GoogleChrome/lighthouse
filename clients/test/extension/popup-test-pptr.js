@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import path from 'path';
@@ -10,14 +10,13 @@ import puppeteer from 'puppeteer-core';
 import {getChromePath} from 'chrome-launcher';
 
 import {DEFAULT_CATEGORIES, STORAGE_KEYS} from '../../extension/scripts/settings-controller.js';
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT} from '../../../shared/root.js';
 
 const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 
 const mockStorage = {
   [STORAGE_KEYS.Categories]: {
     'performance': true,
-    'pwa': true,
     'seo': true,
     'accessibility': false,
     'best-practices': false,
@@ -33,18 +32,41 @@ describe('Lighthouse chrome popup', function() {
 
   let browser;
   let page;
-  const pageErrors = [];
+  let pageErrors = [];
+
+  async function claimErrors() {
+    const theErrors = pageErrors;
+    pageErrors = [];
+    return await Promise.all(theErrors);
+  }
+
+  async function ensureNoErrors() {
+    await page.bringToFront();
+    await page.evaluate(() => new Promise(window.requestAnimationFrame));
+    const errors = await claimErrors();
+    expect(errors).toHaveLength(0);
+  }
 
   before(async function() {
     // start puppeteer
     browser = await puppeteer.launch({
-      headless: false,
       executablePath: getChromePath(),
     });
 
     page = await browser.newPage();
-    page.on('pageerror', err => {
-      pageErrors.push(err);
+    page.on('pageerror', e => pageErrors.push(`${e.message} ${e.stack}`));
+    page.on('console', (e) => {
+      if (e.type() === 'error' || e.type() === 'warning') {
+        const describe = (jsHandle) => {
+          return jsHandle.executionContext().evaluate((obj) => {
+            return JSON.stringify(obj, null, 2);
+          }, jsHandle);
+        };
+        const promise = Promise.all(e.args().map(describe)).then(args => {
+          return `${e.text()} ${args.join(' ')} ${JSON.stringify(e.location(), null, 2)}`;
+        });
+        pageErrors.push(promise);
+      }
     });
     await page.evaluateOnNewDocument((mockStorage) => {
       Object.defineProperty(chrome, 'tabs', {
@@ -85,7 +107,7 @@ describe('Lighthouse chrome popup', function() {
   });
 
   it('should load without errors', async function() {
-    expect(pageErrors).toHaveLength(0);
+    await ensureNoErrors();
   });
 
   it('should generate the category checkboxes', async function() {
@@ -106,6 +128,7 @@ describe('Lighthouse chrome popup', function() {
     const enabledCategoriesFromSettings = Object.keys(mockStorage[STORAGE_KEYS.Categories])
       .filter(key => mockStorage[STORAGE_KEYS.Categories][key]);
     const expectedEnabledValues = [
+      'psi',
       ...enabledCategoriesFromSettings,
       mockStorage[STORAGE_KEYS.Settings].device,
     ];

@@ -1,19 +1,13 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import {LH_ROOT} from '../../../../shared/root.js';
 import DuplicatedJavascript from '../../../audits/byte-efficiency/duplicated-javascript.js';
-import {
-  loadSourceMapFixture,
-  createScript,
-  getURLArtifactFromDevtoolsLog,
-  readJson,
-} from '../../test-utils.js';
-
-const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
-const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+import {loadArtifacts} from '../../../lib/asset-saver.js';
+import {loadSourceMapFixture, createScript} from '../../test-utils.js';
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {
@@ -319,51 +313,14 @@ describe('DuplicatedJavascript computed artifact', () => {
   });
 
   it('.audit', async () => {
-    // Use a real trace fixture, but the bundle stuff.
-    const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
-    const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
-    const artifacts = {
-      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
-      GatherContext: {gatherMode: 'navigation'},
-      devtoolsLogs: {
-        [DuplicatedJavascript.DEFAULT_PASS]: devtoolsLog,
-      },
-      traces: {
-        [DuplicatedJavascript.DEFAULT_PASS]: trace,
-      },
-      SourceMaps: [
-        {
-          scriptId: '1',
-          scriptUrl: 'https://www.paulirish.com/javascripts/firebase-performance.js',
-          map: bundleData1.map,
-        },
-        {
-          scriptId: '2',
-          scriptUrl: 'https://www.paulirish.com/javascripts/firebase-app.js',
-          map: bundleData2.map,
-        },
-      ],
-      Scripts: [
-        {
-          scriptId: '1',
-          url: 'https://www.paulirish.com/javascripts/firebase-performance.js',
-          content: bundleData1.content,
-        },
-        {
-          scriptId: '2',
-          url: 'https://www.paulirish.com/javascripts/firebase-app.js',
-          content: bundleData2.content,
-        },
-      ].map(createScript),
-    };
-
+    const artifacts = await loadArtifacts(`${LH_ROOT}/core/test/fixtures/artifacts/cnn`);
     const ultraSlowThrottling = {rttMs: 150, throughputKbps: 100, cpuSlowdownMultiplier: 8};
     const settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     const context = {settings, computedCache: new Map()};
     const results = await DuplicatedJavascript.audit(artifacts, context);
 
     // Without the `wastedBytesByUrl` this would be zero because the items don't define a url.
-    expect(results.details.overallSavingsMs).toBe(300);
+    expect(results.details.overallSavingsMs).toBe(160);
   });
 
   it('_getNodeModuleName', () => {

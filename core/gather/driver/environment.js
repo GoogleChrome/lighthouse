@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
@@ -30,7 +30,7 @@ const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @return {Promise<LH.Crdp.Browser.GetVersionResponse & {milestone: number}>}
  */
 async function getBrowserVersion(session) {
@@ -45,7 +45,7 @@ async function getBrowserVersion(session) {
 
 /**
  * Computes the benchmark index to get a rough estimate of device class.
- * @param {LH.Gatherer.FRTransitionalDriver['executionContext']} executionContext
+ * @param {LH.Gatherer.Driver['executionContext']} executionContext
  * @return {Promise<number>}
  */
 async function getBenchmarkIndex(executionContext) {
@@ -93,7 +93,7 @@ function getSlowHostCpuWarning(context) {
 function getEnvironmentWarnings(context) {
   return [
     getSlowHostCpuWarning(context),
-  ].filter(/** @return {s is LH.IcuMessage} */ s => !!s);
+  ].filter(s => !!s);
 }
 
 export {

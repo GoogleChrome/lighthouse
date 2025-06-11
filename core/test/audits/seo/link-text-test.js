@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -10,23 +10,58 @@ import LinkTextAudit from '../../../audits/seo/link-text.js';
 
 describe('SEO: link text audit', () => {
   it('fails when link with non descriptive text is found', () => {
-    const invalidLink = {href: 'https://example.com/otherpage.html', text: 'click here', rel: ''};
+    const invalidLink = {href: 'https://example.com/otherpage.html', text: 'click here', rel: '', textLang: 'en'};
+    const invalidLinkDe = {href: 'https://example.com/otherpage.html', text: 'klicke hier', rel: '', textLang: 'de'};
+    const invalidLinkEs = {href: 'https://example.com/otherpage.html', text: 'click aquí', rel: '', textLang: 'es'};
+    const invalidLinkEnUs = {href: 'https://example.com/otherpage.html', text: 'click here', rel: '', textLang: 'en-US'};
+    const invalidLinkDeDe = {href: 'https://example.com/otherpage.html', text: 'klicke hier', rel: '', textLang: 'de-DE'};
+    const artifacts = {
+      URL: {
+        finalDisplayedUrl: 'https://example.com/page.html',
+      },
+      AnchorElements: [
+        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: '', textLang: 'en'},
+        invalidLink,
+        invalidLinkDe,
+        invalidLinkEs,
+        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: '', textLang: 'en'},
+        {href: 'https://example.com/otherpage.html', text: 'legitimer Link-Text', rel: '', textLang: 'de'},
+        invalidLinkEnUs,
+        invalidLinkDeDe,
+      ],
+    };
+
+    const auditResult = LinkTextAudit.audit(artifacts);
+    assert.equal(auditResult.score, 0);
+    assert.equal(auditResult.details.items.length, 5);
+    assert.equal(auditResult.details.items[0].href, invalidLink.href);
+    assert.equal(auditResult.details.items[0].text, invalidLink.text);
+    assert.equal(auditResult.details.items[1].href, invalidLinkDe.href);
+    assert.equal(auditResult.details.items[1].text, invalidLinkDe.text);
+    assert.equal(auditResult.details.items[2].href, invalidLinkEs.href);
+    assert.equal(auditResult.details.items[2].text, invalidLinkEs.text);
+    assert.equal(auditResult.details.items[3].href, invalidLinkEnUs.href);
+    assert.equal(auditResult.details.items[3].text, invalidLinkEnUs.text);
+    assert.equal(auditResult.details.items[4].href, invalidLinkDeDe.href);
+    assert.equal(auditResult.details.items[4].text, invalidLinkDeDe.text);
+  });
+
+  it('considers all non descriptive link texts with unknown language', () => {
     const artifacts = {
       URL: {
         finalDisplayedUrl: 'https://example.com/page.html',
       },
       AnchorElements: [
         {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
-        invalidLink,
-        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
+        {href: 'https://example.com/otherpage.html', text: 'click here', rel: ''},
+        {href: 'https://example.com/otherpage.html', text: 'klicke hier', rel: ''},
+        {href: 'https://example.com/otherpage.html', text: 'click aquí', rel: ''},
       ],
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
     assert.equal(auditResult.score, 0);
-    assert.equal(auditResult.details.items.length, 1);
-    assert.equal(auditResult.details.items[0].href, invalidLink.href);
-    assert.equal(auditResult.details.items[0].text, invalidLink.text);
+    assert.equal(auditResult.details.items.length, 3);
   });
 
   it('ignores links pointing to the main document', () => {
@@ -111,9 +146,10 @@ describe('SEO: link text audit', () => {
         finalDisplayedUrl: 'https://example.com/page.html',
       },
       AnchorElements: [
-        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
-        {href: 'http://example.com/page.html?test=test', text: 'legit link text', rel: ''},
-        {href: 'file://Users/user/Desktop/file.png', text: 'legit link text', rel: ''},
+        {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: '', textLang: 'en'},
+        {href: 'https://example.com/otherpage.html', text: 'legitimer Link-Text', rel: '', textLang: 'de'},
+        {href: 'http://example.com/page.html?test=test', text: 'legit link text', rel: '', textLang: 'en'},
+        {href: 'file://Users/user/Desktop/file.png', text: 'legit link text', rel: '', textLang: 'en'},
       ],
     };
 

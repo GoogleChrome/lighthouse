@@ -12,7 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync as shell } from 'child_process';
 import * as utils from './utils.js';
-import { LH_ROOT } from '../../root.js';
+import { LH_ROOT } from '../../shared/root.js';
 
 const TARGET = 'Release';
 const CONTENT_SHELL_ZIP = 'content-shell.zip';

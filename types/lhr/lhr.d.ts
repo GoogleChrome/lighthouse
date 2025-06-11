@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Result as AuditResult} from './audit-result.js';
@@ -41,7 +41,14 @@ interface Result {
   /** List of top-level warnings for this Lighthouse run. */
   runWarnings: string[];
   /** A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. */
-  runtimeError?: {code: string, message: string};
+  runtimeError?: {
+    code: string;
+    message: string;
+    /** Error stack from any fatal error. */
+    errorStack?: string;
+    /** Artifact the threw the fatal error. */
+    artifactKey?: string;
+  };
   /** The User-Agent string of the browser used run Lighthouse for these results. */
   userAgent: string;
   /** Information about the environment in which Lighthouse was run. */
@@ -71,8 +78,6 @@ declare module Result {
     networkUserAgent: string;
     /** The benchmark index number that indicates rough device class. */
     benchmarkIndex: number;
-    /** Many benchmark indexes. */
-    benchmarkIndexes?: number[];
     /** The version of libraries with which these results were generated. Ex: axe-core. */
     credits?: Record<string, string|undefined>,
   }
@@ -105,6 +110,8 @@ declare module Result {
     score: number|null;
     /** An array of references to all the audit members of this category. */
     auditRefs: AuditRef[];
+    /** An array of all the modes supported by the category. */
+    supportedModes?:  Result.GatherMode[];
   }
 
   interface AuditRef {
@@ -116,8 +123,6 @@ declare module Result {
     group?: string;
     /** The conventional acronym for the audit/metric. */
     acronym?: string;
-    /** Any audit IDs closely relevant to this one. */
-    relevantAudits?: string[];
   }
 
   interface ReportGroup {
@@ -150,7 +155,7 @@ declare module Result {
       width: number;
       height: number;
     };
-    nodes: Record<string, AuditDetails.Rect>;
+    nodes: Record<string, {id?: string} & AuditDetails.Rect>;
   }
 
   /**

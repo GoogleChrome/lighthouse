@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
+env:
+  PUPPETEER_SKIP_DOWNLOAD: 1
+
 jobs:
   package-test:
     runs-on: ubuntu-latest
@@ -14,42 +17,17 @@ jobs:
 
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
+    - name: Use Node.js 18.20
+      uses: actions/setup-node@v4
       with:
-        node-version: 16.x
+        node-version: '18.20'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
-    - run: sudo apt-get install xvfb
 
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code
-
-  package-test-legacy:
-    runs-on: ubuntu-latest
-    name: Package Test Legacy Navigation
-    env:
-      FORCE_COLOR: true
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
-
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
-    - run: sudo apt-get install xvfb
-
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh --legacy-navigation
+    - run: bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

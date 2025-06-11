@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
@@ -34,7 +34,9 @@ class Viewport extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      guidanceLevel: 3,
       requiredArtifacts: ['MetaElements'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
@@ -46,16 +48,37 @@ class Viewport extends Audit {
   static async audit(artifacts, context) {
     const viewportMeta = await ViewportMeta.request(artifacts.MetaElements, context);
 
+    let inpSavings = 300;
     if (!viewportMeta.hasViewportTag) {
       return {
         score: 0,
         explanation: str_(UIStrings.explanationNoTag),
+        metricSavings: {
+          INP: inpSavings,
+        },
+      };
+    }
+
+    if (viewportMeta.isMobileOptimized) {
+      inpSavings = 0;
+    }
+
+    /** @type {LH.Audit.Details.DebugData|undefined} */
+    let details;
+    if (viewportMeta.rawContentString !== undefined) {
+      details = {
+        type: 'debugdata',
+        viewportContent: viewportMeta.rawContentString,
       };
     }
 
     return {
       score: Number(viewportMeta.isMobileOptimized),
+      metricSavings: {
+        INP: inpSavings,
+      },
       warnings: viewportMeta.parserWarnings,
+      details,
     };
   }
 }

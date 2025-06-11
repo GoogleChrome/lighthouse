@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* eslint-disable new-cap */
@@ -16,6 +16,7 @@
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import {expect} from 'expect';
+import {getChromePath} from 'chrome-launcher';
 
 import server from '../auth/server/server.js';
 import {login, logout} from '../auth/example-lh-auth.js';
@@ -82,8 +83,9 @@ describe('my site', () => {
     await new Promise(resolve => server.listen(SERVER_PORT, resolve));
     browser = await puppeteer.launch({
       args: [`--remote-debugging-port=${CHROME_DEBUG_PORT}`],
-      headless: !process.env.DEBUG,
+      headless: process.env.DEBUG ? false : 'new',
       slowMo: process.env.DEBUG ? 50 : undefined,
+      executablePath: getChromePath(),
     });
   });
 
@@ -105,7 +107,7 @@ describe('my site', () => {
     it('lighthouse', async () => {
       await page.goto(ORIGIN);
       const lhr = await runLighthouse(page.url());
-      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.9);
+      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.8);
     });
 
     it('login form should exist', async () => {
@@ -122,7 +124,7 @@ describe('my site', () => {
       await login(page, ORIGIN);
       await page.goto(ORIGIN);
       const lhr = await runLighthouse(page.url());
-      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.9);
+      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.8);
     });
 
     it('login form should not exist', async () => {
@@ -147,7 +149,7 @@ describe('my site', () => {
       await login(page, ORIGIN);
       await page.goto(`${ORIGIN}/dashboard`);
       const lhr = await runLighthouse(page.url());
-      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.9);
+      expect(lhr).toHaveLighthouseScoreGreaterThanOrEqual('seo', 0.8);
     });
 
     it('has secrets', async () => {

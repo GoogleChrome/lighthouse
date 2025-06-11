@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 /**
  * @fileoverview Checks to see if images are displayed only outside of the viewport.
@@ -48,10 +48,11 @@ class OffscreenImages extends ByteEfficiencyAudit {
       id: 'offscreen-images',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
+      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'devtoolsLogs',
-        'traces', 'URL'],
+      guidanceLevel: 2,
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'DevtoolsLog',
+        'Trace', 'URL', 'SourceMaps'],
     };
   }
 
@@ -127,7 +128,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       if (node.type === 'cpu' && timing.duration >= 50) {
         lastLongTaskStartTime = Math.max(lastLongTaskStartTime, timing.startTime);
       } else if (node.type === 'network') {
-        startTimesByURL.set(node.record.url, timing.startTime);
+        startTimesByURL.set(node.request.url, timing.startTime);
       }
     }
 
@@ -156,33 +157,18 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * The default byte efficiency audit will report max(TTI, load), since lazy-loading offscreen
-   * images won't reduce the overall time and the wasted bytes are really only "wasted" for TTI,
-   * override the function to just look at TTI savings.
-   *
-   * @param {Array<LH.Audit.ByteEfficiencyItem>} results
-   * @param {LH.Gatherer.Simulation.GraphNode} graph
-   * @param {LH.Gatherer.Simulation.Simulator} simulator
-   * @return {number}
-   */
-  static computeWasteWithTTIGraph(results, graph, simulator) {
-    return super.computeWasteWithTTIGraph(results, graph, simulator,
-      {includeLoad: false});
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
    * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
+    const {URL, SourceMaps} = artifacts;
     const images = artifacts.ImageElements;
     const viewportDimensions = artifacts.ViewportDimensions;
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
 
     /** @type {string[]} */
     const warnings = [];
@@ -213,7 +199,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const unfilteredResults = Array.from(resultsMap.values());
     // get the interactive time or fallback to getting the end of trace time
     try {
-      const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
+      const metricComputationData =
+        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
       const interactive = await Interactive.request(metricComputationData, context);
 
       // use interactive to generate items

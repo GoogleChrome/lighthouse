@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import log from 'lighthouse-logger';
@@ -9,13 +9,14 @@ import log from 'lighthouse-logger';
 import {ExecutionContext} from './driver/execution-context.js';
 import {TargetManager} from './driver/target-manager.js';
 import {Fetcher} from './fetcher.js';
+import {NetworkMonitor} from './driver/network-monitor.js';
 
 /** @return {*} */
 const throwNotConnectedFn = () => {
   throw new Error('Session not connected');
 };
 
-/** @type {LH.Gatherer.FRProtocolSession} */
+/** @type {LH.Gatherer.ProtocolSession} */
 const throwingSession = {
   setTargetInfo: throwNotConnectedFn,
   hasNextProtocolTimeout: throwNotConnectedFn,
@@ -25,10 +26,12 @@ const throwingSession = {
   once: throwNotConnectedFn,
   off: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
+  sendCommandAndIgnore: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
+  onCrashPromise: throwNotConnectedFn,
 };
 
-/** @implements {LH.Gatherer.FRTransitionalDriver} */
+/** @implements {LH.Gatherer.Driver} */
 class Driver {
   /**
    * @param {LH.Puppeteer.Page} page
@@ -37,6 +40,8 @@ class Driver {
     this._page = page;
     /** @type {TargetManager|undefined} */
     this._targetManager = undefined;
+    /** @type {NetworkMonitor|undefined} */
+    this._networkMonitor = undefined;
     /** @type {ExecutionContext|undefined} */
     this._executionContext = undefined;
     /** @type {Fetcher|undefined} */
@@ -45,13 +50,12 @@ class Driver {
     this.defaultSession = throwingSession;
   }
 
-  /** @return {LH.Gatherer.FRTransitionalDriver['executionContext']} */
+  /** @return {LH.Gatherer.Driver['executionContext']} */
   get executionContext() {
     if (!this._executionContext) return throwNotConnectedFn();
     return this._executionContext;
   }
 
-  /** @return {Fetcher} */
   get fetcher() {
     if (!this._fetcher) return throwNotConnectedFn();
     return this._fetcher;
@@ -60,6 +64,11 @@ class Driver {
   get targetManager() {
     if (!this._targetManager) return throwNotConnectedFn();
     return this._targetManager;
+  }
+
+  get networkMonitor() {
+    if (!this._networkMonitor) return throwNotConnectedFn();
+    return this._networkMonitor;
   }
 
   /** @return {Promise<string>} */
@@ -75,6 +84,8 @@ class Driver {
     const cdpSession = await this._page.target().createCDPSession();
     this._targetManager = new TargetManager(cdpSession);
     await this._targetManager.enable();
+    this._networkMonitor = new NetworkMonitor(this._targetManager);
+    await this._networkMonitor.enable();
     this.defaultSession = this._targetManager.rootSession();
     this._executionContext = new ExecutionContext(this.defaultSession);
     this._fetcher = new Fetcher(this.defaultSession);
@@ -85,6 +96,7 @@ class Driver {
   async disconnect() {
     if (this.defaultSession === throwingSession) return;
     await this._targetManager?.disable();
+    await this._networkMonitor?.disable();
     await this.defaultSession.dispose();
   }
 }

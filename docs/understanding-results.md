@@ -174,14 +174,14 @@ An array containing the different categories, their scores, and the results of t
 ### Example
 ```json
 {
-  "pwa": {
-    "id": "pwa",
-    "title": "Progressive Web App",
-    "description": "PWAs are awesome. [Learn more](...)",
+  "seo": {
+    "id": "seo",
+    "title": "SEO",
+    "description": "These checks ensure that your page is following basic search engine optimization advice...",
     "score": 0.54,
     "auditRefs": [
       {
-        "id": "is-on-https",
+        "id": "crawlable-anchors",
         "weight": 1
       }
     ]

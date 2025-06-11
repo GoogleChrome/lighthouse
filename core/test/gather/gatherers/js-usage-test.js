@@ -1,14 +1,11 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Driver} from '../../../legacy/gather/driver.js';
-import {Connection} from '../../../legacy/gather/connections/connection.js';
 import JsUsage from '../../../gather/gatherers/js-usage.js';
-import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {createMockContext} from '../../gather/mock-driver.js';
+import {createMockContext, createMockDriver} from '../../gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 
 describe('JsUsage gatherer', () => {
@@ -22,19 +19,13 @@ describe('JsUsage gatherer', () => {
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
   async function runJsUsage({coverage}) {
-    const onMock = createMockOnFn();
-    const sendCommandMock = createMockSendCommandFn()
+    const driver = createMockDriver();
+    driver._session.sendCommand
       .mockResponse('Profiler.enable', {})
       .mockResponse('Profiler.disable', {})
       .mockResponse('Profiler.startPreciseCoverage', {})
       .mockResponse('Profiler.takePreciseCoverage', {result: coverage})
       .mockResponse('Profiler.stopPreciseCoverage', {});
-
-    const connectionStub = new Connection();
-    connectionStub.sendCommand = sendCommandMock;
-    connectionStub.on = onMock;
-
-    const driver = new Driver(connectionStub);
 
     const gatherer = new JsUsage();
     await gatherer.startInstrumentation({driver});

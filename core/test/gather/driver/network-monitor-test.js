@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {createMockCdpSession} from '../mock-driver.js';
@@ -79,6 +79,7 @@ describe('NetworkMonitor', () => {
     ]);
 
     // Bring the starting events forward in the log.
+    /** @type {LH.Protocol.RawEventMessage[]} */
     const startEvents = log.filter(m => m.method === 'Network.requestWillBeSent');
     const restEvents = log.filter(m => !startEvents.includes(m));
     return [...startEvents, ...restEvents];
@@ -358,6 +359,22 @@ describe('NetworkMonitor', () => {
       expect(monitor.is2Idle()).toBe(false);
       expect(monitor.isCriticalIdle()).toBe(true);
     });
+
+    it('should treat longlived stuff as noncritical', () => {
+      const messages = networkRecordsToDevtoolsLog([
+        // WebSockets usually dont have a priority on them. SSE usually is a 'High'
+        {url: 'http://example.com/ws', priority: undefined, requestId: `314.1`, resourceType: 'WebSocket'},
+        {url: 'http://example.com/sse', priority: 'High', requestId: `314.2`, resourceType: 'EventSource'},
+      ], {skipVerification: true}).filter(event => event.method === 'Network.requestWillBeSent');
+
+      for (const message of messages) {
+        rootDispatch(message);
+      }
+
+      expect(monitor.isCriticalIdle()).toBe(true);
+      expect(monitor.isIdle()).toBe(false);
+      expect(monitor.is2Idle()).toBe(true);
+    });
   });
 
   describe('#findNetworkQuietPeriods', () => {
@@ -381,9 +398,9 @@ describe('NetworkMonitor', () => {
 
     it('should find the 0-quiet periods', () => {
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1}),
-        record({networkRequestTime: 2, networkEndTime: 3}),
-        record({networkRequestTime: 4, networkEndTime: 5}),
+        record({networkRequestTime: 0, networkEndTime: 1000}),
+        record({networkRequestTime: 2000, networkEndTime: 3000}),
+        record({networkRequestTime: 4000, networkEndTime: 5000}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
@@ -392,15 +409,22 @@ describe('NetworkMonitor', () => {
         {start: 3000, end: 4000},
         {start: 5000, end: Infinity},
       ]);
+      // Same thing but verifying these numbers round trip without a problem.
+      expect(periods).toEqual([
+        // The time between the first two, and so on…
+        {start: records[0].networkEndTime, end: records[1].networkRequestTime},
+        {start: records[1].networkEndTime, end: records[2].networkRequestTime},
+        {start: records[2].networkEndTime, end: Infinity},
+      ]);
     });
 
     it('should find the 2-quiet periods', () => {
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1.5}),
-        record({networkRequestTime: 0, networkEndTime: 2}),
-        record({networkRequestTime: 0, networkEndTime: 2.5}),
-        record({networkRequestTime: 2, networkEndTime: 3}),
-        record({networkRequestTime: 4, networkEndTime: 5}),
+        record({networkRequestTime: 0, networkEndTime: 1500}),
+        record({networkRequestTime: 0, networkEndTime: 2000}),
+        record({networkRequestTime: 0, networkEndTime: 2500}),
+        record({networkRequestTime: 2000, networkEndTime: 3000}),
+        record({networkRequestTime: 4000, networkEndTime: 5000}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
@@ -409,14 +433,14 @@ describe('NetworkMonitor', () => {
 
     it('should handle unfinished requests', () => {
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1.5}),
-        record({networkRequestTime: 0, networkEndTime: 2}),
-        record({networkRequestTime: 0, networkEndTime: 2.5}),
-        record({networkRequestTime: 2, networkEndTime: 3}),
-        record({networkRequestTime: 2}),
-        record({networkRequestTime: 2}),
-        record({networkRequestTime: 4, networkEndTime: 5}),
-        record({networkRequestTime: 5.5}),
+        record({networkRequestTime: 0, networkEndTime: 1500}),
+        record({networkRequestTime: 0, networkEndTime: 2000}),
+        record({networkRequestTime: 0, networkEndTime: 2500}),
+        record({networkRequestTime: 2000, networkEndTime: 3000}),
+        record({networkRequestTime: 2000}),
+        record({networkRequestTime: 2000}),
+        record({networkRequestTime: 4000, networkEndTime: 5000}),
+        record({networkRequestTime: 5500}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
@@ -429,8 +453,8 @@ describe('NetworkMonitor', () => {
 
     it('should ignore data URIs', () => {
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1}),
-        record({networkRequestTime: 0, networkEndTime: 2, url: 'data:image/png;base64,',
+        record({networkRequestTime: 0, networkEndTime: 1000}),
+        record({networkRequestTime: 0, networkEndTime: 2000, url: 'data:image/png;base64,',
           protocol: 'data'}),
       ];
 
@@ -443,12 +467,12 @@ describe('NetworkMonitor', () => {
         finished: false,
         url: 'https://iframe.com',
         documentURL: 'https://iframe.com',
-        responseHeadersEndTime: 1.2,
+        responseHeadersEndTime: 1200,
       };
 
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1}),
-        record({networkRequestTime: 0, networkEndTime: 1.2, ...iframeRequest}),
+        record({networkRequestTime: 0, networkEndTime: 1000}),
+        record({networkRequestTime: 0, networkEndTime: 1200, ...iframeRequest}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
@@ -460,12 +484,12 @@ describe('NetworkMonitor', () => {
       const quicRequest = {
         finished: false,
         responseHeaders: [{name: 'ALT-SVC', value: 'hq=":49288";quic="1,1abadaba,51303334,0"'}],
-        timing: /** @type {*} */ ({receiveHeadersEnd: 1.28}),
+        timing: /** @type {*} */ ({receiveHeadersEnd: 1280}),
       };
 
       const records = [
-        record({networkRequestTime: 0, networkEndTime: 1}),
-        record({networkRequestTime: 0, networkEndTime: 2, ...quicRequest}),
+        record({networkRequestTime: 0, networkEndTime: 1000}),
+        record({networkRequestTime: 0, networkEndTime: 2000, ...quicRequest}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);

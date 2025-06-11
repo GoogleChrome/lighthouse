@@ -1,0 +1,42 @@
+<!--
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel='dns-prefetch' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <style>
+    div {
+      font-family: 'Droid Sans';
+    }
+  </style>
+</head>
+<body>
+
+<div>preconnect</div>
+<script>
+  let timeout = 0;
+  if (document.location.search !== '?noframe') {
+    const el = document.createElement('iframe');
+    el.src = '?noframe';
+    document.body.append(el);
+    timeout = 10 * 1000;
+  }
+
+  setTimeout(() => {
+    const el = document.createElement('link');
+    el.href = 'https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold|PT+Sans:regular,italic,bold|Droid+Sans:400,700|Lato:700,900';
+    el.rel = 'stylesheet';
+    document.head.append(el);
+
+    const el2 = document.createElement('script');
+    el2.src = './hello.js?redirect=./hello.js';
+    document.head.append(el2);
+  }, timeout);
+</script>
+
+</body>
+</html>

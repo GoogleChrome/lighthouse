@@ -1,19 +1,10 @@
 /**
  * @license
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
+
+import * as statistics from './statistics.js';
 
 /** @typedef {import('../types/lhr/audit-details').default.SnippetValue} SnippetValue */
 
@@ -84,6 +75,23 @@ class Util {
     const details = /** @type {LH.Result.FullPageScreenshot=} */ (
       lhr.audits['full-page-screenshot']?.details);
     return details;
+  }
+
+  /**
+   * Given the entity classification dataset and a URL, identify the entity.
+   * @param {string} url
+   * @param {LH.Result.Entities=} entities
+   * @return {LH.Result.LhrEntity|string}
+   */
+  static getEntityFromUrl(url, entities) {
+    // If it's a pre-v10 LHR, we don't have entities, so match against the root-ish domain
+    if (!entities) {
+      return Util.getPseudoRootDomain(url);
+    }
+
+    const entity = entities.find(e => e.origins.find(origin => url.startsWith(origin)));
+    // This fallback case would be unexpected, but leaving for safety.
+    return entity || Util.getPseudoRootDomain(url);
   }
 
   /**
@@ -301,11 +309,12 @@ class Util {
 
   /**
    * Gets the tld of a domain
+   * This function is used only while rendering pre-10.0 LHRs.
    *
    * @param {string} hostname
    * @return {string} tld
    */
-  static getTld(hostname) {
+  static getPseudoTld(hostname) {
     const tlds = hostname.split('.').slice(-2);
 
     if (!listOfTlds.includes(tlds[0])) {
@@ -317,12 +326,16 @@ class Util {
 
   /**
    * Returns a primary domain for provided hostname (e.g. www.example.com -> example.com).
+   * As it doesn't consult the Public Suffix List, it can sometimes lose detail.
+   * See the `listOfTlds` comment above for more.
+   * This function is used only while rendering pre-10.0 LHRs. See UrlUtils.getRootDomain
+   * for the current method that makes use of PSL.
    * @param {string|URL} url hostname or URL object
    * @return {string}
    */
-  static getRootDomain(url) {
+  static getPseudoRootDomain(url) {
     const hostname = Util.createOrReturnURL(url).hostname;
-    const tld = Util.getTld(hostname);
+    const tld = Util.getPseudoTld(hostname);
 
     // tld is .com or .co.uk which means we means that length is 1 to big
     // .com => 2 & .co.uk => 3
@@ -372,6 +385,35 @@ class Util {
     });
 
     return lines.filter(line => lineNumbersToKeep.has(line.lineNumber));
+  }
+
+  /**
+   * Computes a score between 0 and 1 based on the measured `value`. Score is determined by
+   * considering a log-normal distribution governed by two control points (the 10th
+   * percentile value and the median value) and represents the percentage of sites that are
+   * greater than `value`.
+   *
+   * Score characteristics:
+   * - within [0, 1]
+   * - rounded to two digits
+   * - value must meet or beat a controlPoint value to meet or exceed its percentile score:
+   *   - value > median will give a score < 0.5; value ≤ median will give a score ≥ 0.5.
+   *   - value > p10 will give a score < 0.9; value ≤ p10 will give a score ≥ 0.9.
+   * - values < p10 will get a slight boost so a score of 1 is achievable by a
+   *   `value` other than those close to 0. Scores of > ~0.99524 end up rounded to 1.
+   * @param {{median: number, p10: number}} controlPoints
+   * @param {number} value
+   * @return {number}
+   */
+  static computeLogNormalScore(controlPoints, value) {
+    let percentile = statistics.getLogNormalScore(controlPoints, value);
+    // Add a boost to scores of 90+, linearly ramping from 0 at 0.9 to half a
+    // point (0.005) at 1. Expands scores in (0.9, 1] to (0.9, 1.005], so more top
+    // scores will be a perfect 1 after the two-digit `Math.floor()` rounding below.
+    if (percentile > 0.9) { // getLogNormalScore ensures `percentile` can't exceed 1.
+      percentile += 0.05 * (percentile - 0.9);
+    }
+    return Math.floor(percentile * 100) / 100;
   }
 }
 

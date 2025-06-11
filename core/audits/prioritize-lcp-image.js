@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from './audit.js';
@@ -10,7 +10,6 @@ import {NetworkRequest} from '../lib/network-request.js';
 import {MainResource} from '../computed/main-resource.js';
 import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest-contentful-paint.js';
 import {LoadSimulator} from '../computed/load-simulator.js';
-import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import {LCPImageRecord} from '../computed/lcp-image-record.js';
 
 const UIStrings = {
@@ -18,7 +17,7 @@ const UIStrings = {
   title: 'Preload Largest Contentful Paint image',
   /** Description of a lighthouse audit that tells a user to preload an image in order to improve their LCP time.  */
   description: 'If the LCP element is dynamically added to the page, you should preload the ' +
-    'image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered).',
+    'image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -38,8 +37,10 @@ class PrioritizeLcpImage extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'TraceElements'],
-      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      guidanceLevel: 4,
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL', 'TraceElements',
+        'SourceMaps'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
@@ -69,7 +70,7 @@ class PrioritizeLcpImage extends Audit {
   static findLCPNode(graph, lcpRecord) {
     for (const {node} of graph.traverseGenerator()) {
       if (node.type !== 'network') continue;
-      if (node.record.requestId === lcpRecord.requestId) {
+      if (node.request.requestId === lcpRecord.requestId) {
         return node;
       }
     }
@@ -194,8 +195,8 @@ class PrioritizeLcpImage extends Audit {
     modifiedLCPNode.removeAllDependencies();
     modifiedLCPNode.addDependency(mainDocumentNode);
 
-    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
-    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
+    const simulationBeforeChanges = simulator.simulate(graph);
+    const simulationAfterChanges = simulator.simulate(modifiedGraph);
     const lcpTimingsBefore = simulationBeforeChanges.nodeTimings.get(lcpNode);
     if (!lcpTimingsBefore) throw new Error('Impossible - node timings should never be undefined');
     const lcpTimingsAfter = simulationAfterChanges.nodeTimings.get(modifiedLCPNode);
@@ -222,7 +223,7 @@ class PrioritizeLcpImage extends Audit {
       wastedMs,
       results: [{
         node: Audit.makeNodeItem(lcpElement.node),
-        url: lcpNode.record.url,
+        url: lcpNode.request.url,
         wastedMs,
       }],
     };
@@ -235,16 +236,17 @@ class PrioritizeLcpImage extends Audit {
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[PrioritizeLcpImage.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[PrioritizeLcpImage.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
+    const {URL, SourceMaps} = artifacts;
     const settings = context.settings;
-    const metricData = {trace, devtoolsLog, gatherContext, settings, URL};
+    const metricData =
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps, simulator: null};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
     if (!lcpElement || lcpElement.type !== 'image') {
-      return {score: null, notApplicable: true};
+      return {score: null, notApplicable: true, metricSavings: {LCP: 0}};
     }
 
     const mainResource = await MainResource.request({devtoolsLog, URL}, context);
@@ -281,11 +283,12 @@ class PrioritizeLcpImage extends Audit {
     }
 
     return {
-      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
+      score: results.length ? 0 : 1,
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
+      metricSavings: {LCP: wastedMs},
     };
   }
 }

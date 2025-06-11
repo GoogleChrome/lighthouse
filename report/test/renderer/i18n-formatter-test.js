@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -9,6 +9,8 @@ import assert from 'assert/strict';
 import {I18nFormatter} from '../../renderer/i18n-formatter.js';
 
 const NBSP = '\xa0';
+
+const [nodeMajor, nodeMinor] = process.version.replace('v', '').split('.').map(Number);
 
 describe('i18n formatter', () => {
   it('formats a number', () => {
@@ -139,9 +141,16 @@ describe('i18n formatter', () => {
     // Yes, this is actually backwards (s h d).
     i18n = new I18nFormatter('ar');
     /* eslint-disable no-irregular-whitespace */
-    assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
-    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
-    assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
+    if (nodeMajor >= 20 && nodeMinor >= 19) {
+      assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}د`);
+      assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}س 5${NBSP}ث`);
+      assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1 ي 4 س 5 ث`);
+    } else {
+      assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
+      assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
+      assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
+    }
+
     /* eslint-enable no-irregular-whitespace */
   });
 

@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as Lantern from './lantern/lantern.js';
 import {LighthouseError} from './lh-error.js';
-import {NetworkAnalyzer} from './dependency-graph/simulator/network-analyzer.js';
 import {NetworkRequest} from './network-request.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
@@ -16,6 +16,13 @@ const UIStrings = {
    */
   warningXhtml:
     'The page MIME type is XHTML: Lighthouse does not explicitly support this document type',
+  /**
+   * @description Warning shown in report when the page under test returns an error code, which Lighthouse is not able to reliably load so we display a warning.
+   * @example {404} errorCode
+   */
+  warningStatusCode: 'Lighthouse was unable to reliably load the page you requested. Make sure' +
+    ' you are testing the correct URL and that the server is properly responding' +
+    ' to all requests. (Status code: {errorCode})',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -27,9 +34,10 @@ const XHTML_MIME_TYPE = 'application/xhtml+xml';
 /**
  * Returns an error if the original network request failed or wasn't found.
  * @param {LH.Artifacts.NetworkRequest|undefined} mainRecord
+ * @param {{warnings: Array<string | LH.IcuMessage>, ignoreStatusCode?: LH.Config.Settings['ignoreStatusCode']}} context
  * @return {LH.LighthouseError|undefined}
  */
-function getNetworkError(mainRecord) {
+function getNetworkError(mainRecord, context) {
   if (!mainRecord) {
     return new LighthouseError(LighthouseError.errors.NO_DOCUMENT_REQUEST);
   } else if (mainRecord.failed) {
@@ -47,9 +55,13 @@ function getNetworkError(mainRecord) {
         LighthouseError.errors.FAILED_DOCUMENT_REQUEST, {errorDetails: netErr});
     }
   } else if (mainRecord.hasErrorStatusCode()) {
-    return new LighthouseError(LighthouseError.errors.ERRORED_DOCUMENT_REQUEST, {
-      statusCode: `${mainRecord.statusCode}`,
-    });
+    if (context.ignoreStatusCode) {
+      context.warnings.push(str_(UIStrings.warningStatusCode, {errorCode: mainRecord.statusCode}));
+    } else {
+      return new LighthouseError(LighthouseError.errors.ERRORED_DOCUMENT_REQUEST, {
+        statusCode: `${mainRecord.statusCode}`,
+      });
+    }
   }
 }
 
@@ -95,6 +107,9 @@ function getNonHtmlError(finalRecord) {
   // If we never requested a document, there's no doctype error, let other cases handle it.
   if (!finalRecord) return undefined;
 
+  // If the document request error'd, we should not complain about a bad mimeType.
+  if (!finalRecord.mimeType || finalRecord.statusCode === -1) return undefined;
+
   // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
   // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
   if (finalRecord.mimeType !== HTML_MIME_TYPE && finalRecord.mimeType !== XHTML_MIME_TYPE) {
@@ -110,13 +125,13 @@ function getNonHtmlError(finalRecord) {
  * Returns an error if the page load should be considered failed, e.g. from a
  * main document request failure, a security issue, etc.
  * @param {LH.LighthouseError|undefined} navigationError
- * @param {{url: string, loadFailureMode: LH.Gatherer.PassContext['passConfig']['loadFailureMode'], networkRecords: Array<LH.Artifacts.NetworkRequest>, warnings: Array<string | LH.IcuMessage>}} context
+ * @param {{url: string, ignoreStatusCode?: LH.Config.Settings['ignoreStatusCode'], networkRecords: Array<LH.Artifacts.NetworkRequest>, warnings: Array<string | LH.IcuMessage>}} context
  * @return {LH.LighthouseError|undefined}
  */
 function getPageLoadError(navigationError, context) {
-  const {url, loadFailureMode, networkRecords} = context;
+  const {url, networkRecords} = context;
   /** @type {LH.Artifacts.NetworkRequest|undefined} */
-  let mainRecord = NetworkAnalyzer.findResourceForUrl(networkRecords, url);
+  let mainRecord = Lantern.Core.NetworkAnalyzer.findResourceForUrl(networkRecords, url);
 
   // If the url doesn't give us a network request, it's possible we landed on a chrome-error:// page
   // In this case, just get the first document request.
@@ -134,20 +149,19 @@ function getPageLoadError(navigationError, context) {
   // MIME Type is only set on the final redirected document request. Use this for the HTML check instead of root.
   let finalRecord;
   if (mainRecord) {
-    finalRecord = NetworkAnalyzer.resolveRedirects(mainRecord);
+    finalRecord = Lantern.Core.NetworkAnalyzer.resolveRedirects(mainRecord);
+  } else {
+    // We have no network requests to process, use the navError
+    return navigationError;
   }
 
   if (finalRecord?.mimeType === XHTML_MIME_TYPE) {
     context.warnings.push(str_(UIStrings.warningXhtml));
   }
 
-  const networkError = getNetworkError(mainRecord);
+  const networkError = getNetworkError(mainRecord, context);
   const interstitialError = getInterstitialError(mainRecord, networkRecords);
   const nonHtmlError = getNonHtmlError(finalRecord);
-
-  // Check to see if we need to ignore the page load failure.
-  // e.g. When the driver is offline, the load will fail without page offline support.
-  if (loadFailureMode === 'ignore') return;
 
   // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618
   if (interstitialError) return interstitialError;
@@ -163,6 +177,8 @@ function getPageLoadError(navigationError, context) {
   // Navigation errors are rather generic and express some failure of the page to render properly.
   // Use `navigationError` as the last resort.
   // Example: `NO_FCP`, the page never painted content for some unknown reason.
+  // Note that the caller possibly gave this to us as undefined, in which case we have determined
+  // there to be no error with this page load - but there was perhaps a warning.
   return navigationError;
 }
 

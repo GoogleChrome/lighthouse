@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -63,7 +63,7 @@ describe('backward compatibility', () => {
         delete audit.details.type;
       }
     }
-    assert.ok(undefinedCount > 4); // Make sure something's being tested.
+    assert.ok(undefinedCount > 3); // Make sure something's being tested.
     assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
     // Original audit results should be restored.
@@ -82,7 +82,7 @@ describe('backward compatibility', () => {
         audit.details.type = 'diagnostic';
       }
     }
-    assert.ok(diagnosticCount > 4); // Make sure something's being tested.
+    assert.ok(diagnosticCount > 3); // Make sure something's being tested.
     assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
     // Original audit results should be restored.
@@ -139,8 +139,8 @@ describe('backward compatibility', () => {
     for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
       if (auditRef.group === 'hidden') {
         delete auditRef.group;
-      } else if (!auditRef.group) {
-        auditRef.group = 'diagnostics';
+      } else if (auditRef.id === 'render-blocking-resources') {
+        auditRef.group = 'load-opportunities';
       }
     }
     assert.notDeepStrictEqual(clonedSampleResult.categories, sampleResult.categories);
@@ -151,6 +151,23 @@ describe('backward compatibility', () => {
     const preparedResult = upgradeLhr(sampleResult);
     assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
     assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
+  });
+
+  it('corrects performance category without consolidated diagnostics group', () => {
+    const clonedSampleResult = cloneLhr(sampleResult);
+
+    clonedSampleResult.lighthouseVersion = '11.0.0';
+    for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
+      if (auditRef.group === 'diagnostics') {
+        delete auditRef.group;
+      }
+    }
+    assert.notDeepStrictEqual(clonedSampleResult.categories, sampleResult.categories);
+
+    // Original audit results should be restored.
+    const clonedPreparedResult = upgradeLhr(clonedSampleResult);
+    const preparedResult = upgradeLhr(sampleResult);
+    assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
   });
 
   it('converts old opportunity table column headings to consolidated table headings', () => {
@@ -196,5 +213,35 @@ describe('backward compatibility', () => {
     const preparedResult = upgradeLhr(clonedSampleResult);
     assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
     assert.strictEqual(preparedResult.audits['third-party-summary'].details.isEntityGrouped, true);
+  });
+
+  it('uses old metric relevance lists to backfill metric savings', () => {
+    const clonedSampleResult = cloneLhr(sampleResult);
+
+    clonedSampleResult.lighthouseVersion = '11.7.0';
+
+    for (const audit of Object.values(clonedSampleResult.audits)) {
+      // Keep metric savings explicit on this audit
+      if (audit.id === 'modern-image-formats') continue;
+
+      if (audit.metricSavings) {
+        delete audit.metricSavings;
+      }
+    }
+
+    const lcpAuditRef = clonedSampleResult.categories['performance'].auditRefs
+      .find(a => a.id === 'largest-contentful-paint');
+    lcpAuditRef.relevantAudits = ['render-blocking-resources'];
+
+    // Original audit results should be restored.
+    const preparedResult = upgradeLhr(clonedSampleResult);
+    assert.deepStrictEqual(
+      preparedResult.audits['render-blocking-resources'].metricSavings,
+      {LCP: 0}
+    );
+    assert.deepStrictEqual(
+      preparedResult.audits['modern-image-formats'].metricSavings,
+      {LCP: 1650, FCP: 0}
+    );
   });
 });

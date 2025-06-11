@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import * as td from 'testdouble';
@@ -52,8 +52,7 @@ describe('.prepareThrottlingAndNetwork()', () => {
           uploadThroughputKbps: 8,
           cpuSlowdownMultiplier: 2,
         },
-      },
-      constants.defaultNavigationConfig
+      }
     );
 
     expect(sessionMock.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
@@ -72,7 +71,7 @@ describe('.prepareThrottlingAndNetwork()', () => {
       sessionMock.asSession(),
       {
         ...constants.defaultSettings,
-        throttlingMethod: 'devtools',
+        throttlingMethod: 'provided',
         throttling: {
           ...constants.defaultSettings.throttling,
           requestLatencyMs: 100,
@@ -80,10 +79,6 @@ describe('.prepareThrottlingAndNetwork()', () => {
           uploadThroughputKbps: 8,
           cpuSlowdownMultiplier: 2,
         },
-      },
-      {
-        ...constants.defaultNavigationConfig,
-        disableThrottling: true,
       }
     );
 
@@ -93,9 +88,10 @@ describe('.prepareThrottlingAndNetwork()', () => {
       uploadThroughput: 0,
       offline: false,
     });
-    expect(sessionMock.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
-      rate: 1,
-    });
+
+    // CPU throttling is intentionally not cleared.
+    expect(sessionMock.sendCommand.findAllInvocations('Emulation.setCPUThrottlingRate'))
+      .toHaveLength(0);
   });
 
   it('unsets url patterns when empty', async () => {
@@ -104,10 +100,6 @@ describe('.prepareThrottlingAndNetwork()', () => {
       {
         ...constants.defaultSettings,
         blockedUrlPatterns: null,
-      },
-      {
-        ...constants.defaultNavigationConfig,
-        blockedUrlPatterns: [],
       }
     );
 
@@ -122,23 +114,18 @@ describe('.prepareThrottlingAndNetwork()', () => {
       {
         ...constants.defaultSettings,
         blockedUrlPatterns: ['https://a.example.com'],
-      },
-      {
-        ...constants.defaultNavigationConfig,
-        blockedUrlPatterns: ['https://b.example.com'],
       }
     );
 
     expect(sessionMock.sendCommand.findInvocation('Network.setBlockedURLs')).toEqual({
-      urls: ['https://b.example.com', 'https://a.example.com'],
+      urls: ['https://a.example.com'],
     });
   });
 
   it('sets extraHeaders', async () => {
     await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
-      {...constants.defaultSettings, extraHeaders: {'Cookie': 'monster', 'x-men': 'wolverine'}},
-      {...constants.defaultNavigationConfig}
+      {...constants.defaultSettings, extraHeaders: {'Cookie': 'monster', 'x-men': 'wolverine'}}
     );
 
     expect(sessionMock.sendCommand.findInvocation('Network.setExtraHTTPHeaders')).toEqual({
@@ -150,71 +137,9 @@ describe('.prepareThrottlingAndNetwork()', () => {
   });
 });
 
-describe('.prepareTargetForIndividualNavigation()', () => {
-  it('clears storage when not disabled', async () => {
-    await prepare.prepareTargetForIndividualNavigation(
-      sessionMock.asSession(),
-      {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
-    );
-
-    expect(storageMock.clearDataForOrigin).toHaveBeenCalled();
-    expect(storageMock.clearBrowserCaches).toHaveBeenCalled();
-  });
-
-  it('does not clear storage when globally disabled', async () => {
-    await prepare.prepareTargetForIndividualNavigation(
-      sessionMock.asSession(),
-      {...constants.defaultSettings, disableStorageReset: true},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
-    );
-
-    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
-    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
-  });
-
-  it('does not clear storage when disabled per navigation', async () => {
-    await prepare.prepareTargetForIndividualNavigation(
-      sessionMock.asSession(),
-      {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: true, requestor: url}
-    );
-
-    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
-    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
-  });
-
-  it('does not clear storage when given a callback requestor', async () => {
-    await prepare.prepareTargetForIndividualNavigation(
-      sessionMock.asSession(),
-      {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: () => {}}
-    );
-
-    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
-    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
-  });
-
-  it('collects storage warnings', async () => {
-    storageMock.getImportantStorageWarning.mockResolvedValue('This is a storage warning');
-    storageMock.clearDataForOrigin.mockResolvedValue(['This is a clear data warning']);
-    storageMock.clearBrowserCaches.mockResolvedValue(['This is a clear cache warning']);
-    const {warnings} = await prepare.prepareTargetForIndividualNavigation(
-      sessionMock.asSession(),
-      {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
-    );
-
-    expect(warnings).toEqual([
-      'This is a storage warning',
-      'This is a clear data warning',
-      'This is a clear cache warning',
-    ]);
-  });
-});
-
 describe('.prepareTargetForNavigationMode()', () => {
   let driverMock = createMockDriver();
+  let requestor = fnAny();
 
   beforeEach(() => {
     driverMock = createMockDriver();
@@ -223,12 +148,17 @@ describe('.prepareTargetForNavigationMode()', () => {
     sessionMock.sendCommand
       .mockResponse('Network.enable')
       .mockResponse('Network.setUserAgentOverride')
+      .mockResponse('Network.emulateNetworkConditions')
+      .mockResponse('Network.setBlockedURLs')
+      .mockResponse('Emulation.setCPUThrottlingRate')
       .mockResponse('Emulation.setDeviceMetricsOverride')
       .mockResponse('Emulation.setTouchEmulationEnabled')
       .mockResponse('Debugger.enable')
       .mockResponse('Debugger.setSkipAllPauses')
       .mockResponse('Debugger.setAsyncCallStackDepth')
       .mockResponse('Page.enable');
+
+    requestor = fnAny();
   });
 
   it('emulates the target device', async () => {
@@ -241,7 +171,7 @@ describe('.prepareTargetForNavigationMode()', () => {
         width: 200,
         height: 300,
       },
-    });
+    }, requestor);
 
     expect(sessionMock.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride')).toEqual({
       mobile: true,
@@ -254,7 +184,7 @@ describe('.prepareTargetForNavigationMode()', () => {
   it('cache natives on new document', async () => {
     await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
       ...constants.defaultSettings,
-    });
+    }, requestor);
 
     expect(driverMock._executionContext.cacheNativesOnNewDocument).toHaveBeenCalled();
   });
@@ -263,7 +193,7 @@ describe('.prepareTargetForNavigationMode()', () => {
     await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
       ...constants.defaultSettings,
       throttlingMethod: 'simulate',
-    });
+    }, requestor);
 
     const invocations = driverMock._executionContext.evaluateOnNewDocument.mock.calls;
     if (!invocations.length) expect(invocations).toHaveLength(1);
@@ -277,7 +207,7 @@ describe('.prepareTargetForNavigationMode()', () => {
     await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
       ...constants.defaultSettings,
       throttlingMethod: 'devtools',
-    });
+    }, requestor);
 
     const invocations = driverMock._executionContext.evaluateOnNewDocument.mock.calls;
     const matchingInvocations = invocations.filter(argList =>
@@ -295,7 +225,7 @@ describe('.prepareTargetForNavigationMode()', () => {
 
     await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
       ...constants.defaultSettings,
-    });
+    }, requestor);
 
     await flushAllTimersAndMicrotasks();
 
@@ -303,6 +233,65 @@ describe('.prepareTargetForNavigationMode()', () => {
       accept: true,
       promptText: 'Lighthouse prompt response',
     });
+  });
+
+  it('clears storage when not disabled', async () => {
+    await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      disableStorageReset: false,
+    }, url);
+
+    expect(storageMock.clearDataForOrigin).toHaveBeenCalled();
+    expect(storageMock.clearBrowserCaches).toHaveBeenCalled();
+  });
+
+  it('clears storage types specified by user', async () => {
+    await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      disableStorageReset: false,
+      clearStorageTypes: ['cookies', 'shared_storage']},
+      url);
+
+    expect(storageMock.clearDataForOrigin).toHaveBeenCalledWith(expect.anything(),
+      url,
+      ['cookies', 'shared_storage']);
+    expect(storageMock.clearBrowserCaches).toHaveBeenCalled();
+  });
+
+  it('does not clear storage when globally disabled', async () => {
+    await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      disableStorageReset: true,
+    }, url);
+
+    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
+    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
+  });
+
+  it('does not clear storage when given a callback requestor', async () => {
+    await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      disableStorageReset: false,
+    }, requestor);
+
+    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
+    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
+  });
+
+  it('collects storage warnings', async () => {
+    storageMock.getImportantStorageWarning.mockResolvedValue('This is a storage warning');
+    storageMock.clearDataForOrigin.mockResolvedValue(['This is a clear data warning']);
+    storageMock.clearBrowserCaches.mockResolvedValue(['This is a clear cache warning']);
+    const {warnings} = await prepare.prepareTargetForNavigationMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      disableStorageReset: false,
+    }, url);
+
+    expect(warnings).toEqual([
+      'This is a clear data warning',
+      'This is a clear cache warning',
+      'This is a storage warning',
+    ]);
   });
 });
 

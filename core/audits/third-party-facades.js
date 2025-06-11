@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -24,8 +24,8 @@ import * as i18n from '../lib/i18n/i18n.js';
 import {EntityClassification} from '../computed/entity-classification.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 import {NetworkRecords} from '../computed/network-records.js';
-import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import ThirdPartySummary from './third-party-summary.js';
+import {TBTImpactTasks} from '../computed/tbt-impact-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the third-party code on a web page that can be lazy loaded with a facade alternative. This descriptive title is shown to users when no resources have facade alternatives available. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
@@ -86,7 +86,9 @@ class ThirdPartyFacades extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
+      guidanceLevel: 3,
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'URL', 'GatherContext', 'SourceMaps'],
+      scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
 
@@ -148,18 +150,22 @@ class ThirdPartyFacades extends Audit {
    */
   static async audit(artifacts, context) {
     const settings = context.settings;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
-    const tasks = await MainThreadTasks.request(trace, context);
+
+    const metricComputationData = Audit.makeMetricComputationDataInput(artifacts, context);
+    const tbtImpactTasks = await TBTImpactTasks.request(metricComputationData, context);
+
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
-    const summaries = ThirdPartySummary.getSummaries(networkRecords, tasks, multiplier,
+    const summaries = ThirdPartySummary.getSummaries(networkRecords, tbtImpactTasks, multiplier,
       classifiedEntities);
     const facadableProducts =
       ThirdPartyFacades.getProductsWithFacade(summaries.byURL, classifiedEntities);
+
+    let tbtImpact = 0;
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
@@ -178,6 +184,8 @@ class ThirdPartyFacades extends Audit {
       const urls = summaries.urls.get(entity);
       const entitySummary = summaries.byEntity.get(entity);
       if (!urls || !entitySummary) continue;
+
+      tbtImpact += entitySummary.tbtImpact;
 
       const items = Array.from(urls).map((url) => {
         const urlStats = summaries.byURL.get(url);
@@ -198,6 +206,7 @@ class ThirdPartyFacades extends Audit {
       return {
         score: 1,
         notApplicable: true,
+        metricSavings: {TBT: 0},
       };
     }
 
@@ -216,6 +225,7 @@ class ThirdPartyFacades extends Audit {
         itemCount: results.length,
       }),
       details: Audit.makeTableDetails(headings, results),
+      metricSavings: {TBT: Math.round(tbtImpact)},
     };
   }
 }

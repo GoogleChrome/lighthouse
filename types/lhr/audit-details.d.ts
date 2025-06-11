@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {IcuMessage} from './i18n.js';
@@ -9,29 +9,55 @@ import Treemap from './treemap.js';
 
 /** Common properties for all details types. */
 interface BaseDetails {
-  /** If present and audit is part of the performance category, audit is treated as an Opportunity. */
-  overallSavingsMs?: number;
-  /** Optional additional Opportunity information. */
-  overallSavingsBytes?: number;
   /** Additional information, usually used for including debug or meta information in the LHR */
   debugData?: Details.DebugData;
 }
 
 type Details =
   Details.CriticalRequestChain |
+  Details.NetworkTree |
   Details.DebugData |
   Details.TreemapData |
   Details.Filmstrip |
   Details.List |
   Details.Opportunity |
   Details.Screenshot |
+  Details.Checklist |
   Details.Table;
 
 // Details namespace.
 declare module Details {
+  type NetworkNode = {
+    [id: string]: {
+      url: string;
+      /** In ms */
+      navStartToEndTime: number;
+      transferSize: number;
+      isLongest?: boolean;
+      children?: NetworkNode;
+    }
+  };
+
+  /**
+   * This detail type is introduced to address the differences in how the RPP network tree is displayed vs the old Lighthouse CRC audit:
+   * - The CRC audit will show individual request durations but the new NDT insight will show the entire chain duration
+   * - The CRC audit will only show any timing/size for leaf node requests, but the NDT insight will show this info for all requests
+   * - The CRC audit contains extra request timing info like `responseReceivedTime` but we don't need this for the NDT insight.
+   *   The NDT insight has enough information to fill in this extra data, but we shouldn't add calculations just to fill in the CRC detail type.
+   */
+  interface NetworkTree extends BaseDetails {
+    type: 'network-tree';
+    longestChain: {
+      /** In ms */
+      duration: number;
+    };
+    chains: NetworkNode;
+  }
+
   interface CriticalRequestChain extends BaseDetails {
     type: 'criticalrequestchain';
     longestChain: {
+      /** In ms */
       duration: number;
       length: number;
       transferSize: number;
@@ -43,8 +69,11 @@ declare module Details {
     [id: string]: {
       request: {
         url: string;
+        /** In seconds */
         startTime: number;
+        /** In seconds */
         endTime: number;
+        /** In seconds */
         responseReceivedTime: number;
         transferSize: number;
       };
@@ -69,7 +98,7 @@ declare module Details {
     type: 'list';
     // NOTE: any `Details` type *should* be usable in `items`, but check
     // styles/report-ui-features are good before adding.
-    items: Array<Table | DebugData>;
+    items: Array<Table | Checklist | NodeValue | DebugData>;
   }
 
   interface Opportunity extends BaseDetails {
@@ -85,6 +114,15 @@ declare module Details {
     isEntityGrouped?: boolean;
     /** Column keys to skip summing. If omitted, all column types supported are summed. */
     skipSumming?: Array<string>;
+    /**
+     * @deprecated
+     * Historically this represents the time saved on the entire page load. It's mostly used as an
+     * alias for `metricSavings.LCP` now. We recommend using `metricSavings` directly for more
+     * metric-specific savings estimates.
+     */
+    overallSavingsMs?: number;
+    /** Total byte savings covered by this audit. */
+    overallSavingsBytes?: number;
   }
 
   interface Screenshot extends BaseDetails {
@@ -101,6 +139,11 @@ declare module Details {
     right: number;
     bottom: number;
     left: number;
+  }
+
+  interface Checklist extends BaseDetails {
+    type: 'checklist',
+    items: Record<string, {value: boolean, label: IcuMessage | string}>,
   }
 
   interface Table extends BaseDetails {
@@ -146,7 +189,7 @@ declare module Details {
   type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
   /** Possible types of values found within table items. */
-  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | IcuMessage | TableSubItems;
+  type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | TextValue | IcuMessage | TableSubItems;
 
   interface TableColumnHeading {
     /**
@@ -225,6 +268,8 @@ declare module Details {
     snippet?: string;
     /** A human-friendly text descriptor that's used to identify the node more quickly. */
     nodeLabel?: string;
+    /** A human-friendly explainer on how to approach the possible fix. */
+    explanation?: string;
   }
 
   /**
@@ -304,6 +349,10 @@ declare module Details {
     granularity?: number,
   }
 
+  interface TextValue {
+    type: 'text',
+    value: IcuMessage | string,
+  }
 }
 
 export default Details;

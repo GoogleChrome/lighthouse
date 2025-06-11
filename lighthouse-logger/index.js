@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import process from 'process';
@@ -61,6 +61,9 @@ class Log {
     log(...argsArray);
   }
 
+  /**
+   * @param {string} title
+   */
   static loggerfn(title) {
     title = `LH:${title}`;
     let log = loggersByTitle[title];
@@ -123,30 +126,54 @@ class Log {
     return level_ === 'verbose';
   }
 
+  /**
+   * @param {{msg: string, id: string, args?: any[]}} status
+   * @param {string} level
+   */
   static time({msg, id, args = []}, level = 'log') {
     marky.mark(id);
     Log[level]('status', msg, ...args);
   }
 
+  /**
+   * @param {{msg: string, id: string, args?: any[]}} status
+   * @param {string} level
+   */
   static timeEnd({msg, id, args = []}, level = 'verbose') {
     Log[level]('statusEnd', msg, ...args);
     marky.stop(id);
   }
 
+  /**
+   * @param {string} title
+   * @param {...any} args
+   */
   static log(title, ...args) {
     Log.events.issueStatus(title, args);
     return Log._logToStdErr(title, args);
   }
 
+  /**
+   * @param {string} title
+   * @param {...any} args
+   */
   static warn(title, ...args) {
     Log.events.issueWarning(title, args);
     return Log._logToStdErr(`${title}:warn`, args);
   }
 
+  /**
+   * @param {string} title
+   * @param {...any} args
+   */
   static error(title, ...args) {
     return Log._logToStdErr(`${title}:error`, args);
   }
 
+  /**
+   * @param {string} title
+   * @param {...any} args
+   */
   static verbose(title, ...args) {
     Log.events.issueStatus(title, args);
     return Log._logToStdErr(`${title}:verbose`, args);
@@ -236,11 +263,19 @@ class Log {
 }
 
 Log.events = new Emitter();
+
+/**
+ * @return {PerformanceEntry[]}
+ */
 Log.takeTimeEntries = () => {
   const entries = marky.getEntries();
   marky.clear();
   return entries;
 };
+
+/**
+ * @return {PerformanceEntry[]}
+ */
 Log.getTimeEntries = () => marky.getEntries();
 
 export default Log;

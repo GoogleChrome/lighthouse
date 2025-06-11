@@ -1,20 +1,18 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Audit} from '../audit.js';
-import {LanternInteractive} from '../../computed/metrics/lantern-interactive.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {NetworkRecords} from '../../computed/network-records.js';
 import {LoadSimulator} from '../../computed/load-simulator.js';
-import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
+import {LanternLargestContentfulPaint as LanternLCP} from '../../computed/metrics/lantern-largest-contentful-paint.js';
+import {LanternFirstContentfulPaint as LanternFCP} from '../../computed/metrics/lantern-first-contentful-paint.js';
+import {LCPImageRecord} from '../../computed/lcp-image-record.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
-
-/** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
-/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 // Parameters for log-normal distribution scoring. These values were determined by fitting the
 // log-normal cumulative distribution function curve to the former method of linear interpolation
@@ -56,57 +54,13 @@ class ByteEfficiencyAudit extends Audit {
   }
 
   /**
-   * Estimates the number of bytes this network record would have consumed on the network based on the
-   * uncompressed size (totalBytes). Uses the actual transfer size from the network record if applicable.
-   *
-   * @param {LH.Artifacts.NetworkRequest|undefined} networkRecord
-   * @param {number} totalBytes Uncompressed size of the resource
-   * @param {LH.Crdp.Network.ResourceType=} resourceType
-   * @return {number}
-   */
-  static estimateTransferSize(networkRecord, totalBytes, resourceType) {
-    if (!networkRecord) {
-      // We don't know how many bytes this asset used on the network, but we can guess it was
-      // roughly the size of the content gzipped.
-      // See https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer for specific CSS/Script examples
-      // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for fallback multipliers
-      switch (resourceType) {
-        case 'Stylesheet':
-          // Stylesheets tend to compress extremely well.
-          return Math.round(totalBytes * 0.2);
-        case 'Script':
-        case 'Document':
-          // Scripts and HTML compress fairly well too.
-          return Math.round(totalBytes * 0.33);
-        default:
-          // Otherwise we'll just fallback to the average savings in HTTPArchive
-          return Math.round(totalBytes * 0.5);
-      }
-    } else if (networkRecord.resourceType === resourceType) {
-      // This was a regular standalone asset, just use the transfer size.
-      return networkRecord.transferSize || 0;
-    } else {
-      // This was an asset that was inlined in a different resource type (e.g. HTML document).
-      // Use the compression ratio of the resource to estimate the total transferred bytes.
-      const transferSize = networkRecord.transferSize || 0;
-      const resourceSize = networkRecord.resourceSize || 0;
-      // Get the compression ratio, if it's an invalid number, assume no compression.
-      const compressionRatio = Number.isFinite(resourceSize) && resourceSize > 0 ?
-        (transferSize / resourceSize) : 1;
-      return Math.round(totalBytes * compressionRatio);
-    }
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
@@ -125,34 +79,29 @@ class ByteEfficiencyAudit extends Audit {
       };
     }
 
-    const [result, graph, simulator] = await Promise.all([
+    const metricComputationInput = Audit.makeMetricComputationDataInput(artifacts, context);
+
+    const [result, simulator] = await Promise.all([
       this.audit_(artifacts, networkRecords, context),
-      // Page dependency graph is only used in navigation mode.
-      gatherContext.gatherMode === 'navigation' ?
-        PageDependencyGraph.request({trace, devtoolsLog, URL}, context) :
-        null,
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
-    return this.createAuditProduct(result, graph, simulator, gatherContext);
+    return this.createAuditProduct(result, simulator, metricComputationInput, context);
   }
 
   /**
-   * Computes the estimated effect of all the byte savings on the maximum of the following:
-   *
-   * - end time of the last long task in the provided graph
-   * - (if includeLoad is true or not provided) end time of the last node in the graph
+   * Computes the estimated effect of all the byte savings on the provided graph.
    *
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
-   * @param {Node} graph
-   * @param {Simulator} simulator
-   * @param {{includeLoad?: boolean, label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
-   * @return {number}
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
+   * @param {{label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
+   * @return {{savings: number, simulationBeforeChanges: LH.Gatherer.Simulation.Result, simulationAfterChanges: LH.Gatherer.Simulation.Result}}
    */
-  static computeWasteWithTTIGraph(results, graph, simulator, options) {
-    options = Object.assign({includeLoad: true, label: this.meta.id}, options);
-    const beforeLabel = `${options.label}-before`;
-    const afterLabel = `${options.label}-after`;
+  static computeWasteWithGraph(results, graph, simulator, options) {
+    options = Object.assign({label: ''}, options);
+    const beforeLabel = `${this.meta.id}-${options.label}-before`;
+    const afterLabel = `${this.meta.id}-${options.label}-after`;
 
     const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
 
@@ -168,13 +117,13 @@ class ByteEfficiencyAudit extends Audit {
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const wastedBytes = wastedBytesByUrl.get(node.record.url);
+      const wastedBytes = wastedBytesByUrl.get(node.request.url);
       if (!wastedBytes) return;
 
-      const original = node.record.transferSize;
-      originalTransferSizes.set(node.record.requestId, original);
+      const original = node.request.transferSize;
+      originalTransferSizes.set(node.request.requestId, original);
 
-      node.record.transferSize = Math.max(original - wastedBytes, 0);
+      node.request.transferSize = Math.max(original - wastedBytes, 0);
     });
 
     const simulationAfterChanges = simulator.simulate(graph, {label: afterLabel});
@@ -182,43 +131,76 @@ class ByteEfficiencyAudit extends Audit {
     // Restore the original transfer size after we've done our simulation
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const originalTransferSize = originalTransferSizes.get(node.record.requestId);
+      const originalTransferSize = originalTransferSizes.get(node.request.requestId);
       if (originalTransferSize === undefined) return;
-      node.record.transferSize = originalTransferSize;
+      node.request.transferSize = originalTransferSize;
     });
 
-    const savingsOnOverallLoad = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;
-    const savingsOnTTI =
-      LanternInteractive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
-      LanternInteractive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings);
+    const savings = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;
 
-    let savings = savingsOnTTI;
-    if (options.includeLoad) savings = Math.max(savings, savingsOnOverallLoad);
-
-    // Round waste to nearest 10ms
-    return Math.round(Math.max(savings, 0) / 10) * 10;
+    return {
+      // Round waste to nearest 10ms
+      savings: Math.round(Math.max(savings, 0) / 10) * 10,
+      simulationBeforeChanges,
+      simulationAfterChanges,
+    };
   }
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Node|null} graph
-   * @param {Simulator} simulator
-   * @param {LH.Artifacts['GatherContext']} gatherContext
-   * @return {LH.Audit.Product}
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
+   * @param {LH.Artifacts.MetricComputationDataInput} metricComputationInput
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static createAuditProduct(result, graph, simulator, gatherContext) {
+  static async createAuditProduct(result, simulator, metricComputationInput, context) {
     const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
 
+    /** @type {LH.Audit.ProductMetricSavings} */
+    const metricSavings = {
+      FCP: 0,
+      LCP: 0,
+    };
+
     // `wastedMs` may be negative, if making the opportunity change could be detrimental.
     // This is useful information in the LHR and should be preserved.
     let wastedMs;
-    if (gatherContext.gatherMode === 'navigation') {
-      if (!graph) throw Error('Page dependency graph should always be computed in navigation mode');
-      wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
-        providedWastedBytesByUrl: result.wastedBytesByUrl,
-      });
+    if (metricComputationInput.gatherContext.gatherMode === 'navigation') {
+      const optimisticFCPGraph = (await LanternFCP.request(metricComputationInput, context))
+        .optimisticGraph;
+      const optimisticLCPGraph = (await LanternLCP.request(metricComputationInput, context))
+        .optimisticGraph;
+
+      const {savings: fcpSavings} = this.computeWasteWithGraph(
+        results,
+        optimisticFCPGraph,
+        simulator,
+        {providedWastedBytesByUrl: result.wastedBytesByUrl, label: 'fcp'}
+      );
+      // Note: LCP's optimistic graph sometimes unexpectedly yields higher savings than the pessimistic graph.
+      const {savings: lcpGraphSavings} = this.computeWasteWithGraph(
+        results,
+        optimisticLCPGraph,
+        simulator,
+        {providedWastedBytesByUrl: result.wastedBytesByUrl, label: 'lcp'}
+      );
+
+
+      // The LCP graph can underestimate the LCP savings if there is potential savings on the LCP record itself.
+      let lcpRecordSavings = 0;
+      const lcpRecord = await LCPImageRecord.request(metricComputationInput, context);
+      if (lcpRecord) {
+        const lcpResult = results.find(result => result.url === lcpRecord.url);
+        if (lcpResult) {
+          lcpRecordSavings = simulator.computeWastedMsFromWastedBytes(lcpResult.wastedBytes);
+        }
+      }
+
+      metricSavings.FCP = fcpSavings;
+      metricSavings.LCP = Math.max(lcpGraphSavings, lcpRecordSavings);
+      wastedMs = metricSavings.LCP;
     } else {
       wastedMs = simulator.computeWastedMsFromWastedBytes(wastedBytes);
     }
@@ -232,14 +214,22 @@ class ByteEfficiencyAudit extends Audit {
     const details = Audit.makeOpportunityDetails(result.headings, results,
       {overallSavingsMs: wastedMs, overallSavingsBytes: wastedBytes, sortedBy});
 
+    // TODO: Remove from debug data once `metricSavings` is added to the LHR.
+    // For now, add it to debug data for visibility.
+    details.debugData = {
+      type: 'debugdata',
+      metricSavings,
+    };
+
     return {
       explanation: result.explanation,
       warnings: result.warnings,
       displayValue,
       numericValue: wastedMs,
       numericUnit: 'millisecond',
-      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
+      score: results.length ? 0 : 1,
       details,
+      metricSavings,
     };
   }
 

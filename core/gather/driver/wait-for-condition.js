@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* global window */
@@ -45,7 +45,7 @@ function waitForNothing() {
 /**
  * Returns a promise that resolve when a frame has been navigated.
  * Used for detecting that our about:blank reset has been completed.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @return {CancellableWait<LH.Crdp.Page.FrameNavigatedEvent>}
  */
 function waitForFrameNavigated(session) {
@@ -68,7 +68,7 @@ function waitForFrameNavigated(session) {
 
 /**
  * Returns a promise that resolve when a frame has a FCP.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {number} pauseAfterFcpMs
  * @param {number} maxWaitForFcpMs
  * @return {CancellableWait}
@@ -119,14 +119,14 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
 /**
  * Returns a promise that resolves when the network has been idle (after DCL) for
  * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {NetworkMonitor} networkMonitor
  * @param {{networkQuietThresholdMs: number, busyEvent: NetworkMonitorEvent, idleEvent: NetworkMonitorEvent, isIdle(recorder: NetworkMonitor): boolean, pretendDCLAlreadyFired?: boolean}} networkQuietOptions
  * @return {CancellableWait}
  */
 function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
   let hasDCLFired = false;
-  /** @type {NodeJS.Timer|undefined} */
+  /** @type {NodeJS.Timeout|undefined} */
   let idleTimeout;
   /** @type {(() => void)} */
   let cancel = () => {
@@ -213,7 +213,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
 
 /**
  * Resolves when there have been no long tasks for at least waitForCPUQuiet ms.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {number} waitForCPUQuiet
  * @return {CancellableWait}
  */
@@ -225,7 +225,7 @@ function waitForCPUIdle(session, waitForCPUQuiet) {
     };
   }
 
-  /** @type {NodeJS.Timer|undefined} */
+  /** @type {NodeJS.Timeout|undefined} */
   let lastTimeout;
   let canceled = false;
 
@@ -344,7 +344,7 @@ function checkTimeSinceLastLongTaskInPage() {
 /**
  * Return a promise that resolves `pauseAfterLoadMs` after the load event
  * fires and a method to cancel internal listeners and timeout.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {number} pauseAfterLoadMs
  * @return {CancellableWait}
  */
@@ -355,7 +355,7 @@ function waitForLoadEvent(session, pauseAfterLoadMs) {
   };
 
   const promise = new Promise((resolve, reject) => {
-    /** @type {NodeJS.Timer|undefined} */
+    /** @type {NodeJS.Timeout|undefined} */
     let loadTimeout;
     const loadListener = function() {
       loadTimeout = setTimeout(resolve, pauseAfterLoadMs);
@@ -379,7 +379,7 @@ function waitForLoadEvent(session, pauseAfterLoadMs) {
 
 /**
  * Returns whether the page appears to be hung.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @return {Promise<boolean>}
  */
 async function isPageHung(session) {
@@ -410,7 +410,7 @@ const DEFAULT_WAIT_FUNCTIONS = {waitForFcp, waitForLoadEvent, waitForCPUIdle, wa
  *    - cpuQuietThresholdMs have passed since the last long task after network-2-quiet.
  * - maxWaitForLoadedMs milliseconds have passed.
  * See https://github.com/GoogleChrome/lighthouse/issues/627 for more.
- * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Gatherer.ProtocolSession} session
  * @param {NetworkMonitor} networkMonitor
  * @param {WaitOptions} options
  * @return {Promise<{timedOut: boolean}>}
@@ -420,7 +420,7 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
     cpuQuietThresholdMs, maxWaitForLoadedMs, maxWaitForFcpMs} = options;
   const {waitForFcp, waitForLoadEvent, waitForNetworkIdle, waitForCPUIdle} =
     options._waitForTestOverrides || DEFAULT_WAIT_FUNCTIONS;
-  /** @type {NodeJS.Timer|undefined} */
+  /** @type {NodeJS.Timeout|undefined} */
   let maxTimeoutHandle;
 
   // Listener for FCP. Resolves pauseAfterFcpMs ms after first FCP event.
@@ -445,6 +445,21 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
   });
   // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
   let resolveOnCPUIdle = waitForNothing();
+
+  if (log.isVerbose()) {
+    resolveOnFcp.promise.then(() => {
+      log.verbose('waitFor', 'resolveOnFcp fired');
+    });
+    resolveOnLoadEvent.promise.then(() => {
+      log.verbose('waitFor', 'resolveOnLoadEvent fired');
+    });
+    resolveOnNetworkIdle.promise.then(() => {
+      log.verbose('waitFor', 'resolveOnNetworkIdle fired');
+    });
+    resolveOnCriticalNetworkIdle.promise.then(() => {
+      log.verbose('waitFor', 'resolveOnCriticalNetworkIdle fired');
+    });
+  }
 
   // Wait for all initial load promises. Resolves on cleanup function the clears load
   // timeout timer.
@@ -482,8 +497,9 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
       log.warn('waitFor', 'Timed out waiting for page load. Checking if page is hung...');
       if (await isPageHung(session)) {
         log.warn('waitFor', 'Page appears to be hung, killing JavaScript...');
-        await session.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
-        await session.sendCommand('Runtime.terminateExecution');
+        // We don't await these, as we want to exit with PAGE_HUNG
+        void session.sendCommandAndIgnore('Emulation.setScriptExecutionDisabled', {value: true});
+        void session.sendCommandAndIgnore('Runtime.terminateExecution');
         throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       }
 
@@ -519,7 +535,7 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
 }
 
 /**
- * @param {LH.Gatherer.FRTransitionalDriver} driver
+ * @param {LH.Gatherer.Driver} driver
  */
 function waitForUserToContinue(driver) {
   /* c8 ignore start */
@@ -540,7 +556,7 @@ function waitForUserToContinue(driver) {
   }
   /* c8 ignore stop */
 
-  driver.defaultSession.setNextProtocolTimeout(2 ** 31 - 1);
+  driver.defaultSession.setNextProtocolTimeout(Infinity);
   return driver.executionContext.evaluate(createInPagePromise, {args: []});
 }
 

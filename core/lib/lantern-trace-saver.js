@@ -1,14 +1,13 @@
 /**
- * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-/** @typedef {import('./dependency-graph/base-node.js').Node} Node */
-/** @typedef {import('./dependency-graph/simulator/simulator.js').CompleteNodeTiming} CompleteNodeTiming */
+/** @typedef {import('./lantern/lantern.js').Simulation.CompleteNodeTiming} CompleteNodeTiming */
 
 /**
- * @param {Map<Node, CompleteNodeTiming>} nodeTimings
+ * @param {Map<LH.Gatherer.Simulation.GraphNode, CompleteNodeTiming>} nodeTimings
  * @return {LH.Trace}
  */
 function convertNodeTimingsToTrace(nodeTimings) {
@@ -32,9 +31,11 @@ function convertNodeTimingsToTrace(nodeTimings) {
       // Represent all CPU work that was bundled in a task as an EvaluateScript event
       traceEvents.push(...createFakeTaskEvents(node, timing));
     } else {
+      /** @type {LH.Artifacts.NetworkRequest} */
+      const record = node.rawRequest;
       // Ignore data URIs as they don't really add much value
-      if (/^data/.test(node.record.url)) continue;
-      traceEvents.push(...createFakeNetworkEvents(requestId, node.record, timing));
+      if (/^data/.test(record.url)) continue;
+      traceEvents.push(...createFakeNetworkEvents(requestId, record, timing));
       requestId++;
     }
   }
@@ -114,7 +115,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       const ts = eventTs + (event.ts - nestedBaseTs) * multiplier;
       const newEvent = {...event, ...{pid: baseEvent.pid, tid: baseEvent.tid}, ts};
       if (event.dur) newEvent.dur = event.dur * multiplier;
-      events.push(newEvent);
+      events.push(/** @type {LH.TraceEvent} */(newEvent));
     }
 
     return events;
@@ -253,7 +254,6 @@ export default {
     'unlabeled',
     // These node timings should be nearly identical to the ones produced for Interactive
     'optimisticSpeedIndex',
-    'optimisticFlexSpeedIndex',
     'pessimisticSpeedIndex',
   ],
   convertNodeTimingsToTrace,

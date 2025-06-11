@@ -21,7 +21,7 @@ find the gatherer and audit files, when to run them, and how to incorporate thei
 output into the Lighthouse report. This example extends [Lighthouse's
 default configuration](https://github.com/GoogleChrome/lighthouse/blob/main/core/config/default-config.js).
 
-**Note**: when extending the default configuration file, passes with the same name are merged together, all other arrays will be concatenated, and primitive values will override the defaults.
+**Note**: when extending the default configuration file, all arrays will be concatenated and primitive values will override the defaults.
 
 ## Run the configuration
 

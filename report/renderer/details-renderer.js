@@ -1,18 +1,7 @@
 /**
  * @license
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @typedef {import('./dom.js').DOM} DOM */
@@ -56,9 +45,12 @@ export class DetailsRenderer {
         return this._renderFilmstrip(details);
       case 'list':
         return this._renderList(details);
+      case 'checklist':
+        return this._renderChecklist(details);
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
+      case 'network-tree':
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, details, this);
 
@@ -240,6 +232,9 @@ export class DetailsRenderer {
         }
         case 'numeric': {
           return this._renderNumeric(value);
+        }
+        case 'text': {
+          return this._renderText(value.value);
         }
         case 'source-location': {
           return this.renderSourceLocation(value);
@@ -553,12 +548,36 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
+      if (item.type === 'node') {
+        listContainer.append(this.renderNode(item));
+        return;
+      }
+
       const listItem = this.render(item);
       if (!listItem) return;
       listContainer.append(listItem);
     });
 
     return listContainer;
+  }
+
+  /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.Checklist>} details
+   * @return {Element}
+   */
+  _renderChecklist(details) {
+    const container = this._dom.createElement('ul', 'lh-checklist');
+
+    Object.values(details.items).forEach(item => {
+      const element = this._dom.createChildOf(container, 'li', 'lh-checklist-item');
+      const iconClass = item.value ?
+        'lh-report-plain-icon--checklist-pass' :
+        'lh-report-plain-icon--checklist-fail';
+      this._dom.createChildOf(element, 'span', `lh-report-plain-icon ${iconClass}`)
+        .textContent = item.label;
+    });
+
+    return container;
   }
 
   /**

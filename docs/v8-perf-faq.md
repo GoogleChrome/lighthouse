@@ -7,7 +7,7 @@ scores and performance score.](https://developer.chrome.com/docs/lighthouse/perf
 
 In [Lighthouse v8.0](https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0), we updated the score curves for FCP and TBT measurements,
 making both a bit more strict. CLS has been updated to its new, [windowed
-definition](https://web.dev/evolving-cls/). Additionally, the Performance
+definition](https://web.dev/articles/evolving-cls). Additionally, the Performance
 Score's weighted average was
 [rebalanced](https://googlechrome.github.io/lighthouse/scorecalc/#FCP=3000&SI=5800&FMP=4000&TTI=7300&FCI=6500&LCP=4000&TBT=600&CLS=0.25&device=mobile&version=8&version=6&version=5),
 giving more weight to CLS and TBT than before, and slightly decreasing the
@@ -74,7 +74,7 @@ score.
 
 ### How should I think about the Lighthouse performance score in relation to Core Web Vitals?
 
-[Core Web Vitals](https://web.dev/vitals/) refer to a specific set of key user
+[Core Web Vitals](https://web.dev/articles/vitals) refer to a specific set of key user
 experience metrics, their passing thresholds, and percentile at which they're measured.
 In general, CWV's primary focus is field data.
 
@@ -132,7 +132,7 @@ experience is best practice. [Read more about field & lab](https://developers.go
 
 ### How should I work to optimize CLS differently given that it has been updated?
 
-The [windowing adjustment](https://web.dev/evolving-cls/)
+The [windowing adjustment](https://web.dev/articles/evolving-cls)
 will likely not have much effect for the lab measurement, but instead will have
 a large effect on the field CLS for long-lived pages.
 
@@ -195,7 +195,7 @@ experience—we maintain a 40% weighting (TBT and TTI together) in Lighthouse
 
 [FCP's score curve was
 adjusted](https://github.com/GoogleChrome/lighthouse/pull/12556) to align with
-the current de facto ["good" threshold](https://web.dev/fcp/#what-is-a-good-fcp-score),
+the current de facto ["good" threshold](https://web.dev/articles/fcp#what_is_a_good_fcp_score),
 and as a result will score a bit more strictly.
 
 The curve for TBT was made stricter to [more closely
@@ -238,5 +238,5 @@ treemap](https://github.com/GoogleChrome/lighthouse/releases/tag/v7.5.0#:~:text=
 [filtering audits by
 metric](https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0#:~:text=The%20report%20includes%20a-,new%20metric%20filter,-.%20Pick%20a%20metric),
 and the new [Content Security Policy
-audit](https://web.dev/strict-csp/#adopting-a-strict-csp), which was a
+audit](https://web.dev/articles/strict-csp#adopting_a_strict_csp), which was a
 collaboration with the Google Web Security team.

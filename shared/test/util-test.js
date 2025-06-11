@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -9,38 +9,38 @@ import assert from 'assert/strict';
 import {Util} from '../util.js';
 
 describe('util helpers', () => {
-  describe('getTld', () => {
+  describe('getPseudoTld', () => {
     it('returns the correct tld', () => {
-      assert.equal(Util.getTld('example.com'), '.com');
-      assert.equal(Util.getTld('example.co.uk'), '.co.uk');
-      assert.equal(Util.getTld('example.com.br'), '.com.br');
-      assert.equal(Util.getTld('example.tokyo.jp'), '.jp');
+      assert.equal(Util.getPseudoTld('example.com'), '.com');
+      assert.equal(Util.getPseudoTld('example.co.uk'), '.co.uk');
+      assert.equal(Util.getPseudoTld('example.com.br'), '.com.br');
+      assert.equal(Util.getPseudoTld('example.tokyo.jp'), '.jp');
     });
   });
 
-  describe('getRootDomain', () => {
+  describe('getPseudoRootDomain', () => {
     it('returns the correct rootDomain from a string', () => {
-      assert.equal(Util.getRootDomain('https://www.example.com/index.html'), 'example.com');
-      assert.equal(Util.getRootDomain('https://example.com'), 'example.com');
-      assert.equal(Util.getRootDomain('https://www.example.co.uk'), 'example.co.uk');
-      assert.equal(Util.getRootDomain('https://example.com.br/app/'), 'example.com.br');
-      assert.equal(Util.getRootDomain('https://example.tokyo.jp'), 'tokyo.jp');
-      assert.equal(Util.getRootDomain('https://sub.example.com'), 'example.com');
-      assert.equal(Util.getRootDomain('https://sub.example.tokyo.jp'), 'tokyo.jp');
-      assert.equal(Util.getRootDomain('http://localhost'), 'localhost');
-      assert.equal(Util.getRootDomain('http://localhost:8080'), 'localhost');
+      assert.equal(Util.getPseudoRootDomain('https://www.example.com/index.html'), 'example.com');
+      assert.equal(Util.getPseudoRootDomain('https://example.com'), 'example.com');
+      assert.equal(Util.getPseudoRootDomain('https://www.example.co.uk'), 'example.co.uk');
+      assert.equal(Util.getPseudoRootDomain('https://example.com.br/app/'), 'example.com.br');
+      assert.equal(Util.getPseudoRootDomain('https://example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getPseudoRootDomain('https://sub.example.com'), 'example.com');
+      assert.equal(Util.getPseudoRootDomain('https://sub.example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getPseudoRootDomain('http://localhost'), 'localhost');
+      assert.equal(Util.getPseudoRootDomain('http://localhost:8080'), 'localhost');
     });
 
     it('returns the correct rootDomain from an URL object', () => {
-      assert.equal(Util.getRootDomain(new URL('https://www.example.com/index.html')), 'example.com');
-      assert.equal(Util.getRootDomain(new URL('https://example.com')), 'example.com');
-      assert.equal(Util.getRootDomain(new URL('https://www.example.co.uk')), 'example.co.uk');
-      assert.equal(Util.getRootDomain(new URL('https://example.com.br/app/')), 'example.com.br');
-      assert.equal(Util.getRootDomain(new URL('https://example.tokyo.jp')), 'tokyo.jp');
-      assert.equal(Util.getRootDomain(new URL('https://sub.example.com')), 'example.com');
-      assert.equal(Util.getRootDomain(new URL('https://sub.example.tokyo.jp')), 'tokyo.jp');
-      assert.equal(Util.getRootDomain(new URL('http://localhost')), 'localhost');
-      assert.equal(Util.getRootDomain(new URL('http://localhost:8080')), 'localhost');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://www.example.com/index.html')), 'example.com');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://example.com')), 'example.com');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://www.example.co.uk')), 'example.co.uk');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://example.com.br/app/')), 'example.com.br');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://sub.example.com')), 'example.com');
+      assert.equal(Util.getPseudoRootDomain(new URL('https://sub.example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getPseudoRootDomain(new URL('http://localhost')), 'localhost');
+      assert.equal(Util.getPseudoRootDomain(new URL('http://localhost:8080')), 'localhost');
     });
   });
 

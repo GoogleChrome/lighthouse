@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -28,7 +28,7 @@ import {fileURLToPath} from 'url';
 import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
-import {getChromePath} from 'chrome-launcher';
+import {launch} from 'chrome-launcher';
 import esMain from 'es-main';
 
 import {parseChromeFlags} from '../../cli/run.js';
@@ -100,12 +100,22 @@ async function evaluateInSession(session, fn, deps) {
  * @return {Promise<R>}
  */
 async function waitForFunction(session, fn, deps) {
+  let iterations = 0;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await evaluateInSession(session, fn, deps);
-    } catch {
+    } catch (err) {
+      // Random transient errors are common when first booting up.
+      // Only surface errors if this fails 10 times in a row (~5s)
+      if (iterations > 10) {
+        console.error(`Error waiting for function (#${iterations}):`);
+        console.error(err);
+        console.error('Retrying...');
+      }
       await new Promise(r => setTimeout(r, 500));
+    } finally {
+      ++iterations;
     }
   }
 }
@@ -145,33 +155,26 @@ function addSniffer(receiver, methodName, override) {
 }
 
 async function waitForLighthouseReady() {
+  // @ts-expect-error import
+  const {ViewManager, DockController} = await import('./ui/legacy/legacy.js');
+  // @ts-expect-error import
+  const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
+  // @ts-expect-error import
+  const {TargetManager} = await import('./core/sdk/sdk.js');
+  // @ts-expect-error import
+  const {AdvancedApp} = await import('./panels/emulation/emulation.js');
+
   // Undocking later in the function can cause hiccups when Lighthouse enables device emulation.
-  // @ts-expect-error global
-  UI.dockController.setDockSide('undocked');
+  DockController.DockController.instance().setDockSide('undocked');
 
-  // @ts-expect-error global
-  const viewManager = UI.viewManager || (UI.ViewManager.ViewManager || UI.ViewManager).instance();
-  const views = viewManager.views || viewManager._views;
-  const panelName = views.has('lighthouse') ? 'lighthouse' : 'audits';
-  await viewManager.showView(panelName);
+  await ViewManager.ViewManager.instance().showView('lighthouse');
 
-  // @ts-expect-error global
-  const panel = UI.panels.lighthouse || UI.panels.audits;
-  const button = panel.contentElement.querySelector('button');
+  const panel = LighthousePanel.LighthousePanel.instance();
+
+  const button = panel.contentElement.querySelector('.vbox.flex-auto').shadowRoot.querySelector('devtools-button,button');
   if (button.disabled) throw new Error('Start button disabled');
 
-  // Give the main target model a moment to be available.
-  // Otherwise, 'SDK.TargetManager.TargetManager.instance().mainTarget()' is null.
-  // @ts-expect-error global
-  if (self.runtime && self.runtime.loadLegacyModule) {
-    // This exposes TargetManager via self.SDK.
-    try {
-    // @ts-expect-error global
-      await self.runtime.loadLegacyModule('core/sdk/sdk-legacy.js');
-    } catch {}
-  }
-  // @ts-expect-error global
-  const targetManager = SDK.targetManager || (SDK.TargetManager.TargetManager || SDK.TargetManager).instance();
+  const targetManager = TargetManager.TargetManager.instance();
   if (targetManager.primaryPageTarget() === null) {
     if (targetManager?.observeTargets) {
       await new Promise(resolve => targetManager.observeTargets({
@@ -186,16 +189,16 @@ async function waitForLighthouseReady() {
   }
 
   // Ensure the emulation model is ready before Lighthouse starts by enabling device emulation.
-  // @ts-expect-error global
-  const {deviceModeView} = Emulation.AdvancedApp.instance();
+  const {deviceModeView} = AdvancedApp.AdvancedApp.instance();
   if (!deviceModeView.isDeviceModeOn()) {
     deviceModeView.toggleDeviceMode();
   }
 }
 
 async function runLighthouse() {
-  // @ts-expect-error global
-  const panel = UI.panels.lighthouse || UI.panels.audits;
+  // @ts-expect-error import
+  const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
+  const panel = LighthousePanel.LighthousePanel.instance();
 
   /** @type {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>} */
   const resultPromise = new Promise((resolve, reject) => {
@@ -217,28 +220,30 @@ async function runLighthouse() {
     );
   });
 
-  const button = panel.contentElement.querySelector('button');
-  button.click();
+  // In CI clicking the start button just once is flaky and can cause a timeout.
+  // Therefore, keep clicking the button until we detect that the run started.
+  const intervalHandle = setInterval(() => {
+    const button = panel.contentElement.querySelector('.vbox.flex-auto').shadowRoot.querySelector('devtools-button,button');
+    button.click();
+  }, 100);
+
+  addSniffer(
+    panel.__proto__,
+    'handleCompleteRun',
+    () => clearInterval(intervalHandle),
+  );
 
   return resultPromise;
 }
 
-function enableDevToolsThrottling() {
-  // @ts-expect-error global
-  const panel = UI.panels.lighthouse || UI.panels.audits;
-  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane .toolbar').shadowRoot;
+async function enableDevToolsThrottling() {
+  // @ts-expect-error import
+  const {LighthousePanel} = await import('./panels/lighthouse/lighthouse.js');
+  const panel = LighthousePanel.LighthousePanel.instance();
+
+  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane devtools-toolbar');
   toolbarRoot.querySelector('option[value="devtools"]').selected = true;
   toolbarRoot.querySelector('select').dispatchEvent(new Event('change'));
-}
-
-function disableLegacyNavigation() {
-  // @ts-expect-error global
-  const panel = UI.panels.lighthouse || UI.panels.audits;
-  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane .toolbar').shadowRoot;
-  const checkboxRoot = toolbarRoot.querySelector('span[is="dt-checkbox"]').shadowRoot;
-  const checkboxEl = checkboxRoot.querySelector('input');
-  checkboxEl.checked = false;
-  checkboxEl.dispatchEvent(new Event('change'));
 }
 /* eslint-enable */
 
@@ -296,17 +301,27 @@ function dismissDialog(dialog) {
 
 /**
  * @param {string} url
- * @param {{config?: LH.Config, chromeFlags?: string[], useLegacyNavigation?: boolean}} [options]
+ * @param {{config?: LH.Config, chromeFlags?: string[]}} [options]
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, logs: string[]}>}
  */
 async function testUrlFromDevtools(url, options = {}) {
-  const {config, chromeFlags, useLegacyNavigation} = options;
+  const {config, chromeFlags = []} = options;
 
-  const browser = await puppeteer.launch({
-    executablePath: getChromePath(),
-    args: chromeFlags,
-    devtools: true,
+  const newChromeFlags = [
+    ...chromeFlags,
+    '--auto-open-devtools-for-tabs',
+  ];
+
+  const chrome = await launch({chromeFlags: newChromeFlags});
+
+  const browser = await puppeteer.connect({
+    browserURL: `http://127.0.0.1:${chrome.port}`,
+    defaultViewport: null,
+    protocolTimeout: 300_000, // 5 min
   });
+
+  /** @type {puppeteer.CDPSession|undefined} */
+  let inspectorSession;
 
   try {
     if ((await browser.version()).startsWith('Headless')) {
@@ -316,7 +331,7 @@ async function testUrlFromDevtools(url, options = {}) {
     const page = (await browser.pages())[0];
 
     const inspectorTarget = await browser.waitForTarget(t => t.url().includes('devtools'));
-    const inspectorSession = await inspectorTarget.createCDPSession();
+    inspectorSession = await inspectorTarget.createCDPSession();
 
     /** @type {string[]} */
     const logs = [];
@@ -330,10 +345,6 @@ async function testUrlFromDevtools(url, options = {}) {
 
     page.off('dialog', dismissDialog);
 
-    if (!useLegacyNavigation) {
-      await evaluateInSession(inspectorSession, disableLegacyNavigation);
-    }
-
     if (config) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
@@ -341,6 +352,16 @@ async function testUrlFromDevtools(url, options = {}) {
     const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
 
     return {...result, logs};
+  } catch (err) {
+    if (inspectorSession) {
+      const {data} = await inspectorSession.send('Page.captureScreenshot', {format: 'webp'});
+      const image = `data:image/webp;base64,${data}`;
+      throw new Error(
+        `Lighthouse in DevTool failed. DevTools screenshot:\n${image}`,
+        {cause: err}
+      );
+    }
+    throw err;
   } finally {
     await browser.close();
   }

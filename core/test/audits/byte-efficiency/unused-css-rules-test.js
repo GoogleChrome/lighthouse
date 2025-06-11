@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -30,11 +30,12 @@ describe('Best Practices: unused css rules audit', () => {
 
     const context = {computedCache: new Map()};
 
-    function getArtifacts({CSSUsage, networkRecords = defaultNetworkRecords}) {
+    function getArtifacts({rules, stylesheets, networkRecords = defaultNetworkRecords}) {
       return {
-        devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
+        DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
         URL: {finalDisplayedUrl: ''},
-        CSSUsage,
+        CSSUsage: rules,
+        Stylesheets: stylesheets,
       };
     }
 
@@ -44,7 +45,7 @@ describe('Best Practices: unused css rules audit', () => {
 
     it('ignores missing stylesheets', () => {
       return UnusedCSSAudit.audit_(getArtifacts({
-        CSSUsage: {rules: [{styleSheetId: 'a', used: false}], stylesheets: []},
+        rules: [{styleSheetId: 'a', used: false}], stylesheets: [],
       }), defaultNetworkRecords, context).then(result => {
         assert.equal(result.items.length, 0);
       });
@@ -52,11 +53,12 @@ describe('Best Practices: unused css rules audit', () => {
 
     it('ignores stylesheets that are 100% used', () => {
       return UnusedCSSAudit.audit_(getArtifacts({
-        CSSUsage: {rules: [
+        rules: [
           {styleSheetId: 'a', used: true},
           {styleSheetId: 'a', used: true},
           {styleSheetId: 'b', used: true},
-        ], stylesheets: [
+        ],
+        stylesheets: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
             content: '.my.selector {color: #ccc;}\n a {color: #fff}',
@@ -65,7 +67,7 @@ describe('Best Practices: unused css rules audit', () => {
             header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
             content: '.my.favorite.selector { rule: content; }',
           },
-        ]},
+        ],
       }), defaultNetworkRecords, context).then(result => {
         assert.equal(result.items.length, 0);
       });
@@ -73,10 +75,11 @@ describe('Best Practices: unused css rules audit', () => {
 
     it('fails when lots of rules are unused', () => {
       return UnusedCSSAudit.audit_(getArtifacts({
-        CSSUsage: {rules: [
+        rules: [
           {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 11}, // 44 * 25% = 11
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 60000}, // 40000 * 3 * 50% = 60000
-        ], stylesheets: [
+        ],
+        stylesheets: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
             content: '.my.selector {color: #ccc;}\n a {color: #fff}',
@@ -89,7 +92,7 @@ describe('Best Practices: unused css rules audit', () => {
             header: {styleSheetId: 'c', sourceURL: ''},
             content: `${generate('123', 450)}`, // will be filtered out
           },
-        ]},
+        ],
       }), defaultNetworkRecords, context).then(result => {
         assert.equal(result.items.length, 2);
         assert.equal(result.items[0].totalBytes, 100 * 1024);
@@ -106,6 +109,7 @@ describe('Best Practices: unused css rules audit', () => {
           transferSize: 100 * 1024 * 0.5, // compression ratio of 0.5
           resourceSize: 100 * 1024,
           resourceType: 'Document', // this is a document so it'll use the compressionRatio but not the raw size
+          responseHeaders: [{name: 'Content-Encoding', value: 'gzip'}],
         },
         {
           url: 'file://a.html',
@@ -115,16 +119,15 @@ describe('Best Practices: unused css rules audit', () => {
         },
       ];
       const artifacts = getArtifacts({
-        CSSUsage: {
-          rules: [
-            {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 60000}, // 40000 * 3 * 50% = 60000
-          ], stylesheets: [
-            {
-              header: {styleSheetId: 'a', sourceURL: 'file://a.html'},
-              content: `${generate('123', 40000)}`, // stylesheet size of 40000 * 3 uncompressed bytes
-            },
-          ],
-        },
+        rules: [
+          {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 60000}, // 40000 * 3 * 50% = 60000
+        ],
+        stylesheets: [
+          {
+            header: {styleSheetId: 'a', sourceURL: 'file://a.html'},
+            content: `${generate('123', 40000)}`, // stylesheet size of 40000 * 3 uncompressed bytes
+          },
+        ],
         networkRecords,
       });
 
@@ -136,10 +139,11 @@ describe('Best Practices: unused css rules audit', () => {
 
     it('does not include empty or small sheets', () => {
       return UnusedCSSAudit.audit_(getArtifacts({
-        CSSUsage: {rules: [
+        rules: [
           {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 8000}, // 4000 * 3 / 2
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 500}, // 500 * 3 / 3
-        ], stylesheets: [
+        ],
+        stylesheets: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
             content: `${generate('123', 4000)}`,
@@ -160,7 +164,7 @@ describe('Best Practices: unused css rules audit', () => {
             header: {styleSheetId: 'e', sourceURL: 'file://e.css'},
             content: '       ',
           },
-        ]},
+        ],
       }), defaultNetworkRecords, context).then(result => {
         assert.equal(result.items.length, 1);
         assert.equal(Math.floor(result.items[0].wastedPercent), 33);

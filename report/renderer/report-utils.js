@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2023 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import {Util} from '../../shared/util.js';
@@ -39,18 +39,14 @@ class ReportUtils {
     // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
 
-    /** @type {Map<string, Array<LH.ReportResult.AuditRef>>} */
-    const relevantAuditToMetricsMap = new Map();
+    /** @type {Map<string, LH.ReportResult.AuditRef>} */
+    const acronymToMetricMap = new Map();
 
     for (const category of Object.values(clone.categories)) {
       // Make basic lookup table for relevantAudits
       category.auditRefs.forEach(metricRef => {
-        if (!metricRef.relevantAudits) return;
-        metricRef.relevantAudits.forEach(auditId => {
-          const arr = relevantAuditToMetricsMap.get(auditId) || [];
-          arr.push(metricRef);
-          relevantAuditToMetricsMap.set(auditId, arr);
-        });
+        if (!metricRef.acronym) return;
+        acronymToMetricMap.set(metricRef.acronym, metricRef);
       });
 
       category.auditRefs.forEach(auditRef => {
@@ -58,19 +54,28 @@ class ReportUtils {
         auditRef.result = result;
 
         // Attach any relevantMetric auditRefs
-        if (relevantAuditToMetricsMap.has(auditRef.id)) {
-          auditRef.relevantMetrics = relevantAuditToMetricsMap.get(auditRef.id);
+        const relevantAcronyms = Object.keys(auditRef.result.metricSavings || {});
+        if (relevantAcronyms.length) {
+          auditRef.relevantMetrics = [];
+          for (const acronym of relevantAcronyms) {
+            const metric = acronymToMetricMap.get(acronym);
+            if (!metric) continue;
+
+            auditRef.relevantMetrics.push(metric);
+          }
         }
 
         // attach the stackpacks to the auditRef object
         if (clone.stackPacks) {
+          const ids = [auditRef.id, ...auditRef.result.replacesAudits ?? []];
           clone.stackPacks.forEach(pack => {
-            if (pack.descriptions[auditRef.id]) {
+            const id = ids.find(id => pack.descriptions[id]);
+            if (id && pack.descriptions[id]) {
               auditRef.stackPacks = auditRef.stackPacks || [];
               auditRef.stackPacks.push({
                 title: pack.title,
                 iconDataURL: pack.iconDataURL,
-                description: pack.descriptions[auditRef.id],
+                description: pack.descriptions[id],
               });
             }
           });
@@ -398,8 +403,6 @@ const UIStrings = {
   viewTreemapLabel: 'View Treemap',
   /** This label is for a button that will show the user a trace of the page. */
   viewTraceLabel: 'View Trace',
-  /** This label is for a button that will show the user a trace of the page. */
-  viewOriginalTraceLabel: 'View Original Trace',
 
   /** Option in a dropdown menu that opens a small, summary report in a print dialog.  */
   dropdownPrintSummary: 'Print Summary',
@@ -417,6 +420,8 @@ const UIStrings = {
   dropdownSaveGist: 'Save as Gist',
   /** Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes. */
   dropdownDarkTheme: 'Toggle Dark Theme',
+  /** Option in a dropdown menu that opens the trace of the page without throttling. "Unthrottled" can be replaced with "Original". */
+  dropdownViewUnthrottledTrace: 'View Unthrottled Trace',
 
   /** Label for a row in a table that describes the kind of device that was emulated for the Lighthouse run.  Example values for row elements: 'No Emulation', 'Emulated Desktop', etc. */
   runtimeSettingsDevice: 'Device',
@@ -444,12 +449,16 @@ const UIStrings = {
   runtimeDesktopEmulation: 'Emulated Desktop',
   /** Descriptive explanation for a runtime setting that is set to an unknown value. */
   runtimeUnknown: 'Unknown',
-  /** Descriptive label that this analysis run was from a single pageload of a browser (not a summary of hundreds of loads) */
-  runtimeSingleLoad: 'Single page load',
+  /** Descriptive label that this analysis run was from a single sample of a page session (not a summary of hundreds of loads) */
+  runtimeSingleLoad: 'Single page session',
   /** Descriptive label that this analysis only considers the initial load of the page, and no interaction beyond when the page had "fully loaded" */
   runtimeAnalysisWindow: 'Initial page load',
-  /** Descriptive explanation that this analysis run was from a single pageload of a browser, whereas field data often summarizes hundreds+ of page loads */
-  runtimeSingleLoadTooltip: 'This data is taken from a single page load, as opposed to field data summarizing many sessions.', // eslint-disable-line max-len
+  /** Descriptive label that this analysis considers some arbitrary period of time containing user interactions */
+  runtimeAnalysisWindowTimespan: 'User interactions timespan',
+  /** Descriptive label that this analysis considers a snapshot of the page at a single point in time */
+  runtimeAnalysisWindowSnapshot: 'Point-in-time snapshot',
+  /** Descriptive explanation that this analysis run was from a single sample of a page session, whereas field data often summarizes hundreds+ of page loads */
+  runtimeSingleLoadTooltip: 'This data is taken from a single page session, as opposed to field data summarizing many sessions.', // eslint-disable-line max-len
 
   /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
   throttlingProvided: 'Provided by environment',
@@ -472,6 +481,13 @@ const UIStrings = {
   openInANewTabTooltip: 'Open in a new tab',
   /** Generic category name for all resources that could not be attributed to a 1st or 3rd party entity. */
   unattributable: 'Unattributable',
+
+  /** Notice about upcoming planned changes to Lighthouse, to replace most performance audits with a new set of "insight" audits. */
+  insightsNotice: 'Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462).',
+  /** Text for a button to try out "Performance insight audits", a new set of performance advice that will replace performance audits. */
+  tryInsights: 'Try insights',
+  /** Text for a button for going back to normal "Performance audits", instead of using the new set of performance insight audits that will replace performance audits. */
+  goBackToAudits: 'Go back to audits',
 };
 
 export {

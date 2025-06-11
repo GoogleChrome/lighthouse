@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import PreloadFontsAudit from '../../audits/preload-fonts.js';
@@ -19,9 +19,9 @@ describe('Preload Fonts Audit', () => {
 
   function getArtifacts() {
     return {
-      devtoolsLogs: {[PreloadFontsAudit.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      DevtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
       URL: {finalDisplayedUrl: 'https://example.com/foo/bar/page'},
-      CSSUsage: {stylesheets: [stylesheet]},
+      Stylesheets: [stylesheet],
     };
   }
 
@@ -42,7 +42,7 @@ describe('Preload Fonts Audit', () => {
         },
       ];
 
-      const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+      const result = await PreloadFontsAudit.audit(getArtifacts(), context);
       expect(result.score).toEqual(0);
       expect(result.details.items).toEqual([
         {url: networkRecords[0].url},
@@ -65,7 +65,7 @@ describe('Preload Fonts Audit', () => {
         },
       ];
 
-      const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+      const result = await PreloadFontsAudit.audit(getArtifacts(), context);
       expect(result.details.items).toEqual([]);
       expect(result.score).toEqual(1);
     });
@@ -87,7 +87,7 @@ describe('Preload Fonts Audit', () => {
         },
       ];
 
-      const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+      const result = await PreloadFontsAudit.audit(getArtifacts(), context);
       expect(result.score).toEqual(1);
       expect(result.details.items).toEqual([]);
       expect(result.notApplicable).toEqual(true);
@@ -108,7 +108,7 @@ describe('Preload Fonts Audit', () => {
         },
       ];
 
-      const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+      const result = await PreloadFontsAudit.audit(getArtifacts(), context);
       expect(result.score).toEqual(1);
       expect(result.details.items).toEqual([]);
       expect(result.notApplicable).toEqual(true);
@@ -139,7 +139,7 @@ describe('Preload Fonts Audit', () => {
 
     networkRecords = [];
 
-    const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+    const result = await PreloadFontsAudit.audit(getArtifacts(), context);
     expect(result.score).toEqual(1);
     expect(result.details.items).toEqual([]);
     expect(result.notApplicable).toEqual(true);
@@ -191,7 +191,7 @@ describe('Preload Fonts Audit', () => {
       },
     ];
 
-    const result = await PreloadFontsAudit.audit_(getArtifacts(), context);
+    const result = await PreloadFontsAudit.audit(getArtifacts(), context);
     expect(result.score).toEqual(0);
     expect(result.details.items).toEqual([
       {url: networkRecords[1].url},

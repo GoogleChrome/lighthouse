@@ -1,10 +1,11 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import fs from 'fs';
+import path from 'path';
 
 import log from 'lighthouse-logger';
 
@@ -58,13 +59,17 @@ function writeToStdout(output) {
  */
 function writeFile(filePath, output, outputMode) {
   return new Promise((resolve, reject) => {
-    // TODO: make this mkdir to the filePath.
-    fs.writeFile(filePath, output, (err) => {
-      if (err) {
+    fs.mkdir(path.dirname(filePath), {recursive: true}, (err) => {
+      if (err && err.code !== 'EEXIST') {
         return reject(err);
       }
-      log.log('Printer', `${OutputMode[outputMode]} output written to ${filePath}`);
-      resolve();
+      fs.writeFile(filePath, output, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        log.log('Printer', `${OutputMode[outputMode]} output written to ${filePath}`);
+        resolve();
+      });
     });
   });
 }

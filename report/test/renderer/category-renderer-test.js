@@ -1,7 +1,7 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import assert from 'assert/strict';
@@ -29,7 +29,10 @@ describe('CategoryRenderer', () => {
       reportJson: null,
     });
 
-    const {document} = new jsdom.JSDOM().window;
+    const window = new jsdom.JSDOM().window;
+    const document = window.document;
+    global.HTMLElement = window.HTMLElement;
+
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
@@ -42,8 +45,8 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders an audit', () => {
-    const auditRef = sampleResults.categories.pwa.auditRefs
-      .find(a => a.id === 'installable-manifest');
+    const auditRef = sampleResults.categories.performance.auditRefs
+      .find(a => a.id === 'largest-contentful-paint');
 
     const auditDOM = renderer.renderAudit(auditRef);
     assert.equal(auditDOM.nodeType, 1, 'Audit returns an element');
@@ -152,7 +155,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders a category', () => {
-    const category = sampleResults.categories.pwa;
+    const category = sampleResults.categories.seo;
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const categoryEl = categoryDOM.querySelector('.lh-category-header');
@@ -184,7 +187,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('handles markdown in category descriptions a category', () => {
-    const category = sampleResults.categories.pwa;
+    const category = sampleResults.categories.seo;
     const prevDesc = category.description;
     category.description += ' [link text](http://example.com).';
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
@@ -194,17 +197,17 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders manual audits if the category contains them', () => {
-    const pwaCategory = sampleResults.categories.pwa;
-    const categoryDOM = renderer.render(pwaCategory, sampleResults.categoryGroups);
+    const category = sampleResults.categories.seo;
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-clump--manual .lh-audit-group__summary'));
-    assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
+    assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 1,
         'score shows informative and dash icon');
 
-    assert.ok(pwaCategory.manualDescription);
+    assert.ok(category.manualDescription);
     const description = categoryDOM.querySelector('.lh-clump--manual').closest('.lh-audit-group')
       .querySelector('.lh-audit-group__description').textContent;
     // may need to be adjusted if description includes a link at the beginning
-    assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
+    assert.ok(description.startsWith(category.manualDescription.substring(0, 20)),
         'no manual description');
   });
 
@@ -220,12 +223,12 @@ describe('CategoryRenderer', () => {
       assert.ok(categoryDOM.querySelector(
         '.lh-clump--notapplicable .lh-audit-group__summary'));
 
-      const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
-        sum += audit.result.scoreDisplayMode === 'notApplicable' ? 1 : 0, 0);
+      const notApplicableAudits = a11yCategory.auditRefs.filter(audit => {
+        return audit.result.scoreDisplayMode === 'notApplicable' && audit.group !== 'hidden';
+      });
       assert.equal(
         categoryDOM.querySelectorAll('.lh-clump--notapplicable .lh-audit').length,
-        notApplicableCount,
-        'score shows informative and dash icon'
+        notApplicableAudits.length
       );
     });
 
@@ -301,7 +304,7 @@ describe('CategoryRenderer', () => {
       );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
-      assert.equal(gauge.textContent.trim(), '15/20', 'fraction is included');
+      assert.equal(gauge.textContent.trim(), '16/21', 'fraction is included');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const title = score.querySelector('.lh-fraction__label');
@@ -323,7 +326,8 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
 
       // All the group names in the config.
-      const groupNames = Array.from(new Set(auditRefs.map(ref => ref.group))).filter(Boolean);
+      const groupNames = Array.from(
+        new Set(auditRefs.map(ref => ref.group))).filter(n => Boolean(n) && n !== 'hidden');
       assert.ok(groupNames.length > 5, `not enough groups found in category for test`);
 
       // All the group roots in the DOM.
@@ -347,7 +351,9 @@ describe('CategoryRenderer', () => {
     it('renders the passed audits ungrouped', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = category.auditRefs.filter(audit =>
-          audit.result.scoreDisplayMode !== 'notApplicable' && audit.result.score === 1);
+          audit.result.scoreDisplayMode !== 'notApplicable' &&
+          audit.group !== 'hidden' &&
+          audit.result.score === 1);
 
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
       const passedAuditsElems = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit');
@@ -359,7 +365,8 @@ describe('CategoryRenderer', () => {
     it('renders all the audits', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
-      assert.equal(auditsElements.length, category.auditRefs.length);
+      const visibleAudits = category.auditRefs.filter(a => a.group !== 'hidden');
+      assert.equal(auditsElements.length, visibleAudits.length);
     });
 
     it('renders audits without a group before grouped ones', () => {
@@ -399,22 +406,24 @@ describe('CategoryRenderer', () => {
 
       categoryGroupIds.forEach(groupId => {
         const selector = `.lh-audit-group--${groupId}`;
-        assert.equal(categoryElem.querySelectorAll(selector).length, 1,
-          `could not find '${selector}'`);
+        if (groupId !== 'hidden') {
+          assert.equal(categoryElem.querySelectorAll(selector).length, 1,
+            `could not find '${selector}'`);
+        }
       });
     });
   });
 
   describe('clumping passed/failed/warning/manual', () => {
     it('separates audits in the DOM', () => {
-      const category = sampleResults.categories.pwa;
+      const category = sampleResults.categories.seo;
       const categoryClone = JSON.parse(JSON.stringify(category));
       // Give the first two passing grades warnings
       const passingRefs = categoryClone.auditRefs.filter(ref => ref.result.score === 1);
       passingRefs[0].result.warnings = ['Some warning'];
       passingRefs[1].result.warnings = ['Some warning'];
       // Make one audit n/a
-      const audit = categoryClone.auditRefs.find(ref => ref.id === 'themed-omnibox');
+      const audit = categoryClone.auditRefs.find(ref => ref.id === 'is-crawlable');
       audit.result.scoreDisplayMode = 'notApplicable';
       audit.result.score = null;
 
@@ -425,11 +434,11 @@ describe('CategoryRenderer', () => {
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
       const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
-      assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 4);
-      assert.equal(warningAudits.length, 2);
-      assert.equal(manualAudits.length, 3);
-      assert.equal(naAudits.length, 1);
+      assert.equal(passedAudits.length, 4);
+      assert.equal(failedAudits.length, 3);
+      assert.equal(warningAudits.length, 1);
+      assert.equal(manualAudits.length, 1);
+      assert.equal(naAudits.length, 2);
 
       const allAudits = elem.querySelectorAll('.lh-audit');
       // No unaccounted audits
@@ -438,7 +447,7 @@ describe('CategoryRenderer', () => {
     });
 
     it('doesnt create a passed section if there were 0 passed', () => {
-      const origCategory = sampleResults.categories.pwa;
+      const origCategory = sampleResults.categories.seo;
       const category = JSON.parse(JSON.stringify(origCategory));
       category.auditRefs.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.categoryGroups);
@@ -446,19 +455,31 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 7);
+      assert.equal(failedAudits.length, 9);
     });
 
     it('expands warning audit group', () => {
-      const category = sampleResults.categories.pwa;
+      const category = sampleResults.categories.seo;
       const categoryClone = JSON.parse(JSON.stringify(category));
-      const failingAudit = categoryClone.auditRefs.find(ref => ref.id === 'content-width');
+      const failingAudit = categoryClone.auditRefs.find(ref => ref.id === 'is-crawlable');
       failingAudit.result.warnings = ['Some warning'];
 
       const auditDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
       const warningClumpEl = auditDOM.querySelector('.lh-clump--warning');
       const isExpanded = warningClumpEl.hasAttribute('open');
       assert.ok(isExpanded, 'Warning audit group should be expanded by default');
+    });
+
+    it('expands the manual audit group if there are 0 failing audits', () => {
+      const category = sampleResults.categories.accessibility;
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      categoryClone.auditRefs.filter(audit => audit.result.scoreDisplayMode === 'binary')
+        .forEach(audit => audit.result.score = 1);
+
+      const auditDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
+      const manualClumpEl = auditDOM.querySelector('.lh-clump--manual');
+      const isExpanded = manualClumpEl.hasAttribute('open');
+      assert.ok(isExpanded, 'Manual audit group should be expanded if there are 0 failing audits');
     });
 
     it('only passing audits with warnings show in warnings section', () => {

@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license
+ * Copyright 2016 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* global window, document, getNodeDetails */
 
-import FRGatherer from '../base-gatherer.js';
+import BaseGatherer from '../base-gatherer.js';
 import {axeSource} from '../../lib/axe.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 
@@ -41,18 +41,29 @@ async function runA11yChecks() {
       // Consider http://go/prcpg for expert review of the aXe rules.
       'accesskeys': {enabled: true},
       'area-alt': {enabled: false},
+      'aria-allowed-role': {enabled: true},
+      'aria-braille-equivalent': {enabled: false},
+      'aria-conditional-attr': {enabled: true},
+      'aria-deprecated-role': {enabled: true},
+      'aria-dialog-name': {enabled: true},
+      'aria-prohibited-attr': {enabled: true},
       'aria-roledescription': {enabled: false},
       'aria-treeitem-name': {enabled: true},
+      'aria-text': {enabled: true},
       'audio-caption': {enabled: false},
       'blink': {enabled: false},
       'duplicate-id': {enabled: false},
+      'empty-heading': {enabled: true},
       'frame-focusable-content': {enabled: false},
       'frame-title-unique': {enabled: false},
       'heading-order': {enabled: true},
       'html-xml-lang-mismatch': {enabled: true},
-      'identical-links-same-purpose': {enabled: false},
+      'identical-links-same-purpose': {enabled: true},
+      'image-redundant-alt': {enabled: true},
       'input-button-name': {enabled: true},
-      'link-in-text-block': {enabled: false},
+      'label-content-name-mismatch': {enabled: true},
+      'landmark-one-main': {enabled: true},
+      'link-in-text-block': {enabled: true},
       'marquee': {enabled: false},
       'meta-viewport': {enabled: true},
       // https://github.com/dequelabs/axe-core/issues/2958
@@ -60,11 +71,16 @@ async function runA11yChecks() {
       'no-autoplay-audio': {enabled: false},
       'role-img-alt': {enabled: false},
       'scrollable-region-focusable': {enabled: false},
-      'select-name': {enabled: false},
+      'select-name': {enabled: true},
       'server-side-image-map': {enabled: false},
+      'skip-link': {enabled: true},
+      // https://github.com/GoogleChrome/lighthouse/issues/16163
+      'summary-name': {enabled: false},
       'svg-img-alt': {enabled: false},
       'tabindex': {enabled: true},
+      'table-duplicate-name': {enabled: true},
       'table-fake-caption': {enabled: true},
+      'target-size': {enabled: true},
       'td-has-header': {enabled: true},
     },
   });
@@ -164,7 +180,7 @@ function createAxeRuleResultArtifact(result) {
 }
 /* c8 ignore stop */
 
-class Accessibility extends FRGatherer {
+class Accessibility extends BaseGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
@@ -176,7 +192,7 @@ class Accessibility extends FRGatherer {
   };
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   * @param {LH.Gatherer.Context} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
   getArtifact(passContext) {

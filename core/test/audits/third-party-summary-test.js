@@ -1,147 +1,133 @@
 /**
- * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * @license Copyright 2017 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import ThirdPartySummary from '../../audits/third-party-summary.js';
+import {defaultSettings} from '../../config/constants.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
-import {readJson} from '../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
-const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
-const noThirdPartyTrace = readJson('../fixtures/traces/no-tracingstarted-m74.json', import.meta);
+const trace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
+const devtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const noThirdPartyTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
+const noThirdPartyDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 
 describe('Third party summary', () => {
   it('surface the discovered third parties', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
-      traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'https://pwa.rocks'},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
-    const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map()});
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+    const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map(), settings});
 
-    expect(results.score).toBe(1);
+    expect(results.score).toBe(0);
+    expect(results.metricSavings).toEqual({TBT: 245});
     expect(results.displayValue).toBeDisplayString(
-      'Third-party code blocked the main thread for 20 ms'
+      'Third-party code blocked the main thread for 300 ms'
     );
-    expect(results.details.items).toEqual([
-      {
-        entity: 'Google Tag Manager',
-        mainThreadTime: 127.15300000000003,
-        blockingTime: 18.186999999999998,
-        transferSize: 30827,
-        subItems: {
-          items: [
-            {
-              blockingTime: 18.186999999999998,
-              mainThreadTime: 127.15300000000003,
-              transferSize: 30827,
-              url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW',
-            },
-          ],
-          type: 'subitems',
-        },
-      },
-      {
-        entity: 'Google Analytics',
-        mainThreadTime: 95.15599999999999,
-        blockingTime: 0,
-        transferSize: 20913,
-        subItems: {
-          items: [
-            {
-              blockingTime: 0,
-              mainThreadTime: 55.246999999999986,
-              transferSize: 12906,
-              url: 'https://www.google-analytics.com/analytics.js',
-            },
-            {
-              blockingTime: 0,
-              transferSize: 8007,
-              url: expect.toBeDisplayString('Other resources'),
-            },
-          ],
-          type: 'subitems',
-        },
-      },
-    ]);
-    expect(results.details.items[1].subItems.items[1].url).toBeDisplayString('Other resources');
+    expect(results.details.items).toMatchSnapshot();
   });
 
   it('account for simulated throttling', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: pwaDevtoolsLog},
-      traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'https://pwa.rocks'},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
-    const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map(), settings});
 
     expect(results.score).toBe(0);
-    expect(results.details.items).toHaveLength(2);
-    expect(Math.round(results.details.items[0].mainThreadTime)).toEqual(509);
-    expect(Math.round(results.details.items[0].blockingTime)).toEqual(250);
-    expect(Math.round(results.details.items[1].mainThreadTime)).toEqual(381);
-    expect(Math.round(results.details.items[1].blockingTime)).toEqual(157);
+    expect(results.metricSavings).toEqual({TBT: 2570});
+    expect(results.details.items).toHaveLength(145);
+    expect(Math.round(results.details.items[0].mainThreadTime)).toEqual(3520);
+    expect(Math.round(results.details.items[0].blockingTime)).toEqual(1182);
+    expect(Math.round(results.details.items[1].mainThreadTime)).toEqual(1392);
+    expect(Math.round(results.details.items[1].blockingTime)).toEqual(508);
   });
 
   it('be not applicable when no third parties are present', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([{url: 'chrome://version'}])},
-      traces: {defaultPass: noThirdPartyTrace},
-      URL: {finalDisplayedUrl: 'chrome://version'},
+      DevtoolsLog: noThirdPartyDevtoolsLog,
+      Trace: noThirdPartyTrace,
+      URL: {
+        requestedUrl: 'http://localhost:65178/animation.html',
+        mainDocumentUrl: 'http://localhost:65178/animation.html',
+        finalDisplayedUrl: 'http://localhost:65178/animation.html',
+      },
+      GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
-    const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map(), settings});
 
     expect(results).toEqual({
       score: 1,
       notApplicable: true,
+      metricSavings: {TBT: 0},
     });
   });
 
   it('does not return third party entity that matches main resource entity', async () => {
     const externalArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://example.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
+      GatherContext: {gatherMode: 'navigation'},
+      URL: {
+        requestedUrl: 'http://example.com',
+        mainDocumentUrl: 'http://example.com',
+        finalDisplayedUrl: 'http://example.com',
       },
-      traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'http://example.com'},
+      SourceMaps: [],
     };
     const facebookArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://facebook.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://facebook.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
+      GatherContext: {gatherMode: 'navigation'},
+      URL: {
+        requestedUrl: 'http://facebook.com',
+        mainDocumentUrl: 'http://facebook.com',
+        finalDisplayedUrl: 'http://facebook.com',
       },
-      traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'http://facebook.com'},
+      SourceMaps: [],
     };
-    const context = {computedCache: new Map()};
+
+    const settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings.throttlingMethod = 'devtools';
+    const context = {computedCache: new Map(), settings};
 
     const resultsOnExternal = await ThirdPartySummary.audit(externalArtifacts, context);
     const resultsOnFacebook = await ThirdPartySummary.audit(facebookArtifacts, context);
@@ -150,7 +136,7 @@ describe('Third party summary', () => {
     const facebookEntities = resultsOnFacebook.details.items.map(item => item.entity);
 
     expect(externalEntities).toEqual([
-      'Google Tag Manager', 'Facebook', 'pwa.rocks', 'Google Analytics']);
-    expect(facebookEntities).toEqual(['Google Tag Manager', 'pwa.rocks', 'Google Analytics']);
+      'Facebook', 'pwa.rocks', 'Google Tag Manager', 'Google Analytics']);
+    expect(facebookEntities).toEqual(['pwa.rocks', 'Google Tag Manager', 'Google Analytics']);
   });
 });
