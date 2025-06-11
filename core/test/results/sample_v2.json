@@ -5685,14 +5685,57 @@
     },
     "crawlable-anchors": {
       "id": "crawlable-anchors",
-      "title": "Links are crawlable",
+      "title": "Links are not crawlable",
       "description": "Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn how to make links crawlable](https://support.google.com/webmasters/answer/9112205)",
-      "score": 1,
+      "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "node",
+            "valueType": "node",
+            "label": "Uncrawlable Link"
+          }
+        ],
+        "items": [
+          {
+            "node": {
+              "type": "node",
+              "lhId": "1-18-A",
+              "path": "2,HTML,1,BODY,36,A",
+              "selector": "body > a",
+              "boundingRect": {
+                "top": 1106,
+                "bottom": 1124,
+                "left": 175,
+                "right": 255,
+                "width": 80,
+                "height": 19
+              },
+              "snippet": "<a target=\"_blank\">",
+              "nodeLabel": "external link"
+            }
+          },
+          {
+            "node": {
+              "type": "node",
+              "lhId": "1-13-A",
+              "path": "2,HTML,1,BODY,52,A",
+              "selector": "body > a",
+              "boundingRect": {
+                "top": 1199,
+                "bottom": 1217,
+                "left": 192,
+                "right": 192,
+                "width": 0,
+                "height": 19
+              },
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+              "nodeLabel": "body > a"
+            }
+          }
+        ]
       }
     },
     "is-crawlable": {
@@ -7615,7 +7658,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.83
+      "score": 0.75
     }
   },
   "categoryGroups": {
@@ -11627,11 +11670,14 @@
       "core/audits/seo/link-text.js | description": [
         "audits[link-text].description"
       ],
-      "core/audits/seo/crawlable-anchors.js | title": [
+      "core/audits/seo/crawlable-anchors.js | failureTitle": [
         "audits[crawlable-anchors].title"
       ],
       "core/audits/seo/crawlable-anchors.js | description": [
         "audits[crawlable-anchors].description"
+      ],
+      "core/audits/seo/crawlable-anchors.js | columnFailingLink": [
+        "audits[crawlable-anchors].details.headings[0].label"
       ],
       "core/audits/seo/is-crawlable.js | title": [
         "audits[is-crawlable].title"

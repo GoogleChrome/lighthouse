@@ -76,12 +76,15 @@ class CrawlableAnchors extends Audit {
       if (rawHref.startsWith('file:')) return true;
       if (name.length > 0) return;
 
-      // https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
-      // If the a element has no href attribute, then the element represents a placeholder for where a link might otherwise have been placed, if it had been relevant, consisting of just the element's contents.
-      // The target, download, ping, rel, hreflang, type, and referrerpolicy attributes must be omitted if the href attribute is not present.
+      // If the a element has no href attribute, then the element represents a
+      // placeholder for where a link might otherwise have been placed, if it had
+      // been relevant, consisting of just the element's contents. The target,
+      // download, ping, rel, hreflang, type, and referrerpolicy attributes must be
+      // omitted if the href attribute is not present.
+      // See https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
       if (
         !attributeNames.includes('href') &&
-        !hrefAssociatedAttributes.some(attribute => attributeNames.includes(attribute))
+        hrefAssociatedAttributes.every(attribute => !attributeNames.includes(attribute))
       ) {
         return hasListener;
       }
