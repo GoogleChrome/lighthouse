@@ -26,21 +26,19 @@ export default [{
     '**/*.ts',
     '**/*.tsx',
   ],
+}, {
+  // Global ignores.
   ignores: [
     '**/*.d.cts', // ignore d.ts files until we can properly lint them
     '**/*.d.ts',
     '**/dist',
+    '**/fixtures/**',
     '**/node_modules/**',
     '**/source-maps/**',
     '**/third_party/**',
     'build/test/page-functions-test-case*out*.js',
     'core/scripts/legacy-javascript/variants/**',
     'coverage/**',
-  ],
-}, {
-  // Global ignores.
-  ignores: [
-    '**/fixtures',
   ],
 }, ...compat.extends('eslint:recommended', 'google'), {
   plugins: {
