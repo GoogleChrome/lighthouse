@@ -24,6 +24,7 @@ export default [{
     '**/*.js',
     '**/*.mjs',
     '**/*.ts',
+    '**/*.tsx',
   ],
   ignores: [
     '**/*.d.cts', // ignore d.ts files until we can properly lint them
@@ -221,5 +222,18 @@ export default [{
       chrome: true,
       __lighthouse: true,
     },
+  },
+}, {
+  files: ['flow-report/**'],
+
+  languageOptions: {
+    globals: {
+      ...globals.browser,
+      ...globals.node,
+    },
+  },
+
+  rules: {
+    'no-undef': 'off',
   },
 }];

@@ -88,6 +88,7 @@ const FlowStepThumbnail: FunctionComponent<{
   }
 
   if (!width || !height) {
+    // eslint-disable-next-line no-console
     console.warn(new Error('FlowStepThumbnail requested without any dimensions').stack);
     return <></>;
   }

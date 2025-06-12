@@ -26,6 +26,7 @@ function useLhrLocale() {
   const locale = firstLhr.configSettings.locale;
 
   if (flowResult.steps.some(step => step.lhr.configSettings.locale !== locale)) {
+    // eslint-disable-next-line no-console
     console.warn('LHRs have inconsistent locales');
   }
 
