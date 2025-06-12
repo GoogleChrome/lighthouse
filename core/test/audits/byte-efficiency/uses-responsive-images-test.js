@@ -56,7 +56,6 @@ describe('Page uses responsive images', () => {
       ],
     };
     it(description, async () => {
-      // eslint-disable-next-line max-len
       const result = await UsesResponsiveImagesAudit.audit_(
         artifacts,
         [generateRecord(data.sizeInKb, data.durationInMs || 200)],

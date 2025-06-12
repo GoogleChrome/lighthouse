@@ -20,11 +20,9 @@ import {LH_ROOT} from '../../shared/root.js';
 import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
 
-/* eslint-disable max-len */
 const ARTIFACTS_PATH = `${LH_ROOT}/core/test/fixtures/user-flows/artifacts/`;
 const FLOW_RESULT_PATH = `${LH_ROOT}/core/test/fixtures/user-flows/reports/sample-flow-result.json`;
 const FLOW_REPORT_PATH = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
-/* eslint-enable max-len */
 
 const args = yargs(process.argv.slice(2))
   .options({

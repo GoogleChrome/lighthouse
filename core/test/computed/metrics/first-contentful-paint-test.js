@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
+import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);

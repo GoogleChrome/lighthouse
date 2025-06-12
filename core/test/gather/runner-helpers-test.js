@@ -7,7 +7,7 @@
 import * as helpers from '../../gather/runner-helpers.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {defaultSettings} from '../../config/constants.js';
-import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js'; // eslint-disable-line max-len
+import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js';
 
 describe('collectArtifactDependencies', () => {
   /** @type {LH.Config.AnyArtifactDefn} */

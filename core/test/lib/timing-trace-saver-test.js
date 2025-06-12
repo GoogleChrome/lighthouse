@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 import {generateTraceEvents, createTraceString} from '../../lib/timing-trace-saver.js';
 
 const mockEntries = [{

@@ -83,7 +83,7 @@ describe('Link Elements gatherer', () => {
     const result = await new LinkElements().getArtifact(getContext({headers}));
     expect(result).toEqual([
       link({source: 'headers', rel: 'prefetch', href: 'https://example.com/', as: 'image'}),
-      link({source: 'headers', rel: 'preconnect', href: 'https://example.com/', crossOrigin: 'anonymous'}), // eslint-disable-line max-len
+      link({source: 'headers', rel: 'preconnect', href: 'https://example.com/', crossOrigin: 'anonymous'}),
       link({source: 'headers', rel: 'preload', href: 'https://example.com/style.css'}),
       link({source: 'headers', rel: 'canonical', href: 'https://example.com/', hrefRaw: '/'}),
       link({source: 'headers', rel: 'alternate', href: 'https://example.com/', hreflang: 'xx'}),

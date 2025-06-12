@@ -10,8 +10,6 @@
  * flags, start fixture webservers, then run smokehouse.
  */
 
-/* eslint-disable no-console */
-
 import path from 'path';
 import fs from 'fs';
 import url from 'url';

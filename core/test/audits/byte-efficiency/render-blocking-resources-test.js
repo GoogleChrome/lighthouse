@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
+import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js';
 import * as constants from '../../../config/constants.js';
 import * as Lantern from '../../../lib/lantern/lantern.js';
 import {NetworkRequest} from '../../../lib/network-request.js';

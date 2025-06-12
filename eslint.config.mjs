@@ -17,35 +17,29 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
+// See https://eslint.org/docs/latest/use/configure/configuration-files
 export default [{
   files: [
-    '**/*.js',
-    '**/*.ts',
-    '**/*.mjs',
     '**/*.cjs',
-    // 'build/**',
-    // 'cli/**',
-    // 'clients/**',
-    // 'core/**',
-    // 'flow-report/**',
-    // 'lighthouse-logger/**',
-    // 'proto/**',
-    // 'report/**',
-    // 'shared/**',
-    // 'treemap/**',
-    // 'viewer/**',
+    '**/*.js',
+    '**/*.mjs',
+    '**/*.ts',
   ],
   ignores: [
-    '**/node_modules/**/*',
-    '**/third_party/**/*',
-    '**/source-maps/**/*',
-    '**/dist',
-    'coverage/**/*',
-    'core/scripts/legacy-javascript/variants',
-    // ignore d.ts files until we can properly lint them
+    '**/*.d.cts', // ignore d.ts files until we can properly lint them
     '**/*.d.ts',
-    '**/*.d.cts',
+    '**/dist',
+    '**/node_modules/**',
     '**/page-functions-test-case*out*.js',
+    '**/source-maps/**',
+    '**/third_party/**',
+    'core/scripts/legacy-javascript/variants/**',
+    'coverage/**',
+  ],
+}, {
+  // Global ignores.
+  ignores: [
+    '**/fixtures',
   ],
 }, ...compat.extends('eslint:recommended', 'google'), {
   plugins: {
@@ -130,6 +124,7 @@ export default [{
     'no-unused-vars': [2, {
       vars: 'all',
       args: 'after-used',
+      caughtErrors: 'none', // TODO: remove for new "all" default.
       argsIgnorePattern: '(^reject$|^_+$)',
       varsIgnorePattern: '(^_$|^LH$|^Lantern$|^TraceEngine$|^Protocol$)',
     }],
@@ -167,6 +162,15 @@ export default [{
     'max-len': 0,
   },
 }, {
+  files: [
+    '**/scripts/**',
+    '**/test/**',
+  ],
+
+  rules: {
+    'no-console': 0,
+  },
+}, {
   files: ['**/test/**'],
 
   languageOptions: {
@@ -174,15 +178,6 @@ export default [{
       ...globals.jest,
       ...globals.mocha,
     },
-  },
-  rules: {
-    // 'no-console': 0,
-  },
-}, {
-  files: ['**/test/fixtures/**'],
-
-  rules: {
-    'no-console': 0,
   },
 }, {
   files: [

@@ -223,7 +223,6 @@ describe('Manifest Parser', function() {
    * @see https://w3c.github.io/manifest/#start_url-member
    */
   describe('start_url parsing', () => {
-    /* eslint-disable camelcase */
     // 8.10(3)
     it('falls back to document URL and issues a warning for a non-string', () => {
       const manifestSrc = JSON.stringify({
@@ -356,7 +355,6 @@ describe('Manifest Parser', function() {
       assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, 'https://example.com/start_point.html');
     });
-    /* eslint-enable camelcase */
   });
 
   /**
@@ -441,7 +439,6 @@ describe('Manifest Parser', function() {
    */
   describe('related_applications parsing', () => {
     it('correctly parses the urls from an example manifest', () => {
-      /* eslint-disable camelcase */
       // non normative-example from section 10
       const exampleManifest = {
         related_applications: [{
@@ -453,7 +450,7 @@ describe('Manifest Parser', function() {
           url: 'https://itunes.apple.com/app/example-app1/id123456789',
         }],
       };
-      /* eslint-enable camelcase */
+
 
       const parsedManifest = parseManifest(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
           EXAMPLE_DOC_URL);
@@ -466,7 +463,6 @@ describe('Manifest Parser', function() {
     });
 
     it('handles applications with invalid urls', () => {
-      /* eslint-disable camelcase */
       const exampleManifest = {
         related_applications: [{
           platform: 'play',
@@ -477,7 +473,7 @@ describe('Manifest Parser', function() {
           url: {},
         }],
       };
-      /* eslint-enable camelcase */
+
 
       const parsedManifest = parseManifest(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
           EXAMPLE_DOC_URL);

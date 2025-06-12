@@ -101,7 +101,6 @@ async function evaluateInSession(session, fn, deps) {
  */
 async function waitForFunction(session, fn, deps) {
   let iterations = 0;
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await evaluateInSession(session, fn, deps);

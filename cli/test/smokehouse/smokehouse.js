@@ -10,8 +10,6 @@
  * smoke tests passed.
  */
 
-/* eslint-disable no-console */
-
 /**
  * @typedef Run
  * @property {string[] | undefined} networkRequests

@@ -10,7 +10,7 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const trace1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/trace.json.gz', import.meta);
-const devtoolsLog1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/devtoolslog.json.gz', import.meta); // eslint-disable-line max-len
+const devtoolsLog1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/devtoolslog.json.gz', import.meta);
 
 describe('Metrics: Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};

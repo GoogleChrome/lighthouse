@@ -153,7 +153,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
     // 0ms requests get super-messed up rendering
     // Use 0.3ms instead so they're still hoverable, https://github.com/GoogleChrome/lighthouse/pull/5350#discussion_r194563201
-    let {startTime, endTime} = timing; // eslint-disable-line prefer-const
+    let {startTime, endTime} = timing;
     if (startTime === endTime) endTime += 0.3;
 
     const requestData = {requestId: requestId.toString(), frame};

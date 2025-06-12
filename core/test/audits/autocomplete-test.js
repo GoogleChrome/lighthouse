@@ -230,7 +230,7 @@ describe('Best Practices: autocomplete audit', () => {
             autofillPredict: 'HTML_TYPE_CREDIT_CARD_NAME_FULL',
             node: {
               nodeLabel: 'textarea',
-              // eslint-disable-next-line max-len
+
               snippet: '<textarea type="text" name="name_cc2" autocomplete="sectio-red cc-name">'},
           },
           {
