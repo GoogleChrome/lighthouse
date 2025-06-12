@@ -171,7 +171,20 @@ export default [{
     'no-console': 0,
   },
 }, {
-  files: ['**/test/**'],
+  files: [
+    'docs/recipes/auth/**',
+  ],
+
+  rules: {
+    'new-cap': 0,
+    'no-console': 0,
+    'no-unused-vars': 0,
+  },
+}, {
+  files: [
+    '**/test/**',
+    'docs/recipes/**',
+  ],
 
   languageOptions: {
     globals: {
@@ -182,6 +195,7 @@ export default [{
 }, {
   files: [
     'clients/**',
+    'docs/recipes/auth/**',
     'flow-report/**',
     'report/**',
     'treemap/**',
