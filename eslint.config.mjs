@@ -29,6 +29,8 @@ export default [{
 }, {
   // Global ignores.
   ignores: [
+    '.cz-config.js',
+    '**/.tmp',
     '**/*.d.cts', // ignore d.ts files until we can properly lint them
     '**/*.d.ts',
     '**/dist',
@@ -36,6 +38,7 @@ export default [{
     '**/node_modules/**',
     '**/source-maps/**',
     '**/third_party/**',
+    '**/third-party/**',
     'build/test/page-functions-test-case*out*.js',
     'core/scripts/legacy-javascript/variants/**',
     'coverage/**',
@@ -162,6 +165,7 @@ export default [{
   },
 }, {
   files: [
+    '**/build/**',
     '**/scripts/**',
     '**/test/**',
   ],

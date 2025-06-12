@@ -3,7 +3,7 @@
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-'use strict';
+
 
 const readFileSync = require('fs').readFileSync;
 const resolve = require('path').resolve;

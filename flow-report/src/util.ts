@@ -97,12 +97,14 @@ function useHashState(): LH.HashState|null {
 
     const index = Number(indexString);
     if (!Number.isFinite(index)) {
+      // eslint-disable-next-line no-console
       console.warn(`Invalid hash index: ${indexString}`);
       return null;
     }
 
     const step = flowResult.steps[index];
     if (!step) {
+      // eslint-disable-next-line no-console
       console.warn(`No flow step at index ${index}`);
       return null;
     }
