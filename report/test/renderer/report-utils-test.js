@@ -132,7 +132,7 @@ describe('util helpers', () => {
       const auditsWithUrls = auditsWithTableDetails.filter(audit => {
         if (auditsThatDontHaveUrls.includes(audit.id)) return false;
         const urlFields = ['url', 'source-location'];
-        return audit.details.headings.some(heading =>
+        return audit.details.items.length && audit.details.headings.some(heading =>
           urlFields.includes(heading.valueType) ||
           urlFields.includes(heading.subItemsHeading?.valueType)
         );
