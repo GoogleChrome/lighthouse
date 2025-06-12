@@ -114,7 +114,6 @@ describe('util helpers', () => {
     });
 
     it('splits on two instances of backticked code separated by only a space', () => {
-      // eslint-disable-next-line max-len
       expect(Util.splitMarkdownCodeSpans('`first code` `second code`')).toEqual([
         {isCode: true, text: 'first code'},
         {isCode: false, text: ' '},

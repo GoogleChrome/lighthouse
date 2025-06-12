@@ -226,7 +226,6 @@ async function main() {
     let unthrottledDone = false;
 
     // The closure this makes is too convenient to decompose.
-    // eslint-disable-next-line no-inner-declarations
     function updateProgress() {
       const index = TEST_URLS.indexOf(url);
       log.progress([

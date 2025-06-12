@@ -187,6 +187,10 @@ export default [{
     'treemap/**',
     'viewer/**',
   ],
+  ignores: [
+    'report/generator/**',
+    'report/test/generator/**',
+  ],
 
   languageOptions: {
     globals: {
