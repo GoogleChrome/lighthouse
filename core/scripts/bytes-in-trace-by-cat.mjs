@@ -82,7 +82,7 @@ function reportTotals(traceCats, totalBytes, totalEvents, tracePhs, opts) {
   const kbfmt = new Intl.NumberFormat('en', {
     style: 'unit', unit: 'kilobyte', unitDisplay: 'short',
     minimumFractionDigits: 0, maximumFractionDigits: 0,
-    minimumSignificantDigits: 1, maximumSignificantDigits: 3
+    minimumSignificantDigits: 1, maximumSignificantDigits: 3,
   });
   const toKb = bytes => kbfmt.format(bytes / 1024);
 
@@ -91,7 +91,8 @@ function reportTotals(traceCats, totalBytes, totalEvents, tracePhs, opts) {
   });
 
   const skipped = {bytes: 0, count: 0};
-  traceTotals.sort((a, b) => b.bytes - a.bytes).forEach((tot, i) => { // sort by bytes.. can change to sort by eventCount here instead.
+  // sort by bytes.. can change to sort by eventCount here instead.
+  traceTotals.sort((a, b) => b.bytes - a.bytes).forEach((tot) => {
     const bytesPct = tot.bytes * 100 / totalBytes;
     if (bytesPct < 1) {
       skipped.bytes += tot.bytes;

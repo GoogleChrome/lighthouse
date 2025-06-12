@@ -10,8 +10,6 @@ import * as LH from '../../types/lh.js';
  * ignoring normal browser constraints such as CORS.
  */
 
-/* global fetch */
-
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
 
 class Fetcher {

@@ -6,7 +6,7 @@
 
 import log from 'lighthouse-logger';
 
-import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js'; // eslint-disable-line max-len
+import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js';
 import * as constants from '../../config/constants.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import UrlUtils from '../../lib/url-utils.js';
@@ -43,7 +43,6 @@ const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
-  /* eslint-disable max-len */
   let {pauseAfterFcpMs, pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = options;
   let maxWaitMs = options.maxWaitForLoad;
   let maxFCPMs = options.maxWaitForFcp;
@@ -56,7 +55,6 @@ function resolveWaitForFullyLoadedOptions(options) {
   if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
   if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
   if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
-  /* eslint-enable max-len */
 
   if (!options.waitUntil.includes('fcp')) maxFCPMs = undefined;
 

@@ -31,6 +31,7 @@ export class I18nFormatter {
     if (granularity !== undefined) {
       const log10 = -Math.log10(granularity);
       if (!Number.isInteger(log10)) {
+        // eslint-disable-next-line no-console
         console.warn(`granularity of ${granularity} is invalid. Using 1 instead`);
         granularity = 1;
       }

@@ -15,7 +15,7 @@ import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import * as FontSize from './seo/font-size.js';
 
-/* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
+/* global getElementsInDocument, getNodeDetails */
 
 /** @param {Element} element */
 /* c8 ignore start */

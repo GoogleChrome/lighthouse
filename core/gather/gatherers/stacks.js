@@ -8,7 +8,6 @@
  * @fileoverview Gathers a list of detected JS libraries and their versions.
  */
 
-/* global window */
 /* global d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests */
 
 import fs from 'fs';

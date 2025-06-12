@@ -9,7 +9,7 @@
  * and total number of elements used on the page.
  */
 
-/* global getNodeDetails document */
+/* global getNodeDetails */
 
 
 import BaseGatherer from '../../base-gatherer.js';

@@ -50,7 +50,7 @@ export class ViewerUIFeatures extends ReportUIFeatures {
 
       const locales = /** @type {LH.Locale[]} */ (i18nModule.format.getCanonicalLocales());
       this._swapLocales.enable(locales);
-    }).catch(err => console.error(err));
+    }).catch(err => console.error(err)); // eslint-disable-line no-console
   }
 
   /**

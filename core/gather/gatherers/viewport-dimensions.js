@@ -6,8 +6,6 @@
 
 import BaseGatherer from '../base-gatherer.js';
 
-/* global window */
-
 /**
  * @return {LH.Artifacts.ViewportDimensions}
  */

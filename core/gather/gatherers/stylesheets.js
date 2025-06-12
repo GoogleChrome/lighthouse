@@ -74,7 +74,6 @@ class Stylesheets extends BaseGatherer {
 
     // Force style to recompute.
     // Doesn't appear to be necessary in newer versions of Chrome.
-    /* global window, document */
     await executionContext.evaluate(() => window.getComputedStyle(document.body), {
       args: [],
     });

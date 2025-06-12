@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* global caches */
-
 import BaseGatherer from '../base-gatherer.js';
 
 /**

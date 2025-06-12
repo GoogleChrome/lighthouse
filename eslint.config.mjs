@@ -31,9 +31,9 @@ export default [{
     '**/*.d.ts',
     '**/dist',
     '**/node_modules/**',
-    '**/page-functions-test-case*out*.js',
     '**/source-maps/**',
     '**/third_party/**',
+    'build/test/page-functions-test-case*out*.js',
     'core/scripts/legacy-javascript/variants/**',
     'coverage/**',
   ],
@@ -196,6 +196,7 @@ export default [{
 }, {
   files: [
     'clients/**',
+    'core/gather/gatherers/**',
     'docs/recipes/auth/**',
     'flow-report/**',
     'report/**',

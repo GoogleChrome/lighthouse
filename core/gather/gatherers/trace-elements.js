@@ -35,7 +35,7 @@ const MAX_LAYOUT_SHIFTS = 15;
  */
 /* c8 ignore start */
 function getNodeDetailsData() {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
+  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
   let traceElement;
   if (elem) {
     // @ts-expect-error - getNodeDetails put into scope via stringification

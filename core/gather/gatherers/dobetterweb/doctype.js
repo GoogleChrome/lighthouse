@@ -6,8 +6,6 @@
 
 import BaseGatherer from '../../base-gatherer.js';
 
-/* global document */
-
 /**
  * Get and return `name`, `publicId`, `systemId` from
  * `document.doctype`

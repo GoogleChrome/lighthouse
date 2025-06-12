@@ -10,8 +10,6 @@ import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import {resolveDevtoolsNodePathToObjectId} from '../driver/dom.js';
 
-/* eslint-env browser, node */
-
 /**
  * Function that is stringified and run in the page to collect anchor elements.
  * Additional complexity is introduced because anchors can be HTML or SVG elements.
