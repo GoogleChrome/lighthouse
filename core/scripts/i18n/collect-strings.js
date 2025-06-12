@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console, max-len */
+/* eslint-disable max-len */
 
 import fs from 'fs';
 import path from 'path';

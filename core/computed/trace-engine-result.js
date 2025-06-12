@@ -34,7 +34,6 @@ class TraceEngineResult {
       lanternSettings.precomputedLanternData = settings.precomputedLanternData;
     }
 
-    // eslint-disable-next-line max-len
     await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
       traceEvents
     ), {

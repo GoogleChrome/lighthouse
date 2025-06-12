@@ -458,7 +458,6 @@ vs: ${JSON.stringify(normalizedAuditSettings[k], null, 2)}`);
     for (const [artifactKey, possibleErrorArtifact] of possibleErrorArtifacts) {
       const isError = possibleErrorArtifact instanceof LighthouseError;
 
-      // eslint-disable-next-line max-len
       if (isError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
         // Prefer the stack trace closest to the error.

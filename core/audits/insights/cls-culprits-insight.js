@@ -19,12 +19,10 @@ const MAX_LAYOUT_SHIFTS_PER_CLUSTER = 5;
 // eslint-disable-next-line max-len
 const insightStr_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js', InsightUIStrings);
 
-/* eslint-disable max-len */
 const UIStrings = {
   /** Label for a column in a data table; entries in this column will be a number representing how large the layout shift was. */
   columnScore: 'Layout shift score',
 };
-/* eslint-enable max-len */
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 

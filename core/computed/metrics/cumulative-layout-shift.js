@@ -159,7 +159,6 @@ class CumulativeLayoutShift {
         LayoutShifts: TraceEngine.TraceHandlers.LayoutShifts,
         Screenshots: TraceEngine.TraceHandlers.Screenshots,
       });
-      // eslint-disable-next-line max-len
       await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
         events
       ), {});
@@ -212,6 +211,7 @@ class CumulativeLayoutShift {
           throw new Error(`new trace engine differed. expected: ${expected}, got: ${got}`);
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(err);
         newEngineResultDiffered = true;
 

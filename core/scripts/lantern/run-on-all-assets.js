@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /** @typedef {{tracePath: string, devtoolsLogPath: string, lhrPath: string}} GoldenUnthrottled */
 /** @typedef {Record<string, number|undefined>} GoldenWpt3g */
 /**

@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 import path from 'path';
 import {execFileSync} from 'child_process';
 

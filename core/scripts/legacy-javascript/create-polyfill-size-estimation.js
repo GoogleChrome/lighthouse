@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /**
  * @fileoverview - Used to generate size estimation data for polyfills in LegacyJavaScript audit.
  *

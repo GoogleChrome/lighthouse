@@ -393,7 +393,6 @@ async function main() {
   // Create output directory.
   if (fs.existsSync(outputDir)) {
     if (fs.readdirSync(outputDir).length) {
-      // eslint-disable-next-line no-console
       console.warn('WARNING: Output directory is not empty.');
     }
   } else {

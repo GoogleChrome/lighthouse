@@ -13,7 +13,6 @@
  * USAGE: node core/scripts/gcp-collection/analyze-lhr-data.js [<directory of lhr data>] [<audit id>]
  */
 
-/* eslint-disable no-console */
 import {readdirSync, readFileSync} from 'fs';
 import {join} from 'path';
 

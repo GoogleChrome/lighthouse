@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /**
  * @fileoverview - Used to manually examine the polyfills/transforms used on a page.
  *

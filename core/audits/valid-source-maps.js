@@ -121,7 +121,6 @@ class ValidSourceMaps extends Audit {
 
     /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
-      /* eslint-disable max-len */
       {
         key: 'scriptUrl',
         valueType: 'url',
@@ -129,7 +128,6 @@ class ValidSourceMaps extends Audit {
         label: str_(i18n.UIStrings.columnURL),
       },
       {key: 'sourceMapUrl', valueType: 'url', label: str_(UIStrings.columnMapURL)},
-      /* eslint-enable max-len */
     ];
 
     results.sort((a, b) => {

@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /**
  * @fileoverview Used in conjunction with `./download-issues.js` to analyze our Issue and PR response times as a team.
  *

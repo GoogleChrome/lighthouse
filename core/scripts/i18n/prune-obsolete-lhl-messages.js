@@ -51,7 +51,6 @@ function equalArguments(goldenArgumentIds, lhlMessage) {
 function logRemoval(alreadyLoggedPrunes, messageId, reason) {
   if (alreadyLoggedPrunes.has(messageId)) return;
 
-  // eslint-disable-next-line no-console
   console.log(`Removing message\n\t'${messageId}'\nfrom translations: ${reason}.`);
   alreadyLoggedPrunes.add(messageId);
 }

@@ -55,7 +55,6 @@ function computeGeneratedFileSizes(map, contentLength, content) {
     let mappingLength = 0;
     if (lastColNum !== undefined) {
       if (lastColNum > line.length) {
-        // eslint-disable-next-line max-len
         const errorMessage =
           `${map.url()} mapping for last column out of bounds: ${lineNum + 1}:${lastColNum}`;
         log.error('JSBundles', errorMessage);

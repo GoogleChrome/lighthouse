@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /**
  * @fileoverview Minifies a devtools log by removing noisy header values, eliminating data URIs, etc.
  */
