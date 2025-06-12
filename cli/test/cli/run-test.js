@@ -31,10 +31,10 @@ describe('CLI run', function() {
 
     before(async () => {
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
-      // eslint-disable-next-line max-len
+
       const samplev2ArtifactsPath = LH_ROOT + '/core/test/results/artifacts/';
 
-      // eslint-disable-next-line max-len
+
       const flags = getFlags([
         '--output=json',
         `--output-path=${filename}`,

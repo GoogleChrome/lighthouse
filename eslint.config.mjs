@@ -19,19 +19,29 @@ const compat = new FlatCompat({
 
 export default [{
   files: [
-    'core/**',
-    'cli/**',
+    '**/*.js',
+    '**/*.ts',
+    '**/*.mjs',
+    '**/*.cjs',
+    // 'build/**',
+    // 'cli/**',
+    // 'clients/**',
+    // 'core/**',
+    // 'flow-report/**',
+    // 'lighthouse-logger/**',
+    // 'proto/**',
+    // 'report/**',
+    // 'shared/**',
+    // 'treemap/**',
+    // 'viewer/**',
   ],
   ignores: [
     '**/node_modules/**/*',
     '**/third_party/**/*',
     '**/source-maps/**/*',
     '**/dist',
-    'cli/test/fixtures/**',
     'coverage/**/*',
-    '!**/.eslintrc.cjs',
     'core/scripts/legacy-javascript/variants',
-    'third-party/**/*',
     // ignore d.ts files until we can properly lint them
     '**/*.d.ts',
     '**/*.d.cts',
@@ -69,6 +79,7 @@ export default [{
     'import/group-exports': 2,
     'import/exports-last': 2,
     'eqeqeq': 2,
+    'no-console': 2,
 
     'indent': [2, 2, {
       SwitchCase: 1,
@@ -150,18 +161,51 @@ export default [{
     'arrow-parens': 0,
   },
 }, {
-  files: ['cli/test/smokehouse/test-definitions/*.js'],
+  files: ['cli/test/smokehouse/test-definitions/**'],
 
   rules: {
     'max-len': 0,
   },
 }, {
-  files: ['cli/test/**/*.js'],
+  files: ['**/test/**'],
 
   languageOptions: {
     globals: {
       ...globals.jest,
       ...globals.mocha,
-    }
+    },
+  },
+  rules: {
+    // 'no-console': 0,
+  },
+}, {
+  files: ['**/test/fixtures/**'],
+
+  rules: {
+    'no-console': 0,
+  },
+}, {
+  files: [
+    'cli/test/fixtures/**',
+    'report/**',
+    'viewer/**',
+    'clients/**',
+  ],
+
+  languageOptions: {
+    globals: {
+      ...globals.browser,
+    },
+  },
+}, {
+  files: [
+    'clients/**',
+  ],
+
+  languageOptions: {
+    globals: {
+      chrome: true,
+      __lighthouse: true,
+    },
   },
 }];

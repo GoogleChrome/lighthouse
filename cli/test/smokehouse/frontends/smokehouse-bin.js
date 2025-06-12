@@ -173,7 +173,7 @@ async function begin() {
       },
       'no-headless': {
         type: 'boolean',
-        describe: 'Launch Chrome in typical desktop headful mode, rather than our default of `--headless=new` (https://developer.chrome.com/articles/new-headless/).', // eslint-disable-line max-len
+        describe: 'Launch Chrome in typical desktop headful mode, rather than our default of `--headless=new` (https://developer.chrome.com/articles/new-headless/).',
       },
     })
     .wrap(y.terminalWidth())

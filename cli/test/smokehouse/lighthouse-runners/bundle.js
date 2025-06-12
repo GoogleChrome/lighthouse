@@ -39,6 +39,7 @@ if (!isMainThread && parentPort) {
       };
       parentPort?.postMessage({type: 'result', value});
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       parentPort?.postMessage({type: 'error', value: err.toString()});
     }

@@ -5,6 +5,8 @@
  */
 // @ts-nocheck
 
+/* eslint-disable no-console */
+
 import http from 'http';
 import zlib from 'zlib';
 import path from 'path';
