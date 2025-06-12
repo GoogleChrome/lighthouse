@@ -182,6 +182,7 @@ export default [{
 }, {
   files: [
     'clients/**',
+    'flow-report/**',
     'report/**',
     'treemap/**',
     'viewer/**',
