@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* global CompressionStream */
-
 const btoa_ = typeof btoa !== 'undefined' ?
   btoa :
   /** @param {string} str */

@@ -50,7 +50,7 @@ export class I18nFormatter {
     }
 
     let formatter;
-    // eslint-disable-next-line max-len
+
     const cacheKey = [
       opts.minimumFractionDigits,
       opts.maximumFractionDigits,

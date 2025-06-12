@@ -37,6 +37,7 @@ export class ReportRenderer {
   renderReport(lhr, rootEl, opts) {
     // Allow legacy report rendering API
     if (!this._dom.rootEl && rootEl) {
+      // eslint-disable-next-line no-console
       console.warn('Please adopt the new report API in renderer/api.js.');
       const closestRoot = rootEl.closest('.lh-root');
       if (closestRoot) {

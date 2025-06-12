@@ -159,6 +159,7 @@ class ReportUtils {
         const aVal = a[key];
         const bVal = b[key];
         if (typeof aVal !== typeof bVal || !['number', 'string'].includes(typeof aVal)) {
+          // eslint-disable-next-line no-console
           console.warn(`Warning: Attempting to sort unsupported value type: ${key}.`);
         }
         if (typeof aVal === 'number' && typeof bVal === 'number' && aVal !== bVal) {
@@ -191,7 +192,7 @@ class ReportUtils {
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-        // eslint-disable-next-line max-len
+
         cpuThrottling = `${i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
         networkThrottling = `${i18n.formatMilliseconds(requestLatencyMs)} HTTP RTT, ` +
           `${i18n.formatKbps(throttling.downloadThroughputKbps)} down, ` +
@@ -207,7 +208,7 @@ class ReportUtils {
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-        // eslint-disable-next-line max-len
+
         cpuThrottling = `${i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
         networkThrottling = `${i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
           `${i18n.formatKbps(throughputKbps)} throughput (Simulated)`;

@@ -181,10 +181,10 @@ export default [{
   },
 }, {
   files: [
-    'cli/test/fixtures/**',
-    'report/**',
-    'viewer/**',
     'clients/**',
+    'report/**',
+    'treemap/**',
+    'viewer/**',
   ],
 
   languageOptions: {

@@ -30,7 +30,6 @@ const getAuditsOfCategory = category => defaultConfig.categories[category].audit
 
 // TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', () => {
-  // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-viewer');
 
   /** @type {import('puppeteer').Browser} */

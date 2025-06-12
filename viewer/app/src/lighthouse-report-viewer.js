@@ -105,9 +105,11 @@ export class LighthouseReportViewer {
           this._replaceReportHtml(hashParams.lhr);
           return Promise.resolve();
         } else {
+          // eslint-disable-next-line no-console
           console.warn('URL hash is populated, but no LHR was found', hashParams);
         }
       } catch {
+        // eslint-disable-next-line no-console
         console.warn('URL hash is populated, but not decoded successfully');
       }
     }

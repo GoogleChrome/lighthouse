@@ -24,7 +24,6 @@ function getTextEncodingCode() {
 }
 
 describe('Lighthouse Treemap', () => {
-  // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-treemap');
 
   /** @type {import('puppeteer').Browser} */
