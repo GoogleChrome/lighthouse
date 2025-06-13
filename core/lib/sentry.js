@@ -11,7 +11,7 @@ import {initializeConfig} from '../config/config.js';
 /** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
 /** @typedef {import('@sentry/node').NodeClient} NodeClient */
 /** @typedef {import('@sentry/node').NodeOptions} NodeOptions */
-/** @typedef {import('@sentry/node').Severity} Severity */
+/** @typedef {import('@sentry/node').SeverityLevel} SeverityLevel */
 
 const SENTRY_URL = 'https://a6bb0da87ee048cc9ae2a345fc09ab2e:63a7029f46f74265981b7e005e0f69f8@sentry.io/174697';
 
@@ -26,7 +26,7 @@ const noop = () => { };
  */
 const sentryDelegate = {
   init,
-  /** @type {(message: string, level?: Severity) => void} */
+  /** @type {(message: string, level?: SeverityLevel) => void} */
   captureMessage: noop,
   /** @type {(breadcrumb: Breadcrumb) => void} */
   captureBreadcrumb: noop,
