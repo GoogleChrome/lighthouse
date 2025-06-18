@@ -23,6 +23,7 @@ jobs:
     # Prevent scheduled job from running if...
     # 1) this is a fork
     # 2) there has not been a change in the last day
+    needs: check_date
     if: |
       github.event_name != 'schedule' ||
       (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
