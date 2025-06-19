@@ -66,6 +66,8 @@ import serviceWorkerReloaded from './test-definitions/service-worker-reloaded.js
 import shiftAttribution from './test-definitions/shift-attribution.js';
 import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
+import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
+import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -131,6 +133,8 @@ const smokeTests = [
   shiftAttribution,
   sourceMaps,
   timing,
+  trustedTypesDirectivePresent,
+  trustedTypesDirectiveMissingDirective,
 ];
 
 export default smokeTests;
