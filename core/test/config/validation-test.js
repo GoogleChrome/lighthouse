@@ -61,6 +61,18 @@ describe('Config Validation', () => {
       expect(invocation).toThrow(/does not start with.*lighthouse-plugin/);
     });
 
+    it('should not throw if plugin starts with lighthouse-plugin', () => {
+      const invocation = () =>
+        validation.assertValidPluginName(defaultConfig, 'lighthouse-plugin-test');
+      expect(invocation).not.toThrow();
+    });
+
+    it('should not throw if plugin starts with @xxx/lighthouse-plugin', () => {
+      const invocation = () =>
+        validation.assertValidPluginName(defaultConfig, '@org/lighthouse-plugin-test');
+      expect(invocation).not.toThrow();
+    });
+
     it('should throw if category already exists in config', () => {
       const config = {...defaultConfig};
       const category = {title: 'Test Plugin', auditRefs: [{id: 'viewport', weight: 1}]};

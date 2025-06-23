@@ -36,6 +36,10 @@ function isValidArtifactDependency(dependent, dependency) {
  * @param {string} pluginName
  */
 function assertValidPluginName(config, pluginName) {
+  const parts = pluginName.split('/');
+  if (parts.length === 2) {
+    pluginName = parts[1];
+  }
   if (!pluginName.startsWith('lighthouse-plugin-')) {
     throw new Error(`plugin name '${pluginName}' does not start with 'lighthouse-plugin-'`);
   }
