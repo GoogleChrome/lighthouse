@@ -12,7 +12,7 @@ import {Globals} from './report-globals.js';
 import {Util} from '../../shared/util.js';
 import {createGauge, updateGauge} from './explodey-gauge.js';
 
-const LOCAL_STORAGE_INSIGHTS_KEY = '__lh__insights_audits_toggle_state';
+const LOCAL_STORAGE_INSIGHTS_KEY = '__lh__insights_audits_toggle_state_2';
 
 /**
  * @typedef {('DEFAULT'|'AUDITS'|'INSIGHTS')} InsightsExperimentState
@@ -159,7 +159,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   **/
   _getInsightToggleState() {
     let state = this._getRawInsightToggleState();
-    if (state === 'DEFAULT') state = 'AUDITS';
+    if (state === 'DEFAULT') state = 'INSIGHTS';
     return state;
   }
 
