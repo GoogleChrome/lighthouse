@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Resource requests whose URLs contained both removed whitespace \\(n|r|t) characters and less-than characters (<) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP rakstzīmju kopas automātiskā noteikšana vairs netiek atbalstīta un drīzumā tiks atspējota. Lūdzu, norādiet rakstzīmju kopu satura veida galvenē vai izmantojot metatagu (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() is deprecated, instead use standardized API: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Funkcijas window.confirm aktivizēšana no citas izcelsmes iframe ietvariem vairs netiek atbalstīta un nākotnē tiks noņemta."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM mutācijas notikumi, tostarp DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument un DOMCharacterDataModified, ir novecojuši (https://w3c.github.io/uievents/#legacy-event-types) un tiks noņemti. To vietā izmantojiet MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Datu atbalsts: parametrā SVGUseElement vairs netiek atbalstīti vietrāži URL, un nākotnē tie tiks noņemti."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter atribūta “isFallbackAdapter” darbība ir pārtraukta, tā vietā izmantojiet GPUAdapterInfo atribūtu “isFallbackAdapter”."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response json in XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Galvenie izkārtojuma nobīdes cēloņi"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Attēli bez lieluma parametriem"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Vissliktākā kopa"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Jūsu pirmais tīkla pieprasījums ir vissvarīgākais.  Samaziniet latentumu, novēršot novirzīšanu, nodrošinot ātru servera atbildi un iespējojot teksta saspiešanu."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Tika veikta novirzīšana ({PH1} novirzīšana, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Serveris atbildēja lēni (novērots: {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Saspiešana netika lietota."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Izvairās no novirzīšanas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Serveris atbild ātri (novērots: {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Tiek lietota teksta saspiešana"
@@ -2598,7 +2601,7 @@
     "message": "Neizmantotie baiti"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Pārlūka ielikumi un pārveidošanas kodi ļauj mantotos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. Ieteicams mainīt JavaScript būvēšanas procesu, lai netiktu transpilētas [pamata līmeņa](https://web.dev/articles/baseline-and-polyfills) funkcijas, ja vien nezināt, ka jums ir jāatbalsta mantotie pārlūki. [Uzziniet, kāpēc lielākajā daļā vietņu var izvietot ES6+ kodu bez transpilēšanas](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
+    "message": "Pārlūka ielikumi un pārveidošanas kodi ļauj vecākos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. Ieteicams mainīt JavaScript būvēšanas procesu, lai netiktu transpilētas [pamata līmeņa](https://web.dev/articles/baseline-and-polyfills) funkcijas, ja vien nezināt, ka jums ir jāatbalsta vecāki pārlūki. [Uzziniet, kāpēc lielākajā daļā vietņu var izvietot ES6+ kodu bez transpilēšanas](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Mantotais JavaScript kods"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Moderns HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Sākumadrese"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Pieprasījums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Avots"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Laiks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Aptuvenais LCP ietaupījums"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Neizmantota iepriekšēja pieslēgšanās. Pārbaudiet, vai atribūts crossorigin tiek izmantots pareizi."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Novērsiet kritisko pieprasījumu ķēdes](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), samazinot ķēžu garumu, samazinot resursu lejupielādes apjomu vai atliekot nevajadzīgo resursu lejupielādi, lai uzlabotu lapas ielādi."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Pievienojiet [iepriekšējas pieslēgšanas](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) norādes savām svarīgākajām sākumadresēm, taču centieties izmantot mazāk par četrām."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Iepriekšējās pievienošanas kandidāti"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Maksimālā kritiskā ceļa latentums:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Nav neviena atveidošanas uzdevuma, ko ietekmētu tīkla atkarības"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Nav nevienas papildu sākumadreses, kas būtu piemērota iepriekšējai pievienošanai"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "neviena sākumadrese netika iepriekš pievienota"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[iepriekšējas pieslēgšanas](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) norādes palīdz pārlūkprogrammai izveidot savienojumu agrāk lapas ielādes laikā, tādējādi ietaupot laiku, kad tiek iesniegts pirmais pieprasījums attiecīgajai sākumadresei. Tālāk ir norādītas sākumlapas, kurām lapa tika iepriekš pieslēgta."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Iepriekš pievienotās sākumadreses"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Tīkla atkarību koks"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Tika atrasti vairāk nekā četri preconnect savienojumi. Tie jāizmanto ierobežoti un tikai pašām svarīgākajām sākumadresēm."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Neizmantota iepriekšēja pieslēgšanās. Izmantojiet preconnect savienojumus tikai sākumadresēm, ko lapa, visticamāk, pieprasīs."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Novērsiet kritisko pieprasījumu ķēdes, samazinot ķēžu garumu, samazinot resursu lejupielādes apjomu vai atliekot nevajadzīgo resursu lejupielādi, lai uzlabotu lapas ielādi."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Pieprasījumi bloķē lapas sākotnējo atveidi, un tas var aizkavēt LCP. [Atliekot vai iekļaujot](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) šos tīkla pieprasījumus, tos varat pārvietot ārpus kritiskā ceļa."
+    "message": "Pieprasījumi bloķē lapas sākotnējo atveidi, un tas var aizkavēt LCP. [Atliekot vai iekļaujot](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) šos tīkla pieprasījumus, tos varat pārvietot ārpus kritiskā ceļa."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Ilgums"
@@ -2682,7 +2727,7 @@
     "message": "Pārsūtīto vienumu lielums"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Trešās puses kods var ievērojami ietekmēt ielādes veiktspēju. Lai piešķirtu prioritāti savas lapas saturam, [ierobežojiet un atlieciet trešās puses koda ielādi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "Trešās puses kods var ievērojami ietekmēt ielādes veiktspēju. Lai piešķirtu prioritāti savas lapas saturam, [ierobežojiet un atlieciet trešās puses koda ielādi](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Netika atrasts trešās puses saturs"

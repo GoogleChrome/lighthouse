@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Naka-block ang mga kahiligan sa resource na may mga URL na naglalaman ng mga inalis na whitespace \\(n|r|t) character at less-than character (<). Pakialis ang mga newline at i-encode ang mga less-than character mula sa mga lugar tulad ng mga value na attribute ng element para ma-load ang mga resource na ito."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Hindi na ginagamit ang awtomatikong pag-detect ng set ng character na ISO-2022-JP at idi-disable ito sa hinaharap. Pakitukoy ang set ng character sa header ng Uri ng Content o sa pamamagitan ng paggamit ng meta tag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Hindi na ginagamit ang chrome.loadTimes(), standardized na API: Navigation Timing 2 na lang ang gamitin."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Hindi na ginagamit ang pag-trigger ng window.confirm mula sa mga cross origin na iframe at aalisin na ito sa hinaharap."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Hindi na ginagamit at aalisin na ang Mga Event ng DOM Mutation, kasama ang DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, at DOMCharacterDataModified (https://w3c.github.io/uievents/#legacy-event-types). Pakigamit na lang ang MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Suporta para sa data: Hindi na ginagamit ang mga URL sa SVGUseElement at aalisin na ito sa hinaharap."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Dapat mag-opt in ang mga extension sa mga pag-isolate ng cross-origin para patuloy na magamit ang SharedArrayBuffer. Tingnan ang https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Hindi na ginagamit ang attribute na isFallbackAdapter ng GPUAdapter, sa halip ay gamitin ang attribute na isFallbackAdapter ng GPUAdapterInfo."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Hindi sinusuportahan ang UTF-16 ng sagot na json sa XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Mga nangungunang dahilan ng pagbabago sa layout"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Mga Larawang Walang Malinaw na Sukat"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Pinakahindi magandang cluster"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Pinakamahalaga ang iyong unang request sa network.  Bawasan ang latency nito sa pamamagitan ng pag-iwas sa mga pag-redirect, na tumitiyak sa mabilis na pagtugon ng server, at nagbibigay-daan sa pag-compress ng text."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Nagkaroon ng mga pag-redirect ({PH1} (na) pag-redirect, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Mabagal na tumutugon ang server (naobserbahan ang {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Wala inilapat na pag-compress"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Umiiwas sa mga pag-redirect"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Mabilis na tumutugon ang server (naobserbahan ang {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Naglalapat ng pag-compress ng text"
@@ -2571,7 +2574,7 @@
     "message": "Pagkaantala sa pag-render ng element"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Ika-75 percentile ng field"
+    "message": "Field p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Walang na-detect na LCP"
@@ -2598,7 +2601,7 @@
     "message": "Mga nasayang na byte"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga legacy na browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Pag-isipang baguhin ang iyong proseso ng pagbuo sa JavaScript para hindi ma-transpile ang mga [Baseline](https://web.dev/articles/baseline-and-polyfills) na feature, maliban kung alam mong dapat mong masuportahan ang mga legacy na browser. [Alamin kung bakit puwedeng mag-deploy ang karamihan ng mga site ng ES6+ na code nang hindi nagta-transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Nagbibigay-daan ang mga polyfill at transform na magamit ng mga mas lumang browser ang mga bagong feature ng JavaScript. Gayunpaman, marami ang hindi kinakailangan para sa mga modernong browser. Pag-isipang baguhin ang iyong proseso ng pagbuo sa JavaScript para hindi ma-transpile ang mga [Baseline](https://web.dev/articles/baseline-and-polyfills) na feature, maliban kung alam mong dapat mong masuportahan ang mga mas lumang browser. [Alamin kung bakit puwedeng mag-deploy ang karamihan ng mga site ng ES6+ na code nang hindi nagta-transpile](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Legacy na JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Modernong HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Request"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Source"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Oras"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Mga tinatayang pagtitipid sa LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Hindi nagamit na pag-preconnect. Tingnan kung ginagamit nang maayos ang attribute na crossorigin."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Iwasan ang pag-chain ng mahahalagang request](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) sa pamamagitan ng pagbabawas sa haba ng mga chain, pagbabawas sa laki ng mga dina-download na resource, o pagpapaliban sa pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Magdagdag ng mga hint sa [pag-preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) sa mga pinakamahalagang origin mo, pero subukang gumamit ng mas kaunti sa 4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Mag-preconnect ng mga candidate"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Maximum na latency ng critical path:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Walang gawain sa pag-render na naapektuhan ng mga dependency ng network"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Walang karagdagang origin ang magandang candidate para sa pag-preconnect"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "walang na-preconnect na origin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Nakakatulong ang mga hint sa [pag-preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) sa browser na bumuo ng koneksyon nang mas maaga sa pag-load ng page, kung saan may matitipid na oras kapag ginawa ang unang request para sa origin na iyon. Ang sumusunod ay mga origin kung saan naka-preconnect ang page."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Mga na-preconnect na origin"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Dependency tree ng network"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Mahigit 4 na koneksyong preconnect ang nakita. Bihira lang dapat gamitin ang mga ito at tanging sa mga pinakamahalagang origin lang."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Hindi nagamit na pag-preconnect. Gamitin lang ang preconnect para sa mga origin na malamang na i-request ng page."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Iwasan ang pag-chain ng mahahalagang request sa pamamagitan ng pagbabawas sa haba ng mga chain, pagbabawas sa laki ng mga dina-download na resource, o pagpapaliban sa pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Bina-block ng mga request ang unang pag-render ng page, na posibleng makaantala sa LCP. Puwedeng alisin ng [pagpapaliban o pag-inline](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) ang mga request sa network na ito sa critical path."
+    "message": "Bina-block ng mga request ang unang pag-render ng page, na posibleng makaantala sa LCP. Puwedeng alisin ng [pagpapaliban o pag-inline](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) ang mga request sa network na ito sa critical path."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Tagal"
@@ -2682,7 +2727,7 @@
     "message": "Laki ng paglipat"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Puwedeng lubos na makaapekto ang code ng 3rd party sa performance ng pag-load. [Bawasan at ipagpaliban ang pag-load ng code ng 3rd party](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) para isapriyoridad ang content ng iyong page."
+    "message": "Puwedeng lubos na makaapekto ang code ng 3rd party sa performance ng pag-load. [Bawasan at ipagpaliban ang pag-load ng code ng 3rd party](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) para isapriyoridad ang content ng iyong page."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Walang nakitang third party"

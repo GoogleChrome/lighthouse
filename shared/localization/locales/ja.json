@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "URL に削除された空白文字（\\(n|r|t)）と未満文字（<）が含まれるリソース リクエストはブロックされます。これらのリソースを読み込むには、要素の属性値などの場所にある改行を削除し、未満文字をエンコードしてください。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP 文字セットの自動検出機能は非推奨となり、まもなく無効になります。Content-Type ヘッダーで文字セットを指定するか、メタタグ（https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding）を使用して文字セットを指定してください。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() は非推奨となっています。代わりに標準化 API の Navigation Timing 2 を使用してください。"
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "クロスオリジンの iframe から window.confirm をトリガーすることは非推奨であり、今後削除される予定です。"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOMSubtreeModified、DOMNodeInserted、DOMNodeRemoved、DOMNodeRemovedFromDocument、DOMNodeInsertedIntoDocument、DOMCharacterDataModified を含む DOM ミューテーション イベントは非推奨となり（https://w3c.github.io/uievents/#legacy-event-types）、削除される予定です。代わりに MutationObserver を使用してください。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "データのサポート: SVGUseElement の URL は非推奨となり、今後削除される予定です。"
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "拡張機能で引き続き SharedArrayBuffer を使用するは、クロスオリジン分離を有効にする必要があります。https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ をご覧ください。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter isFallbackAdapter 属性は非推奨です。代わりに、GPUAdapterInfo isFallbackAdapter 属性を使用してください。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 は、XMLHttpRequest のレスポンス JSON ではサポートされていません。"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "レイアウト シフトの主な原因"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "サイズ指定されていない画像"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "最も影響の大きいクラスタ"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "最初のネットワーク リクエストは最も重要です。リダイレクトを回避し、サーバー応答を高速に保ち、テキスト圧縮を有効にして、レイテンシを削減します。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "リダイレクトあり（{PH1} 件のリダイレクト、+ {PH2}）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "サーバーの応答が遅い（観測値 {PH1}） "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "圧縮の適用なし"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "リダイレクトなし"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "サーバーの応答が速い（観測値 {PH1}） "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "テキスト圧縮の適用あり"
@@ -2571,7 +2574,7 @@
     "message": "要素のレンダリングの遅延"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "フィールドの 75 パーセンタイル"
+    "message": "実際 p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "LCP は検出されませんでした"
@@ -2598,7 +2601,7 @@
     "message": "不要なバイト"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新のブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/articles/baseline-and-polyfills) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/articles/baseline-and-polyfills) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "以前の JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "最新の HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "オリジン"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "リクエスト"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "ソース"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "推定される LCP 短縮時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "未使用の事前接続。crossorigin 属性が適切に使用されていることを確認してください。"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善し、[クリティカル リクエスト チェーンを回避](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)してください。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "最も重要なオリジンに[事前接続](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)のヒントを追加します。ヒントを追加するオリジンは 4 つまでにすることをおすすめします。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "事前接続の候補"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "クリティカル パスの最大待ち時間:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "ネットワークの依存関係の影響を受けるレンダリング処理はありません"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "事前接続の候補となるオリジンは他にありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "事前接続したオリジンはありません"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[事前接続](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)のヒントは、ブラウザがページの読み込みの早い段階で接続を確立できるようにして、そのオリジンに対する最初のリクエストの実行時間を短縮します。以下は、ページから事前接続したオリジンです。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "事前接続したオリジン"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "ネットワークの依存関係ツリー"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "4 つ以上の preconnect 接続が見つかりました。これらの接続は控えめに、重要なソースにのみ使用してください。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "未使用の事前接続。preconnect は、ページでリクエストされる可能性が高いオリジンにのみ使用してください。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善し、クリティカル リクエスト チェーンを回避してください。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "リクエストがページの最初のレンダリングをブロックしているため、LCP が遅れる可能性があります。これらのネットワーク リクエストを[遅らせるかインライン化](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)すると、クリティカル パスから移動できます。"
+    "message": "リクエストがページの最初のレンダリングをブロックしているため、LCP が遅れる可能性があります。これらのネットワーク リクエストを[遅らせるかインライン化](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)すると、クリティカル パスから移動できます。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "所要時間"
@@ -2682,7 +2727,7 @@
     "message": "転送サイズ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。ページのコンテンツを優先させるには、[サードパーティのコードの読み込みを減らして遅らせ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)ます。"
+    "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。ページのコンテンツを優先させるには、[サードパーティのコードの読み込みを減らして遅らせ](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)ます。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "サードパーティのコンテンツは見つかりませんでした"

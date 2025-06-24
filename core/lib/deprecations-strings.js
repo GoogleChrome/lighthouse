@@ -17,6 +17,10 @@ export const UIStrings = {
    */
   CanRequestURLHTTPContainingNewline: "Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources.",
   /**
+   * @description Warning displayed to developers that they did not specify character encoding for HTML document, and that auto-detection of specific character set (i.e. ISO-2022-JP) used by the webiste won't be supported in the near futre.
+   */
+  CharsetAutoDetectionISO2022JP: "Auto-detection of ISO-2022-JP character set is deprecated and it will be disabled in the near future. Please specify character set in the Content Type header or by using a meta tag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding).",
+  /**
    * @description This warning occurs when the website attempts to invoke the deprecated `chrome.loadTimes().connectionInfo` API.
    */
   ChromeLoadTimesConnectionInfo: "`chrome.loadTimes()` is deprecated, instead use standardized API: Navigation Timing 2.",
@@ -56,10 +60,6 @@ export const UIStrings = {
    * @description Warning displayed to developers when a data: URL is assigned to SVGUseElement to let them know that the support is deprecated.
    */
   DataUrlInSvgUse: "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future.",
-  /**
-   * @description Warning displayed to developers when non-standard Mutation Events are used. These are deprecated and will be removed.
-   */
-  DOMMutationEvents: "DOM Mutation Events, including `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument`, and `DOMCharacterDataModified` are deprecated (https://w3c.github.io/uievents/#legacy-event-types) and will be removed. Please use `MutationObserver` instead.",
   /**
    * @description Warning displayed to developers when the Geolocation API is used from an insecure origin (one that isn't localhost or doesn't use HTTPS) to notify them that this use is no longer supported.
    */
@@ -229,6 +229,10 @@ export const UIStrings = {
    */
   V8SharedArrayBufferConstructedInExtensionWithoutIsolation: "Extensions should opt into cross-origin isolation to continue using `SharedArrayBuffer`. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/.",
   /**
+   * @description This warning occurs when the website attempts to use the deprecated GPUAdapter `isFallbackAdapter` attribute.
+   */
+  WebGPUAdapterIsFallbackAdapter: "The GPUAdapter `isFallbackAdapter` attribute is deprecated, instead use the GPUAdapterInfo `isFallbackAdapter` attribute.",
+  /**
    * @description Warning displayed to developers that they are using `XMLHttpRequest` API in a way that they expect an unsupported character encoding `UTF-16` could be used in the server reply.
    */
   XHRJSONEncodingDetection: "UTF-16 is not supported by response json in `XMLHttpRequest`",
@@ -255,6 +259,9 @@ export const DEPRECATIONS_METADATA = {
   "CanRequestURLHTTPContainingNewline": {
     "chromeStatusFeature": 5735596811091968
   },
+  "CharsetAutoDetectionISO2022JP": {
+    "chromeStatusFeature": 6576566521561088
+  },
   "ChromeLoadTimesConnectionInfo": {
     "chromeStatusFeature": 5637885046816768
   },
@@ -269,10 +276,6 @@ export const DEPRECATIONS_METADATA = {
   },
   "CrossOriginAccessBasedOnDocumentDomain": {
     "milestone": 115
-  },
-  "DOMMutationEvents": {
-    "chromeStatusFeature": 5083947249172480,
-    "milestone": 127
   },
   "DataUrlInSvgUse": {
     "chromeStatusFeature": 5128825141198848,
@@ -357,6 +360,9 @@ export const DEPRECATIONS_METADATA = {
   },
   "V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "milestone": 96
+  },
+  "WebGPUAdapterIsFallbackAdapter": {
+    "chromeStatusFeature": 4870179714236416
   },
   "XHRJSONEncodingDetection": {
     "milestone": 93

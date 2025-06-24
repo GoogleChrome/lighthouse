@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "రిసోర్స్ రిక్వెస్ట్‌లు వేటి URLలు అయితే, తీసివేయబడిన వైట్‌స్పేస్ \\(n|r|t) అక్షరాలను, (<) అక్షరాలు కంటే తక్కువ ఉన్న వాటి రెండింటి కలయికను కలిగి ఉన్నాయో, అవి బ్లాక్ చేయబడ్డాయి. ఈ రిసోర్స్‌లను లోడ్ చేయడానికి, దయచేసి ఎలిమెంట్ లక్షణం విలువలు వంటి స్థలాల నుండి కొత్తలైన్‌లను తీసివేయండి, అంత కంటే తక్కువ అక్షరాలను ఎన్‌కోడ్ చేయండి."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP క్యారెక్టర్‌ల సెట్‌ను ఆటోమేటిక్‌గా గుర్తించే ఫీచర్ నిలిపివేయబడింది, సమీప భవిష్యత్తులో ఇది డిజేబుల్ అవుతుంది. దయచేసి కంటెంట్ రకం హెడర్‌లో లేదా మెటా ట్యాగ్ (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)‌ను ఉపయోగించి క్యారెక్టర్‌ల సెట్‌ను పేర్కొనండి."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() విస్మరించబడింది, బదులుగా ప్రామాణిక APIని ఉపయోగించండి: నావిగేషన్ సమయం 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "క్రాస్ ఆరిజిన్ iframeల నుండి window.confirmను ట్రిగ్గర్ చేయడం విస్మరించబడింది, భవిష్యత్తులో ఈ ఆప్షన్ తీసివేయబడుతుంది."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, ఇంకా DOMCharacterDataModified‌తో సహా DOM మ్యుటేషన్ ఈవెంట్‌లు విస్మరించబడ్డాయి (https://w3c.github.io/uievents/#legacy-event-types) అలాగే తీసివేయబడతాయి. దయచేసి బదులుగా MutationObserver‌ను ఉపయోగించండి."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "డేటాకు సపోర్ట్: SVGUseElementలోని URLలు విస్మరించబడ్డాయి, భవిష్యత్తులో అవి తీసివేయబడతాయి."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer‌ను ఉపయోగించడం కొనసాగించడానికి, ఎక్స్‌టెన్షన్‌లు క్రాస్-ఆరిజిన్ ఐసోలేషన్‌ను ఎంపిక చేసుకోవాలి. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ లింక్‌ను చూడండి."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter isFallbackAdapter అట్రిబ్యూట్ వినియోగాన్ని ఆపివేశారు, బదులుగా GPUAdapterInfo isFallbackAdapter అట్రిబ్యూట్‌ను ఉపయోగించండి."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest‌లోని JSON ప్రతిస్పందన ద్వారా UTF-16 సపోర్ట్ చేయబడదు"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "టాప్ లేఅవుట్ షిఫ్ట్ కారణాలను చూపండి"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "కొలతలు లేని ఇమేజ్‌లు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "పనికి రాని క్లస్టర్"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "మీ మొదటి నెట్‌వర్క్ రిక్వెస్ట్ చాలా ముఖ్యమైనది.  మళ్లింపు‌లను నివారించడం, సర్వర్ ప్రతిస్పందన వేగంగా ఉండేలా చూసుకోవడం, అలాగే టెక్స్ట్ కంప్రెషన్‌ను ఎనేబుల్ చేయడం ద్వారా దాని ల్యాగ్‌ను తగ్గించండి."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "మళ్లింపులు ఉన్నాయి ({PH1} మళ్లింపులు, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "సర్వర్ నెమ్మదిగా సమాధానమిచ్చింది ({PH1} సమయంలో) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "కంప్రెషన్ ఏదీ వర్తించబడలేదు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "మళ్లింపులను నివారిస్తుంది"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "సర్వర్ వేగంగా సమాధానమిస్తోంది ({PH1} సమయంలో) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "టెక్స్ట్ కంప్రెషన్‌ను వర్తింపజేస్తుంది"
@@ -2571,7 +2574,7 @@
     "message": "ఎలిమెంట్ రెండర్ ల్యాగ్"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "ఫీల్డ్ 75వ శాతం"
+    "message": "ఫీల్డ్ p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "LCP ఏదీ కనుగొనబడలేదు"
@@ -2598,7 +2601,7 @@
     "message": "వృధా బైట్‌లు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా లెగసీ బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. మీరు లెగసీ బ్రౌజర్‌లకు సపోర్ట్ ఇవ్వాలని మీకు తెలిస్తే తప్ప, [బేస్‌లైన్](https://web.dev/articles/baseline-and-polyfills) ఫీచర్‌లను ట్రాన్స్‌పైల్ చేయకుండా మీ జావాస్క్రిప్ట్ బిల్డ్ ప్రాసెస్‌ను సవరించడాన్ని పరిగణించండి. [చాలా సైట్‌లు ట్రాన్స్‌పైలింగ్ లేకుండా ES6+ కోడ్‌ను ఎందుకు అమలు చేయగలవో తెలుసుకోండి](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "పాలీఫిల్స్, ఇంకా ట్రాన్స్‌ఫామ్‌లు, కొత్త JavaScript ఫీచర్‌లను ఉపయోగించగలిగేలా పాత బ్రౌజర్‌లను ఎనేబుల్ చేస్తాయి. అయితే, ఆధునిక బ్రౌజర్‌లకు వాటిలో చాలా వరకు అవసరం ఉండదు. మీరు మరింత పాత బ్రౌజర్‌లకు సపోర్ట్ అందించాలని మీకు ఖచ్చితంగా తెలిస్తే తప్ప, [బేస్‌లైన్](https://web.dev/articles/baseline-and-polyfills) ఫీచర్‌లను ట్రాన్స్‌పైల్ చేయకుండా మీ JavaScript బిల్డ్ ప్రాసెస్‌ను సవరించేలా పరిగణించండి. [చాలా సైట్‌లు ట్రాన్స్‌పైలింగ్ లేకుండా ES6+ కోడ్‌ను ఎందుకు అమలు చేయగలవో తెలుసుకోండి](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "లెగసీ JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "ఆధునిక HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "ఆరిజిన్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "రిక్వెస్ట్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "సోర్స్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "సమయం"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Est LCP సేవింగ్స్"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "వినియోగించని ప్రీకనెక్ట్. crossorigin అట్రిబ్యూట్‌ను సరిగ్గా ఉపయోగించారో లేదో చెక్ చేయండి."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి చేయడం ద్వారా [అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను నివారించండి](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "అత్యంత ముఖ్యమైన మీ ఆరిజిన్‌లకు [ప్రీకనెక్ట్](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) సూచనలను జోడించండి, కానీ 4 కంటే తక్కువ సూచనలను ఉపయోగించడానికి ట్రై చేయండి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "ప్రీకనెక్ట్ కావలసిన ఆరిజిన్‌లు"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "గరిష్ఠ క్లిష్టమైన పాత్ ల్యాగ్:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "నెట్‌వర్క్ డిపెండెన్సీ‌ల ద్వారా రెండరింగ్ టాస్క్‌లు ఏవీ ప్రభావితం కాలేదు"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "ప్రీకనెక్ట్ చేయడానికి అదనపు ఆరిజిన్‌లు ఏవీ సరైనవి కావు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "ఆరిజిన్‌లు ఏవీ ప్రీకనెక్ట్ అయి లేవు"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "పేజీ లోడ్ అవ్వడానికి ముందే కనెక్షన్‌ను ఏర్పాటు చేసేలా [ప్రీకనెక్ట్](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) సూచనలు బ్రౌజర్‌కు సహాయపడతాయి, దాని వలన ఆ ఆరిజిన్ కోసం మొదటి రిక్వెస్ట్ చేసినప్పుడు సమయం ఆదా అవుతుంది. ఈ కింది ఆరిజిన్‌లకు పేజీ ప్రీకనెక్ట్ అయి ఉంది."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "ముందుగా కనెక్ట్ చేసిన ఆరిజిన్‌లు"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "నెట్‌వర్క్ డిపెండెన్సీ ట్రీ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "4 కంటే ఎక్కువ preconnect కనెక్షన్‌లను కనుగొన్నాము. వీటిని పరిమితంగా, కేవలం అత్యంత ముఖ్యమైన ఆరిజిన్‌లకు మాత్రమే ఉపయోగించాలి."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "వినియోగించని ప్రీకనెక్ట్ ఉంది. పేజీ రిక్వెస్ట్ చేసే అవకాశం ఉన్న ఆరిజిన్‌లకు మాత్రమే preconnect‌ను ఉపయోగించండి."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి చేయడం ద్వారా అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను నివారించండి."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "రిక్వెస్ట్‌లు పేజీకి సంబంధించిన ప్రారంభ రెండర్‌ను బ్లాక్ చేస్తున్నాయి, దీని వలన LCP ఆలస్యం కావచ్చు. [వాయిదా వేయడం లేదా ఇన్‌లైన్ చేయడం](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) ఈ నెట్‌వర్క్ రిక్వెస్ట్‌లను క్లిష్టమైన మార్గం నుండి తరలించగలదు."
+    "message": "రిక్వెస్ట్‌లు పేజీకి సంబంధించిన ప్రారంభ రెండర్‌ను బ్లాక్ చేస్తున్నాయి, దీని వలన LCP ఆలస్యం కావచ్చు. [వాయిదా వేయడం లేదా ఇన్‌లైన్ చేయడం](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) ఈ నెట్‌వర్క్ రిక్వెస్ట్‌లను క్లిష్టమైన మార్గం నుండి తరలించగలదు."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "వ్యవధి"
@@ -2682,7 +2727,7 @@
     "message": "బదిలీ సైజ్"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "3వ-పార్టీ కోడ్ గణనీయమైన స్థాయిలో లోడ్ పనితీరుపై ప్రభావం చూపవచ్చు. మీ పేజీకి సంబంధించిన కంటెంట్‌కు ప్రాధాన్యత ఇవ్వడానికి[3వ-పార్టీ కోడ్‌ను తగ్గించండి, అలాగే లోడ్ చేయడం మినహాయించండి](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "3వ-పార్టీ కోడ్ గణనీయమైన స్థాయిలో లోడ్ పనితీరుపై ప్రభావం చూపవచ్చు. మీ పేజీకి సంబంధించిన కంటెంట్‌కు ప్రాధాన్యత ఇవ్వడానికి[3వ-పార్టీ కోడ్‌ను తగ్గించండి, అలాగే లోడ్ చేయడం మినహాయించండి](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "థర్డ్-పార్టీ‌లు ఏవీ లేవు"

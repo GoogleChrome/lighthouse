@@ -112,8 +112,9 @@ class LayoutShifts extends Audit {
             cause: str_(UIStrings.rootCauseFontChanges),
           });
         }
-        if (rootCauses.iframeIds.length) {
+        for (const iframe of rootCauses.iframes) {
           subItems.push({
+            extra: iframe.url ? {type: 'url', value: iframe.url} : undefined,
             cause: str_(UIStrings.rootCauseInjectedIframe),
           });
         }

@@ -59,7 +59,7 @@ class CLSCulpritsInsight extends Audit {
     for (const unsizedImage of culprits.unsizedImages) {
       subItems.push({
         extra: makeNodeItemForNodeId(TraceElements, unsizedImage.backendNodeId),
-        cause: insightStr_(InsightUIStrings.unsizedImages),
+        cause: insightStr_(InsightUIStrings.unsizedImage),
       });
     }
     for (const request of culprits.fontRequests) {
@@ -69,8 +69,9 @@ class CLSCulpritsInsight extends Audit {
         cause: insightStr_(InsightUIStrings.fontRequest),
       });
     }
-    if (culprits.iframeIds.length) {
+    for (const iframe of culprits.iframes) {
       subItems.push({
+        extra: iframe.url ? {type: 'url', value: iframe.url} : undefined,
         cause: insightStr_(InsightUIStrings.injectedIframe),
       });
     }

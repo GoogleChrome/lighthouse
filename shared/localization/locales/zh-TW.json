@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "如果資源要求網址中同時包含已移除的 \\(n|r|t) 字元和小於字元 (<)，系統會予以封鎖。請從元素屬性值等位置移除換行符號，並編碼小於字元，以便載入這些資源。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "自動偵測 ISO-2022-JP 字元集的功能已淘汰，近期即將停用。請在「Content Type」標頭，或是使用中繼標記 (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)，指定字元集。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() 已淘汰，請改用標準化 API：Navigation Timing 2。"
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "從跨來源 iframe 觸發 window.confirm 的功能已淘汰，並將在之後移除。"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM 變更事件 (包括 DOMSubtreeModified、DOMNodeInserted、DOMNodeRemoved、DOMNodeRemovedFromDocument、DOMNodeInsertedIntoDocument 和 DOMCharacterDataModified) 已淘汰 (https://w3c.github.io/uievents/#legacy-event-types)，並將於日後移除。請改用 MutationObserver。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "SVGUseElement 不再支援「data: 網址」，並將於日後移除。"
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "擴充功能應選擇啟用跨來源隔離功能，以便繼續使用 SharedArrayBuffer。詳情請參閱 https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/。"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter 的 isFallbackAdapter 屬性已淘汰，請改用 GPUAdapterInfo 的 isFallbackAdapter 屬性。"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest 中的 JSON 回應不支援 UTF-16"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "版面配置位移的常見主因"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "原寸圖片"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "最嚴重的叢集"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "第一個網路要求最為重要。避免重新導向、確保伺服器快速回應，並啟用文字壓縮功能，即可縮短延遲時間。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "有重新導向 ({PH1} 次重新導向，+{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "伺服器回應緩慢 (觀測結果：{PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "未套用壓縮功能"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "避免重新導向"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "伺服器回應迅速 (觀測結果：{PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "套用文字壓縮"
@@ -2571,7 +2574,7 @@
     "message": "元素轉譯延遲"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "實際使用者資料的第 75 個百分位數"
+    "message": "實際使用者的第 75 個百分位數"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "未偵測到 LCP"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "新式 HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "來源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "要求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "來源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "預估 LCP 節省毫秒數"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "這是未使用的預先連結。請檢查 crossorigin 屬性的設定是否正確。"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "如要[避免鏈結關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "請為最重要的來源新增 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但盡量不要超過 4 個。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "預先連結候選來源"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "關鍵路徑延遲時間上限："
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "網路依附元件未影響任何算繪工作"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "沒有其他適合的預先連結候選來源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "未預先連結任何來源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示可協助瀏覽器在載入網頁時提早建立連結，因此首次向該來源發出要求時可節省時間。以下是網頁預先連結的來源。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "預先連結的來源"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "網路依附元件樹狀結構"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "找到超過 4 個「preconnect」連結。請謹慎使用這些連結，僅用於最重要的來源。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "這是未使用的預先連結。建議將 preconnect 僅用於網頁可能會要求的來源。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "如要避免鏈結關鍵要求，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "要求會阻礙網頁的初始轉譯作業，進而導致 LCP 延遲。你可以透過[延後或內嵌](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)的方式，將這些網路要求移出關鍵路徑。"
+    "message": "要求會阻礙網頁的初始轉譯作業，進而導致 LCP 延遲。你可以透過[延後或內嵌](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)的方式，將這些網路要求移出關鍵路徑。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "時間長度"
@@ -2682,7 +2727,7 @@
     "message": "傳輸大小"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "第三方程式碼可能會嚴重影響載入效能。請[減少第三方程式碼並延遲載入](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)，優先載入網頁內容。"
+    "message": "第三方程式碼可能會嚴重影響載入效能。請[減少第三方程式碼並延遲載入](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)，優先載入網頁內容。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "找不到任何第三方"

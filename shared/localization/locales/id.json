@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Permintaan resource yang URL-nya berisi karakter \\(n|r|t) spasi kosong yang dihapus dan karakter kurang dari (<) akan diblokir. Hapus baris baru dan enkode karakter kurang dari, dari tempat seperti nilai atribut elemen untuk memuat resource ini."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Deteksi otomatis himpunan karakter ISO-2022-JP tidak digunakan lagi dan akan dinonaktifkan dalam waktu dekat. Harap tentukan himpunan karakter di header Jenis Konten atau dengan menggunakan tag meta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() tidak digunakan lagi. Sebagai gantinya, gunakan API standar: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Memicu window.confirm dari iframe lintas origin tidak digunakan lagi dan akan dihapus pada masa mendatang."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Peristiwa Mutasi DOM, termasuk DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, dan DOMCharacterDataModified tidak digunakan lagi (https://w3c.github.io/uievents/#legacy-event-types) dan akan dihapus. Sebagai gantinya, gunakan MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Dukungan untuk data: URL dalam SVGUseElement tidak digunakan lagi dan akan dihapus pada masa mendatang."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Ekstensi harus ikut serta dalam isolasi lintas asal untuk terus menggunakan SharedArrayBuffer. Lihat https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Atribut isFallbackAdapter GPUAdapter tidak digunakan lagi, gunakan atribut isFallbackAdapter GPUAdapterInfo sebagai gantinya."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 tidak didukung oleh respons JSON di XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Penyebab utama perubahan tata letak"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Gambar Tidak Berukuran"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cluster terburuk"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Permintaan jaringan pertama merupakan yang terpenting.  Kurangi latensinya dengan menghindari pengalihan, memastikan respons server yang cepat, dan mengaktifkan kompresi teks."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Memiliki pengalihan ({PH1} pengalihan, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Server merespons dengan lambat ({PH1} dalam pengamatan) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Tidak ada kompresi yang diterapkan"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Menghindari pengalihan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Server merespons dengan cepat ({PH1} dalam pengamatan) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Menerapkan kompresi teks"
@@ -2571,7 +2574,7 @@
     "message": "Penundaan render elemen"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Persentil ke-75 lapangan"
+    "message": "P75 sebenarnya"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Tidak ada LCP yang terdeteksi"
@@ -2598,7 +2601,7 @@
     "message": "Byte yang tidak digunakan"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfill dan transformasi memungkinkan browser lama menggunakan fitur JavaScript baru. Namun, banyak di antara fitur tersebut yang tidak diperlukan browser modern. Pertimbangkan untuk mengubah proses build JavaScript Anda agar tidak mentranspilasi fitur [Baseline](https://web.dev/articles/baseline-and-polyfills), kecuali jika Anda tahu bahwa Anda harus mendukung browser lama. [Pelajari alasan sebagian besar situs dapat men-deploy kode ES6+ tanpa mentranspilasi](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill dan transformasi memungkinkan browser lama menggunakan fitur JavaScript yang baru. Namun, banyak di antara fitur tersebut yang tidak diperlukan browser modern. Pertimbangkan untuk mengubah proses build JavaScript Anda agar tidak mentranspilasi fitur [Baseline](https://web.dev/articles/baseline-and-polyfills), kecuali jika Anda tahu bahwa Anda harus mendukung browser lama. [Pelajari alasan sebagian besar situs dapat men-deploy kode ES6+ tanpa mentranspilasi](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript Versi Lama"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP Modern"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Permintaan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Sumber"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Waktu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Perkiraan penghematan LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Prakoneksi yang tidak digunakan. Pastikan atribut crossorigin digunakan dengan benar."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Hindari perantaian permintaan penting](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) dengan mengurangi panjang rantai, mengurangi ukuran download resource, atau menunda download resource yang tidak penting untuk mempercepat pemuatan halaman."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Tambahkan petunjuk [prakoneksi](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ke origin yang paling penting, tapi usahakan untuk menggunakan kurang dari 4 petunjuk."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Kandidat prakoneksi"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Latensi jalur penting maksimum:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Tidak ada tugas rendering yang terpengaruh oleh dependensi jaringan"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Tidak ada origin tambahan yang cocok untuk prakoneksi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "tidak ada origin yang dihubungkan sebelumnya"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Petunjuk [prakoneksi](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) membantu browser membuat koneksi lebih awal saat halaman dimuat, sehingga dapat menghemat waktu ketika permintaan ke origin tersebut dibuat pertama kali. Berikut ini adalah origin yang telah terhubung ke halaman sebelumnya."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Origin yang dihubungkan sebelumnya"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Hierarki dependensi jaringan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Ditemukan lebih dari 4 koneksi preconnect. Koneksi tersebut sebaiknya tidak sering digunakan dan hanya untuk origin yang paling penting."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Prakoneksi yang tidak digunakan. Hanya gunakan preconnect untuk origin yang kemungkinan akan diminta halaman."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Hindari perantaian permintaan penting dengan mengurangi panjang rantai dan ukuran download resource, atau menunda download resource yang tidak penting untuk mempercepat pemuatan halaman."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Permintaan memblokir render awal halaman, yang dapat menunda LCP. [Penundaan atau penyisipan](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) dapat memindahkan permintaan jaringan ini dari jalur penting."
+    "message": "Permintaan memblokir render awal halaman, yang dapat menunda LCP. [Penundaan atau penyisipan](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) dapat memindahkan permintaan jaringan ini dari jalur penting."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Durasi"
@@ -2682,7 +2727,7 @@
     "message": "Ukuran transfer"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kode pihak ketiga dapat memberikan dampak signifikan terhadap performa pemuatan. [Kurangi dan tunda pemuatan kode pihak ketiga](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) untuk memprioritaskan konten halaman Anda."
+    "message": "Kode pihak ketiga dapat memberikan dampak signifikan terhadap performa pemuatan. [Kurangi dan tunda pemuatan kode pihak ketiga](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) untuk memprioritaskan konten halaman Anda."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Tidak ada pihak ketiga yang ditemukan"

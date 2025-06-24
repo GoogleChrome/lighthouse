@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Bronverzoeken waarvan de URL's verwijderde \\(n|r|t)-tekens voor witruimten en kleiner-dan-tekens (<) bevatten, worden geblokkeerd. Verwijder nieuwe-regelitems en codeer kleiner-dan-tekens, bijvoorbeeld in kenmerkwaarden voor elementen, om deze bronnen te laden."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Automatische detectie van de tekenset ISO-2022-JP is beëindigd en wordt binnenkort uitgezet. Specificeer de tekenset in de Content Type-header of met een metatag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() is beëindigd, gebruik in plaats daarvan de gestandaardiseerde API: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "De activering van window.confirm van cross-origin iframes is beëindigd en wordt in de toekomst verwijderd."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM-mutatiegebeurtenissen, waaronder DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument en DOMCharacterDataModified, zijn beëindigd (https://w3c.github.io/uievents/#legacy-event-types) en worden verwijderd. Gebruik in plaats daarvan MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Ondersteuning voor gegevens: URL's in GIFUseElement zijn beëindigd en worden in de toekomst verwijderd."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensies moeten zijn aangemeld voor cross-origin-isolatie om SharedArrayBuffer te blijven gebruiken. Zie https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Het GPUAdapter-kenmerk isFallbackAdapter is beëindigd. Gebruik in plaats daarvan het GPUAdapterInfo-kenmerk isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 wordt niet ondersteund door de reactie-json in XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Belangrijkste oorzaken van indelingsverschuivingen"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Afbeeldingen zonder formaat"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Slechtste cluster"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Je eerste netwerkverzoek is het belangrijkst.  Verminder de vertraging door omleidingen te vermijden, een snelle serverreactie te garanderen en tekstcompressie aan te zetten."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Had omleidingen ({PH1} omleidingen, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Server reageerde traag ({PH1} waargenomen) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Geen compressie toegepast"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Vermijdt omleidingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Server reageert snel ({PH1} waargenomen) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Past tekstcompressie toe"
@@ -2571,7 +2574,7 @@
     "message": "Vertraging bij element renderen"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75e percentiel voor veld"
+    "message": "Veld p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Geen LCP gevonden"
@@ -2598,7 +2601,7 @@
     "message": "Verspilde bytes"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Met polyfills en transformaties kunnen verouderde browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Overweeg om je JavaScript-buildproces aan te passen zodat [Baseline](https://web.dev/articles/baseline-and-polyfills)-functies niet worden getranspileerd, tenzij je weet dat je verouderde browsers moet ondersteunen. [Meer informatie over waarom de meeste sites ES6+-code kunnen implementeren zonder transpileren](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Met polyfills en transformaties kunnen oudere browsers nieuwe JavaScript-functies gebruiken. Voor moderne browsers is dit meestal niet nodig. Overweeg om je JavaScript-buildproces aan te passen zodat [Baseline](https://web.dev/articles/baseline-and-polyfills)-functies niet worden getranspileerd, tenzij je weet dat je oudere browsers moet ondersteunen. [Meer informatie over waarom de meeste sites ES6+-code kunnen implementeren zonder transpileren](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Verouderde JavaScript-code"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Moderne HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Oorsprong"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Verzoek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Bron"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Tijd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Geschatte LCP-besparingen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Niet-gebruikte preconnect. Ga na of het kenmerk crossorigin juist wordt gebruikt."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Vermijd het doorlinken van kritieke verzoeken](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) door de lengte van ketens te verkleinen, de downloadgrootte van resources te beperken of het downloaden van onnodige resources uit te stellen om de laadtijd van de pagina te verbeteren."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Voeg [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)-hints toe aan je belangrijkste oorsprongen, maar probeer er minder dan 4 te gebruiken."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Kandidaten voor preconnect"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Max. latentie voor kritiek pad:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Geen weergavetaken beïnvloed door netwerkafhankelijkheid"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Er zijn geen extra oorsprongen die goede kandidaten zijn voor verbinding vooraf (preconnect)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "er zijn geen oorsprongen vooraf gekoppeld"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Met [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)-hints kan de browser eerder tijdens het laden van de pagina een verbinding tot stand brengen, waardoor er tijd wordt bespaard wanneer het eerste verzoek voor die oorsprong wordt gedaan. Dit zijn de oorsprongen waarmee de pagina een preconnect heeft gemaakt."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Vooraf gekoppelde oorsprongen"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Netwerkafhankelijkheidsstructuur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Er zijn meer dan 4 preconnect-verbindingen gevonden. Deze moeten niet te veel worden gebruikt en alleen voor de belangrijkste oorsprongen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Niet-gebruikte preconnect. Gebruik preconnect alleen voor oorsprongen die de pagina waarschijnlijk aanvraagt."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Vermijd het doorlinken van kritieke verzoeken door de lengte van ketens te verkleinen, de downloadgrootte van resources te beperken of het downloaden van onnodige resources uit te stellen om de laadtijd van de pagina te verbeteren."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Verzoeken blokkeren de eerste keer renderen van de pagina, waardoor LCP kan worden vertraagd. Door [verzoeken uit te stellen of in te sluiten](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) kun je deze netwerkverzoeken van de kritieke route verwijderen."
+    "message": "Verzoeken blokkeren de eerste keer renderen van de pagina, waardoor LCP kan worden vertraagd. Door [verzoeken uit te stellen of in te sluiten](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) kun je deze netwerkverzoeken van de kritieke route verwijderen."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Duur"
@@ -2682,7 +2727,7 @@
     "message": "Overdrachtsgrootte"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Code van derden kan van grote invloed zijn op de laadprestaties. [Verminder het laden van code van derden en stel dit uit](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) om prioriteit te geven aan de content van je pagina."
+    "message": "Code van derden kan van grote invloed zijn op de laadprestaties. [Verminder het laden van code van derden en stel dit uit](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) om prioriteit te geven aan de content van je pagina."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Geen derden gevonden"

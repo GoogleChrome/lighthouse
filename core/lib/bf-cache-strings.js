@@ -704,7 +704,10 @@ const NotRestoredReasonDescription = {
   WebViewSafeBrowsingAllowlistChanged: {name: ('WebViewSafeBrowsingAllowlistChanged')},
   WebViewDocumentStartJavascriptChanged: {name: ('WebViewDocumentStartJavascriptChanged')},
   CacheControlNoStoreDeviceBoundSessionTerminated: {name: str_(UIStrings.cacheControlNoStore)},
-  CacheLimitPruned: {name: ('CacheLimitPruned')},
+  CacheLimitPrunedOnModerateMemoryPressure:
+      {name: ('CacheLimitPrunedOnModerateMemoryPressure')},
+  CacheLimitPrunedOnCriticalMemoryPressure:
+      {name: ('CacheLimitPrunedOnCriticalMemoryPressure')},
 };
 
 export {

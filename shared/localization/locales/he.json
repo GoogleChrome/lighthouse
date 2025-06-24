@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "בקשות למשאבים שכתובות ה-URL שלהן מכילות גם תווי \\(n|r|t) של רווח לבן מחוק וגם תווי 'פחות מ-' (<) חסומות. כדי לטעון את המשאבים האלה, יש להסיר תווי 'פחות מ-' מקודדים ושורות חדשות ממקומות כמו ערכי מאפיינים של רכיבים."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "הזיהוי האוטומטי של מערכת התווים ISO-2022-JP הוצא משימוש, והוא יושבת בקרוב. צריך לפרט את מערכת התווים בכותרת \"סוג תוכן\" או באמצעות מטא תג (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "האפשרות chrome.loadTimes() הוצאה משימוש. במקומה יש להשתמש ב-API הסטנדרטי: תזמון ניווט 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "האפשרות להפעיל את הפונקציה window.confirm דרך רכיבי iframe ממקורות שונים הוצאה משימוש ותוסר בעתיד."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "אירועי מוטציה של DOM, כולל DOMSubtreeModified,‏ DOMNodeInserted,‏ DOMNodeRemoved,‏ DOMNodeRemovedFromDocument,‏ DOMNodeInsertedIntoDocument ו-DOMCharacterDataModified הוצאו משימוש (https://w3c.github.io/uievents/#legacy-event-types) ויוסרו בעתיד. במקומם יש להשתמש ב-MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "התמיכה בהקצאת כתובות URL מסוג data:‎ ב-SVGUseElement הוצאה משימוש ותוסר בעתיד."
@@ -2324,6 +2318,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "כדי להמשיך להשתמש ב-SharedArrayBuffer, צריך לאשר חסימה לגישה מדומיינים אחרים בתוספים. הסבר זמין בכתובת https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/‎."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "המאפיין isFallbackAdapter של GPUAdapter הוצא משימוש. צריך להשתמש במקומו במאפיין isFallbackAdapter של GPUAdapterInfo."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "אין תמיכה ב-UTF-16 ב-JSON של התגובה ב-XMLHttpRequest"
   },
@@ -2356,9 +2353,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "הגורמים המובילים לשינוי הפריסה"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "תמונות ללא גודל"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "האשכול הגרוע ביותר"
@@ -2411,11 +2405,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "בקשת הרשת הראשונה היא החשובה ביותר.  אפשר להפחית את זמן האחזור של הבקשה על ידי הימנעות מהפניות לכתובות URL אחרות, וכך להבטיח תגובה מהירה של השרת ולהפעיל דחיסת טקסט."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "היו הפניות אוטומטיות ({PH1} הפניות אוטומטיות, ‎+{PH2}‎)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "השרת הגיב באיטיות ({PH1} נצפו) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "לא הוחלה דחיסת נתונים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "בקשת המסמך לא מבצעת הפניות לכתובות אחרות"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "השרת מגיב במהירות ({PH1} נצפו) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "החלת דחיסת טקסט"
@@ -2568,7 +2571,7 @@
     "message": "עיכוב בעיבוד הרכיב"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "האחוזון ה-75 של המשתמשים בשטח"
+    "message": "שדה p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "לא זוהה LCP"
@@ -2595,7 +2598,7 @@
     "message": "בייטים מבוזבזים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים מדור קודם להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מתקדמים. כדאי לשקול לשנות את תהליך ה-build של JavaScript כדי לא להמיר [תכונות בסיסיות](https://web.dev/articles/baseline-and-polyfills), אלא אם ידוע לך שנדרשת תמיכה בדפדפנים מדור קודם. [למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים ישנים יותר להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כדאי לשקול לשנות את תהליך ה-build של JavaScript כדי לא לבצע טרנספילציה של [תכונות בסיסיות](https://web.dev/articles/baseline-and-polyfills), אלא אם ידוע לך שנדרשת תמיכה בדפדפנים ישנים יותר. [למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "‫JavaScript מדור קודם"
@@ -2615,8 +2618,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "‫HTTP מודרני"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "מקור"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "בקשה"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "מקור"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "זמן"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "חיסכון משוער ב-LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "קישור מקדים שלא נוצל. צריך לוודא שהשימוש במאפיין crossorigin נעשה בצורה נכונה."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[כדאי להימנע משרשראות של בקשות קריטיות](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains). מומלץ לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים כדי לשפר את מהירות טעינת הדף."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "אפשר להוסיף רמזים [לקישורים מקדימים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) למקורות החשובים ביותר, אבל כדאי להשתמש בפחות מ-4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "מקורות מתאימים לקישור מקדים"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "זמן אחזור מקסימלי בנתיב הקריטי:"
@@ -2624,14 +2651,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "אין משימות רינדור שנפגעו בגלל תלות ברשת"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "אין מקורות נוספים שמתאימים לקישור מקדים"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "לא היו מקורות עם קישורים מקדימים"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "הרמזים [לקישורים מקדימים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) עוזרים לדפדפן ליצור חיבור מהיר יותר במהלך טעינת הדף, ומאפשרים לשלוח מוקדם יותר את הבקשה הראשונה למקור הזה. אלה המקורות שהדף מתחבר אליהם מראש."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "מקורות עם קישור מקדים"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "עץ תלות ברשת"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "נמצאו יותר מארבעה קישורים preconnect. השימוש בקישורים מקדימים צריך להיות מצומצם מאוד ומוגבל למקורות החשובים ביותר."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "קישור מקדים שלא נוצל. צריך להשתמש ב-preconnect רק למקורות שהדף עשוי לבקש."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "כדי לטעון דפים מהר יותר, כדאי להימנע משרשראות של בקשות קריטיות. מומלץ לקצר את השרשראות, להקטין את נפח ההורדה של המשאבים או לדחות את ההורדה של משאבים לא נחוצים."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "יש בקשות שחוסמות את העיבוד הראשוני של הדף, מה שעלול לגרום לעיכוב של ה-LCP. [דחייה או שילוב בקוד](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) יכולים להוציא את בקשות הרשת האלה מהנתיב הקריטי."
+    "message": "יש בקשות שחוסמות את העיבוד הראשוני של הדף, מה שעלול לגרום לעיכוב של ה-LCP. [דחייה או שילוב בקוד](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) יכולים להוציא את בקשות הרשת האלה מהנתיב הקריטי."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "משך"
@@ -2679,7 +2724,7 @@
     "message": "גודל ההעברה"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "קוד של צד שלישי עשוי להשפיע בצורה משמעותית על ביצועי הטעינה. כדי לתעדף את תוכן הדף שלך, צריך [לצמצם ולדחות טעינת קוד של צד שלישי](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "קוד של צד שלישי עשוי להשפיע בצורה משמעותית על ביצועי הטעינה. כדי לתעדף את תוכן הדף שלך, צריך [לצמצם ולדחות טעינת קוד של צד שלישי](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "לא נמצאו צדדים שלישיים"

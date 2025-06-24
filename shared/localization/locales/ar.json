@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "يتم حظر طلبات المصادر التي تتضمّن عناوين URL الخاصة بها كلاً من أحرف المسافة البيضاء \\(n|r|t) ورمز \"الأقل من\" (<). لتحميل هذه المصادر، يُرجى إزالة السطور الجديدة وترميز رمز \"الأقل من\" من خلال مواضع مثل قيم سمات العناصر."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "تقرَّر الإيقاف النهائي لميزة الرصد التلقائي لدليل الرموز ISO-2022-JP في المستقبل القريب. يُرجى تحديد دليل الرموز في عنوان \"نوع المحتوى\" أو باستخدام علامة وصفية (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "تم إيقاف واجهة برمجة التطبيقات chrome.loadTimes() نهائيًا ويمكنك بدلاً منها استخدام واجهة برمجة التطبيقات Navigation Timing 2 الموحَّدة."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "إنّ ميزة تنفيذ الوظيفة window.confirm المستنِدة إلى إطارات iframe من مصادر متعددة تم إيقافها نهائيًا وستتم إزالتها في المستقبل."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "إنّ أحداث تغيُّر نموذج العناصر في المستند (DOM)، بما في ذلك\nDOMSubtreeModified وDOMNodeInserted وDOMNodeRemoved وDOMNodeRemovedFromDocument وDOMNodeInsertedIntoDocument وDOMCharacterDataModified \nتم إيقافها نهائيًا (https://w3c.github.io/uievents/#legacy-event-types)، وستتم إزالتها. يُرجى استخدام MutationObserver بدلاً من ذلك."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "تم بشكل نهائي إيقاف استخدام عناوين URL التي تبدأ بمخطّط \"data:‎\" في واجهة SVGUseElement، وستتم إزالة هذه الميزة في المستقبل."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "يجب أن تستخدم الإضافات ميزة حظر الوصول من نطاقات أخرى لمواصلة استخدام الكائن SharedArrayBuffer. يُرجى الاطّلاع على https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/‎."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "تم إيقاف سمة isFallbackAdapter GPUAdapter نهائيًا. يُرجى استخدام سمة isFallbackAdapter GPUAdapterInfo بدلاً منها."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "لا يتوفّر الترميز UTF-16 من خلال استجابة json في واجهة برمجة التطبيقات XMLHttpRequest."
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "أهم أسباب تغييرات التصميم"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "صور بلا حجم محدَّد"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "أسوأ مجموعة"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "طلب الشبكة الأول هو الأهم.  يمكنك تقليل وقت الاستجابة للطلب عن طريق تجنُّب عمليات إعادة التوجيه وضمان استجابة الخادم بسرعة وتفعيل ميزة ضغط النص."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "تضمَّن الطلب عمليات إعادة توجيه (عدد عمليات إعادة التوجيه: {PH1}، ومدتها {PH2}+)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "استجابة الخادم كانت بطيئة (المدة المرصودة: {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "لم يتمّ تطبيق أي ضغط"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "يتجنّب هذا الطلب عمليات إعادة التوجيه"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "يستجيب الخادم بسرعة (المدة المرصودة: {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "تمّ تطبيق ضغط النص"
@@ -2598,7 +2601,7 @@
     "message": "وحدات البايت المُهدرة"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "تساعد الرموز البرمجية polyfill وtransform المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية إنشاء رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/articles/baseline-and-polyfills)، إلّا في حال ضرورة دعم المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "تساعد الرموز البرمجية polyfill وtransform المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية تصميم رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/articles/baseline-and-polyfills)، إلّا إذا كان من الضروري التوافق مع المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "ميزات JavaScript القديمة"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "بروتوكول HTTP الحديث"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "المصدر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "طلب"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "المصدر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "الوقت"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "التوفير المقدَّر في سرعة عرض أكبر محتوى مرئي (LCP)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "تمت إضافة اتصال مُسبَق لمصادر غير مستخدَمة. يُرجى التحقّق من استخدام السمة crossorigin بشكل صحيح."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "يُمكن [تجنُّب تقييد الطلبات المهمة](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "يمكنك إضافة إشارات [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) إلى أهم مصادرك، ولكن يُرجى محاولة استخدام أقل من 4 إشارات."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "المصادر المُرشَّحة للاتصال المُسبَق"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "الحد الأقصى لوقت استجابة سلسلة الطلبات المُهمّة:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "ما مِن مهام عرض متأثرة بطلبات اعتمادية الشبكة"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "ما مِن مصادر إضافية مناسبة للاتصال المُسبَق"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "لم يتم إنشاء اتصال مُسبَق لأي مصادر"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "تساعد إشارات [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) المتصفّح على إنشاء اتصال قبل تحميل الصفحة، ما يوفِّر الوقت عند إرسال أول طلب إلى مصدر المحتوى هذا. في ما يلي المصادر التي تم إنشاء اتصال مُسبَق بها على الصفحة."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "المصادر المتصلة مُسبَقًا"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "شجرة اعتمادية الشبكة"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "تم العثور على أكثر من 4 روابط preconnect. يُنصح بعدم استخدام هذه الروابط بشكل كبير واقتصارها على المصادر الأكثر أهمية فقط."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "تمت إضافة اتصال مُسبَق لمصادر غير مستخدَمة. يجب استخدام preconnect فقط للمصادر التي من المرجح أن تطلبها الصفحة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "يُمكن تجنُّب تقييد الطلبات المهمة عن طريق تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "تؤدي الطلبات إلى حظر العرض الأوّلي للصفحة، ما قد يُبطئ سرعة عرض أكبر محتوى مرئي (LCP). ويمكن [تأجيل هذه الطلبات](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) أو تضمينها لإخراجها من المسار الحرج."
+    "message": "تؤدي الطلبات إلى حظر العرض الأوّلي للصفحة، ما قد يُبطئ سرعة عرض أكبر محتوى مرئي (LCP). ويمكن [تأجيل هذه الطلبات](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) أو تضمينها لإخراجها من المسار الحرج."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "المدة"
@@ -2682,7 +2727,7 @@
     "message": "حجم عملية النقل"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "يمكن أن يؤثر الرمز البرمجي التابع لجهة خارجية بشكل كبير في أداء التحميل. [يمكنك تقليل تحميل الرموز البرمجية التابعة لجهات خارجية وتأجيله](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)، ومنح الأولوية لمحتوى صفحتك."
+    "message": "يمكن أن يؤثر الرمز البرمجي التابع لجهة خارجية بشكل كبير في أداء التحميل. [يمكنك تقليل تحميل الرموز البرمجية التابعة لجهات خارجية وتأجيله](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)، ومنح الأولوية لمحتوى صفحتك."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "لم يتم العثور على أي محتوى خارجي"

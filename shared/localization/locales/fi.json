@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Resurssipyynnöt, joiden URL-osoitteet sisälsivät sekä poistettuja tyhjätilamerkkejä (\\(n|r|t)) että pienempi kuin ‑merkkejä (<) on estetty. Poista newline-koodit ja koodaa pienempi kuin ‑merkkejä esimerkiksi elementin attribuuttiarvoista, jos haluat ladata näitä resursseja."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP-merkistön automaattinen tunnistus on poistettu käytöstä, ja se poistetaan lähiaikoina. Määritä merkistö \"Content Type\" ‐otsikossa tai metatagilla (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() on poistettu käytöstä, käytä sen sijaan standardoitua APIa: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "window.confirmin käynnistäminen eri lähteistä peräisin olevista iframeista on poistettu käytöstä ja poistetaan kokonaan tulevaisuudessa."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM-muutostapahtumat, kuten DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument ja DOMCharacterDataModified, on poistettu käytöstä (https://w3c.github.io/uievents/#legacy-event-types) ja poistetaan. Käytä sen sijaan tätä: MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Datatuki: URL-osoitteet SVGUseElement-elementissä on poistettu käytöstä, ja se poistetaan tulevaisuudessa."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Laajennusten pitäisi ottaa muista lähteistä eristäminen käyttöön, jotta ne voivat jatkaa tämän käyttöä: SharedArrayBuffer. Lue lisää osoitteesta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter isFallbackAdapter ‑määrite on poistettu käytöstä. Käytä sen sijaan GPUAdapterInfo isFallbackAdapter ‑määritettä."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Vastaus-JSON ei tue UTF-16:ta kohteessa XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Asettelun muutoksen yleisimmät aiheuttajat"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Kuvien kokoa ei ole asetettu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Huonoin klusteri"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Ensimmäinen verkkopyyntö on tärkein.  Vähennä viivettä välttämällä uudelleenohjauksia, varmistamalla nopea palvelimen vaste ja ottamalla tekstin pakkaus käyttöön."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Uudelleenohjauksia ({PH1} uudelleenohjausta, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Palvelin vastasi hitaasti (havaittu {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Ei pakattu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Välttää uudelleenohjaukset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Palvelin vastaa nopeasti (havaittu {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Pakkaa tekstin"
@@ -2571,7 +2574,7 @@
     "message": "Elementin renderöintiviive"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Kentän 75. prosenttipiste"
+    "message": "Kenttä p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "LCP:tä ei havaittu"
@@ -2598,7 +2601,7 @@
     "message": "Hukatut tavut"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Harkitse JavaScript-käännösprosessin muuttamista niin, että [Baseline](https://web.dev/articles/baseline-and-polyfills)-ominaisuuksien ohjelmkointikoodin kieltä ei käännetä, ellet tiedä, että sinun on tuettava vanhoja selaimia. [Lue lisää siitä, miksi useimmat sivustot voivat ottaa käyttöön ES6+-koodin ilman ohjelmointikoodin kielen kääntämistä](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill- ja transform-merkintöjen avulla vanhemmat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Harkitse JavaScript-käännösprosessin muuttamista niin, että [Baseline](https://web.dev/articles/baseline-and-polyfills)-ominaisuuksien ohjelmkointikoodin kieltä ei käännetä, ellet tiedä, että sinun on tuettava vanhempia selaimia. [Lue lisää siitä, miksi useimmat sivustot voivat ottaa käyttöön ES6+-koodin ilman ohjelmointikoodin kielen kääntämistä](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Vanha JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Moderni HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Alkuperä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Pyyntö"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Lähde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Arvioidut LCP-säästöt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Käyttämätön ennakkoyhteys. Varmista, että crossorigin-määritettä käytetään oikein."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Vältä kriittisten pyyntöjen ketjuttamista](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Lisää [ennakkoyhdistämisen](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) vihjeitä tärkeimpiin alkuperiin, mutta pyri käyttämään alle neljää."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Ennakkoyhteydet"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Kriittisen polun enimmäisviive:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Verkko-ohjelmat eivät vaikuta mihinkään renderöintitehtävään"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Yksikään muu alkuperä ei sovellu ennakkoyhteyden muodostamiseen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "lähteitä ei yhdistetty ennakkoon"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[ennakkoyhdistämisen](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) vihjeet auttavat selainta muodostamaan yhteyden aikaisemmin sivun latauksen aikana, jolloin kyseisen kohteen ensimmäinen pyyntö on nopeampi. Seuraavat ovat alkuperä, joihin sivu on muodostanut yhteyden etukäteen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Ennakkoon yhdistetyt alkuperät"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Verkon riippuvuuspuu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "preconnect-yhteyksiä löytyi enemmän kuin neljä. Niitä tulee käyttää säästeliäästi ja vain tärkeimpiin alkuperiin."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Käyttämätön ennakkoyhteys. Valitse preconnect vain alkuperille, joita sivu todennäköisesti pyytää."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Vältä kriittisten pyyntöjen ketjuttamista lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista sivun latausajan parantamiseksi."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Pyynnöt estävät sivun ensimmäisen renderöinnin, joten LCP:ssä voi olla viiveitä. [Siirtäminen myöhemmäksi tai sisällyttäminen](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) voi poistaa nämä verkkopyynnöt kriittiseltä polulta."
+    "message": "Pyynnöt estävät sivun ensimmäisen renderöinnin, joten LCP:ssä voi olla viiveitä. [Siirtäminen myöhemmäksi tai sisällyttäminen](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) voi poistaa nämä verkkopyynnöt kriittiseltä polulta."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Kesto"
@@ -2682,7 +2727,7 @@
     "message": "Siirron koko"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kolmannen osapuolen koodi voi vaikuttaa lataustehokkuuteen merkittävästi. [Vähennä ja lykkää kolmannen osapuolen koodin lataamista](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) sivun sisällön priorisoimiseksi."
+    "message": "Kolmannen osapuolen koodi voi vaikuttaa lataustehokkuuteen merkittävästi. [Vähennä ja lykkää kolmannen osapuolen koodin lataamista](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) sivun sisällön priorisoimiseksi."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Kolmansia osapuolia ei löytynyt"

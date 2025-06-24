@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Solicitações de recursos com URLs que contêm caracteres \\(n|r|t) de espaço em branco removido e caracteres \"menor que\" (<) estão bloqueadas. Remova novas linhas e codifique caracteres \"menor que\" em lugares como valores de atributos de elementos para carregar esses recursos."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "A detecção automática do conjunto de caracteres ISO-2022-JP foi descontinuada e será desativada em breve. Especifique o conjunto de caracteres no cabeçalho \"Tipo de conteúdo\" ou usando uma metatag (https://developer.mozilla.org/pt-BR/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "O uso de chrome.loadTimes() foi descontinuado. Use a API padronizada Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "O acionamento de window.confirm de iframes entre origens foi descontinuado e será removido."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Eventos de mutação DOM, incluindo DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument e DOMCharacterDataModified, foram descontinuados (https://w3c.github.io/uievents/#legacy-event-types, link em inglês) e serão removidos. Use MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Suporte para dados: os URLs em SVGUseElement foram descontinuados e serão removidos no futuro."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "As extensões precisam ativar o isolamento entre origens para continuar usando o recurso SharedArrayBuffer. Consulte https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ (link em inglês)."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "O atributo isFallbackAdapter do GPUAdapter foi descontinuado. Use o atributo isFallbackAdapter do GPUAdapterInfo."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Não há suporte da resposta JSON para UTF-16 no XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Principais causas da troca de layout"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Imagens sem tamanho definido"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Pior cluster"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "A primeira solicitação de rede é a mais importante.  Reduza a latência dela evitando redirecionamentos, garantindo uma resposta rápida do servidor e ativando a compactação de texto."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Tinha redirecionamentos ({PH1}, mais de {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "O servidor respondeu lentamente (observado: {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Nenhuma compactação aplicada"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Sem redirecionamentos"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "O servidor respondeu rapidamente (observado: {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Compactação de texto aplicada"
@@ -2571,7 +2574,7 @@
     "message": "Atraso na renderização do elemento"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75º percentil de campo"
+    "message": "P75 de campo"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Nenhum LCP detectado"
@@ -2598,7 +2601,7 @@
     "message": "Bytes desperdiçados"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Com polyfills e transformações, navegadores legados pode usar novos recursos do JavaScript. No entanto, muitos não são necessários para navegadores modernos. Considere mudar seu processo de criação do JavaScript para não transpilar os recursos [de referência](https://web.dev/articles/baseline-and-polyfills), a menos que você precise da compatibilidade com navegadores legados. [Entenda por que a maioria dos sites pode implantar código ES6+ sem transpilação](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfills e transformações permitem que navegadores mais antigos usem novos recursos do JavaScript. No entanto, muitos não são necessários para navegadores mais recentes. Considere mudar seu processo de criação do JavaScript para não transpilar os recursos [de referência](https://web.dev/articles/baseline-and-polyfills), a menos que você precise da compatibilidade com navegadores mais antigos. [Entenda por que a maioria dos sites pode implantar código ES6+ sem transpilação](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript legado"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP moderno"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origem"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Solicitação"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Fonte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Hora"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Economia estimada de LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Pré-conexão não usada. Confira se o atributo crossorigin está sendo usado corretamente."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Evite encadear solicitações críticas](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) reduzindo o tamanho das cadeias, o tamanho do download de recursos ou adiando o download de recursos desnecessários para melhorar o carregamento da página."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Adicione dicas de [pré-conexão](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) às suas origens mais importantes, mas tente usar menos de quatro."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Candidatos à pré-conexão"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Latência máxima do caminho crítico:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Nenhuma tarefa de renderização foi afetada por dependências de rede"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Nenhuma outra origem é uma boa candidata para a pré-conexão"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "nenhuma origem foi pré-conectada"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "As dicas de [pré-conexão](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ajudam o navegador a estabelecer uma conexão mais cedo durante o carregamento da página, poupando tempo quando a primeira solicitação para essa origem é feita. A página fez a pré-conexão com as seguintes origens:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Origens pré-conectadas"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Árvore de dependência da rede"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Foram encontradas mais de quatro conexões preconnect. Elas precisam ser usadas com moderação e somente para as origens mais importantes."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Pré-conexão não usada. Use preconnect apenas para origens que a página provavelmente vai solicitar."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Evite encadear solicitações críticas reduzindo o tamanho das cadeias, diminuindo o tamanho do download de recursos ou adiando o download de recursos desnecessários para melhorar o carregamento da página."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "As solicitações estão bloqueando a renderização inicial da página, o que pode atrasar a LCP. Essas solicitações de rede podem ser [deferidas ou colocadas inline](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) para que fiquem fora do caminho crítico."
+    "message": "As solicitações estão bloqueando a renderização inicial da página, o que pode atrasar a LCP. Essas solicitações de rede podem ser [deferidas ou colocadas inline](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) para que fiquem fora do caminho crítico."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Duração"
@@ -2682,7 +2727,7 @@
     "message": "Tamanho da transferência"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Código de terceiros pode afetar significativamente a performance de carregamento. [Reduza e adie o carregamento de código de terceiros](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) para priorizar o conteúdo da sua página."
+    "message": "Código de terceiros pode afetar significativamente a performance de carregamento. [Reduza e adie o carregamento de código de terceiros](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) para priorizar o conteúdo da sua página."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nenhum terceiro encontrado"

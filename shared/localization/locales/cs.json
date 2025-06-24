@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Požadavky na zdroje, jejichž adresy URL obsahovaly jak odstraněné prázdné znaky \\(n|r|t), tak znaky menší než (<), jsou blokovány. Aby se tyto zdroje načetly, je na místech, jako jsou hodnoty atributů, potřeba odstranit zalomení řádků a zakódovat znaky menší než."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Automatická detekce znakové sady ISO-2022-JP je zastaralá a brzy bude deaktivována. Uveďte znakovou sadu v záhlaví Content Type nebo pomocí metaznačky (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Metoda chrome.loadTimes() je zastaralá, použijte místo ní standardizované API: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Podpora volání funkce window.confirm z prvků iframe jiných domén byla ukončena a v budoucnu bude odstraněno."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Události změny DOM, včetně DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument a DOMCharacterDataModified jsou zastaralé (https://w3c.github.io/uievents/ #legacy-event-types) a budou odstraněny. Použijte místo nich rozhraní MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Podpora adres URL se schématem data: v rozhraní SVGUseElement je zastaralá a v budoucnu bude odstraněna."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Pokud v rozšířeních chcete používat technologii SharedArrayBuffer, je u nich potřeba aktivovat izolaci od jiných zdrojů. Viz https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Atribut GPUAdapter isFallbackAdapter je zastaralý, použijte místo něj atribut GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Kódování UTF-16 není v objektech JSON odpovědí rozhraní XMLHttpRequest podporováno."
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Hlavní viníci změn rozvržení"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Obrázky bez velikosti"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Nejhorší klastr"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "První síťový požadavek je nejdůležitější.  Snižte jeho latenci tím, že nebudete používat přesměrování, zajistíte rychlou odezvu serveru a zapnete kompresi textu."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Zahrnuje přesměrování (přesměrování {PH1}, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Server odpověděl pomalu (pozorováno {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Není použita žádná komprese"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Nepoužívá přesměrování"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Server reaguje rychle (pozorováno {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Používá kompresi textu"
@@ -2571,7 +2574,7 @@
     "message": "Zpoždění vykreslení prvku"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75. percentil dat z terénu"
+    "message": "Terén 75 %"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Metrika LCP nebyla zjištěna"
@@ -2598,7 +2601,7 @@
     "message": "Vyplýtvané bajty"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Doplňující kódy polyfill a transformace umožňují starším prohlížečům používat nové funkce JavaScriptu. Moderní prohlížeče ale řadu z nich nepotřebují. Pokud nutně nepotřebujete podporovat zastaralé prohlížeče, zvažte úpravu procesu sestavování JavaScriptu tak, aby se netranspilovaly základní ([Baseline](https://web.dev/articles/baseline-and-polyfills)) funkce. [Proč většina webů může implementovat kód ES6+ bez transpilace](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Doplňující kódy polyfill a transformace umožňují starším prohlížečům používat nové funkce JavaScriptu. Moderní prohlížeče ale řadu z nich nepotřebují. Pokud nutně nepotřebujete podporovat starší prohlížeče, zvažte úpravu procesu sestavování JavaScriptu tak, aby se netranspilovaly základní ([Baseline](https://web.dev/articles/baseline-and-polyfills)) funkce. [Proč většina webů může implementovat kód ES6+ bez transpilace](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Starší JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Moderní HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Zdroj"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Požadavek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Zdroj"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Čas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Odh. zlepšení LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Nepoužité předběžné připojení. Zajistěte, aby byl správně použit atribut crossorigin."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Vyhněte se řetězení kritických požadavků](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) tím, že zkrátíte délku řetězců, snížíte velikost stahovaných zdrojů nebo odložíte stahování nepotřebných zdrojů, abyste zlepšili načítání stránky."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "K nejdůležitějším zdrojům přidejte signály [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/), ale snažte se jich použít méně než 4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Kandidáti na předběžné připojení"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Maximální latence kritické cesty:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Síťové závislosti nemají dopad na žádné úlohy vykreslování"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Žádné další zdroje nejsou vhodnými kandidáty pro předběžné připojení."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "nebyly předem připojeny žádné zdroje"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Signály [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) pomáhají prohlížeči navázat při načítání stránky spojení dříve, což šetří čas při prvním požadavku na daný zdroj. Níže jsou uvedeny zdroje, ke kterým se stránka předběžně připojila."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Předběžně připojené zdroje"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Strom síťových závislostí"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Byla nalezena více než 4 připojení preconnect. Tato připojení byste měli používat střídmě a pouze pro nejdůležitější zdroje."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Nepoužité předběžné připojení. Signály preconnect používejte jen pro zdroje, o které bude stránka pravděpodobně žádat."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Vyhněte se řetězení kritických požadavků tím, že zkrátíte délku řetězců, snížíte velikost stahovaných zdrojů nebo odložíte stahování nepotřebných zdrojů, abyste zlepšili načítání stránky."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Počáteční vykreslení stránky blokují požadavky, což může zpozdit LCP. [Odložením nebo vložením](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) lze tyto síťové požadavky přesunout mimo kritickou cestu."
+    "message": "Počáteční vykreslení stránky blokují požadavky, což může zpozdit LCP. [Odložením nebo vložením](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) lze tyto síťové požadavky přesunout mimo kritickou cestu."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Trvání"
@@ -2682,7 +2727,7 @@
     "message": "Velikost přenosu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kód třetích stran může mít významný dopad na rychlost načítání. [Omezte a odložte načítání kódu třetích stran](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), aby se mohl přednostně načíst obsah stránky."
+    "message": "Kód třetích stran může mít významný dopad na rychlost načítání. [Omezte a odložte načítání kódu třetích stran](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), aby se mohl přednostně načíst obsah stránky."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nebyly nalezeny žádné třetí strany"

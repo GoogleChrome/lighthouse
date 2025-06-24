@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Le vannak tiltva azok az erőforráskérések, amelyek esetében az URL-ek eltávolított \\(n|r|t) térközkaraktereket és kisebb mint karaktereket (<) is tartalmaznak. Az ilyen erőforrások betöltése érdekében távolítsa el az „új sor” jelöléseket, és kódolja a kisebb mint karaktereket az olyan helyeken, mint az elemek attribútumértékei."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Az ISO-2022-JP karakterkészlet automatikus észlelése elavult, és a közeljövőben letiltásra kerül. Adja meg a karakterkészletet a Tartalomtípus fejlécben vagy egy metacímke használatával (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Az chrome.loadTimes() függvényt megszüntettük. Használja helyette a szabványosított Navigation Timing 2 API-t."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "A window.confirm eredeteken átívelő iframe-ekből való aktiválásának lehetőségét megszüntettük, és a jövőben el fogjuk távolítani."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "A DOM-mutációs események, köztük a DOMSubtreeModified, a DOMNodeInserted, a DOMNodeRemoved, a DOMNodeRemovedFromDocument, a DOMNodeInsertedIntoDocument és a DOMCharacterDataModified elavultak (https://w3c.github.io/uievents/#legacy-event-types), és el lesznek távolítva. Használja helyettük a következőt: MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Adatok támogatása: az SVGUseElement elemben lévő URL-ek elavultak, és a jövőben el fogjuk távolítani őket."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "A SharedArrayBuffer használatának folytatásához a bővítményeknél engedélyezni kell az eltérő eredetek elkülönítését. További információ: https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "A GPUAdapter isFallbackAdapter attribútuma elavult, használja helyette a GPUAdapterInfo isFallbackAdapter attribútumát."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Az XMLHttpRequest esetében az UTF-16 kódolást nem támogatja a válasz-JSON."
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Az elrendezésmozgás legfontosabb okai"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Nem méretezett képek"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Legrosszabb klaszter"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Az első hálózati kérelem a legfontosabb.  Csökkentse a várakozási idejét az átirányítások elkerülésével, gyors szerverválasz biztosításával és a szövegtömörítés engedélyezésével."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Voltak átirányítások ({PH1} átirányítás, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "A szerver lassan válaszolt ({PH1} észlelve) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Nincs alkalmazva tömörítés"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Elkerüli az átirányításokat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "A szerver gyorsan válaszol ({PH1} észlelve) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Szövegtömörítés alkalmazva"
@@ -2571,7 +2574,7 @@
     "message": "Elem renderelési késése"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Mező 75. percentilise"
+    "message": "Mező: 75. percentilis"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Nem észlelhető LCP"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Modern HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Eredet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Kérés"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Forrás"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Idő"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Becsült LCP-megtakarítás"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Nem használt előzetes kapcsolat. Ellenőrizze, hogy megfelelően használja-e a crossorigin attribútumot."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Kerülje a kritikus kérések láncba fűzését](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Adjon meg [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) tippeket a legfontosabb eredethelyekhez, de próbáljon meg négynél kevesebbet használni."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Előzetes kapcsolódás jelöltjei"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Kritikus elérési út maximális várakozási ideje:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Nincs olyan megjelenítési feladat, amelyet befolyásolnak a hálózati függőségek"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Nincsenek további eredethelyek, amelyek jó jelöltek lennének az előzetes kapcsolódásra"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "nincsenek előre kapcsolódott eredethelyek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Az [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) tippek segítenek a böngészőnek abban, hogy az oldal betöltésének korábbi szakaszában létesítsen kapcsolatot, így időt takaríthat meg, amikor elküldi az első kérést az adott eredethelynek. A következők azok az eredethelyek, amelyekkel az oldal előre kapcsolódott."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Előzetesen kapcsolódott eredethelyek"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Hálózati függőségi fa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Több mint négy preconnect kapcsolat található. Ezeket érdemes csak ritkán használnia, a legfontosabb eredethelyekhez."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Nem használt előzetes kapcsolat. Csak az oldal által valószínűleg kérelmezett forrásokhoz használja a preconnect lehetőséget."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Kerülje a kritikus kérések láncba fűzését a láncok hosszának csökkentésével, a letöltött források méretének csökkentésével, vagy a felesleges források letöltésének késleltetésével, hogy javuljon az oldalbetöltés."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Kérelmek blokkolják az oldal kezdeti megjelenítését, ami késleltetheti az LCP-t. [Elhalasztás vagy a beágyazás](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) segítségével ezeket a hálózati kérelmeket el lehet távolítani a kritikus útvonalról."
+    "message": "Kérelmek blokkolják az oldal kezdeti megjelenítését, ami késleltetheti az LCP-t. [Elhalasztás vagy a beágyazás](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) segítségével ezeket a hálózati kérelmeket el lehet távolítani a kritikus útvonalról."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Időtartam"
@@ -2682,7 +2727,7 @@
     "message": "Átviteli méret"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "A harmadik felektől származó kódok jelentős hatással lehetnek a betöltés teljesítményére. [Csökkentse és késleltesse a harmadik féltől származó kód betöltését](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) az oldal tartalmának előrébb sorolása érdekében."
+    "message": "A harmadik felektől származó kódok jelentős hatással lehetnek a betöltés teljesítményére. [Csökkentse és késleltesse a harmadik féltől származó kód betöltését](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) az oldal tartalmának előrébb sorolása érdekében."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nem található harmadik fél"

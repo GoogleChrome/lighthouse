@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Les sol·licituds de recursos amb URL que contenien tant caràcters d'espai en blanc (\\(n|r|t)) com caràcters d'\"inferior a\" (<) suprimits estan bloquejades. Suprimeix les línies noves i codifica els caràcters d'\"inferior a\" de llocs com els valors d'atribut d'element per carregar aquests recursos."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "La detecció automàtica del conjunt de caràcters ISO-2022-JP està obsoleta i es desactivarà pròximament. Especifica el conjunt de caràcters a la capçalera Content-Type o mitjançant una metaetiqueta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() està obsoleta. Substitueix-la per l'API estandarditzada: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "L'opció d'activar window.confirm des d'iframes d'altres orígens està obsoleta i se suprimirà en el futur."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Els esdeveniments de modificació de DOM, inclosos DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument i DOMCharacterDataModified, estan obsolets (https://w3c.github.io/uievents/#legacy-event-types) i se suprimiran. Substitueix-los per MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "La compatibilitat amb les URL data: a SVGUseElement està obsoleta i se suprimirà en el futur."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Les extensions han d'activar l'aïllament d'altres orígens per continuar utilitzant SharedArrayBuffer. Consulta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "L'atribut isFallbackAdapter de GPUAdapter està obsolet. Substitueix-lo per l'atribut isFallbackAdapter de GPUAdapterInfo."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "La resposta JSON no admet UTF-16 a XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Principals causants del canvi de disseny"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Imatges sense mida"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "El pitjor clúster"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "La primera sol·licitud de xarxa és la més important.  Per reduir-ne la latència, evita les redireccions, assegura't que el servidor respongui amb rapidesa i activa la compressió de text."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Tenia redireccions ({PH1} redireccions, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "El servidor ha respost lentament (temps observat: {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "No s'ha aplicat cap compressió"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Evita les redireccions"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "El servidor respon ràpidament (temps observat: {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "S'aplica la compressió de text"
@@ -2571,7 +2574,7 @@
     "message": "Retard en la renderització de l'element"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Percentil 75 del camp"
+    "message": "Camp p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "No s'ha detectat cap LCP"
@@ -2598,7 +2601,7 @@
     "message": "Bytes malgastats"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Els polyfills i les transformacions permeten als navegadors heretats fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Et recomanem que modifiquis el procés de compilació de JavaScript perquè no transpili les funcions de [referència](https://web.dev/articles/baseline-and-polyfills), tret que sàpigues que has de donar suport als navegadors heretats. [Obtén informació sobre per què la majoria dels llocs web poden implementar codi ES6+ sense transcompilació](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Els polyfills i les transformacions permeten als navegadors més antics fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Et recomanem que modifiquis el procés de compilació de JavaScript perquè no transpili les funcions de [referència](https://web.dev/articles/baseline-and-polyfills), tret que sàpigues que has de donar suport als navegadors més antics. [Obtén informació sobre per què la majoria dels llocs web poden implementar codi ES6+ sense transpilar](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript heretat"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP modern"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Sol·licitud"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Font"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Hora"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Estalvi estimat d'LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Preconnexió no utilitzada. Comprova que l'atribut crossorigin s'utilitzi correctament."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Evita encadenar sol·licituds crítiques](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) escurçant les cadenes, reduint la mida de baixada dels recursos o ajornant la baixada de recursos innecessaris per millorar la càrrega de les pàgines."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Afegeix suggeriments de [preconnexió](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) als teus orígens més importants, però prova d'utilitzar-ne menys de 4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Candidats per a la preconnexió"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Latència de camí crítica màxima:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "No hi ha tasques de renderització afectades per cap dependència de xarxa"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Cap origen addicional no és un bon candidat per a la preconnexió"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "no s'ha preconnectat cap origen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Els suggeriments de [preconnexió](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ajuden el navegador a establir una connexió més aviat durant la càrrega de la pàgina, de manera que es guanya temps quan es fa la primera sol·licitud per a aquest origen. Aquests són els orígens als quals la pàgina s'ha connectat prèviament."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Orígens preconnectats"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Arbre de dependències de la xarxa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "S'han trobat més de 4 connexions preconnect. Aquestes connexions s'han d'utilitzar amb moderació i només per als orígens més importants."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Preconnexió no utilitzada. Utilitza preconnect només per als orígens que és probable que la pàgina sol·liciti."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Evita encadenar sol·licituds crítiques escurçant les cadenes, reduint la mida de baixada dels recursos o ajornant la baixada de recursos innecessaris per millorar la càrrega de les pàgines."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Les sol·licituds estan bloquejant la renderització inicial de la pàgina, cosa que pot retardar l'LCP. [Ajornar o inserir](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) pot treure aquestes sol·licituds de xarxa del camí crític."
+    "message": "Les sol·licituds estan bloquejant la renderització inicial de la pàgina, cosa que pot retardar l'LCP. [Ajornar o inserir](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) pot treure aquestes sol·licituds de xarxa del camí crític."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Durada"
@@ -2682,7 +2727,7 @@
     "message": "Mida de la transferència"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "El codi de tercers pot afectar significativament el rendiment de la càrrega. [Redueix i ajorna la càrrega de codi de tercers](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) per prioritzar el contingut de la pàgina."
+    "message": "El codi de tercers pot afectar significativament el rendiment de la càrrega. [Redueix i ajorna la càrrega de codi de tercers](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) per prioritzar el contingut de la pàgina."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "No s'ha trobat cap tercer"

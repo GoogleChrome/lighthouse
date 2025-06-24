@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Запити ресурсів до URL-адрес, які містять вилучені пробіли \\(n|r|t) та знаки менше (<), блокуються. Щоб завантажити ці ресурси, вилучіть символи нового рядка з таких місць, як значення атрибутів елементів, і закодуйте знаки менше."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Автоматичне визначення набору символів ISO-2022-JP більше не підтримується, і незабаром його буде вимкнено. Укажіть набір символів у заголовку Content Type або за допомогою метатегу (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() не підтримується. Натомість використовуйте стандартизований інтерфейс API: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Запуск window.confirm із міждоменних елементів iframe не підтримується, і в майбутньому цю функцію буде вилучено."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Події DOM MutationEvent, зокрема DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument і DOMCharacterDataModified, більше не підтримуються (https://w3c.github.io/uievents/#legacy-event-types), і їх буде вилучено. Натомість використовуйте MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Обробка даних: підтримку URL-адрес у SVGUseElement припинено, і в майбутньому цю функцію буде вилучено."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Для розширень потрібно ввімкнути ізоляцію від міждоменних джерел, щоб і надалі використовувати SharedArrayBuffer. Докладніше читайте на сторінці https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Атрибут GPUAdapter isFallbackAdapter більше не підтримується. Натомість використовуйте атрибут GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 не підтримується відповіддю JSON у XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Основні причини зміщення макета"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Зображення невідомих розмірів"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Найгірший кластер"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Перший запит мережі найважливіший.  Щоб зменшити його затримку, уникайте переспрямувань, забезпечте швидку відповідь сервера й увімкніть стиснення тексту."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Містить переспрямування ({PH1}, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Сервер відповідає повільно ({PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Без стиснення"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Уникає переспрямувань"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Сервер відповідає швидко ({PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Застосовано стиснення тексту"
@@ -2571,7 +2574,7 @@
     "message": "Затримка відображення елемента"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75-й процентиль поля"
+    "message": "75-й процентиль реальних користувачів"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "LCP не виявлено"
@@ -2598,7 +2601,7 @@
     "message": "Заощаджені байти"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Поліфіли й перетворення дають застарілим вебпереглядачам змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/articles/baseline-and-polyfills), якщо вам не потрібно підтримувати застарілі вебпереглядачі. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Поліфіли й перетворення дають вебпереглядачам старіших версій змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/articles/baseline-and-polyfills), якщо вам не потрібно підтримувати вебпереглядачі старіших версій. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Застарілі функції JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Сучасний протокол HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Час"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Очікуване заощадження LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Невикористане джерело для попереднього підключення. Переконайтеся, що атрибут crossorigin використовується правильно."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Щоб уникнути утворення ланцюжків критичних запитів](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. Це допоможе пришвидшити завантаження сторінки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Додайте підказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) для найважливіших джерел (бажано використовувати щонайбільше 4)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Варіанти джерел для попереднього підключення"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Максимальна затримка критичного шляху:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Немає завдань відрисовки, на які впливають залежності мережі"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Немає додаткових джерел, для яких варто налаштувати попереднє підключення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "немає попередньо підключених джерел"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Підказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) допомагають вебпереглядачу встановлювати з’єднання на початку завантаження сторінки, що заощаджує час під час першого запиту до відповідного джерела. Нижче наведено джерела, до яких сторінка підключатиметься заздалегідь."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Попередньо підключені джерела"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Дерево залежностей мережі"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Знайдено більше ніж 4 підключення preconnect. Такі засоби слід використовувати зрідка й лише для найважливіших джерел."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Невикористане джерело для попереднього підключення. Використовуйте підказки preconnect тільки для джерел, яким сторінка, імовірно, надсилатиме запити."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Щоб уникнути утворення ланцюжків критичних запитів, зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. Це допоможе пришвидшити завантаження сторінки."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Запити блокують початкове відображення сторінки, що може викликати затримку завантаження елементів LCP. За допомогою [відкладання або вставки](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) можна усунути ці запити мережі з критичного шляху."
+    "message": "Запити блокують початкове відображення сторінки, що може викликати затримку завантаження елементів LCP. За допомогою [відкладання або вставки](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) можна усунути ці запити мережі з критичного шляху."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Тривалість"
@@ -2682,7 +2727,7 @@
     "message": "Розмір передавання"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Сторонній код може значно погіршити швидкість завантаження. [Зменште обсяг стороннього коду й відкладіть його завантаження](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), щоб надати пріоритет контенту сторінки."
+    "message": "Сторонній код може значно погіршити швидкість завантаження. [Зменште обсяг стороннього коду й відкладіть його завантаження](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), щоб надати пріоритет контенту сторінки."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Сторонніх розробників не знайдено"

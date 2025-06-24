@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Solicitările de resurse ale căror adrese URL conțineau atât caractere pentru spații \\(n|r|t), cât și semnul mai mic decât (<) sunt blocate. Pentru a încărca resursele, elimină caracterele de rând nou și codifică semnul mai mic decât în locuri cum ar fi valorile atributelor elementelor."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Detectarea automată a setului de caractere ISO-2022-JP este învechită și va fi dezactivată în viitorul apropiat. Specifică setul de caractere în antetul Tipul de conținut sau folosind o metaetichetă (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() s-a învechit. Folosește API-ul standardizat Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Declanșarea window.confirm din cadre iframe cu origini diferite s-a învechit și va fi eliminată pe viitor."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Evenimentele de mutare DOM, inclusiv DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument și DOMCharacterDataModified, sunt învechite (https://w3c.github.io/uievents/#legacy-event-types) și vor fi eliminate. Folosește MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Compatibilitate cu datele: adresele URL din SVGUseElement sunt învechite și vor fi eliminate pe viitor."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensiile trebuie să aibă blocarea accesului de la mai multe surse activată pentru a folosi în continuare SharedArrayBuffer. Consultă https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Atributul GPUAdapter isFallbackAdapter este învechit. Folosește atributul GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "Fișierul JSON de răspuns din XMLHttpRequest nu acceptă UTF-16"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Principalii factori care au cauzat schimbarea aspectului"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Imagini fără dimensiuni"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cel mai slab grup"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Prima solicitare din rețea este cea mai importantă.  Redu latența acesteia evitând redirecționările, asigurând un răspuns rapid al serverului și activând comprimarea textului."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "A avut redirecționări ({PH1} redirecționări, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Serverul a răspuns lent (observat {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Nu s-a aplicat nicio compresie"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Evită redirecționările"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Serverul răspunde rapid (observat {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Se aplică comprimarea textului"
@@ -2571,7 +2574,7 @@
     "message": "Întârzierea la redarea elementului"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Câmpul Percentila 75"
+    "message": "Câmpul p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Nu s-a detectat nicio valoare LCP"
@@ -2598,7 +2601,7 @@
     "message": "Byți inutili"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Codurile polyfill și transformările fac posibilă folosirea noilor funcții JavaScript în browserele vechi. Însă pentru browserele moderne, majoritatea nu sunt necesare. Poți să modifici procesul versiunii JavaScript astfel încât să nu transpileze funcțiile [Baseline](https://web.dev/articles/baseline-and-polyfills), cu excepția cazului în care știi că trebuie să accepti browserele vechi. [Află de ce majoritatea site-urilor pot implementa cod ES6+ fără transpilare](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Codurile polyfill și transformările fac posibilă folosirea noilor funcții JavaScript în browserele vechi. Însă pentru browserele moderne, majoritatea nu sunt necesare. Poți să modifici procesul versiunii JavaScript astfel încât să nu transpileze funcțiile [Baseline](https://web.dev/articles/baseline-and-polyfills), cu excepția cazului în care știi că trebuie să accepti browserele mai vechi. [Află de ce majoritatea site-urilor pot implementa cod ES6+ fără transpilare](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript vechi"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP modern"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Origine"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Solicitare"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Sursă"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Ora"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Economii LCP est."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Preconectare nefolosită. Verifică dacă folosești corect atributul crossorigin."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Evită să legi solicitări critice](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) reducând lungimea lanțurilor, reducând dimensiunea de descărcare a resurselor sau amânând descărcarea de resurse inutile pentru a îmbunătăți încărcarea paginilor."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Adaugă indicii de [preconectare](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) pentru cele mai importante origini, dar încearcă să folosești mai puțin de patru."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Candidați pentru conectare prealabilă"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Latența maximă a căii critice:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Nicio activitate de redare nu a fost afectată de dependențele de rețea"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Nu există alte origini care să fie candidate bune pentru conectarea prealabilă"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "nu s-au conectat în prealabil origini"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Indiciile de [preconectare](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ajută browserul să stabilească o conexiune mai devreme în timpul încărcării paginii, economisind timp la prima solicitare pentru acea origine. Următoarele sunt originile la care s-a conectat pagina în prealabil."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Origini conectate în prealabil"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Arborele de dependențe al rețelei"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "S-au găsit mai mult de patru conexiuni preconnect. Acestea trebuie folosite cu măsură și numai pentru cele mai importante origini."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Preconectare nefolosită. Folosește preconnect doar pentru originile pe care pagina le va solicita probabil."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Evită să legi solicitări critice reducând lungimea lanțurilor, reducând dimensiunea de descărcare a resurselor sau amânând descărcarea de resurse inutile pentru a îmbunătăți încărcarea paginilor."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Solicitările blochează redarea inițială a paginii, ceea ce poate întârzia LCP. [Amânarea sau încorporarea](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) poate să mute aceste solicitări de rețea în afara căii critice."
+    "message": "Solicitările blochează redarea inițială a paginii, ceea ce poate întârzia LCP. [Amânarea sau încorporarea](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) poate să mute aceste solicitări de rețea în afara căii critice."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Durată"
@@ -2682,7 +2727,7 @@
     "message": "Dimensiunea transferului"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Codul terță parte poate influența semnificativ performanța de încărcare. [Redu și amână încărcarea codului terță parte](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) pentru a acorda prioritate conținutului din pagină."
+    "message": "Codul terță parte poate influența semnificativ performanța de încărcare. [Redu și amână încărcarea codului terță parte](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) pentru a acorda prioritate conținutului din pagină."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nu s-au găsit terțe părți"

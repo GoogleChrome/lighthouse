@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Anmodninger om ressourcer, hvis webadresser både indeholder tegnene \\(n|r|t) uden blanktegn og mindre end-tegn (<), blokeres. Hvis du vil indlæse disse ressourcer, skal du fjerne linjeskift og indkode mindre end-tegn fra f.eks. attributværdier for elementer."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Automatisk registrering af ISO-2022-JP-tegnsættet er udfaset og deaktiveres snart. Angiv tegnsættet i headeren Content Type, eller brug et metatag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() er udfaset. Brug i stedet den standardiserede API: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Aktivering af window.confirm fra iframes med krydsoprindelse er udfaset og fjernes senere."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Hændelser med DOM-mutation, herunder DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument og DOMCharacterDataModified, er udfaset (https://w3c.github.io/uievents/#legacy-event-types) og fjernes. Brug i stedet MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Understøttelse af data: Webadresser i SVGUseElement er udfaset, og de fjernes på et senere tidspunkt."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Udvidelser skal tilvælge domæneisolering for fortsat at kunne bruge SharedArrayBuffer. Se https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Attributten GPUAdapter isFallbackAdapter er udfaset. Brug i stedet attributten GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 understøttes ikke af svar-json i XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Typiske årsager til layoutændringer"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Billeder uden mål"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Værste klynge"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Din første netværksanmodning er den vigtigste.  Reducer forsinkelsen ved at undgå omdirigeringer, sikre en hurtig serversvartid og aktivere tekstkomprimering."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Der var omdirigeringer ({PH1} omdirigeringer, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Serveren reagerede langsomt (observeret {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Der er ikke anvendt komprimering"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Undgår omdirigeringer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Serveren svarer hurtigt (observeret {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Tekstkomprimering er anvendt"
@@ -2571,7 +2574,7 @@
     "message": "Forsinket gengivelse af element"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75. percentil for feltet"
+    "message": "Felt p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Der blev ikke registreret nogen LCP"
@@ -2598,7 +2601,7 @@
     "message": "Bortkastede bytes"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Polyfill-koder og transformeringer gør det muligt for browsere at anvende nye JavaScript-funktioner. Mange af dem er dog ikke nødvendige til moderne browsere. Du kan vælge at ændre din JavaScript-buildproces, så den ikke transpilerer [Baseline](https://web.dev/articles/baseline-and-polyfills)-funktioner, medmindre du ved, at du skal understøtte forældede browsere. [Se, hvorfor de fleste websites kan implementere ES6+-kode uden transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill-koder og transformeringer gør det muligt for ældre browsere at anvende nye JavaScript-funktioner. Mange af dem er dog ikke nødvendige til moderne browsere. Du kan vælge at ændre din JavaScript-buildproces, så den ikke transpilerer [Baseline](https://web.dev/articles/baseline-and-polyfills)-funktioner, medmindre du ved, at du skal understøtte ældre browsere. [Se, hvorfor de fleste websites kan implementere ES6+-kode uden transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Forældet JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Moderne HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Oprindelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Anmodning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Kilde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Tidspunkt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Estimerede LCP-besparelser"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Ubrugt oprettelse af forbindelse på forhånd. Sørg for, at attributten crossorigin bruges korrekt."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Undgå at sammenkæde kritiske anmodninger](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) ved at reducere kædernes længde, så ressourcernes downloadstørrelse bliver mindre, eller at udskyde download af unødvendige ressourcer, så sideindlæsningen forbedres."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Føj hints til at [oprette forbindelse på forhånd](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) til dine vigtigste oprindelser, men prøv at bruge færre end 4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Opret forbindelse til kandidater på forhånd"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Maksimal forsinkelse for kritisk sti:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Ingen gengivelsesopgaver påvirkes af netværksafhængigheder"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Der er ingen yderligere oprindelser, der er gode kandidater til at oprette forbindelse på forhånd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "ingen oprindelser blev forbundet på forhånd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Hints til at [oprette forbindelse på forhånd](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hjælper browseren med at oprette en forbindelse tidligere i sideindlæsningen, hvilket sparer tid, når den første anmodning om den pågældende oprindelse foretages. Følgende er de kilder, som siden har oprettet forbindelse til på forhånd."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Oprindelser, der på forhånd er oprettet forbindelse til"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Afhængighedstræ for netværket"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Der blev fundet mere end 4 preconnect forbindelser. Disse bør bruges sparsomt og kun til de vigtigste oprindelser."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Ubrugt oprettelse af forbindelse på forhånd. Du bør kun bruge preconnect til oprindelser, som siden sandsynligvis vil anmode om."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Undgå at sammenkæde kritiske anmodninger ved at reducere kædernes længde, så ressourcernes downloadstørrelse bliver mindre, eller at udskyde download af unødvendige ressourcer, så sideindlæsningen forbedres."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Anmodninger blokerer for sidens oprindelige gengivelse, hvilket kan forsinke LCP. [Udsættelse eller indlejring](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) kan flytte disse netværksanmodninger væk fra den kritiske sti."
+    "message": "Anmodninger blokerer for sidens oprindelige gengivelse, hvilket kan forsinke LCP. [Udsættelse eller indlejring](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) kan flytte disse netværksanmodninger væk fra den kritiske sti."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Varighed"
@@ -2682,7 +2727,7 @@
     "message": "Overførselsstørrelse"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Tredjepartskode kan have en væsentlig indvirkning på indlæsningen. [Reducer og udskyd indlæsningen af tredjepartskoden](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) for at prioritere din sides indhold."
+    "message": "Tredjepartskode kan have en væsentlig indvirkning på indlæsningen. [Reducer og udskyd indlæsningen af tredjepartskoden](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) for at prioritere din sides indhold."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Der blev ikke fundet nogen tredjeparter"

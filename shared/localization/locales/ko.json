@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "삭제된 공백 \\(n|r|t)자 및 글자수 제한(<)이 URL에 포함된 리소스 요청이 차단되었습니다. 이러한 리소스를 로드하려면 엘리먼트 속성 값과 같은 위치에서 줄바꿈을 삭제하고 글자수 제한을 인코딩하세요."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP 문자 집합의 자동 감지는 지원 중단되었으며 조만간 사용 중지됩니다. 콘텐츠 유형 헤더에서 문자 집합을 지정하거나 메타 태그(https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)를 사용하세요."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes()는 지원 중단되었습니다. 대신 표준화된 API인 Navigation Timing 2를 사용하세요."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "교차 출처 iframe에서의 window.confirm 트리거는 지원 중단되었으며 앞으로 삭제될 예정입니다."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument, DOMCharacterDataModified 등의 DOM 변형 이벤트가 지원 중단되었으며(https://w3c.github.io/uievents/#legacy-event-types) 삭제됩니다. 대신 MutationObserver를 사용하시기 바랍니다."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "데이터 지원: SVGUseElement의 URL은 지원 중단되며 향후 삭제될 예정입니다."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer를 계속 사용하려면 확장 프로그램에서 교차 출처 분리를 사용해야 합니다. 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter isFallbackAdapter 속성은 지원 중단되었습니다. 대신 GPUAdapterInfo isFallbackAdapter 속성을 사용하세요."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16은 XMLHttpRequest의 response.json에서 지원되지 않습니다."
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "상위 레이아웃 변경 원인"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "크기가 지정되지 않은 이미지"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "최악의 클러스터"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "첫 번째 네트워크 요청이 가장 중요합니다.  리디렉션을 방지하고 서버 응답 속도를 높이며 텍스트 압축을 사용 설정하여 지연 시간을 줄이세요."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "리디렉션 있음(리디렉션 {PH1}개, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "서버 응답이 느림({PH1} 관찰됨) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "적용된 압축 없음"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "리디렉션 방지"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "서버 응답이 빠름({PH1} 관찰됨) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "텍스트 압축 적용"
@@ -2571,7 +2574,7 @@
     "message": "요소 렌더링 지연"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "필드 75번째 백분위수"
+    "message": "실사용자 75번째 백분위수"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "감지된 LCP 없음"
@@ -2598,7 +2601,7 @@
     "message": "낭비된 바이트"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "폴리필 및 변환을 통해 레거시 브라우저에서 새로운 JavaScript 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 레거시 브라우저를 지원해야 하는 경우가 아니라면 [Baseline](https://web.dev/articles/baseline-and-polyfills) 기능을 트랜스파일하지 않도록 JavaScript 빌드 프로세스를 수정해 보세요. [대부분의 사이트에서 트랜스파일링 없이 ES6+ 코드를 배포할 수 있는 이유 알아보기](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "폴리필 및 변환을 통해 이전 브라우저에서 새로운 JavaScript 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 이전 브라우저를 지원해야 하는 경우가 아니라면 [Baseline](https://web.dev/articles/baseline-and-polyfills) 기능을 트랜스파일하지 않도록 JavaScript 빌드 프로세스를 수정해 보세요. [대부분의 사이트에서 트랜스파일링 없이 ES6+ 코드를 배포할 수 있는 이유 알아보기](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "레거시 JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "최신 HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "출처"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "요청"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "소스"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "예상 LCP 절감 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "미사용 연결입니다. crossorigin 속성이 올바르게 사용되었는지 확인하세요."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 개선하는 방식으로 [크리티컬 요청 체이닝을 방지](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "가장 중요한 출처에 [사전 연결](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 힌트를 추가하되 4개 미만으로 사용하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "후보 사전 연결"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "최대 중요 경로 지연 시간:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "네트워크 종속 항목의 영향을 받는 렌더링 작업이 없습니다."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "사전 연결에 적합한 추가 출처가 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "사전 연결된 출처가 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[사전 연결](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 힌트는 브라우저가 페이지 로드 초기에 연결을 설정하도록 지원하여 해당 출처에 대한 첫 번째 요청이 이루어질 때 시간을 절약합니다. 다음은 페이지가 사전 연결된 출처입니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "사전 연결된 출처"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "네트워크 종속 항목 트리"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "5개가 넘는 preconnect 연결이 발견되었습니다. 사전 연결은 가장 중요한 출처에 한해 최소한으로만 사용해야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "미사용 연결입니다. 페이지에서 요청할 가능성이 있는 출처에만 preconnect를 사용합니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 개선하는 방식으로 크리티컬 요청 체이닝을 방지합니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "요청으로 인해 페이지의 초기 렌더링이 차단되어 LCP가 지연될 수 있습니다. [지연 또는 인라인 처리](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)하면 이러한 네트워크 요청이 주요 경로에서 벗어날 수 있습니다."
+    "message": "요청으로 인해 페이지의 초기 렌더링이 차단되어 LCP가 지연될 수 있습니다. [지연 또는 인라인 처리](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)하면 이러한 네트워크 요청이 주요 경로에서 벗어날 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "기간"
@@ -2682,7 +2727,7 @@
     "message": "전송 크기"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "서드 파티 코드는 로드 성능에 크게 영향을 미칠 수 있습니다. [서드 파티 코드의 로드를 줄이고 연기](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)하여 페이지 콘텐츠에 우선순위를 지정하세요."
+    "message": "서드 파티 코드는 로드 성능에 크게 영향을 미칠 수 있습니다. [서드 파티 코드의 로드를 줄이고 연기](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)하여 페이지 콘텐츠에 우선순위를 지정하세요."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "서드 파티를 찾을 수 없음"

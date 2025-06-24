@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "URL'lerinde hem kaldırılan boşluk \\(n|r|t) karakterleri hem küçüktür karakterleri (<) bulunan kaynak istekleri engellenir. Bu kaynakları yüklemek için lütfen yeni satırları kaldırıp öğe özellik değeri gibi yerlerdeki küçüktür karakterlerini kodlayın."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP karakter kümesinin otomatik algılanması kullanımdan kaldırılmıştır ve yakın zamanda devre dışı bırakılacak. Lütfen karakter kümesini İçerik Türü üstbilgisinde veya bir meta etiket kullanarak (https://developer.mozilla.org/tr/docs/Glossary/Character_encoding) belirtin."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() kullanımdan kaldırıldı. Onun yerine standart API: Navigation Timing 2'yi kullanın."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Çapraz kaynak iframe'lerden window.confirm tetikleme desteği sonlandırılmış olup ileride kaldırılacaktır."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument ve DOMCharacterDataModified dahil omak üzere DOM dönüşümü etkinliklerinin desteği sonlandırılmıştır (https://w3c.github.io/uievents/#legacy-event-types) ve bu etkinlikler kaldırılacaktır. Lütfen bunun yerine MutationObserver kullanın."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Veri desteği: SVGUseElement öğesindeki URL'lerin desteği sonlandırılmıştır ve gelecekte kaldırılacaktır."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Uzantıların SharedArrayBuffer kullanmayı sürdürmek için kökler arası erişimi kapatmaları gerekir. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ adresini ziyaret edin."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "GPUAdapter isFallbackAdapter özelliğinin desteği sonlandırıldı. Bunun yerine GPUAdapterInfo isFallbackAdapter özelliğini kullanın."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest içindeki yanıt JSON dosyası UTF-16'yı desteklemiyor."
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Düzen kayması sorununun en önemli nedenleri"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Boyutu Belirlenmemiş Resimler"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "En kötü küme"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "İlk ağ isteğiniz en önemli isteğinizdir.  Yönlendirmelerden kaçınarak, hızlı sunucu yanıtı sağlayarak ve metin sıkıştırmayı etkinleştirerek gecikmeyi azaltın."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Yönlendirmeler vardı ({PH1} yönlendirme, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Sunucu yavaş yanıt verdi ({PH1} gözlemlendi) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Sıkıştırma uygulanmadı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Yönlendirme içermiyor"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Sunucu hızlı yanıt veriyor ({PH1} gözlemlendi) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Metin sıkıştırma uygulanır"
@@ -2571,7 +2574,7 @@
     "message": "Öğe oluşturma gecikmesi"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Alanın 75. yüzdelik dilimi"
+    "message": "75. yüzdelik dilim alanı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "LCP algılanmadı"
@@ -2598,7 +2601,7 @@
     "message": "Boşa harcanan bayt miktarı"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Çoklu dolgular ve dönüşümler, eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Eski tarayıcıları desteklemeniz gerekmediğinden eminseniz JavaScript derleme işleminizi [Baseline](https://web.dev/articles/baseline-and-polyfills) özelliklerini çevirecek şekilde değiştirmeyi düşünün. [Çoğu sitenin neden ES6+ kodunu çevirmeden dağıtabildiğini öğrenin](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill'ler ve dönüşümler, daha eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Daha eski tarayıcıları desteklemeniz gerekmediğinden eminseniz JavaScript derleme işleminizi [Baseline](https://web.dev/articles/baseline-and-polyfills) özelliklerini çevirecek şekilde değiştirmeyi düşünün. [Çoğu sitenin neden ES6+ kodunu çevirmeden dağıtabildiğini öğrenin](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Eski JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Modern HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Kaynak"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "İstek"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Kaynak"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Zaman"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Tahmini LCP tasarrufu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Kullanılmayan ön bağlantı. crossorigin özelliğinin doğru şekilde kullanıldığını kontrol edin."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek [kritik istek zinciri oluşturmaktan kaçının](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "En önemli kaynaklarınıza [önceden bağlanma](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ipuçları ekleyin ancak 4'ten az ipucu kullanmaya çalışın."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Önceden bağlanma adayları"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Maksimum kritik yol gecikmesi:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Ağ bağımlılıklarından etkilenen oluşturma görevi yok"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Ön bağlantı için uygun ek kaynak bulunmamaktadır"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "hiçbir kaynak önceden bağlanmadı"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[Önceden bağlanma](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ipuçları, sayfa yüklenirken tarayıcının gerekli bağlantıları önceden kurmasına yardımcı olarak ilgili kaynağa yapılacak ilk istekte zaman kazandırır. Sayfanın önceden bağlantı kurduğu kaynaklar aşağıda verilmiştir."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Önceden bağlanmış kaynaklar"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Ağ bağımlılık ağacı"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "4'ten fazla preconnect bağlantısı bulundu. Bunlar az kullanılıp sadece en önemli kaynaklar için tercih edilmelidir."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Kullanılmayan ön bağlantı. Yalnızca sayfanın isteyebileceği kaynaklar için preconnect öğesini kullanın."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Sayfaların daha kolay yüklenmesi için zincir uzunluğunu azaltarak, kaynakların indirme boyutunu küçülterek veya gereksiz kaynakların indirilmesini erteleyerek kritik istek zinciri oluşturmaktan kaçının."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "İstekler sayfanın ilk oluşturma işlemini engelliyor. Bu durum, LCP'yi geciktirebilir. [Erteleme veya satır içine yerleştirme](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/), bu ağ isteklerini kritik yoldan uzaklaştırabilir."
+    "message": "İstekler sayfanın ilk oluşturma işlemini engelliyor. Bu durum, LCP'yi geciktirebilir. [Erteleme veya satır içine yerleştirme](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources), bu ağ isteklerini kritik yoldan uzaklaştırabilir."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Süre"
@@ -2682,7 +2727,7 @@
     "message": "Aktarım boyutu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Sayfanızdaki içeriklere öncelik vermek için [üçüncü taraf kodlarının yüklenmesini azaltın ve geciktirin](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+    "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Sayfanızdaki içeriklere öncelik vermek için [üçüncü taraf kodlarının yüklenmesini azaltın ve geciktirin](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Üçüncü taraf içeriği bulunamadı"

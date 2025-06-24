@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Resursförfrågningar vars webbadresser innehöll både de borttagna blankstegstecknen \\(n|r|t) och mindre än-tecknen (<) blockeras. Ta bort radbrytningstecken och koda mindre än-tecken från t.ex. värden för elementattribut om du vill läsa in dessa resurser."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Automatisk identifiering av teckenuppsättningen ISO-2022-JP har fasats ut och inaktiveras inom kort. Ange teckenuppsättningen i rubriken för innehållstyp eller med en metatagg (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() är utfasad. Använd det standardiserade API:et Navigation Timing 2 i stället."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Aktivering av window.confirm från iframes för korsursprung har fasats ut och kommer att tas bort."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM-mutationshändelser, inklusive DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument och DOMCharacterDataModified, har fasats ut (https://w3c.github.io/uievents/#legacy-event-types) och kommer att tas bort. Använd MutationObserver i stället."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Stöd för data: webbadresser i SVGUseElement har fasats ut och tas bort i framtiden."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Tillägg måste isoleras för korsursprung om du vill fortsätta använda SharedArrayBuffer. Läs mer på https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Attributet GPUAdapter isFallbackAdapter har fasats ut. Använd i stället attributet GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 stöds inte av json-svar i XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "De vanligaste orsakerna till layoutförskjutningar"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Bilder utan angiven storlek"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Sämsta klustret"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Den första nätverksbegäran är den viktigaste.  Minska latensen genom att undvika omdirigeringar (så att servern svarar snabbt) och aktivera textkomprimering."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Innehöll omdirigeringar ({PH1} omdirigeringar, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Servern svarade långsamt ({PH1} har observerats) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Ingen komprimering har tillämpats"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Undviker omdirigeringar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Servern svarar snabbt ({PH1} har observerats) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Tillämpar textkomprimering"
@@ -2571,7 +2574,7 @@
     "message": "Fördröjning av elementrendering"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75:e percentilen i fältet"
+    "message": "Fält p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Ingen LCP upptäcktes"
@@ -2598,7 +2601,7 @@
     "message": "Bortkastade bytes"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem behövs dock inte för moderna webbläsare. Överväg att ändra JavaScript-byggprocessen så att du inte transpilerar [Baseline](https://web.dev/articles/baseline-and-polyfills)-funktioner, förutom om du vet att du måste ha stöd för äldre webbläsare. [Läs mer om varför de flesta webbplatser kan implementera ES6+-kod utan transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem är dock inte nödvändiga för moderna webbläsare. Överväg att ändra JavaScript-byggprocessen så att du inte transpilerar [Baseline](https://web.dev/articles/baseline-and-polyfills)-funktioner, förutom om du vet att du måste ha stöd för äldre webbläsare. [Läs mer om varför de flesta webbplatser kan implementera ES6+-kod utan transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Äldre JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Modern HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Ursprung"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Begäran"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Källa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Tid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Beräknade LCP-besparingar"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Oanvänd föranslutning. Kontrollera att attributet crossorigin används korrekt."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Undvik att kedjekoppla kritiska begäranden](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjut upp nedladdningen av onödiga resurser för att förbättra sidhämtningstiden."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Lägg till signaler för [föranslutning](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) för dina viktigaste ursprung, men försök att använda färre än fyra."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Kandidater för föranslutning"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Högsta latens för kritisk kedja:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Inga renderingsuppgifter påverkades av nätverksberoenden"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Inga ytterligare ursprung är bra kandidater för föranslutning"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "inga källor har föranslutits"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Signaler för [föranslutning](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hjälper webbläsaren att upprätta en anslutning tidigare under sidhämtningen, vilket sparar tid när första begäran för det ursprunget görs. Följande är ursprungen som sidan föranslöts till."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Föranslutna ursprung"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Nätverksberoendeträd"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Fler än fyra anslutningar för preconnect hittades. Dessa ska användas sparsamt och bara med de viktigaste ursprungen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Oanvänd föranslutning. Använd endast preconnect för ursprung som sidan sannolikt kommer att begära."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Undvik att kedjekoppla kritiska begäranden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser för att förbättra sidhämtningstiden."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Begäranden blockerar sidans första rendering, vilket kan fördröja LCP. [Använd uppskjutning eller infogning](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) för att flytta bort dessa nätverksbegäranden från den kritiska vägen."
+    "message": "Begäranden blockerar sidans första rendering, vilket kan fördröja LCP. [Använd uppskjutning eller infogning](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) för att flytta bort dessa nätverksbegäranden från den kritiska vägen."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Längd"
@@ -2682,7 +2727,7 @@
     "message": "Överföringsstorlek"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kod från tredje part kan påverka inläsningsprestandan betydligt. [Minska och skjut upp inläsningen av kod från tredje part](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) för att prioritera sidans innehåll."
+    "message": "Kod från tredje part kan påverka inläsningsprestandan betydligt. [Minska och skjut upp inläsningen av kod från tredje part](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) för att prioritera sidans innehåll."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Inga tredje parter hittades"

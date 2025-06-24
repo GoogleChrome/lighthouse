@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Запросы ресурсов, в URL которых содержатся и удаленные пробельные символы (\\(n|r|t)), и знаки \"меньше\" (<), блокируются. Чтобы загружать такие ресурсы, удалите символы новой строки и используйте коды для знаков \"меньше\" в таких местах URL, где, например, указываются значения атрибутов элементов."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Автоматическое обнаружение набора символов ISO-2022-JP больше не поддерживается и вскоре будет отключено. Указать набор символов можно в заголовке \"Тип контента\" или с помощью метатега (https://developer.mozilla.org/ru-ru/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Метод chrome.loadTimes() больше не поддерживается. Вместо него используйте стандартный API Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Вызов функции window.confirm из окон iframe в других источниках не поддерживается. В дальнейшем эта возможность будет удалена."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "События изменения DOM, в том числе DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument и DOMCharacterDataModified, больше не поддерживаются (https://w3c.github.io/uievents/#legacy-event-types) и будут удалены. Используйте вместо них MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "URL из SVGUseElement больше не поддерживаются и в дальнейшем будут удалены."
@@ -2324,6 +2318,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Теперь, чтобы использовать объект SharedArrayBuffer, в расширениях необходимо включить изоляцию от междоменных источников. Подробнее: https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Атрибут GPUAdapter isFallbackAdapter устарел. Используйте вместо него атрибут GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "В объекте JSON ответа XMLHttpRequest не поддерживает UTF-16."
   },
@@ -2356,9 +2353,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Основные причины смещения макета"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Изображения с незаданными размерами"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Худший кластер"
@@ -2411,17 +2405,26 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Ваш первый сетевой запрос – самый важный.  Уменьшайте задержку, избегая переадресации, ускоряя ответ сервера и используя сжатие текста."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Зафиксированы переадресации ({PH1}, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Сервер отвечает медленно (фактическая скорость – {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Без сжатия"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Не используются переадресации"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Сервер отвечает быстро (фактическая скорость – {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Применяется сжатие текста"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
-    "message": "Перенаправления"
+    "message": "Переадресации"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
     "message": "Время ответа сервера"
@@ -2568,7 +2571,7 @@
     "message": "Задержка при отрисовке элемента"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75-й процентиль в наблюдаемых данных"
+    "message": "75-й процентиль данных"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Значение LCP не обнаружено"
@@ -2595,7 +2598,7 @@
     "message": "Потерянные байты"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Полифилы и преобразования позволяют работать с новыми возможностями JavaScript в устаревших браузерах. Однако для современных браузеров многие полифилы и преобразования не требуются. Если вам не нужно поддерживать устаревшие браузеры, возможно стоит изменить процесс сборки JavaScript, чтобы не транспилировать функции [Baseline](https://web.dev/articles/baseline-and-polyfills). Подробнее о том, [почему большинство сайтов могут использовать код ES6+ без транспилирования](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)…"
+    "message": "Полифилы и преобразования позволяют работать с новыми возможностями JavaScript в более старых браузерах. Однако для современных браузеров большинство из них не требуется. Если поддержка более старых браузеров не требуется, возможно стоит изменить процесс сборки JavaScript, чтобы не транспилировать функции [Baseline](https://web.dev/articles/baseline-and-polyfills). Узнайте, [почему большинство сайтов могут использовать код ES6+ без транспилирования](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Устаревший код JavaScript"
@@ -2615,8 +2618,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Современная версия HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Источник"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Запрос"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Источник"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Время"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Приблизительная экономия LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Неиспользуемое предварительное подключение. Убедитесь, что атрибут crossorigin настроен правильно."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Старайтесь избегать цепочек критических запросов.](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) Чтобы ускорить загрузку страницы, сократите количество запросов, уменьшите размер скачиваемых ресурсов или отложите скачивание ненужных ресурсов."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Добавьте подсказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) к наиболее значимым источникам, но не более четырех."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Варианты предварительного подключения"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Максимальная задержка критического пути:"
@@ -2624,14 +2651,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Нет задач отрисовки, на которые повлияло дерево зависимостей в сети."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Отсутствуют дополнительные источники и хорошие варианты для предварительного подключения"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "нет предварительно подключенных источников"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Подсказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) помогают браузеру установить соединение на более ранних этапах загрузки страницы, что экономит время при первом запросе к источнику. Далее перечислены источники, к которым предварительно подключилась страница."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Предварительно подключенные источники"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Дерево зависимостей в сети"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Обнаружено больше четырех предварительно подключенных ссылок типа preconnect. Используйте их умеренно и только для наиболее значимых источников."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Неиспользуемое предварительное подключение. Применяйте preconnect только для источников, которые будут запрашиваться с наибольшей вероятностью."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Избегайте цепочек критических запросов. Чтобы ускорить загрузку страниц, рекомендуется сократить количество запросов, уменьшить размер скачиваемых ресурсов или отложить скачивание ненужных ресурсов."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Запросы блокируют обработку при первоначальной загрузке страницы. Это может привести к увеличению значения LCP. [Отсрочка или встраивание](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) могут избавить от негативного воздействия этих сетевых запросов."
+    "message": "Запросы блокируют обработку при первоначальной загрузке страницы. Это может привести к увеличению значения LCP. [Отсрочка или встраивание](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) могут избавить от негативного воздействия этих сетевых запросов."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Продолжительность"
@@ -2679,7 +2724,7 @@
     "message": "Объем передаваемых данных"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Сторонний код может сильно замедлить загрузку страниц сайта. [Сократите и отсрочьте загрузку стороннего кода,](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) чтобы ускорить показ своего контента."
+    "message": "Сторонний код может сильно замедлить загрузку страниц сайта. [Сократите и отсрочьте загрузку стороннего кода,](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) чтобы ускорить показ своего контента."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Сторонний контент не найден"

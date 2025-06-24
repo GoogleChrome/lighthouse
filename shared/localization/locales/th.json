@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "คำขอทรัพยากรที่ URL มีทั้งอักขระ \\(n|r|t) แบบช่องว่างซึ่งนำออกไปแล้วและมีอักขระน้อยกว่า (<) ถูกบล็อก โปรดนำบรรทัดใหม่ออกและเข้ารหัสอักขระที่น้อยกว่าจากที่ต่างๆ อย่างเช่นค่าแอตทริบิวต์ขององค์ประกอบเพื่อโหลดทรัพยากรเหล่านี้"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "การตรวจหาการเข้ารหัสข้อความ ISO-2022-JP โดยอัตโนมัติเลิกใช้งานแล้วและจะปิดใช้ในเร็วๆ นี้ โปรดระบุการเข้ารหัสข้อความในส่วนหัวประเภทเนื้อหาหรือใช้เมตาแท็ก (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() เลิกใช้งานแล้ว โปรดใช้ Navigation Timing 2 ซึ่งเป็น API แบบมาตรฐานแทน"
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "การเรียกใช้ window.confirm จาก iframe แบบข้ามต้นทางเลิกใช้งานแล้วและจะถูกนำออกในอนาคต"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "เหตุการณ์การเปลี่ยนแปลง DOM ซึ่งรวมถึง DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument และ DOMCharacterDataModified เลิกใช้งานแล้ว (https://w3c.github.io/uievents/#legacy-event-types) และจะถูกนำออก โปรดใช้ MutationObserver แทน"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "การรองรับข้อมูล: URL ใน SVGUseElement เลิกใช้งานแล้วและจะนำออกในอนาคต"
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "ส่วนขยายควรเลือกใช้การแยกแบบข้ามต้นทางเพื่อใช้ SharedArrayBuffer ต่อ ดู https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "เราเลิกใช้งานแอตทริบิวต์ isFallbackAdapter ของ GPUAdapter แล้ว โปรดใช้แอตทริบิวต์ isFallbackAdapter ของ GPUAdapterInfo แทน"
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "JSON ของการตอบกลับไม่รองรับ UTF-16 ใน XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "สาเหตุหลักๆ ของการเปลี่ยนแปลงเลย์เอาต์"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "รูปภาพที่ไม่มีขนาด"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "คลัสเตอร์ที่แย่ที่สุด"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "คำขอเครือข่ายครั้งแรกเป็นสิ่งสำคัญที่สุด  ลดเวลาในการตอบสนองโดยหลีกเลี่ยงการเปลี่ยนเส้นทาง ตรวจสอบการตอบกลับของเซิร์ฟเวอร์ที่รวดเร็ว และเปิดใช้การบีบอัดข้อความ"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "มีการเปลี่ยนเส้นทาง (เปลี่ยนเส้นทาง {PH1} +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "เซิร์ฟเวอร์ตอบสนองช้า (สังเกต {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "ไม่ได้ใช้การบีบอัด"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "หลีกเลี่ยงการเปลี่ยนเส้นทาง"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "เซิร์ฟเวอร์ตอบสนองเร็ว (สังเกต {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "ใช้การบีบอัดข้อความ"
@@ -2571,7 +2574,7 @@
     "message": "ความล่าช้าในการแสดงผลองค์ประกอบ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "เปอร์เซ็นไทล์ที่ 75 ในฟิลด์"
+    "message": "ช่อง p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "ไม่พบ LCP"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP ที่ทันสมัย"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "ต้นทาง"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "คำขอ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "แหล่งที่มา"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "เวลา"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "การประหยัด LCP โดยประมาณ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "การเชื่อมต่อล่วงหน้าที่ไม่ได้ใช้ โปรดตรวจสอบว่าใช้แอตทริบิวต์ crossorigin อย่างถูกต้องแล้ว"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[หลีกเลี่ยงการเชนคำขอที่สำคัญ](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)โดยลดความยาวของเชน ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "เพิ่มคำแนะนำ[การเชื่อมต่อล่วงหน้า](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)ไปยังต้นทางที่สำคัญที่สุด แต่พยายามใช้ให้น้อยกว่า 4"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "ตัวเลือกการเชื่อมต่อล่วงหน้า"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "เวลาในการตอบสนองสูงสุดของเส้นทางที่สำคัญ:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "ไม่มีงานการแสดงผลที่ได้รับผลกระทบจากทรัพยากร Dependency ของเครือข่าย"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "ไม่มีตัวเลือกต้นทางเพิ่มเติมที่เหมาะสําหรับการเชื่อมต่อล่วงหน้า"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "ไม่ได้เชื่อมต่อกับต้นทางไว้ล่วงหน้า"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "คำแนะนำ[การเชื่อมต่อล่วงหน้า](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)ทำให้เบราว์เซอร์สร้างการเชื่อมต่อได้เร็วขึ้นเมื่อโหลดหน้าเว็บ ซึ่งจะช่วยประหยัดเวลาเมื่อมีการขอข้อมูลต้นทางครั้งแรก ต้นทางที่หน้าเว็บเชื่อมต่อไว้ล่วงหน้ามีดังนี้"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "ต้นทางที่เชื่อมต่อไว้ล่วงหน้า"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "แผนผังทรัพยากร Dependency ของเครือข่าย"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "พบการเชื่อมต่อ preconnect มากกว่า 4 รายการ ควรใช้การเชื่อมต่อเช่นนี้เท่าที่จำเป็นและใช้กับต้นทางที่สำคัญที่สุดเท่านั้น"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "การเชื่อมต่อล่วงหน้าที่ไม่ได้ใช้ ใช้ preconnect กับต้นทางที่หน้าเว็บมีแนวโน้มจะขอเท่านั้น"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "หลีกเลี่ยงการเชนคำขอที่สำคัญโดยลดความยาวของเชน ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "คำขอกำลังบล็อกการแสดงผลเริ่มต้นของหน้าเว็บ ซึ่งอาจทำให้ LCP ล่าช้า [การเลื่อนเวลาหรือแทรกในหน้า](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)สามารถย้ายคำขอเครือข่ายเหล่านี้ออกจากเส้นทางที่สำคัญได้"
+    "message": "คำขอกำลังบล็อกการแสดงผลเริ่มต้นของหน้าเว็บ ซึ่งอาจทำให้ LCP ล่าช้า [การเลื่อนเวลาหรือแทรกในหน้า](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)สามารถย้ายคำขอเครือข่ายเหล่านี้ออกจากเส้นทางที่สำคัญได้"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "ระยะเวลา"
@@ -2682,7 +2727,7 @@
     "message": "ขนาดการโอน"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "โค้ดของบุคคลที่สามอาจส่งผลกระทบที่สำคัญต่อประสิทธิภาพการโหลด [ลดและเลื่อนการโหลดโค้ดของบุคคลที่สามออกไป](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)เพื่อจัดลำดับความสำคัญของเนื้อหาในหน้าเว็บ"
+    "message": "โค้ดของบุคคลที่สามอาจส่งผลกระทบที่สำคัญต่อประสิทธิภาพการโหลด [ลดและเลื่อนการโหลดโค้ดของบุคคลที่สามออกไป](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)เพื่อจัดลำดับความสำคัญของเนื้อหาในหน้าเว็บ"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "ไม่พบบุคคลที่สาม"

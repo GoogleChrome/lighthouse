@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Šaltinių užklausos, kurių URL buvo pašalintų matomų tarpų „\\(n|r|t)“ simbolių ir simbolių „mažiau ne“ („<“), yra užblokuotos. Pašalinkite naujas eilutes ir užkoduokite simbolius „mažiau nei“ tokiose vietose kaip elementų atributų vertės, kad įkeltumėte šiuos šaltinius."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "ISO-2022-JP simbolių rinkinio automatinis aptikimas nebepalaikomas ir netrukus bus išjungtas. Nurodykite simbolių rinkinį turinio tipo antraštėje arba naudodami metažymą (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Funkcijos „chrome.loadTimes()“ teikimas nutrauktas; vietoj jos naudokite standartizuotą API: „2 naršymo laiko žymės“."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Funkcijos „window.confirm“ suaktyvinimo iš skirtingų šaltinių „iframe“ teikimas nutrauktas ir ateityje ji bus pašalinta."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "DOM pakeitimų įvykių, įskaitant „DOMSubtreeModified“, „DOMNodeInserted“, „DOMNodeRemoved“, „DOMNodeRemovedFromDocument“, „DOMNodeInsertedIntoDocument“ ir „DOMCharacterDataModified“, teikimas nutrauktas (https://w3c.github.io/uievents/#legacy-event-types) ir jie bus pašalinti. Vietoj jų naudokite „MutationObserver“."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Duomenų palaikymas: „SVGUseElement“ URL nebenaudojamas ir ateityje bus pašalintas."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Plėtiniams reikia pasirinkti apsaugą nuo subjektų iš kitų domenų, norint toliau naudoti „SharedArrayBuffer“. Žr. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "„GPUAdapter“ atributo „isFallbackAdapter“ teikimas nutrauktas; vietoj jo naudokite „GPUAdapterInfo“ atributą „isFallbackAdapter“."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 nepalaikomas atsako JSON naudojant funkciją „XMLHttpRequest“"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Pagrindinės išdėstymo poslinkio priežastys"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Nenustatyto dydžio vaizdai"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Blogiausia grupė"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Pirmoji tinklo užklausa yra svarbiausia.  Sumažinkite delsą vengdami peradresavimų, užtikrindami spartų serverio atsaką ir įgalindami teksto glaudinimą."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Buvo peradresavimų (peradresavimų: {PH1}, + {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Serveris atsakė lėtai (stebėta {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Glaudinimas netaikomas"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Išvengiama peradresavimo"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Serveris greitai atsako (stebėta {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Taikomas teksto glaudinimas"
@@ -2571,7 +2574,7 @@
     "message": "Elemento pateikimo delsa"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75-asis stebėjimo duomenų procentilis"
+    "message": "75-ojo procentilio laukas"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "DTŽ neaptikta"
@@ -2598,7 +2601,7 @@
     "message": "Iššvaistytų baitų"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Naudojant kodus ir transformacijas pasenusiose naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Apsvarstykite galimybę pakeisti „JavaScript“ kompiliavimo procesą, kad nebūtų transpiliuojamos [pagrindinės](https://web.dev/articles/baseline-and-polyfills) funkcijos, nebent žinote, kad turite palaikyti pasenusias naršykles. [Sužinokite, kodėl dauguma svetainių gali diegti ES6+ kodą be transpiliavimo](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Naudojant kodus ir transformacijas senesnėse naršyklėse galima naudoti naujas „JavaScript“ funkcijas. Tačiau dauguma jų nereikalingi modernioms naršyklėms. Apsvarstykite galimybę pakeisti „JavaScript“ kompiliavimo procesą, kad nebūtų transpiliuojamos [pagrindinės](https://web.dev/articles/baseline-and-polyfills) funkcijos, nebent žinote, kad turite palaikyti senesnes naršykles. [Sužinokite, kodėl dauguma svetainių gali diegti ES6+ kodą be transpiliavimo](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Pasenusi „JavaScript“"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Modernus HTTP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Šaltinis"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Užklausa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Šaltinis"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Laikas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Numatomas trumpesnis DTŽ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Nepanaudotas išankstinis susiejimas. Patikrinkite, ar atributas „crossorigin“ naudojamas tinkamai."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Venkite svarbiausių užklausų grandinių](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), sutrumpindami grandines, sumažindami atsisiunčiamų šaltinių dydį arba atidėdami nebūtinų šaltinių atsisiuntimą, kad puslapio įkėlimas būtų sklandesnis."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Pridėkite [išankstinio susiejimo](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) nurodymų prie svarbiausių šaltinių, bet pabandykite naudoti mažiau nei keturis."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Išankstinis kandidatų susiejimas"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Didžiausia svarbaus kelio delsa:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Nėra pateikimo užduočių, paveiktų tinklo priklausomybių"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Nėra jokių papildomų šaltinių, kurie būtų tinkami išankstiniam susiejimui"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "jokie šaltiniai nebuvo iš anksto susieti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[Išankstinio susiejimo](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) nurodymai padeda naršyklei užmegzti ryšį anksčiau įkeliant puslapį, taupant laiką pateikiant pirmąją to šaltinio užklausą. Toliau pateikiami šaltiniai, prie kurių puslapis iš anksto prisijungė."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Iš anksto susieti šaltiniai"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Tinklo būtinųjų šaltinių medis"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Rastos daugiau nei keturios „preconnect“ sąsajos. Jos turi būti naudojamos taupiai ir susiejant tik su svarbiausiais šaltiniais."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Nepanaudotas išankstinis susiejimas. Naudokite tik „preconnect“ šaltiniams, kurių užklausas puslapis greičiausiai pateiks."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Venkite svarbiausių užklausų grandinių, sutrumpindami grandines, sumažindami atsisiunčiamų šaltinių dydį arba atidėdami nebūtinų šaltinių atsisiuntimą, kad puslapio įkėlimas būtų sklandesnis."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Užklausos blokuoja pradinį puslapio pateikimą, dėl kurio DTŽ gali vėluoti. [Atidėliojant arba įterpiant](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) šias tinklo užklausas galima pašalinti iš kritinio kelio."
+    "message": "Užklausos blokuoja pradinį puslapio pateikimą, dėl kurio DTŽ gali vėluoti. [Atidėliojant arba įterpiant](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) šias tinklo užklausas galima pašalinti iš kritinio kelio."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Trukmė"
@@ -2682,7 +2727,7 @@
     "message": "Failų perkėlimo dydis"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Trečiosios šalies kodas gali smarkiai paveikti įkėlimo našumą. [Sumažinkite ir atidėkite trečiosios šalies kodo įkėlimą](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), kad būtų nustatytas puslapio turinio prioritetas."
+    "message": "Trečiosios šalies kodas gali smarkiai paveikti įkėlimo našumą. [Sumažinkite ir atidėkite trečiosios šalies kodo įkėlimą](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), kad būtų nustatytas puslapio turinio prioritetas."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Nerasta trečiųjų šalių"

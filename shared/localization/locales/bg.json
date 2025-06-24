@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Заявките за ресурси, чиито URL адреси съдържат премахнатите знаци за интервал (\\(n|r|t)) и знака за по-малко (<), са блокирани. За да се заредят тези ресурси, премахнете новите редове и кодирайте знаците за по-малко, използвани например в стойности на атрибути за елементи."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Автоматичното разпознаване на знаковия набор ISO-2022-JP е оттеглено и ще бъде деактивирано в близко бъдеще. Моля, посочете знаковия набор в заглавката Content Type или чрез мета маркер (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "Приложният програмен интерфейс chrome.loadTimes() е оттеглен. Вместо него използвайте стандартизирания API Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Възможността за задействане на window.confirm от вложени рамки от външни източници е оттеглена и ще бъде премахната в бъдеще."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Събития за промяна на DOM, включително DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument и DOMCharacterDataModified, са оттеглени (https://w3c.github.io/uievents/#legacy-event-types) и ще бъдат премахнати. Вместо това използвайте MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Поддръжката на данни: URL адресите в елемента SVGUseElement са оттеглени и ще бъдат премахнати в бъдеще."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Разширенията трябва да се включат в изолирането от външни източници, за да продължат да използват SharedArrayBuffer. Вижте https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Атрибутът isFallbackAdapter за GPUAdapter е оттеглен. Вместо него използвайте атрибута isFallbackAdapter за GPUAdapterInfo."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 не се поддържа от JSON отговора в XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Водещи причинители на структурни промени"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Изображения без размери"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Най-лошата група"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Първата мрежова заявка е най-важна.  Намалете забавянето ѝ, като избягвате пренасочвания, осигурявате бърз отговор от сървъра и активирате компресирането на текста."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Имаше пренасочвания ({PH1} пренасочвания, + {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Сървърът отговори бавно (отчетено време: {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Не е приложена компресия"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Избягва пренасочванията"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Сървърът отговаря бързо (отчетено време: {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Прилага се компресиране на текста"
@@ -2571,7 +2574,7 @@
     "message": "Забавяне при рендерирането на елемента"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "75-ият процентил според реалните данни"
+    "message": "Поле със 75-и процентил"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Не е открито изобразяване на най-голямото съдържание (LCP)"
@@ -2598,7 +2601,7 @@
     "message": "Загубени байтове"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Полифиловете и трансформациите дават възможност на старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. Добре е да промените процеса на компилиране на JavaScript, така че да не се транскомпилират функциите на [Baseline](https://web.dev/articles/baseline-and-polyfills), освен ако не знаете, че трябва да поддържате наследени браузъри. [Научете защо повечето сайтове могат да внедряват код ES6+ без транскомпилиране](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Полифиловете и трансформациите дават възможност на по-старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. Добре е да промените процеса на компилиране на JavaScript, така че да не се транскомпилират функциите на [Baseline](https://web.dev/articles/baseline-and-polyfills), освен ако не знаете, че трябва да поддържате по-стари браузъри. [Научете защо повечето сайтове могат да внедряват код ES6+ без транскомпилиране](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "Наследен JavaScript"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "Съвременни HTTP връзки"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Източник"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Заявка"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Източник"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Час"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Приблизителни икономии от LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Неизползвано предварително свързване. Проверете дали атрибутът crossorigin се използва правилно."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "За да ускорите зареждането на страницата, [избягвайте верижни последователности от критични заявки](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), като скъсите веригите, намалите размера за изтегляне на ресурсите или отложите изтеглянето на ненужните от тях."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Добавете подсказки за [предварително свързване](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) към най-важните си източници, но опитайте да използвате по-малко от 4."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Подходящи за предварително свързване"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Максимално забавяне в критичния път:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Няма задачи за рендериране, засегнати от мрежови зависимости"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Няма допълнителни източници, подходящи за предварително свързване"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "няма предварително свързани източници"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Подсказките за [предварително свързване](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) помагат на браузъра да установи връзка по-рано при зареждането на страницата, което спестява време при първата заявка за този източник. По-долу са посочени източниците, с които страницата се е свързала предварително."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Източници с предварително установена връзка"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Дърво на мрежовите зависимости"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Бяха намерени повече от 4 връзки за preconnect. Те трябва да се използват пестеливо и само за най-важните източници."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Неизползвано предварително свързване. Използвайте preconnect само за източници, за които е вероятно страницата да изпрати заявка."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "За да ускорите зареждането на страницата, избягвайте верижни последователности от критични заявки, като скъсите веригите, намалите размера за изтегляне на ресурсите или отложите изтеглянето на ненужните от тях."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Заявки блокират първоначалното рендериране на страницата, което може да забави LCP. Тези заявки могат да бъдат преместени извън критичния път чрез [отлагане или вграждане](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)."
+    "message": "Заявки блокират първоначалното рендериране на страницата, което може да забави LCP. Тези заявки могат да бъдат преместени извън критичния път чрез [отлагане или вграждане](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Продължителност"
@@ -2682,7 +2727,7 @@
     "message": "Размер на прехвърлянето"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Кодът от трети страни може сериозно да повлияе върху скоростта на зареждане. [Намалете и отложете зареждането на кода от трети страни](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), за да дадете приоритет на съдържанието на страницата си."
+    "message": "Кодът от трети страни може сериозно да повлияе върху скоростта на зареждане. [Намалете и отложете зареждането на кода от трети страни](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), за да дадете приоритет на съдържанието на страницата си."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Няма намерени трети страни"

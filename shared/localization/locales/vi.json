@@ -2171,9 +2171,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
     "message": "Các yêu cầu tài nguyên có URL chứa cả ký tự \\(n|r|t) khoảng trắng đã bị xoá và ký tự nhỏ hơn (<) sẽ bị chặn. Vui lòng xoá các dòng mới và mã hoá ký tự nhỏ hơn khỏi các vị trí như giá trị thuộc tính phần tử để tải những tài nguyên như vậy."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CharsetAutoDetectionISO2022JP": {
-    "message": "Tính năng tự động phát hiện bộ ký tự ISO-2022-JP không được dùng nữa và sẽ bị tắt trong tương lai gần. Vui lòng chỉ định bộ ký tự trong tiêu đề Loại nội dung hoặc bằng cách sử dụng thẻ meta (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
     "message": "chrome.loadTimes() không được dùng nữa; thay vào đó, hãy sử dụng API đã chuẩn hoá: Navigation Timing 2."
   },
@@ -2194,9 +2191,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
     "message": "Tính năng kích hoạt window.confirm qua các iframe trên nhiều nguồn gốc không được dùng nữa và sẽ bị loại bỏ trong tương lai."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DOMMutationEvents": {
-    "message": "Các Sự kiện đột biến DOM, trong đó có DOMSubtreeModified, DOMNodeInserted, DOMNodeRemoved, DOMNodeRemovedFromDocument, DOMNodeInsertedIntoDocument và DOMCharacterDataModified, không được dùng nữa (https://w3c.github.io/uievents/#legacy-event-types) và sẽ bị loại bỏ. Thay vào đó, vui lòng sử dụng MutationObserver."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
     "message": "Hỗ trợ về dữ liệu: Các URL trong SVGUseElement không được dùng nữa và sẽ bị loại bỏ trong tương lai."
@@ -2327,6 +2321,9 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Các tiện ích phải chọn sử dụng chế độ tách biệt nhiều nguồn gốc đẻ có thể tiếp tục sử dụng SharedArrayBuffer. Xem https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
+    "message": "Thuộc tính GPUAdapter isFallbackAdapter đã ngừng hoạt động. Thay vào đó, hãy sử dụng thuộc tính GPUAdapterInfo isFallbackAdapter."
+  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "JSON phản hồi không hỗ trợ UTF-16 trong XMLHttpRequest"
   },
@@ -2359,9 +2356,6 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Nguyên nhân làm thay đổi bố cục thường gặp nhất"
-  },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImages": {
-    "message": "Hình ảnh chưa xác định kích thước"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cụm tệ nhất"
@@ -2414,11 +2408,20 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Yêu cầu mạng đầu tiên là quan trọng nhất.  Giảm độ trễ bằng cách tránh dùng đường liên kết chuyển hướng, đảm bảo máy chủ phản hồi nhanh và bật tính năng nén văn bản."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Có chuyển hướng ({PH1} chuyển hướng, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Máy chủ phản hồi chậm (theo quan sát là {PH1}) "
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Không áp dụng tính năng nén"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
     "message": "Tránh chuyển hướng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Máy chủ phản hồi nhanh (theo quan sát là {PH1}) "
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Áp dụng tính năng nén văn bản"
@@ -2571,7 +2574,7 @@
     "message": "Độ trễ khi hiển thị phần tử"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | fieldDuration": {
-    "message": "Nhóm 75 phần trăm của dữ liệu thực địa"
+    "message": "Trường p75"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | noLcp": {
     "message": "Không phát hiện ra LCP"
@@ -2598,7 +2601,7 @@
     "message": "Số byte bị lãng phí"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/articles/baseline-and-polyfills), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Mã Polyfill và Transform cho phép các trình duyệt cũ sử dụng những tính năng mới của JavaScript. Tuy nhiên, có nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/articles/baseline-and-polyfills), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
     "message": "JavaScript cũ"
@@ -2618,8 +2621,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
     "message": "HTTP hiện đại"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Điểm gốc"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Yêu cầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Nguồn"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Thời gian"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Mức tiết kiệm LCP ước tính"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Kết nối trước chưa sử dụng. Hãy kiểm tra để đảm bảo thuộc tính crossorigin được sử dụng đúng cách."
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
     "message": "[Tránh tạo chuỗi các yêu cầu quan trọng](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Thêm gợi ý [kết nối trước](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) cho các điểm gốc quan trọng nhất, nhưng hãy cố gắng sử dụng ít hơn 4 gợi ý."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Đề xuất kết nối trước"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
     "message": "Độ trễ tối đa của đường dẫn quan trọng:"
@@ -2627,14 +2654,32 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
     "message": "Không có tác vụ kết xuất nào chịu ảnh hưởng của phần phụ thuộc mạng"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Không có điểm gốc nào khác phù hợp để kết nối trước"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "không có điểm gốc nào được kết nối trước"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Gợi ý [kết nối trước](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) giúp trình duyệt thiết lập kết nối sớm hơn trong quá trình tải trang, nhờ đó tiết kiệm thời gian khi gửi yêu cầu đầu tiên đối với điểm gốc đó. Sau đây là những điểm gốc mà trang đã kết nối trước."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Điểm gốc được kết nối trước"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
     "message": "Cây phần phụ thuộc mạng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Đã phát hiện ra hơn 4 đường kết nối preconnect. Bạn nên dùng những đường kết nối này một cách hợp lý và chỉ dùng cho các điểm gốc quan trọng nhất."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Kết nối trước chưa sử dụng. Chỉ sử dụng preconnect cho những điểm gốc mà trang có khả năng yêu cầu."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
     "message": "Tránh tạo chuỗi các yêu cầu quan trọng bằng cách giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Các yêu cầu đang chặn quá trình kết xuất ban đầu của trang, điều này có thể làm trễ LCP. [Việc hoãn hoặc dùng cùng dòng](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) có thể di chuyển các yêu cầu mạng này ra khỏi đường dẫn quan trọng."
+    "message": "Các yêu cầu đang chặn quá trình kết xuất ban đầu của trang, điều này có thể làm trễ LCP. [Việc hoãn hoặc dùng cùng dòng](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) có thể di chuyển các yêu cầu mạng này ra khỏi đường dẫn quan trọng."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
     "message": "Thời lượng"
@@ -2682,7 +2727,7 @@
     "message": "Kích thước cần chuyển"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Mã của bên thứ ba có thể tác động đáng kể đến hiệu suất tải. [Giảm và trì hoãn việc tải mã của bên thứ ba](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) để ưu tiên nội dung trên trang của bạn."
+    "message": "Mã của bên thứ ba có thể tác động đáng kể đến hiệu suất tải. [Giảm và trì hoãn việc tải mã của bên thứ ba](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) để ưu tiên nội dung trên trang của bạn."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
     "message": "Không tìm thấy bên thứ ba nào"
