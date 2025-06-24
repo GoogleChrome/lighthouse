@@ -9,6 +9,7 @@ import {isEqual} from 'lodash-es';
 
 import {
   getBrowserVersion, getBenchmarkIndex, getEnvironmentWarnings,
+  getDevicePixelRatio,
 } from './driver/environment.js';
 
 /**
@@ -20,6 +21,7 @@ import {
 async function getBaseArtifacts(resolvedConfig, driver, context) {
   const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
   const {userAgent, product} = await getBrowserVersion(driver.defaultSession);
+  const HostDPR = await getDevicePixelRatio(driver.executionContext);
 
   return {
     // Meta artifacts.
@@ -29,6 +31,7 @@ async function getBaseArtifacts(resolvedConfig, driver, context) {
     settings: resolvedConfig.settings,
     // Environment artifacts that can always be computed.
     BenchmarkIndex,
+    HostDPR,
     HostUserAgent: userAgent,
     HostFormFactor: userAgent.includes('Android') || userAgent.includes('Mobile') ?
       'mobile' : 'desktop',

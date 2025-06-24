@@ -44,6 +44,8 @@ interface UniversalBaseArtifacts {
   LighthouseRunWarnings: Array<string | IcuMessage>;
   /** The benchmark index that indicates rough device class. */
   BenchmarkIndex: number;
+  /** The host's device pixel ratio. */
+  HostDPR: number;
   /** An object containing information about the testing configuration used by Lighthouse. */
   settings: Config.Settings;
   /** The timing instrumentation of the gather portion of a run. */
