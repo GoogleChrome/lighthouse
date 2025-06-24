@@ -100,8 +100,8 @@ declare module Details {
   
   interface ListSectionItem {
     type: 'list-section';
-    title: IcuMessage | string;
-    description: IcuMessage | string;
+    title?: IcuMessage | string;
+    description?: IcuMessage | string;
     value: ListableDetail;
   }
 

@@ -69,7 +69,7 @@ class NetworkDependencyTreeInsight extends Audit {
           duration: Math.round(insight.maxTime / 1000),
         },
       });
-      list.push(Audit.makeListDetailSectionItem('', '', sectionDetails));
+      list.push(Audit.makeListDetailSectionItem(sectionDetails));
 
       // Preconnected origins table.
       if (insight.preconnectedOrigins.length) {
@@ -111,9 +111,9 @@ class NetworkDependencyTreeInsight extends Audit {
       }
 
       list.push(Audit.makeListDetailSectionItem(
+        sectionDetails,
         str_(UIStrings.preconnectOriginsTableTitle),
-        str_(UIStrings.preconnectOriginsTableDescription),
-        sectionDetails));
+        str_(UIStrings.preconnectOriginsTableDescription)));
 
       // Estimated savings table.
       if (insight.preconnectCandidates.length) {
@@ -135,9 +135,9 @@ class NetworkDependencyTreeInsight extends Audit {
       }
 
       list.push(Audit.makeListDetailSectionItem(
+        sectionDetails,
         str_(UIStrings.estSavingTableTitle),
-        str_(UIStrings.estSavingTableDescription),
-        sectionDetails));
+        str_(UIStrings.estSavingTableDescription)));
 
       const warnings = [];
       if (insight.preconnectedOrigins.length > TOO_MANY_PRECONNECTS_THRESHOLD) {
