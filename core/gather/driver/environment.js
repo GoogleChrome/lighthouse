@@ -66,6 +66,7 @@ async function getBenchmarkIndex(executionContext) {
 async function getDevicePixelRatio(executionContext) {
   const status = {msg: 'Host device pixel ratio', id: 'lh:gather:getDevicePixelRatio'};
   log.time(status);
+  // eslint-disable-next-line no-undef
   const indexVal = await executionContext.evaluate(() => devicePixelRatio, {
     args: [],
   });
