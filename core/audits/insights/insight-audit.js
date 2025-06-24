@@ -127,7 +127,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     scoreDisplayMode,
     score,
     metricSavings,
-    warnings,
+    warnings: warnings.length ? warnings : undefined,
     displayValue,
     details,
   };
