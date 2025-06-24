@@ -541,6 +541,22 @@ export class DetailsRenderer {
   }
 
   /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.ListableDetail>} item
+   * @return {Element | null}
+   */
+  _renderListValue(item) {
+    if (item.type === 'node') {
+      return this.renderNode(item);
+    }
+
+    if (item.type === 'text') {
+      return this._renderText(item.value);
+    }
+
+    return this.render(item);
+  }
+
+  /**
    * @param {LH.FormattedIcu<LH.Audit.Details.List>} details
    * @return {Element}
    */
@@ -548,13 +564,29 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
-      if (item.type === 'node') {
-        listContainer.append(this.renderNode(item));
+      if (item.type === 'list-section') {
+        const sectionEl = this._dom.createElement('div', 'lh-list-section');
+
+        if (item.title) {
+          const titleEl = this._dom.createChildOf(sectionEl, 'div', 'lh-list-section__title');
+          titleEl.append(this._dom.convertMarkdownLinkSnippets(item.title));
+        }
+
+        if (item.description) {
+          const descEl = this._dom.createChildOf(sectionEl, 'div', 'lh-list-section__description');
+          descEl.append(this._dom.convertMarkdownLinkSnippets(item.description));
+        }
+
+        const listItem = this._renderListValue(item.value);
+        if (listItem) sectionEl.append(listItem);
+
+        listContainer.append(sectionEl);
         return;
       }
 
-      const listItem = this.render(item);
+      const listItem = this._renderListValue(item);
       if (!listItem) return;
+
       listContainer.append(listItem);
     });
 

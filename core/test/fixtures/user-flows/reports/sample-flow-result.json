@@ -5040,23 +5040,69 @@
               "LCP": 0
             },
             "details": {
-              "type": "network-tree",
-              "chains": {
-                "9E726BF73EE3F17B3D0E9C4779BDDEF7": {
-                  "url": "https://www.mikescerealshack.co/",
-                  "navStartToEndTime": 173,
-                  "transferSize": 3632,
-                  "isLongest": true,
-                  "children": {}
+              "type": "list",
+              "items": [
+                {
+                  "type": "list-section",
+                  "title": "",
+                  "description": "",
+                  "value": {
+                    "type": "network-tree",
+                    "chains": {
+                      "9E726BF73EE3F17B3D0E9C4779BDDEF7": {
+                        "url": "https://www.mikescerealshack.co/",
+                        "navStartToEndTime": 173,
+                        "transferSize": 3632,
+                        "isLongest": true,
+                        "children": {}
+                      }
+                    },
+                    "longestChain": {
+                      "duration": 173
+                    }
+                  }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnected origins",
+                  "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+                  "value": {
+                    "type": "text",
+                    "value": "no origins were preconnected"
+                  }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnect candidates",
+                  "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+                  "value": {
+                    "type": "table",
+                    "headings": [
+                      {
+                        "key": "origin",
+                        "valueType": "text",
+                        "label": "Origin"
+                      },
+                      {
+                        "key": "wastedMs",
+                        "valueType": "ms",
+                        "label": "Est LCP savings"
+                      }
+                    ],
+                    "items": [
+                      {
+                        "origin": "https://www.google-analytics.com",
+                        "wastedMs": 300
+                      }
+                    ]
+                  }
                 }
-              },
-              "longestChain": {
-                "duration": 173
-              }
+              ]
             },
             "guidanceLevel": 1,
             "replacesAudits": [
-              "critical-request-chains"
+              "critical-request-chains",
+              "uses-rel-preconnect"
             ]
           },
           "render-blocking-insight": {
@@ -10490,6 +10536,27 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
               "audits[network-dependency-tree-insight].description"
             ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[1].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[1].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": [
+              "audits[network-dependency-tree-insight].details.items[1].value.value"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[2].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[2].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": [
+              "audits[network-dependency-tree-insight].details.items[2].value.headings[0].label"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": [
+              "audits[network-dependency-tree-insight].details.items[2].value.headings[1].label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"
             ],
@@ -13491,15 +13558,44 @@
               "LCP": 0
             },
             "details": {
-              "type": "network-tree",
-              "chains": {},
-              "longestChain": {
-                "duration": 0
-              }
+              "type": "list",
+              "items": [
+                {
+                  "type": "list-section",
+                  "title": "",
+                  "description": "",
+                  "value": {
+                    "type": "network-tree",
+                    "chains": {},
+                    "longestChain": {
+                      "duration": 0
+                    }
+                  }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnected origins",
+                  "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+                  "value": {
+                    "type": "text",
+                    "value": "no origins were preconnected"
+                  }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnect candidates",
+                  "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+                  "value": {
+                    "type": "text",
+                    "value": "No additional origins are good candidates for preconnecting"
+                  }
+                }
+              ]
             },
             "guidanceLevel": 1,
             "replacesAudits": [
-              "critical-request-chains"
+              "critical-request-chains",
+              "uses-rel-preconnect"
             ]
           },
           "render-blocking-insight": {
@@ -16002,6 +16098,24 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
               "audits[network-dependency-tree-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[1].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[1].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": [
+              "audits[network-dependency-tree-insight].details.items[1].value.value"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[2].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[2].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": [
+              "audits[network-dependency-tree-insight].details.items[2].value.value"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"
@@ -27358,30 +27472,59 @@
               "LCP": 0
             },
             "details": {
-              "type": "network-tree",
-              "chains": {
-                "95864F7341656C3DA17C13B7DF249E7F": {
-                  "url": "https://www.mikescerealshack.co/corrections",
-                  "navStartToEndTime": 185,
-                  "transferSize": 3612,
-                  "isLongest": true,
-                  "children": {
-                    "27446.102": {
-                      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-RTW9M3W5HC&gtm=45je5230v9102781914za200&_p=1738719102855&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=102067808~102081485~102123608~102482432~102539968~102558064&cid=974257356.1738719103&ul=en-us&sr=412x823&uaa=&uab=64&uafvl=Chromium%3B134.0.6998.0%7CNot%253AA-Brand%3B24.0.0.0%7CGoogle%2520Chrome%3B134.0.6998.0&uamb=1&uam=moto%20g%20power%20(2022)&uap=Android&uapv=11.0&uaw=0&are=1&frm=0&pscdl=noapi&_s=5&sid=1738719103&sct=1&seg=1&dl=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty&dr=https%3A%2F%2Fwww.mikescerealshack.co%2F&dt=%22call%20of%20duty%22%20Results%20-%20Mike%27s%20Cereal%20Shack%3A%20The%20Office%20Search%20Engine&en=user_engagement&_et=9757&tfd=19216",
-                      "navStartToEndTime": 177,
-                      "transferSize": 0,
-                      "children": {}
+              "type": "list",
+              "items": [
+                {
+                  "type": "list-section",
+                  "title": "",
+                  "description": "",
+                  "value": {
+                    "type": "network-tree",
+                    "chains": {
+                      "95864F7341656C3DA17C13B7DF249E7F": {
+                        "url": "https://www.mikescerealshack.co/corrections",
+                        "navStartToEndTime": 185,
+                        "transferSize": 3612,
+                        "isLongest": true,
+                        "children": {
+                          "27446.102": {
+                            "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-RTW9M3W5HC&gtm=45je5230v9102781914za200&_p=1738719102855&gcd=13l3l3l3l1l1&npa=0&dma=0&tag_exp=102067808~102081485~102123608~102482432~102539968~102558064&cid=974257356.1738719103&ul=en-us&sr=412x823&uaa=&uab=64&uafvl=Chromium%3B134.0.6998.0%7CNot%253AA-Brand%3B24.0.0.0%7CGoogle%2520Chrome%3B134.0.6998.0&uamb=1&uam=moto%20g%20power%20(2022)&uap=Android&uapv=11.0&uaw=0&are=1&frm=0&pscdl=noapi&_s=5&sid=1738719103&sct=1&seg=1&dl=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty&dr=https%3A%2F%2Fwww.mikescerealshack.co%2F&dt=%22call%20of%20duty%22%20Results%20-%20Mike%27s%20Cereal%20Shack%3A%20The%20Office%20Search%20Engine&en=user_engagement&_et=9757&tfd=19216",
+                            "navStartToEndTime": 177,
+                            "transferSize": 0,
+                            "children": {}
+                          }
+                        }
+                      }
+                    },
+                    "longestChain": {
+                      "duration": 185
                     }
                   }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnected origins",
+                  "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+                  "value": {
+                    "type": "text",
+                    "value": "no origins were preconnected"
+                  }
+                },
+                {
+                  "type": "list-section",
+                  "title": "Preconnect candidates",
+                  "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+                  "value": {
+                    "type": "text",
+                    "value": "No additional origins are good candidates for preconnecting"
+                  }
                 }
-              },
-              "longestChain": {
-                "duration": 185
-              }
+              ]
             },
             "guidanceLevel": 1,
             "replacesAudits": [
-              "critical-request-chains"
+              "critical-request-chains",
+              "uses-rel-preconnect"
             ]
           },
           "render-blocking-insight": {
@@ -32881,6 +33024,24 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": [
               "audits[network-dependency-tree-insight].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[1].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[1].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": [
+              "audits[network-dependency-tree-insight].details.items[1].value.value"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": [
+              "audits[network-dependency-tree-insight].details.items[2].title"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": [
+              "audits[network-dependency-tree-insight].details.items[2].description"
+            ],
+            "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": [
+              "audits[network-dependency-tree-insight].details.items[2].value.value"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": [
               "audits[render-blocking-insight].title"

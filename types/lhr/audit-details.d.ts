@@ -94,11 +94,20 @@ declare module Details {
     }[];
   }
 
+  // NOTE: any `Details` type *should* be usable in `items`, but check
+  // styles/report-ui-features are good before adding.
+  type ListableDetail = Table | Checklist | NetworkTree | NodeValue | TextValue | DebugData;
+  
+  interface ListSectionItem {
+    type: 'list-section';
+    title: IcuMessage | string;
+    description: IcuMessage | string;
+    value: ListableDetail;
+  }
+
   interface List extends BaseDetails {
     type: 'list';
-    // NOTE: any `Details` type *should* be usable in `items`, but check
-    // styles/report-ui-features are good before adding.
-    items: Array<Table | Checklist | NodeValue | DebugData>;
+    items: Array<ListSectionItem | ListableDetail>;
   }
 
   interface Opportunity extends BaseDetails {

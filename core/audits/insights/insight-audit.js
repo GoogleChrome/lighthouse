@@ -42,7 +42,7 @@ async function getInsightSet(artifacts, context) {
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
  * @param {T} insightName
- * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => LH.Audit.Details|undefined} createDetails
+ * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => {details: LH.Audit.Details, warnings: Array<string | LH.IcuMessage>}|LH.Audit.Details|undefined} createDetails
  * @template {keyof import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModelsType} T
  * @return {Promise<LH.Audit.Product>}
  */
@@ -64,10 +64,21 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     };
   }
 
-  const details = createDetails(insight, {
+  const cbResult = createDetails(insight, {
     parsedTrace,
     insights,
   });
+
+  const warnings = [...insight.warnings ?? []];
+
+  let details;
+  if (cbResult && 'warnings' in cbResult) {
+    details = cbResult.details;
+    warnings.push(...cbResult.warnings);
+  } else {
+    details = cbResult;
+  }
+
   if (!details || (details.type === 'table' && details.items.length === 0)) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
@@ -116,7 +127,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     scoreDisplayMode,
     score,
     metricSavings,
-    warnings: insight.warnings,
+    warnings,
     displayValue,
     details,
   };
