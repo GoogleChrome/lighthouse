@@ -17,7 +17,14 @@ jobs:
       - id: should_run
         continue-on-error: true
         if: ${{ github.event_name == 'schedule' }}
-        run: test -z $(git rev-list --after="1 day" ${{ github.sha }}) && echo "should_run=false" >> $GITHUB_OUTPUT
+        run: |
+          commit_count=$(git rev-list --count --after="1 day" ${{ github.sha }})
+
+          if [[ "$commit_count" -gt 0 ]]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
 
   publish:
     # Prevent scheduled job from running if...
