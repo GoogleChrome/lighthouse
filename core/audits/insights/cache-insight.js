@@ -41,7 +41,7 @@ class CacheInsight extends Audit {
         /* eslint-disable max-len */
         {key: 'url', valueType: 'url', label: str_(UIStrings.requestColumn)},
         {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(UIStrings.cacheTTL), displayUnit: 'duration'},
-        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), displayUnit: 'kb', granularity: 1},
         /* eslint-enable max-len */
       ];
       // TODO: this should be the sorting in the model (instead it sorts by transfer size...)
@@ -50,6 +50,7 @@ class CacheInsight extends Audit {
       const items = values.map(value => ({
         url: value.request.args.data.url,
         cacheLifetimeMs: value.ttl * 1000,
+        totalBytes: value.request.args.data.encodedDataLength || 0,
         wastedBytes: value.wastedBytes,
       }));
       return Audit.makeTableDetails(headings, items, {
