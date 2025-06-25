@@ -197,6 +197,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
 async function makeMocksForGatherRunner() {
   await td.replaceEsm('../gather/driver/environment.js', {
     getBenchmarkIndex: () => Promise.resolve(150),
+    getDevicePixelRatio: () => Promise.resolve(2),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
