@@ -39,6 +39,7 @@ describe('PerfCategoryRenderer', () => {
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
     global.CustomEvent = window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
@@ -58,6 +59,7 @@ describe('PerfCategoryRenderer', () => {
 
   after(() => {
     Globals.i18n = undefined;
+    global.requestAnimationFrame = undefined;
   });
 
   it('renders the category header', () => {

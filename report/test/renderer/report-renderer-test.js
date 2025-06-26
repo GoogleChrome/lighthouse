@@ -37,6 +37,8 @@ describe('ReportRenderer', () => {
     const {window} = new jsdom.JSDOM();
     global.self = window;
     global.HTMLElement = window.HTMLElement;
+    global.CustomEvent = window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     const dom = new DOM(window.document);
     const detailsRenderer = new DetailsRenderer(dom);
@@ -51,6 +53,8 @@ describe('ReportRenderer', () => {
   after(() => {
     global.self = undefined;
     global.matchMedia = undefined;
+    global.requestAnimationFrame = undefined;
+    global.CustomEvent = undefined;
   });
 
   describe('renderReport', () => {

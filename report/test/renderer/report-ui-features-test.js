@@ -61,9 +61,9 @@ describe('ReportUIFeatures', () => {
     global.HTMLElement = document.window.HTMLElement;
     global.HTMLInputElement = document.window.HTMLInputElement;
     global.CustomEvent = document.window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     global.window = document.window;
-    global.window.requestAnimationFrame = fn => fn();
     global.window.getComputedStyle = function() {
       return {
         marginTop: '10px',
@@ -85,6 +85,7 @@ describe('ReportUIFeatures', () => {
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
     global.CustomEvent = undefined;
+    global.requestAnimationFrame = undefined;
   });
 
   describe('initFeatures', () => {

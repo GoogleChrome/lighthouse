@@ -24,7 +24,7 @@ describe('lighthouseRenderer bundle', () => {
     document = window.document;
 
     global.window = global.self = window;
-    global.window.requestAnimationFrame = fn => fn();
+    global.requestAnimationFrame = fn => fn();
     global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
     global.CustomEvent = window.CustomEvent;
