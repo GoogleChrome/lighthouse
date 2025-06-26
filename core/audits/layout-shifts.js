@@ -105,7 +105,7 @@ class LayoutShifts extends Audit {
             cause: str_(UIStrings.rootCauseUnsizedMedia),
           });
         }
-        for (const request of rootCauses.fontRequests) {
+        for (const request of rootCauses.webFonts) {
           const url = request.args.data.url;
           subItems.push({
             extra: {type: 'url', value: url},

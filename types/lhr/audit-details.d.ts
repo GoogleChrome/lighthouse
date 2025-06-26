@@ -305,6 +305,7 @@ declare module Details {
       line: number;
       column: number;
     };
+    functionName?: string;
   }
 
   /**

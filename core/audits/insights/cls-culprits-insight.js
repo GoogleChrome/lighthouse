@@ -62,11 +62,11 @@ class CLSCulpritsInsight extends Audit {
         cause: insightStr_(InsightUIStrings.unsizedImage),
       });
     }
-    for (const request of culprits.fontRequests) {
+    for (const request of culprits.webFonts) {
       const url = request.args.data.url;
       subItems.push({
         extra: {type: 'url', value: url},
-        cause: insightStr_(InsightUIStrings.fontRequest),
+        cause: insightStr_(InsightUIStrings.webFont),
       });
     }
     for (const iframe of culprits.iframes) {

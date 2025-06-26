@@ -4,22 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js';
+import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/INPBreakdown.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
-const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js', UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js', UIStrings);
 
-class InteractionToNextPaintInsight extends Audit {
+class INPBreakdownInsight extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'interaction-to-next-paint-insight',
+      id: 'inp-breakdown-insight',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
@@ -35,7 +35,7 @@ class InteractionToNextPaintInsight extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    return adaptInsightToAuditProduct(artifacts, context, 'InteractionToNextPaint', (insight) => {
+    return adaptInsightToAuditProduct(artifacts, context, 'INPBreakdown', (insight) => {
       const event = insight.longestInteractionEvent;
       if (!event) {
         // TODO: show UIStrings.noInteractions?
@@ -44,16 +44,16 @@ class InteractionToNextPaintInsight extends Audit {
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'label', valueType: 'text', label: str_(UIStrings.phase)},
+        {key: 'label', valueType: 'text', label: str_(UIStrings.subpart)},
         {key: 'duration', valueType: 'ms', label: str_(i18n.UIStrings.columnDuration)},
       ];
 
       /** @type {LH.Audit.Details.Table['items']} */
       const items = [
         /* eslint-disable max-len */
-        {phase: 'inputDelay', label: str_(UIStrings.inputDelay), duration: event.inputDelay / 1000},
-        {phase: 'processingDuration', label: str_(UIStrings.processingDuration), duration: event.mainThreadHandling / 1000},
-        {phase: 'presentationDelay', label: str_(UIStrings.presentationDelay), duration: event.presentationDelay / 1000},
+        {subpart: 'inputDelay', label: str_(UIStrings.inputDelay), duration: event.inputDelay / 1000},
+        {subpart: 'processingDuration', label: str_(UIStrings.processingDuration), duration: event.mainThreadHandling / 1000},
+        {subpart: 'presentationDelay', label: str_(UIStrings.presentationDelay), duration: event.presentationDelay / 1000},
         /* eslint-enable max-len */
       ];
 
@@ -65,4 +65,4 @@ class InteractionToNextPaintInsight extends Audit {
   }
 }
 
-export default InteractionToNextPaintInsight;
+export default INPBreakdownInsight;
