@@ -49,6 +49,9 @@ const rootHooks = {
 
     // @ts-expect-error: for @testing-library/preact-hooks
     global.MessageChannel = MessageChannel;
+
+    // @ts-expect-error
+    global.requestAnimationFrame = fn => fn();
   },
 };
 
