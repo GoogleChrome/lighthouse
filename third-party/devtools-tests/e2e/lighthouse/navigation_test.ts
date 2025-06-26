@@ -147,7 +147,7 @@ describe('Navigation', function() {
     await navigateToLighthouseTab();
 
     // Test element link behavior
-    const lcpElementAudit = await waitForElementWithTextContent('Largest Contentful Paint element', reportEl);
+    const lcpElementAudit = await waitForElementWithTextContent('LCP breakdown', reportEl);
     await lcpElementAudit.click();
     const lcpElementLink = await waitForElementWithTextContent('button');
     await lcpElementLink.click();
