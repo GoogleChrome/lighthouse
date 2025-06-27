@@ -1,3 +1,72 @@
+<a name="12.7.0"></a>
+# 12.7.0 (2025-06-27)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.1...v12.7.0)
+
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- demostanis @demostanis
+- OronW @OronW
+
+## Notable Changes
+
+The Performance category in the Lighthouse report now shows performance insight audits by default - read more [here](https://github.com/GoogleChrome/lighthouse/discussions/16462).
+
+## Core
+
+* always include headers even for empty tables ([#16534](https://github.com/GoogleChrome/lighthouse/pull/16534))
+* expose error stack, artifact on runtimeError ([#16524](https://github.com/GoogleChrome/lighthouse/pull/16524))
+* cache-insight: fix wrong value being used for transfer size ([#16562](https://github.com/GoogleChrome/lighthouse/pull/16562))
+* config: throw an error if a filter is an empty array ([#15118](https://github.com/GoogleChrome/lighthouse/pull/15118))
+* crawlable-anchors: allow placeholder anchor elements ([#16292](https://github.com/GoogleChrome/lighthouse/pull/16292))
+* gather: add host DPR base artifact ([#16559](https://github.com/GoogleChrome/lighthouse/pull/16559))
+* gather: deprecate executionContext.evaluateAsync ([#16518](https://github.com/GoogleChrome/lighthouse/pull/16518))
+* insights: show estimated ms savings ([#16563](https://github.com/GoogleChrome/lighthouse/pull/16563))
+* inspector-issues: rename to elementAccessibilityIssue ([#16561](https://github.com/GoogleChrome/lighthouse/pull/16561))
+* link-text: use lang to check for only localized terms ([#16526](https://github.com/GoogleChrome/lighthouse/pull/16526))
+* network-dependency-tree-insight: add preconnect advice ([#16557](https://github.com/GoogleChrome/lighthouse/pull/16557))
+* plugins: support scoped npm packages ([#16550](https://github.com/GoogleChrome/lighthouse/pull/16550))
+* render-blocking-resources: change column label to Duration ([#16519](https://github.com/GoogleChrome/lighthouse/pull/16519))
+* timing-summary: suppress expected errors ([#16520](https://github.com/GoogleChrome/lighthouse/pull/16520))
+* trace-elements: remove sentry debugging for invalid impactedNodes ([#16523](https://github.com/GoogleChrome/lighthouse/pull/16523))
+
+## Report
+
+* show insight performance audits by default ([#16552](https://github.com/GoogleChrome/lighthouse/pull/16552))
+* fix 3p filter checkbox for insight audits ([#16564](https://github.com/GoogleChrome/lighthouse/pull/16564))
+* hide highlighter during print ([#16544](https://github.com/GoogleChrome/lighthouse/pull/16544))
+* remove custom focus outline styles ([#16531](https://github.com/GoogleChrome/lighthouse/pull/16531))
+* increase max width of 3-dot menu ([#16530](https://github.com/GoogleChrome/lighthouse/pull/16530))
+* hide treemap, view trace buttons when printing ([#16529](https://github.com/GoogleChrome/lighthouse/pull/16529))
+
+## Deps
+
+* upgrade trace_engine to 0.0.56 ([#16565](https://github.com/GoogleChrome/lighthouse/pull/16565))
+* upgrade deps ([#16555](https://github.com/GoogleChrome/lighthouse/pull/16555))
+* upgrade configstore to 7.0.0 ([#16148](https://github.com/GoogleChrome/lighthouse/pull/16148))
+* upgrade jest packages to 29.7.0 ([#16147](https://github.com/GoogleChrome/lighthouse/pull/16147))
+* sentry: upgrade to v9 ([#16541](https://github.com/GoogleChrome/lighthouse/pull/16541))
+
+## Docs
+
+* recipes: give explicit commands for first building Lighthouse ([#16527](https://github.com/GoogleChrome/lighthouse/pull/16527))
+
+## Tests
+
+* parallelize lantern database tests ([#16545](https://github.com/GoogleChrome/lighthouse/pull/16545))
+
+## Misc
+
+* chore: use "Note" indentation in readme ([#16533](https://github.com/GoogleChrome/lighthouse/pull/16533))
+* chore: reformat to reduce spurious newlines ([#16038](https://github.com/GoogleChrome/lighthouse/pull/16038))
+* chore: rename traceEngineData to parsedTrace ([#16270](https://github.com/GoogleChrome/lighthouse/pull/16270))
+* ci: fix logic for nightly publish cron ([#16556](https://github.com/GoogleChrome/lighthouse/pull/16556))
+* ci: prevent nightly publish if no changes in last day ([#16547](https://github.com/GoogleChrome/lighthouse/pull/16547))
+* deps: upgrade to eslint 9 ([#16327](https://github.com/GoogleChrome/lighthouse/pull/16327))
+
 <a name="12.6.1"></a>
 # 12.6.1 (2025-06-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.0...v12.6.1)
@@ -53,9 +122,9 @@ We expect this release to ship in the DevTools of [Chrome 137](https://chromiumd
 
 Thanks to our new contributors 👽🐷🐰🐯🐻!
 
-Jack Franklin @jackfranklin
-Rob Kodey @rkodey
-Clément Barbaza @cba85
+- Jack Franklin @jackfranklin
+- Rob Kodey @rkodey
+- Clément Barbaza @cba85
 
 ## Notable Changes
 
