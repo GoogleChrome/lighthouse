@@ -11,9 +11,11 @@ polyfillDOMRect();
 const TraceProcessor = TraceEngine.Processor.TraceProcessor;
 const TraceHandlers = TraceEngine.Handlers.ModelHandlers;
 const Insights = TraceEngine.Insights;
+const Helpers = TraceEngine.Helpers;
 
 export {
   TraceProcessor,
   TraceHandlers,
   Insights,
+  Helpers,
 };

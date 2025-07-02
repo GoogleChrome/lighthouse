@@ -19,13 +19,15 @@ import * as LH from '../../types/lh.js';
  */
 class TraceEngineResult {
   /**
-   * @param {LH.TraceEvent[]} traceEvents
+   * @param {LH.TraceEvent[]} _traceEvents
    * @param {LH.Audit.Context['settings']} settings
    * @param {LH.Artifacts['SourceMaps']} SourceMaps
    * @return {Promise<LH.Artifacts.TraceEngineResult>}
    */
-  static async runTraceEngine(traceEvents, settings, SourceMaps) {
+  static async runTraceEngine(_traceEvents, settings, SourceMaps) {
     const processor = new TraceEngine.TraceProcessor(TraceEngine.TraceHandlers);
+    const traceEvents =
+      /** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (_traceEvents);
 
     const lanternSettings = {};
     if (settings.throttlingMethod) lanternSettings.throttlingMethod = settings.throttlingMethod;
@@ -34,9 +36,10 @@ class TraceEngineResult {
       lanternSettings.precomputedLanternData = settings.precomputedLanternData;
     }
 
-    await processor.parse(/** @type {import('@paulirish/trace_engine').Types.Events.Event[]} */ (
-      traceEvents
-    ), {
+    // SyntheticEventsManager must be initialized prior to processor.parse().
+    TraceEngine.Helpers.SyntheticEvents.SyntheticEventsManager.createAndActivate(traceEvents);
+
+    await processor.parse(traceEvents, {
       logger: {
         start(id) {
           const logId = `lh:computed:TraceEngineResult:${id}`;
