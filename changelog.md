@@ -1,3 +1,13 @@
+<a name="12.7.1"></a>
+# 12.7.1 (2025-07-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.0...v12.7.1)
+
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
+
+## Core
+
+* trace-engine-result: initialize SyntheticEventsManager ([#16572](https://github.com/GoogleChrome/lighthouse/pull/16572))
+
 <a name="12.7.0"></a>
 # 12.7.0 (2025-06-27)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.6.1...v12.7.0)
