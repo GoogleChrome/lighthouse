@@ -2778,6 +2778,40 @@
         ]
       }
     },
+    "trusted-types-xss": {
+      "id": "trusted-types-xss",
+      "title": "Mitigate DOM-based XSS with Trusted Types",
+      "description": "The `require-trusted-types-for` directive in the `Content-Security-Policy` (CSP) header instructs user agents to control the data passed to DOM XSS sink functions. [Learn more about mitigating DOM-based XSS with Trusted Types](https://web.dev/articles/trusted-types).",
+      "score": 1,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "description",
+            "valueType": "text",
+            "subItemsHeading": {
+              "key": "description"
+            },
+            "label": "Description"
+          },
+          {
+            "key": "severity",
+            "valueType": "text",
+            "subItemsHeading": {
+              "key": "severity"
+            },
+            "label": "Severity"
+          }
+        ],
+        "items": [
+          {
+            "severity": "High",
+            "description": "No `Content-Security-Policy` header with Trusted Types directive found"
+          }
+        ]
+      }
+    },
     "script-treemap-data": {
       "id": "script-treemap-data",
       "title": "Script Treemap Data",
@@ -7950,6 +7984,11 @@
           "group": "best-practices-trust-safety"
         },
         {
+          "id": "trusted-types-xss",
+          "weight": 0,
+          "group": "best-practices-trust-safety"
+        },
+        {
           "id": "paste-preventing-inputs",
           "weight": 3,
           "group": "best-practices-ux"
@@ -9861,6 +9900,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:trusted-types-xss",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:script-treemap-data",
         "duration": 100,
         "entryType": "measure"
@@ -11019,7 +11064,8 @@
         "audits[csp-xss].details.headings[0].label",
         "audits[has-hsts].details.headings[0].label",
         "audits[origin-isolation].details.headings[0].label",
-        "audits[clickjacking-mitigation].details.headings[0].label"
+        "audits[clickjacking-mitigation].details.headings[0].label",
+        "audits[trusted-types-xss].details.headings[0].label"
       ],
       "core/audits/server-response-time.js | title": [
         "audits[server-response-time].title"
@@ -11468,7 +11514,8 @@
         "audits[csp-xss].details.items[0].severity",
         "audits[has-hsts].details.items[0].severity",
         "audits[origin-isolation].details.items[0].severity",
-        "audits[clickjacking-mitigation].details.items[0].severity"
+        "audits[clickjacking-mitigation].details.items[0].severity",
+        "audits[trusted-types-xss].details.items[0].severity"
       ],
       "core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
@@ -11514,6 +11561,18 @@
       ],
       "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": [
         "audits[clickjacking-mitigation].details.items[0].description"
+      ],
+      "core/audits/trusted-types-xss.js | title": [
+        "audits[trusted-types-xss].title"
+      ],
+      "core/audits/trusted-types-xss.js | description": [
+        "audits[trusted-types-xss].description"
+      ],
+      "core/audits/trusted-types-xss.js | columnSeverity": [
+        "audits[trusted-types-xss].details.headings[1].label"
+      ],
+      "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": [
+        "audits[trusted-types-xss].details.items[0].description"
       ],
       "core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
