@@ -40,12 +40,13 @@ describe('TraceEngineResult', () => {
     });
 
     describe('with big trace', () => {
-      // We'll inject two events into this trace that should blend in.
-      const refEvent = bigTrace.traceEvents[10_000];
-      const {ts, pid, tid} = refEvent.ts;
       let result;
 
-      it('parses', async () => {
+      before(async () => {
+        // We'll inject two events into this trace that should blend in.
+        const refEvent = bigTrace.traceEvents[10_000];
+        const {ts, pid, tid} = refEvent.ts;
+        // These events excercise the ExtensionTraceDataHandler.
         const measureEvents = [
           {
             args: {
@@ -68,10 +69,13 @@ describe('TraceEngineResult', () => {
 
         bigTrace.traceEvents.push(...measureEvents);
 
-        result = await TraceEngineResult.request(
-        {trace: bigTrace, SourceMaps: [], settings},
-        context
+        result = await TraceEngineResult.request({trace: bigTrace, SourceMaps: [], settings},
+          context
         );
+      });
+
+
+      it('parses', async () => {
         assert.ok(result.insights);
         assert.ok(result.parsedTrace);
       });
