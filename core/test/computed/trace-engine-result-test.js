@@ -32,7 +32,7 @@ describe('TraceEngineResult', () => {
       );
       assert.ok(result.insights);
       assert.ok(result.parsedTrace);
-      result.insights.values().forEach(insightSet => {
+      Array.from(result.insights.values()).forEach(insightSet => {
         Object.entries(insightSet.model).forEach(([_, value]) => {
           expect(value).not.toBeInstanceOf(Error);
         });
@@ -82,7 +82,7 @@ describe('TraceEngineResult', () => {
 
 
       it('insights look ok', () => {
-        result.insights.values().forEach(insightSet => {
+        Array.from(result.insights.values()).forEach(insightSet => {
           Object.entries(insightSet.model).forEach(([_, value]) => {
             expect(value).not.toBeInstanceOf(Error);
           });
