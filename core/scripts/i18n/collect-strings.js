@@ -750,6 +750,7 @@ function checkKnownFixedCollisions(strings) {
       'Severity',
       'Severity',
       'Severity',
+      'Severity',
       'Total',
       'Total',
       'Use $MARKDOWN_SNIPPET_0$ to detect unused JavaScript code. $LINK_START_0$Learn more$LINK_END_0$',

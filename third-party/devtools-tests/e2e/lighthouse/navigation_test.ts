@@ -120,7 +120,7 @@ describe('Navigation', function() {
     });
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, ['max-potential-fid']);
-    assert.strictEqual(auditResults.length, 175);
+    assert.strictEqual(auditResults.length, 176);
     assert.deepStrictEqual(erroredAudits, []);
     assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
       'document-title',
@@ -205,7 +205,7 @@ describe('Navigation', function() {
     ];
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr, flakyAudits);
-    assert.strictEqual(auditResults.length, 175);
+    assert.strictEqual(auditResults.length, 176);
     assert.deepStrictEqual(erroredAudits, []);
     assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
       'document-title',
