@@ -61,10 +61,10 @@ A Lighthouse plugin is just a node module with a name that starts with `lighthou
   "type": "module",
   "main": "plugin.js",
   "peerDependencies": {
-    "lighthouse": "^12.7.1"
+    "lighthouse": "^12.8.0"
   },
   "devDependencies": {
-    "lighthouse": "^12.7.1"
+    "lighthouse": "^12.8.0"
   }
 }
 ```
