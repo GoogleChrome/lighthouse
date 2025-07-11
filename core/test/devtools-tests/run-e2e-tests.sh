@@ -17,7 +17,7 @@ cd "$DEVTOOLS_PATH"
 TEST_PATTERN="${1:-test/e2e/lighthouse/*}"
 
 # Don't let console.errors() like 'Unknown VE Context' fail the build
-sed -i 's| fatalErrors.push(message);|/*fatalErrors.push(message)*/|' test/conductor/events.ts
+sed -i.bak 's| fatalErrors.push(message);|/*fatalErrors.push(message)*/|' test/conductor/events.ts
 autoninja -C "out/$BUILD_FOLDER"
 
 vpython3 third_party/node/node.py --output scripts/run_on_target.mjs gen/test/run.js "$TEST_PATTERN" --target=$BUILD_FOLDER --skip-ninja
