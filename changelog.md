@@ -1,3 +1,36 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="12.8.0"></a>
+# 12.8.0 (2025-07-11)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.1...v12.8.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## New Audits
+
+* mitigate dom-based xss with trusted types ([#16493](https://github.com/GoogleChrome/lighthouse/pull/16493))
+
+## Core
+
+* tracehouse: fix OOM when computing attributable URLs ([#16585](https://github.com/GoogleChrome/lighthouse/pull/16585))
+* trusted-types-xss: add link to lighthouse docs ([#16590](https://github.com/GoogleChrome/lighthouse/pull/16590))
+
+## Deps
+
+* upgrade trace_engine to 0.0.57 ([#16589](https://github.com/GoogleChrome/lighthouse/pull/16589))
+
+## Tests
+
+* disable issues-mixed-content smoke test ([#16586](https://github.com/GoogleChrome/lighthouse/pull/16586))
+* add test for trace-engine-result ([#16574](https://github.com/GoogleChrome/lighthouse/pull/16574))
+* update expectations ([#16580](https://github.com/GoogleChrome/lighthouse/pull/16580))
+* devtools: avoid failure on Unknown VE Context ([#16581](https://github.com/GoogleChrome/lighthouse/pull/16581))
+
 <a name="12.7.1"></a>
 # 12.7.1 (2025-07-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.0...v12.7.1)
