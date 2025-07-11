@@ -18,7 +18,7 @@ const UIStrings = {
   description:
       'The `require-trusted-types-for` directive in the `Content-Security-Policy` (CSP) header ' +
       'instructs user agents to control the data passed to DOM XSS sink functions. ' +
-      '[Learn more about mitigating DOM-based XSS with Trusted Types](https://web.dev/articles/trusted-types).',
+      '[Learn more about mitigating DOM-based XSS with Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss).',
   /** Summary text for the results of a Lighthouse audit that evaluates whether the set CSP header and Trusted Types directive is mitigating DOM-based XSS. This text is displayed if the page does not respond with a CSP header and a Trusted Types directive. "CSP" stands for "Content-Security-Policy" and should not be translated. "XSS" stands for "Cross Site Scripting" and should not be translated. */
   noTrustedTypesToMitigateXss:
       'No `Content-Security-Policy` header with Trusted Types directive found',
