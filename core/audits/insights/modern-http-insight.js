@@ -42,7 +42,7 @@ class ModernHTTPInsight extends Audit {
       ];
       /** @type {LH.Audit.Details.Table['items']} */
       const items =
-        insight.requests.map(r => ({url: r.args.data.url, protocol: r.args.data.protocol}));
+        insight.http1Requests.map(r => ({url: r.args.data.url, protocol: r.args.data.protocol}));
       return Audit.makeTableDetails(headings, items);
     });
   }
