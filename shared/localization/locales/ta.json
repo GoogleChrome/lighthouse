@@ -2318,9 +2318,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer ஐத் தொடர்ந்து பயன்படுத்த நீட்டிப்புகள் கிராஸ் ஆரிஜின் ஐசொலேஷனைப் பயன்படுத்த வேண்டும். https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ தளத்தைப் பார்வையிடவும்."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "GPUAdapter isFallbackAdapter பண்புக்கூறு நிறுத்தப்பட்டது, அதற்குப் பதிலாக GPUAdapterInfo isFallbackAdapter பண்புக்கூறைப் பயன்படுத்தவும்."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest இல் உள்ள json பதிலில் UTF-16 ஆதரிக்கப்படுவதில்லை"
   },
@@ -2350,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "லே-அவுட் ஷிஃப்ட்டுக்கான முக்கியமான காரணங்கள்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Unsized image element"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "மோசமான கிளஸ்டர்"
@@ -2406,7 +2406,7 @@
     "message": "திசைதிருப்புதல்கள் இருந்தன ({PH1} திசைதிருப்புதல்கள், +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "சேவையகம் மெதுவாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1}) "
+    "message": "சேவையகம் மெதுவாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "சுருக்குதல் பயன்படுத்தப்படவில்லை"
@@ -2415,7 +2415,7 @@
     "message": "திசைதிருப்புதல்களைத் தவிர்க்கும்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "சேவையகம் வேகமாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1}) "
+    "message": "சேவையகம் வேகமாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "வார்த்தைச் சுருக்குதலைப் பயன்படுத்துகிறது"
@@ -2583,7 +2583,7 @@
     "message": "செயின்களின் நீளத்தைக் குறைத்தல், ஆதாரங்களின் பதிவிறக்க அளவைக் குறைத்தல், பக்கம் ஏற்றப்படுவதன் வேகத்தை அதிகரிக்க தேவையற்ற ஆதாரங்களைப் பதிவிறக்குவதைத் தவிர்த்தல் போன்றவற்றின் மூலம் [முக்கியக் கோரிக்கைகளின் செயினிங்கைத் தவிர்க்கலாம்](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "உங்களின் மிகவும் முக்கியமான ஆரிஜின்களுடன் [முன்னிணைப்புக்](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) குறிப்புகளைச் சேர்க்கவும், ஆனால் 4க்கும் குறைவாகப் பயன்படுத்தவும்."
+    "message": "உங்களின் மிகவும் முக்கியமான ஆரிஜின்களுடன் [முன்னிணைப்புக்](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) குறிப்புகளைச் சேர்க்கவும், ஆனால் 4க்கும் அதிகமாகப் பயன்படுத்தவும்."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "முன்னிணைப்புக்கான ஆரிஜின்கள்"
@@ -2677,6 +2677,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "காட்சிப் பகுதி மொபைலுக்கு ஏற்றவாறு மேம்படுத்தப்படவில்லை என்றால் தட்டுதல் செயல்பாடுகள் [300 மிவி வரை தாமதம் ஆகக்கூடும்](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "மொபைல் தட்டல் தாமதம்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "காட்சிப் பகுதியை மொபைலுக்கு ஏற்றதாக மேம்படுத்துதல்"

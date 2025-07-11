@@ -2321,9 +2321,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer‌ను ఉపయోగించడం కొనసాగించడానికి, ఎక్స్‌టెన్షన్‌లు క్రాస్-ఆరిజిన్ ఐసోలేషన్‌ను ఎంపిక చేసుకోవాలి. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ లింక్‌ను చూడండి."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "GPUAdapter isFallbackAdapter అట్రిబ్యూట్ వినియోగాన్ని ఆపివేశారు, బదులుగా GPUAdapterInfo isFallbackAdapter అట్రిబ్యూట్‌ను ఉపయోగించండి."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest‌లోని JSON ప్రతిస్పందన ద్వారా UTF-16 సపోర్ట్ చేయబడదు"
   },
@@ -2353,6 +2350,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "టాప్ లేఅవుట్ షిఫ్ట్ కారణాలను చూపండి"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "కొలతలు లేని ఇమేజ్ ఎలిమెంట్"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "పనికి రాని క్లస్టర్"
@@ -2409,7 +2409,7 @@
     "message": "మళ్లింపులు ఉన్నాయి ({PH1} మళ్లింపులు, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "సర్వర్ నెమ్మదిగా సమాధానమిచ్చింది ({PH1} సమయంలో) "
+    "message": "సర్వర్ నెమ్మదిగా సమాధానం ఇచ్చింది ({PH1} సమయంలో)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "కంప్రెషన్ ఏదీ వర్తించబడలేదు"
@@ -2418,7 +2418,7 @@
     "message": "మళ్లింపులను నివారిస్తుంది"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "సర్వర్ వేగంగా సమాధానమిస్తోంది ({PH1} సమయంలో) "
+    "message": "సర్వర్ వేగంగా సమాధానం ఇస్తోంది ({PH1} సమయంలో)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "టెక్స్ట్ కంప్రెషన్‌ను వర్తింపజేస్తుంది"
@@ -2586,7 +2586,7 @@
     "message": "పేజీ లోడ్‌ను మెరుగుపరచడానికి చెయిన్‌ల పొడవును తగ్గించడం, రిసోర్స్‌ల డౌన్‌లోడ్ సైజును తగ్గించడం, లేదా అనవసరమైన రిసోర్స్‌లను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం వంటివి చేయడం ద్వారా [అతి ముఖ్యమైన రిక్వెస్ట్‌ల చైనింగ్‌ను నివారించండి](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "అత్యంత ముఖ్యమైన మీ ఆరిజిన్‌లకు [ప్రీకనెక్ట్](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) సూచనలను జోడించండి, కానీ 4 కంటే తక్కువ సూచనలను ఉపయోగించడానికి ట్రై చేయండి."
+    "message": "అత్యంత ముఖ్యమైన మీ ఆరిజిన్‌లకు [ప్రీకనెక్ట్](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) సూచనలను జోడించండి, కానీ 4 కంటే ఎక్కువ ఉపయోగించకుండా ట్రై చేయండి."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "ప్రీకనెక్ట్ కావలసిన ఆరిజిన్‌లు"
@@ -2680,6 +2680,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "మొబైల్ కోసం వీక్షణ పోర్ట్‌ను ఆప్టిమైజ్ చేయనట్లయితే ట్యాప్ ఇంటరాక్షన్‌లు [గరిష్ఠంగా 300 మి.సె. వరకు ఆలస్యం కావచ్చు](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "మొబైల్ ట్యాప్‌లో ఆలస్యం"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "మొబైల్ కోసం వీక్షణ పోర్ట్‌ను ఆప్టిమైజ్ చేయండి"
