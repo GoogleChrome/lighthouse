@@ -132,7 +132,7 @@ message LighthouseResult {
   map<string, CategoryGroup> category_groups = 11;
 
   // Message containing the configuration settings for the LH run
-  // Next ID: 11
+  // Next ID: 33
   message ConfigSettings {
     // The possible form factors an audit can be run in.
     // This enum served the emulated_form_factor field, but in v7, that field
@@ -193,11 +193,11 @@ message LighthouseResult {
     string throttling_method = 8;
 
     message ScreenEmulation {
-      // Overriding width value in pixels (minimum 0, maximum 10000000). 0
-      // disables the override.
+      // Overriding width value in pixels (minimum 0, maximum 10000000).
+      // 0 disables the override.
       double width = 1;
-      // Overriding height value in pixels (minimum 0, maximum 10000000). 0
-      // disables the override.
+      // Overriding height value in pixels (minimum 0, maximum 10000000).
+      // 0 disables the override.
       double height = 2;
       // Overriding device scale factor value. 0 disables the override.
       double deviceScaleFactor = 3;
@@ -217,8 +217,85 @@ message LighthouseResult {
     // screen emulation.
     ScreenEmulation screen_emulation = 9;
 
+
     // Indicating whether Lighthouse should ignore status codes.
     bool ignore_status_code = 10;
+
+    // The type(s) of report output to be produced.
+    // Can be a string of 'json' | 'html' | 'csv'
+    // Or an array of those strings
+    google.protobuf.Value output = 11;
+
+    // The maximum amount of time to wait for a page content render, in ms. If
+    // no content is rendered within this limit, the run is aborted with an
+    // error.
+    int32 max_wait_for_fcp = 12;
+    // The maximum amount of time to wait for a page to load, in ms.
+    int32 max_wait_for_load = 13;
+    // The number of milliseconds to wait after FCP until the page should be
+    // considered loaded.
+    int32 pause_after_fcp_ms = 14;
+    // The number of milliseconds to wait after the load event until the page
+    // should be considered loaded.
+    int32 pause_after_load_ms = 15;
+    // The number of milliseconds to wait between high priority network requests
+    // or 3 simultaneous requests before the page should be considered loaded.
+    int32 network_quiet_threshold_ms = 16;
+    // The number of milliseconds to wait between long tasks until the page
+    // should be considered loaded.
+    int32 cpu_quiet_threshold_ms = 17;
+
+    // User Agent string to apply, `false` to not change the host's UA string,
+    // or `true` to use Lighthouse's default UA string.
+    string emulated_user_agent = 18;
+
+    // audit_mode and gather_mode are excluded from the proto, as they are boolean/string and niche enough that we don't want to deal with them.
+
+    // Flag indicating that the browser storage should not be reset for the
+    // audit.
+    bool disable_storage_reset = 19;
+    // Flag indicating that Lighthouse should pause after page load to wait for
+    // the user's permission to continue the audit.
+    bool debug_navigation = 20;
+    // If set to true, gatherers should avoid any behavior that may be
+    // destructive to the page state. (e.g. extra navigations, resizing the
+    // viewport)
+    bool use_passive_gathering = 21;
+    // Disables collection of the full page screenshot, which can be rather
+    // large and possibly leave the page in an undesirable state.
+    bool disable_full_page_screenshot = 22;
+    // If set to true, will skip the initial navigation to about:blank.
+    bool skip_about_blank = 23;
+    // The URL to use for the "blank" neutral page in between navigations.
+    // Defaults to `about:blank`.
+    string blank_page = 24;
+
+    // List of URL patterns to block.
+    repeated string blocked_url_patterns = 25;
+
+    // Comma-delimited list of trace categories to include.
+    string additional_trace_categories = 26;
+
+    // If present, the run should only conduct this list of audits.
+    repeated string only_audits = 27;
+    // If present, the run should skip this list of audits.
+    repeated string skip_audits = 28;
+
+    // Flag indicating which kinds of browser storage should be reset for the audit.
+    // Cookies are not cleared by default, so the user isn't logged out.
+    // indexeddb, websql, and localstorage are not cleared by default to prevent
+    // loss of potentially important data.
+    // https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
+    repeated string clear_storage_types = 29;
+
+    // List of extra HTTP Headers to include
+    map<string, string> extra_headers = 30;
+
+    // The budget.json object for LightWallet
+    repeated google.protobuf.Struct budgets = 31 [deprecated = true];
+
+    // Precomputed lantern estimates to use instead of observed analysis.
+    google.protobuf.Struct precomputed_lantern_data = 32;
   }
 
   // The settings that were used to run this audit
@@ -298,7 +375,7 @@ message LhrCategory {
   // This value is nullable, so is a `Value` type
   google.protobuf.Value score = 4;
 
-  // An description for manual audits within this category.
+  // A description for manual audits within this category.
   string manual_description = 5;
 
   // A Category's reference to an AuditResult, with a weight for category

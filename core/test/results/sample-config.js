@@ -13,6 +13,9 @@ const sampleConfig = {
   extends: 'lighthouse:default',
   settings: {
     throttlingMethod: 'devtools',
+    extraHeaders: {
+      'Cookie': 'monster=blue',
+    },
   },
 };
 
