@@ -792,7 +792,7 @@ class TreemapViewer {
    * @param {LH.Treemap.Node} node
    */
   getNodeCompressionRatio(node) {
-    if (node.encodedBytes) {
+    if (node.encodedBytes !== undefined) {
       return node.encodedBytes / node.resourceBytes;
     }
 
@@ -801,7 +801,7 @@ class TreemapViewer {
       return depthOneNode.encodedBytes / depthOneNode.resourceBytes;
     }
 
-    return 1;
+    return null;
   }
 
   /**
@@ -844,11 +844,23 @@ class TreemapViewer {
 
     if (!sizes) {
       const compressionRatio = this.getNodeCompressionRatio(node);
+
+      // script-treemap-data nodes have a value for encodedBytes when it comes
+      // directly from a network record. But nodes from a source map bundle don't
+      // have that, so in that case estimate it from the compression ratio of the
+      // depth 1 node.
+      let encodedBytes;
+      if (node.encodedBytes !== undefined) {
+        encodedBytes = node.encodedBytes;
+      } else if (compressionRatio !== null) {
+        encodedBytes = node.resourceBytes * compressionRatio;
+      }
+
       sizes = {
-        size: this.getNodeDisplaySize(node, compressionRatio) ?? 0,
+        size: this.getNodeDisplaySize(node, compressionRatio ?? 1) ?? 0,
         resourceBytes: node.resourceBytes,
-        encodedBytes: node.encodedBytes,
-        unusedBytes: this.getNodeUnusedBytes(node, compressionRatio),
+        encodedBytes,
+        unusedBytes: this.getNodeUnusedBytes(node, compressionRatio ?? 1),
       };
       this.nodeToSizesMap.set(node, sizes);
     }
