@@ -87,6 +87,7 @@ class NetworkRequests extends Audit {
         lrTCPMs: TCPMs, // Only exists on Lightrider runs
         lrRequestMs: requestMs, // Only exists on Lightrider runs
         lrResponseMs: responseMs, // Only exists on Lightrider runs
+        initiator: record.initiator,
       };
     });
 
