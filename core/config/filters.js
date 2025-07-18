@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
 import {Audit} from '../audits/audit.js';
 
 /** @type {Record<keyof LH.BaseArtifacts, string>} */
@@ -191,7 +189,7 @@ function warnOnUnknownOnlyCategories(allCategories, onlyCategories) {
     throw new Error(
       `Unknown categories in '--only-categories': ${unknownCategories.join(', ')}\n` +
       `Available categories: ${Object.keys(allCategories || {}).join(', ')}`
-    )
+    );
   }
 }
 
