@@ -87,8 +87,6 @@ class NetworkRequests extends Audit {
         lrTCPMs: TCPMs, // Only exists on Lightrider runs
         lrRequestMs: requestMs, // Only exists on Lightrider runs
         lrResponseMs: responseMs, // Only exists on Lightrider runs
-        initiatorUrl: record.initiator.url,
-        initiatorLineNumber: record.initiator.lineNumber,
       };
     });
 
@@ -123,9 +121,21 @@ class NetworkRequests extends Audit {
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
     const networkStartTimeTs = Number.isFinite(earliestRendererStartTime) ?
         earliestRendererStartTime * 1000 : undefined;
+
+    const initiators = records.filter((record) => record.initiator.url).map((record) => {
+      const {type, url, lineNumber, columnNumber} = record.initiator;
+      return {
+        type,
+        ...(url && {url: UrlUtils.elideDataURI(url)}),
+        ...(lineNumber && {lineNumber}),
+        ...(columnNumber && {columnNumber}),
+      };
+    });
+
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,
+      initiators,
     };
 
     return {
