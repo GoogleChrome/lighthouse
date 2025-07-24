@@ -87,8 +87,12 @@ class NetworkRequests extends Audit {
         lrTCPMs: TCPMs, // Only exists on Lightrider runs
         lrRequestMs: requestMs, // Only exists on Lightrider runs
         lrResponseMs: responseMs, // Only exists on Lightrider runs
-        initiatorUrl: record.initiator.url,
-        initiatorLineNumber: record.initiator.lineNumber,
+        initiator: {
+          type: record.initiator.type,
+          url: record.initiator.url && UrlUtils.elideDataURI(record.initiator.url ),
+          lineNumber: record.initiator.lineNumber,
+          columnNumber: record.initiator.columnNumber,
+        },
       };
     });
 
