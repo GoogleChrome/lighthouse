@@ -122,7 +122,7 @@ class NetworkRequests extends Audit {
     const networkStartTimeTs = Number.isFinite(earliestRendererStartTime) ?
         earliestRendererStartTime * 1000 : undefined;
 
-    const initiators = records.map((record) => {
+    const initiators = records.filter((record) => record.initiator.url).map((record) => {
       const {type, url, lineNumber, columnNumber} = record.initiator;
       return {
         type,
@@ -130,7 +130,7 @@ class NetworkRequests extends Audit {
         ...(lineNumber && {lineNumber}),
         ...(columnNumber && {columnNumber}),
       };
-    }).filter((record) => record.url);
+    });
 
     tableDetails.debugData = {
       type: 'debugdata',
