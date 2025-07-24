@@ -64,6 +64,13 @@ describe('Network requests audit', () => {
     expect(output.details.debugData).toStrictEqual({
       type: 'debugdata',
       networkStartTimeTs: 360725780729,
+      initiators: [
+        {lineNumber: 15, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {lineNumber: 971, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {lineNumber: 987, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {lineNumber: 988, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {lineNumber: 989, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+      ],
     });
   });
 
