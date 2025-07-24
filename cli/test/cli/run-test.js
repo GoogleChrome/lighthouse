@@ -37,6 +37,7 @@ describe('CLI run', function() {
 
       const flags = getFlags([
         '--output=json',
+        `--extra-headers '{"Cookie":"monster=blue"}'`,
         `--output-path=${filename}`,
         '--plugins=lighthouse-plugin-simple',
         // Use sample artifacts to avoid gathering during a unit test.
