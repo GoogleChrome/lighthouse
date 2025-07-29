@@ -126,9 +126,9 @@ class NetworkRequests extends Audit {
       const {type, url, lineNumber, columnNumber} = record.initiator;
       return {
         type,
-        ...(url && {url: UrlUtils.elideDataURI(url)}),
-        ...(lineNumber && {lineNumber}),
-        ...(columnNumber && {columnNumber}),
+        url: url ? UrlUtils.elideDataURI(url) : undefined,
+        lineNumber,
+        columnNumber,
       };
     });
 
