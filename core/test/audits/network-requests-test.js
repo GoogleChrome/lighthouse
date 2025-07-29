@@ -65,11 +65,11 @@ describe('Network requests audit', () => {
       type: 'debugdata',
       networkStartTimeTs: 360725780729,
       initiators: [
-        {lineNumber: 15, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
-        {lineNumber: 971, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
-        {lineNumber: 987, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
-        {lineNumber: 988, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
-        {lineNumber: 989, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {columnNumber: undefined, lineNumber: 15, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {columnNumber: undefined, lineNumber: 971, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {columnNumber: undefined, lineNumber: 987, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {columnNumber: undefined, lineNumber: 988, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
+        {columnNumber: undefined, lineNumber: 989, type: 'parser', url: 'https://googlechrome.github.io/lighthouse/viewer/'},
       ],
     });
   });
