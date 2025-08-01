@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
 import {Audit as BaseAudit} from '../../audits/audit.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {defaultSettings} from '../../config/constants.js';
@@ -437,32 +435,14 @@ describe('Config Filtering', () => {
       });
     });
 
-    it('should warn and drop unknown onlyCategories entries', () => {
-      /** @type {Array<unknown>} */
-      const warnings = [];
-      /** @param {unknown} evt */
-      const saveWarning = evt => warnings.push(evt);
-
-      log.events.on('warning', saveWarning);
-      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
-        onlyAudits: null,
-        onlyCategories: ['timespan', 'thisIsNotACategory'],
-        skipAudits: null,
-      });
-      log.events.off('warning', saveWarning);
-
-      if (!filtered.categories) throw new Error('Failed to keep any categories');
-      expect(Object.keys(filtered.categories)).toEqual(['timespan']);
-      expect(filtered).toMatchObject({
-        artifacts: [{id: 'Timespan'}],
-        audits: [{implementation: TimespanAudit}],
-        categories: {
-          timespan: {},
-        },
-      });
-      expect(warnings).toEqual(expect.arrayContaining([
-        ['config', `unrecognized category in 'onlyCategories': thisIsNotACategory`],
-      ]));
+    it('should throw error for unknown onlyCategories entries', () => {
+      expect(() => {
+        filters.filterConfigByExplicitFilters(resolvedConfig, {
+          onlyAudits: null,
+          onlyCategories: ['timespan', 'thisIsNotACategory'],
+          skipAudits: null,
+        });
+      }).toThrow('Unrecognized category in \'onlyCategories\': thisIsNotACategory');
     });
 
     it('should filter via a combination of filters', () => {
@@ -586,7 +566,7 @@ describe('Config Filtering', () => {
 
       const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
-        onlyCategories: ['performance'],
+        onlyCategories: ['timespan'],
         skipAudits: null,
       });
       expect(filtered).toMatchObject({
