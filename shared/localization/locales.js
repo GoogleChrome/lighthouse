@@ -21,149 +21,158 @@
 
 // TODO(paulirish): Centralize locale inheritance (combining this & i18n.lookupLocale()), adopt cldr parentLocale rules.
 
-import ar from './locales/ar.json' with { type: 'json' };
-import arXB from './locales/ar-XB.json' with { type: 'json' };
-import bg from './locales/bg.json' with { type: 'json' };
-import ca from './locales/ca.json' with { type: 'json'};
-import cs from './locales/cs.json' with { type: 'json'};
-import da from './locales/da.json' with { type: 'json'};
-import de from './locales/de.json' with { type: 'json'};
-import el from './locales/el.json' with { type: 'json'};
-import enGB from './locales/en-GB.json' with { type: 'json'};
-import enUS from './locales/en-US.json' with { type: 'json'};
-import enXA from './locales/en-XA.json' with { type: 'json'};
-import enXL from './locales/en-XL.json' with { type: 'json'};
-import es from './locales/es.json' with { type: 'json'};
-import es419 from './locales/es-419.json' with { type: 'json'};
-import fi from './locales/fi.json' with { type: 'json'};
-import fil from './locales/fil.json' with { type: 'json'};
-import fr from './locales/fr.json' with { type: 'json'};
-import he from './locales/he.json' with { type: 'json'};
-import hi from './locales/hi.json' with { type: 'json'};
-import hr from './locales/hr.json' with { type: 'json'};
-import hu from './locales/hu.json' with { type: 'json'};
-import id from './locales/id.json' with { type: 'json'};
-import it from './locales/it.json' with { type: 'json'};
-import ja from './locales/ja.json' with { type: 'json'};
-import ko from './locales/ko.json' with { type: 'json'};
-import lt from './locales/lt.json' with { type: 'json'};
-import lv from './locales/lv.json' with { type: 'json'};
-import nl from './locales/nl.json' with { type: 'json'};
-import no from './locales/no.json' with { type: 'json'};
-import pl from './locales/pl.json' with { type: 'json'};
-import pt from './locales/pt.json' with { type: 'json'};
-import ptPT from './locales/pt-PT.json' with { type: 'json'};
-import ro from './locales/ro.json' with { type: 'json'};
-import ru from './locales/ru.json' with { type: 'json'};
-import sk from './locales/sk.json' with { type: 'json'};
-import sl from './locales/sl.json' with { type: 'json'};
-import sr from './locales/sr.json' with { type: 'json'};
-import srLatn from './locales/sr-Latn.json' with { type: 'json'};
-import sv from './locales/sv.json' with { type: 'json'};
-import ta from './locales/ta.json' with { type: 'json'};
-import te from './locales/te.json' with { type: 'json'};
-import th from './locales/th.json' with { type: 'json'};
-import tr from './locales/tr.json' with { type: 'json'};
-import uk from './locales/uk.json' with { type: 'json'};
-import vi from './locales/vi.json' with { type: 'json'};
-import zh from './locales/zh.json' with { type: 'json'};
-import zhHK from './locales/zh-HK.json' with { type: 'json'};
-import zhTW from './locales/zh-TW.json' with { type: 'json'};
+import fs from 'fs';
+
+import {getModuleDirectory} from '../esm-utils.js';
 
 /** @typedef {import('../../types/lhr/settings').Locale} Locale */
 /** @typedef {Record<string, {message: string}>} LhlMessages */
 
+const moduleDir = getModuleDirectory(import.meta);
+
+/** @type {Record<string, LhlMessages>} */
+const files = {
+  'ar': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ar.json`, 'utf8')),
+  'ar-XB': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ar-XB.json`, 'utf8')),
+  'bg': JSON.parse(fs.readFileSync(`${moduleDir}/locales/bg.json`, 'utf8')),
+  'ca': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ca.json`, 'utf8')),
+  'cs': JSON.parse(fs.readFileSync(`${moduleDir}/locales/cs.json`, 'utf8')),
+  'da': JSON.parse(fs.readFileSync(`${moduleDir}/locales/da.json`, 'utf8')),
+  'de': JSON.parse(fs.readFileSync(`${moduleDir}/locales/de.json`, 'utf8')),
+  'el': JSON.parse(fs.readFileSync(`${moduleDir}/locales/el.json`, 'utf8')),
+  'en-GB': JSON.parse(fs.readFileSync(`${moduleDir}/locales/en-GB.json`, 'utf8')),
+  'en-US': JSON.parse(fs.readFileSync(`${moduleDir}/locales/en-US.json`, 'utf8')),
+  'en-XA': JSON.parse(fs.readFileSync(`${moduleDir}/locales/en-XA.json`, 'utf8')),
+  'en-XL': JSON.parse(fs.readFileSync(`${moduleDir}/locales/en-XL.json`, 'utf8')),
+  'es': JSON.parse(fs.readFileSync(`${moduleDir}/locales/es.json`, 'utf8')),
+  'es-419': JSON.parse(fs.readFileSync(`${moduleDir}/locales/es-419.json`, 'utf8')),
+  'fi': JSON.parse(fs.readFileSync(`${moduleDir}/locales/fi.json`, 'utf8')),
+  'fil': JSON.parse(fs.readFileSync(`${moduleDir}/locales/fil.json`, 'utf8')),
+  'fr': JSON.parse(fs.readFileSync(`${moduleDir}/locales/fr.json`, 'utf8')),
+  'he': JSON.parse(fs.readFileSync(`${moduleDir}/locales/he.json`, 'utf8')),
+  'hi': JSON.parse(fs.readFileSync(`${moduleDir}/locales/hi.json`, 'utf8')),
+  'hr': JSON.parse(fs.readFileSync(`${moduleDir}/locales/hr.json`, 'utf8')),
+  'hu': JSON.parse(fs.readFileSync(`${moduleDir}/locales/hu.json`, 'utf8')),
+  'id': JSON.parse(fs.readFileSync(`${moduleDir}/locales/id.json`, 'utf8')),
+  'it': JSON.parse(fs.readFileSync(`${moduleDir}/locales/it.json`, 'utf8')),
+  'ja': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ja.json`, 'utf8')),
+  'ko': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ko.json`, 'utf8')),
+  'lt': JSON.parse(fs.readFileSync(`${moduleDir}/locales/lt.json`, 'utf8')),
+  'lv': JSON.parse(fs.readFileSync(`${moduleDir}/locales/lv.json`, 'utf8')),
+  'nl': JSON.parse(fs.readFileSync(`${moduleDir}/locales/nl.json`, 'utf8')),
+  'no': JSON.parse(fs.readFileSync(`${moduleDir}/locales/no.json`, 'utf8')),
+  'pl': JSON.parse(fs.readFileSync(`${moduleDir}/locales/pl.json`, 'utf8')),
+  'pt': JSON.parse(fs.readFileSync(`${moduleDir}/locales/pt.json`, 'utf8')),
+  'pt-PT': JSON.parse(fs.readFileSync(`${moduleDir}/locales/pt-PT.json`, 'utf8')),
+  'ro': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ro.json`, 'utf8')),
+  'ru': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ru.json`, 'utf8')),
+  'sk': JSON.parse(fs.readFileSync(`${moduleDir}/locales/sk.json`, 'utf8')),
+  'sl': JSON.parse(fs.readFileSync(`${moduleDir}/locales/sl.json`, 'utf8')),
+  'sr': JSON.parse(fs.readFileSync(`${moduleDir}/locales/sr.json`, 'utf8')),
+  'sr-Latn': JSON.parse(fs.readFileSync(`${moduleDir}/locales/sr-Latn.json`, 'utf8')),
+  'sv': JSON.parse(fs.readFileSync(`${moduleDir}/locales/sv.json`, 'utf8')),
+  'ta': JSON.parse(fs.readFileSync(`${moduleDir}/locales/ta.json`, 'utf8')),
+  'te': JSON.parse(fs.readFileSync(`${moduleDir}/locales/te.json`, 'utf8')),
+  'th': JSON.parse(fs.readFileSync(`${moduleDir}/locales/th.json`, 'utf8')),
+  'tr': JSON.parse(fs.readFileSync(`${moduleDir}/locales/tr.json`, 'utf8')),
+  'uk': JSON.parse(fs.readFileSync(`${moduleDir}/locales/uk.json`, 'utf8')),
+  'vi': JSON.parse(fs.readFileSync(`${moduleDir}/locales/vi.json`, 'utf8')),
+  'zh': JSON.parse(fs.readFileSync(`${moduleDir}/locales/zh.json`, 'utf8')),
+  'zh-HK': JSON.parse(fs.readFileSync(`${moduleDir}/locales/zh-HK.json`, 'utf8')),
+  'zh-TW': JSON.parse(fs.readFileSync(`${moduleDir}/locales/zh-TW.json`, 'utf8')),
+};
+
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
 /** @type {Record<Locale, LhlMessages>} */
 const locales = {
-  'en-US': enUS, // The 'source' strings, with descriptions
-  'en': enUS, // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
+  'en-US': files['en-US'], // The 'source' strings, with descriptions
+  'en': files['en-US'], // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
 
   // TODO: en-GB has just ~10 messages that are different from en-US. We should only ship those.
-  'en-AU': enGB, // Alias of 'en-GB'
-  'en-GB': enGB, // Alias of 'en-GB'
-  'en-IE': enGB, // Alias of 'en-GB'
-  'en-SG': enGB, // Alias of 'en-GB'
-  'en-ZA': enGB, // Alias of 'en-GB'
-  'en-IN': enGB, // Alias of 'en-GB'
+  'en-AU': files['en-GB'], // Alias of 'en-GB'
+  'en-GB': files['en-GB'], // Alias of 'en-GB'
+  'en-IE': files['en-GB'], // Alias of 'en-GB'
+  'en-SG': files['en-GB'], // Alias of 'en-GB'
+  'en-ZA': files['en-GB'], // Alias of 'en-GB'
+  'en-IN': files['en-GB'], // Alias of 'en-GB'
 
   // All locales from here have a messages file, though we allow fallback to the base locale when the files are identical
-  'ar-XB': arXB, // psuedolocalization
-  'ar': ar,
-  'bg': bg,
-  'ca': ca,
-  'cs': cs,
-  'da': da,
-  'de': de, // de-AT, de-CH identical, so they fall back into de
-  'el': el,
-  'en-XA': enXA, // psuedolocalization
-  'en-XL': enXL, // local psuedolocalization
-  'es': es,
-  'es-419': es419,
+  'ar-XB': files['ar-XB'], // psuedolocalization
+  'ar': files['ar'],
+  'bg': files['bg'],
+  'ca': files['ca'],
+  'cs': files['cs'],
+  'da': files['da'],
+  'de': files['de'], // de-AT, de-CH identical, so they fall back into de
+  'el': files['el'],
+  'en-XA': files['en-XA'], // psuedolocalization
+  'en-XL': files['en-XL'], // local psuedolocalization
+  'es': files['es'],
+  'es-419': files['es-419'],
   // Aliases of es-419: https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/parentLocales.json
-  'es-AR': es419,
-  'es-BO': es419,
-  'es-BR': es419,
-  'es-BZ': es419,
-  'es-CL': es419,
-  'es-CO': es419,
-  'es-CR': es419,
-  'es-CU': es419,
-  'es-DO': es419,
-  'es-EC': es419,
-  'es-GT': es419,
-  'es-HN': es419,
-  'es-MX': es419,
-  'es-NI': es419,
-  'es-PA': es419,
-  'es-PE': es419,
-  'es-PR': es419,
-  'es-PY': es419,
-  'es-SV': es419,
-  'es-US': es419,
-  'es-UY': es419,
-  'es-VE': es419,
+  'es-AR': files['es-419'],
+  'es-BO': files['es-419'],
+  'es-BR': files['es-419'],
+  'es-BZ': files['es-419'],
+  'es-CL': files['es-419'],
+  'es-CO': files['es-419'],
+  'es-CR': files['es-419'],
+  'es-CU': files['es-419'],
+  'es-DO': files['es-419'],
+  'es-EC': files['es-419'],
+  'es-GT': files['es-419'],
+  'es-HN': files['es-419'],
+  'es-MX': files['es-419'],
+  'es-NI': files['es-419'],
+  'es-PA': files['es-419'],
+  'es-PE': files['es-419'],
+  'es-PR': files['es-419'],
+  'es-PY': files['es-419'],
+  'es-SV': files['es-419'],
+  'es-US': files['es-419'],
+  'es-UY': files['es-419'],
+  'es-VE': files['es-419'],
 
-  'fi': fi,
-  'fil': fil,
-  'fr': fr, // fr-CH identical, so it falls back into fr
-  'he': he,
-  'hi': hi,
-  'hr': hr,
-  'hu': hu,
-  'gsw': de, // swiss german. identical (for our purposes) to 'de'
-  'id': id,
-  'in': id, // Alias of 'id'
-  'it': it,
-  'iw': he, // Alias of 'he'
-  'ja': ja,
-  'ko': ko,
-  'lt': lt,
-  'lv': lv,
-  'mo': ro, // Alias of 'ro'
-  'nl': nl,
-  'nb': no, // Alias of 'no'
-  'no': no,
-  'pl': pl,
-  'pt': pt, // pt-BR identical, so it falls back into pt
-  'pt-PT': ptPT,
-  'ro': ro,
-  'ru': ru,
-  'sk': sk,
-  'sl': sl,
-  'sr': sr,
-  'sr-Latn': srLatn,
-  'sv': sv,
-  'ta': ta,
-  'te': te,
-  'th': th,
-  'tl': fil, // Alias of 'fil'
-  'tr': tr,
-  'uk': uk,
-  'vi': vi,
-  'zh': zh, // aka ZH-Hans, sometimes seen as zh-CN, zh-Hans-CN, Simplified Chinese
-  'zh-HK': zhHK, // aka zh-Hant-HK. Note: yue-Hant-HK is not supported.
-  'zh-TW': zhTW, // aka zh-Hant, zh-Hant-TW, Traditional Chinese
+  'fi': files['fi'],
+  'fil': files['fil'],
+  'fr': files['fr'], // fr-CH identical, so it falls back into fr
+  'he': files['he'],
+  'hi': files['hi'],
+  'hr': files['hr'],
+  'hu': files['hu'],
+  'gsw': files['de'], // swiss german. identical (for our purposes) to 'de'
+  'id': files['id'],
+  'in': files['id'], // Alias of 'id'
+  'it': files['it'],
+  'iw': files['he'], // Alias of 'he'
+  'ja': files['ja'],
+  'ko': files['ko'],
+  'lt': files['lt'],
+  'lv': files['lv'],
+  'mo': files['ro'], // Alias of 'ro'
+  'nl': files['nl'],
+  'nb': files['no'], // Alias of 'no'
+  'no': files['no'],
+  'pl': files['pl'],
+  'pt': files['pt'], // pt-BR identical, so it falls back into pt
+  'pt-PT': files['pt-PT'],
+  'ro': files['ro'],
+  'ru': files['ru'],
+  'sk': files['sk'],
+  'sl': files['sl'],
+  'sr': files['sr'],
+  'sr-Latn': files['sr-Latn'],
+  'sv': files['sv'],
+  'ta': files['ta'],
+  'te': files['te'],
+  'th': files['th'],
+  'tl': files['fil'], // Alias of 'fil'
+  'tr': files['tr'],
+  'uk': files['uk'],
+  'vi': files['vi'],
+  'zh': files['zh'], // aka ZH-Hans, sometimes seen as zh-CN, zh-Hans-CN, Simplified Chinese
+  'zh-HK': files['zh-HK'], // aka zh-Hant-HK. Note: yue-Hant-HK is not supported.
+  'zh-TW': files['zh-TW'], // aka zh-Hant, zh-Hant-TW, Traditional Chinese
 };
 
 export {locales};
