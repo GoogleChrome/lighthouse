@@ -174,14 +174,15 @@ function filterCategoriesByExplicitFilters(categories, onlyCategories) {
 }
 
 /**
- * Logs a warning if any specified onlyCategory is not a known category that can
- * be included.
+ * Throws an error if any specified onlyCategory is not a known category.
+ * Prevents silent failures by validating user input.
  *
  * @param {LH.Config.ResolvedConfig['categories']} allCategories
  * @param {string[] | null} onlyCategories
  * @return {void}
+ * @throws {Error} If any unknown category is detected.
  */
-function warnOnUnknownOnlyCategories(allCategories, onlyCategories) {
+function throwOnUnknownOnlyCategories(allCategories, onlyCategories) {
   if (!onlyCategories) return;
 
   const unknownCategories = onlyCategories.filter(c => !allCategories?.[c]);
@@ -271,7 +272,7 @@ function filterConfigByExplicitFilters(resolvedConfig, filters) {
     throw new Error(`onlyCategories cannot be an empty array.`);
   }
 
-  warnOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
+  throwOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
 
   let baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, undefined);
   if (onlyCategories) {
