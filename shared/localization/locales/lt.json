@@ -1188,7 +1188,7 @@
     "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė. [Sužinokite daugiau apie didžiausios potencialios pirmosios įvesties delsos metriką](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Greičio rodiklis parodo, kaip greitai pavaizduojamas puslapio turinys. [Sužinokite daugiau apie spartos rodiklio metriką](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "„Speed Index“ parodo, kaip greitai pavaizduojamas puslapio turinys. [Sužinokite daugiau apie spartos rodiklio metriką](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Visų laikotarpių tarp PTŽ ir laiko iki sąveikos suma milisekundėmis, kai užduoties atlikimo laikas viršija 50 ms. [Sužinokite daugiau apie bendro blokavimo laiko metriką](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Pradinio serverio atsako laikas buvo trumpas"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Ateityje „Chrome“ naudotojai galės pasirinkti naršymą be trečiųjų šalių slapukų. [Sužinokite daugiau apie trečiųjų šalių slapukus](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Trečiųjų šalių slapukai gali būti blokuojami tam tikrame kontekste. [Sužinokite daugiau apie pasirengimą trečiųjų šalių slapukų apribojimams](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Rastas 1 slapukas}one{Rastas # slapukas}few{Rasti # slapukai}many{Rasta # slapuko}other{Rasta # slapukų}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Trečiųjų šalių kodo naudojimo sumažinimas"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Svarba"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Direktyva „`require-trusted-types-for`“ antraštėje „`Content-Security-Policy`“ (CSP) nurodo naudotojo priemonėms valdyti duomenis, perduodamus DOM XSS šaltinio funkcijoms. [Sužinokite daugiau apie DOM pagrįsto XSS rizikos mažinimą naudojant patikimus tipus](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nerasta jokių `Content-Security-Policy` antraščių su patikimų tipų direktyva"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Sumažinkite DOM pagrįsto XSS riziką naudodami patikimus tipus"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Nustatykite tikslų vaizdo elementų plotį ir aukštį, kad būtų mažiau išdėstymo poslinkių ir pagerinamas KIP. [Sužinokite, kaip nustatyti vaizdo matmenis](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Pirmojo parodymo patobulinimai"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Šios įžvalgos taip pat pasiekiamos „Chrome“ kūrėjo įrankių našumo skydelyje – [įrašykite pėdsaką](https://developer.chrome.com/docs/devtools/performance/reference), kad peržiūrėtumėte išsamesnę informaciją."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Įžvalgos"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrika"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Pagerinkite bendrą įkėlimo našumą, kad puslapis reaguotų ir būtų parengtas naudoti kuo greičiau. Svarbiausia metrika: laikas iki sąveikos, greičio rodiklis"
+    "message": "Pagerinkite bendrą įkėlimo našumą, kad puslapis reaguotų ir būtų parengtas naudoti kuo greičiau. Svarbiausia metrika: laikas iki sąveikos, „Speed Index“"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Bendri patobulinimai"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Galima sutaupyti"
+    "message": "Numatomos sutaupytos lėšos"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Galima sutaupyti"
+    "message": "Numatomos sutaupytos lėšos"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Galima sutaupyti {wastedBytes, number, bytes} KiB"
+    "message": "Numatoma, kad bus sutaupyta {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Rastas 1 elementas}one{Rastas # elementas}few{Rasti # elementai}many{Rasta # elemento}other{Rasta # elementų}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Galima sutaupyti {wastedMs, number, milliseconds} ms"
+    "message": "Numatoma, kad bus sutaupyta {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentas"
@@ -2070,7 +2088,7 @@
     "message": "Gauti „Lighthouse“ našumo balą."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Įvertinti puslapio įkėlimo našumo metriką, pavyzdžiui, didžiausio turiningo žymėjimo ir spartos rodiklio."
+    "message": "Įvertinti puslapio įkėlimo našumo metriką, pavyzdžiui, didžiausio turiningo žymėjimo ir „Speed Index“."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Įvertinti laipsniškųjų žiniatinklio programų galimybes."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Pateikti problemą"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Grįžti į patikrinimų skiltį"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Slėpti"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Vėliau šiais metais įžvalgos pakeis našumo patikrinimus. [Sužinokite daugiau ir pateikite atsiliepimą čia](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Laboratorijos duomenys"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Paleidžiant „Lighthouse“ kilo problemų."
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Išbandyti įžvalgas"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nepriskiriama"
   },
@@ -3705,7 +3732,10 @@
     "message": "Aprėptis"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Tikslios modulių kopijos"
+    "message": "Pasikartojantys moduliai"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Pasikartojantys baitai"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Šaltinių baitai"
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Perjungti lentelę"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Perkėlimo baitai"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Nenaudojami baitai"

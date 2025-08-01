@@ -1188,7 +1188,7 @@
     "message": "Thời gian phản hồi lần tương tác đầu tiên tối đa mà người dùng có thể gặp phải là thời gian thực hiện nhiệm vụ lâu nhất. [Tìm hiểu thêm về chỉ số Thời gian phản hồi lần tương tác đầu tiên tối đa có thể xảy ra](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Chỉ số tốc độ cho biết nội dung của một trang hiển thị nhanh chóng đến mức nào. [Tìm hiểu thêm về Chỉ số tốc độ](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index cho biết nội dung của một trang hiển thị nhanh chóng đến mức nào. [Tìm hiểu thêm về Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Tổng tất cả các khoảng thời gian giữa thời điểm Hiển thị nội dung đầu tiên (FCP) và Thời điểm tương tác khi thời gian của nhiệm vụ vượt quá 50 mili giây, được biểu thị bằng đơn vị mili giây. [Tìm hiểu thêm về chỉ số Tổng thời gian chặn](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Thời gian phản hồi ban đầu của máy chủ là ngắn"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome đang hướng đến một trải nghiệm mới cho phép người dùng chọn duyệt web mà không dùng cookie của bên thứ ba. [Tìm hiểu thêm về cookie của bên thứ ba](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Cookie của bên thứ ba có thể bị chặn trong một số trường hợp. [Tìm hiểu thêm về việc chuẩn bị cho các hạn chế đối với cookie của bên thứ ba](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Đã tìm thấy 1 cookie}other{Đã tìm thấy # cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Giảm thiểu mức sử dụng của bên thứ ba"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Mức độ nghiêm trọng"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Chỉ thị `require-trusted-types-for` trong tiêu đề `Content-Security-Policy` (CSP) hướng dẫn các tác nhân người dùng kiểm soát dữ liệu được truyền đến các hàm bồn lưu trữ dữ liệu có thể gây ra lỗ hổng XSS trong DOM. [Tìm hiểu thêm về cách giảm thiểu XSS dựa trên DOM bằng Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Không tìm thấy tiêu đề `Content-Security-Policy` có chỉ thị Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Giảm thiểu XSS dựa trên DOM bằng Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Đặt chiều rộng và chiều cao rõ ràng đối với các phần tử hình ảnh để giảm sự thay đổi về bố cục và cải thiện CLS (Điểm số tổng hợp về mức thay đổi bố cục). [Tìm hiểu cách đặt kích thước hình ảnh](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Các thao tác để cải thiện thời gian hiển thị hình ảnh đầu tiên"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Những thông tin chi tiết này cũng có trong Bảng điều khiển hiệu suất của Chrome DevTools – hãy [ghi lại dấu vết](https://developer.chrome.com/docs/devtools/performance/reference) để xem thông tin chi tiết hơn."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Thông tin chi tiết"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Các chỉ số"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Cải thiện trải nghiệm tải tổng thể để trang phản hồi và sẵn sàng cho bạn sử dụng sớm nhất có thể. Các số liệu chính: Thời điểm tương tác, Chỉ số tốc độ"
+    "message": "Cải thiện trải nghiệm tải tổng thể để trang phản hồi và sẵn sàng cho bạn sử dụng sớm nhất có thể. Các số liệu chính: Thời điểm tương tác, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Các thao tác để cải thiện hiệu suất tổng thể"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Lượng dữ liệu có thể tiết kiệm được"
+    "message": "Mức tiết kiệm ước tính"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Thời gian có thể tiết kiệm được"
+    "message": "Mức tiết kiệm ước tính"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Lượng dữ liệu có thể tiết kiệm được là {wastedBytes, number, bytes} KiB"
+    "message": "Mức tiết kiệm ước tính: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Tìm thấy 1 phần tử}other{Tìm thấy # phần tử}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Thời gian có thể tiết kiệm được là {wastedMs, number, milliseconds} mili giây"
+    "message": "Mức tiết kiệm ước tính: {wastedMs, number, milliseconds} mili giây"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Tài liệu"
@@ -2070,7 +2088,7 @@
     "message": "Đạt được điểm Hiệu suất Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Đo lường các chỉ số về Hiệu suất tải trang, chẳng hạn như Thời gian hiển thị nội dung lớn nhất và Chỉ số tốc độ."
+    "message": "Đo lường các chỉ số về Hiệu suất tải trang, chẳng hạn như Thời gian hiển thị nội dung lớn nhất và Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Đánh giá các chức năng của Ứng dụng web tiến bộ."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Tạo vấn đề"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Quay lại phần kiểm tra"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ẩn"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Vào cuối năm nay, các báo cáo kiểm tra thông tin chi tiết sẽ thay thế cho báo cáo kiểm tra hiệu suất. [Tìm hiểu thêm và đưa ra ý kiến phản hồi tại đây](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Dữ liệu của phòng thí nghiệm"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Đã xảy ra sự cố ảnh hưởng đến lần chạy Lighthouse này:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Thử tính năng kiểm tra thông tin chi tiết"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Không thể phân bổ"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Mô-đun trùng lặp"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Số byte trùng lặp"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Số byte tài nguyên"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Ẩn/hiện bảng"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Số byte cần chuyển"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Số byte chưa dùng đến"

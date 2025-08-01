@@ -660,7 +660,7 @@
     "message": "Pre animovaný obsah použite formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfilly a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Ak nutne nemusíte podporovať staršie prehliadače, zvážte úpravu procesu kompilácie JavaScriptu tak, aby nedochádzalo k transpilovaniu [základných](https://web.dev/baseline) funkcií. [Prečo väčšina webov môže nasadiť kód ES6+ bez transpilácie](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Na stránke bola zistená 2. verzia knižnice core-js. Ak chcete získať množstvo zlepšení výkonu, mali by ste inovovať na 3. verziu."
@@ -1188,7 +1188,7 @@
     "message": "Maximálne potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy. [Ďalšie informácie o metrike Maximálne potenciálne oneskorenie prvého vstupu](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Index rýchlosti znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie o metrike Index rýchlosti](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie o metrike Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Súčet všetkých časových období medzi prvým vykreslením obsahu a časom do interaktivity, kedy dĺžka úlohy presiahla 50 ms (vyjadrený v milisekundách). [Ďalšie informácie o metrike Celkový čas blokovania](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "Počiatočný čas odpovede servera bol krátky"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "V Chrome bude k dispozícii nové prostredie, ktoré umožní používateľom prehliadať bez súborov cookie tretích strán. [Ďalšie informácie o súboroch cookie tretích strán](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "V niektorých kontextoch môžu byť súbory cookie tretích strán blokované. [Ďalšie informácie o príprave na obmedzenia súborov cookie tretích strán](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Bol nájdený 1 súbor cookie}few{Boli nájdené # súbory cookie}many{# cookies found}other{Bolo nájdených # súborov cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimalizujte použitie riešení tretích strán"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Direktíva `require-trusted-types-for` v hlavičke `Content-Security-Policy` (PZO) dáva pokyny používateľským agentom, aby kontrolovali údaje odovzdávané funkciám prijímača DOM XSS. [Ďalšie informácie o zmiernení rizika útoku XSS založeného na DOM pomocou direktívy Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nenašla sa žiadna hlavička `Content-Security-Policy` s direktívou Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Zmiernite riziko skriptovania medzi webmi založeného na modeli DOM pomocou direktívy Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "V prvkoch obrázka nastavte explicitnú šírku aj výšku, aby ste znížili posuny rozloženia a zlepšili kumulatívnu zmenu rozloženia. [Ako nastaviť rozmery obrázkov](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Vylepšenia prvého vyfarbenia"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Tieto štatistiky sú k dispozícii aj v nástrojoch pre vývojárov v prehliadači Chrome na paneli výkonnosti. Ak si chcete zobraziť podrobnejšie informácie, [zaznamenajte stopu](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Štatistiky"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metriky"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Vylepšite celkové načítavanie, aby bola stránka čo najskôr responzívna a pripravená na použitie. Kľúčové metriky: Čas do interaktívneho vykreslenia, Index rýchlosti"
+    "message": "Vylepšite celkové načítavanie, aby bola stránka čo najskôr responzívna a pripravená na použitie. Kľúčové metriky: Čas do interaktívneho vykreslenia, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Celkové vylepšenia"
@@ -1857,22 +1875,22 @@
     "message": "Webová adresa"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potenciálna úspora"
+    "message": "Odhadovaná redukcia veľkosti"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potenciálna úspora"
+    "message": "Odhadovaný čas skrátenia uloženia"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potenciálna úspora: {wastedBytes, number, bytes} KiB"
+    "message": "Môže byť menšia o {wastedBytes, number, bytes} kB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Bol nájdený 1 prvok}few{Boli nájdené # prvky}many{# elements found}other{Bolo nájdených # prvkov}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potenciálna úspora: {wastedMs, number, milliseconds} ms"
+    "message": "Uloží sa asi o {wastedMs, number, milliseconds} ms rýchlejšie"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
@@ -2070,7 +2088,7 @@
     "message": "Získať skóre výkonnosti v nástroji Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Merať metriky výkonnosti načítania stránok, ako sú vykreslenie najväčšieho obsahu a index rýchlosti."
+    "message": "Merať metriky výkonnosti načítania stránok, ako sú vykreslenie najväčšieho obsahu a Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Získať prístup k možnostiam progresívnych webových aplikácií."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Nahlásiť problém"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Prejsť späť na kontroly"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Skryť"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Neskôr v tomto roku nahradia štatistiky kontroly výkonnosti. [Tu môžete zistiť viac a poskytnúť spätnú väzbu](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Údaje laboratória"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Vyskytli sa problémy ovplyvňujúce funkčnosť nástroja Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Vyskúšať štatistiky"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nie je možné priradiť"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Duplikovať moduly"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Duplicitné bajty"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Počet bajtov zdroja"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Prepnúť tabuľku"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Prenos bajtov"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Nepoužité bajty"

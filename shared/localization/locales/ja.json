@@ -1440,7 +1440,7 @@
     "message": "最初のサーバー応答時間は問題ない速さです"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome は、サードパーティ Cookie を使用しない新しいブラウジング環境に移行しています。[サードパーティ Cookie の詳細](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "サードパーティ Cookie は、状況によってはブロックされることがあります。[サードパーティ Cookie の制限に備える方法について](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 件の Cookie が見つかりました}other{# 件の Cookie が見つかりました}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "第三者の使用の最小化"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "重大度"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy`（CSP）ヘッダーの `require-trusted-types-for` ディレクティブは、DOM XSS シンク関数に渡されるデータの制御をユーザー エージェントに指示します。[Trusted Types を使用して DOM ベースの XSS に対処する方法の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Trusted Types ディレクティブを含む `Content-Security-Policy` ヘッダーが見つかりません"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Trusted Types を使用して DOM ベースの XSS に対処する"
   },
   "core/audits/unsized-images.js | description": {
     "message": "画像要素で幅と高さを明示的に設定すると、レイアウト シフトを減らして、CLS を改善できます。[画像サイズの設定方法の詳細](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint の改善点"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "これらのインサイトは、Chrome DevTools のパフォーマンス パネルでも確認できます。詳しい情報を表示するには、[トレースを記録](https://developer.chrome.com/docs/devtools/performance/reference)してください。"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "インサイト"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指標"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "読み込みの全体的なパフォーマンスを改善して、ページの反応性や操作性を高めましょう。主要な指標: インタラクティブになるまでの時間、速度インデックス"
+    "message": "読み込みの全体的なパフォーマンスを改善して、ページの反応性や操作性を高めましょう。主要な指標: Time to Interactive、Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "全体的な改善点"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "減らせるデータ量"
+    "message": "推定される削減サイズ"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "短縮できる時間"
+    "message": "推定される削減時間"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "{wastedBytes, number, bytes} KiB 削減可能"
+    "message": "推定される削減サイズ {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 件の要素が見つかりました}other{# 件の要素が見つかりました}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "{wastedMs, number, milliseconds} ミリ秒短縮できます"
+    "message": "推定される削減時間 {wastedMs, number, milliseconds} ミリ秒"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ドキュメント"
@@ -2070,7 +2088,7 @@
     "message": "Lighthouse のパフォーマンス スコアを取得する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Largest Contentful Paint（最大コンテンツの描画時間）、Speed Index（速度インデックス）などのページ読み込みに関するパフォーマンス指標を測定する。"
+    "message": "Largest Contentful Paint、Speed Index などのページ読み込みに関するパフォーマンス指標を測定する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "プログレッシブ ウェブアプリの機能を評価する。"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "問題を提出"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "監査に戻る"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "非表示"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "今年後半に、パフォーマンスの監査はインサイトに置き換えられます。[詳細およびフィードバックについては、こちらにアクセスしてください](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "ラボデータ"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouse の実行に影響する問題が発生しました。"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "インサイトを利用してみる"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "アトリビューション不可"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "重複モジュール"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "重複するバイト"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "リソースのサイズ（バイト）"
   },
@@ -3714,7 +3744,10 @@
     "message": "名前"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "表を切り替える"
+    "message": "表を切り替え"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "転送バイト数"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "使用していないバイト"
