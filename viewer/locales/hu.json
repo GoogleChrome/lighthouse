@@ -660,7 +660,7 @@
     "message": "Használjon videoformátumot az animált tartalmakhoz"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "A polyfillek és az átalakítások lehetővé teszik, hogy a régi böngészők is használhassák az újabb JavaScript-funkciókat. A modern böngészők esetében azonban sok polyfill és átalakítás szükségtelen. Fontolja meg a JavaScript-buildkészítési folyamat módosítását, hogy az ne alakítsa át a [Baseline](https://web.dev/baseline) funkciókat, kivéve, ha tudja, hogy támogatnia kell a régi böngészőket. [További információ arról, hogy a legtöbb webhely miért tud átalakítás nélkül ES6+ kódot telepíteni](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "A core-js 2-es verzióját észlelte a rendszer az oldalon. A teljesítményt érintő számos fejlesztés miatt érdemes váltani a 3-as verzióra."
@@ -1188,7 +1188,7 @@
     "message": "A felhasználók által tapasztalható, első interakciótól számított esetleges maximális válaszkésés a leghosszabb feladat időtartama. [További információ az Első interakciótól számított esetleges maximális válaszkésés mutatóról](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "A Sebességindex mutató azt jelzi, hogy az adott oldal tartalmai milyen gyorsan válnak láthatóvá. [További információ a Sebességindex mutatóról](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "A Speed Index mutató azt jelzi, hogy az adott oldal tartalmai milyen gyorsan válnak láthatóvá. [További információ a Speed Index mutatóról](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Az első vizuális tartalomválasz és az interaktivitásig eltelt idő közötti minden (50 ms-nál hosszabb feladatot jelentő) periódus időtartamának összege milliszekundumban kifejezve. [További információ a Teljes tiltási idő mutatóról](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "A kezdeti szerverválaszidő rövid volt"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "A Chrome egy új megoldáson dolgozik, amely lehetővé teszi a felhasználók számára, hogy harmadik féltől származó cookie-k nélkül böngésszenek. [További információ a harmadik féltől származó cookie-król](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Előfordulhat, hogy a harmadik felektől származó cookie-k le vannak tiltva bizonyos környezetekben. [További információ a harmadik féltől származó cookie-kra vonatkozó korlátozásokra való felkészülésről](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 cookie található}other{# cookie található}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimalizálja a harmadik felektől származó kódok használatát"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Súlyosság"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "A(z) `Content-Security-Policy` (CSP) fejlécben szereplő `require-trusted-types-for` utasítás arra szólítja fel a felhasználói ügynököket, hogy szabályozzák a DOM XSS-t fogadó funkcióinak átadott adatokat. [További információ a DOM-alapú XSS-típusú támadások Trusted Types megoldással való mérsékléséről](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nem található `Content-Security-Policy` fejléc Trusted Types-utasítás"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "A DOM-alapú XSS csökkentése Trusted Types-utasítással"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Adja meg a képelemek pontos szélességét és magasságát, hogy kevésbé csússzon el az elrendezés, és javuljon a CLS. [További információ a képméretek beállításáról](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Az első leképezést érintő fejlesztések"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Ezek a statisztikák a Chrome DevTools Teljesítmény paneljén is rendelkezésre állnak – [nyom rögzítésével](https://developer.chrome.com/docs/devtools/performance/reference) részletesebb információkat tekinthet meg."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Statisztika"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mutatók"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Növelje az átfogó betöltési élményt annak érdekében, hogy az oldal reszponzív legyen, és a lehető legrövidebb időn belül használhatóvá váljon. Főbb mutatók: interaktivitásig eltelt idő, sebességindex"
+    "message": "Növelje az átfogó betöltési élményt annak érdekében, hogy az oldal reszponzív legyen, és a lehető legrövidebb időn belül használhatóvá váljon. Főbb mutatók: interaktivitásig eltelt idő, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Átfogó javítások"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potenciális megtakarítás"
+    "message": "Becsült megtakarítás"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potenciális megtakarítás"
+    "message": "Becsült megtakarítás"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Akár {wastedBytes, number, bytes} KiB megtakarítás"
+    "message": "Becsült megtakarítás: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 talált elem}other{# talált elem}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potenciálisan {wastedMs, number, milliseconds} ms megtakarítás"
+    "message": "Becsült megtakarítás: {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentum"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Probléma beküldése"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Vissza az ellenőrzésekhez"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Elrejtés"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Az év későbbi szakaszában a statisztikák a teljesítmény-ellenőrzések helyébe lépnek majd. [További információ és visszajelzés itt](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Laboradatok"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "A Lighthouse-futtatást befolyásoló problémák fordultak elő:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Statisztikák kipróbálása"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nem hozzárendelhető"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Ismétlődő modulok"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Ismétlődő bájtok"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Forrásfájl mérete bájtokban"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Táblázat elrejtése/megjelenítése"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Bájtok átvitele"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Fel nem használt bájtok"

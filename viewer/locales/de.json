@@ -660,7 +660,7 @@
     "message": "Videoformate für animierte Inhalte verwenden"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Dank Polyfills und Transformationen können veraltete Browser die neuen JavaScript-Funktionen nutzen. Bei modernen Browsern hingegen sind viele davon nicht erforderlich. Du solltest den Build-Prozess deines JavaScripts so anpassen, dass [Baseline](https://web.dev/baseline)-Funktionen nicht transpiliert werden, es sei denn, du weißt, dass du alte Browser unterstützen musst. [Hier erfährst du, warum die meisten Websites ES6+ Code ohne Transpilierung bereitstellen können](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Auf der Seite wurde Version 2 von core-js erkannt. Ein Upgrade auf Version 3 bietet viele Leistungsverbesserungen."
@@ -1188,7 +1188,7 @@
     "message": "Das maximale potenzielle First Input Delay, das bei deinen Nutzern auftreten kann, entspricht der Dauer der längsten Aufgabe. [Weitere Informationen zum Messwert „Maximales potenzielles First Input Delay“](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Der Geschwindigkeitsindex gibt an, wie schnell die Inhalte einer Seite sichtbar dargestellt werden. [Weitere Informationen zum Messwert „Geschwindigkeitsindex“.](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Der Speed Index gibt an, wie schnell die Inhalte einer Seite sichtbar dargestellt werden. [Weitere Informationen zum Messwert „Speed Index“.](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Summe aller Zeiträume (in Millisekunden) zwischen FCP und „Zeit bis Interaktivität“, wenn die Aufgabendauer 50 ms überschreitet. [Weitere Informationen zum Messwert „Gesamte Blockierzeit“.](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "Kurze Erstreaktionszeit des Servers"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome wird in Zukunft so umgestaltet, dass Nutzer die Möglichkeit haben, ohne Drittanbieter-Cookies zu surfen. [Weitere Informationen zu Drittanbieter-Cookies](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "Drittanbieter-Cookies werden möglicherweise in bestimmten Kontexten blockiert. [Weitere Informationen zur Vorbereitung auf Einschränkungen für Drittanbieter-Cookies](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 Cookie gefunden}other{# Cookies gefunden}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Drittanbieternutzung minimieren"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Schweregrad"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Die `require-trusted-types-for`-Richtlinie im `Content-Security-Policy`-Header (CSP) weist User-Agents an, die an DOM-XSS-Senkenfunktionen übergebenen Daten zu steuern. [Weitere Informationen zum Reduzieren von DOM-basierten XSS-Angriffen mit vertrauenswürdigen Typen](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Kein `Content-Security-Policy`-Header mit der Richtlinie zu vertrauenswürdigen Typen gefunden"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "DOM-basiertes XSS-Angriffe mit vertrauenswürdigen Typen reduzieren"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Lege eine explizite Breite und Höhe für Bildelemente fest, um Layoutverschiebungen zu reduzieren und den CLS-Wert zu verbessern. [Informationen zum Festlegen von Bildabmessungen](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Verbesserungen beim Zeichnen der ersten Inhalte"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Diese Statistiken sind auch im Bereich „Leistung“ der Chrome-Entwicklertools verfügbar – wenn du detailliertere Informationen erhalten möchtest, kannst du [einen Trace aufzeichnen](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Statistiken"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Messwerte"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Hier kannst du die Ladezeiten verkürzen, damit die Seite so schnell wie möglich reagiert und Einsatzbereit ist. Wichtige Messwerte: „Zeit bis Interaktivität“, „Geschwindigkeitsindex“"
+    "message": "Hier kannst du die Ladezeiten verkürzen, damit die Seite so schnell wie möglich reagiert und Einsatzbereit ist. Wichtige Messwerte: „Zeit bis Interaktivität“, „Speed Index“"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Allgemeine Verbesserungen"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Mögliche Einsparungen"
+    "message": "Geschätzte Einsparungen"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Mögliche Einsparungen"
+    "message": "Geschätzte Einsparungen"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Mögliche Einsparung von {wastedBytes, number, bytes} KiB"
+    "message": "Geschätzte Einsparung von {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 Element gefunden}other{# Elemente gefunden}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Mögliche Einsparung von {wastedMs, number, milliseconds} ms"
+    "message": "Geschätzte Einsparung von {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Problem melden"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Zurück zu Prüfungen"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ausblenden"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Im Laufe des Jahres werden die Leistungsprüfungen durch Statistiken ersetzt. [Hier findest du weitere Informationen und kannst Feedback geben.](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Labdaten"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Einige Probleme haben diese Ausführung von Lighthouse beeinträchtigt:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Statistiken ausprobieren"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nicht zuordenbar"
   },
@@ -3699,13 +3726,16 @@
     "message": "Alles"
   },
   "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Alle Skripts"
+    "message": "Alle Scripts"
   },
   "treemap/app/src/util.js | coverageColumnName": {
     "message": "Abdeckung"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Doppelte Module"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Doppelte Bytes"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Ressourcengröße in Byte"
@@ -3716,7 +3746,10 @@
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Tabelle ein- oder ausblenden"
   },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Übertragungsbytes"
+  },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Nicht verwendete Byte"
+    "message": "Nicht verwendete Bytes"
   }
 }

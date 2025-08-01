@@ -660,7 +660,7 @@
     "message": "Utilitza formats de vídeo per al contingut animat"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Els polyfills i les transformacions permeten als navegadors heretats fer servir funcions de JavaScript noves. No obstant això, molts no són necessaris per als navegadors moderns. Et recomanem que modifiquis el procés de compilació de JavaScript perquè no transpili les funcions de [referència](https://web.dev/baseline), tret que sàpigues que has de donar suport als navegadors heretats. [Obtén informació sobre per què la majoria dels llocs web poden implementar codi ES6+ sense transcompilació](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "S'ha detectat la versió 2 de core-js a la pàgina. L'has d'actualitzar a la versió 3 per obtenir moltes millores de rendiment."
@@ -1188,7 +1188,7 @@
     "message": "El retard potencial màxim respecte a la primera interacció que els usuaris es poden trobar és la durada de la tasca més llarga. [Obtén més informació sobre el retard potencial màxim respecte a la primera interacció](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "L'índex de velocitat mostra la rapidesa amb què s'emplena el contingut d'una pàgina. [Obtén més informació sobre la mètrica Índex de velocitat](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index mostra la rapidesa amb què s'emplena el contingut d'una pàgina. [Obtén més informació sobre la mètrica Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Suma de tots els períodes de temps entre l'FCP i el Temps fins que és interactiva, quan la durada de la tasca ha superat els 50 ms, expressada en mil·lisegons. [Obtén més informació sobre la mètrica Temps total de bloqueig](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "El temps inicial de resposta del servidor ha estat breu"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome està fent el canvi a una nova experiència que permet als usuaris triar si volen navegar sense galetes de tercers. [Obtén més informació sobre les galetes de tercers](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "És possible que les galetes de tercers estiguin bloquejades en alguns contextos. [Obtén més informació sobre com pots preparar-te per a les restriccions de galetes de tercers](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{S'ha trobat 1 galeta}other{S'han trobat # galetes}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Redueix l'ús de tercers"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Gravetat"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "La directiva `require-trusted-types-for` a la capçalera de `Content-Security-Policy` (CSP) indica als agents d'usuari que controlin les dades que es transfereixen a les funcions de receptors d'XSS del DOM. [Obtén més informació sobre com pots mitigar la XSS basada en el DOM amb Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "No s'ha trobat cap capçalera de `Content-Security-Policy` amb la directiva Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Mitiga la XSS basada en el DOM amb Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Als elements d'imatge, defineix una amplada i una alçada explícites per reduir els canvis de disseny i millorar el CLS. [Informació sobre com pots definir les dimensions d'imatge](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Millores de la primera renderització"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Aquestes estadístiques també estan disponibles al tauler de rendiment de Chrome DevTools: [registra una traça](https://developer.chrome.com/docs/devtools/performance/reference) per veure informació més detallada."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Estadístiques"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mètriques"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Millora l'experiència general de càrrega, de manera que la pàgina respongui i estigui preparada per utilitzar-se al més aviat possible. Mètriques clau: Temps fins que és interactiva, Índex de velocitat"
+    "message": "Millora l'experiència general de càrrega, de manera que la pàgina respongui i estigui preparada per utilitzar-se al més aviat possible. Mètriques clau: Temps fins que és interactiva, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Millores generals"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Possible estalvi"
+    "message": "Estalvi estimat"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Possible estalvi"
+    "message": "Estalvi estimat"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Possible estalvi de {wastedBytes, number, bytes} KiB"
+    "message": "Estalvi estimat de {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 element trobat}other{# elements trobats}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Possible estalvi de {wastedMs, number, milliseconds} ms"
+    "message": "Estalvi estimat de {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
@@ -2070,7 +2088,7 @@
     "message": "Obtén una puntuació del rendiment de Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Mesura les mètriques de rendiment de la càrrega de pàgines, com ara la renderització de l'element més gran amb contingut i l'índex de velocitat."
+    "message": "Mesura les mètriques de rendiment de la càrrega de pàgines, com ara la renderització de l'element més gran amb contingut i Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Avalua les funcions d'una aplicació web progressiva."
@@ -3462,7 +3480,7 @@
     "message": "Hi ha diversos connectors de WordPress que et poden ajudar a [inserir recursos essencials](https://wordpress.org/plugins/search/critical+css/) o a [ajornar els recursos menys importants](https://wordpress.org/plugins/search/defer+css+javascript/). Tingues en compte que les optimitzacions que proporcionen aquests connectors poden afectar les funcions del tema o dels connectors, de manera que és possible que hagis de fer canvis al codi."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
-    "message": "Tria un tema lleuger (si pot ser, un tema de blocs) i implementa la memòria cau de pàgines completes o una solució de llocs webs estàtics. Desactiva els connectors innecessaris per minimitzar el temps de càrrega del servidor. Pots actualitzar l'allotjament a un servei gestionat o dedicat."
+    "message": "Tria un tema lleuger (si pot ser, un tema de blocs) i implementa la memòria cau de pàgines completes o una solució de llocs web estàtics. Desactiva els connectors innecessaris per minimitzar el temps de càrrega del servidor. Pots actualitzar l'allotjament a un servei gestionat o dedicat."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Pots mostrar extractes a les llistes de publicacions (per exemple, amb l'etiqueta més), reduir el nombre de publicacions que es mostren en una pàgina concreta, tallar les publicacions llargues en diverses pàgines o fer servir un connector per als comentaris de càrrega diferida."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Informa d'un problema"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Torna a les auditories"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Amaga"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Abans que acabi l'any, les estadístiques substituiran les auditories de rendiment. [Obtén més informació i envia suggeriments aquí](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Dades de laboratori"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Hi ha hagut problemes que afecten aquesta execució de Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Prova les estadístiques"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "No atribuïble"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Mòduls duplicats"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Bytes duplicats"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Bytes del recurs"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Commuta la taula"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Transfereix bytes"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Bytes no utilitzats"

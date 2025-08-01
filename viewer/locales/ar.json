@@ -1188,7 +1188,7 @@
     "message": "مقياس \"الحد الأقصى المحتمَل لمهلة الاستجابة لأوّل إدخال\" هو أطول مدّة تستغرقها إحدى المهام استجابةً لإدخال المستخدمين. [مزيد من المعلومات حول مقياس \"الحد الأقصى المحتمَل لمهلة الاستجابة لأوّل إدخال\"](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "يوضّح مؤشر السرعة وتيرة تعبئة محتوى الصفحة على شاشة المستخدم. [مزيد من المعلومات حول مقياس مؤشر السرعة](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "يوضّح Speed Index وتيرة تعبئة محتوى الصفحة على شاشة المستخدم. [مزيد من المعلومات حول مقياس Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "مجموع الفترات الزمنية بين \"سرعة عرض المحتوى على الصفحة\" و\"وقت التفاعل\" عندما تتجاوز مدّة المهمة 50 ملي ثانية، معبرًا عنها بالملي ثانية. [مزيد من المعلومات حول مقياس \"إجمالي وقت الحظر\"](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "وقت استجابة الخادم الأوّلي قصير"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "يوفِّر Chrome تجربة جديدة تتيح للمستخدمين إمكانية اختيار التصفُّح بدون ملفات تعريف الارتباط التابعة لجهات خارجية. [مزيد من المعلومات حول ملفات تعريف الارتباط التابعة لجهات خارجية](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "قد يتم حظر ملفات تعريف الارتباط الخارجية في بعض السياقات. [مزيد من المعلومات حول الاستعداد للقيود المفروضة على ملفات تعريف الارتباط الخارجية](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{تم العثور على ملف تعريف ارتباط واحد}zero{تم العثور على # ملف تعريف ارتباط}two{تم العثور على ملفَي تعريف ارتباط}few{تم العثور على # ملفات تعريف ارتباط}many{تم العثور على # ملف تعريف ارتباط}other{تم العثور على # ملف تعريف ارتباط}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "تقليل استخدام الرموز التابعة لجهات خارجية"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "درجة الخطورة"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "يوضّح توجيه `require-trusted-types-for` في عنوان `Content-Security-Policy` (CSP) لوكلاء المستخدمين كيفية التحكّم في البيانات التي يتم تمريرها إلى دوال DOM المتعلّقة بهجمات XSS. [مزيد من المعلومات حول الحدّ من هجمات XSS المستنِدة إلى DOM باستخدام Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "لم يتم العثور على عنوان `Content-Security-Policy` مع توجيه Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "الحدّ من هجمات XSS المستنِدة إلى DOM باستخدام Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "يجب ضبط قيَم واضحة للعرض والارتفاع في عناصر الصور للحدّ من متغيّرات التصميم وتحسين متغيّرات التصميم التراكمية (CLS). تعرَّف على [كيفية ضبط أبعاد الصور](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "تحسينات العرض الأول"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "تتوفّر هذه الإحصاءات أيضًا في لوحة \"أداء أدوات مطوري البرامج في Chrome\"، ويمكنك [تسجيل عملية تتبُّع](https://developer.chrome.com/docs/devtools/performance/reference) لعرض معلومات أكثر تفصيلاً."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "الإحصاءات"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "المقاييس"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "يمكنك تحسين تجربة التحميل العامة لتصبح هذه الصفحة سريعة الاستجابة وجاهزة للاستخدام في أقرب وقت ممكن. المقاييس الأساسية: وقت التفاعل ومؤشر السرعة."
+    "message": "يمكنك تحسين تجربة التحميل العامة لتصبح هذه الصفحة سريعة الاستجابة وجاهزة للاستخدام في أقرب وقت ممكن. المقاييس الأساسية: وقت التفاعل ومؤشر Speed Index."
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "التحسينات العامة"
@@ -1857,22 +1875,22 @@
     "message": "عنوان URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "التوفيرات المحتملة"
+    "message": "التوفير المقدَّر"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "التوفيرات المحتملة"
+    "message": "التوفير المقدَّر"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "احتمال توفير {wastedBytes, number, bytes} كيبيبايت"
+    "message": "التوفير المقدَّر: {wastedBytes, number, bytes} كيبيبايت"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{تم العثور على عنصر واحد}zero{تم العثور على # عنصر}two{تم العثور على عنصرَين}few{تم العثور على # عناصر}many{تم العثور على # عنصرًا}other{تم العثور على # عنصر}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "التوفيرات المحتملة من {wastedMs, number, milliseconds} مللي ثانية"
+    "message": "التوفير المقدَّر: {wastedMs, number, milliseconds} ملي ثانية"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "المستند"
@@ -2070,7 +2088,7 @@
     "message": "الحصول على نتيجة أداء أداة Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "التعرّف على قيم مقاييس أداء تحميل الصفحة، مثل سرعة عرض أكبر جزء من المحتوى على الصفحة ومؤشر السرعة"
+    "message": "التعرّف على قيم مقاييس أداء تحميل الصفحة، مثل سرعة عرض أكبر جزء من المحتوى على الصفحة ومؤشر Speed Index"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "تقييم إمكانات تطبيقات الويب التقدّمية"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "الإبلاغ عن مشكلة"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "الرجوع إلى عمليات التدقيق"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "إخفاء"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "ستحلّ الإحصاءات محل عمليات تدقيق الأداء في وقت لاحق من هذا العام. [يمكنك هنا التعرّف على مزيد من المعلومات وتقديم الملاحظات](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "بيانات المختبَر"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "حدثت مشاكل تؤثر في تشغيل Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "تجربة الإحصاءات"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "موارد لا يمكن تحديد مصدرها"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "الوحدات المكرَّرة"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "وحدات البايت المكرّرة"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "حجم الموارد بوحدة البايت"
   },
@@ -3714,9 +3744,12 @@
     "message": "الاسم"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "تبديل الجدول"
+    "message": "إظهار الجدول أو إخفاؤه"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "نقل وحدات البايت"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "وحدات بايت غير المستخدمة"
+    "message": "وحدات البايت غير المستخدمة"
   }
 }

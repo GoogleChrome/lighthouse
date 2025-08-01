@@ -1188,7 +1188,7 @@
     "message": "De Maximale potentiële eerste invoervertraging (MPFID) die gebruikers kunnen ervaren, is de duur van de langste taak. [Meer informatie over de statistiek Maximale potentiële eerste invoervertraging (MPFID)](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Snelheidsindex laat zien hoe snel de content van een pagina zichtbaar is. [Meer informatie over de statistiek Snelheidsindex](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Snelheidsindex laat zien hoe snel de content van een pagina zichtbaar is. [Meer informatie over de statistiek Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Som van alle perioden tussen Eerste tekenbewerking met content (FCP) en Tijd tot interactief, als de taaklengte langer duurt dan 50 ms, aangegeven in milliseconden. [Meer informatie over de statistiek Totale blokkeertijd](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "Eerste reactietijd van server was kort"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome gaat over op een nieuwe functionaliteit waarmee gebruikers kunnen kiezen om te browsen zonder cookies van derden. [Meer informatie over cookies van derden](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Cookies van derden kunnen in bepaalde contexten worden geblokkeerd. [Meer informatie over hoe je je kunt voorbereiden op de beperkingen voor cookies van derden](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 cookie gevonden}other{# cookies gevonden}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Gebruik door derden minimaliseren"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Ernst"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "De instructie `require-trusted-types-for` in de koptekst `Content-Security-Policy` (CSP) geeft user-agents de opdracht om de gegevens te beheren die worden doorgegeven aan DOM XSS-sinkfuncties. [Meer informatie over hoe je DOM-gebaseerde XSS beperkt met Vertrouwde typen](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Geen `Content-Security-Policy`-header met instructie voor Vertrouwde typen gevonden"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "DOM-gebaseerde XSS beperken met Vertrouwde typen"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Stel een expliciete breedte en hoogte in voor afbeeldingselementen om opmaakverschuivingen te verminderen en CLS te verbeteren. [Meer informatie over hoe je afbeeldingsafmetingen instelt](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Verbeteringen voor eerste weergave"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Deze inzichten zijn ook beschikbaar in het deelvenster Prestaties van Chrome DevTools. [Neem een tracering op](https://developer.chrome.com/docs/devtools/performance/reference) om meer gedetailleerde informatie te bekijken."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Inzichten"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Statistieken"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Verbeter de algemene laadfunctionaliteit, zodat de pagina zo snel mogelijk reageert en gebruiksklaar is. Belangrijkste statistieken: Tijd tot interactief, Snelheidsindex"
+    "message": "Verbeter de algemene laadfunctionaliteit, zodat de pagina zo snel mogelijk reageert en gebruiksklaar is. Belangrijkste statistieken: Tijd tot interactief, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Algemene verbeteringen"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potentiële besparingen"
+    "message": "Geschatte besparingen"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potentiële besparingen"
+    "message": "Geschatte besparingen"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potentiële besparing van {wastedBytes, number, bytes} KiB"
+    "message": "Geschatte besparingen van {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 element gevonden}other{# elementen gevonden}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potentiële besparing van {wastedMs, number, milliseconds} ms"
+    "message": "Geschatte besparingen van {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
@@ -2070,7 +2088,7 @@
     "message": "Lighthouse-prestatiescore ophalen."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Prestatiestatistieken voor het laden van de pagina meten, zoals de Grootste weergave met content (LCP) en de snelheidsindex."
+    "message": "Prestatiestatistieken voor het laden van de pagina meten, zoals de Grootste weergave met content (LCP) en de Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Mogelijkheden van progressive web-apps evalueren."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Een probleem melden"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Terug naar audits"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Verbergen"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Later dit jaar worden prestatieaudits vervangen door inzichten. [Hier vind je meer informatie en kun je feedback geven](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Labgegevens"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Er zijn problemen opgetreden bij deze uitvoering van Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Inzichten proberen"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Niet toe te schrijven"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Dubbele modules"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Dubbele bytes"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Resourcebytes"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Tabel schakelen"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Aantal bytes voor overdracht"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Ongebruikte bytes"

@@ -1440,7 +1440,7 @@
     "message": "初始服务器响应用时较短"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome 将推出新的用户体验，使用户可以选择不使用第三方 Cookie 来浏览网页。[详细了解第三方 Cookie](https://developers.google.com/privacy-sandbox/cookies)。"
+    "message": "在某些情况下，第三方 Cookie 可能会被屏蔽。[详细了解如何为第三方 Cookie 限制做好准备](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 个 Cookie}other{找到 # 个 Cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "尽量减少第三方使用"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) 标头中的 `require-trusted-types-for` 指令会指示用户代理控制传递给 DOM XSS 接收器函数的数据。[详细了解如何使用 Trusted Types 缓解基于 DOM 的 XSS 攻击](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)。"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "未找到包含 Trusted Types 指令的 `Content-Security-Policy` 标头"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "使用 Trusted Types 缓解基于 DOM 的 XSS 攻击"
   },
   "core/audits/unsized-images.js | description": {
     "message": "请为图片元素设置明确的宽度值和高度值，以减少布局偏移并改善 CLS。[了解如何设置图片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "改进首次绘制"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "您还可在 Chrome 开发者工具的“性能”面板中查看这些数据分析。只要[记录跟踪信息](https://developer.chrome.com/docs/devtools/performance/reference)，即可查看更详细的信息。"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "数据分析"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指标"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "改善整体的加载体验，使该网页响应迅速且可尽快投入使用。关键指标：可交互前的耗时、速度指数"
+    "message": "改善整体的加载体验，使该网页响应迅速且可尽快投入使用。关键指标：可交互前的耗时、Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "整体改进"
@@ -1857,22 +1875,22 @@
     "message": "网址"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "可能达到的节省程度"
+    "message": "预计节省的字节数"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "可能达到的节省程度"
+    "message": "预计缩短的毫秒数"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "有望节省 {wastedBytes, number, bytes} KiB"
+    "message": "预计节省 {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{发现了 1 个元素}other{发现了 # 个元素}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "有望节省 {wastedMs, number, milliseconds} 毫秒"
+    "message": "预计缩短 {wastedMs, number, milliseconds} 毫秒"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文档"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "提交问题"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "返回审核部分"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "隐藏"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "今年晚些时候，数据分析将取代效果审核。[点击此处了解详情并提供反馈](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "实验室数据"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "此次 Lighthouse 运行并不顺利，原因如下："
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "试用数据分析功能"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "无法归因"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "重复的模块"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "重复的字节数"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "资源字节数"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "显示/隐藏表格"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "传输字节数"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "未使用的字节数"

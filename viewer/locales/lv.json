@@ -660,7 +660,7 @@
     "message": "Izmantojiet video failu formātus animētam saturam"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Pārlūka ielikumi un pārveidošanas kodi ļauj mantotos pārlūkos izmantot jaunas JavaScript funkcijas. Tomēr modernos pārlūkos daudzi no tiem nav nepieciešami. Ieteicams mainīt JavaScript būvēšanas procesu, lai netiktu transpilētas [pamata līmeņa](https://web.dev/baseline) funkcijas, ja vien nezināt, ka jums ir jāatbalsta mantotie pārlūki. [Uzziniet, kāpēc lielākajā daļā vietņu var izvietot ES6+ kodu bez transpilēšanas](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Lapā tika konstatēta core-js 2. versija. Jums ir jāveic jaunināšana uz 3. versiju, lai iegūtu daudzus veiktspējas uzlabojumus."
@@ -1188,7 +1188,7 @@
     "message": "Iespējamā maksimālā First Input Delay, ar ko jūsu lietotāji var saskarties, ir ilgākā uzdevuma ilgums. [Uzziniet vairāk par rādītāju “Iespējamā maksimālā First Input Delay”](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Ātruma rādītājs norāda, cik ātri tiek parādīts lapas saturs. [Uzziniet vairāk par ātruma rādītāju](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed index norāda, cik ātri tiek parādīts lapas saturs. [Uzziniet vairāk par ātruma rādītāju](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Visu laika periodu summa (no PSM līdz “Time to Interactive”), kad uzdevuma ilgums pārsniedz 50 ms (izteikts milisekundēs). [Uzziniet vairāk par rādītāju “Kopējais bloķēšanas laiks”](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Sākotnējās servera atbildes laika bija īss"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Pārlūkā Chrome tiek ieviestas jaunas iespējas, kas ļauj lietotājiem izvēlēties pārlūkošanu bez trešo pušu sīkfailiem. [Uzziniet vairāk par trešo pušu sīkfailiem](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Dažos gadījumos var tikt bloķēti trešo pušu sīkfaili. [Uzziniet vairāk par sagatavošanos trešo pušu sīkfailu ierobežojumiem](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Atrasts 1 sīkfails}zero{Atrasti # sīkfaili}one{Atrasts # sīkfails}other{Atrasti # sīkfaili}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Samaziniet trešās puses koda lietojumu"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Nozīmīgums"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Direktīva `require-trusted-types-for` galvenē `Content-Security-Policy` (CSP) lietotāju aģentiem sniedz norādījumu kontrolēt datus, kas iestata vērtību DOM starpvietņu skriptēšanas (XSS) izlietnes funkcijām. [Uzziniet vairāk par DOM XSS uzbrukumu ierobežošanu, izmantojot direktīvu Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Netika atrasta neviena `Content-Security-Policy` galvene ar direktīvu Trusted Types."
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "DOM XSS uzbrukumu ierobežošana, izmantojot direktīvu Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Iestatiet konkrētu platumu un augstumu attēlu elementiem, lai samazinātu izkārtojuma nobīdes un uzlabotu CLS. [Uzziniet, kā iestatīt attēlu izmērus](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Pirmā satura atveidojuma uzlabojumi"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Šie ieskati ir pieejami arī Chrome izstrādātāja rīku veiktspējas panelī. Lai skatītu detalizētāku informāciju, [reģistrējiet izsekošanas datus](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Ieskati"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrikas"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Uzlabojiet vispārējo ielādes darbību, lai lapa reaģētu un būtu gatava izmantošanai pēc iespējas ātrāk. Galvenās metrikas: “Laiks līdz interaktivitātei”, “Ātruma rādītājs”"
+    "message": "Uzlabojiet vispārējo ielādes darbību, lai lapa reaģētu un būtu gatava izmantošanai pēc iespējas ātrāk. Galvenās metrikas: “Laiks līdz interaktivitātei”, “Speed index”"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Vispārēji uzlabojumi"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potenciālie ietaupījumi"
+    "message": "Aptuvenais ietaupījums"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potenciālie ietaupījumi"
+    "message": "Aptuvenais ietaupījums"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potenciālais ietaupījums: {wastedBytes, number, bytes} KiB"
+    "message": "Aptuvenais ietaupījums: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Tika atrasts viens elements}zero{Tika atrasti # elementi}one{Tika atrasts # elements}other{Tika atrasti # elementi}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potenciālais ietaupījums: {wastedMs, number, milliseconds} ms"
+    "message": "Aptuvenais ietaupījums: {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokuments"
@@ -2070,7 +2088,7 @@
     "message": "Iegūstiet Lighthouse veiktspējas rādītāju."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Nosakiet tādus lapas ielādes veiktspējas rādītājus kā Largest Contentful Paint un ātruma indekss."
+    "message": "Nosakiet tādus lapas ielādes veiktspējas rādītājus kā Largest Contentful Paint un Speed index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Izvērtējiet progresīvo tīmekļa lietotņu iespējas."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Iesniegt problēmu"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Atgriezties pie pārbaudēm"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Paslēpt"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Vēlāk šajā gadā ieskati aizstās veiktspējas pārbaudes. [Šeit varat uzzināt vairāk un sniegt atsauksmes](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Laboratorijas dati"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Radās problēmas, kas ietekmēja šo Lighthouse palaišanu:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Izmēģināt ieskatus"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Neattiecināmi"
   },
@@ -3705,7 +3732,10 @@
     "message": "Tvērums"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Dublēti moduļi"
+    "message": "Dublētie moduļi"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Dublētie baiti"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Faila lielums baitos"
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Pārslēgt tabulu"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Pārsūtītā faila lielums baitos"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Neizmantotais apjoms baitos"

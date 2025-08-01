@@ -660,7 +660,7 @@
     "message": "使用影片格式的動畫內容"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill 和轉換可讓舊版瀏覽器使用新版 JavaScript 的功能。不過，有很多 Polyfill 和轉換都不是新型瀏覽器的必要項目。除非你認為必須支援舊版瀏覽器，否則請考慮將 JavaScript 建立流程改為不轉譯[基準](https://web.dev/baseline)功能。[瞭解為何大部分網站無需轉譯也能部署 ES6+ 程式碼](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "系統偵測到網頁採用 core-js 第 2 版。第 3 版大幅提升效能，請務必升級。"
@@ -1188,7 +1188,7 @@
     "message": "使用者可以體驗到最長的「首次輸入延遲時間」就是最長的工作持續時間。[進一步瞭解「最長的首次輸入延遲時間」數據](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)。"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "「速度指數」會顯示頁面內容的展現速度。[進一步瞭解「速度指數」數據](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)。"
+    "message": "Speed Index 會顯示頁面內容的顯示速度。[進一步瞭解 Speed Index 數據](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)。"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "當工作長度超過 50 毫秒時，所有 FCP 和「可互動所需時間」之間的時長總和 (以毫秒為單位)。[進一步瞭解「總封鎖時間」數據](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)。"
@@ -1440,7 +1440,7 @@
     "message": "初始伺服器回應時間短暫"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome 推出全新體驗，讓使用者選擇在無第三方 Cookie 的情況下瀏覽網頁。[進一步瞭解第三方 Cookie](https://developers.google.com/privacy-sandbox/cookies)。"
+    "message": "第三方 Cookie 在某些情況下可能會被封鎖。[進一步瞭解如何應對第三方 Cookie 限制](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 個 Cookie}other{找到 # 個 Cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "減少第三方程式碼使用量"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "嚴重性"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) 標題的 `require-trusted-types-for` 指令指示用戶代理程式控制傳輸到 DOM XSS Sink 函數的資料。[進一步瞭解如何緩解設有「受信任類型」的 DOM XSS](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "找不到設有「受信任類型」指令的 `Content-Security-Policy` 標題"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "緩解設有「受信任類型」的 DOM XSS"
   },
   "core/audits/unsized-images.js | description": {
     "message": "請明確設定圖片元素的寬度和高度，以減少版面配置轉移及改善累計版面配置轉移 (CLS)。[瞭解如何設定圖片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "首次繪製改進"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "你也可前往 Chrome 開發人員工具的「效能」面板查閱這些分析資料，透過[建立追蹤記錄](https://developer.chrome.com/docs/devtools/performance/reference)瞭解更多詳情。"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "分析資料"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "數據"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "改善整體載入體驗，令網頁反應更靈敏快捷，盡快可供用戶使用。關鍵數據：可互動時間、速度指數"
+    "message": "改善整體載入體驗，令網頁反應更靈敏快捷，盡快可供用戶使用。關鍵數據：可互動時間、Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "整體改進"
@@ -1857,22 +1875,22 @@
     "message": "網址"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "可節省的數據用量"
+    "message": "估計節省"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "可節省的數據用量"
+    "message": "估計節省"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "可節省 {wastedBytes, number, bytes} KiB"
+    "message": "估計節省：{wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "可減少 {wastedMs, number, milliseconds} 毫秒"
+    "message": "估計節省：{wastedMs, number, milliseconds} 毫秒"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文件"
@@ -2070,7 +2088,7 @@
     "message": "取得 Lighthouse 效能分數。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "測量頁面載入效能數據，例如「最大內容繪製」和「速度指數」。"
+    "message": "測量頁面載入效能數據，例如 Largest Contentful Paint 和 Speed Index。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "存取「漸進式網頁應用程式」功能。"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "報告問題"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "返回審核頁面"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "隱藏"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "分析功能將於今年稍後時間取代效能審核。[按此瞭解詳情和分享意見](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "實驗室數據"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "導致這次 Lighthouse 無法順利執行的問題："
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "試用分析功能"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "無法歸因"
   },
@@ -3707,8 +3734,11 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "重複的模組"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "重複的位元組數目"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "資源字節"
+    "message": "資源位元組"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "名稱"
@@ -3716,7 +3746,10 @@
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "顯示/隱藏表格"
   },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "傳輸位元組數"
+  },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "未使用的字節"
+    "message": "未使用的位元組數目"
   }
 }
