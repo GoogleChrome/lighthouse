@@ -15,14 +15,21 @@
 /** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
 /** @typedef {{matches: PatternMatchResult[], estimatedByteSavings: number}} Result */
 
-import polyfillModuleData_ from './polyfill-module-data.json' with { type: 'json' };
-import graph_ from './polyfill-graph-data.json' with { type: 'json' };
+import fs from 'fs';
+
+import {LH_ROOT} from '../../../shared/root.js';
+
+const polyfillModuleDataJson = fs.readFileSync(
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-module-data.json`, 'utf-8');
 
 /** @type {import('../../scripts/legacy-javascript/create-polyfill-module-data.js').PolyfillModuleData} */
-const polyfillModuleData = polyfillModuleData_;
+const polyfillModuleData = JSON.parse(polyfillModuleDataJson);
+
+const graphJson = fs.readFileSync(
+  `${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`, 'utf-8');
 
 /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
-const graph = graph_;
+const graph = JSON.parse(graphJson);
 
 /**
  * Takes a list of patterns (consisting of a name identifier and a RegExp expression string)
