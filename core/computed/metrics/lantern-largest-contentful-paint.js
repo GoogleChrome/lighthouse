@@ -13,11 +13,19 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @param {Omit<Lantern.Metrics.Extras, 'optimistic'>=} extras
+   * @param {Required<Pick<Lantern.Metrics.Extras, 'fcpResult'>>} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
     const params = await getComputationDataParams(data, context);
+    // If FCP and LCP happened within the same frame, we can assume their simulated values
+    // are also the same.
+    if (
+      params.processedNavigation.timestamps.firstContentfulPaint ===
+        params.processedNavigation.timestamps.largestContentfulPaint
+    ) {
+      return extras.fcpResult;
+    }
     return Promise.resolve(this.compute(params, extras)).catch(lanternErrorAdapter);
   }
 
