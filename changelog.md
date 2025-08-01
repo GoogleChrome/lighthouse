@@ -1,15 +1,15 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Boluwatife Omosowon @bolu-tife
-Jonas Thelemann @dargmuesli
- <a name="12.8.1"></a>
+<a name="12.8.1"></a>
 # 12.8.1 (2025-08-01)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.0...v12.8.1)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
-## Notable Changes
-~~ TODO: Move notable changes here ~~
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Boluwatife Omosowon @bolu-tife
+- Jonas Thelemann @dargmuesli
 
 
 ## Core
