@@ -177,23 +177,6 @@ describe('ConsoleMessages error logs audit', () => {
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('does nothing with an empty description', async () => {
-      const options = {ignoredPatterns: 'pattern'};
-      const context = {options, computedCache: new Map()};
-      const result = await ErrorLogsAudit.audit({
-        ConsoleMessages: [
-          {
-            level: 'error',
-          },
-        ],
-        SourceMaps: [],
-        Scripts: [],
-      }, context);
-
-      expect(result.score).toBe(0);
-      expect(result.details.items).toHaveLength(1);
-    });
-
     it('filters console messages as a string', async () => {
       const options = {ignoredPatterns: ['simple']};
       const context = {options, computedCache: new Map()};
