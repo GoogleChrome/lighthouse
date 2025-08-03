@@ -17,7 +17,7 @@ import {SwapLocaleFeature} from '../../../report/renderer/swap-locale-feature.js
 export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {{saveGist?: function(LH.Result): void, refresh: function(LH.Result): void, getStandaloneReportHTML: function(): string}} callbacks
+   * @param {{saveGist?: (json: LH.Result) => Promise<string|undefined>, refresh: function(LH.Result): void, getStandaloneReportHTML: function(): string}} callbacks
    */
   constructor(dom, callbacks) {
     super(dom, {
@@ -54,20 +54,27 @@ export class ViewerUIFeatures extends ReportUIFeatures {
   }
 
   /**
-   * @override
-   */
-  saveAsGist() {
-    if (this._saveGistCallback) {
-      this._saveGistCallback(this.json);
-    } else {
-      // UI should prevent this from being called with no callback, but throw to be sure.
+ * @override
+ * Saves the report as a gist and disables the save menu option **only on success**.
+ */
+  async saveAsGist() {
+    if (!this._saveGistCallback) {
       throw new Error('Cannot save this report as a gist');
     }
 
-    // Disable save-gist option after saving.
-    const saveGistItem =
-      this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
-    saveGistItem.setAttribute('disabled', 'true');
+    try {
+    // Await the callback which returns the gist ID string or undefined
+      const gistId = await this._saveGistCallback(this.json);
+
+      if (gistId) {
+      // Disable the "Save as Gist" menu option only if save succeeded
+        const saveGistItem =
+        this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
+        saveGistItem.setAttribute('disabled', 'true');
+      }
+    } catch (err) {
+    // Log errors but keep menu enabled for retries
+    }
   }
 
   /**

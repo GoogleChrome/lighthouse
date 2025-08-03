@@ -172,9 +172,9 @@ export class LighthouseReportViewer {
       // minor LH version.
       // See https://github.com/GoogleChrome/lighthouse/issues/1108
       logger.warn('Results may not display properly.\n' +
-                  'Report was created with an earlier version of ' +
-                  `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
-                  `version is ${window.LH_CURRENT_VERSION}.`);
+        'Report was created with an earlier version of ' +
+        `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
+        `version is ${window.LH_CURRENT_VERSION}.`);
     }
   }
 
@@ -191,7 +191,7 @@ export class LighthouseReportViewer {
    * @param {HTMLElement} rootEl
    * @param {(json: LH.Result|LH.FlowResult) => void} [saveGistCallback]
    */
-  _renderLhr(json, rootEl, saveGistCallback) {
+  _renderLhr(json, rootEl) {
     // Allow users to view the runnerResult
     if ('lhr' in json) {
       const runnerResult = /** @type {{lhr: LH.Result}} */ (/** @type {unknown} */ (json));
@@ -226,7 +226,7 @@ export class LighthouseReportViewer {
     });
 
     const features = new ViewerUIFeatures(reportDom, {
-      saveGist: saveGistCallback,
+      saveGist: this._onSaveJson,
       refresh: newLhr => {
         this._replaceReportHtml(newLhr);
       },
@@ -278,7 +278,7 @@ export class LighthouseReportViewer {
         this._renderFlowResult(json, rootEl, saveGistCallback);
         if (window.gtag) window.gtag('event', 'report', {type: 'flow-report'});
       } else {
-        this._renderLhr(json, rootEl, saveGistCallback);
+        this._renderLhr(json, rootEl);
         if (window.gtag) window.gtag('event', 'report', {type: 'report'});
       }
 
@@ -347,26 +347,21 @@ export class LighthouseReportViewer {
   }
 
   /**
-   * Saves the current report by creating a gist on GitHub.
-   * @param {LH.Result|LH.FlowResult} reportJson
-   * @return {Promise<string|void>} id of the created gist.
-   * @private
-   */
+ * Saves the current report by creating a gist on GitHub.
+ * @param {LH.Result|LH.FlowResult} reportJson
+ * @return {Promise<string|undefined>} gist ID on success, undefined on failure
+ */
   async _onSaveJson(reportJson) {
-    if (window.gtag) {
-      window.gtag('event', 'report', {type: 'share'});
-    }
-
-    // TODO: find and reuse existing json gist if one exists.
     try {
       const id = await this._github.createGist(reportJson);
       if (window.gtag) {
         window.gtag('event', 'report', {type: 'created'});
       }
       history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
-      return id;
+      return id; // Return gist ID on success
     } catch (err) {
       logger.log(err.message);
+      return undefined; // Return undefined on failure
     }
   }
 
