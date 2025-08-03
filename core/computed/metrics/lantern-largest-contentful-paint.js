@@ -10,6 +10,8 @@ import {getComputationDataParams, lanternErrorAdapter} from './lantern-metric.js
 import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
 class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPaint {
+  static disableFcpShortCircuiting = false;
+
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Artifacts.ComputedContext} context
@@ -22,7 +24,8 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
     // are also the same.
     if (
       params.processedNavigation.timestamps.firstContentfulPaint ===
-        params.processedNavigation.timestamps.largestContentfulPaint
+        params.processedNavigation.timestamps.largestContentfulPaint &&
+        !this.disableFcpShortCircuiting
     ) {
       return extras.fcpResult;
     }
@@ -37,6 +40,21 @@ class LanternLargestContentfulPaint extends Lantern.Metrics.LargestContentfulPai
   static async compute_(data, context) {
     const fcpResult = await LanternFirstContentfulPaint.request(data, context);
     return this.computeMetricWithGraphs(data, context, {fcpResult});
+  }
+
+  /**
+   * Designed to be used solely in tests.
+   *
+   * @param {() => Promise<LH.Artifacts.LanternMetric>} callback
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static async withFcpShortCircuitDisabled(callback) {
+    this.disableFcpShortCircuiting = true;
+    try {
+      return await callback();
+    } finally {
+      this.disableFcpShortCircuiting = false;
+    }
   }
 }
 
