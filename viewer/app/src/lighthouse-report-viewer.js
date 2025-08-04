@@ -189,7 +189,6 @@ export class LighthouseReportViewer {
   /**
    * @param {LH.Result} json
    * @param {HTMLElement} rootEl
-   * @param {(json: LH.Result|LH.FlowResult) => void} [saveGistCallback]
    */
   _renderLhr(json, rootEl) {
     // Allow users to view the runnerResult
