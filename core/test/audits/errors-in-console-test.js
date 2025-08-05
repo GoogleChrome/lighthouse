@@ -204,7 +204,7 @@ describe('ConsoleMessages error logs audit', () => {
           {
             level: 'error',
             source: 'network',
-            text: `Error message`.repeat(20 * KB),
+            text: `Error message`.repeat(KB),
           },
         ],
         SourceMaps: [],
