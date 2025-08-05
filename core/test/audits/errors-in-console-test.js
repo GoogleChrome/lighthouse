@@ -180,15 +180,14 @@ describe('ConsoleMessages error logs audit', () => {
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('should return 1000 console errors', async () => {
-      const options = {ignoredPatterns: ['simple']};
-      const context = {options, computedCache: new Map()};
+    it('should limit console errors length to 1000', async () => {
+      const context = {options: {}, computedCache: new Map()};
 
       const result = await ErrorLogsAudit.audit({
-        ConsoleMessages: Array.from({length: MAX_CONSOLE_ERRORS * 2}, (_, i) => ({
+        ConsoleMessages: Array.from({length: MAX_CONSOLE_ERRORS * 2}, () => ({
         level: 'error',
         source: 'network',
-        text: `Error message ${i + 1}`,
+        text: `Error message`,
       })),
         SourceMaps: [],
         Scripts: [],
