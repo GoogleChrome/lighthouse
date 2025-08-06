@@ -1,3 +1,37 @@
+<a name="12.8.1"></a>
+# 12.8.1 (2025-08-01)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.0...v12.8.1)
+
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Boluwatife Omosowon @bolu-tife
+- Jonas Thelemann @dargmuesli
+
+
+## Core
+
+* network-requests: add initiators to debugData ([#16605](https://github.com/GoogleChrome/lighthouse/pull/16605))
+
+## I18n
+
+* import ([#16616](https://github.com/GoogleChrome/lighthouse/pull/16616))
+
+## Tests
+
+* disable csp-block-all smoke test ([#16598](https://github.com/GoogleChrome/lighthouse/pull/16598))
+
+## Misc
+
+* revert json modules to fully support Node 20 ([#16613](https://github.com/GoogleChrome/lighthouse/pull/16613))
+* ci: clear devtools build cache ([#16615](https://github.com/GoogleChrome/lighthouse/pull/16615))
+* logger: bump to 2.0.2 ([#16604](https://github.com/GoogleChrome/lighthouse/pull/16604))
+* logger: update debug dep to v4 ([#16601](https://github.com/GoogleChrome/lighthouse/pull/16601))
+* treemap: fix sizes not showing for source map nodes ([#16593](https://github.com/GoogleChrome/lighthouse/pull/16593))
+
 <a name="12.8.0"></a>
 # 12.8.0 (2025-07-11)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.1...v12.8.0)

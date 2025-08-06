@@ -1440,7 +1440,7 @@
     "message": "Mabilis ang unang pagtugon ng server"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Lumilipat ang Chrome patungo sa bagong experience na nagbibigay-daan sa mga user na piliing mag-browse nang walang third-party na cookies. [Matuto pa tungkol sa third-party na cookies](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Posibleng ma-block ang third-party na cookies sa ilang context. [Matuto pa tungkol sa paghahanda para sa mga paghihigpit sa third-party na cookie](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{May nakitang 1 cookie}one{May nakitang # cookies}other{May nakitang # na cookies}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Bawasan ang paggamit ng third-party"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Kalalaan"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Nagbibigay ng tagubilin ang direktibang `require-trusted-types-for` sa header ng `Content-Security-Policy` (CSP) sa mga user agent na kontrolin ang datang ipinapasa sa mga sink function ng DOM XSS. [Matuto pa tungkol sa pag-mitigate ng DOM-based XSS na may Mga Pinagkakatiwalaang Uri](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Walang nakitang header ng `Content-Security-Policy` na may direktiba sa Mga Pinagkakatiwalaang Uri"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "I-mitigate ang DOM-based XSS na may Mga Pinagkakatiwalaang Uri"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Magtakda ng malinaw na lapad at taas sa mga element na larawan para mabawasan ang mga pagbabago sa layout at mapahusay ang CLS. [Alamin kung paano magtakda ng mga dimensyon ng larawan](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,6 +1688,12 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Mga Pagpapahusay sa First Paint"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Available din ang mga insight na ito sa Performance Panel ng Chrome DevTools - [mag-record ng trace](https://developer.chrome.com/docs/devtools/performance/reference) para tumingin pa ng mas detalyadong impormasyon."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Mga Insight"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Mga Sukatan"
   },
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Puwedeng Matipid"
+    "message": "Mga Tinatayang Pagtitipid"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Puwedeng Matipid"
+    "message": "Mga Tinatayang Pagtitipid"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Puwedeng makatipid ng {wastedBytes, number, bytes} KiB"
+    "message": "Tinatayang makatipid ng {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 element ang nakita}one{# element ang nakita}other{# na element ang nakita}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Puwedeng makatipid ng {wastedMs, number, milliseconds} ms"
+    "message": "Tinatayang makatipid ng {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumento"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Mag-file ng isyu"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Bumalik sa mga audit"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Itago"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Sa huling bahagi ng taong ito, papalitan ng mga insight ang mga pag-audit ng performance. [Matuto pa at magbigay ng feedback dito](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Data ng Lab"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "May mga isyung nakakaapekto sa pagpapatakbong ito ng Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Subukan ang mga insight"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Hindi ma-attribute"
   },
@@ -3699,24 +3726,30 @@
     "message": "Lahat"
   },
   "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Lahat ng Script"
+    "message": "Lahat ng script"
   },
   "treemap/app/src/util.js | coverageColumnName": {
     "message": "Sakop"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mga Duplicate na Module"
+    "message": "Mga duplicate na module"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Mga na-duplicate na byte"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Mga Byte ng Resource"
+    "message": "Mga byte ng resource"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "Pangalan"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "I-toggle ang Talahanayan"
+    "message": "I-toggle ang talahanayan"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Maglipat ng mga byte"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Mga Hindi Nagamit na Byte"
+    "message": "Mga hindi nagamit na byte"
   }
 }

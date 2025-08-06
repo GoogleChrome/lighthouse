@@ -660,7 +660,7 @@
     "message": "Pro animovaný obsah používejte formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Doplňující kódy polyfill a transformace umožňují starším prohlížečům používat nové funkce JavaScriptu. Moderní prohlížeče ale řadu z nich nepotřebují. Pokud nutně nepotřebujete podporovat zastaralé prohlížeče, zvažte úpravu procesu sestavování JavaScriptu tak, aby se netranspilovaly základní ([Baseline](https://web.dev/baseline)) funkce. [Proč většina webů může implementovat kód ES6+ bez transpilace](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Na stránce byla zjištěna verze 2 knihovny core-js. Pro mnoho vylepšení výkonu byste měli upgradovat na verzi 3."
@@ -1188,7 +1188,7 @@
     "message": "Maximální potenciální prodleva prvního vstupu, kterou by uživatelé mohli pocítit, je trvání nejdelší úlohy. [Další informace o metrice Maximální potenciální prodleva prvního vstupu](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Index rychlosti ukazuje, jak rychle se viditelně vyplní obsah stránky. [Další informace o metrice Index rychlosti](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index ukazuje, jak rychle se viditelně vyplní obsah stránky. [Další informace o metrice Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Součet všech dob (uvedený v milisekundách) mezi prvním vykreslením obsahu a dobou do interaktivity, u nichž délka úlohy překročila 50 ms. [Další informace o metrice Celková doba blokování](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "Počáteční odpověď serveru byla rychlá"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome postupně přechází na nové prostředí, které uživatelům umožňuje procházet internet bez souborů cookie třetích stran. [Další informace o souborech cookie třetích stran](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "Soubory cookie třetích stran mohou být v některých kontextech blokovány. [Další informace o přípravě na omezení souborů cookie třetích stran](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Byl nalezen 1 soubor cookie}few{Byly nalezeny # soubory cookie}many{Bylo nalezeno # souboru cookie}other{Bylo nalezeno # souborů cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimalizujte používání kódu od třetích stran"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Závažnost"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Direktiva `require-trusted-types-for` v záhlaví `Content-Security-Policy` (CSP) user-agentům sděluje, že mají kontrolovat data předávaná funkcím DOM, které lze zneužít ke skriptování mezi weby (útokům XSS). [Další informace o zmírnění rizika útoků XSS přes model DOM pomocí důvěryhodných typů](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nebylo nalezeno žádné záhlaví `Content-Security-Policy` s direktivou Trusted Types."
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Pomocí důvěryhodných typů zmírněte riziko útoků XSS přes model DOM"
   },
   "core/audits/unsized-images.js | description": {
     "message": "U obrázkových prvků vždy explicitně určete šířku a výšku, aby se omezilo poskakování při vykreslování a zlepšila se hodnota CLS. [Jak nastavit rozměry obrázků](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,6 +1688,12 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Vylepšení prvního vykreslení"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Tyto statistiky jsou k dispozici také na panelu Výkon v Nástrojích pro vývojáře Chrome – k zobrazení podrobnějších informací [zaznamenejte trasování](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Statistiky"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metriky"
   },
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Možná úspora"
+    "message": "Odh. úspora"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Možná úspora"
+    "message": "Odh. úspora"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potenciální úspora {wastedBytes, number, bytes} KiB"
+    "message": "Odh. úspora: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Byl nalezen 1 prvek}few{Byly nalezeny # prvky}many{Bylo nalezeno # prvku}other{Bylo nalezeno # prvků}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Lze uspořit {wastedMs, number, milliseconds} ms"
+    "message": "Odh. úspora: {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
@@ -2070,7 +2088,7 @@
     "message": "Získat skóre výkonu Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Měřit metriky načítání stránek, jako jsou vykreslení největšího obsahu a index rychlosti."
+    "message": "Měřit metriky načítání stránek, jako jsou vykreslení největšího obsahu a Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Vyhodnotit funkce progresivních webových aplikací."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Zaznamenat problém"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Zpět k auditům"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Skrýt"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Později v tomto roce budou audity výkonu nahrazeny statistikami. [Další informace a možnost poskytnout zpětnou vazbu najdete tady](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Laboratorní data"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Při tomto spuštění nástroje Lighthouse se vyskytly problémy:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Vyzkoušet statistiky"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nepřiřaditelné"
   },
@@ -3699,7 +3726,7 @@
     "message": "Vše"
   },
   "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Všechna písma"
+    "message": "Všechny skripty"
   },
   "treemap/app/src/util.js | coverageColumnName": {
     "message": "Pokrytí"
@@ -3707,14 +3734,20 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Duplicitní moduly"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Duplicitní bajty"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Počet bajtů zdroje"
+    "message": "Bajty zdroje"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "Název"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Zobrazit nebo skrýt tabulku"
+    "message": "Přepnout tabulku"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Přenášené bajty"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Nevyužité bajty"

@@ -660,7 +660,7 @@
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கங்களுக்கு வீடியோ வடிவமைப்புகளைப் பயன்படுத்தவும்"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "புதிய JavaScript அம்சங்களைப் பழைய பிரவுசர்கள் பயன்படுத்த பாலிஃபில்களும் டிரான்ஸ்ஃபார்ம்களும் உதவுகின்றன. எனினும், நவீன பிரவுசர்களுக்கு இவற்றில் பல தேவைப்படுவதில்லை. [பேஸ்லைன்](https://web.dev/baseline) அம்சங்களை டிரான்ஸ்பைல் செய்யாமல் இருக்கும்படி உங்கள் JavaScript பதிப்புச் செயல்முறையை மாற்றுங்கள். இல்லையெனில் பழைய பிரவுசர்களுக்கான ஆதரவை வழங்க வேண்டியிருக்கும். [டிரான்ஸ்பைல் செய்யாமல் ES6+ குறியீட்டைப் பெரும்பாலான தளங்கள் ஏன் பயன்படுத்தலாம் என்று தெரிந்துகொள்ளுங்கள்](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "இந்தப் பக்கத்தில் core-js 2ம் பதிப்பு கண்டறியப்பட்டுள்ளது. இன்னும் கூடுதல் செயல்திறன் மேம்பாடுகளுக்கு 3ம் பதிப்புக்கு மேம்படுத்த வேண்டும்."
@@ -1440,7 +1440,7 @@
     "message": "சேவையகப் பதிலளிப்புக்கான தொடக்க நேரம் குறைவானது"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "மூன்றாம் தரப்புக் குக்கீகள் இல்லாமல் பிரவுஸ் செய்ய பயனர்களை அனுமதிக்கும் புதிய வசதி Chromeமில் வரவுள்ளது. [மூன்றாம் தரப்புக் குக்கீகள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "சில சூழல்களில் மூன்றாம் தரப்புக் குக்கீகள் தடுக்கப்படலாம். [மூன்றாம் தரப்புக் குக்கீகள் மீதான கட்டுப்பாடுகளுக்குத் தயாராவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 குக்கீ கண்டறியப்பட்டது}other{# குக்கீகள் கண்டறியப்பட்டன}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "மூன்றாம் தரப்பு உபயோகத்தைக் குறைத்தல்"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "தீவிரத்தன்மை"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) தலைப்பில் உள்ள `require-trusted-types-for` டைரெக்டிவ், DOM XSS சின்க் செயல்பாடுகளுக்கு அனுப்பப்படும் தரவைக் கட்டுப்படுத்தும்படி பயனர் ஏஜெண்ட்டுகளுக்கு அறிவுறுத்துகிறது. [நம்பகமான வகைகள் மூலம் DOM அடிப்படையிலான XSS பாதிப்பைக் குறைப்பது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "நம்பகமான வகைகள் டைரெக்டிவ் உள்ள `Content-Security-Policy` தலைப்பு எதுவும் இல்லை"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "நம்பகமான வகைகள் மூலம் DOM அடிப்படையிலான XSS பாதிப்பைக் குறைத்தல்"
   },
   "core/audits/unsized-images.js | description": {
     "message": "தளவமைப்பு மாற்றங்களைக் குறைப்பதற்கும் CLSஸை மேம்படுத்துவதற்கும் படத்தின் துல்லியமான அகலத்தையும் உயரத்தையும் அமைக்கவும். [படத்தின் பரிமாணங்களை அமைப்பது எப்படி என அறிக](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "முதல் தோற்ற மேம்பாடுகள்"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "இந்தப் புள்ளிவிவரங்கள் அம்சம், Chrome டெவெலப்பர் கருவிகளில் உள்ள செயல்திறன் பேனலிலும் கிடைக்கும். [டிரேஸைப் பதிவுசெய்து](https://developer.chrome.com/docs/devtools/performance/reference) மேலும் விரிவான தகவலைப் பாருங்கள்."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "புள்ளிவிவரங்கள்"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "அளவீடுகள்"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "ஒட்டுமொத்தமாகப் பக்கம் ஏற்றப்படும் அனுபவத்தை மேம்படுத்தவும், இதனால் பக்கம் விரைவாக எதிர்வினையாற்றும், அத்துடன் முடிந்தளவு விரைவாகப் பயன்படுத்தத் தயாராக இருக்கும். முக்கிய அளவீடுகள்: 'எதிர்வினை நேரம்', 'வேக அட்டவணை'"
+    "message": "ஒட்டுமொத்தமாகப் பக்கம் ஏற்றப்படும் அனுபவத்தை மேம்படுத்தவும், இதனால் பக்கம் விரைவாக எதிர்வினையாற்றும், அத்துடன் முடிந்தளவு விரைவாகப் பயன்படுத்தத் தயாராக இருக்கும். முக்கிய அளவீடுகள்: எதிர்வினை நேரம், Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "ஒட்டுமொத்த மேம்பாடுகள்"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "சேமிக்கப்படக்கூடியது"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "சேமிக்கப்படக்கூடியது"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "சேமிக்கக்கூடிய அளவு: {wastedBytes, number, bytes} KiB"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 உறுப்பு உள்ளது}other{# உறுப்புகள் உள்ளன}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "சேமிக்கக்கூடிய நேரம்: {wastedMs, number, milliseconds} மி.வி."
+    "message": "கணக்கிடப்பட்ட சேமிப்பு: {wastedMs, number, milliseconds} மி.வி"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ஆவணம்"
@@ -2070,7 +2088,7 @@
     "message": "Lighthouseஸின் செயல்திறன் ஸ்கோரைப் பெறுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரம், ஸ்பீடு இண்டெக்ஸ் போன்ற ‘பக்க ஏற்றச் செயல்திறன் அளவீடுகளை’ அளவிடுதல்."
+    "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரம், Speed Index போன்ற ‘பக்க ஏற்றச் செயல்திறன் அளவீடுகளை’ அளவிடுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "மேம்பட்ட இணைய ஆப்ஸின் திறன்களை மதிப்பாய்வு செய்தல்."
@@ -3572,8 +3590,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "சிக்கலைப் புகார் செய்க"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "'தணிக்கைகள்' அம்சத்திற்குத் திரும்பு"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "மறை"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "இந்த ஆண்டின் பிற்பகுதியில், செயல்திறன் தணிக்கைகளுக்குப் பதிலாக 'புள்ளிவிவரங்கள்' அம்சம் அறிமுகம் செய்யப்படவுள்ளது. [இங்கே மேலும் தெரிந்துகொள்ளலாம், கருத்தை வழங்கலாம்](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "ஆய்வகத் தரவு"
@@ -3674,6 +3698,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouseஸின் இந்த இயக்கத்தைச் சில சிக்கல்கள் பாதிக்கின்றன:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "'புள்ளிவிவரங்கள்' அம்சத்தைப் பயன்படுத்திப் பாருங்கள்"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "இணைக்க முடியாதவை"
   },
@@ -3704,6 +3731,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "நகல் மாடியூல்கள்"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "நகல் பைட்டுகள்"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "ஃபைலின் அளவு (பைட்டுகள்)"
   },
@@ -3711,9 +3741,12 @@
     "message": "பெயர்"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "டேபிளைக் காட்டு/மறை"
+    "message": "அட்டவணையைக் காட்டு/மறை"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "பரிமாற்றப்பட்ட பைட்டுகள்"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "பயன்படுத்தப்படாத பைட்டுகள்"
+    "message": "பயன்படுத்தாத பைட்டுகள்"
   }
 }

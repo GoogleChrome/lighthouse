@@ -1188,7 +1188,7 @@
     "message": "Максимално потенцијално кашњење првог приказа које може да се деси корисницима је трајање најдужег задатка. [Сазнајте више о показатељу Максимално потенцијално кашњење првог приказа](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Индекс брзине приказује колико брзо садржај странице постаје видљив за кориснике. [Сазнајте више о показатељу Индекс брзине](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index приказује колико брзо садржај странице постаје видљив за кориснике. [Сазнајте више о показатељу Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Збир свих периода између FCP-а и времена до почетка интеракције, када задатак траје дуже од 50 ms, изражено у милисекундама. [Сазнајте више о показатељу Укупно време блокирања](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Почетно време одговора сервера је било кратко"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome се креће ка новом доживљају који омогућава корисницима да бирају прегледање садржаја без колачића треће стране. [Сазнајте више о колачићима треће стране](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Колачићи треће стране могу да буду блокирани у неким контекстима. [Сазнајте више о припреми за ограничења колачића треће стране](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Пронађен је 1 колачић}one{Пронађен је # колачић}few{Пронађена су # колачића}other{Пронађено је # колачића}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Смањите коришћење садржаја треће стране"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Озбиљност"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Директива `require-trusted-types-for` у заглављу `Content-Security-Policy` (CSP) упућује корисничке агенте да контролишу податке који се прослеђују DOM XSS функцијама за обраду злонамерног материјала. [Сазнајте више о ублажавању XSS-а заснованог на DOM-у помоћу поузданих типова](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Није пронађено заглавље `Content-Security-Policy` са директивом Поуздани типови"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Ублажите XSS заснован на DOM-у помоћу поузданих типова"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Подесите експлицитну ширину и висину у елементима слика ради смањења прелаза изгледа и побољшања кумулативног помака садржаја странице. [Сазнајте како да подесите димензије слике](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,17 +1688,23 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Побољшања првог приказивања"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Ови увиди су доступни и у окну за учинак Chrome алатки за програмере – [снимите траг](https://developer.chrome.com/docs/devtools/performance/reference) да бисте видели детаљније информације."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Увид"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показатељи"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Побољшајте општи доживљај учитавања да би страница почела да се одазива и да би била спремна за коришћење у најкраћем могућем року. Кључни показатељи: Време почетка интеракције, Индекс брзине"
+    "message": "Побољшајте општи доживљај учитавања да би страница почела да се одазива и да би била спремна за коришћење у најкраћем могућем року. Кључни показатељи: Време почетка интеракције, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Општа побољшања"
   },
   "core/config/default-config.js | performanceCategoryTitle": {
-    "message": "Учинак"
+    "message": "Перформансе"
   },
   "core/config/default-config.js | seoCategoryDescription": {
     "message": "Захваљујући овим проверама страница ће сигурно бити у складу са основним саветима за оптимизацију за претраживаче. Има много додатних фактора које Lighthouse овде не узима у обзир, а који могу да утичу на рангирање у претрази, укључујући учинак у [Основним показатељима за веб](https://web.dev/explore/vitals). [Сазнајте више о основама Google претраге](https://support.google.com/webmasters/answer/35769)."
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Потенцијална уштеда"
+    "message": "Процењена уштеда"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Потенцијална уштеда"
+    "message": "Процењена уштеда"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Потенцијална уштеда од {wastedBytes, number, bytes} KiB"
+    "message": "Процењена уштеда од {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Пронађен је 1 елемент}one{Пронађен је # елемент}few{Пронађена су # елемента}other{Пронађено је # елемената}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Потенцијална уштеда од {wastedMs, number, milliseconds} ms"
+    "message": "Процењена уштеда од {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
@@ -2043,7 +2061,7 @@
     "message": "Најбоље праксе"
   },
   "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
-    "message": "Учинак"
+    "message": "Перформансе"
   },
   "flow-report/src/i18n/ui-strings.js | categorySeo": {
     "message": "Оптимизација за претраживаче"
@@ -2070,7 +2088,7 @@
     "message": "Преузмите Lighthouse оцену учинка."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Измерите показатеље учинка за учитавање странице, као што су највеће приказивање садржаја и индекс брзине."
+    "message": "Измерите показатеље учинка за учитавање странице, као што су највеће приказивање садржаја и Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Приступите могућностима прогресивних веб-апликација."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Пријавите проблем"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Назад на ревизије"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Сакриј"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Касније у току године увиди ће заменити ревизије учинка. [Сазнајте више и пошаљите повратне информације овде](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Подаци о експерименталним функцијама"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Било је извесних проблема који су утицали на ово покретање Lighthouse-а:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Испробај увиде"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Неприписиво"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Дуплирани модули"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Дуплирани бајтови"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Бајтови ресурса"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Укључи/искључи табелу"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Бајтови фајла за пренос"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Неискоришћени бајтови"

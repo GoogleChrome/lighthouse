@@ -660,7 +660,7 @@
     "message": "ऐनिमेट की गई सामग्री के लिए वीडियो फ़ॉर्मेट का इस्तेमाल करें"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfills और Transforms की मदद से, लेगसी ब्राउज़र पर JavaScript की नई सुविधाएं इस्तेमाल की जा सकती हैं. हालांकि, मॉडर्न ब्राउज़र को इनमें से कई सुविधाओं की ज़रूरत नहीं पड़ती. [बेसलाइन](https://web.dev/baseline) सुविधाओं को ट्रांसपाइल न करने के लिए, JavaScript की बिल्ड प्रोसेस में बदलाव किया जा सकता है. यह बदलाव सिर्फ़ तब न करें, जब आपके लिए लेगसी ब्राउज़र का इस्तेमाल करना ज़रूरी हो. [जानें कि क्यों ज़्यादातर साइटें ट्रांसपाइल किए बिना ES6+ कोड को डिप्लॉय कर सकती हैं](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "पेज पर core-js के वर्शन 2 का पता चला. बेहतर परफ़ॉर्मेंस के लिए, आपको वर्शन 3 पर अपग्रेड करना चाहिए."
@@ -1188,7 +1188,7 @@
     "message": "मैक्सिमम पोटेंशियल फ़र्स्ट इनपुट डिले मेट्रिक, आपके पेज पर उपयोगकर्ता के इनपुट मिलने और पेज को उस इनपुट का जवाब देने में लगने वाला सबसे लंबा संभावित समय बताती है. [\"मैक्सिमम पोटेंशियल फ़र्स्ट इनपुट डिले\" मेट्रिक के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "स्पीड इंडेक्स से पता चलता है कि किसी पेज का कॉन्टेंट कितनी जल्दी दिखता है. [स्पीड इंडेक्स से जुड़ी मेट्रिक के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index से पता चलता है कि किसी पेज का कॉन्टेंट कितनी जल्दी दिखता है. [Speed Index मेट्रिक के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "एफ़सीपी और इंटरैक्टिव में लगने वाले समय के बीच का समय जब 50 मिलीसेकंड से ज़्यादा होता है, तब यह मेट्रिक उस कुल समय की जानकारी मिलीसेकंड में देती है. [टोटल ब्लॉकिंग टाइम मेट्रिक के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "जवाब देने में सर्वर को लगने वाला शुरुआती समय कम था"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome, एक नए अनुभव की ओर बढ़ रहा है. इसमें उपयोगकर्ता, तीसरे पक्ष की कुकी के बिना ब्राउज़ करने का विकल्प चुन सकते हैं. [तीसरे पक्ष की कुकी के बारे में ज़्यादा जानें](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "कुछ मामलों में, तीसरे पक्ष की कुकी ब्लॉक हो सकती हैं. [तीसरे पक्ष की कुकी से जुड़ी पाबंदियों के लिए तैयारी करने के बारे में ज़्यादा जानें](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 कुकी मिली}one{# कुकी मिली}other{# कुकी मिलीं}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "तीसरे पक्ष के इस्तेमाल को कम करें"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "गंभीरता"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (सीएसपी) हेडर में मौजूद `require-trusted-types-for` डायरेक्टिव, उपयोगकर्ता एजेंट को निर्देश देता है कि वे डीओएम XSS सिंक फ़ंक्शन को पास किए गए डेटा को कंट्रोल करें. [Trusted Types की मदद से, डीओएम पर आधारित XSS से अपनी साइट को सुरक्षित रखने के बारे में ज़्यादा जानें](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Trusted Types डायरेक्टिव वाला कोई `Content-Security-Policy` हेडर नहीं मिला"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Trusted Types की मदद से, डीओएम पर आधारित XSS से अपनी साइट को सुरक्षित रखें"
   },
   "core/audits/unsized-images.js | description": {
     "message": "इमेज एलिमेंट पर, चौड़ाई और ऊंचाई की जानकारी साफ़ तौर पर सेट करें, ताकि लेआउट शिफ़्ट को कम किया जा सके और सीएलएस को बेहतर बनाया जा सके. [इमेज का डाइमेंशन सेट करने का तरीका जानें](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "पहले पेंट के सुधार"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "खास जानकारी वाली यह सुविधा, Chrome DevTools के परफ़ॉर्मेंस पैनल में भी उपलब्ध है. ज़्यादा बारीकी से जानकारी पाने के लिए [ट्रेस रिकॉर्ड करें](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "अहम जानकारी"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "मेट्रिक"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "पूरे लोडिंग अनुभव को बेहतर बनाएं ताकि पेज जवाब दे और जल्दी से जल्दी इस्तेमाल के लिए तैयार हो जाए. प्रमुख मेट्रिक: इंटरेक्टिव में लगने वाला समय, गति इंडेक्स"
+    "message": "पेज लोड होने के अनुभव को बेहतर बनाएं, ताकि पेज रिस्पॉन्सिव हो और जल्द से जल्द उपलब्ध हो जाए. प्रमुख मेट्रिक: टाइम टू इंटरैक्टिव, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "समस्त सुधार"
@@ -1857,22 +1875,22 @@
     "message": "यूआरएल"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "संभावित बचत"
+    "message": "अनुमानित बचत"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "संभावित बचत"
+    "message": "अनुमानित बचत"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "{wastedBytes, number, bytes} किबीबाइट मेमोरी बचाई जा सकती है"
+    "message": "{wastedBytes, number, bytes} कि॰बा॰ की अनुमानित बचत"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 एलिमेंट मिला}one{# एलिमेंट मिला}other{# एलिमेंट मिले}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "{wastedMs, number, milliseconds} मि. से. की संभावित बचत"
+    "message": "{wastedMs, number, milliseconds} मि॰से॰ की अनुमानित बचत"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "दस्तावेज़"
@@ -2070,7 +2088,7 @@
     "message": "लाइटहाउस परफ़ॉर्मेंस स्कोर हासिल करें."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "सबसे बड़ा कॉन्टेंटफ़ुल पेंट और स्पीड इंडेक्स जैसी पेज लोड की परफ़ॉर्मेंस मेट्रिक का आकलन करें."
+    "message": "पेज लोड के लिए, 'सबसे बड़े एलिमेंट को रेंडर करने में लगने वाला समय' और Speed Index जैसी परफ़ॉर्मेंस मेट्रिक का आकलन करें."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "प्रोग्रेसिव वेब ऐप्लिकेशन की क्षमताओं का आकलन करें."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "समस्या की रिपोर्ट करें"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "'परफ़ॉर्मेंस ऑडिट' सुविधा पर वापस जाएं"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "छिपाएं"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "साल के आखिर में, 'परफ़ॉर्मेंस ऑडिट' सुविधा को 'खास जानकारी' सुविधा से बदल दिया जाएगा. [ज़्यादा जानें और सुझाव, शिकायत या राय दें](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "किसी नई या दुबारा जाँची जाने वाली ऐप्लिकेशन के लिए तैयार किया गया डेटा"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "कुछ समस्याएं आने के कारण Lighthouse के इस रन पर असर पड़ा है:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "'खास जानकारी' सुविधा आज़माएं"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "एट्रिब्यूट की जानकारी नहीं दी जा सकती"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "डुप्लीकेट मॉड्यूल"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "डुप्लीकेट बाइट"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "फ़ाइल का साइज़ (बाइट में)"
   },
@@ -3716,7 +3746,10 @@
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "टेबल को टॉगल करें"
   },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "बाइट ट्रांसफ़र करें"
+  },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "इस्तेमाल न की गई बाइट की संख्या"
+    "message": "इस्तेमाल न किए गए बाइट"
   }
 }

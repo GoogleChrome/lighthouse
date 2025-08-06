@@ -660,7 +660,7 @@
     "message": "Usa formatos de vídeo para incluir contenido animado"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Los polyfills y los transforms permiten que los navegadores antiguos utilicen las nuevas funciones de JavaScript. Sin embargo, muchos de estos polyfills y transforms no son necesarios para los navegadores modernos. Te recomendamos que modifiques tu proceso de compilación de JavaScript para que no transpile las funciones de [Baseline](https://web.dev/baseline), a menos que sepas que debes admitir navegadores antiguos. [Descubre por qué la mayoría de los sitios pueden implementar código ES6+ sin transpilación](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Se ha detectado la versión 2 de core-js en la página. Debes actualizar a la versión 3 para disfrutar de muchas mejoras de rendimiento."
@@ -1440,7 +1440,7 @@
     "message": "El tiempo de respuesta inicial del servidor fue breve"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome está cambiando a una nueva experiencia que permite a los usuarios elegir si quieren navegar sin cookies de terceros. [Consulta más información sobre las cookies de terceros](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Las cookies de terceros podrían estar bloqueadas en algunos contextos. [Más información sobre cómo prepararse para las restricciones de las cookies de terceros](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 cookie encontrada}other{# cookies encontradas}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Reducir el uso de código de terceros"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Gravedad"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "La directiva `require-trusted-types-for` del encabezado `Content-Security-Policy` (CSP) indica a los user-agents que controlen los datos que se pasan a las funciones de sumidero de XSS basado en DOM. [Consulta más información sobre cómo mitigar el XSS basado en DOM con Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "No se ha encontrado ningún encabezado `Content-Security-Policy` con la directiva Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Mitigar el XSS basado en DOM con Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "En los elementos de imagen, especifica un ancho y una altura explícitos para reducir los cambios de diseño y mejorar el CLS. [Consulta cómo configurar las dimensiones de una imagen](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Mejoras del primer renderizado"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Estas estadísticas también están disponibles en el panel Rendimiento de Chrome DevTools. [Graba una traza](https://developer.chrome.com/docs/devtools/performance/reference) para ver información más detallada."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Estadísticas"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Métricas"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Mejora la experiencia de carga general para que la página responda bien y se pueda usar lo antes posible. Métricas clave: Tiempo hasta que está interactiva, Índice de velocidad"
+    "message": "Mejora la experiencia de carga general para que la página responda bien y se pueda usar lo antes posible. Métricas clave: Tiempo hasta que está interactiva, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Mejoras generales"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Ahorro potencial"
+    "message": "Ahorro estimado"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Ahorro potencial"
+    "message": "Ahorro estimado"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cambios de diseño acumulados"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Ahorro potencial de {wastedBytes, number, bytes} KiB"
+    "message": "Ahorro estimado de {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 elemento encontrado}other{# elementos encontrados}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Ahorro potencial de {wastedMs, number, milliseconds} ms"
+    "message": "Ahorro estimado de {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Documento"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Notificar un problema"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Volver a las auditorías"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ocultar"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "A finales de este año, las estadísticas reemplazarán a las auditorías de rendimiento. [Más información y comentarios](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Datos de experimentos"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Algunos problemas han afectado a la ejecución de Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Probar las estadísticas"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "No atribuible"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Módulos duplicados"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Bytes duplicados"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Bytes del recurso"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Mostrar/Ocultar tabla"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Bytes de transferencia"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Bytes sin usar"
