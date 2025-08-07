@@ -61,19 +61,14 @@ export class ViewerUIFeatures extends ReportUIFeatures {
     if (!this._saveGistCallback) {
       throw new Error('Cannot save this report as a gist');
     }
-
-    try {
     // Await the callback which returns the gist ID string or undefined
-      const gistId = await this._saveGistCallback(this.json);
+    const gistId = await this._saveGistCallback(this.json);
 
-      if (gistId) {
+    if (gistId) {
       // Disable the "Save as Gist" menu option only if save succeeded
-        const saveGistItem =
-        this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
-        saveGistItem.setAttribute('disabled', 'true');
-      }
-    } catch (err) {
-    // Log errors but keep menu enabled for retries
+      const saveGistItem =
+      this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
+      saveGistItem.setAttribute('disabled', 'true');
     }
   }
 

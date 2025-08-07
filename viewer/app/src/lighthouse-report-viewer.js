@@ -172,9 +172,9 @@ export class LighthouseReportViewer {
       // minor LH version.
       // See https://github.com/GoogleChrome/lighthouse/issues/1108
       logger.warn('Results may not display properly.\n' +
-        'Report was created with an earlier version of ' +
-        `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
-        `version is ${window.LH_CURRENT_VERSION}.`);
+                  'Report was created with an earlier version of ' +
+                  `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
+                  `version is ${window.LH_CURRENT_VERSION}.`);
     }
   }
 
@@ -349,8 +349,12 @@ export class LighthouseReportViewer {
  * Saves the current report by creating a gist on GitHub.
  * @param {LH.Result|LH.FlowResult} reportJson
  * @return {Promise<string|undefined>} gist ID on success, undefined on failure
+ * @private
  */
   async _onSaveJson(reportJson) {
+    if (window.gtag) {
+      window.gtag('event', 'report', {type: 'share'});
+    }
     try {
       const id = await this._github.createGist(reportJson);
       if (window.gtag) {
