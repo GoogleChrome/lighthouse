@@ -56,6 +56,7 @@ Array [
   "sharedDictionaryIssueDetails",
   "sriMessageSignatureIssueDetails",
   "stylesheetLoadingIssueDetails",
+  "unencodedDigestIssueDetails",
   "userReidentificationIssueDetails",
 ]
 `);
