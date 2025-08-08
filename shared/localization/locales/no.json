@@ -1188,7 +1188,7 @@
     "message": "Den maksimale potensielle forsinkelsen for første inndata som brukerne dine kan oppleve, er varigheten av den lengste oppgaven. [Finn ut mer om beregningen Maksimal potensiell forsinkelse for første inndata](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Hastighetsindeksen viser hvor raskt innholdet på siden blir synlig. [Finn ut mer om beregningen Hastighetsindeks](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index viser hvor raskt innholdet på siden blir synlig. [Finn ut mer om beregningen Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Summen av alle tidsperiodene mellom første innholdsrike opptegning (FCP) og Tid til interaktiv, når oppgavelengden har overskredet 50 ms, uttrykt i millisekunder. [Finn ut mer om beregningen Total blokkeringstid](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Den innledende tjenerresponstiden var kort"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Vi jobber med å gi Chrome-brukere mulighet til å velge å surfe uten informasjonskapsler fra tredjeparter. [Finn ut mer om informasjonskapsler fra tredjeparter](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Informasjonskapsler fra tredjeparter kan være blokkert i enkelte sammenhenger. [Finn ut mer om hvordan du kan forberede deg på begrensninger for informasjonskapsler fra tredjeparter](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Fant 1 informasjonskapsel}other{Fant # informasjonskapsler}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimer bruken av tredjepartskode"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Alvorlighetsgrad"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`require-trusted-types-for`-direktivet i `Content-Security-Policy`-hodet (CSP) ber brukeragenter om å kontrollere dataene som sendes til DOM XSS-mottaksfunksjoner. [Finn ut mer om hvordan du kan redusere DOM-basert XSS med Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Fant ikke noe `Content-Security-Policy`-hode med Trusted Types-direktiv"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Reduser DOM-basert XSS med betrodde typer"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Angi bredden og høyden på bildeelementer eksplisitt for å redusere utseendeforskyvninger og oppnå bedre CLS. [Finn ut hvordan du angir bildedimensjoner](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Forbedringer av første opptegning"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Denne statistikken er også tilgjengelig i ytelsespanelet i Chrome Utviklerverktøy – [lag et spor](https://developer.chrome.com/docs/devtools/performance/reference) for å se mer detaljert informasjon."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Statistikk"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Beregninger"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Gjør den totale innlastingsopplevelsen bedre, slik at siden reagerer og er klar til bruk så snart som mulig. Nøkkelberegninger: Tid til interaktiv, Hastighetsindeks"
+    "message": "Gjør den totale innlastingsopplevelsen bedre, slik at siden reagerer og er klar til bruk så snart som mulig. Nøkkelberegninger: Tid til interaktiv, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Forbedringsmuligheter"
@@ -1857,22 +1875,22 @@
     "message": "Nettadresse"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potensielle besparelser"
+    "message": "Anslått besparelse"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potensielle besparelser"
+    "message": "Anslått besparelse"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potensielle besparelser på {wastedBytes, number, bytes} KiB"
+    "message": "Anslått besparelse på {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 element funnet}other{# elementer funnet}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potensielle besparelser på {wastedMs, number, milliseconds} ms"
+    "message": "Anslått besparelse på {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
@@ -2070,7 +2088,7 @@
     "message": "skaffe en Lighthouse-ytelsespoengsum"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "måle ytelsesverdier knyttet til sideinnlasting, for eksempel Største innholdsrike opptegning (LCP) og Hastighetsindeks"
+    "message": "måle ytelsesverdier knyttet til sideinnlasting, for eksempel Største innholdsrike opptegning (LCP) og Speed Index"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "vurdere egenskapene til progressive nettprogrammer"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Opprett sak"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Gå tilbake til revisjonene"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Skjul"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Senere i år erstattes ytelsesrevisjoner av statistikk. [Finn ut mer og gi tilbakemelding her](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Prøvefunksjonsdata"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Det oppsto problemer som påvirker denne kjøringen av Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Prøv statistikk"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Kan ikke tilskrives"
   },
@@ -3705,7 +3732,10 @@
     "message": "Dekning"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Duplikatmoduler"
+    "message": "Dupliserte moduler"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Dupliserte byte"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Ressursstørrelse i byte"
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Slå av/på tabell"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Overfør byte"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Ubrukte byte"

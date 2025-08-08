@@ -660,7 +660,7 @@
     "message": "애니메이션 콘텐츠에 동영상 형식 사용하기"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "폴리필 및 변환을 통해 레거시 브라우저에서 새로운 JavaScript 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 레거시 브라우저를 지원해야 하는 경우가 아니라면 [Baseline](https://web.dev/baseline) 기능을 트랜스파일하지 않도록 JavaScript 빌드 프로세스를 수정해 보세요. [대부분의 사이트에서 트랜스파일링 없이 ES6+ 코드를 배포할 수 있는 이유 알아보기](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "페이지에서 core-js 버전 2가 감지되었습니다. 다양한 성능 개선사항을 적용하려면 버전 3으로 업그레이드해야 합니다."
@@ -1188,7 +1188,7 @@
     "message": "사용자가 경험할 수 있는 최초 입력 반응 시간의 최댓값은 가장 긴 작업의 길이입니다. [최초 입력 반응 시간 최댓값 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "속도 색인은 페이지 콘텐츠가 얼마나 빨리 표시되는지 보여줍니다. [속도 색인 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index는 페이지 콘텐츠가 얼마나 빨리 표시되는지 보여줍니다. [Speed Index 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "FCP와 상호작용 시간 사이의 모든 시간의 합으로, 작업 지속 시간이 50ms를 넘으면 밀리초 단위로 표현됩니다. [총 차단 시간 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "초기 서버 응답 시간 짧음"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome은 사용자가 서드 파티 쿠키 없이 탐색할 수 있는 새로운 환경으로 전환하고 있습니다. [서드 파티 쿠키에 관해 자세히 알아보기](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "일부 상황에서는 서드 파티 쿠키가 차단될 수 있습니다. [서드 파티 쿠키 제한에 대비하는 방법 자세히 알아보기](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{쿠키 1개 찾음}other{쿠키 #개 찾음}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "타사 사용량 최소화"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy`(CSP) 헤더의 `require-trusted-types-for` 지시어는 사용자 에이전트에 DOM XSS 싱크 함수로 전달되는 데이터를 제어하도록 지시합니다. [신뢰할 수 있는 유형으로 DOM 기반 XSS를 완화하는 방법 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "신뢰할 수 있는 유형 지시어가 포함된 `Content-Security-Policy` 헤더를 찾을 수 없음"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "신뢰할 수 있는 유형으로 DOM 기반 XSS 완화"
   },
   "core/audits/unsized-images.js | description": {
     "message": "이미지 요소에 명시적인 너비 및 높이를 설정하여 레이아웃 변경 횟수를 줄이고 누적 레이아웃 변경을 개선합니다. [이미지 크기 설정 방법 알아보기](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "최초 페인트 개선"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "이러한 통계는 Chrome DevTools 성능 패널에서도 확인할 수 있습니다. [트레이스를 기록](https://developer.chrome.com/docs/devtools/performance/reference)하여 자세한 정보를 확인하세요."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "인사이트"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "측정항목"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "페이지가 빠르게 반응하고 가능한 한 빨리 사용할 수 있는 준비가 되도록 전반적인 로드 환경을 강화하세요. 주요 측정항목: 상호작용 시간, 속도 색인"
+    "message": "페이지가 빠르게 반응하고 가능한 한 빨리 사용할 수 있는 준비가 되도록 전반적인 로드 환경을 강화하세요. 주요 측정항목: 상호작용 시간, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "전반적인 개선사항"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "가능한 절감 효과"
+    "message": "예상 절감 용량"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "가능한 절감 효과"
+    "message": "예상 절감 시간"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "절감 가능치: {wastedBytes, number, bytes}KiB"
+    "message": "예상 절감 용량: {wastedBytes, number, bytes}KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{요소 1개 발견됨}other{요소 #개 발견됨}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "절감 가능치: {wastedMs, number, milliseconds} 밀리초"
+    "message": "예상 절감 시간: {wastedMs, number, milliseconds}밀리초"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "문서"
@@ -2070,7 +2088,7 @@
     "message": "Lighthouse 성능 점수를 받습니다."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "최대 콘텐츠 렌더링 시간 및 속도 색인과 같은 페이지 로드 성능 측정항목을 측정합니다."
+    "message": "최대 콘텐츠 렌더링 시간 및 Speed Index와 같은 페이지 로드 성능 측정항목을 측정합니다."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "프로그레시브 웹 앱 기능을 평가합니다."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "문제 신고"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "감사로 돌아가기"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "숨기기"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "올해 말에는 통계가 성능 감사를 대체할 예정입니다. [여기에서 자세히 알아보고 의견을 제공하세요](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "실험실 데이터"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouse 실행에 영향을 미치는 문제가 발생했습니다."
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "통계 사용해 보기"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "확인되지 않음"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "중복 모듈"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "중복된 바이트"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "리소스 바이트"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "표 전환"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "전송 바이트"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "사용하지 않은 바이트"

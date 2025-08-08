@@ -660,7 +660,7 @@
     "message": "Використовуйте формати відео для анімованого вмісту"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Поліфіли й перетворення дають застарілим вебпереглядачам змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/baseline), якщо вам не потрібно підтримувати застарілі вебпереглядачі. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "На сторінці виявлено версію 2 core-js. Щоб підвищити продуктивність, перейдіть на версію 3."
@@ -1188,7 +1188,7 @@
     "message": "Максимальна потенційна затримка відповіді на першу дію – це тривалість найдовшого завдання. [Докладніше про показник \"Максимальна потенційна затримка відповіді на першу дію\".](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Індекс швидкості показує, через скільки часу відображається вміст сторінки. [Докладніше про показник \"Індекс швидкості\".](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index показує, через скільки часу відображається вміст сторінки. [Докладніше про показник Speed Index.](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Загальна тривалість усіх періодів часу в мілісекундах між першою візуалізацією контенту та часом до повного завантаження, коли час виконання завдання перевищує 50 мс. [Докладніше про показник \"Загальний час блокування\".](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "Сервер відповідає швидко"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome пропонуватиме користувачам переглядати вебсторінки без сторонніх файлів cookie. [Докладніше про ці файли.](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "Сторонні файли cookie можуть блокуватися в деяких контекстах. [Докладніше про підготовку до обмежень щодо сторонніх файлів cookie.](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Знайдено 1 файл cookie}one{Знайдено # файл cookie}few{Знайдено # файли cookie}many{Знайдено # файлів cookie}other{Знайдено # файлу cookie}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Зменште використання стороннього коду"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Директива `require-trusted-types-for` у заголовку `Content-Security-Policy` (CSP) указує агентам користувачів контролювати дані, які передаються функціям-приймачам міжсайтного скриптингу (XSS) на основі DOM. [Докладніше про те, як зменшити ризик міжсайтного скриптингу на основі DOM за допомогою Trusted Types.](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Заголовок `Content-Security-Policy` із директивою Trusted Types не знайдено"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Зменште ризик міжсайтного скриптингу (XSS) на основі DOM за допомогою Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Явно вказуючи ширину й висоту для зображень, ви зможете зменшити зміщення макета й покращити показник CLS. [Дізнайтесь, як налаштувати розміри зображень.](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Покращення першого відображення"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Ця статистика також доступна на панелі \"Продуктивність\" в Інструментах розробника Chrome. Щоб переглянути докладнішу інформацію, [запишіть трасування](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Статистика"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показники"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Покращте загальну ефективність завантаження, щоб сторінка швидко реагувала й завантажувалася. Основні показники: час до повної взаємодії, індекс швидкості"
+    "message": "Покращте загальну ефективність завантаження, щоб сторінка швидко реагувала й завантажувалася. Основні показники: Time to Interactive, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Загальні покращення"
@@ -1857,22 +1875,22 @@
     "message": "URL-адреса"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Потенційне заощадження"
+    "message": "Очікуване заощадження"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Потенційне заощадження"
+    "message": "Очікуване заощадження"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Можна зменшити на {wastedBytes, number, bytes} КіБ"
+    "message": "Очікуване заощадження: {wastedBytes, number, bytes} КіБ"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Знайдено 1 елемент}one{Знайдено # елемент}few{Знайдено # елементи}many{Знайдено # елементів}other{Знайдено # елемента}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Потенційне заощадження – {wastedMs, number, milliseconds} мс"
+    "message": "Очікуване заощадження: {wastedMs, number, milliseconds} мс"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
@@ -2070,7 +2088,7 @@
     "message": "Отримати оцінку ефективності в Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Вимірювати показники ефективності завантаження сторінки, такі як візуалізація великого контенту й індекс швидкості."
+    "message": "Вимірювати показники ефективності завантаження сторінки, такі як Largest Contentful Paint і Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Оцінювати можливості прогресивного веб-додатка."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Повідомити про проблему"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Повернутися до перевірок ефективності"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Сховати"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Пізніше цього року перевірки ефективності замінить статистика ефективності. [Щоб дізнатися більше й надіслати відгук, перейдіть за цим посиланням.](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Дані тестів"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Спробувати статистику ефективності"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Атрибуція неможлива"
   },
@@ -3705,7 +3732,10 @@
     "message": "Дані про використання"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Задубльовані модулі"
+    "message": "Повторювані модулі"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Повторювані байти"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Розмір ресурсу в байтах"
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Показати або сховати таблицю"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Розмір перенесеного файлу в байтах"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Невикористані байти"

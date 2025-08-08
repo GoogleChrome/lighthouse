@@ -40,6 +40,8 @@ for (const array of Object.values(exclusions)) {
   array.push('csp-block-all');
   // glitch is gone.
   array.push('issues-mixed-content');
+  // works most of the time, but since it uses a live site it can be flaky
+  array.push('trusted-types-directive-present');
 }
 
 export default exclusions;

@@ -1188,7 +1188,7 @@
     "message": "First Input Delay สูงสุดที่อาจเกิดขึ้นซึ่งผู้ใช้อาจเจอคือระยะเวลาของงานที่ยาวที่สุด [ดูข้อมูลเพิ่มเติมเกี่ยวกับเมตริก First Input Delay สูงสุดที่อาจเกิดขึ้น](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "ดัชนีความเร็วแสดงให้เห็นความเร็วที่เนื้อหาของหน้าปรากฏจนดูสมบูรณ์ [ดูข้อมูลเพิ่มเติมเกี่ยวกับเมตริกดัชนีความเร็ว](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index แสดงให้เห็นความเร็วที่เนื้อหาของหน้าปรากฏจนดูสมบูรณ์ [ดูข้อมูลเพิ่มเติมเกี่ยวกับเมตริก Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "ผลรวมช่วงเวลาทั้งหมดระหว่าง FCP และเวลาในการตอบสนอง เมื่อความยาวของงานเกิน 50ms หน่วยเป็นมิลลิวินาที [ดูข้อมูลเพิ่มเติมเกี่ยวกับเมตริกเวลาทั้งหมดในการบล็อก](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1440,7 +1440,7 @@
     "message": "การตอบกลับของเซิร์ฟเวอร์ขณะเริ่มแรกใช้เวลาน้อย"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome กำลังมุ่งไปสู่ประสบการณ์การใช้งานรูปแบบใหม่ที่อนุญาตให้ผู้ใช้เลือกท่องเว็บโดยไม่มีคุกกี้ของบุคคลที่สามได้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับคุกกี้ของบุคคลที่สาม](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "คุกกี้ของบุคคลที่สามอาจถูกบล็อกในบางบริบท [ดูข้อมูลเพิ่มเติมเกี่ยวกับการเตรียมพร้อมสําหรับข้อจํากัดคุกกี้ของบุคคลที่สาม](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{พบคุกกี้ 1 รายการ}other{พบคุกกี้ # รายการ}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "ลดการใช้ของบุคคลที่สาม"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "ความรุนแรง"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "คําสั่ง `require-trusted-types-for` ในส่วนหัว `Content-Security-Policy` (CSP) จะสั่งให้ User Agent ควบคุมข้อมูลที่ส่งไปยังฟังก์ชัน DOM XSS Sink [ดูข้อมูลเพิ่มเติมเกี่ยวกับการลดความเสี่ยงของ XSS ที่อิงตาม DOM ด้วย Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "ไม่พบส่วนหัว `Content-Security-Policy` ที่มีคําสั่ง Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "ลดความเสี่ยงของ XSS ที่อิงตาม DOM ด้วย Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "กำหนดความกว้างและความยาวขององค์ประกอบรูปภาพอย่างชัดเจนเพื่อลดการขยับของเลย์เอาต์และปรับปรุง CLS [ดูวิธีตั้งค่าขนาดรูปภาพ](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "การปรับปรุงการแสดงผลครั้งแรก"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "ข้อมูลเชิงลึกเหล่านี้ยังอยู่ในแผงประสิทธิภาพของเครื่องมือสำหรับนักพัฒนาเว็บใน Chrome ด้วย [บันทึกการติดตาม](https://developer.chrome.com/docs/devtools/performance/reference)เพื่อดูข้อมูลโดยละเอียดเพิ่มเติม"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "ข้อมูลเชิงลึก"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "เมตริก"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "ปรับปรุงประสบการณ์ในการโหลดโดยรวมเพื่อให้หน้าเว็บตอบสนองและพร้อมใช้งานโดยเร็วที่สุด เมตริกที่สำคัญ ได้แก่ เวลาในการโต้ตอบ ดัชนีความเร็ว"
+    "message": "ปรับปรุงประสบการณ์ในการโหลดโดยรวมเพื่อให้หน้าเว็บตอบสนองและพร้อมใช้งานโดยเร็วที่สุด เมตริกที่สำคัญได้แก่เวลาในการโต้ตอบและ Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "การปรับปรุงโดยรวม"
@@ -1857,22 +1875,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "เวลาที่อาจประหยัดได้"
+    "message": "พื้นที่ที่ประหยัดได้โดยประมาณ"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "เวลาที่อาจประหยัดได้"
+    "message": "เวลาที่ประหยัดได้โดยประมาณ"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "อาจประหยัดพื้นที่ได้ {wastedBytes, number, bytes} KiB"
+    "message": "ประหยัดพื้นที่ได้ {wastedBytes, number, bytes} KiB โดยประมาณ"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{พบ 1 องค์ประกอบ}other{พบ # องค์ประกอบ}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "อาจประหยัดได้ {wastedMs, number, milliseconds} มิลลิวินาที"
+    "message": "ประหยัดเวลาได้ {wastedMs, number, milliseconds} มิลลิวินาทีโดยประมาณ"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "เอกสาร"
@@ -2070,7 +2088,7 @@
     "message": "รับคะแนนประสิทธิภาพของ Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "วัดเมตริกประสิทธิภาพของการโหลดหน้าเว็บ เช่น Largest Contentful Paint และดัชนีความเร็ว"
+    "message": "วัดเมตริกประสิทธิภาพของการโหลดหน้าเว็บ เช่น Largest Contentful Paint และ Speed Index"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "ประเมินความสามารถของ Progressive Web App"
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "รายงานปัญหา"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "กลับไปที่การตรวจสอบ"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "ซ่อน"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "ข้อมูลเชิงลึกจะแทนที่การตรวจสอบประสิทธิภาพภายในปีนี้ [ดูข้อมูลเพิ่มเติมและแสดงความคิดเห็นได้ที่นี่](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "ข้อมูลในห้องทดลอง"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "เกิดปัญหาที่มีผลต่อการทำงานนี้ของ Lighthouse"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "ลองดูข้อมูลเชิงลึก"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "ระบุแหล่งที่มาไม่ได้"
   },
@@ -3707,6 +3734,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "โมดูลที่ซ้ำกัน"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "ไบต์ที่ซ้ำกัน"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "ขนาดไฟล์ทรัพยากร (ไบต์)"
   },
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "ซ่อน/แสดงตาราง"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "ไบต์ของการโอน"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "ไบต์ที่ไม่ได้ใช้"

@@ -660,7 +660,7 @@
     "message": "Folosește formate video pentru conținut animat"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Codurile polyfill și transformările fac posibilă folosirea noilor funcții JavaScript în browserele vechi. Însă pentru browserele moderne, majoritatea nu sunt necesare. Poți să modifici procesul versiunii JavaScript astfel încât să nu transpileze funcțiile [Baseline](https://web.dev/baseline), cu excepția cazului în care știi că trebuie să accepti browserele vechi. [Află de ce majoritatea site-urilor pot implementa cod ES6+ fără transpilare](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "A fost detectată versiunea 2 de core-js în pagină. Pentru mai multe îmbunătățiri ale performanței, ar trebui să faci upgrade la versiunea 3."
@@ -1188,7 +1188,7 @@
     "message": "Valoarea First Input Delay maximă potențială cu care utilizatorii se pot confrunta este durata celei mai lungi activități. [Află mai multe despre valoarea First Input Delay maximă potențială](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Indexul de viteză arată cât de repede se completează vizibil conținutul unei pagini. [Află mai multe despre valoarea Index de viteză](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index  arată cât de repede se completează vizibil conținutul unei pagini. [Află mai multe despre valoarea Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Suma tuturor intervalelor de timp dintre FCP și Time to Interactive, când durata activității a depășit 50 ms, exprimată în milisecunde. [Află mai multe despre valoarea Timpul total de blocare](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1440,7 +1440,7 @@
     "message": "Durata inițială de răspuns de la server a fost scurtă"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome va trece la o nouă experiență care le dă utilizatorilor posibilitatea să navigheze fără cookie-uri terță parte. [Află mai multe despre cookie-urile terță parte](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Cookie-urile terță parte pot fi blocate în anumite contexte. [Află mai multe despre pregătirea pentru restricțiile privind cookie-urile terță parte](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{S-a găsit un cookie}few{S-au găsit # cookie-uri}other{S-au găsit # de cookie-uri}}"
@@ -1492,6 +1492,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimalizează folosirea terțelor părți"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Severitate"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Directiva `require-trusted-types-for` din antetul `Content-Security-Policy` (CSP) instruiește orice user agent să controleze datele transmise funcțiilor sink DOM XSS. [Află mai multe despre reducerea atacurilor XSS bazate pe DOM cu Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nu s-a găsit niciun antet `Content-Security-Policy` cu directiva Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Redu riscul de XSS bazat pe DOM cu Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Setează lățimea și înălțimea explicite pentru elementele imagine, ca să reduci modificările de aspect și să îmbunătățești CLS. [Află cum să setezi dimensiunile imaginii](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1676,11 +1688,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Îmbunătățirile pentru prima redare"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Aceste statistici sunt disponibile și în panoul de performanță din Chrome DevTools. [Înregistrează o urmărire](https://developer.chrome.com/docs/devtools/performance/reference) pentru a vedea informații mai detaliate."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Statistici"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Valori"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Îmbunătățește experiența globală de încărcare, astfel ca pagina să se afișeze și să fie gata de utilizare cât mai curând posibil. Valori cheie: timpul până la interactivitate, indexul de viteză"
+    "message": "Îmbunătățește experiența globală de încărcare, astfel ca pagina să se afișeze și să fie gata de utilizare cât mai curând posibil. Valori cheie: timpul până la interactivitate, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Îmbunătățiri generale"
@@ -1857,22 +1875,22 @@
     "message": "Adresa URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Economii potențiale"
+    "message": "Economii est."
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Economii potențiale"
+    "message": "Economii est."
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Poți economisi {wastedBytes, number, bytes} KiB"
+    "message": "Economii est.: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{A fost identificat un element}few{Au fost identificate # elemente}other{Au fost identificate # de elemente}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Poți economisi {wastedMs, number, milliseconds} ms"
+    "message": "Economii est.: {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
@@ -2070,7 +2088,7 @@
     "message": "Obține un scor de performanță pentru Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Măsoară valorile de performanță pentru încărcarea paginii, cum ar fi Largest Contentful Paint și indicele de viteză."
+    "message": "Măsoară valorile de performanță pentru încărcarea paginii, cum ar fi Largest Contentful Paint și Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Evaluează funcțiile aplicațiilor web progresive."
@@ -3575,8 +3593,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Raportează o problemă"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Revino la audituri"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ascunde"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Mai târziu anul acesta, statisticile vor înlocui auditurile performanței. [Află mai multe și trimite feedback aici](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Datele testului"
@@ -3677,6 +3701,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Au apărut probleme care au afectat această rulare Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Încearcă statisticile"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nu se poate atribui"
   },
@@ -3705,7 +3732,10 @@
     "message": "Acoperire"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Module dublate"
+    "message": "Module dublură"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Byți dublură"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Byți resursă"
@@ -3715,6 +3745,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Activează / dezactivează tabelul"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Dimensiunea transferului în byți"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Byți nefolosiți"
