@@ -318,4 +318,5 @@ export {
   filterCategoriesByAvailableAudits,
   filterCategoriesByExplicitFilters,
   filterCategoriesByGatherMode,
+  throwOnUnknownOnlyCategories,
 };
