@@ -79,7 +79,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     details = cbResult;
   }
 
-  if (!details || (details.type === 'table' && details.items.length === 0)) {
+  if (!details) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,

@@ -6581,8 +6581,12 @@
       "id": "duplicated-javascript-insight",
       "title": "Duplicated JavaScript",
       "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 0
+      },
       "details": {
         "type": "table",
         "headings": [
@@ -6605,7 +6609,11 @@
             "label": "Duplicated bytes"
           }
         ],
-        "items": []
+        "items": [],
+        "debugData": {
+          "type": "debugdata",
+          "wastedBytes": 0
+        }
       },
       "guidanceLevel": 2,
       "replacesAudits": [
@@ -6616,8 +6624,13 @@
       "id": "font-display-insight",
       "title": "Font display",
       "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "metricSavings",
+      "displayValue": "Est savings of -∞ ms",
+      "metricSavings": {
+        "FCP": 0,
+        "INP": 0
+      },
       "details": {
         "type": "table",
         "headings": [
@@ -6928,8 +6941,12 @@
       "id": "legacy-javascript-insight",
       "title": "Legacy JavaScript",
       "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 0
+      },
       "details": {
         "type": "table",
         "headings": [
@@ -6956,7 +6973,11 @@
             "label": "Wasted bytes"
           }
         ],
-        "items": []
+        "items": [],
+        "debugData": {
+          "type": "debugdata",
+          "wastedBytes": 0
+        }
       },
       "guidanceLevel": 2
     },
@@ -6964,8 +6985,12 @@
       "id": "modern-http-insight",
       "title": "Modern HTTP",
       "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "metricSavings",
+      "metricSavings": {
+        "FCP": 0,
+        "LCP": 0
+      },
       "details": {
         "type": "table",
         "headings": [
@@ -7185,8 +7210,8 @@
       "id": "third-parties-insight",
       "title": "3rd parties",
       "description": "3rd party code can significantly impact load performance. [Reduce and defer loading of 3rd party code](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) to prioritize your page's content.",
-      "score": null,
-      "scoreDisplayMode": "notApplicable",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
       "details": {
         "type": "table",
         "headings": [
@@ -11620,6 +11645,12 @@
             "wastedMs": 0
           },
           "path": "audits[render-blocking-resources].displayValue"
+        },
+        {
+          "values": {
+            "wastedMs": null
+          },
+          "path": "audits[font-display-insight].displayValue"
         }
       ],
       "core/audits/csp-xss.js | title": [
