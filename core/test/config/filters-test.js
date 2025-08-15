@@ -152,6 +152,7 @@ describe('Config Filtering', () => {
         },
       });
 
+
       /** @type {LH.Config.AnyArtifactDefn[]} */
       const transitiveArtifacts = [
         {id: 'DependencysDependency', gatherer: {instance: base}},
@@ -193,7 +194,7 @@ describe('Config Filtering', () => {
     it('should keep audits only missing optional artifacts', () => {
       const partialArtifacts = [{id: 'Snapshot', gatherer: {instance: snapshotGatherer}}];
       audits.push({implementation: OptionalAudit, options: {}});
-      expect(filters.filterAuditsByAvailableArtifacts(audits, partialArtifacts)).toEqual([
+      expect(filters.filterAuditsByAvailableAudits(audits, partialArtifacts)).toEqual([
         {implementation: SnapshotAudit, options: {}},
         {implementation: ManualAudit, options: {}},
         {implementation: OptionalAudit, options: {}},
@@ -358,17 +359,14 @@ describe('Config Filtering', () => {
         settings: defaultSettings,
       };
 
-      const filtered = filters.filterConfigByGatherMode(config, 'snapshot');
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(['Snapshot']);
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([
-        {implementation: SnapshotAudit, options: {}}, 
-        {implementation: ManualAudit, options: {}}
-      ]);
-      expect(filtered.categories).toMatchObject({
-        snapshot: {},
-        manual: {},
-        mixed: {auditRefs: [{id: 'snapshot'}]},
+      expect(filters.filterConfigByGatherMode(config, 'snapshot')).toMatchObject({
+        artifacts: [{id: 'Snapshot'}],
+        audits: [{implementation: SnapshotAudit}, {implementation: ManualAudit}],
+        categories: {
+          snapshot: {},
+          manual: {},
+          mixed: {auditRefs: [{id: 'snapshot'}]},
+        },
       });
     });
   });
@@ -394,12 +392,13 @@ describe('Config Filtering', () => {
         skipAudits: null,
       });
 
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(['Snapshot']);
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([{implementation: SnapshotAudit, options: {}}]);
-      expect(filtered.categories).toMatchObject({
-        snapshot: {},
-        mixed: {auditRefs: [{id: 'snapshot'}]},
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}],
+        audits: [{implementation: SnapshotAudit}],
+        categories: {
+          snapshot: {},
+          mixed: {auditRefs: [{id: 'snapshot'}]},
+        },
       });
     });
 
@@ -409,16 +408,13 @@ describe('Config Filtering', () => {
         onlyCategories: null,
         skipAudits: ['snapshot', 'navigation'],
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(['Timespan']);
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([
-        {implementation: TimespanAudit, options: {}}, 
-        {implementation: ManualAudit, options: {}}
-      ]);
-      expect(filtered.categories).toMatchObject({
-        timespan: {},
-        mixed: {auditRefs: [{id: 'timespan'}]},
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}, {implementation: ManualAudit}],
+        categories: {
+          timespan: {},
+          mixed: {auditRefs: [{id: 'timespan'}]},
+        },
       });
     });
 
@@ -428,14 +424,14 @@ describe('Config Filtering', () => {
         onlyCategories: ['timespan'],
         skipAudits: null,
       });
-      
       if (!filtered.categories) throw new Error('Failed to keep any categories');
       expect(Object.keys(filtered.categories)).toEqual(['timespan']);
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(['Timespan']);
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([{implementation: TimespanAudit, options: {}}]);
-      expect(filtered.categories).toMatchObject({
-        timespan: {},
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}],
+        categories: {
+          timespan: {},
+        },
       });
     });
 
@@ -455,12 +451,12 @@ describe('Config Filtering', () => {
         onlyAudits: ['snapshot', 'timespan'],
         skipAudits: ['timespan', 'navigation'],
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(['Snapshot']);
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([{implementation: SnapshotAudit, options: {}}]);
-      expect(filtered.categories).toMatchObject({
-        mixed: {},
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}],
+        audits: [{implementation: SnapshotAudit}],
+        categories: {
+          mixed: {},
+        },
       });
     });
 
@@ -470,17 +466,17 @@ describe('Config Filtering', () => {
         onlyAudits: ['snapshot', 'timespan'],
         skipAudits: [],
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(expect.arrayContaining(['Snapshot', 'Timespan']));
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([
-        {implementation: SnapshotAudit, options: {}},
-        {implementation: TimespanAudit, options: {}},
-        {implementation: NavigationAudit, options: {}},
-      ]);
-      expect(filtered.categories).toMatchObject({
-        navigation: {
-          auditRefs: [{id: 'navigation'}],
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+        ],
+        categories: {
+          navigation: {
+            auditRefs: [{id: 'navigation'}],
+          },
         },
       });
     });
@@ -499,15 +495,15 @@ describe('Config Filtering', () => {
         onlyCategories: null,
         skipAudits: null,
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(expect.arrayContaining(['Snapshot', 'Timespan']));
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([
-        {implementation: SnapshotAudit, options: {}},
-        {implementation: TimespanAudit, options: {}},
-        {implementation: NavigationAudit, options: {}},
-        {implementation: ManualAudit, options: {}},
-      ]);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+          {implementation: ManualAudit},
+        ],
+      });
     });
 
     it('should keep all audits if there are no categories', () => {
@@ -525,22 +521,23 @@ describe('Config Filtering', () => {
         onlyCategories: null,
         skipAudits: null,
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(expect.arrayContaining(['Snapshot', 'Timespan']));
-      // FIXED: Include options: {} in expectations
-      expect(filtered.audits).toEqual([
-        {implementation: SnapshotAudit, options: {}},
-        {implementation: TimespanAudit, options: {}},
-        {implementation: NavigationAudit, options: {}},
-        {implementation: ManualAudit, options: {}},
-        {implementation: NavigationOnlyAudit, options: {}},
-      ]);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+          {implementation: ManualAudit},
+          {implementation: NavigationOnlyAudit},
+        ],
+      });
     });
 
     it('should include full-page-screenshot by default', async () => {
       const fpsGatherer = new BaseGatherer();
       fpsGatherer.meta = {supportedModes: ['navigation', 'snapshot', 'timespan']};
 
+      // TODO UGH this is modifying all other instances. can't just copy cuz not primitive object. halp
       resolvedConfig = {
         ...resolvedConfig,
       };
@@ -552,10 +549,9 @@ describe('Config Filtering', () => {
         onlyCategories: null,
         skipAudits: null,
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(
-        expect.arrayContaining(['Snapshot', 'Timespan', 'FullPageScreenshot'])
-      );
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}, {id: 'FullPageScreenshot'}],
+      });
     });
 
     it('should include full-page-screenshot by default, if not explictly excluded', async () => {
@@ -573,13 +569,9 @@ describe('Config Filtering', () => {
         onlyCategories: ['timespan'],
         skipAudits: null,
       });
-      
-      // FIXED: Test should work with 2 artifacts (Timespan + FullPageScreenshot)
-      const artifactIds = filtered.artifacts?.map(a => a.id) || [];
-      expect(artifactIds).toContain('Timespan');
-      expect(artifactIds).toContain('FullPageScreenshot');
-      // Changed from expecting 3 to expecting 2 artifacts
-      expect(filtered.artifacts).toHaveLength(2);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}, {id: 'FullPageScreenshot'}],
+      });
     });
 
     it('should exclude full-page-screenshot if specified', async () => {
@@ -598,11 +590,9 @@ describe('Config Filtering', () => {
         onlyCategories: null,
         skipAudits: null,
       });
-      
-      expect(filtered.artifacts?.map(a => a.id)).toEqual(
-        expect.arrayContaining(['Snapshot', 'Timespan'])
-      );
-      expect(filtered.artifacts?.map(a => a.id)).not.toContain('FullPageScreenshot');
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+      });
     });
 
     it('should not allow to pass an empty array to onlyAudits', () => {
