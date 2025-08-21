@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "Hindi na gumagana ang getUserMedia() sa mga hindi secure na origin. Para magamit ang feature na ito, dapat mong isaalang-alang ang paglipat ng iyong application sa isang secure na origin, tulad ng HTTPS. Tingnan ang https://goo.gle/chrome-insecure-origins para sa higit pang detalye."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "May nakitang tag na <h1> sa <article>, <aside>, <nav>, o <section> na walang tinukoy na laki ng font. Magbabago ang laki ng text ng heading na ito sa browser na ito sa nalalapit na hinaharap. Tingnan ang https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 para sa higit pang impormasyon."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "Hindi na ginagamit ang RTCPeerConnectionIceErrorEvent.hostCandidate. RTCPeerConnectionIceErrorEvent.address o RTCPeerConnectionIceErrorEvent.port na lang ang gamitin."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Hindi na ginagamit ang format na ito para sa request na navigator.credentials.get() para sa mga digital na kredensyal, paki-update ang iyong call para gamitin ang bagong format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Ang origin ng merchant at arbitrary na data mula sa canmakepayment na event ng service worker ay hindi na ginagamit at aalisin: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Kapag tinukoy ang overflow: visible sa mga tag ng img, video at canvas, posibleng gumawa ang mga ito ng visual na content sa labas ng mga hangganan ng element. Tingnan ang https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Na-rewrite ang legacy na pag-embed ng video gamit ang flash sa iframe ng HTML. Matagal nang wala ang flash, hindi na ginagamit ang pag-rewrite na paraang ito at posibleng alisin na ito sa hinaharap."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "Hindi na ginagamit ang paymentManager.instruments. Gumamit na lang ng just-in-time na pag-install para sa mga tagapangasiwa ng pagbabayad."
@@ -2370,7 +2367,10 @@
     "message": "Mga nangungunang dahilan ng pagbabago sa layout"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "Element ng larawang walang malinaw na sukat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Web font"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Pinakahindi magandang cluster"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Kapag malaki ang DOM, puwedeng tumaas ang tagal ng pagkalkula ng istilo at mga reflow ng layout, na nakakaapekto sa pagiging responsive ng page. Madaragdagan din ng malaking DOM ang paggamit ng memory. [Alamin kung paano iwasan ang masyadong malaking DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Tagal"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Layout ({PH1} (na) object)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Pagkalkula ulit ng istilo ({PH1} (na) element)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Pinakamaraming child"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "I-optimize ang laki ng DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Ang mga ito ay ang mga pinakamalaking event sa pagkalkula ulit ng layout at istilo. Posibleng mabawasan ang epekto ng performance ng mga ito kapag ginawang mas simple ang DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Kabuuang element"
@@ -2481,7 +2493,7 @@
     "message": "(anonymous)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Pinipilit ng maraming API, na kadalasang nagbabasa ng geometry ng layout, ang rendering engine na i-pause ang pag-execute ng script para makalkula nito ang istilo at layout. Matuto pa tungkol sa [sapilitang reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) at ang mga pag-mitigate nito."
+    "message": "Nagkakaroon ng sapilitang pag-reflow kapag nag-query ang JavaScript ng mga geometric na property (gaya ng offsetWidth) pagkatapos ma-invalidate ang mga istilo sa pamamagitan ng pagbabago sa status ng DOM. Puwede itong magresulta sa hindi magandang performance. Matuto pa tungkol sa [mga sapilitang pag-reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) at posibleng pag-mitigate."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Stack trace"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[hindi na-attribute]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Simulan ang pagsisiyasat sa pinakamahabang subpart. [Puwedeng mabawasan ang mga pagkaantala](https://web.dev/articles/optimize-inp#optimize_interactions). Para paikliin ang tagal ng pagproseso, [i-optimize ang mga main-thread cost](https://web.dev/articles/optimize-long-tasks), na madalas ay JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Tagal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Pagkaantala ng input"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Walang na-detect na interaction"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Pagkaantala ng presentation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Tagal ng pagpoproseso"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Subpart"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Breakdown ng INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Kapag binawasan ang tagal ng pag-download ng mga larawan, posibleng mapahusay ang natukoy na oras ng pag-load ng page at LCP. [Matuto pa tungkol sa pag-optimize ng laki ng larawan](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Kapag gumamit ng mga format ng video sa halip na mga GIF, posibleng mapahusay ang laki ng download ng animated na content."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Ang bawat [subpart ay may mga partikular na strategy sa pagpapahusay](https://web.dev/articles/optimize-lcp#lcp-breakdown). Mainam kung gugugulin ang malaking bahagi ng tagal ng LCP sa pag-load ng mga resource, at hindi sa mga pagkaantala."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Tagal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Pagkaantala sa pag-render ng element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Field p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Walang na-detect na LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Pagkaantala sa pag-load ng resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Tagal ng pag-load ng resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Subpart"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to first byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Breakdown ng LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Gawing [nahahanap](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) kaagad ang larawan para sa LCP mula sa HTML para ma-optimize ang LCP, at [maiwasan ang mabagal na pag-load](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "Nag-aalok ang HTTP/2 at HTTP/3 ng maraming benepisyo kumpara sa HTTP/1.1, tulad ng multiplexing. [Matuto pa tungkol sa paggamit ng modernong HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Walang request na gumamit ng HTTP/1.1"
+    "message": "Walang request na gumamit ng HTTP/1.1, o hindi nagpapakita ang kasalukuyang paggamit nito ng HTTP/1.1 ng makabuluhang pagkakataon sa pag-optimize. Fina-flag lang ang mga HTTP/1.1 request kung nagmumula ang anim o higit pang static na asset sa parehong origin, at hindi inihahatid ang mga ito mula sa lokal na environment sa pag-develop o third-party na source."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocol"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Mga gastos sa CSS Selector"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Lumipas na oras ng nangungunang selector"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Pagsubok sa pagtutugma ng nangungunang selector"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Mga nangungunang selector"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SharedWorker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Inalis ang page sa cache dahil nakatanggap ito ng mensahe mula sa SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Kasalukuyang hindi kwalipikado para sa back/forward cache ang mga page na gumagamit ng SpeechRecognizer."

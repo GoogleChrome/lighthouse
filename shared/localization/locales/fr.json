@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() ne fonctionne plus sur les origines non sécurisées. Pour utiliser cette fonctionnalité, vous devriez envisager d'utiliser une origine sûre pour votre application, par exemple HTTPS. Pour en savoir plus, consultez https://goo.gle/chrome-insecure-origins."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Une balise <h1> a été trouvée dans un élément <article>, <aside>, <nav> ou <section> qui ne comporte pas de taille de police spécifiée. La taille de ce titre sera prochainement modifiée dans ce navigateur. Pour en savoir plus, consultez https://developer.mozilla.org/fr-FR/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate est obsolète. Veuillez utiliser RTCPeerConnectionIceErrorEvent.address ou RTCPeerConnectionIceErrorEvent.port à la place."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Ce format de demande navigator.credentials.get() pour les identifiants numériques est obsolète. Veuillez mettre à jour votre appel de façon à utiliser le nouveau format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Le point de départ du marchand et les données arbitraires provenant de l'événement service worker canmakepayment sont obsolètes et seront supprimés : topOrigin, paymentRequestOrigin, methodData et modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Si vous spécifiez overflow: visible sur \"img\", \"video\" et \"canvas\", ces tags risquent de générer du contenu visuel en dehors des limites de l'élément. Voir https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "L'intégration de l'ancienne vidéo Flash a été réécrite en iFrame HTML. Flash n'est plus disponible depuis longtemps. Cette réécriture est obsolète et pourrait être supprimée à l'avenir."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments est obsolète. Veuillez utiliser l'installation \"juste-à-temps\" pour les gestionnaires de paiement."
@@ -2370,7 +2367,10 @@
     "message": "Principales causes des décalages de mise en page"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "Élément d'image de taille inconnue"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Police Web"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Pire cluster"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un grand DOM peut allonger la durée des calculs de style et des ajustements de la mise en page, ce qui impacte la réactivité de la page. Un grand DOM sollicite davantage la mémoire. [Découvrez comment éviter une taille de DOM excessive.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Durée"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Élément"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Mise en page ({PH1} objets)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Recalcul du style ({PH1} éléments)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "La plupart des enfants"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimiser la taille du DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Voici les événements de recalcul de style et de mise en page les plus importants. Leur impact sur les performances peut être réduit en simplifiant le DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Nombre total d'éléments"
@@ -2481,7 +2493,7 @@
     "message": "(anonyme)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "De nombreuses API, qui lisent généralement la géométrie de la mise en page, forcent le moteur de rendu à suspendre l'exécution du script afin de calculer le style et la mise en page. En savoir plus sur l'[ajustement de la mise en page forcé](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) et les stratégies d'atténuation"
+    "message": "Un ajustement de la mise en page forcé se produit lorsque JavaScript interroge des propriétés géométriques (comme offsetWidth) après que les styles ont été invalidés par une modification de l'état du DOM. Cela peut entraîner de mauvaises performances. En savoir plus sur les [ajustements de la mise en page forcés](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) et les stratégies d'atténuation possibles"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Trace de la pile"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[non attribué]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Commencez par étudier la sous-partie la plus longue. [Les délais peuvent être réduits au maximum.](https://web.dev/articles/optimize-inp#optimize_interactions) Pour réduire la durée de traitement, [optimisez les coûts du thread principal](https://web.dev/articles/optimize-long-tasks), souvent JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Durée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Délai de réponse à l'entrée utilisateur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Aucune interaction détectée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Délai de présentation"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Durée de traitement"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Sous-partie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Répartition INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Réduire le temps de téléchargement des images peut améliorer le temps de chargement perçu de la page et le LCP. [En savoir plus sur l'optimisation de la taille des images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Utiliser des formats vidéo plutôt que des GIF peut réduire la taille de téléchargement du contenu animé."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Chaque [sous-partie comporte des stratégies d'amélioration spécifiques](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idéalement, la plupart du temps LCP devrait être consacré au chargement des ressources et non aux délais."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Durée"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Délai d'affichage de l'élément"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "75e centile du champ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Aucun LCP détecté"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Délai de chargement de la ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Durée de chargement de la ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Sous-partie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Répartition du LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimisez le LCP en rendant l'image LCP [visible](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) immédiatement à partir du code HTML et en [évitant le chargement différé](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 et HTTP/3 offrent de nombreux avantages par rapport à HTTP/1.1, comme le multiplexage. [En savoir plus sur l'utilisation de protocole HTTP récent](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Aucune requête n'a utilisé HTTP/1.1"
+    "message": "Aucune requête n'a utilisé HTTP/1.1, ou l'utilisation actuelle de HTTP/1.1 ne présente pas d'opportunité d'optimisation significative. Les requêtes HTTP/1.1 ne sont signalées que si six éléments statiques ou plus proviennent de la même origine et qu'ils ne sont pas diffusés à partir d'un environnement de développement local ou d'une source tierce."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocole"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Coûts des sélecteurs CSS"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Temps écoulé pour le sélecteur principal"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Tentative de correspondance du sélecteur principal"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Principaux sélecteurs"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Les pages qui utilisent SharedWorker ne sont actuellement pas éligibles au cache amélioré."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "La page a été exclue du cache, car elle a reçu un message d'un SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Les pages qui utilisent SpeechRecognizer ne sont actuellement pas éligibles au cache amélioré."

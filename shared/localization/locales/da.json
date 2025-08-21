@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() fungerer ikke længere på usikre oprindelser. Hvis du vil bruge denne funktion, bør du overveje at skifte til en sikker oprindelse for din app, f.eks. HTTPS. Få flere oplysninger på https://goo.gle/chrome-insecure-origins."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Der blev fundet et <h1>-tag i en <article>, <aside>, <nav> eller <section>, som ikke har en angivet skriftstørrelse. Størrelsen på teksten af denne overskrift ændres i denne browser i nærmeste fremtid. Få flere oplysninger på https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate er udfaset. Brug i stedet RTCPeerConnectionIceErrorEvent.address eller RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Dette format for anmodningen om digitale loginoplysninger i navigator.credentials.get() er udfaset. Opdater kaldet for at bruge det nye format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Sælgerens oprindelse og de vilkårlige data fra canmakepayment-hændelsens scripttjeneste er udfaset og fjernes: topOrigin, paymentRequestOrigin, methodData og modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Angivelse af overflow: visible i img-, video- og canvas-tags kan medføre, at de producerer visuelt indhold uden for elementgrænserne. Se https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Den gamle Flash-videoindlejring er blevet omskrevet til HTML-iframe. Flash er for længst forsvundet, og denne nyttige metode til omskrivning er udfaset og fjernes muligvis i fremtiden."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments er udfaset. Brug just-in-time-installation for betalingshandlere i stedet."
@@ -2370,7 +2367,10 @@
     "message": "Typiske årsager til layoutændringer"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "Billedelement uden mål"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Webskrifttype"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Værste klynge"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "En stor DOM kan øge varigheden af beregninger af typografi og dynamiske tilpasninger af layout, hvilket påvirker sidens svartid. En stor DOM øger også hukommelsesforbruget. [Få oplysninger om, hvordan du undgår en for stor DOM-størrelse](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Varighed"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Layout ({PH1} objekter)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Genberegning af typografi ({PH1} elementer)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Maks. antal underordnede"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimer DOM-størrelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Dette er de mest omfattende hændelser med genberegning af layout og typografi. Du kan reducere deres indvirkning på effektiviteten ved at forenkle DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Samlet antal elementer"
@@ -2481,7 +2493,7 @@
     "message": "(anonym)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Mange API'er, som typisk læser layoutgeometri, tvinger gengivelsesmotoren til at sætte scriptudførelsen på pause for at beregne typografien og layoutet. Få flere oplysninger om [tvungen reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) og forebyggelsen af den."
+    "message": "Tvungen reflow opstår, når JavaScript forespørger om geometriske egenskaber (f.eks. offsetWidth), efter typografier er blevet ugyldiggjort af en ændring af DOM-tilstanden. Dette kan resultere i mangelfuld effektivitet. Få flere oplysninger om [tvungne reflows](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) og mulige forebyggende foranstaltninger."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Staksporing"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[uden attributter]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Start med at undersøge den længste underdel. [Forsinkelser kan minimeres](https://web.dev/articles/optimize-inp#optimize_interactions). Hvis du vil reducere behandlingsvarigheden, skal du [optimere omkostningerne for hovedtråden](https://web.dev/articles/optimize-long-tasks) (typisk JS)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Varighed"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Inputforsinkelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Der er ikke registreret nogen interaktioner"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Præsentationsforsinkelse"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Behandlingstid"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Underdel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP-oversigt"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Hvis du reducerer downloadtiden for billeder, kan det forbedre den oplevede indlæsningstid for siden og LCP. [Få flere oplysninger om optimering af billedstørrelse](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Hvis du bruger videoformater i stedet for giffer, kan det forbedre downloadstørrelsen på det animerede indhold."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Hver [underdel har specifikke forbedringsstrategier](https://web.dev/articles/optimize-lcp#lcp-breakdown). Det meste af LCP-tiden bør ideelt set bruges på at indlæse ressourcerne og ikke på forsinkelser."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Varighed"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Forsinket gengivelse af element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Felt p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Der blev ikke registreret nogen LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Forsinkelse ved indlæsning af ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Varighed af indlæsning af ressource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Underdel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP-oversigt"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimer LCP ved at gøre LCP-billedet [synligt](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) i HTML med det samme, og [undgå lazy loading](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 og HTTP/3 har mange fordele i forhold til HTTP/1.1, f.eks. multiplexing. [Få flere oplysninger om brug af moderne HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Der var ingen anmodninger, der brugte HTTP/1.1"
+    "message": "Der var ingen anmodninger, der brugte HTTP/1.1, eller også giver den aktuelle brug af HTTP/1.1 ikke en betydelig optimeringsmulighed. HTTP/1.1-anmodninger rapporteres kun, hvis seks eller flere statiske aktiver stammer fra den samme oprindelse, og de ikke vises fra et lokalt udviklingsmiljø eller en tredjepartskilde."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protokol"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Omkostninger for CSS-vælger"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Mest tidskrævende vælger"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Mest anvendte vælger ved forsøg på match"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Mest tidskrævende vælgere"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Sider, der anvender SharedWorker, er ikke kvalificeret til back/forward-cachen i øjeblikket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Siden blev fjernet fra cachen, fordi den modtog en besked fra en SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Sider, der anvender SpeechRecognizer, er ikke kvalificeret til back/forward-cachen i øjeblikket."
