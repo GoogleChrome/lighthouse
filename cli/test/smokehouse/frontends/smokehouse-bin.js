@@ -189,6 +189,11 @@ async function begin() {
   const {runLighthouse, setup} = await import(runnerPath);
   runLighthouse.runnerName = argv.runner;
 
+  if (!argv.testsPath && !fs.existsSync(coreTestDefnsPath)) {
+    console.error('Set --tests-path to provide the file that defines the smoke tests for your Lighthouse plugin. See https://github.com/GoogleChrome/lighthouse/blob/main/cli/test/smokehouse/readme.md for more information');
+    process.exit(1);
+  }
+
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;
   testDefnPath = path.resolve(process.cwd(), testDefnPath);
