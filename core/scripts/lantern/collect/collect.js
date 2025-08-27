@@ -12,8 +12,6 @@ import fs from 'fs';
 import {execFile} from 'child_process';
 import {promisify} from 'util';
 
-import fetch from 'node-fetch';
-
 import defaultTestUrls from './urls.js';
 import * as common from './common.js';
 import {LH_ROOT} from '../../../../shared/root.js';
