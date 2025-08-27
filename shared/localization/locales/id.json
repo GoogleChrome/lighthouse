@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() tidak lagi berfungsi pada asal yang tidak aman. Untuk menggunakan fitur ini, sebaiknya Anda mengalihkan aplikasi ke asal yang aman, seperti HTTPS. Lihat https://goo.gle/chrome-insecure-origins untuk detail selengkapnya."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Ditemukan tag <h1> dalam <article>, <aside>, <nav>, atau <section> yang tidak memiliki ukuran font yang ditentukan. Ukuran teks judul ini akan berubah di browser ini dalam waktu dekat. Lihat https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 untuk mengetahui informasi selengkapnya."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate tidak digunakan lagi. Sebagai gantinya, gunakan RTCPeerConnectionIceErrorEvent.address atau RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Format permintaan navigator.credentials.get() untuk kredensial digital ini tidak digunakan lagi. Perbarui panggilan Anda untuk menggunakan format baru."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Data arbitrer dan asal penjual dari peristiwa pekerja layanan canmakepayment tidak digunakan lagi dan akan dihapus: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Menentukan overflow: visible pada tag img, video, dan canvas dapat menyebabkannya menghasilkan konten visual di luar batas elemen. Lihat https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Penyematan video Flash lama telah ditulis ulang ke iframe HTML. Flash sudah lama tidak digunakan, metode penulisan ulang ini sudah tidak digunakan lagi dan mungkin akan dihapus pada masa mendatang."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments tidak digunakan lagi. Sebagai gantinya, gunakan penginstalan tepat waktu untuk pengendali pembayaran."
@@ -2370,7 +2367,10 @@
     "message": "Penyebab utama perubahan tata letak"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "Elemen gambar dengan ukuran tidak diketahui"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Font web"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cluster terburuk"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM yang besar dapat meningkatkan durasi penghitungan gaya dan perubahan posisi/geometri tata letak, yang memengaruhi responsivitas halaman. DOM yang besar juga akan meningkatkan penggunaan memori. [Pelajari cara menghindari ukuran DOM yang berlebihan](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Durasi"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Elemen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Tata letak ({PH1} objek)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Penghitungan ulang gaya ({PH1} elemen)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Sebagian besar turunan"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimalkan ukuran DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Berikut adalah peristiwa penghitungan ulang tata letak dan gaya terbesar. Dampak performanya dapat dikurangi dengan membuat DOM yang lebih sederhana."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Total elemen"
@@ -2481,7 +2493,7 @@
     "message": "(anonim)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Banyak API, yang biasanya membaca geometri tata letak, memaksa mesin rendering menjeda eksekusi skrip untuk menghitung gaya dan tata letak. Pelajari lebih lanjut [perubahan posisi/geometri paksa](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) dan mitigasinya."
+    "message": "Perubahan posisi/geometri paksa terjadi saat JavaScript meminta properti geometris (seperti offsetWidth) setelah gaya dibatalkan karena perubahan pada status DOM. Hal ini dapat menyebabkan performa yang buruk. Pelajari lebih lanjut [perubahan posisi/geometri paksa](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) dan kemungkinan mitigasinya."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Stack trace"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[tanpa atribut]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Mulai investigasi dengan subbagian terpanjang. [Penundaan dapat diminimalkan](https://web.dev/articles/optimize-inp#optimize_interactions). Untuk mengurangi durasi pemrosesan, [optimalkan biaya thread utama](https://web.dev/articles/optimize-long-tasks), yang sering kali berupa JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Durasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Penundaan input"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Tidak ada interaksi yang terdeteksi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Penundaan presentasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Durasi pemrosesan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Subbagian"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Perincian INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Mengurangi waktu download gambar dapat meningkatkan waktu pemuatan halaman dan LCP. [Pelajari lebih lanjut cara mengoptimalkan ukuran gambar](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Menggunakan format video, bukan GIF, dapat meningkatkan ukuran download konten animasi."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Setiap [subbagian memiliki strategi peningkatan tertentu](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealnya, sebagian besar waktu LCP harus digunakan untuk memuat resource, bukan untuk penundaan."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Durasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Penundaan render elemen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "P75 sebenarnya"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Tidak ada LCP yang terdeteksi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Penundaan pemuatan resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Durasi pemuatan resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Subbagian"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to first byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Perincian LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimalkan LCP dengan membuat gambar LCP [dapat ditemukan](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) dari HTML secara langsung, dan [menghindari pemuatan lambat](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 dan HTTP/3 menawarkan banyak manfaat dibandingkan HTTP/1.1, seperti multiplexing. [Pelajari lebih lanjut cara menggunakan HTTP modern](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Tidak ada permintaan yang menggunakan HTTP/1.1"
+    "message": "Tidak ada permintaan yang menggunakan HTTP/1.1, atau penggunaan HTTP/1.1 saat ini tidak memberikan peluang pengoptimalan yang signifikan. Permintaan HTTP/1.1 hanya ditandai jika ada enam atau lebih aset statis berasal dari origin yang sama, dan tidak disalurkan dari lingkungan pengembangan lokal atau sumber pihak ketiga."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protokol"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Biaya Pemilih CSS"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Waktu berlalu pemilih teratas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Upaya pencocokan pemilih teratas"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Pemilih teratas"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Halaman yang menggunakan SharedWorker saat ini tidak dapat disimpan dengan benar dalam back-forward cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Halaman dihapus dari cache karena menerima pesan dari SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Halaman yang menggunakan SpeechRecognizer saat ini tidak dapat disimpan dengan benar dalam back-forward cache."

@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() werkt niet meer op niet-beveiligde oorsprongen. Als je deze functie wilt gebruiken, kun je overwegen om een beveiligde oorsprong voor je app te gebruiken, zoals HTTPS. Zie https://goo.gle/chrome-insecure-origins voor meer informatie."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Er is een <h1>-tag gevonden in een <article>, <aside>, <nav> of <section> waarvoor geen lettergrootte is gespecificeerd. De grootte van deze koptekst wordt binnenkort gewijzigd in deze browser. Ga naar https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 voor meer informatie."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is beëindigd. Gebruik in plaats daarvan RTCPeerConnectionIceErrorEvent.address of RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Deze indeling voor het verzoek navigator.credentials.get() voor digitale inloggegevens is beëindigd. Update de aanroep zodat de nieuwe indeling wordt gebruikt."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "De verkoperoorsprong en willekeurige gegevens van de canmakepayment-service worker-gebeurtenis zijn beëindigd en worden verwijderd: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Als je overflow: visible opgeeft voor img-, video- en canvas-tags, kunnen deze visuele content produceren buiten de elementgrenzen. Zie https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "De oude Flash-videotoevoeging is herschreven naar HTML-iframe. Flash is al lang weg. Deze hack voor herschrijven is beëindigd en kan in de toekomst worden verwijderd."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments is beëindigd. Gebruik in plaats daarvan just-in-time-installaties voor betalingshandlers."
@@ -2372,6 +2369,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
     "message": "Afbeeldingselement zonder formaat"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Weblettertype"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Slechtste cluster"
   },
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Een grote DOM kan de duur van stijlberekeningen en dynamische aanpassingen van de indeling verlengen, wat de responsiviteit van de pagina beïnvloedt. Een grote DOM vergroot ook het geheugengebruik. [Meer informatie over hoe je een overmatige DOM-grootte voorkomt](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Duur"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Indeling ({PH1} objecten)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Stijlherberekening ({PH1} elementen)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Meeste onderliggende elementen"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM-grootte optimaliseren"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Dit zijn de grootste gebeurtenissen voor het opnieuw berekenen van de indeling en stijl. Je kunt de impact op de prestaties verminderen door het DOM eenvoudiger te maken."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Totaal aantal elementen"
@@ -2481,7 +2493,7 @@
     "message": "(anoniem)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Veel API's, die meestal de indelingsgeometrie lezen, dwingen de weergave-engine om de scriptuitvoering te onderbreken om de stijl en indeling te berekenen. Meer informatie over [gedwongen dynamische aanpassing](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) en de bijbehorende beperkende maatregelen."
+    "message": "Een geforceerde dynamische aanpassing vindt plaats als JavaScript geometrische eigenschappen (zoals offsetWidth) opvraagt nadat stijlen zijn ongeldig gemaakt door een wijziging in de DOM-status. Dit kan leiden tot slechte prestaties. Meer informatie over [gedwongen dynamische aanpassingen](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) en mogelijke beperkende maatregelen."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Stacktrace"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[niet toegeschreven]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Onderzoek eerst het langste subgedeelte. [Je kunt vertraging tot een minimum beperken](https://web.dev/articles/optimize-inp#optimize_interactions). [Optimaliseer de kosten van de hoofdthread](https://web.dev/articles/optimize-long-tasks) (vaak JS) om de verwerkingsduur te verkorten."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Duur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Invoervertraging"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Geen interacties gevonden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Presentatievertraging"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Verwerkingsduur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Subonderdeel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP-uitsplitsing"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Als je de downloadtijd van afbeeldingen verkort, kunnen de waargenomen laadtijd van de pagina en LCP verbeteren. [Meer informatie over hoe je de afbeeldingsgrootte optimaliseert](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Als je video-indelingen gebruikt in plaats van gifjes, kan dit de downloadgrootte van geanimeerde content verbeteren."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Elk [subonderdeel heeft specifieke verbeteringsstrategieën](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealiter wordt het grootste deel van de LCP-tijd besteed aan het laden van de resources, niet aan vertragingen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Duur"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Vertraging bij element renderen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Veld p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Geen LCP gevonden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Vertraging bij resource laden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Duur van resource laden"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Subonderdeel"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP-uitsplitsing"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimaliseer LCP door de LCP-afbeelding [vindbaar](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) te maken vanuit de HTML en [lazy loading te voorkomen](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 en HTTP/3 bieden veel voordelen ten opzichte van HTTP/1.1, zoals multiplexing. [Meer informatie over het gebruik van moderne HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Geen verzoeken hebben HTTP/1.1 gebruikt"
+    "message": "Geen verzoeken hebben HTTP/1.1 gebruikt of het huidige gebruik van HTTP/1.1 biedt geen significante optimalisatiemogelijkheid. HTTP/1.1-verzoeken worden alleen gemarkeerd als 6 of meer statische items afkomstig zijn van dezelfde oorsprong en ze niet worden geleverd vanuit een lokale ontwikkelomgeving of een bron van derden."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocol"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Kosten van css-kiezer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Verstreken tijd voor topkiezer"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Poging tot overeenkomst met topkiezer"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Topkiezers"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Pagina's die SharedWorker gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "De pagina is verwijderd uit het cachegeheugen omdat deze een bericht heeft gekregen van een SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Pagina's die SpeechRecognizer gebruiken, komen momenteel niet in aanmerking voor Back-Forward Cache."

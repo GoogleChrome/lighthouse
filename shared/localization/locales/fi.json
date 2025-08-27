@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() ei enää toimi suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "<article>-, <aside>-, <nav>- tai <section>-elementistä löytyi <h1>-tagi, jolle ei ole määritetty fonttikokoa. Otsikon tekstin koko muuttuu tässä selaimessa lähitulevaisuudessa. Lue lisää osoitteesta https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate on poistettu käytöstä. Valitse sen sijaan RTCPeerConnectionIceErrorEvent.address tai RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Tämä digitaalisten kirjautumistietojen navigator.credentials.get()-pyynnön muoto on poistunut käytöstä. Päivitä pyyntö käyttämään uutta muotoa."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Kauppiaan alkuperän ja satunnaisen datan määrä service worker ‑tapahtumasta (canmakepayment) on poistettu käytöstä, ja se poistetaan seuraavista: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Jos overflow: visible määritetään img-, video- ja canvas-tageissa, ne voivat tuottaa visuaalista sisältöä elementtirajojen ulkopuolella. Lue lisää osoitteesta https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Vanha Flash-videon upotus on kirjoitettu uudelleen HTML-iframeksi. Flash on poistunut jo kauan sitten, ja tämä uudelleenkirjoitushakkerointi on poistettu käytöstä ja saatetaan poistaa kokonaan tulevaisuudessa."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments on poistettu käytöstä. Käytä maksujen käsittelijöille sen sijaan heti asennettavaa (JIT) APIa."
@@ -2372,6 +2369,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
     "message": "Kuvaelementti, jonka kokoa ei ole asetettu"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Verkkofontti"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Huonoin klusteri"
   },
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Suuri DOM voi pidentää tyylilaskelmien ja asettelun uudelleenjuoksutusten kestoa, mikä vaikuttaa sivun responsiivisuuteen. Suuri DOM lisää myös muistin käyttöä. [Katso, miten voit välttää liian suuren DOM:n](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Kesto"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Elementti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Asettelu ({PH1} kohdetta)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Tyylin uudelleenlaskenta ({PH1} elementtiä)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Useimmat alatasot"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimoi DOM-koko"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Nämä ovat suurimmat asettelun ja tyylin uudelleenlaskentatapahtumat. DOM:n yksinkertaistaminen voi vähentää niiden vaikutusta suorituskykyyn."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Elementit yhteensä"
@@ -2481,7 +2493,7 @@
     "message": "(nimettömät)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Monet APIt, jotka yleensä lukevat asettelun geometriaa, pakottavat renderöintimoottorin keskeyttämään skriptin suorittamisen, jotta tyyli ja asettelu voidaan laskea. Lue lisää [pakotetusta uudelleenlaskemisesta](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) ja sen torjunnasta."
+    "message": "Pakotettu uudelleenlaskenta tapahtuu, kun JavaScript kysyy geometrisiä ominaisuuksia (esim. offsetWidth) sen jälkeen, kun DOM-tilan muutos on mitätöinyt tyylit. Tämä voi johtaa huonoihin tuloksiin. Lue lisää [pakotetuista uudelleenlaskemisista](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) ja mahdollisista torjuntakeinoista."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Jäljityslista"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[määrittämätön]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Aloita tutkinta pisimmästä osasta. [Viiveet voidaan minimoida](https://web.dev/articles/optimize-inp#optimize_interactions). Voit lyhentää käsittelyaikaa [optimoimalla pääsäikeen kustannukset](https://web.dev/articles/optimize-long-tasks), usein JS:n."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Syötteen viive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Interaktioita ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Esityksen viive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Käsittelyn kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Alakohta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP-erittely"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Kuvien latausajan lyhentäminen voi parantaa sivun havaittua latausaikaa ja LCP:tä. [Lue lisää kuvakoon optimoinnista](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Videomuotojen käyttö GIF-tiedostojen sijaan voi parantaa animoidun sisällön latauskokoa."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Kullakin [osavaiheella on omat parantamisen strategiat](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ihanteellisesti suurin osa LCP-ajasta pitäisi käyttää resurssien lataamiseen, ei viivästyksiin."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Elementin renderöintiviive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Kenttä p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "LCP:tä ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Resurssin latausviive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Resurssin latauksen kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Alakohta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Ensimmäistä tavua edeltävä aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP-erittely"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimoi LCP tekemällä LCP-kuvasta [löydettävä](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) HTML:stä heti ja [välttämällä laiskaa latautumista](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 ja HTTP/3 tarjoavat monia etuja HTTP/1.1:een verrattuna, esimerkiksi kanavoinnin. [Lue lisää modernin HTTP:n käytöstä](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "HTTP/1.1 ei ollut käytössä millään pyynnöllä"
+    "message": "HTTP/1.1 ei ollut käytössä millään pyynnöllä, tai sen nykyinen käyttö ei tarjoa merkittävää optimointimahdollisuutta. HTTP/1.1-pyynnöt merkitään vain, jos kuusi tai useampi staattinen elementti on peräisin samasta alkuperästä eikä niitä tarjota paikallisesta kehitysympäristöstä tai kolmannen osapuolen lähteestä."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protokolla"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS-valitsimen kustannukset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Suosituimman valitsimen kulunut aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Suosituimman valitsimen vastaavuusyritys"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Suosituimmat valitsimet"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "SharedWorkeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Sivu poistettiin välimuistista, koska se sai viestin SharedWorkerilta"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "SpeechRecognizeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
