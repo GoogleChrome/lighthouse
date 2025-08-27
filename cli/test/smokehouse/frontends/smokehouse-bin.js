@@ -14,7 +14,6 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import {cloneDeep} from 'lodash-es';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
@@ -92,7 +91,7 @@ function getDefinitionsToRun(allTestDefns, requestedIds, excludedTests) {
 function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
   const pruneNetworkRequests = !takeNetworkRequestUrls;
 
-  const clonedDefns = cloneDeep(testDefns);
+  const clonedDefns = structuredClone(testDefns);
   for (const {id, expectations, runSerially} of clonedDefns) {
     if (!runSerially && expectations.networkRequests) {
       throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
