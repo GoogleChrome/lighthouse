@@ -25,6 +25,7 @@ yarn upgrade --latest \
     puppeteer-core \
     speedline-core \
     third-party-web \
+    tldts-icann \
 
 node -e "
     const pkg = require('$LH_ROOT/package.json');
