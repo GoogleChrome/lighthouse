@@ -53,7 +53,6 @@ async function main() {
     javascripts: [
       buildStrings(),
       {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
-      {path: require.resolve('event-target-shim/umd')},
       {path: require.resolve('webtreemap-cdt')},
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', esbuild: true},

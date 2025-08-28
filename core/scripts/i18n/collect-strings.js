@@ -825,7 +825,8 @@ function injectTraceEngineStrings() {
         .replace(`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`)
         .replace(`{imageOrientation: ''from-image''}`, `\\\\{imageOrientation: ''from-image''\\\\}`)
         .replace(`{imageOrientation: "from-image"}`, `\\\\{imageOrientation: "from-image"\\\\}`)
-        .replace(`{imageOrientation: 'from-image'\\}`, `\\\\{imageOrientation: 'from-image'\\\\}`);
+        .replace(`{imageOrientation: 'from-image'\\}`, `\\\\{imageOrientation: 'from-image'\\\\}`)
+        .replace(`'{'imageOrientation: 'from-image'}'`, `\\\\{imageOrientation: 'from-image'\\\\}`);
       strings[lhKey] = value;
     }
 

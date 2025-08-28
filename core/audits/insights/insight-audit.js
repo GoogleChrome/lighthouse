@@ -79,7 +79,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     details = cbResult;
   }
 
-  if (!details || (details.type === 'table' && details.items.length === 0)) {
+  if (!details) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,
@@ -92,6 +92,17 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
       details.debugData = {type: 'debugdata'};
     }
     details.debugData.wastedBytes = insight.wastedBytes;
+  }
+
+  // TODO: FontDisplay insight (and maybe others) can return -Infinity savings when
+  // passing. That's weird. For now, just delete those.
+  if (insight.metricSavings) {
+    for (const [metric, value] of Object.entries(insight.metricSavings)) {
+      if (!Number.isFinite(value)) {
+        // @ts-expect-error
+        delete insight.metricSavings[metric];
+      }
+    }
   }
 
   // This hack is to add metric adorners if an insight category links it to a metric,

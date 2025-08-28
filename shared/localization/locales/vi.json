@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() không còn hoạt động trên các nguồn gốc không an toàn. Để dùng tính năng này, bạn nên cân nhắc việc chuyển ứng dụng sang một nguồn gốc an toàn, chẳng hạn như HTTPS. Xem https://goo.gle/chrome-insecure-origins để biết thêm thông tin."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Đã tìm thấy thẻ <h1> trong <article>, <aside>, <nav> hoặc <section> không có cỡ chữ được chỉ định. Kích cỡ của văn bản tiêu đề này sẽ thay đổi trong trình duyệt này trong thời gian sắp tới. Hãy truy cập vào https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 để biết thêm thông tin."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate không còn hoạt động. Thay vào đó, hãy sử dụng RTCPeerConnectionIceErrorEvent.address hoặc RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Định dạng này dùng cho yêu cầu cung cấp thông tin đăng nhập kỹ thuật số navigator.credentials.get() không còn được dùng nữa. Vui lòng cập nhật lệnh gọi để sử dụng định dạng mới."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Nguồn gốc của bên bán và dữ liệu bất kỳ trong sự kiện canmakepayment của trình chạy dịch vụ không được dùng nữa và sẽ bị loại bỏ: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Việc chỉ định overflow: visible trên thẻ img, video và canvas có thể khiến các thẻ này tạo ra nội dung hình ảnh bên ngoài ranh giới thành phần. Xem tại https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Mã nhúng video Flash cũ đã được viết lại thành iframe HTML. Flash đã ngừng hoạt động. Mẹo viết lại này không còn được dùng nữa và có thể bị loại bỏ trong tương lai."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments không được dùng nữa. Vui lòng sử dụng chế độ cài đặt đúng thời điểm cho trình xử lý thanh toán."
@@ -2372,6 +2369,9 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
     "message": "Thành phần hình ảnh chưa xác định kích thước"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Phông chữ web"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cụm tệ nhất"
   },
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM lớn có thể làm các phép tính về kiểu và quy trình trình bày lại bố cục dài hơn, ảnh hưởng đến tốc độ phản hồi của trang. DOM lớn cũng sẽ làm tăng mức sử dụng bộ nhớ. [Tìm hiểu cách tránh kích thước DOM quá lớn](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Thời lượng"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Phần tử"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Bố cục ({PH1} đối tượng)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Tính toán lại kiểu ({PH1} phần tử)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Hầu hết trẻ em"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Tối ưu hoá kích thước DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Đây là những sự kiện tính toán lại bố cục và kiểu lớn nhất. Bạn có thể giảm tác động đến hiệu suất của các phần tử này bằng cách đơn giản hoá DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Tổng số phần tử"
@@ -2481,7 +2493,7 @@
     "message": "(ẩn danh)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Nhiều API, thường đọc hình học bố cục, buộc công cụ kết xuất phải tạm dừng thực thi tập lệnh để tính toán kiểu và bố cục. Tìm hiểu thêm về [chế độ buộc chỉnh lại luồng](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) và cách giảm thiểu tác động của chế độ này."
+    "message": "Chế độ buộc chỉnh lại luồng diễn ra khi JavaScript truy vấn các thuộc tính hình học (chẳng hạn như offsetWidth) sau khi các kiểu đã bị vô hiệu hoá do trạng thái DOM có thay đổi. Điều này có thể dẫn đến hiệu suất kém. Tìm hiểu thêm về [chế độ buộc chỉnh lại luồng](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) và các biện pháp giảm thiểu có thể áp dụng."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Dấu vết ngăn xếp"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[chưa được phân bổ]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Bắt đầu kiểm tra phần phụ dài nhất. [Có thể giảm thiểu sự chậm trễ](https://web.dev/articles/optimize-inp#optimize_interactions). Để giảm thời gian xử lý, [hãy tối ưu hoá hiệu suất của luồng chính](https://web.dev/articles/optimize-long-tasks), thường là JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Thời lượng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Độ trễ khi nhập thông tin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Không phát hiện ra hoạt động tương tác nào"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Độ trễ khi trình bày"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Thời gian xử lý"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Phần phụ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Bảng chi tiết về INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Việc giảm thời gian tải hình ảnh xuống có thể cải thiện thời gian tải trang và LCP được cảm nhận. [Tìm hiểu thêm về cách tối ưu hoá kích thước hình ảnh](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Việc sử dụng định dạng video thay vì GIF có thể cải thiện kích thước tải xuống của nội dung động."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Mỗi [phần phụ có một chiến lược cải thiện cụ thể](https://web.dev/articles/optimize-lcp#lcp-breakdown). Tốt nhất là thời gian hiển thị LCP (Nội dung lớn nhất hiển thị) nên được dùng để tải các tài nguyên thay vì bị chậm trễ."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Thời lượng"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Độ trễ khi hiển thị phần tử"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Trường p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Không phát hiện ra LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Độ trễ khi tải tài nguyên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Thời lượng tải tài nguyên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Phần phụ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Thời gian cho byte đầu tiên"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Bảng chi tiết về LCP (Nội dung lớn nhất hiển thị)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Tối ưu hoá LCP (Nội dung lớn nhất hiển thị) bằng cách giúp trình duyệt [có thể tìm thấy](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) hình ảnh LCP dựa vào HTML ngay lập tức và [tránh tải từng phần](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 và HTTP/3 mang lại nhiều lợi ích hơn HTTP/1.1, chẳng hạn như ghép kênh. [Tìm hiểu thêm về cách sử dụng HTTP hiện đại](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Không có yêu cầu nào sử dụng HTTP/1.1"
+    "message": "Không có yêu cầu nào sử dụng HTTP/1.1 hoặc việc sử dụng HTTP/1.1 hiện tại không mang lại cơ hội tối ưu hoá đáng kể. Yêu cầu HTTP/1.1 chỉ được gắn cờ nếu có từ 6 tài sản tĩnh cùng nguồn gốc trở lên và không được phân phát từ môi trường phát triển cục bộ hoặc nguồn của bên thứ ba."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Giao thức"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Hiệu suất của Bộ chọn CSS"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Thời gian đã trôi qua của bộ chọn hàng đầu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Nỗ lực khớp bộ chọn hàng đầu"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Bộ chọn hàng đầu"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Những trang sử dụng SharedWorker hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Trang này đã bị xoá khỏi bộ nhớ đệm vì nhận được thông báo từ một SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Những trang sử dụng SpeechRecognizer hiện không đủ điều kiện dùng bộ nhớ đệm cho thao tác tiến/lùi."

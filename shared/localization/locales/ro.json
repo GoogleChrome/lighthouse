@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() nu mai funcționează cu origini nesigure. Pentru a folosi această funcție, îți recomandăm să treci aplicația la o origine sigură, cum ar fi HTTPS. Consultă https://goo.gle/chrome-insecure-origins pentru detalii suplimentare."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "S-a găsit o etichetă <h1> într-un element <article>, <aside>, <nav> sau <section> care nu are o dimensiune a fontului specificată. În viitorul apropiat, dimensiunea textului acestui titlu se va modifica în acest browser. Accesează https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 pentru mai multe informații."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate s-a învechit. Folosește RTCPeerConnectionIceErrorEvent.address sau RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Acest format pentru solicitarea navigator.credentials.get() pentru datele de conectare digitale este învechit. Actualizează apelul pentru a folosi noul format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Originea comerciantului și datele arbitrare din evenimentul service worker canmakepayment sunt învechite și vor fi eliminate: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Dacă specifici overflow: visible pe etichetele imagine, video și pânză, este posibil să se producă conținut vizual în afara limitelor elementului. Accesează https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Încorporarea videoclipului Flash vechi a fost rescrisă într-un iframe HTML. Flash a fost retras de mult timp. Această soluție de rescriere este învechită și poate fi eliminată în viitor."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments s-a învechit. Folosește instalarea la timp pentru handlerele pentru plăți."
@@ -2370,7 +2367,10 @@
     "message": "Principalii factori care au cauzat schimbarea aspectului"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "Element imagine fără dimensiuni"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Font web"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cel mai slab grup"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Un DOM mare poate crește durata calculelor de stil și a rearanjărilor aspectului, afectând receptivitatea paginii. Un DOM mare va crește și folosirea memoriei. [Află cum să eviți o dimensiune DOM excesivă](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Durată"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Aspect ({PH1} obiecte)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Recalcularea stilului ({PH1} elemente)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Majoritatea copiilor"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimizează dimensiunea DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Acestea sunt cele mai importante evenimente de recalculare a aspectului și a stilului. Impactul lor asupra performanței poate fi redus prin simplificarea modelului DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Numărul total de elemente"
@@ -2481,7 +2493,7 @@
     "message": "(anonim)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Multe API-uri, care citesc de obicei geometria aspectului, forțează motorul de redare să întrerupă executarea scriptului pentru a calcula stilul și aspectul. Află mai multe despre [rearanjarea forțată](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) și despre măsurile sale de atenuare."
+    "message": "Rearanjarea forțată are loc atunci când JavaScript interoghează proprietăți geometrice (cum ar fi offsetWidth) după ce stilurile au fost invalidate de o modificare a stării DOM. Acest lucru poate duce la performanțe slabe. Află mai multe despre [rearanjările forțate](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) și despre posibilele măsuri de atenuare."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Urmărirea stivei"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[neatribuit]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Începe investigația cu cea mai lungă secțiune. [Poți să minimizezi întârzierile](https://web.dev/articles/optimize-inp#optimize_interactions). Pentru a reduce durata procesării, [optimizează costurile asociate cu firul principal](https://web.dev/articles/optimize-long-tasks), de obicei JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Durată"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Întârziere la introducere"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Nu s-au detectat interacțiuni"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Întârzierea prezentării"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Durata procesării"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Secțiune"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Detalierea valorii INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Reducerea duratei de descărcare a imaginilor poate îmbunătăți durata de încărcare percepută a paginii și LCP. [Află mai multe despre optimizarea dimensiunii imaginii](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Folosirea formatelor video în locul GIF-urilor poate îmbunătăți dimensiunea descărcării conținutului animat."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Fiecare [secțiune are strategii de îmbunătățire specifice](https://web.dev/articles/optimize-lcp#lcp-breakdown). În mod ideal, majoritatea timpului LCP ar trebui să fie petrecut cu încărcarea resurselor, nu cu întârzieri."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Durată"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Întârzierea la redarea elementului"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Câmpul p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Nu s-a detectat nicio valoare LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Întârzierea la încărcarea resursei"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Durata de încărcare a resursei"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Secțiune"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to first byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Detalierea valorii LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimizează LCP făcând imediat imaginea LCP [vizibilă](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) din HTML și [evitând încărcarea asincronă](https://web.dev/articles/lcp-lazy-loading)"
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 și HTTP/3 oferă multe beneficii față de HTTP/1.1, cum ar fi multiplexingul. [Află mai multe despre folosirea protocolului HTTP modern](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Nicio solicitare nu a folosit HTTP/1.1"
+    "message": "Nicio solicitare nu a folosit HTTP/1.1 sau utilizarea actuală pentru HTTP/1.1 nu prezintă o oportunitate semnificativă de optimizare. Solicitările HTTP/1.1 sunt semnalate numai dacă șase sau mai multe elemente statice au aceeași origine și nu sunt difuzate dintr-un mediu de dezvoltare local sau o sursă terță."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocol"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Costurile selectorului CSS"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Selectorul principal după timpul scurs"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Selectorul principal după încercarea de potrivire"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Selectori de top"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Paginile care folosesc SharedWorker nu sunt eligibile momentan pentru memoria cache înainte/înapoi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Pagina a fost eliminată din memoria cache deoarece a primit un mesaj de la un SharedWorker"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Paginile care folosesc SpeechRecognizer nu sunt eligibile momentan pentru memoria cache înainte/înapoi."

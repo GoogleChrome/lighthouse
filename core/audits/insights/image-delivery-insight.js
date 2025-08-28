@@ -46,11 +46,6 @@ class ImageDeliveryInsight extends Audit {
    */
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'ImageDelivery', (insight) => {
-      if (!insight.optimizableImages.length) {
-        // TODO: show UIStrings.noOptimizableImages?
-        return;
-      }
-
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         /* eslint-disable max-len */

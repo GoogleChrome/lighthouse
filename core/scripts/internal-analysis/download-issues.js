@@ -20,8 +20,6 @@
 import fs from 'fs';
 import path from 'path';
 
-import fetch from 'node-fetch';
-
 import {LH_ROOT} from '../../../shared/root.js';
 
 const DAY_FILTER = 90;

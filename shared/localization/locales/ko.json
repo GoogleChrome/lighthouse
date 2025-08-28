@@ -2222,14 +2222,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia()는 더 이상 안전하지 않은 출처에서 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "<article>, <aside>, <nav> 또는 <section> 내에 지정된 글꼴 크기가 없는 <h1> 태그가 있습니다. 이 브라우저에서 이 제목 텍스트의 크기가 조만간 변경될 예정입니다. 자세한 내용은 다음을 참고하세요. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate는 지원 중단되었습니다. 대신 RTCPeerConnectionIceErrorEvent.address 또는 RTCPeerConnectionIceErrorEvent.port를 사용하세요."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "디지털 사용자 인증 정보에 대한 navigator.credentials.get() 요청의 이 형식은 지원 중단되었으므로 호출을 업데이트하여 새 형식을 사용하세요."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "canmakepayment 서비스 워커 이벤트의 판매자 원본 및 임의 데이터인 topOrigin, paymentRequestOrigin, methodData, modifiers가 지원 중단되었으며 삭제될 예정입니다."
@@ -2269,6 +2263,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "img, video, canvas 태그에 overflow: visible을(를) 지정하면 요소 경계 외부에 시각적 콘텐츠가 생성될 수 있습니다. 다음을 참고하세요. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "레거시 Flash 동영상 임베드가 HTML iframe으로 재작성되었습니다. Flash는 오래전에 사라졌으며 이 재작성 방식은 지원 중단되었고 향후 삭제될 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments 지원이 중단됩니다. 대신 결제 핸들러에 적시 설치를 사용하세요."
@@ -2370,7 +2367,10 @@
     "message": "상위 레이아웃 변경 원인"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
-    "message": "Unsized image element"
+    "message": "크기가 지정되지 않은 이미지 요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "웹 글꼴"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "최악의 클러스터"
@@ -2399,8 +2399,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM이 크면 스타일 계산 및 레이아웃 리플로우 시간이 길어져 페이지 반응성에 영향을 미칠 수 있습니다. DOM이 크면 메모리 사용량도 늘어납니다. [과도한 DOM 크기를 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "기간"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "레이아웃(객체 {PH1}개)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "스타일 재계산(요소 {PH1}개)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "대부분의 하위 요소"
@@ -2413,6 +2422,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM 크기 최적화"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "가장 큰 레이아웃 및 스타일 재계산 이벤트입니다. DOM을 단순화하면 성능에 미치는 영향이 줄어들 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "총 요소 수"
@@ -2481,7 +2493,7 @@
     "message": "(익명)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "많은 API가 일반적으로 레이아웃 도형을 읽으며, 스타일과 레이아웃을 계산하기 위해 렌더링 엔진이 스크립트 실행을 일시중지하도록 강제합니다. [강제 리플로우](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) 및 완화에 관해 자세히 알아보세요."
+    "message": "DOM 상태 변경으로 인해 스타일이 무효화된 후 JavaScript가 기하학적 속성(예: offsetWidth)을 쿼리하면 강제 리플로우가 발생합니다. 이로 인해 성능이 저하될 수 있습니다. [강제 리플로우](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) 및 가능한 완화 조치에 관해 자세히 알아보세요."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "스택 트레이스"
@@ -2497,6 +2509,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[출처 불명]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "가장 긴 하위 파트부터 조사를 시작하세요. [지연을 최소화할 수 있습니다](https://web.dev/articles/optimize-inp#optimize_interactions). 처리 시간을 줄이려면 [기본 스레드 비용(JS인 경우가 많음)을 최적화](https://web.dev/articles/optimize-long-tasks)하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "입력 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "상호작용이 감지되지 않음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "표시 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "처리 기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "하위 파트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP 분석"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "이미지의 다운로드 시간을 줄이면 페이지의 체감 로드 시간과 LCP를 개선할 수 있습니다. [이미지 크기 최적화에 대해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2527,6 +2563,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "GIF 대신 동영상 형식을 사용하면 애니메이션 콘텐츠의 다운로드 크기를 개선할 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "각 [하위 파트에는 해당 파트에 맞는 개선 전략이 있습니다](https://web.dev/articles/optimize-lcp#lcp-breakdown). 이상적으로는 대부분의 LCP 시간이 지연이 아닌 리소스 로드에 소요되어야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "요소 렌더링 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "실사용자 75번째 백분위수"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "감지된 LCP 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "리소스 로드 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "리소스 로드 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "하위 파트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "첫 바이트까지의 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP 분석"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "HTML에서 LCP 이미지를 즉시 [검색 가능](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)하게 만들고 [지연 로드](https://web.dev/articles/lcp-lazy-loading)를 방지하여 LCP를 최적화합니다."
@@ -2571,7 +2637,7 @@
     "message": "HTTP/2 및 HTTP/3은 HTTP/1.1에 비해 다중화와 같은 많은 이점을 제공합니다. [최신 HTTP 사용에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "HTTP/1.1을 사용한 요청 없음"
+    "message": "HTTP/1.1을 사용한 요청이 없거나, 현재 HTTP/1.1 사용이 상당한 최적화 기회를 제공하지 않습니다. HTTP/1.1 요청은 6개 이상의 정적 애셋이 동일한 출처에서 발생하고 로컬 개발 환경 또는 서드 파티 소스에서 제공되지 않는 경우에만 플래그가 지정됩니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "프로토콜"
@@ -2671,6 +2737,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS 선택자 비용"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "상위 선택자 소요 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "상위 선택자 일치 시도"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "상위 선택기"
@@ -2992,6 +3064,9 @@
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "SharedWorker를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "SharedWorker에서 메시지를 수신하여 페이지가 캐시에서 삭제되었습니다."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "SpeechRecognizer를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
