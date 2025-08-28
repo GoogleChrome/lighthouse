@@ -1,0 +1,23 @@
+name: Popup Trader UI — Smoke (fallback URL)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"  # daily 06:00 UTC
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: python -m pip install requests
+      - name: Run smoke (with fallback if secret missing)
+        env:
+          BASE_URL: ${{ secrets.POPUP_BASE_URL }}
+        run: |
+          : "${BASE_URL:=https://popup-trader-ui-meirniv.pythonanywhere.com}"
+          python tools/smoke_popup_trader.py --base-url "$BASE_URL"
