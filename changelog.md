@@ -1,3 +1,50 @@
+<a name="12.8.2"></a>
+# 12.8.2 (2025-08-28)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.1...v12.8.2)
+
+We expect this release to ship in the DevTools of [Chrome 141](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- uthem150 @uthem150
+- Nirav Gondaliya @niravzxv
+
+## Core
+
+* errors-in-console: truncate large errors ([#16619](https://github.com/GoogleChrome/lighthouse/pull/16619))
+* insights: passing score (not n/a) for empty results ([#16639](https://github.com/GoogleChrome/lighthouse/pull/16639))
+* non-composited-animations: separate custom CSS properties ([#16627](https://github.com/GoogleChrome/lighthouse/pull/16627))
+
+## Report
+
+* viewer: only disable save-gist button on successful save ([#16618](https://github.com/GoogleChrome/lighthouse/pull/16618))
+
+## Deps
+
+* upgrade deps ([#16660](https://github.com/GoogleChrome/lighthouse/pull/16660))
+* upgrade trace_engine to 0.0.59 ([#16659](https://github.com/GoogleChrome/lighthouse/pull/16659))
+* remove semver ([#16655](https://github.com/GoogleChrome/lighthouse/pull/16655))
+* upgrade tldts-icann ([#16657](https://github.com/GoogleChrome/lighthouse/pull/16657))
+* upgrade esbuild to 0.25.9 ([#16652](https://github.com/GoogleChrome/lighthouse/pull/16652))
+* upgrade / drop many dev deps ([#16651](https://github.com/GoogleChrome/lighthouse/pull/16651))
+* upgrade trace_engine to 0.0.58 ([#16649](https://github.com/GoogleChrome/lighthouse/pull/16649))
+
+## I18n
+
+* import ([#16662](https://github.com/GoogleChrome/lighthouse/pull/16662))
+
+## Tests
+
+* disable startTimespan api test ([#16653](https://github.com/GoogleChrome/lighthouse/pull/16653))
+* disable trusted-types-directive-present smoke test ([#16620](https://github.com/GoogleChrome/lighthouse/pull/16620))
+* smokehouse: log specific error message when missing tests path ([#16648](https://github.com/GoogleChrome/lighthouse/pull/16648))
+
+## Misc
+
+* use structuredClone instead of lodash cloneDeep ([#16656](https://github.com/GoogleChrome/lighthouse/pull/16656))
+
 <a name="12.8.1"></a>
 # 12.8.1 (2025-08-01)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.0...v12.8.1)
