@@ -17,10 +17,6 @@ export const UIStrings = {
    */
   CanRequestURLHTTPContainingNewline: "Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources.",
   /**
-   * @description Warning displayed to developers that they did not specify character encoding for HTML document, and that auto-detection of specific character set (i.e. ISO-2022-JP) used by the webiste won't be supported in the near futre.
-   */
-  CharsetAutoDetectionISO2022JP: "Auto-detection of ISO-2022-JP character set is deprecated and it will be disabled in the near future. Please specify character set in the Content Type header or by using a meta tag (https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding).",
-  /**
    * @description This warning occurs when the website attempts to invoke the deprecated `chrome.loadTimes().connectionInfo` API.
    */
   ChromeLoadTimesConnectionInfo: "`chrome.loadTimes()` is deprecated, instead use standardized API: Navigation Timing 2.",
@@ -73,17 +69,9 @@ export const UIStrings = {
    */
   GetUserMediaInsecureOrigin: "`getUserMedia()` no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details.",
   /**
-   * @description This warning occurs when a site uses <h1> inside <article>, <aside>, <nav>, or <section>. It means the behavior (font size) may change in a future Chrome release, when some special rules are removed from the browser.
-   */
-  H1UserAgentFontSizeInSection: "Found an <h1> tag within an <article>, <aside>, <nav>, or <section> which does not have a specified font-size. The size of this heading text will be changing in this browser in the near future. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information.",
-  /**
    * @description A deprecation warning shown to developers in the DevTools Issues tab when code tries to use the deprecated hostCandidate field, guiding developers to use the equivalent information in the .address and .port fields instead.
    */
   HostCandidateAttributeGetter: "`RTCPeerConnectionIceErrorEvent.hostCandidate` is deprecated. Please use `RTCPeerConnectionIceErrorEvent.address` or `RTCPeerConnectionIceErrorEvent.port` instead.",
-  /**
-   * @description A deprecation warning shown in the DevTools Issues tab, when a request for digital credentials API is formatted using a deprecated format.
-   */
-  IdentityDigitalCredentials: "This format for the navigator.credentials.get() request for digital credentials is deprecated, please update your call to use the new format.",
   /**
    * @description A deprecation warning shown in the DevTools Issues tab, when a service worker reads one of the fields from an event named 'canmakepayment'.
    */
@@ -136,6 +124,10 @@ export const UIStrings = {
    * @description Warning displayed to developers that use overflow:visible for replaced elements. This declaration was earlier ignored but will now change the element's painting based on whether the overflow value allows the element to paint outside its bounds.
    */
   OverflowVisibleOnReplacedElement: "Specifying `overflow: visible` on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md.",
+  /**
+   * @description Warning displayed to developers when they use a Flash Embed URLS to let them know that the browser will not automatically link to their equivalent HTML5 link.
+   */
+  OverrideFlashEmbedwithHTML: "Legacy flash video embed has been rewritten to HTML iframe. Flash is long gone, this rewriting hack is deprecated and may be removed in the future.",
   /**
    * @description Warning displayed to developers when they use the PaymentInstruments API to let them know this API is deprecated.
    */
@@ -229,10 +221,6 @@ export const UIStrings = {
    */
   V8SharedArrayBufferConstructedInExtensionWithoutIsolation: "Extensions should opt into cross-origin isolation to continue using `SharedArrayBuffer`. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/.",
   /**
-   * @description This warning occurs when the website attempts to use the deprecated GPUAdapter `isFallbackAdapter` attribute.
-   */
-  WebGPUAdapterIsFallbackAdapter: "The GPUAdapter `isFallbackAdapter` attribute is deprecated, instead use the GPUAdapterInfo `isFallbackAdapter` attribute.",
-  /**
    * @description Warning displayed to developers that they are using `XMLHttpRequest` API in a way that they expect an unsupported character encoding `UTF-16` could be used in the server reply.
    */
   XHRJSONEncodingDetection: "UTF-16 is not supported by response json in `XMLHttpRequest`",
@@ -259,9 +247,6 @@ export const DEPRECATIONS_METADATA = {
   "CanRequestURLHTTPContainingNewline": {
     "chromeStatusFeature": 5735596811091968
   },
-  "CharsetAutoDetectionISO2022JP": {
-    "chromeStatusFeature": 6576566521561088
-  },
   "ChromeLoadTimesConnectionInfo": {
     "chromeStatusFeature": 5637885046816768
   },
@@ -280,13 +265,6 @@ export const DEPRECATIONS_METADATA = {
   "DataUrlInSvgUse": {
     "chromeStatusFeature": 5128825141198848,
     "milestone": 119
-  },
-  "H1UserAgentFontSizeInSection": {
-    "chromeStatusFeature": 6192419898654720,
-    "milestone": 136
-  },
-  "IdentityDigitalCredentials": {
-    "chromeStatusFeature": 5166035265650688
   },
   "IdentityInCanMakePaymentEvent": {
     "chromeStatusFeature": 5190978431352832
@@ -320,6 +298,9 @@ export const DEPRECATIONS_METADATA = {
   "OverflowVisibleOnReplacedElement": {
     "chromeStatusFeature": 5137515594383360,
     "milestone": 108
+  },
+  "OverrideFlashEmbedwithHTML": {
+    "milestone": 140
   },
   "PaymentInstruments": {
     "chromeStatusFeature": 5099285054488576
@@ -360,9 +341,6 @@ export const DEPRECATIONS_METADATA = {
   },
   "V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "milestone": 96
-  },
-  "WebGPUAdapterIsFallbackAdapter": {
-    "chromeStatusFeature": 4870179714236416
   },
   "XHRJSONEncodingDetection": {
     "milestone": 93
