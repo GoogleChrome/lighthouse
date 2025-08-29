@@ -592,9 +592,9 @@ const defaultConfig = {
         {id: 'empty-heading', weight: 0, group: 'a11y-best-practices'},
         {id: 'identical-links-same-purpose', weight: 0, group: 'a11y-best-practices'},
         {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'},
-        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'},
-        {id: 'table-fake-caption', weight: 0, group: 'hidden'},
-        {id: 'td-has-header', weight: 0, group: 'hidden'},
+        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'}, // Serious, experimental
+        {id: 'table-fake-caption', weight: 0, group: 'hidden'}, // Serious, experimental
+        {id: 'td-has-header', weight: 0, group: 'hidden'}, // Critical, experimental
       ],
     },
     'best-practices': {
