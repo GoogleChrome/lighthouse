@@ -13,10 +13,10 @@ import AxeAudit from './axe-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title of an accesibility audit that evaluates if all list elements have a valid structure containing only list items. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accessibility audit that evaluates if all list elements have a valid structure containing only list items. This title is descriptive of the successful state and is shown to users when no user action is required. */
   title: 'Lists contain only `<li>` elements and script supporting elements ' +
       '(`<script>` and `<template>`).',
-  /** Title of an accesibility audit that evaluates if all list elements have a valid structure containing only list items. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  /** Title of an accessibility audit that evaluates if all list elements have a valid structure containing only list items. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'Lists do not contain only `<li>` elements and script ' +
       'supporting elements (`<script>` and `<template>`).',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
