@@ -521,61 +521,63 @@ const defaultConfig = {
       //   2. Click on the latest rule set (ex: https://dequeuniversity.com/rules/axe/html/4.10)
       //   3. Review the tables
       auditRefs: [
-        {id: 'accesskeys', weight: 7, group: 'a11y-navigation'}, // Serious, best-practice
-        {id: 'aria-allowed-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-command-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-conditional-attr', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-deprecated-role', weight: 1, group: 'a11y-aria'}, // Minor, wcag2a
-        {id: 'aria-dialog-name', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
-        {id: 'aria-hidden-body', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-hidden-focus', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-input-field-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-meter-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-progressbar-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-prohibited-attr', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-required-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-required-children', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'accesskeys', weight: 7, group: 'a11y-navigation'},
+        {id: 'aria-allowed-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-allowed-role', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
+        {id: 'aria-command-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-conditional-attr', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-deprecated-role', weight: 1, group: 'a11y-aria'},
+        {id: 'aria-dialog-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-hidden-body', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-hidden-focus', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-input-field-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-meter-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-progressbar-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-prohibited-attr', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-required-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-required-children', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'},
         {id: 'aria-roles', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-text', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
-        {id: 'aria-toggle-field-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-tooltip-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
-        {id: 'aria-treeitem-name', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
-        {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'button-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
-        {id: 'bypass', weight: 7, group: 'a11y-navigation'}, // Serious, wcag2a
-        {id: 'color-contrast', weight: 7, group: 'a11y-color-contrast'}, // Serious, wcag2aa
-        {id: 'definition-list', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'dlitem', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'document-title', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
-        {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
-        {id: 'form-field-multiple-labels', weight: 3, group: 'a11y-names-labels'}, // Moderate, wcag2a
-        {id: 'frame-title', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
-        {id: 'heading-order', weight: 3, group: 'a11y-navigation'}, // Moderate, best-practice
-        {id: 'html-has-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
-        {id: 'html-lang-valid', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
-        {id: 'html-xml-lang-mismatch', weight: 3, group: 'a11y-language'}, // Moderate, wcag2a
-        {id: 'image-alt', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
-        {id: 'input-button-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
-        {id: 'input-image-alt', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'aria-text', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-toggle-field-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-tooltip-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-treeitem-name', weight: 7, group: 'a11y-aria'},
+        {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'button-name', weight: 10, group: 'a11y-names-labels'},
+        {id: 'bypass', weight: 7, group: 'a11y-navigation'},
+        {id: 'color-contrast', weight: 7, group: 'a11y-color-contrast'},
+        {id: 'definition-list', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'dlitem', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'document-title', weight: 7, group: 'a11y-names-labels'},
+        {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'},
+        {id: 'form-field-multiple-labels', weight: 3, group: 'a11y-names-labels'},
+        {id: 'frame-title', weight: 7, group: 'a11y-names-labels'},
+        {id: 'heading-order', weight: 3, group: 'a11y-navigation'},
+        {id: 'html-has-lang', weight: 7, group: 'a11y-language'},
+        {id: 'html-lang-valid', weight: 7, group: 'a11y-language'},
+        {id: 'html-xml-lang-mismatch', weight: 3, group: 'a11y-language'},
+        {id: 'image-alt', weight: 10, group: 'a11y-names-labels'},
+        {id: 'image-redundant-alt', weight: 0, group: 'a11y-names-labels'}, // Minor, best-practice
+        {id: 'input-button-name', weight: 10, group: 'a11y-names-labels'},
+        {id: 'input-image-alt', weight: 10, group: 'a11y-names-labels'},
         {id: 'label', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
-        {id: 'link-in-text-block', weight: 7, group: 'a11y-color-contrast'}, // Serious, wcag2a
-        {id: 'link-name', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
-        {id: 'list', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'listitem', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'}, // Critical, wcag2a
-        {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'}, // Critical, wcag2aa
-        {id: 'object-alt', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'link-in-text-block', weight: 7, group: 'a11y-color-contrast'},
+        {id: 'link-name', weight: 7, group: 'a11y-names-labels'},
+        {id: 'list', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'listitem', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'},
+        {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'},
+        {id: 'object-alt', weight: 7, group: 'a11y-names-labels'},
         {id: 'select-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
-        {id: 'skip-link', weight: 3, group: 'a11y-names-labels'}, // Moderate, best-practice
-        {id: 'tabindex', weight: 7, group: 'a11y-navigation'}, // Serious, best-practice
-        {id: 'target-size', weight: 7, group: 'a11y-best-practices'}, // Serious, wcag22aa
-        {id: 'td-headers-attr', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'th-has-data-cells', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
-        {id: 'valid-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2aa
-        {id: 'video-caption', weight: 10, group: 'a11y-audio-video'}, // Critical, wcag2a
-        {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'}, // Moderate, best-practice
+        {id: 'skip-link', weight: 3, group: 'a11y-names-labels'},
+        {id: 'tabindex', weight: 7, group: 'a11y-navigation'},
+        {id: 'table-duplicate-name', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
+        {id: 'target-size', weight: 7, group: 'a11y-best-practices'},
+        {id: 'td-headers-attr', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'th-has-data-cells', weight: 7, group: 'a11y-tables-lists'},
+        {id: 'valid-lang', weight: 7, group: 'a11y-language'},
+        {id: 'video-caption', weight: 10, group: 'a11y-audio-video'},
         // Manual audits
         {id: 'focusable-controls', weight: 0},
         {id: 'interactive-element-affordance', weight: 0},
@@ -588,13 +590,11 @@ const defaultConfig = {
         {id: 'custom-controls-labels', weight: 0},
         {id: 'custom-controls-roles', weight: 0},
         // Low-impact best-practices
-        {id: 'table-duplicate-name', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
         {id: 'empty-heading', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
-        {id: 'aria-allowed-role', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
-        {id: 'image-redundant-alt', weight: 0, group: 'a11y-names-labels'}, // Minor, best-practice
         // WCAG AAA
         {id: 'identical-links-same-purpose', weight: 0, group: 'a11y-best-practices'}, // Minor, wcag2aaa
         // Hidden audits (ie. experimental)
+        {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'}, // Moderate, best-practice
         {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'}, // Serious, experimental
         {id: 'table-fake-caption', weight: 0, group: 'hidden'}, // Serious, experimental
         {id: 'td-has-header', weight: 0, group: 'hidden'}, // Critical, experimental
