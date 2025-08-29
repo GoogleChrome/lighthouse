@@ -5,8 +5,8 @@
 Setup:
 
 ```sh
-# Lighthouse requires Node 18 LTS (18.x) or later.
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+# Lighthouse requires Node 22 LTS (22.x) or later.
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs npm
 
 # get chromium (stable)
@@ -32,8 +32,8 @@ was explicitly omitted from the original headless browser.
 Alternatively, you can run full Chrome + xvfb instead of headless mode. These steps worked on Debian Jessie:
 
 ```sh
-# get node 18
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+# get node 22
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt-get install -y nodejs npm
 
 # get chromium (stable) and Xvfb
