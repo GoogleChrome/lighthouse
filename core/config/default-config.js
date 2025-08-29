@@ -589,15 +589,12 @@ const defaultConfig = {
         {id: 'offscreen-content-hidden', weight: 0},
         {id: 'custom-controls-labels', weight: 0},
         {id: 'custom-controls-roles', weight: 0},
-        // Low-impact best-practices
-        {id: 'empty-heading', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
-        // WCAG AAA
-        {id: 'identical-links-same-purpose', weight: 0, group: 'a11y-best-practices'}, // Minor, wcag2aaa
-        // Hidden audits (ie. experimental)
-        {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'}, // Moderate, best-practice
-        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'}, // Serious, experimental
-        {id: 'table-fake-caption', weight: 0, group: 'hidden'}, // Serious, experimental
-        {id: 'td-has-header', weight: 0, group: 'hidden'}, // Critical, experimental
+        {id: 'empty-heading', weight: 0, group: 'a11y-best-practices'},
+        {id: 'identical-links-same-purpose', weight: 0, group: 'a11y-best-practices'},
+        {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'},
+        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'},
+        {id: 'table-fake-caption', weight: 0, group: 'hidden'},
+        {id: 'td-has-header', weight: 0, group: 'hidden'},
       ],
     },
     'best-practices': {
