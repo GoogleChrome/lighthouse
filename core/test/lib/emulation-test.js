@@ -17,7 +17,17 @@ describe('emulation', () => {
       session.sendCommand
         .mockResponse('Network.setUserAgentOverride')
         .mockResponse('Emulation.setDeviceMetricsOverride')
-        .mockResponse('Emulation.setTouchEmulationEnabled');
+        .mockResponse('Emulation.setTouchEmulationEnabled')
+        .mockResponse('Browser.getVersion', {
+          protocolVersion: '1.3',
+          // This matches the UA in constants for easier snapshotting.
+          product: 'Chrome/136.0.0.0',
+          revision: '@1bbc3cb89f49c1e317f65ea88795d2a87b4b9a13',
+          userAgent:
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+            '(KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+          jsVersion: '14.2.72',
+        });
     });
 
     /**
