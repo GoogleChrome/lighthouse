@@ -62,9 +62,8 @@ function parseUseragentIntoMetadata(fullVersion, formFactor) {
  */
 async function matchHostUAVersion(session, userAgent) {
   const {milestone} = await getBrowserVersion(session);
-  const match = userAgent.match(/Chrome\/([\d.]+)/); // eg 'Chrome/(71.0.3577.0)'
-  const fullVersion = match?.[1] || '170.0.1234.0';
   const tweakedUA = userAgent.replace(/(Chrome\/)[\d.]+/, `$1${milestone}.0.0.0`);
+  const fullVersion = `${milestone}.0.0.0`;
   return {tweakedUA, fullVersion};
 }
 
@@ -172,4 +171,5 @@ export {
   clearNetworkThrottling,
   enableCPUThrottling,
   clearCPUThrottling,
+  matchHostUAVersion,
 };
