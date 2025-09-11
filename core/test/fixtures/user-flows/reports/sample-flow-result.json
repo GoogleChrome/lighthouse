@@ -2,7 +2,7 @@
   "steps": [
     {
       "lhr": {
-        "lighthouseVersion": "12.8.1",
+        "lighthouseVersion": "12.8.2",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "mainDocumentUrl": "https://www.mikescerealshack.co/",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/",
@@ -4694,8 +4694,12 @@
             "id": "cache-insight",
             "title": "Use efficient cache lifetimes",
             "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -4718,7 +4722,11 @@
                   "granularity": 1
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 3,
             "replacesAudits": [
@@ -4856,8 +4864,12 @@
             "id": "duplicated-javascript-insight",
             "title": "Duplicated JavaScript",
             "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -4880,7 +4892,11 @@
                   "label": "Duplicated bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2,
             "replacesAudits": [
@@ -4891,8 +4907,11 @@
             "id": "font-display-insight",
             "title": "Font display",
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "INP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -4948,8 +4967,45 @@
             "id": "image-delivery-insight",
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL",
+                  "subItemsHeading": {
+                    "key": "reason",
+                    "valueType": "text"
+                  }
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Resource Size"
+                },
+                {
+                  "key": "wastedBytes",
+                  "valueType": "bytes",
+                  "label": "Est Savings",
+                  "subItemsHeading": {
+                    "key": "wastedBytes",
+                    "valueType": "bytes"
+                  }
+                }
+              ],
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
+            },
             "guidanceLevel": 3,
             "replacesAudits": [
               "modern-image-formats",
@@ -5066,8 +5122,12 @@
             "id": "legacy-javascript-insight",
             "title": "Legacy JavaScript",
             "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -5094,7 +5154,11 @@
                   "label": "Wasted bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2
           },
@@ -5102,8 +5166,12 @@
             "id": "modern-http-insight",
             "title": "Modern HTTP",
             "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -5199,8 +5267,12 @@
             "id": "render-blocking-insight",
             "title": "Render blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -9381,6 +9453,7 @@
               "audits[unused-javascript].details.headings[0].label",
               "audits[legacy-javascript].details.headings[0].label",
               "audits[font-display-insight].details.headings[0].label",
+              "audits[image-delivery-insight].details.headings[0].label",
               "audits[legacy-javascript-insight].details.headings[0].label",
               "audits[modern-http-insight].details.headings[0].label",
               "audits[render-blocking-insight].details.headings[0].label"
@@ -9526,7 +9599,8 @@
               "audits[font-display].details.headings[1].label",
               "audits[unused-javascript].details.headings[2].label",
               "audits[legacy-javascript].details.headings[2].label",
-              "audits[font-display-insight].details.headings[1].label"
+              "audits[font-display-insight].details.headings[1].label",
+              "audits[image-delivery-insight].details.headings[2].label"
             ],
             "core/audits/font-display.js | title": [
               "audits[font-display].title"
@@ -10583,6 +10657,9 @@
             "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
               "audits[image-delivery-insight].description"
             ],
+            "core/lib/i18n/i18n.js | columnResourceSize": [
+              "audits[image-delivery-insight].details.headings[1].label"
+            ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": [
               "audits[inp-breakdown-insight].title"
             ],
@@ -10878,7 +10955,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "12.8.1",
+        "lighthouseVersion": "12.8.2",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2025-02-05T01:31:50.141Z",
         "gatherMode": "timespan",
@@ -13429,8 +13506,11 @@
             "id": "duplicated-javascript-insight",
             "title": "Duplicated JavaScript",
             "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -13453,7 +13533,11 @@
                   "label": "Duplicated bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2,
             "replacesAudits": [
@@ -13464,8 +13548,11 @@
             "id": "font-display-insight",
             "title": "Font display",
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "INP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -13532,8 +13619,44 @@
             "id": "image-delivery-insight",
             "title": "Improve image delivery",
             "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL",
+                  "subItemsHeading": {
+                    "key": "reason",
+                    "valueType": "text"
+                  }
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Resource Size"
+                },
+                {
+                  "key": "wastedBytes",
+                  "valueType": "bytes",
+                  "label": "Est Savings",
+                  "subItemsHeading": {
+                    "key": "wastedBytes",
+                    "valueType": "bytes"
+                  }
+                }
+              ],
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
+            },
             "guidanceLevel": 3,
             "replacesAudits": [
               "modern-image-formats",
@@ -13620,8 +13743,8 @@
             "id": "legacy-javascript-insight",
             "title": "Legacy JavaScript",
             "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
             "details": {
               "type": "table",
               "headings": [
@@ -13648,7 +13771,11 @@
                   "label": "Wasted bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2
           },
@@ -13656,8 +13783,11 @@
             "id": "modern-http-insight",
             "title": "Modern HTTP",
             "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -13728,8 +13858,11 @@
             "id": "render-blocking-insight",
             "title": "Render blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "metricSavings": {
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -15721,6 +15854,7 @@
               "audits[uses-long-cache-ttl].details.headings[0].label",
               "audits[total-byte-weight].details.headings[0].label",
               "audits[font-display-insight].details.headings[0].label",
+              "audits[image-delivery-insight].details.headings[0].label",
               "audits[legacy-javascript-insight].details.headings[0].label",
               "audits[modern-http-insight].details.headings[0].label",
               "audits[render-blocking-insight].details.headings[0].label"
@@ -16154,7 +16288,8 @@
               "audits[font-display-insight].description"
             ],
             "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[font-display-insight].details.headings[1].label"
+              "audits[font-display-insight].details.headings[1].label",
+              "audits[image-delivery-insight].details.headings[2].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": [
               "audits[forced-reflow-insight].title"
@@ -16170,6 +16305,9 @@
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": [
               "audits[image-delivery-insight].description"
+            ],
+            "core/lib/i18n/i18n.js | columnResourceSize": [
+              "audits[image-delivery-insight].details.headings[1].label"
             ],
             "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": [
               "audits[inp-breakdown-insight].title"
@@ -16376,7 +16514,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "12.8.1",
+        "lighthouseVersion": "12.8.2",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2025-02-05T01:32:00.108Z",
         "gatherMode": "snapshot",
@@ -22382,7 +22520,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "12.8.1",
+        "lighthouseVersion": "12.8.2",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
         "mainDocumentUrl": "https://www.mikescerealshack.co/corrections",
         "finalDisplayedUrl": "https://www.mikescerealshack.co/corrections",
@@ -27200,8 +27338,12 @@
             "id": "cache-insight",
             "title": "Use efficient cache lifetimes",
             "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -27224,7 +27366,11 @@
                   "granularity": 1
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 3,
             "replacesAudits": [
@@ -27362,8 +27508,12 @@
             "id": "duplicated-javascript-insight",
             "title": "Duplicated JavaScript",
             "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -27386,7 +27536,11 @@
                   "label": "Duplicated bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2,
             "replacesAudits": [
@@ -27397,8 +27551,11 @@
             "id": "font-display-insight",
             "title": "Font display",
             "description": "Consider setting [font-display](https://developer.chrome.com/blog/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "INP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -27629,8 +27786,12 @@
             "id": "legacy-javascript-insight",
             "title": "Legacy JavaScript",
             "description": "Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/articles/baseline-and-polyfills) features, unless you know you must support older browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -27657,7 +27818,11 @@
                   "label": "Wasted bytes"
                 }
               ],
-              "items": []
+              "items": [],
+              "debugData": {
+                "type": "debugdata",
+                "wastedBytes": 0
+              }
             },
             "guidanceLevel": 2
           },
@@ -27665,8 +27830,12 @@
             "id": "modern-http-insight",
             "title": "Modern HTTP",
             "description": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [
@@ -27752,8 +27921,12 @@
             "id": "render-blocking-insight",
             "title": "Render blocking requests",
             "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1,
+            "scoreDisplayMode": "metricSavings",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            },
             "details": {
               "type": "table",
               "headings": [

@@ -55,7 +55,6 @@ Puppeteer can reconnect to this existing browser instance like so:
 import chromeLauncher from 'chrome-launcher';
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
-import fetch from 'node-fetch';
 
 const url = 'https://chromestatus.com/features';
 
