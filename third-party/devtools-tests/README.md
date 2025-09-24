@@ -9,6 +9,6 @@ See `core/test/devtools-tests/README.md` for more.
 ## Sync
 
 ```sh
-rsync -ahvz --exclude='OWNERS' ~/src/devtools/devtools-frontend/test/e2e_non_hosted/lighthouse/ third-party/devtools-tests/e2e_non_hosted/lighthouse/
-rsync -ahvz --exclude='OWNERS' ~/src/devtools/devtools-frontend/test/e2e/resources/lighthouse/ third-party/devtools-tests/e2e/resources/lighthouse/
+rsync -ahvz --exclude='OWNERS' --exclude='DIR_METADATA' ~/src/devtools/devtools-frontend/test/e2e_non_hosted/lighthouse/ third-party/devtools-tests/e2e_non_hosted/lighthouse/
+rsync -ahvz --exclude='OWNERS' --exclude='DIR_METADATA' ~/src/devtools/devtools-frontend/test/e2e/resources/lighthouse/ third-party/devtools-tests/e2e/resources/lighthouse/
 ```
