@@ -209,6 +209,7 @@ describe('Navigation', function() {
       assert.deepEqual(failedAudits.map(audit => audit.id), [
         'document-title',
         'html-has-lang',
+        'landmark-one-main',
         'meta-description',
         'network-dependency-tree-insight',
       ]);

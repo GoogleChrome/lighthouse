@@ -75,6 +75,7 @@ describe('Snapshot', function() {
       'document-title',
       'html-has-lang',
       'label',
+      'landmark-one-main',
       'target-size',
       'meta-description',
     ]);
