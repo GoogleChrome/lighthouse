@@ -75,10 +75,10 @@ echo -e "$check Locale JSON files copied."
 # copy e2e tests
 lh_e2e_dir="third-party/devtools-tests/e2e_non_hosted/lighthouse/"
 fe_e2e_dir="$dt_dir/test/e2e_non_hosted/lighthouse"
-rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --delete
+rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 lh_e2e_res_dir="third-party/devtools-tests/e2e/resources/lighthouse/"
 fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
-rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --delete
+rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 
 PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
 REVISION=$(git rev-parse HEAD)
