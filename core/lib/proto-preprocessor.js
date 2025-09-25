@@ -6,8 +6,6 @@
 
 import fs from 'fs';
 
-import esMain from 'es-main';
-
 /**
  * @fileoverview Helper functions to transform an LHR into a proto-ready LHR.
  *
@@ -126,7 +124,7 @@ function processForProto(lhr) {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (import.meta.main) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);
   let input;

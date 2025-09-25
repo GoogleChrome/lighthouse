@@ -15,7 +15,6 @@ import glob from 'glob';
 import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';
-import esMain from 'es-main';
 import {isEqual} from 'lodash-es';
 
 import {Util} from '../../../shared/util.js';
@@ -877,7 +876,7 @@ async function main() {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 

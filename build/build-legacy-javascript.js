@@ -7,7 +7,6 @@
 import fs from 'fs';
 
 import esbuild from 'esbuild';
-import esMain from 'es-main';
 
 import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../shared/root.js';
@@ -34,6 +33,6 @@ async function main() {
   await buildPackage();
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
