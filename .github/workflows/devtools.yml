@@ -25,10 +25,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 22.x
+    - name: Use Node.js 22.20
       uses: actions/setup-node@v4
       with:
-        node-version: 22.x
+        node-version: 22.20
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -91,10 +91,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 22.x
+    - name: Use Node.js 22.20
       uses: actions/setup-node@v4
       with:
-        node-version: 22.x
+        node-version: 22.20
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
@@ -141,10 +141,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 22.x
+    - name: Use Node.js 22.20
       uses: actions/setup-node@v4
       with:
-        node-version: 22.x
+        node-version: 22.20
 
     - name: Load build artifacts
       id: devtools-build-artifacts
