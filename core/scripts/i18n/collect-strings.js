@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import {pathToFileURL} from 'url';
 
-import glob from 'glob';
+import * as glob from 'glob';
 import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from '@formatjs/icu-messageformat-parser';

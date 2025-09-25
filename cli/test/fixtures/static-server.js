@@ -16,7 +16,7 @@ import {parse as parseURL} from 'url';
 import {URLSearchParams} from 'url';
 
 import mime from 'mime-types';
-import glob from 'glob';
+import * as glob from 'glob';
 import esMain from 'es-main';
 
 import {LH_ROOT} from '../../../shared/root.js';

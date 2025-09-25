@@ -16,7 +16,7 @@ import fs from 'fs';
 import util from 'util';
 import childProcess from 'child_process';
 
-import glob from 'glob';
+import * as glob from 'glob';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 

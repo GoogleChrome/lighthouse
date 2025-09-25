@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 
-import glob from 'glob';
+import * as glob from 'glob';
 
 import {readJson} from '../../test/test-utils.js';
 

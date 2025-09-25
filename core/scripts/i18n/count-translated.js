@@ -6,7 +6,7 @@
 
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
-import glob from 'glob';
+import * as glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';

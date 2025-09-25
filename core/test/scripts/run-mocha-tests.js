@@ -17,7 +17,7 @@ import {once} from 'events';
 import Mocha from 'mocha';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
-import glob from 'glob';
+import * as glob from 'glob';
 
 import {LH_ROOT} from '../../../shared/root.js';
 import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
