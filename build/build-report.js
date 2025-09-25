@@ -60,7 +60,7 @@ async function buildFlowReport() {
     format: 'iife',
     charset: 'utf8',
     bundle: true,
-    minify: true,
+    minify: !process.env.DEBUG,
     plugins: [
       plugins.replaceModules({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
@@ -117,7 +117,7 @@ export const format = {registerLocaleData, hasLocale};
     outfile: 'dist/report/bundle.esm.js',
     format: 'esm',
     bundle: true,
-    minify: true,
+    minify: !process.env.DEBUG,
     plugins: [
       plugins.replaceModules({
         // Exclude this 30kb from the devtools bundle for now.

@@ -16,6 +16,7 @@ To build the Lighthouse bundle for CDT and roll them into a local checkout of th
 
 ```sh
 yarn devtools
+DEBUG=1 yarn devtools # or use this command to skip minification
 ```
 
 One of the commands that the above runs - `yarn build-devtools` - creates these files:
