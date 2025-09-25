@@ -118,8 +118,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   Doctype: Artifacts.Doctype | null;
   /** Information on the size of all DOM nodes in the page and the most extreme members. */
   DOMStats: Artifacts.DOMStats;
-  /** Information on poorly sized font usage and the text affected by it. */
-  FontSize: Artifacts.FontSize;
   /** All the iframe elements in the page. */
   IFrameElements: Artifacts.IFrameElement[];
   /** All the input elements, including associated form and label elements. */
@@ -382,37 +380,6 @@ declare module Artifacts {
 
   interface BFCacheFailure {
     notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
-  }
-
-  interface FontSize {
-    totalTextLength: number;
-    failingTextLength: number;
-    analyzedFailingTextLength: number;
-    /** Elements that contain a text node that failed size criteria. */
-    analyzedFailingNodesData: Array<{
-      /* nodeId of the failing TextNode. */
-      nodeId: number;
-      fontSize: number;
-      textLength: number;
-      parentNode: {
-        backendNodeId: number;
-        attributes: string[];
-        nodeName: string;
-        parentNode?: {
-          backendNodeId: number;
-          attributes: string[];
-          nodeName: string;
-        };
-      };
-      cssRule?: {
-        type: 'Regular' | 'Inline' | 'Attributes';
-        range?: {startLine: number, startColumn: number};
-        parentRule?: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
-        styleSheetId?: string;
-        stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
-        cssProperties?: Array<Crdp.CSS.CSSProperty>;
-      }
-    }>
   }
 
   // TODO(bckenny): real type for parsed manifest.

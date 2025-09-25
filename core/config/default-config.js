@@ -119,7 +119,6 @@ const defaultConfig = {
     {id: 'CSSUsage', gatherer: 'css-usage'},
     {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
     {id: 'DOMStats', gatherer: 'dobetterweb/domstats'},
-    {id: 'FontSize', gatherer: 'seo/font-size'},
     {id: 'Inputs', gatherer: 'inputs'},
     {id: 'IFrameElements', gatherer: 'iframe-elements'},
     {id: 'ImageElements', gatherer: 'image-elements'},
@@ -302,7 +301,6 @@ const defaultConfig = {
     'dobetterweb/uses-passive-event-listeners',
     'seo/meta-description',
     'seo/http-status-code',
-    'seo/font-size',
     'seo/link-text',
     'seo/crawlable-anchors',
     'seo/is-crawlable',
@@ -619,7 +617,6 @@ const defaultConfig = {
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
         {id: 'viewport', weight: 1, group: 'best-practices-ux'},
-        {id: 'font-size', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
