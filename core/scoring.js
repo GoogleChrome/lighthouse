@@ -57,7 +57,7 @@ class ReportScoring {
         const member = {...configMember};
 
         // If a result was not applicable, meaning its checks did not run against anything on
-        // the page, force it's weight to 0. It will not count during the arithmeticMean() but
+        // the page, force its weight to 0. It will not count during the arithmeticMean() but
         // will still be included in the final report json and displayed in the report as
         // "Not Applicable".
         const result = resultsByAuditId[member.id];
