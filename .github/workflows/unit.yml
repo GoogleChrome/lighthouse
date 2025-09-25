@@ -13,7 +13,7 @@ jobs:
   unit:
     strategy:
       matrix:
-        node: ['22.20', '23', '24']
+        node: ['22.19', '23', '24']
       fail-fast: false
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
@@ -106,10 +106,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v4
 
-    - name: Use Node.js 22.20
+    - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
-        node-version: '22.20'
+        node-version: '22.19'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
