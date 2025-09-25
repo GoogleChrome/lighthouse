@@ -656,7 +656,6 @@ export class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.SourceLocationValue} item
    * @return {Element|null}
-   * @protected
    */
   renderSourceLocation(item) {
     if (!item.url) {

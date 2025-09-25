@@ -86,13 +86,21 @@ echo "Name: Lighthouse
 Short Name: lighthouse
 Version: $PKG_VERSION
 Revision: $REVISION
+Update Mechanism: Manual
 URL: https://github.com/GoogleChrome/lighthouse
-License: Apache License 2.0
+License: Apache-2.0
 License File: LICENSE
 Security Critical: no
 Shipped: yes
 
-This directory contains Chromium's version of the lighthouse report assets, including renderer." > "$fe_lh_dir/README.chromium"
+This directory contains Chromium's version of Lighthouse. It includes:
+
+- locale strings
+- report assets
+- report renderer
+- worker bundle for running Lighthouse core
+
+Build documentation: https://github.com/GoogleChrome/lighthouse/blob/main/build/readme.md#building-for-devtools" > "$fe_lh_dir/README.chromium"
 
 echo ""
 echo "Done. To run the e2e tests: "
