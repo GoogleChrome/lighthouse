@@ -14,6 +14,5 @@ LH_ROOT="$SCRIPT_DIR/../.."
 
 cd "$LH_ROOT"
 bash .github/scripts/print-devtools-relevant-commits.sh
-md5sum \
-  core/test/devtools-tests/* \
-  third-party/devtools-tests/e2e/**/*.*
+find core/test/devtools-tests/ -type f -print0 | xargs -0 md5sum
+find third-party/devtools-tests/ -type f -name "*.*" -print0 | xargs -0 md5sum

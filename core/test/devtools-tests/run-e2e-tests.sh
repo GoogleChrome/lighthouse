@@ -14,7 +14,7 @@ export LH_ROOT="$SCRIPT_DIR/../../.."
 
 cd "$DEVTOOLS_PATH"
 
-TEST_PATTERN="${1:-test/e2e/lighthouse/*}"
+TEST_PATTERN="${1:-test/e2e_non_hosted/lighthouse/*}"
 
 # Don't let console.errors() like 'Unknown VE Context' fail the build
 sed -i.bak 's| fatalErrors.push(message);|/*fatalErrors.push(message)*/|' test/conductor/events.ts

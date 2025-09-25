@@ -2519,23 +2519,8 @@
             "id": "aria-allowed-role",
             "title": "Uses ARIA roles only on compatible elements",
             "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "aria-command-name": {
             "id": "aria-command-name",
@@ -3033,23 +3018,8 @@
             "id": "image-redundant-alt",
             "title": "Image elements do not have `[alt]` attributes that are redundant text.",
             "description": "Informative elements should aim for short, descriptive alternative text. Alternative text that is exactly the same as the text adjacent to the link or image is potentially confusing for screen reader users, because the text will be read twice. [Learn more about the `alt` attribute](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "input-button-name": {
             "id": "input-button-name",
@@ -3096,10 +3066,10 @@
           },
           "landmark-one-main": {
             "id": "landmark-one-main",
-            "title": "Document has a main landmark.",
+            "title": "Document does not have a main landmark.",
             "description": "One main landmark helps screen reader users navigate a web page. [Learn more about landmarks](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main).",
-            "score": 1,
-            "scoreDisplayMode": "informative",
+            "score": 0,
+            "scoreDisplayMode": "binary",
             "details": {
               "type": "table",
               "headings": [
@@ -5916,11 +5886,6 @@
                 "group": "a11y-aria"
               },
               {
-                "id": "aria-allowed-role",
-                "weight": 1,
-                "group": "a11y-aria"
-              },
-              {
                 "id": "aria-command-name",
                 "weight": 0,
                 "group": "a11y-aria"
@@ -5987,7 +5952,7 @@
               },
               {
                 "id": "aria-roles",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-aria"
               },
               {
@@ -6091,11 +6056,6 @@
                 "group": "a11y-names-labels"
               },
               {
-                "id": "image-redundant-alt",
-                "weight": 1,
-                "group": "a11y-names-labels"
-              },
-              {
                 "id": "input-button-name",
                 "weight": 0,
                 "group": "a11y-names-labels"
@@ -6107,7 +6067,7 @@
               },
               {
                 "id": "label",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-names-labels"
               },
               {
@@ -6161,11 +6121,6 @@
                 "group": "a11y-navigation"
               },
               {
-                "id": "table-duplicate-name",
-                "weight": 0,
-                "group": "a11y-tables-lists"
-              },
-              {
                 "id": "target-size",
                 "weight": 7,
                 "group": "a11y-best-practices"
@@ -6189,6 +6144,11 @@
                 "id": "video-caption",
                 "weight": 0,
                 "group": "a11y-audio-video"
+              },
+              {
+                "id": "landmark-one-main",
+                "weight": 3,
+                "group": "a11y-best-practices"
               },
               {
                 "id": "focusable-controls",
@@ -6231,19 +6191,29 @@
                 "weight": 0
               },
               {
+                "id": "table-duplicate-name",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "empty-heading",
                 "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "aria-allowed-role",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "image-redundant-alt",
+                "weight": 0,
+                "group": "a11y-names-labels"
               },
               {
                 "id": "identical-links-same-purpose",
                 "weight": 0,
-                "group": "hidden"
-              },
-              {
-                "id": "landmark-one-main",
-                "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
               },
               {
                 "id": "label-content-name-mismatch",
@@ -6262,7 +6232,7 @@
               }
             ],
             "id": "accessibility",
-            "score": 1
+            "score": 0.98
           },
           "best-practices": {
             "title": "Best Practices",
@@ -9905,7 +9875,6 @@
             ],
             "core/lib/i18n/i18n.js | columnFailingElem": [
               "audits[aria-allowed-attr].details.headings[0].label",
-              "audits[aria-allowed-role].details.headings[0].label",
               "audits[aria-conditional-attr].details.headings[0].label",
               "audits[aria-deprecated-role].details.headings[0].label",
               "audits[aria-hidden-body].details.headings[0].label",
@@ -9922,7 +9891,6 @@
               "audits[html-has-lang].details.headings[0].label",
               "audits[html-lang-valid].details.headings[0].label",
               "audits[image-alt].details.headings[0].label",
-              "audits[image-redundant-alt].details.headings[0].label",
               "audits.label.details.headings[0].label",
               "audits[landmark-one-main].details.headings[0].label",
               "audits[link-name].details.headings[0].label",
@@ -10184,7 +10152,7 @@
             "core/audits/accessibility/label.js | description": [
               "audits.label.description"
             ],
-            "core/audits/accessibility/landmark-one-main.js | title": [
+            "core/audits/accessibility/landmark-one-main.js | failureTitle": [
               "audits[landmark-one-main].title"
             ],
             "core/audits/accessibility/landmark-one-main.js | description": [
@@ -16848,23 +16816,8 @@
             "id": "aria-allowed-role",
             "title": "Uses ARIA roles only on compatible elements",
             "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "aria-command-name": {
             "id": "aria-command-name",
@@ -18574,23 +18527,8 @@
             "id": "image-redundant-alt",
             "title": "Image elements do not have `[alt]` attributes that are redundant text.",
             "description": "Informative elements should aim for short, descriptive alternative text. Alternative text that is exactly the same as the text adjacent to the link or image is potentially confusing for screen reader users, because the text will be read twice. [Learn more about the `alt` attribute](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "input-button-name": {
             "id": "input-button-name",
@@ -18639,8 +18577,23 @@
             "id": "landmark-one-main",
             "title": "Document has a main landmark.",
             "description": "One main landmark helps screen reader users navigate a web page. [Learn more about landmarks](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable"
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
           },
           "link-name": {
             "id": "link-name",
@@ -19779,11 +19732,6 @@
                 "group": "a11y-aria"
               },
               {
-                "id": "aria-allowed-role",
-                "weight": 1,
-                "group": "a11y-aria"
-              },
-              {
                 "id": "aria-command-name",
                 "weight": 0,
                 "group": "a11y-aria"
@@ -19850,7 +19798,7 @@
               },
               {
                 "id": "aria-roles",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-aria"
               },
               {
@@ -19954,11 +19902,6 @@
                 "group": "a11y-names-labels"
               },
               {
-                "id": "image-redundant-alt",
-                "weight": 1,
-                "group": "a11y-names-labels"
-              },
-              {
                 "id": "input-button-name",
                 "weight": 0,
                 "group": "a11y-names-labels"
@@ -19970,7 +19913,7 @@
               },
               {
                 "id": "label",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-names-labels"
               },
               {
@@ -20024,11 +19967,6 @@
                 "group": "a11y-navigation"
               },
               {
-                "id": "table-duplicate-name",
-                "weight": 0,
-                "group": "a11y-tables-lists"
-              },
-              {
                 "id": "target-size",
                 "weight": 7,
                 "group": "a11y-best-practices"
@@ -20052,6 +19990,11 @@
                 "id": "video-caption",
                 "weight": 0,
                 "group": "a11y-audio-video"
+              },
+              {
+                "id": "landmark-one-main",
+                "weight": 3,
+                "group": "a11y-best-practices"
               },
               {
                 "id": "focusable-controls",
@@ -20094,19 +20037,29 @@
                 "weight": 0
               },
               {
+                "id": "table-duplicate-name",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "empty-heading",
                 "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "aria-allowed-role",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "image-redundant-alt",
+                "weight": 0,
+                "group": "a11y-names-labels"
               },
               {
                 "id": "identical-links-same-purpose",
                 "weight": 0,
-                "group": "hidden"
-              },
-              {
-                "id": "landmark-one-main",
-                "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
               },
               {
                 "id": "label-content-name-mismatch",
@@ -20125,7 +20078,7 @@
               }
             ],
             "id": "accessibility",
-            "score": 0.86
+            "score": 0.87
           },
           "best-practices": {
             "title": "Best Practices",
@@ -21865,7 +21818,6 @@
             ],
             "core/lib/i18n/i18n.js | columnFailingElem": [
               "audits[aria-allowed-attr].details.headings[0].label",
-              "audits[aria-allowed-role].details.headings[0].label",
               "audits[aria-conditional-attr].details.headings[0].label",
               "audits[aria-deprecated-role].details.headings[0].label",
               "audits[aria-hidden-body].details.headings[0].label",
@@ -21882,8 +21834,8 @@
               "audits[html-has-lang].details.headings[0].label",
               "audits[html-lang-valid].details.headings[0].label",
               "audits[image-alt].details.headings[0].label",
-              "audits[image-redundant-alt].details.headings[0].label",
               "audits.label.details.headings[0].label",
+              "audits[landmark-one-main].details.headings[0].label",
               "audits[link-name].details.headings[0].label",
               "audits.list.details.headings[0].label",
               "audits.listitem.details.headings[0].label",
@@ -25085,23 +25037,8 @@
             "id": "aria-allowed-role",
             "title": "Uses ARIA roles only on compatible elements",
             "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "aria-command-name": {
             "id": "aria-command-name",
@@ -25636,23 +25573,8 @@
             "id": "image-redundant-alt",
             "title": "Image elements do not have `[alt]` attributes that are redundant text.",
             "description": "Informative elements should aim for short, descriptive alternative text. Alternative text that is exactly the same as the text adjacent to the link or image is potentially confusing for screen reader users, because the text will be read twice. [Learn more about the `alt` attribute](https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "subItemsHeading": {
-                    "key": "relatedNode",
-                    "valueType": "node"
-                  },
-                  "label": "Failing Elements"
-                }
-              ],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "input-button-name": {
             "id": "input-button-name",
@@ -25701,8 +25623,23 @@
             "id": "landmark-one-main",
             "title": "Document has a main landmark.",
             "description": "One main landmark helps screen reader users navigate a web page. [Learn more about landmarks](https://dequeuniversity.com/rules/axe/4.10/landmark-one-main).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable"
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "valueType": "node",
+                  "subItemsHeading": {
+                    "key": "relatedNode",
+                    "valueType": "node"
+                  },
+                  "label": "Failing Elements"
+                }
+              ],
+              "items": []
+            }
           },
           "link-name": {
             "id": "link-name",
@@ -28598,11 +28535,6 @@
                 "group": "a11y-aria"
               },
               {
-                "id": "aria-allowed-role",
-                "weight": 1,
-                "group": "a11y-aria"
-              },
-              {
                 "id": "aria-command-name",
                 "weight": 0,
                 "group": "a11y-aria"
@@ -28669,7 +28601,7 @@
               },
               {
                 "id": "aria-roles",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-aria"
               },
               {
@@ -28773,11 +28705,6 @@
                 "group": "a11y-names-labels"
               },
               {
-                "id": "image-redundant-alt",
-                "weight": 1,
-                "group": "a11y-names-labels"
-              },
-              {
                 "id": "input-button-name",
                 "weight": 0,
                 "group": "a11y-names-labels"
@@ -28789,7 +28716,7 @@
               },
               {
                 "id": "label",
-                "weight": 7,
+                "weight": 10,
                 "group": "a11y-names-labels"
               },
               {
@@ -28843,11 +28770,6 @@
                 "group": "a11y-navigation"
               },
               {
-                "id": "table-duplicate-name",
-                "weight": 0,
-                "group": "a11y-tables-lists"
-              },
-              {
                 "id": "target-size",
                 "weight": 7,
                 "group": "a11y-best-practices"
@@ -28871,6 +28793,11 @@
                 "id": "video-caption",
                 "weight": 0,
                 "group": "a11y-audio-video"
+              },
+              {
+                "id": "landmark-one-main",
+                "weight": 3,
+                "group": "a11y-best-practices"
               },
               {
                 "id": "focusable-controls",
@@ -28913,19 +28840,29 @@
                 "weight": 0
               },
               {
+                "id": "table-duplicate-name",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
                 "id": "empty-heading",
                 "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "aria-allowed-role",
+                "weight": 0,
+                "group": "a11y-best-practices"
+              },
+              {
+                "id": "image-redundant-alt",
+                "weight": 0,
+                "group": "a11y-names-labels"
               },
               {
                 "id": "identical-links-same-purpose",
                 "weight": 0,
-                "group": "hidden"
-              },
-              {
-                "id": "landmark-one-main",
-                "weight": 0,
-                "group": "hidden"
+                "group": "a11y-best-practices"
               },
               {
                 "id": "label-content-name-mismatch",
@@ -28944,7 +28881,7 @@
               }
             ],
             "id": "accessibility",
-            "score": 0.9
+            "score": 0.91
           },
           "best-practices": {
             "title": "Best Practices",
@@ -32635,7 +32572,6 @@
             ],
             "core/lib/i18n/i18n.js | columnFailingElem": [
               "audits[aria-allowed-attr].details.headings[0].label",
-              "audits[aria-allowed-role].details.headings[0].label",
               "audits[aria-conditional-attr].details.headings[0].label",
               "audits[aria-deprecated-role].details.headings[0].label",
               "audits[aria-hidden-body].details.headings[0].label",
@@ -32652,8 +32588,8 @@
               "audits[html-has-lang].details.headings[0].label",
               "audits[html-lang-valid].details.headings[0].label",
               "audits[image-alt].details.headings[0].label",
-              "audits[image-redundant-alt].details.headings[0].label",
               "audits.label.details.headings[0].label",
+              "audits[landmark-one-main].details.headings[0].label",
               "audits[link-name].details.headings[0].label",
               "audits.list.details.headings[0].label",
               "audits.listitem.details.headings[0].label",
