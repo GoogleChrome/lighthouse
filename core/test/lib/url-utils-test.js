@@ -18,7 +18,7 @@ describe('UrlUtils', () => {
     assert.doesNotThrow(_ => new URL(url));
   });
 
-  it.skip('handles URLs with multiple dashes', () => {
+  it('handles URLs with multiple dashes', () => {
     // from https://github.com/GoogleChrome/lighthouse/issues/1972
     const url = 'https://r15---sn-o097znl7.googlevideo.com/generate_204?conn2';
     assert.doesNotThrow(_ => new URL(url));

@@ -16,11 +16,9 @@ import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
 import errorsInfiniteLoop from './test-definitions/errors-infinite-loop.js';
-import fontSize from './test-definitions/font-size.js';
 import formsAutoComplete from './test-definitions/forms-autocomplete.js';
 import fpsMax from './test-definitions/fps-max.js';
 import fpsMaxPassive from './test-definitions/fps-max-passive.js';
-import fpsScaled from './test-definitions/fps-scaled.js';
 import fpsOverflowX from './test-definitions/fps-overflow-x.js';
 import issuesMixedContent from './test-definitions/issues-mixed-content.js';
 import hstsFullyPresent from './test-definitions/hsts-fully-present.js';
@@ -83,12 +81,10 @@ const smokeTests = [
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
   errorsInfiniteLoop,
-  fontSize,
   formsAutoComplete,
   fpsMax,
   fpsMaxPassive,
   fpsOverflowX,
-  fpsScaled,
   issuesMixedContent,
   hstsFullyPresent,
   hstsMissingDirectives,
