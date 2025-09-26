@@ -141,6 +141,10 @@ if (import.meta.main) {
     const report = processForProto(JSON.parse(fs.readFileSync(input, 'utf-8')));
     // write to output from argv
     fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
+    // eslint-disable-next-line no-console
+    console.log(`file written to ${output}`);
+  } else {
+    process.exit(1);
   }
 }
 
