@@ -9,7 +9,7 @@ import util from 'util';
 import path from 'path';
 import {execFile} from 'child_process';
 
-import glob from 'glob';
+import * as glob from 'glob';
 
 import {makeHash} from './hash.js';
 import SDK from '../../lib/cdt/SDK.js';

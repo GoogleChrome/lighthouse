@@ -7,7 +7,6 @@
 import fs from 'fs';
 
 import archiver from 'archiver';
-import cpy from 'cpy';
 import esbuild from 'esbuild';
 
 import * as plugins from './esbuild-plugins.js';
@@ -50,15 +49,7 @@ async function buildEntryPoint() {
 }
 
 function copyAssets() {
-  cpy([
-    '*.html',
-    'styles/**/*.css',
-    'images/**/*',
-    'manifest.json',
-  ], distDir, {
-    cwd: sourceDir,
-    parents: true,
-  });
+  fs.cpSync(sourceDir, distDir, {recursive: true});
 }
 
 /**

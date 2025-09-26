@@ -45,7 +45,7 @@ cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check lighthouse-dt-bundle copied."
 
 # generate bundle.d.ts
-npx tsc --allowJs --declaration --emitDeclarationOnly dist/report/bundle.esm.js
+npx tsc --allowJs --declaration --emitDeclarationOnly --esModuleInterop dist/report/bundle.esm.js
 
 # Exports of report/clients/bundle.js can possibly be mistakenly overridden by tsc.
 # Funky sed inplace command so we support both GNU sed and BSD sed (used by GHA devtools runner on macos)
