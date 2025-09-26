@@ -17,12 +17,11 @@ import {URLSearchParams} from 'url';
 
 import mime from 'mime-types';
 import * as glob from 'glob';
-import esMain from 'es-main';
 
 import {LH_ROOT} from '../../../shared/root.js';
 
 const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy', 'set-cookie']);
-const wasInvokedDirectly = esMain(import.meta);
+const wasInvokedDirectly = import.meta.main;
 
 class Server {
   baseDir = `${LH_ROOT}/cli/test/fixtures`;

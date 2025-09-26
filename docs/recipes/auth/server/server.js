@@ -17,7 +17,6 @@ import createError from 'http-errors';
 import express from 'express';
 import morgan from 'morgan';
 import session from 'express-session';
-import esMain from 'es-main';
 
 const moduleDir = path.dirname(url.fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(moduleDir, 'public');
@@ -83,7 +82,7 @@ app.use(function(err, req, res, next) {
 
 const server = http.createServer(app);
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   server.listen(10632);
 }
 

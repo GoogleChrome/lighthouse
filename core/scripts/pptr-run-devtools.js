@@ -29,7 +29,6 @@ import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import {launch} from 'chrome-launcher';
-import esMain from 'es-main';
 
 import {parseChromeFlags} from '../../cli/run.js';
 
@@ -443,7 +442,7 @@ async function main() {
   if (errorCount) process.exit(1);
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 
