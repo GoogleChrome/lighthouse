@@ -23,6 +23,14 @@ import {readJson} from '../../test/test-utils.js';
 
 const LATEST_RUN_DIR = path.join(LH_ROOT, 'latest-run');
 
+/**
+ * @param {number} bytes
+ */
+function formatBytes(bytes) {
+  bytes = Math.floor(10 * bytes / 1024) / 10;
+  return `${bytes} KiB`;
+}
+
 async function main() {
   /** @type {LH.Artifacts} */
   const artifacts = readJson(`${LATEST_RUN_DIR}/artifacts.json`);
@@ -49,7 +57,16 @@ async function main() {
     return;
   }
 
+  let totalWastedBytes = 0;
+  for (const item of items) {
+    totalWastedBytes += item.wastedBytes ?? 0;
+  }
+
   console.log(colors.bold(`${items.length} signals found!`));
+  if (totalWastedBytes) {
+    console.log(colors.bold(`Wasted bytes: ${formatBytes(totalWastedBytes)}`));
+  }
+
   for (const item of items) {
     if (typeof item.url !== 'string') continue;
 
@@ -64,7 +81,7 @@ async function main() {
 
     console.log('---------------------------------');
     console.log(`URL: ${item.url}`);
-    console.log(`Wasted bytes: ${Math.floor(10 * wastedBytes / 1024) / 10} KiB`);
+    console.log(`Wasted bytes: ${formatBytes(wastedBytes)}`);
     console.log(`Signals: ${signals.length}`);
     if (!script || !script.content) {
       console.log('\nFailed to find script content! :/');
