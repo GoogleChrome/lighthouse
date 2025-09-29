@@ -9,8 +9,6 @@
  * Primary purpose is to better understand what takes up the most space in an LHR.
  */
 
-/* eslint-disable no-console */
-
 // cat latest-run/lhr.report.json | node core/scripts/json-size.js | less
 // cat latest-run/lhr.report.json | jq .audits | node core/scripts/json-size.js | less
 

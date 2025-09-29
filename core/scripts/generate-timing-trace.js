@@ -23,7 +23,6 @@ import {createTraceString} from '../lib/timing-trace-saver.js';
  * @param {string} msg
  */
 function printErrorAndQuit(msg) {
-  // eslint-disable-next-line no-console
   console.error(`ERROR:
   > ${msg}
   > Example:
@@ -50,7 +49,6 @@ function saveTraceFromCLI() {
   const pathObj = path.parse(filename);
   const traceFilePath = path.join(pathObj.dir, `${pathObj.name}.timing.trace.json`);
   fs.writeFileSync(traceFilePath, jsonStr, 'utf8');
-  // eslint-disable-next-line no-console
   console.log(`
   > Timing trace file saved to: ${traceFilePath}
   > Open this file in DevTools perf panel   (For --audit-mode runs, use chrome://tracing instead)

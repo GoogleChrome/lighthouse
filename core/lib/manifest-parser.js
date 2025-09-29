@@ -458,7 +458,6 @@ function parseManifest(string, manifestUrl, documentUrl) {
     };
   }
 
-  /* eslint-disable camelcase */
   const manifest = {
     name: parseName(jsonInput),
     short_name: parseShortName(jsonInput),
@@ -471,7 +470,6 @@ function parseManifest(string, manifestUrl, documentUrl) {
     theme_color: parseThemeColor(jsonInput),
     background_color: parseBackgroundColor(jsonInput),
   };
-  /* eslint-enable camelcase */
 
   /** @type {string|undefined} */
   let manifestUrlWarning;

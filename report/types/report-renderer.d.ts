@@ -47,6 +47,11 @@ declare module Renderer {
      * data, which can be gotten from the artifacts.
      */
     onViewTrace?: () => void;
+    /**
+     * Called when the performance audits/insights are swapped out.
+     * TODO(v13): remove
+     */
+    _onSwapHook?: () => void;
   }
 }
 

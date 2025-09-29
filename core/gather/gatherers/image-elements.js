@@ -3,19 +3,18 @@
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-/**
-  * @fileoverview Gathers all images used on the page with their src, size,
-  *   and attribute information. Executes script in the context of the page.
-  */
 
+/**
+ * @fileoverview Gathers all images used on the page with their src, size,
+ * and attribute information. Executes script in the context of the page.
+ */
 
 import log from 'lighthouse-logger';
 
 import BaseGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import * as FontSize from './seo/font-size.js';
 
-/* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
+/* global getElementsInDocument, getNodeDetails */
 
 /** @param {Element} element */
 /* c8 ignore start */
@@ -189,6 +188,33 @@ function findSizeDeclaration(rule, property) {
 /**
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
+ * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
+ * @param {function(LH.Crdp.CSS.CSSStyle):boolean|string|undefined} isDeclarationOfInterest
+ */
+function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
+  let mostSpecificRule;
+  for (let i = matchedCSSRules.length - 1; i >= 0; i--) {
+    if (isDeclarationOfInterest(matchedCSSRules[i].rule.style)) {
+      mostSpecificRule = matchedCSSRules[i].rule;
+      break;
+    }
+  }
+
+  if (mostSpecificRule) {
+    return {
+      type: 'Regular',
+      ...mostSpecificRule.style,
+      parentRule: {
+        origin: mostSpecificRule.origin,
+        selectors: mostSpecificRule.selectorList.selectors,
+      },
+    };
+  }
+}
+
+/**
+ * Finds the most specific directly matched CSS font-size rule from the list.
+ *
  * @param {Array<LH.Crdp.CSS.RuleMatch>|undefined} matchedCSSRules
  * @param {string} property
  * @return {string | undefined}
@@ -196,7 +222,7 @@ function findSizeDeclaration(rule, property) {
 function findMostSpecificCSSRule(matchedCSSRules, property) {
   /** @param {LH.Crdp.CSS.CSSStyle} declaration */
   const isDeclarationofInterest = (declaration) => findSizeDeclaration(declaration, property);
-  const rule = FontSize.findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
+  const rule = findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
   if (!rule) return;
 
   return findSizeDeclaration(rule, property);

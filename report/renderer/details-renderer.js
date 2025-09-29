@@ -45,9 +45,12 @@ export class DetailsRenderer {
         return this._renderFilmstrip(details);
       case 'list':
         return this._renderList(details);
+      case 'checklist':
+        return this._renderChecklist(details);
       case 'table':
       case 'opportunity':
         return this._renderTable(details);
+      case 'network-tree':
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, details, this);
 
@@ -229,6 +232,9 @@ export class DetailsRenderer {
         }
         case 'numeric': {
           return this._renderNumeric(value);
+        }
+        case 'text': {
+          return this._renderText(value.value);
         }
         case 'source-location': {
           return this.renderSourceLocation(value);
@@ -535,6 +541,22 @@ export class DetailsRenderer {
   }
 
   /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.ListableDetail>} item
+   * @return {Element | null}
+   */
+  _renderListValue(item) {
+    if (item.type === 'node') {
+      return this.renderNode(item);
+    }
+
+    if (item.type === 'text') {
+      return this._renderText(item.value);
+    }
+
+    return this.render(item);
+  }
+
+  /**
    * @param {LH.FormattedIcu<LH.Audit.Details.List>} details
    * @return {Element}
    */
@@ -542,12 +564,52 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
-      const listItem = this.render(item);
+      if (item.type === 'list-section') {
+        const sectionEl = this._dom.createElement('div', 'lh-list-section');
+
+        if (item.title) {
+          const titleEl = this._dom.createChildOf(sectionEl, 'div', 'lh-list-section__title');
+          titleEl.append(this._dom.convertMarkdownLinkSnippets(item.title));
+        }
+
+        if (item.description) {
+          const descEl = this._dom.createChildOf(sectionEl, 'div', 'lh-list-section__description');
+          descEl.append(this._dom.convertMarkdownLinkSnippets(item.description));
+        }
+
+        const listItem = this._renderListValue(item.value);
+        if (listItem) sectionEl.append(listItem);
+
+        listContainer.append(sectionEl);
+        return;
+      }
+
+      const listItem = this._renderListValue(item);
       if (!listItem) return;
+
       listContainer.append(listItem);
     });
 
     return listContainer;
+  }
+
+  /**
+   * @param {LH.FormattedIcu<LH.Audit.Details.Checklist>} details
+   * @return {Element}
+   */
+  _renderChecklist(details) {
+    const container = this._dom.createElement('ul', 'lh-checklist');
+
+    Object.values(details.items).forEach(item => {
+      const element = this._dom.createChildOf(container, 'li', 'lh-checklist-item');
+      const iconClass = item.value ?
+        'lh-report-plain-icon--checklist-pass' :
+        'lh-report-plain-icon--checklist-fail';
+      this._dom.createChildOf(element, 'span', `lh-report-plain-icon ${iconClass}`)
+        .textContent = item.label;
+    });
+
+    return container;
   }
 
   /**
@@ -594,7 +656,6 @@ export class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.SourceLocationValue} item
    * @return {Element|null}
-   * @protected
    */
   renderSourceLocation(item) {
     if (!item.url) {

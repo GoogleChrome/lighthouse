@@ -22,10 +22,9 @@ import {LH_ROOT} from '../../shared/root.js';
 
 const optionsFilename = 'options.json';
 const artifactsFilename = 'artifacts.json';
-const traceSuffix = '.trace.json';
-const devtoolsLogSuffix = '.devtoolslog.json';
-const defaultPrefix = 'defaultPass';
-const errorPrefix = 'pageLoadError-defaultPass';
+const traceFilename = 'trace.json';
+const devtoolsFilename = 'devtoolslog.json';
+const errorPrefix = 'pageLoadError.';
 const stepDirectoryRegex = /^step(\d+)$/;
 
 /**
@@ -94,29 +93,26 @@ function loadArtifacts(basePath) {
 
   const filenames = fs.readdirSync(basePath);
 
-  filenames.filter(f => endsWithSuffix(f, devtoolsLogSuffix)).forEach(filename => {
-    if (!artifacts.devtoolsLogs) artifacts.devtoolsLogs = {};
-    const prefix = filename.replace(devtoolsLogSuffix + '.gz', '').replace(devtoolsLogSuffix, '');
+  filenames.filter(f => endsWithSuffix(f, devtoolsFilename)).forEach(filename => {
     const devtoolsLog = readJson(path.join(basePath, filename));
-    artifacts.devtoolsLogs[prefix] = devtoolsLog;
-    if (prefix === defaultPrefix) {
+
+    if (filename.startsWith(devtoolsFilename)) {
       artifacts.DevtoolsLog = devtoolsLog;
-    }
-    if (prefix === errorPrefix) {
+    } else if (filename.startsWith(errorPrefix)) {
       artifacts.DevtoolsLogError = devtoolsLog;
     }
   });
 
-  filenames.filter(f => endsWithSuffix(f, traceSuffix)).forEach(filename => {
-    if (!artifacts.traces) artifacts.traces = {};
-    const trace = readJson(path.join(basePath, filename));
-    const prefix = filename.replace(traceSuffix + '.gz', '').replace(traceSuffix, '');
-    artifacts.traces[prefix] = Array.isArray(trace) ? {traceEvents: trace} : trace;
-    if (prefix === defaultPrefix) {
-      artifacts.Trace = artifacts.traces[prefix];
+  filenames.filter(f => endsWithSuffix(f, traceFilename)).forEach(filename => {
+    let trace = readJson(path.join(basePath, filename));
+    if (Array.isArray(trace)) {
+      trace = {traceEvents: trace};
     }
-    if (prefix === errorPrefix) {
-      artifacts.TraceError = artifacts.traces[prefix];
+
+    if (filename.startsWith(traceFilename)) {
+      artifacts.Trace = trace;
+    } else if (filename.startsWith(errorPrefix)) {
+      artifacts.TraceError = trace;
     }
   });
 
@@ -196,8 +192,8 @@ function stringifyReplacer(key, value) {
  *     step0/                          --  Directory containing artifacts for the first step.
  *       options.json                  --  First step's options (e.g. step flags).
  *       artifacts.json                --  First step's artifacts except the DevTools log and trace.
- *       defaultPass.devtoolslog.json  --  First step's DevTools log.
- *       defaultPass.trace.json        --  First step's trace.
+ *       devtoolslog.json              --  First step's DevTools log.
+ *       trace.json                    --  First step's trace.
  *     step1/                          --  Directory containing artifacts for the second step.
  *
  * @param {LH.UserFlow.FlowArtifacts} flowArtifacts
@@ -254,21 +250,15 @@ async function saveArtifacts(artifacts, basePath, options = {}) {
   const filenames = fs.readdirSync(basePath);
   for (const filename of filenames) {
     const isPreviousFile =
-      filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
-      filename.endsWith(traceSuffix + '.gz') || filename.endsWith(devtoolsLogSuffix + '.gz') ||
+      filename.endsWith(traceFilename) || filename.endsWith(devtoolsFilename) ||
+      filename.endsWith(traceFilename + '.gz') || filename.endsWith(devtoolsFilename + '.gz') ||
       filename === artifactsFilename || filename === artifactsFilename + '.gz';
     if (isPreviousFile) {
       fs.unlinkSync(`${basePath}/${filename}`);
     }
   }
 
-  // `devtoolsLogs` and `traces` are duplicate compat artifacts.
-  // We don't need to save them twice, so extract them here.
   const {
-    // eslint-disable-next-line no-unused-vars
-    traces,
-    // eslint-disable-next-line no-unused-vars
-    devtoolsLogs,
     DevtoolsLog,
     Trace,
     DevtoolsLogError,
@@ -277,21 +267,21 @@ async function saveArtifacts(artifacts, basePath, options = {}) {
   } = artifacts;
 
   if (Trace) {
-    await saveTrace(Trace, `${basePath}/${defaultPrefix}${traceSuffix}`, options);
+    await saveTrace(Trace, `${basePath}/${traceFilename}`, options);
   }
 
   if (TraceError) {
-    await saveTrace(TraceError, `${basePath}/${errorPrefix}${traceSuffix}`, options);
+    await saveTrace(TraceError, `${basePath}/${errorPrefix}${traceFilename}`, options);
   }
 
   if (DevtoolsLog) {
     await saveDevtoolsLog(
-      DevtoolsLog, `${basePath}/${defaultPrefix}${devtoolsLogSuffix}`, options);
+      DevtoolsLog, `${basePath}/${devtoolsFilename}`, options);
   }
 
   if (DevtoolsLogError) {
     await saveDevtoolsLog(
-      DevtoolsLogError, `${basePath}/${errorPrefix}${devtoolsLogSuffix}`, options);
+      DevtoolsLogError, `${basePath}/${errorPrefix}${devtoolsFilename}`, options);
   }
 
   // save everything else, using a replacer to serialize LighthouseErrors in the artifacts.
@@ -452,9 +442,9 @@ async function saveLanternDebugTraces(pathWithBasename) {
   for (const [label, nodeTimings] of Lantern.Simulation.Simulator.allNodeTimings) {
     if (lanternTraceSaver.simulationNamesToIgnore.includes(label)) continue;
 
-    const traceFilename = `${pathWithBasename}-${label}${traceSuffix}`;
-    await saveTrace(lanternTraceSaver.convertNodeTimingsToTrace(nodeTimings), traceFilename);
-    log.log('saveAssets', `${label} lantern trace file streamed to disk: ${traceFilename}`);
+    const filename = `${pathWithBasename}-${label}.${traceFilename}`;
+    await saveTrace(lanternTraceSaver.convertNodeTimingsToTrace(nodeTimings), filename);
+    log.log('saveAssets', `${label} lantern trace file streamed to disk: ${filename}`);
   }
 }
 
@@ -469,15 +459,15 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
   const allAssets = await prepareAssets(artifacts, audits);
   const saveAll = allAssets.map(async (assets, index) => {
     if (assets.devtoolsLog) {
-      const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
-      await saveDevtoolsLog(assets.devtoolsLog, devtoolsLogFilename);
-      log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
+      const filename = `${pathWithBasename}-${index}.${devtoolsFilename}`;
+      await saveDevtoolsLog(assets.devtoolsLog, filename);
+      log.log('saveAssets', 'devtools log saved to disk: ' + filename);
     }
 
     if (assets.traceData) {
-      const traceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
-      await saveTrace(assets.traceData, traceFilename);
-      log.log('saveAssets', 'trace file streamed to disk: ' + traceFilename);
+      const filename = `${pathWithBasename}-${index}.${traceFilename}`;
+      await saveTrace(assets.traceData, filename);
+      log.log('saveAssets', 'trace file streamed to disk: ' + filename);
     }
   });
 
@@ -515,18 +505,30 @@ function normalizeTimingEntries(timings) {
 }
 
 /**
+ * @param {string} errorStack
+ * @return {string}
+ */
+function elideErrorStack(errorStack) {
+  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+  return errorStack
+    // Make paths relative to the repo root.
+    .replaceAll(baseCallFrameUrl.pathname, '')
+    // Remove line/col info.
+    .replaceAll(/:\d+:\d+/g, '');
+}
+
+/**
  * @param {LH.Result} lhr
  */
-function elideAuditErrorStacks(lhr) {
-  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+function elideLhrErrorStacks(lhr) {
   for (const auditResult of Object.values(lhr.audits)) {
     if (auditResult.errorStack) {
-      auditResult.errorStack = auditResult.errorStack
-        // Make paths relative to the repo root.
-        .replaceAll(baseCallFrameUrl.pathname, '')
-        // Remove line/col info.
-        .replaceAll(/:\d+:\d+/g, '');
+      auditResult.errorStack = elideErrorStack(auditResult.errorStack);
     }
+  }
+
+  if (lhr.runtimeError?.errorStack) {
+    lhr.runtimeError.errorStack = elideErrorStack(lhr.runtimeError.errorStack);
   }
 }
 
@@ -543,5 +545,5 @@ export {
   saveLanternNetworkData,
   stringifyReplacer,
   normalizeTimingEntries,
-  elideAuditErrorStacks,
+  elideLhrErrorStacks,
 };

@@ -14,7 +14,6 @@ import path from 'path';
 import {execSync} from 'child_process';
 import {createRequire} from 'module';
 
-import esMain from 'es-main';
 import esbuild from 'esbuild';
 // @ts-expect-error: plugin has no types.
 import SoftNavPlugin from 'lighthouse-plugin-soft-navigation';
@@ -62,7 +61,7 @@ const banner = `
  * ${pkg.description}
  *
  * @homepage ${pkg.homepage}
- * @author   Copyright 2023 ${pkg.author}
+ * @author   Copyright ${new Date().getFullYear()} ${pkg.author}
  * @license  ${pkg.license}
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -279,7 +278,7 @@ async function cli(argv) {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await cli(process.argv);
 }
 

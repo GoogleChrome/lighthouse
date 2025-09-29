@@ -44,7 +44,7 @@ class ValidSourceMaps extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Scripts', 'SourceMaps', 'URL', 'devtoolsLogs'],
+      requiredArtifacts: ['Scripts', 'SourceMaps', 'URL', 'DevtoolsLog'],
     };
   }
 
@@ -70,7 +70,7 @@ class ValidSourceMaps extends Audit {
    */
   static async audit(artifacts, context) {
     const {SourceMaps} = artifacts;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
 
@@ -121,7 +121,6 @@ class ValidSourceMaps extends Audit {
 
     /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
-      /* eslint-disable max-len */
       {
         key: 'scriptUrl',
         valueType: 'url',
@@ -129,7 +128,6 @@ class ValidSourceMaps extends Audit {
         label: str_(i18n.UIStrings.columnURL),
       },
       {key: 'sourceMapUrl', valueType: 'url', label: str_(UIStrings.columnMapURL)},
-      /* eslint-enable max-len */
     ];
 
     results.sort((a, b) => {

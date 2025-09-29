@@ -13,7 +13,6 @@ import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {getIssueDetailDescription} from '../lib/deprecation-description.js';
 
-/* eslint-disable max-len */
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the use of deprecated APIs. This descriptive title is shown to users when the page does not use deprecated APIs. */
   title: 'Avoids deprecated APIs',
@@ -32,7 +31,6 @@ const UIStrings = {
   /** Table column header for line of code (eg. 432) that is using a deprecated API. */
   columnLine: 'Line',
 };
-/* eslint-enable max-len */
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
@@ -58,7 +56,7 @@ class Deprecations extends Audit {
   static async audit(artifacts, context) {
     const bundles = await JSBundles.request(artifacts, context);
 
-    const deprecations = artifacts.InspectorIssues.deprecationIssue
+    const deprecations = (artifacts.InspectorIssues.deprecationIssue ?? [])
       .map(deprecation => {
         const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
         const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);

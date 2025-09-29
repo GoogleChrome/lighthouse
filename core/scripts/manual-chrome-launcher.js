@@ -46,5 +46,4 @@ launch({
   ignoreDefaultFlags,
   chromeFlags,
 })
-// eslint-disable-next-line no-console
 .then(v => console.log(`✨  Chrome debugging port: ${v.port}`));

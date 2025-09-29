@@ -37,6 +37,8 @@ describe('ReportRenderer', () => {
     const {window} = new jsdom.JSDOM();
     global.self = window;
     global.HTMLElement = window.HTMLElement;
+    global.CustomEvent = window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     const dom = new DOM(window.document);
     const detailsRenderer = new DetailsRenderer(dom);
@@ -51,6 +53,8 @@ describe('ReportRenderer', () => {
   after(() => {
     global.self = undefined;
     global.matchMedia = undefined;
+    global.requestAnimationFrame = undefined;
+    global.CustomEvent = undefined;
   });
 
   describe('renderReport', () => {
@@ -60,7 +64,6 @@ describe('ReportRenderer', () => {
       assert.ok(output.querySelector('.lh-header-container'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
-      // eslint-disable-next-line max-len
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-exp-gauge__wrapper').length,
           Object.keys(sampleResults.categories).length * 3, 'renders category gauges');
     });
@@ -292,7 +295,8 @@ describe('ReportRenderer', () => {
     const hiddenAuditIds = new Set();
     for (const category of Object.values(clonedSampleResult.categories)) {
       for (const auditRef of category.auditRefs) {
-        if (auditRef.group === 'hidden') {
+        // TODO: Remove insights condition when insights become the default
+        if (auditRef.group === 'hidden' || auditRef.group === 'insights') {
           hiddenAuditIds.add(auditRef.id);
         }
       }

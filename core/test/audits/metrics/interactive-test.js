@@ -8,7 +8,7 @@ import assert from 'assert/strict';
 
 import Interactive from '../../../audits/metrics/interactive.js';
 import * as constants from '../../../config/constants.js';
-import {readJson} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const acceptableTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const acceptableDevToolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -36,12 +36,10 @@ describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [Interactive.DEFAULT_PASS]: acceptableTrace,
-      },
-      devtoolsLogs: {
-        [Interactive.DEFAULT_PASS]: acceptableDevToolsLog,
-      },
+      Trace: acceptableTrace,
+      DevtoolsLog: acceptableDevToolsLog,
+      URL: getURLArtifactFromDevtoolsLog(acceptableDevToolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
@@ -55,12 +53,10 @@ describe('Performance: interactive audit', () => {
   it('should compute interactive on pages with redirect', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [Interactive.DEFAULT_PASS]: redirectTrace,
-      },
-      devtoolsLogs: {
-        [Interactive.DEFAULT_PASS]: redirectDevToolsLog,
-      },
+      Trace: redirectTrace,
+      DevtoolsLog: redirectDevToolsLog,
+      URL: getURLArtifactFromDevtoolsLog(redirectDevToolsLog),
+      SourceMaps: [],
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

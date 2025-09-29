@@ -7,7 +7,6 @@
 import {Protocol as Crdp} from 'devtools-protocol/types/protocol.js';
 import * as TraceEngine from '@paulirish/trace_engine';
 import * as Lantern from '../core/lib/lantern/lantern.js';
-import {LayoutShiftRootCausesData} from '@paulirish/trace_engine/models/trace/root-causes/LayoutShift.js';
 
 import {parseManifest} from '../core/lib/manifest-parser.js';
 import {LighthouseError} from '../core/lib/lh-error.js';
@@ -45,6 +44,8 @@ interface UniversalBaseArtifacts {
   LighthouseRunWarnings: Array<string | IcuMessage>;
   /** The benchmark index that indicates rough device class. */
   BenchmarkIndex: number;
+  /** The host's device pixel ratio. */
+  HostDPR: number;
   /** An object containing information about the testing configuration used by Lighthouse. */
   settings: Config.Settings;
   /** The timing instrumentation of the gather portion of a run. */
@@ -117,8 +118,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   Doctype: Artifacts.Doctype | null;
   /** Information on the size of all DOM nodes in the page and the most extreme members. */
   DOMStats: Artifacts.DOMStats;
-  /** Information on poorly sized font usage and the text affected by it. */
-  FontSize: Artifacts.FontSize;
   /** All the iframe elements in the page. */
   IFrameElements: Artifacts.IFrameElement[];
   /** All the input elements, including associated form and label elements. */
@@ -138,8 +137,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
-  /** The result of calling the shared trace engine root cause analysis. */
-  RootCauses: Artifacts.TraceEngineRootCauses;
   /** Source maps of scripts executed in the page. */
   SourceMaps: Array<Artifacts.SourceMap>;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
@@ -150,10 +147,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceError: Trace;
   /** Elements associated with metrics (ie: Largest Contentful Paint element). */
   TraceElements: Artifacts.TraceElement[];
-  /** COMPAT: A set of traces, keyed by passName. */
-  traces: {[passName: string]: Trace};
-  /** COMPAT: A set of DevTools debugger protocol records, keyed by passName. */
-  devtoolsLogs: {[passName: string]: DevtoolsLog};
 }
 
 declare module Artifacts {
@@ -360,12 +353,17 @@ declare module Artifacts {
     rawHref: string
     name?: string
     text: string
+    textLang?: string
     role: string
     target: string
     node: NodeDetails
     onclick: string
     id: string
+    attributeNames: Array<string>
     listeners?: Array<{
+      type: Crdp.DOMDebugger.EventListener['type']
+    }>
+    ancestorListeners?: Array<{
       type: Crdp.DOMDebugger.EventListener['type']
     }>
   }
@@ -378,37 +376,6 @@ declare module Artifacts {
 
   interface BFCacheFailure {
     notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
-  }
-
-  interface FontSize {
-    totalTextLength: number;
-    failingTextLength: number;
-    analyzedFailingTextLength: number;
-    /** Elements that contain a text node that failed size criteria. */
-    analyzedFailingNodesData: Array<{
-      /* nodeId of the failing TextNode. */
-      nodeId: number;
-      fontSize: number;
-      textLength: number;
-      parentNode: {
-        backendNodeId: number;
-        attributes: string[];
-        nodeName: string;
-        parentNode?: {
-          backendNodeId: number;
-          attributes: string[];
-          nodeName: string;
-        };
-      };
-      cssRule?: {
-        type: 'Regular' | 'Inline' | 'Attributes';
-        range?: {startLine: number, startColumn: number};
-        parentRule?: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
-        styleSheetId?: string;
-        stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
-        cssProperties?: Array<Crdp.CSS.CSSProperty>;
-      }
-    }>
   }
 
   // TODO(bckenny): real type for parsed manifest.
@@ -502,7 +469,7 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
+    traceEventType: 'trace-engine'|'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     node: NodeDetails;
     nodeId: number;
     animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
@@ -510,12 +477,12 @@ declare module Artifacts {
   }
 
   interface TraceEngineResult {
-    data: TraceEngine.Handlers.Types.ParsedTrace;
+    parsedTrace: TraceEngine.Handlers.Types.ParsedTrace;
     insights: TraceEngine.Insights.Types.TraceInsightSets;
   }
 
   interface TraceEngineRootCauses {
-    layoutShifts: Record<number, LayoutShiftRootCausesData>;
+    layoutShifts: Map<TraceEngine.Types.Events.SyntheticLayoutShift, TraceEngine.Insights.Models.CLSCulprits.LayoutShiftRootCausesData>;
   }
 
   interface ViewportDimensions {
@@ -526,30 +493,15 @@ declare module Artifacts {
     devicePixelRatio: number;
   }
 
-  interface InspectorIssues {
-    attributionReportingIssue: Crdp.Audits.AttributionReportingIssueDetails[];
-    blockedByResponseIssue: Crdp.Audits.BlockedByResponseIssueDetails[];
-    bounceTrackingIssue: Crdp.Audits.BounceTrackingIssueDetails[];
-    clientHintIssue: Crdp.Audits.ClientHintIssueDetails[];
-    contentSecurityPolicyIssue: Crdp.Audits.ContentSecurityPolicyIssueDetails[];
-    cookieDeprecationMetadataIssue: Crdp.Audits.CookieDeprecationMetadataIssueDetails[],
-    corsIssue: Crdp.Audits.CorsIssueDetails[];
-    deprecationIssue: Crdp.Audits.DeprecationIssueDetails[];
-    federatedAuthRequestIssue: Crdp.Audits.FederatedAuthRequestIssueDetails[],
-    genericIssue: Crdp.Audits.GenericIssueDetails[];
-    heavyAdIssue: Crdp.Audits.HeavyAdIssueDetails[];
-    lowTextContrastIssue: Crdp.Audits.LowTextContrastIssueDetails[];
-    mixedContentIssue: Crdp.Audits.MixedContentIssueDetails[];
-    navigatorUserAgentIssue: Crdp.Audits.NavigatorUserAgentIssueDetails[];
-    propertyRuleIssue: Crdp.Audits.PropertyRuleIssueDetails[],
-    quirksModeIssue: Crdp.Audits.QuirksModeIssueDetails[];
-    cookieIssue: Crdp.Audits.CookieIssueDetails[];
-    selectElementAccessibilityIssue: Crdp.Audits.SelectElementAccessibilityIssueDetails[];
-    sharedArrayBufferIssue: Crdp.Audits.SharedArrayBufferIssueDetails[];
-    sharedDictionaryIssue: Crdp.Audits.SharedDictionaryIssueDetails[];
-    stylesheetLoadingIssue: Crdp.Audits.StylesheetLoadingIssueDetails[];
-    federatedAuthUserInfoRequestIssue: Crdp.Audits.FederatedAuthUserInfoRequestIssueDetails[];
-  }
+  type Replace<T extends string, S extends string, D extends string,
+    A extends string = ""> = T extends `${infer L}${S}${infer R}` ?
+    Replace<R, S, D, `${A}${L}${D}`> : `${A}${T}`;
+
+  export type InspectorIssuesKeyToArtifactKey<T extends string> = Replace<T, 'Details', ''>;
+
+  export type InspectorIssues = {
+    [x in keyof Crdp.Audits.InspectorIssueDetails as InspectorIssuesKeyToArtifactKey<x>]: Array<Exclude<Crdp.Audits.InspectorIssueDetails[x], undefined>>
+  };
 
   // Computed artifact types below.
   type CriticalRequestNode = {
@@ -566,8 +518,9 @@ declare module Artifacts {
     trace: Trace;
     settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: Gatherer.Simulation.Simulator;
+    simulator: Gatherer.Simulation.Simulator | null;
     URL: Artifacts['URL'];
+    SourceMaps: Artifacts['SourceMaps'];
   }
 
   interface MetricComputationData extends MetricComputationDataInput {

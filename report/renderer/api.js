@@ -21,6 +21,7 @@ function renderReport(lhr, opts = {}) {
 
   const dom = new DOM(rootEl.ownerDocument, rootEl);
   const renderer = new ReportRenderer(dom);
+  if (opts._onSwapHook) dom._onSwapHook = opts._onSwapHook;
 
   renderer.renderReport(lhr, rootEl, opts);
 

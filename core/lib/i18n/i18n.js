@@ -17,16 +17,15 @@ import {LH_ROOT} from '../../../shared/root.js';
 import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
 import {getModulePath} from '../../../shared/esm-utils.js';
 
-/* eslint-disable max-len */
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
   /** Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s) */
   seconds: '{timeInMs, number, seconds}\xa0s',
   /** Label shown per-audit to show how many bytes smaller the page could be if the user implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kibibytes (e.g. 148 KiB) */
-  displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KiB',
+  displayValueByteSavings: 'Est savings of {wastedBytes, number, bytes}\xa0KiB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
-  displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
+  displayValueMsSavings: 'Est savings of {wastedMs, number, milliseconds}\xa0ms',
   /** Label shown per-audit to show how many HTML elements did not pass the audit. The `{# elements found}` placeholder will be replaced with the number of failing HTML elements. */
   displayValueElementsFound: `{nodeCount, plural, =1 {1 element found} other {# elements found}}`,
   /** Label for a column in a data table; entries will be the URL of a web resource */
@@ -40,9 +39,9 @@ const UIStrings = {
   /** Label for a column in a data table; entries will be the time to live value of the cache header on a web resource. */
   columnCacheTTL: 'Cache TTL',
   /** Label for a column in a data table; entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions. */
-  columnWastedBytes: 'Potential Savings',
+  columnWastedBytes: 'Est Savings',
   /** Label for a column in a data table; entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions. */
-  columnWastedMs: 'Potential Savings',
+  columnWastedMs: 'Est Savings',
   /** Label for a table column that displays how much time each row spent blocking other work on the main thread, entries will be the number of milliseconds spent. */
   columnBlockingTime: 'Main-Thread Blocking Time',
   /** Label for a column in a data table; entries will be the number of milliseconds spent during a particular activity. */
@@ -67,6 +66,8 @@ const UIStrings = {
   columnFailingElem: 'Failing Elements',
   /** Label for a column in a data table; entries will be a description of the table item. */
   columnDescription: 'Description',
+  /** Label for a row in a data table; the row represents the total number of something. */
+  total: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
@@ -112,7 +113,6 @@ const UIStrings = {
   /** Table item value for the severity of a high impact, or dangerous vulnerability. Part of a ranking scale in the form: low, medium, high. */
   itemSeverityHigh: 'High',
 };
-/* eslint-enable max-len */
 
 /**
  * Look up the best available locale for the requested language through these fall backs:

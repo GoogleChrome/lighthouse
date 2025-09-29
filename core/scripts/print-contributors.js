@@ -9,11 +9,7 @@
  * Ex: node core/scripts/print-contributors.js v6.4.0 HEAD
  */
 
-/* eslint-disable no-console */
-
 import {execFileSync} from 'child_process';
-
-import fetch from 'node-fetch';
 
 const startingHash = process.argv[2];
 const endingHash = process.argv[3];

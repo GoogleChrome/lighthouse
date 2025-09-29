@@ -1,0 +1,20 @@
+# Copyright 2020 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("../../../scripts/build/typescript/typescript.gni")
+
+ts_e2e_library("lighthouse") {
+  sources = [
+    "devtools-settings_test.ts",
+    "navigation_test.ts",
+    "snapshot_test.ts",
+    "start-view_test.ts",
+    "timespan_test.ts",
+  ]
+
+  deps = [
+    "../../e2e/helpers",
+    "../../shared",
+  ]
+}

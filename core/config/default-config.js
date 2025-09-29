@@ -15,6 +15,10 @@ const UIStrings = {
   performanceCategoryTitle: 'Performance',
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
+  /** Title of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
+  insightsGroupTitle: 'Insights',
+  /** Description of the insights section of the Performance category. Within this section are various insights to give developers tips on how to improve the performance of their page. */
+  insightsGroupDescription: 'These insights are also available in the Chrome DevTools Performance Panel - [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information.',
   /** Title of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
   firstPaintImprovementsGroupTitle: 'First Paint Improvements',
   /** Description of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
@@ -107,7 +111,6 @@ const defaultConfig = {
     // Artifacts which can be depended on come first.
     {id: 'DevtoolsLog', gatherer: 'devtools-log'},
     {id: 'Trace', gatherer: 'trace'},
-    {id: 'RootCauses', gatherer: 'root-causes'},
 
     {id: 'Accessibility', gatherer: 'accessibility'},
     {id: 'AnchorElements', gatherer: 'anchor-elements'},
@@ -116,7 +119,6 @@ const defaultConfig = {
     {id: 'CSSUsage', gatherer: 'css-usage'},
     {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
     {id: 'DOMStats', gatherer: 'dobetterweb/domstats'},
-    {id: 'FontSize', gatherer: 'seo/font-size'},
     {id: 'Inputs', gatherer: 'inputs'},
     {id: 'IFrameElements', gatherer: 'iframe-elements'},
     {id: 'ImageElements', gatherer: 'image-elements'},
@@ -135,10 +137,6 @@ const defaultConfig = {
     {id: 'Stylesheets', gatherer: 'stylesheets'},
     {id: 'TraceElements', gatherer: 'trace-elements'},
     {id: 'ViewportDimensions', gatherer: 'viewport-dimensions'},
-
-    // Artifact copies are renamed for compatibility with legacy artifacts.
-    {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
-    {id: 'traces', gatherer: 'trace-compat'},
 
     // FullPageScreenshot comes at the end so all other node analysis is captured.
     {id: 'FullPageScreenshot', gatherer: 'full-page-screenshot'},
@@ -195,6 +193,7 @@ const defaultConfig = {
     'has-hsts',
     'origin-isolation',
     'clickjacking-mitigation',
+    'trusted-types-xss',
     'script-treemap-data',
     'accessibility/accesskeys',
     'accessibility/aria-allowed-attr',
@@ -298,7 +297,6 @@ const defaultConfig = {
     'dobetterweb/uses-passive-event-listeners',
     'seo/meta-description',
     'seo/http-status-code',
-    'seo/font-size',
     'seo/link-text',
     'seo/crawlable-anchors',
     'seo/is-crawlable',
@@ -308,10 +306,31 @@ const defaultConfig = {
     'seo/manual/structured-data',
     'work-during-interaction',
     'bf-cache',
+    'insights/cache-insight',
+    'insights/cls-culprits-insight',
+    'insights/document-latency-insight',
+    'insights/dom-size-insight',
+    'insights/duplicated-javascript-insight',
+    'insights/font-display-insight',
+    'insights/forced-reflow-insight',
+    'insights/image-delivery-insight',
+    'insights/inp-breakdown-insight',
+    'insights/lcp-breakdown-insight',
+    'insights/lcp-discovery-insight',
+    'insights/legacy-javascript-insight',
+    'insights/modern-http-insight',
+    'insights/network-dependency-tree-insight',
+    'insights/render-blocking-insight',
+    'insights/third-parties-insight',
+    'insights/viewport-insight',
   ],
   groups: {
     'metrics': {
       title: str_(UIStrings.metricGroupTitle),
+    },
+    'insights': {
+      title: str_(UIStrings.insightsGroupTitle),
+      description: str_(UIStrings.insightsGroupDescription),
     },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
@@ -388,6 +407,25 @@ const defaultConfig = {
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
         {id: 'interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
 
+        // Insight audits.
+        {id: 'cache-insight', weight: 0, group: 'hidden'},
+        {id: 'cls-culprits-insight', weight: 0, group: 'hidden'},
+        {id: 'document-latency-insight', weight: 0, group: 'hidden'},
+        {id: 'dom-size-insight', weight: 0, group: 'hidden'},
+        {id: 'duplicated-javascript-insight', weight: 0, group: 'hidden'},
+        {id: 'font-display-insight', weight: 0, group: 'hidden'},
+        {id: 'forced-reflow-insight', weight: 0, group: 'hidden'},
+        {id: 'image-delivery-insight', weight: 0, group: 'hidden'},
+        {id: 'inp-breakdown-insight', weight: 0, group: 'hidden'},
+        {id: 'lcp-breakdown-insight', weight: 0, group: 'hidden'},
+        {id: 'lcp-discovery-insight', weight: 0, group: 'hidden'},
+        {id: 'legacy-javascript-insight', weight: 0, group: 'hidden'},
+        {id: 'modern-http-insight', weight: 0, group: 'hidden'},
+        {id: 'network-dependency-tree-insight', weight: 0, group: 'hidden'},
+        {id: 'render-blocking-insight', weight: 0, group: 'hidden'},
+        {id: 'third-parties-insight', weight: 0, group: 'hidden'},
+        {id: 'viewport-insight', weight: 0, group: 'hidden'},
+
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'interactive', weight: 0, group: 'hidden', acronym: 'TTI'},
         {id: 'max-potential-fid', weight: 0, group: 'hidden'},
@@ -452,68 +490,86 @@ const defaultConfig = {
       description: str_(UIStrings.a11yCategoryDescription),
       manualDescription: str_(UIStrings.a11yCategoryManualDescription),
       supportedModes: ['navigation', 'snapshot'],
-      // Audit weights are meant to match the aXe scoring system of
-      // minor, moderate, serious, and critical.
-      // See the audits listed at dequeuniversity.com/rules/axe/4.7.
-      // Click on an audit and check the right hand column to see its severity.
+      // Audit weights weights are derived from the axe-core "Impact",
+      // with adjustments based on axe-core "Tags":
+      //
+      // ┌────────────┬───────────────────────────────────────────────┐
+      // │ Impact     │ Weight Based on Tags                          │
+      // │            ├──────────────┬─────────────────┬──────────────┤
+      // │            │  wcag A+AA   │  best-practice  │ experimental │
+      // │            │ (ex: wcag2aa)│ (w/o wcag tag)  │              │
+      // ├────────────┼──────────────┼─────────────────┼──────────────┤
+      // │ Minor      │       1      │        0        │      0       │
+      // │ Moderate   │       3      │        3        │      0       │
+      // │ Serious    │       7      │        7        │      0       │
+      // │ Critical   │      10      │       10        │      0       │
+      // └────────────┴──────────────┴─────────────────┴──────────────┘
+      //
+      // Notes:
+      //  • Experimental rules always have weight 0
+      //  • Best practice rules only affect scores when tagged with wcagA+AA
+      //    and are moderate, serious, or critical.
+      //
+      // To find the latest axe-core Impact and Tag values:
+      //   1. Browse to https://dequeuniversity.com/rules/axe/html.
+      //   2. Click on the latest rule set (ex: https://dequeuniversity.com/rules/axe/html/4.10)
+      //   3. Review the tables
       auditRefs: [
-        {id: 'accesskeys', weight: 7, group: 'a11y-navigation'},
-        {id: 'aria-allowed-attr', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-allowed-role', weight: 1, group: 'a11y-aria'},
-        {id: 'aria-command-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-conditional-attr', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-deprecated-role', weight: 1, group: 'a11y-aria'},
-        {id: 'aria-dialog-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-hidden-body', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-hidden-focus', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-input-field-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-meter-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-progressbar-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-prohibited-attr', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-required-attr', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-required-children', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-roles', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-text', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-toggle-field-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-tooltip-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-treeitem-name', weight: 7, group: 'a11y-aria'},
-        {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'},
-        {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'},
-        {id: 'button-name', weight: 10, group: 'a11y-names-labels'},
-        {id: 'bypass', weight: 7, group: 'a11y-navigation'},
-        {id: 'color-contrast', weight: 7, group: 'a11y-color-contrast'},
-        {id: 'definition-list', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'dlitem', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'document-title', weight: 7, group: 'a11y-names-labels'},
-        {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'},
-        {id: 'form-field-multiple-labels', weight: 3, group: 'a11y-names-labels'},
-        {id: 'frame-title', weight: 7, group: 'a11y-names-labels'},
-        {id: 'heading-order', weight: 3, group: 'a11y-navigation'},
-        {id: 'html-has-lang', weight: 7, group: 'a11y-language'},
-        {id: 'html-lang-valid', weight: 7, group: 'a11y-language'},
-        {id: 'html-xml-lang-mismatch', weight: 3, group: 'a11y-language'},
-        {id: 'image-alt', weight: 10, group: 'a11y-names-labels'},
-        {id: 'image-redundant-alt', weight: 1, group: 'a11y-names-labels'},
-        {id: 'input-button-name', weight: 10, group: 'a11y-names-labels'},
-        {id: 'input-image-alt', weight: 10, group: 'a11y-names-labels'},
-        {id: 'label', weight: 7, group: 'a11y-names-labels'},
-        {id: 'link-in-text-block', weight: 7, group: 'a11y-color-contrast'},
-        {id: 'link-name', weight: 7, group: 'a11y-names-labels'},
-        {id: 'list', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'listitem', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'},
-        {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'},
-        {id: 'object-alt', weight: 7, group: 'a11y-names-labels'},
-        {id: 'select-name', weight: 7, group: 'a11y-names-labels'},
-        {id: 'skip-link', weight: 3, group: 'a11y-names-labels'},
-        {id: 'tabindex', weight: 7, group: 'a11y-navigation'},
-        {id: 'table-duplicate-name', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'target-size', weight: 7, group: 'a11y-best-practices'},
-        {id: 'td-headers-attr', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'th-has-data-cells', weight: 7, group: 'a11y-tables-lists'},
-        {id: 'valid-lang', weight: 7, group: 'a11y-language'},
-        {id: 'video-caption', weight: 10, group: 'a11y-audio-video'},
+        {id: 'accesskeys', weight: 7, group: 'a11y-navigation'}, // Serious, best-practice
+        {id: 'aria-allowed-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-command-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-conditional-attr', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-deprecated-role', weight: 1, group: 'a11y-aria'}, // Minor, wcag2a
+        {id: 'aria-dialog-name', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
+        {id: 'aria-hidden-body', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-hidden-focus', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-input-field-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-meter-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-progressbar-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-prohibited-attr', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-required-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-required-children', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-roles', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-text', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
+        {id: 'aria-toggle-field-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-tooltip-name', weight: 7, group: 'a11y-aria'}, // Serious, wcag2a
+        {id: 'aria-treeitem-name', weight: 7, group: 'a11y-aria'}, // Serious, best-practice
+        {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'button-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'bypass', weight: 7, group: 'a11y-navigation'}, // Serious, wcag2a
+        {id: 'color-contrast', weight: 7, group: 'a11y-color-contrast'}, // Serious, wcag2aa
+        {id: 'definition-list', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'dlitem', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'document-title', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'}, // Critical, wcag2a
+        {id: 'form-field-multiple-labels', weight: 3, group: 'a11y-names-labels'}, // Moderate, wcag2a
+        {id: 'frame-title', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'heading-order', weight: 3, group: 'a11y-navigation'}, // Moderate, best-practice
+        {id: 'html-has-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
+        {id: 'html-lang-valid', weight: 7, group: 'a11y-language'}, // Serious, wcag2a
+        {id: 'html-xml-lang-mismatch', weight: 3, group: 'a11y-language'}, // Moderate, wcag2a
+        {id: 'image-alt', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'input-button-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'input-image-alt', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'label', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'link-in-text-block', weight: 7, group: 'a11y-color-contrast'}, // Serious, wcag2a
+        {id: 'link-name', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'list', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'listitem', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'}, // Critical, wcag2a
+        {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'}, // Critical, wcag2aa
+        {id: 'object-alt', weight: 7, group: 'a11y-names-labels'}, // Serious, wcag2a
+        {id: 'select-name', weight: 10, group: 'a11y-names-labels'}, // Critical, wcag2a
+        {id: 'skip-link', weight: 3, group: 'a11y-names-labels'}, // Moderate, best-practice
+        {id: 'tabindex', weight: 7, group: 'a11y-navigation'}, // Serious, best-practice
+        {id: 'target-size', weight: 7, group: 'a11y-best-practices'}, // Serious, wcag22aa
+        {id: 'td-headers-attr', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'th-has-data-cells', weight: 7, group: 'a11y-tables-lists'}, // Serious, wcag2a
+        {id: 'valid-lang', weight: 7, group: 'a11y-language'}, // Serious, wcag2aa
+        {id: 'video-caption', weight: 10, group: 'a11y-audio-video'}, // Critical, wcag2a
+        {id: 'landmark-one-main', weight: 3, group: 'a11y-best-practices'}, // Moderate, best-practice
         // Manual audits
         {id: 'focusable-controls', weight: 0},
         {id: 'interactive-element-affordance', weight: 0},
@@ -525,13 +581,17 @@ const defaultConfig = {
         {id: 'offscreen-content-hidden', weight: 0},
         {id: 'custom-controls-labels', weight: 0},
         {id: 'custom-controls-roles', weight: 0},
-        // Hidden audits
-        {id: 'empty-heading', weight: 0, group: 'hidden'},
-        {id: 'identical-links-same-purpose', weight: 0, group: 'hidden'},
-        {id: 'landmark-one-main', weight: 0, group: 'hidden'},
-        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'},
-        {id: 'table-fake-caption', weight: 0, group: 'hidden'},
-        {id: 'td-has-header', weight: 0, group: 'hidden'},
+        // Low-impact best-practices
+        {id: 'table-duplicate-name', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
+        {id: 'empty-heading', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
+        {id: 'aria-allowed-role', weight: 0, group: 'a11y-best-practices'}, // Minor, best-practice
+        {id: 'image-redundant-alt', weight: 0, group: 'a11y-names-labels'}, // Minor, best-practice
+        // WCAG AAA
+        {id: 'identical-links-same-purpose', weight: 0, group: 'a11y-best-practices'}, // Minor, wcag2aaa
+        // Hidden audits (ie. experimental)
+        {id: 'label-content-name-mismatch', weight: 0, group: 'hidden'}, // Serious, experimental
+        {id: 'table-fake-caption', weight: 0, group: 'hidden'}, // Serious, experimental
+        {id: 'td-has-header', weight: 0, group: 'hidden'}, // Critical, experimental
       ],
     },
     'best-practices': {
@@ -547,12 +607,12 @@ const defaultConfig = {
         {id: 'has-hsts', weight: 0, group: 'best-practices-trust-safety'},
         {id: 'origin-isolation', weight: 0, group: 'best-practices-trust-safety'},
         {id: 'clickjacking-mitigation', weight: 0, group: 'best-practices-trust-safety'},
+        {id: 'trusted-types-xss', weight: 0, group: 'best-practices-trust-safety'},
         // User Experience
         {id: 'paste-preventing-inputs', weight: 3, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
         {id: 'viewport', weight: 1, group: 'best-practices-ux'},
-        {id: 'font-size', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* globals window getBoundingClientRect requestAnimationFrame */
+/* globals getBoundingClientRect */
 
 import BaseGatherer from '../base-gatherer.js';
 import * as emulation from '../../lib/emulation.js';

@@ -415,10 +415,8 @@ describeSkipOnWindows('inline-fs', () => {
 
       it('handles methods chained on fs.readdirSync result', async () => {
         fs.writeFileSync(tmpPath, 'text');
-        // eslint-disable-next-line max-len
         const content = `const files = fs.readdirSync('${tmpDir}').map(f => \`metrics/\${f}\`)`;
         const result = await inlineFs(content, filepath);
-        // eslint-disable-next-line max-len
         expect(result).toEqual({
           code: 'const files = ["test.txt"].map(f => `metrics/${f}`)',
           warnings: [],
@@ -430,7 +428,6 @@ describeSkipOnWindows('inline-fs', () => {
         // eslint-disable-next-line max-len
         const content = `const files = [...fs.readdirSync('${tmpDir}'), ...fs.readdirSync('${tmpDir}').map(f => \`metrics/\${f}\`)]`;
         const result = await inlineFs(content, filepath);
-        // eslint-disable-next-line max-len
         expect(result).toEqual({
           code: 'const files = [...["test.txt"], ...["test.txt"].map(f => `metrics/${f}`)]',
           warnings: [],

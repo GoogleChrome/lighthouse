@@ -28,12 +28,20 @@ const exclusions = {
     'byte-efficiency', 'byte-gzip', 'perf-preload',
     // Disabled because a renderer crash also breaks devtools frontend
     'crash',
+    // Disabled because is timing out.
+    'oopif-scripts',
   ],
 };
 
-// https://github.com/GoogleChrome/lighthouse/issues/14271
 for (const array of Object.values(exclusions)) {
+  // https://github.com/GoogleChrome/lighthouse/issues/14271
   array.push('lantern-idle-callback-short');
+  // https://github.com/GoogleChrome/lighthouse/issues/16597
+  array.push('csp-block-all');
+  // glitch is gone.
+  array.push('issues-mixed-content');
+  // works most of the time, but since it uses a live site it can be flaky
+  array.push('trusted-types-directive-present');
 }
 
 export default exclusions;

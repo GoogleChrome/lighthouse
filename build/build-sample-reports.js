@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
 
 import fs from 'fs';
 import path from 'path';
@@ -156,8 +155,8 @@ async function generateErrorLHR() {
     GatherContext: {gatherMode: 'navigation'},
     Timing: [],
     PageLoadError: null,
-    devtoolsLogs: {},
-    traces: {},
+    DevtoolsLog: [],
+    Trace: {traceEvents: []},
   };
 
   // Save artifacts to disk then run `lighthouse -A` with them.

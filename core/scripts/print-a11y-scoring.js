@@ -26,5 +26,4 @@ const result = auditRefs
   })
   .join('\n');
 
-// eslint-disable-next-line no-console
 console.log(result);

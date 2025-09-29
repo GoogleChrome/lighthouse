@@ -9,8 +9,8 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/artifacts/blocking-time/trace.json.gz', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/blocking-time/devtoolslog.json.gz', import.meta);
-const cnnTrace = readJson('../../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const cnnDevtoolsLog = readJson('../../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const cnnTrace = readJson('../../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const cnnDevtoolsLog = readJson('../../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
@@ -21,7 +21,7 @@ describe('Metrics: TotalBlockingTime', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
       context
     );
 
@@ -42,7 +42,8 @@ describe('Metrics: TotalBlockingTime', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
-      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL},
+      // eslint-disable-next-line max-len
+      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
       context
     );
     expect(result.timing).toBeCloseTo(400, 1);

@@ -31,6 +31,12 @@ const expectations = {
   },
   artifacts: {
     TraceElements: [
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
+      {traceEventType: 'trace-engine'},
       {
         traceEventType: 'largest-contentful-paint',
         node: {
@@ -57,12 +63,6 @@ const expectations = {
         traceEventType: 'layout-shift',
         node: {
           nodeLabel: `Please don't move me`,
-        },
-      },
-      {
-        traceEventType: 'layout-shift',
-        node: {
-          nodeLabel: 'section > img',
         },
       },
       {

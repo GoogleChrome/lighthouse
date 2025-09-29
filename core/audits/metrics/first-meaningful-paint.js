@@ -28,7 +28,7 @@ class FirstMeaningfulPaint extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
+      requiredArtifacts: ['Trace', 'DevtoolsLog', 'GatherContext', 'URL'],
     };
   }
 

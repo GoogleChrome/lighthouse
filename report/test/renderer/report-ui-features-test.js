@@ -61,9 +61,9 @@ describe('ReportUIFeatures', () => {
     global.HTMLElement = document.window.HTMLElement;
     global.HTMLInputElement = document.window.HTMLInputElement;
     global.CustomEvent = document.window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     global.window = document.window;
-    global.window.requestAnimationFrame = fn => fn();
     global.window.getComputedStyle = function() {
       return {
         marginTop: '10px',
@@ -85,6 +85,7 @@ describe('ReportUIFeatures', () => {
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
     global.CustomEvent = undefined;
+    global.requestAnimationFrame = undefined;
   });
 
   describe('initFeatures', () => {
@@ -110,7 +111,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr, {onViewTrace});
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(3);
+        expect(buttons).toHaveLength(4);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);
@@ -130,7 +131,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr, {onViewTrace});
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(2);
+        expect(buttons).toHaveLength(3);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);
@@ -146,7 +147,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr);
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(2);
+        expect(buttons).toHaveLength(3);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);

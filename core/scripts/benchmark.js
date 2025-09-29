@@ -6,8 +6,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 // node core/scripts/benchmark.js
 
 import {pageFunctions} from '../lib/page-functions.js';

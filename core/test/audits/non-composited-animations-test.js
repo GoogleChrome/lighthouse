@@ -233,4 +233,129 @@ describe('Non-composited animations audit', () => {
     expect(auditResult.details.items[0].subItems.items[5].animation)
       .toBeUndefined();
   });
+
+  // Testing custom CSS property separation
+  it('separates custom CSS properties from regular properties', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          nodeId: 4,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#custom-animated',
+            nodeLabel: 'div',
+            snippet: '<div id="custom-animated">',
+          },
+          animations: [
+            {
+              name: 'customAnimation',
+              failureReasonsMask: 8192,
+              unsupportedProperties: ['--swing-y', '--rotation', 'color', 'height'],
+            },
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.headings).toHaveLength(2);
+    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
+    expect(auditResult.details.items).toHaveLength(1);
+
+    const subItems = auditResult.details.items[0].subItems.items;
+
+    // There should be two separate messages: one for standard CSS properties, and one for custom properties.
+    expect(subItems).toHaveLength(2);
+
+    const failureReasons = subItems.map(item => item.failureReason);
+
+    expect(failureReasons[0])
+      .toBeDisplayString('Unsupported CSS Properties: color, height');
+    expect(failureReasons[1])
+      .toBeDisplayString(
+        'Custom CSS properties cannot be animated on the compositor: --swing-y, --rotation'
+      );
+
+    expect(subItems[0].animation).toEqual('customAnimation');
+    expect(subItems[1].animation).toEqual('customAnimation');
+  });
+
+  // Custom properties only
+  it('handles animations with only custom CSS properties', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          nodeId: 5,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#only-custom',
+            nodeLabel: 'div',
+            snippet: '<div id="only-custom">',
+          },
+          animations: [
+            {
+              failureReasonsMask: 8192,
+              unsupportedProperties: ['--yheight'],
+            },
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.items).toHaveLength(1);
+
+    const subItems = auditResult.details.items[0].subItems.items;
+    expect(subItems).toHaveLength(1);
+    expect(subItems[0].failureReason)
+      .toBeDisplayString(
+        'Custom CSS properties cannot be animated on the compositor: --yheight'
+      );
+    expect(subItems[0].animation).toBeUndefined();
+  });
+
+  // In the case of general properties only
+  it('handles animations with only regular CSS properties', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          nodeId: 6,
+          node: {
+            devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+            selector: 'body > div#only-regular',
+            nodeLabel: 'div',
+            snippet: '<div id="only-regular">',
+          },
+          animations: [
+            {
+              name: 'regularAnimation',
+              failureReasonsMask: 8192,
+              unsupportedProperties: ['margin', 'padding'],
+            },
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.items).toHaveLength(1);
+
+    const subItems = auditResult.details.items[0].subItems.items;
+    expect(subItems).toHaveLength(1);
+    expect(subItems[0].failureReason)
+      .toBeDisplayString('Unsupported CSS Properties: margin, padding');
+    expect(subItems[0].animation).toEqual('regularAnimation');
+  });
 });

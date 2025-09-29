@@ -67,13 +67,15 @@ class ReportUtils {
 
         // attach the stackpacks to the auditRef object
         if (clone.stackPacks) {
+          const ids = [auditRef.id, ...auditRef.result.replacesAudits ?? []];
           clone.stackPacks.forEach(pack => {
-            if (pack.descriptions[auditRef.id]) {
+            const id = ids.find(id => pack.descriptions[id]);
+            if (id && pack.descriptions[id]) {
               auditRef.stackPacks = auditRef.stackPacks || [];
               auditRef.stackPacks.push({
                 title: pack.title,
                 iconDataURL: pack.iconDataURL,
-                description: pack.descriptions[auditRef.id],
+                description: pack.descriptions[id],
               });
             }
           });
@@ -157,6 +159,7 @@ class ReportUtils {
         const aVal = a[key];
         const bVal = b[key];
         if (typeof aVal !== typeof bVal || !['number', 'string'].includes(typeof aVal)) {
+          // eslint-disable-next-line no-console
           console.warn(`Warning: Attempting to sort unsupported value type: ${key}.`);
         }
         if (typeof aVal === 'number' && typeof bVal === 'number' && aVal !== bVal) {
@@ -189,7 +192,7 @@ class ReportUtils {
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-        // eslint-disable-next-line max-len
+
         cpuThrottling = `${i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
         networkThrottling = `${i18n.formatMilliseconds(requestLatencyMs)} HTTP RTT, ` +
           `${i18n.formatKbps(throttling.downloadThroughputKbps)} down, ` +
@@ -205,7 +208,7 @@ class ReportUtils {
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-        // eslint-disable-next-line max-len
+
         cpuThrottling = `${i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
         networkThrottling = `${i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
           `${i18n.formatKbps(throughputKbps)} throughput (Simulated)`;
@@ -479,6 +482,13 @@ const UIStrings = {
   openInANewTabTooltip: 'Open in a new tab',
   /** Generic category name for all resources that could not be attributed to a 1st or 3rd party entity. */
   unattributable: 'Unattributable',
+
+  /** Notice about upcoming planned changes to Lighthouse, to replace most performance audits with a new set of "insight" audits. */
+  insightsNotice: 'Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462).',
+  /** Text for a button to try out "Performance insight audits", a new set of performance advice that will replace performance audits. */
+  tryInsights: 'Try insights',
+  /** Text for a button for going back to normal "Performance audits", instead of using the new set of performance insight audits that will replace performance audits. */
+  goBackToAudits: 'Go back to audits',
 };
 
 export {

@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /** @typedef {import('./constants').LanternSiteDefinition} LanternSiteDefinition */
 /** @typedef {import('./constants').LanternEvaluation} LanternEvaluation */
 /** @typedef {import('./constants').EstimateEvaluationSummary} EstimateEvaluationSummary */

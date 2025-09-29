@@ -59,6 +59,22 @@ async function getBenchmarkIndex(executionContext) {
 }
 
 /**
+ * Computes the observed DPR.
+ * @param {LH.Gatherer.Driver['executionContext']} executionContext
+ * @return {Promise<number>}
+ */
+async function getDevicePixelRatio(executionContext) {
+  const status = {msg: 'Host device pixel ratio', id: 'lh:gather:getDevicePixelRatio'};
+  log.time(status);
+  // eslint-disable-next-line no-undef
+  const indexVal = await executionContext.evaluate(() => devicePixelRatio, {
+    args: [],
+  });
+  log.timeEnd(status);
+  return indexVal;
+}
+
+/**
  * Returns a warning if the host device appeared to be underpowered according to BenchmarkIndex.
  *
  * @param {{settings: LH.Config.Settings; baseArtifacts: Pick<LH.Artifacts, 'BenchmarkIndex'>}} context
@@ -100,6 +116,7 @@ export {
   UIStrings,
   getBrowserVersion,
   getBenchmarkIndex,
+  getDevicePixelRatio,
   getSlowHostCpuWarning,
   getEnvironmentWarnings,
 };

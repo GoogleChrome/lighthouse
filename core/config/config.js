@@ -10,7 +10,7 @@ import log from 'lighthouse-logger';
 
 import {Runner} from '../runner.js';
 import defaultConfig from './default-config.js';
-import {nonSimulatedSettingsOverrides} from './constants.js'; // eslint-disable-line max-len
+import {nonSimulatedSettingsOverrides} from './constants.js';
 import {
   throwInvalidDependencyOrder,
   isValidArtifactDependency,

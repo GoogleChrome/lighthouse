@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* global globalThis */
-
 import {Buffer} from 'buffer';
 
 import log from 'lighthouse-logger';

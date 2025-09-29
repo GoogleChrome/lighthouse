@@ -29,10 +29,10 @@ jobs:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
 
-    - name: Use Node.js 18.x
+    - name: Use Node.js 22.19
       uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: '22.19'
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn type-check
@@ -58,8 +58,12 @@ jobs:
     - run: yarn lint
     - run: yarn test-lantern
     - run: yarn test-legacy-javascript
+      env:
+        # https://github.com/nodejs/node/issues/51555#issuecomment-1974877052
+        DISABLE_V8_COMPILE_CACHE: 1
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
+    - run: yarn generate-insight-audits
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code

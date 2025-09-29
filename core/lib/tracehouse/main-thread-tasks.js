@@ -267,6 +267,14 @@ class MainThreadTasks {
             // It's less than 1ms, we'll let it slide by increasing the duration of the parent.
             currentTask.endTime = nextTask.endTime;
             currentTask.duration += timeDelta;
+
+            // Recursively extend parent endTimes, as needed.
+            let cur = currentTask.parent;
+            while (cur && cur.endTime < nextTask.endTime) {
+              cur.duration += nextTask.endTime - cur.endTime;
+              cur.endTime = nextTask.endTime;
+              cur = cur.parent;
+            }
           } else if (nextTask.unbounded) {
             // It's ending at traceEndTs, it means we were missing the end event. We'll truncate it to the parent.
             nextTask.endTime = currentTask.endTime;
@@ -507,8 +515,8 @@ class MainThreadTasks {
       if (!url) continue;
       // Add unique URLs to our overall tree.
       if (!allURLsInTree.includes(url)) allURLsInTree.push(url);
-      // Don't add consecutive, duplicate URLs
-      if (attributableURLs[attributableURLs.length - 1] === url) continue;
+      // Don't add duplicate URLs
+      if (attributableURLs.includes(url)) continue;
       attributableURLs.push(url);
     }
 

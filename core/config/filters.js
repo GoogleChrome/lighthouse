@@ -13,6 +13,7 @@ const baseArtifactKeySource = {
   fetchTime: '',
   LighthouseRunWarnings: '',
   BenchmarkIndex: '',
+  HostDPR: '',
   settings: '',
   Timing: '',
   URL: '',
@@ -263,6 +264,12 @@ function filterConfigByGatherMode(resolvedConfig, mode) {
  */
 function filterConfigByExplicitFilters(resolvedConfig, filters) {
   const {onlyAudits, onlyCategories, skipAudits} = filters;
+  if (onlyAudits && !onlyAudits.length) {
+    throw new Error(`onlyAudits cannot be an empty array.`);
+  }
+  if (onlyCategories && !onlyCategories.length) {
+    throw new Error(`onlyCategories cannot be an empty array.`);
+  }
 
   warnOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
 

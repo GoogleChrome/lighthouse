@@ -14,6 +14,10 @@ import log from 'lighthouse-logger';
 import {Audit} from './audit.js';
 import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from '../lib/i18n/i18n.js';
+import {Util} from '../../shared/util.js';
+
+const KB = 1024;
+const MAX_CONSOLE_ERRORS = 1000;
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on browser errors. This descriptive title is shown to users when no browser errors were logged into the devtools console. */
@@ -90,10 +94,10 @@ class ErrorLogs extends Audit {
         const bundle = bundles.find(bundle => bundle.script.scriptId === item.scriptId);
         return {
           source: item.source,
-          description: item.text,
+          description: item.text ? Util.truncate(item.text, 10 * KB) : undefined,
           sourceLocation: Audit.makeSourceLocationFromConsoleMessage(item, bundle),
         };
-      });
+      }).slice(0, MAX_CONSOLE_ERRORS);
 
     const tableRows = ErrorLogs.filterAccordingToOptions(consoleRows, auditOptions)
       .sort((a, b) => (a.description || '').localeCompare(b.description || ''));

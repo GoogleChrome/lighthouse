@@ -179,8 +179,8 @@ describe('NetworkMonitor', () => {
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}}); // eslint-disable-line max-len
-      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}});
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}});
       rootDispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
       expect(await monitor.getNavigationUrls()).toEqual({
@@ -208,7 +208,7 @@ describe('NetworkMonitor', () => {
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}});
       rootDispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
       expect(await monitor.getNavigationUrls()).toEqual({

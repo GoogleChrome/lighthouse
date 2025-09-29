@@ -40,7 +40,7 @@ class UserTimings extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       guidanceLevel: 2,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['Trace'],
     };
   }
 
@@ -66,7 +66,7 @@ class UserTimings extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
     const computedUserTimings = await ComputedUserTimings.request(trace, context);
     const userTimings = computedUserTimings.filter(UserTimings.excludeEvent);
     const tableRows = userTimings.map(item => {

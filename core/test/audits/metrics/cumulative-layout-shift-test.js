@@ -13,9 +13,7 @@ describe('Cumulative Layout Shift', () => {
   it('evaluates CLS correctly', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {
-        [CumulativeLayoutShift.DEFAULT_PASS]: jumpyClsTrace,
-      },
+      Trace: jumpyClsTrace,
     };
 
     const context = {

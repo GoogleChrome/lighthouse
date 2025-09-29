@@ -660,7 +660,10 @@
     "message": "Використовуйте формати відео для анімованого вмісту"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Поліфіли та перетворення дають змогу застарілим веб-переглядачам використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних веб-переглядачів. Для пакетів JavaScript прийміть сучасну стратегію введення скрипту в дію за допомогою виявлення модульних/немодульних функцій, щоб зменшити обсяг коду, який надсилається сучасним веб-переглядачам зі збереженням підтримки застарілих. [Дізнайтесь, як використовувати сучасний код JavaScript.](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Поліфіли й перетворення дають застарілим вебпереглядачам змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/baseline), якщо вам не потрібно підтримувати застарілі вебпереглядачі. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "На сторінці виявлено версію 2 core-js. Щоб підвищити продуктивність, перейдіть на версію 3."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Не показуйте застарілі елементи JavaScript у сучасних веб-переглядачах"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Увімкніть стиснення тексту"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "Заголовок `X-Frame-Options` (XFO) або директива `frame-ancestors` у заголовку `Content-Security-Policy` (CSP) указує на те, куди можна вбудовувати сторінку. Ці заголовки допомагають зменшити ризик атак типу clickjacking, блокуючи вбудовування сторінки на деяких або всіх сайтах. [Докладніше про запобігання атакам типу clickjacking.](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Не знайдено правила керування фреймом"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Зменште ризик атак типу clickjacking за допомогою XFO або CSP"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Ланцюжки важливих запитів нижче показують, які ресурси мають високий пріоритет. Щоб пришвидшити завантаження сторінки, зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. [Дізнайтесь, як не створювати ланцюжки критичних запитів.](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Інструменту Lighthouse не вдалось автоматично перевірити значення елемента `font-display` для URL-адреси {fontOrigin}.}one{Інструменту Lighthouse не вдалось автоматично перевірити значення елемента `font-display` для URL-адреси {fontOrigin}.}few{Інструменту Lighthouse не вдалось автоматично перевірити значення елемента `font-display` для URL-адреси {fontOrigin}.}many{Інструменту Lighthouse не вдалось автоматично перевірити значення елемента `font-display` для URL-адреси {fontOrigin}.}other{Інструменту Lighthouse не вдалось автоматично перевірити значення елемента `font-display` для URL-адреси {fontOrigin}.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Директива"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "Використання заголовка HSTS значно зменшує ризик переходу на попередні версії підключень HTTP й атак перехоплення. Радимо впроваджувати оновлення поступово, починаючи з низького значення max-age. [Докладніше про використання надійних правил HSTS.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Недійсний синтаксис"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "Тривалість директиви `max-age` занизька"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "Заголовок HSTS не знайдено"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Немає директиви `max-age`"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "Директиву `preload` не знайдено"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "Директиву `includeSubDomains` не знайдено"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Використовуйте надійні правила HSTS"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Формат (фактичний)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Показує зображення з правильною роздільною здатністю"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Показник зміщення макета"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Дозволено"
@@ -1082,9 +1130,6 @@
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Вставлено iframe"
   },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Макет сторінки змінено через запізній запит мережі"
-  },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Для медіаоб’єкта не вказано явний розмір"
   },
@@ -1143,7 +1188,7 @@
     "message": "Максимальна потенційна затримка відповіді на першу дію – це тривалість найдовшого завдання. [Докладніше про показник \"Максимальна потенційна затримка відповіді на першу дію\".](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Індекс швидкості показує, через скільки часу відображається вміст сторінки. [Докладніше про показник \"Індекс швидкості\".](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index показує, через скільки часу відображається вміст сторінки. [Докладніше про показник Speed Index.](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Загальна тривалість усіх періодів часу в мілісекундах між першою візуалізацією контенту та часом до повного завантаження, коли час виконання завдання перевищує 50 мс. [Докладніше про показник \"Загальний час блокування\".](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Ефект містить непідтримувані параметри хронометражу"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Директива"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "За допомогою правила Cross-Origin-Opener-Policy (COOP) можна ізолювати вікно верхнього рівня від інших документів, таких як спливаючі вікна. [Докладніше про розгортання заголовка COOP.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Недійсний синтаксис"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "Заголовок COOP не знайдено"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Забезпечте належне відокремлення джерел за допомогою правила COOP"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Попередньо завантажте шрифти з параметром \"`optional`\", щоб нові відвідувачі могли використовувати їх. [Докладніше про попереднє завантаження шрифтів.](https://web.dev/articles/preload-optional-fonts)"
@@ -1252,36 +1315,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Посилання можна сканувати"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Інший нечитабельний текст"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Розмір шрифту"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% тексту на сторінці"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Селектор"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Розміри шрифту до 12px замалі й нечитабельні. Щоб користувачі мобільних пристроїв змогли прочитати текст, їм потрібно буде збільшувати масштаб пальцями. Бажано, щоб понад 60% тексту на сторінці було написано щонайменше шрифтом 12px. [Докладніше про читабельні розміри шрифтів.](https://developer.chrome.com/docs/lighthouse/seo/font-size/)"
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} читабельного тексту"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Текст нечитабельний, оскільки метатег області перегляду не оптимізовано для мобільних пристроїв."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "У документі використано нечитабельні розміри шрифтів"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Читабельний текст"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "У документі використано читабельні розміри шрифтів"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "Посилання hreflang указують пошуковим системам версію сторінки, яку потрібно додати в результати пошуку для певної мови чи регіону. [Докладніше про атрибут `hreflang`.](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)"
@@ -1377,7 +1410,7 @@
     "message": "Сервер відповідає швидко"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome пропонуватиме користувачам переглядати вебсторінки без сторонніх файлів cookie. [Докладніше про ці файли.](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "Сторонні файли cookie можуть блокуватися в деяких контекстах. [Докладніше про підготовку до обмежень щодо сторонніх файлів cookie.](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Знайдено 1 файл cookie}one{Знайдено # файл cookie}few{Знайдено # файли cookie}many{Знайдено # файлів cookie}other{Знайдено # файлу cookie}}"
@@ -1429,6 +1462,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Зменште використання стороннього коду"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Рівень серйозності"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Директива `require-trusted-types-for` у заголовку `Content-Security-Policy` (CSP) указує агентам користувачів контролювати дані, які передаються функціям-приймачам міжсайтного скриптингу (XSS) на основі DOM. [Докладніше про те, як зменшити ризик міжсайтного скриптингу на основі DOM за допомогою Trusted Types.](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Заголовок `Content-Security-Policy` із директивою Trusted Types не знайдено"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Зменште ризик міжсайтного скриптингу (XSS) на основі DOM за допомогою Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Явно вказуючи ширину й висоту для зображень, ви зможете зменшити зміщення макета й покращити показник CLS. [Дізнайтесь, як налаштувати розміри зображень.](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1613,11 +1658,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Покращення першого відображення"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Ця статистика також доступна на панелі \"Продуктивність\" в Інструментах розробника Chrome. Щоб переглянути докладнішу інформацію, [запишіть трасування](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Статистика"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показники"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Покращте загальну ефективність завантаження, щоб сторінка швидко реагувала й завантажувалася. Основні показники: час до повної взаємодії, індекс швидкості"
+    "message": "Покращте загальну ефективність завантаження, щоб сторінка швидко реагувала й завантажувалася. Основні показники: Time to Interactive, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Загальні покращення"
@@ -1675,357 +1726,6 @@
   },
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Під час запуску виявлено навігацію сторінкою. Не рекомендується перевіряти навігацію сторінками в режимі періоду часу. Щоб ефективніше виявляти сторонню атрибуцію і основний потік, перевіряйте навігацію сторінками в режимі навігації."
-  },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Для зворотного кешу підтримуються лише сторінки, завантажені через запити GET."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Можна кешувати лише сторінки з кодом статусу 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Веб-переглядач Chrome виявив спробу виконання JavaScript для сторінки в кеші."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "Сторінки, які надіслали запит на AppBanner, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Зворотний кеш вимкнено через запит повідомлення keepalive."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Зворотний кеш вимкнено експериментальними параметрами. Щоб увімкнути його локально на цьому пристрої, перейдіть на сторінку chrome://flags/#back-forward-cache."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Зворотний кеш вимкнено командним рядком."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Зворотний кеш вимкнено через недостатній обсяг пам’яті."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Зворотний кеш не підтримується делегатом."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Зворотний кеш вимкнено засобом попереднього завантаження."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Сторінку не можна додати в кеш, оскільки вона містить екземпляр BroadcastChannel із зареєстрованими прослуховувачами."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Сторінки із заголовком cache-control:no-store не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Кеш було навмисно очищено."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Сторінку вилучено з кешу, щоб можна було кешувати іншу сторінку."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Сторінки з плагінами зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "Сторінки, які використовують FileChooser API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "Сторінки, які використовують File System Access API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Сторінки, які використовують Media Device Dispatcher, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Медіапрогравач відтворював контент під час виходу."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "Сторінки, які використовують MediaSession API і для яких вибрано статус відтворення, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "Сторінки, які використовують MediaSession API та для яких налаштовано обробники дій, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Зворотний кеш вимкнено через програму зчитування з екрана."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "Сторінки, які використовують клас SecurityHandler, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Сторінки, які використовують Serial API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "Сторінки, які використовують WebAuthentication API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "Сторінки, які використовують WebBluetooth API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "Сторінки, які використовують WebUSB API, не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Зворотний кеш вимкнено, оскільки файли cookie не дозволено на сторінці, де використовується `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Сторінки, які використовують Dedicated Worker або Worklet, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Документ не було завантажено перед виходом."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Під час виходу відображався банер додатка."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Під час виходу відображався Менеджер паролів Chrome."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "Під час виходу тривала дистиляція DOM."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "Під час виходу працював засіб перегляду DOM Distiller."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Зворотний кеш вимкнено через розширення, що використовують інтерфейси API для обміну повідомленнями."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Розширення з постійним з’єднанням мають розірвати його перед переходом у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Розширення з постійним з’єднанням намагалися надіслати повідомлення фреймам у зворотному кеші."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Зворотний кеш вимкнено через розширення."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Під час виходу на сторінці відображалося вікно (наприклад, для повторного надсилання форми чи введення пароля http)."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Під час виходу відображалась офлайн-сторінка."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Під час виходу відображалася панель втручання через нестачу пам’яті."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Під час виходу відображалися запити на дозволи."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Під час виходу працював блокувальник спливаючих вікон."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Під час виходу відображалась інформація від Безпечного перегляду."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Безпечний перегляд виявив порушення на цій сторінці й заблокував спливаюче вікно."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Синтаксис Service Worker активовано, коли сторінка була у зворотному кеші."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Зворотний кеш вимкнено через помилку документа."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "Сторінки, які використовують елемент FencedFrames, не можна зберегти у зворотному кеші."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Сторінку вилучено з кешу, щоб можна було кешувати іншу сторінку."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Сторінки, які надали доступ до потоку медіа, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Сторінки, які використовують портали, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "Сторінки, які використовують IdleManager, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Сторінки з активованим з’єднанням IndexedDB зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Зворотний кеш вимкнено через подію IndexedDB."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Використано непридатні інтерфейси API."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Сторінки, на які розширення вставили фрагменти `JavaScript`, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Сторінки, на які розширення вставили фрагмент `StyleSheet`, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Внутрішня помилка."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Зворотний кеш вимкнено через запит повідомлення keepalive."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Сторінки, які використовують блокування клавіатури, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Сторінка не завершила завантаження перед тим, як ви вийшли з неї."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Сторінки, головний ресурс яких містить cache-control:no-cache, не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Сторінки, головний ресурс яких містить cache-control:no-store, не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Перехід скасовано до того, як сторінку було відновлено зі зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Сторінку вилучено з кешу, оскільки активне з’єднання з мережею отримало забагато даних. У Chrome діють обмеження щодо обсягу даних, який кешована сторінка може отримувати."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Сторінки з надісланими запитами fetch() або XHR зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Сторінку вилучено зі зворотного кешу, оскільки активний запит мережі містив переспрямування."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Сторінку вилучено з кешу, оскільки з’єднання з мережею тривало занадто довго. У Chrome діють обмеження щодо тривалості часу, упродовж якого кешована сторінка може отримувати дані."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Сторінки, які не мають дійсного заголовка відповіді, не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Перехід відбувся не в головному фреймі."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Сторінки з активними індексованими транзакціями баз даних зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Сторінки з надісланими запитами мережі зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Сторінки з надісланими запитами мережі fetch зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Сторінки з надісланими запитами мережі зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Сторінки з надісланими запитами мережі XHR зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "Сторінки, які використовують PaymentManager, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Сторінки, які використовують функцію Picture-in-Picture, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Сторінки, які використовують портали, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Сторінки, на яких відображається інтерфейс друку, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "Сторінку відкрито за допомогою методу `window.open()`, а інша вкладка має посилання на неї, або сторінка відкрила вікно."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Під час процесу обробки для цієї сторінки у зворотному кеші відбувся збій."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Процес обробки для цієї сторінки у зворотному кеші завершився."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Сторінки, які надіслали запит на дозвіл записувати аудіо, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Сторінки, які надіслали запит на доступ до датчиків, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Сторінки, які надіслали запит на синхронізацію у фоновому режимі чи запит на отримання даних, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "Сторінки, які надіслали запит на доступ до пристроїв MIDI, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Сторінки, які надіслали запит на доступ до сповіщень, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Сторінки, які надіслали запит на доступ до пам’яті, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Сторінки, які надіслали запит на дозвіл записувати відео, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "У кеш можна додавати лише сторінки, у яких схеми URL-адрес – це HTTP / HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Синтаксис Service Worker заявив права на цю сторінку, додану у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Синтаксис Service Worker намагався надіслати `MessageEvent` сторінці у зворотному кеші."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "Реєстрацію ServiceWorker скасовано, коли сторінка була у зворотному кеші."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Сторінку вилучено зі зворотного кешу через активацію синтаксису Service Worker."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome перезапущено, записи зворотного кешу очищено."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "Сторінки, які використовують SharedWorker, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "Сторінки, які використовують SpeechRecognizer, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "Сторінки, які використовують SpeechSynthesis, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Елемент iframe на сторінці розпочав перехід, який не було завершено."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Сторінки, субресурси яких містять cache-control:no-cache, не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Сторінки, субресурси яких містять cache-control:no-store, не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Ця сторінка перевищила максимальний час зберігання у зворотному кеші. Її термін дії завершився."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Час очікування сторінки на додавання у зворотний кеш минув (імовірно, через довготривалу роботу обробників подій pagehide)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Сторінка містить обробник вивантаження в основному фреймі."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Сторінка містить обробник вивантаження в додатковому фреймі."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Веб-переглядач змінив заголовок перевизначення агента користувача."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Сторінки, які надали дозвіл на запис відео чи аудіо, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "Сторінки, які використовують WebDatabase, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "Сторінки, які використовують WebHID, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "Сторінки, які використовують WebLocks, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "Сторінки, які використовують WebNfc, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "Сторінки, які використовують WebOTPService, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "Сторінки з WebRTC не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "Сторінки, які використовують WebShare, зараз не підтримуються для зворотного кешу."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "Сторінки з WebSocket не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "Сторінки з WebTransport не можна додавати у зворотний кеш."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "Сторінки, які використовують WebXR, зараз не підтримуються для зворотного кешу."
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Додайте схеми URL-адрес https: і http: (ігноруються веб-переглядачами, що підтримують `'strict-dynamic'`) для зворотної сумісності зі старішими веб-переглядачами."
@@ -2093,183 +1793,6 @@
   "core/lib/deprecation-description.js | title": {
     "message": "Використовується функція, яка більше не підтримується"
   },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "На авторизацію під час обробки CORS `Access-Control-Allow-Headers` не поширюватиметься символ підстановки (*)."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "Щоб вимкнути інтеграцію Google Cast за умовчанням, використовуйте атрибут `disableRemotePlayback` замість засобу вибору `-internal-media-controls-overlay-cast-button`."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Запити ресурсів до URL-адрес, які містять вилучені пробіли `(n|r|t)` та знаки менше (`<`), блокуються. Щоб завантажити ці ресурси, вилучіть символи нового рядка з таких місць, як значення атрибутів елементів, і закодуйте знаки менше."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` не підтримується. Натомість використовуйте стандартизований інтерфейс API: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` не підтримується, натомість використовуйте стандартизований інтерфейс API: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` не підтримується. Натомість використовуйте стандартизований метод API: `nextHopProtocol` у специфікації Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "Файли cookie, які містять символ `(0|r|n)`, будуть відхилятися, а не скорочуватися."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Правило одного джерела більше не можна буде послаблювати, налаштувавши `document.domain`, і цю функцію буде вилучено. Це сповіщення про припинення міждоменного доступу, активованого завдяки налаштуванню `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "Запуск window.alert із міждоменних елементів iframe не підтримується, і в майбутньому цю функцію буде вилучено."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "Запуск window.confirm із міждоменних елементів iframe не підтримується, і в майбутньому цю функцію буде вилучено."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "Події DOM MutationEvent, зокрема `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` і `DOMCharacterDataModified`, більше не підтримуються (https://w3c.github.io/uievents/#legacy-event-types), і їх буде вилучено. Натомість використовуйте `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Підтримку значень \"data: URL\" в елементі <use> SVG припинено, і в майбутньому цю функцію буде вилучено."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Правило одного джерела більше не можна буде послаблювати, налаштувавши `document.domain`, і цю функцію буде вилучено. Щоб продовжити користуватися цією функцією, вимкніть кластери агентів за ключем джерела. Для цього надішліть заголовок `Origin-Agent-Cluster: ?0` із відповіддю HTTP для документа й фреймів. Докладніше читайте на сторінці https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Заголовок `Expect-CT` не підтримується, і його буде вилучено. Chrome вимагає перевірки всіх загальнодоступних надійних сертифікатів, виданих після 30 квітня 2018 року."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` і `watchPosition()` більше не працюють із незахищеними джерелами. Щоб користуватися цією функцією, перенесіть свій додаток у захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` і `watchPosition()` з незахищених джерел не підтримуються. Щоб користуватися цією функцією, перенесіть свій додаток у захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` більше не працює з незахищеними джерелами. Щоб користуватися цією функцією, перенесіть свій додаток у захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` не підтримується. Натомість використовуйте `RTCPeerConnectionIceErrorEvent.address` або `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Джерело продавця й довільні дані події синтаксису Service Worker `canmakepayment` не підтримуються. Їх буде вилучено: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Веб-сайт надіслав запит на субресурс у мережі, доступній лише завдяки повноваженням її користувачів. Такі запити відкривають інтернет-доступ до приватних пристроїв і серверів, що збільшує ризик атак із підробкою міжсайтових запитів (CSRF) та/або витоку інформації. Щоб знизити ці ризики, Chrome ігнорує запити до приватних субресурсів, які надходять із небезпечного контексту, і почне блокувати їх."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "Поле `InterestGroups` у структурі `dailyUpdateUrl`, призначене методу `joinAdInterestGroup()`, було перейменовано на `updateUrl`, щоб точніше відображати його поведінку."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS не можна завантажити з URL-адрес `file:`, які не мають розширення файлу `.css`."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "У зв’язку зі зміною специфікацій скасування асинхронного вилучення діапазону елемента `remove()` через `SourceBuffer.abort()` не підтримується. У майбутньому цю функцію буде вилучено. Натомість вам слід керуватися подією `updateend`. `abort()` слід використовувати лише для того, щоб скасувати асинхронне додавання медіафайлів або скинути стан синтаксичного аналізатора."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "У зв’язку зі зміною специфікацій налаштування значення `MediaSource.duration` нижче за найвищу відображувану позначку часу будь-яких закодованих фреймів у буфері не підтримується. У майбутньому неявне вилучення стиснених медіафайлів із буфера не підтримуватиметься. Натомість застосовуйте явну функцію `remove(newDuration, oldDuration)` для всіх елементів `sourceBuffers`, де `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Навіть якщо в `MIDIOptions` не вказано значення SysEx, веб-сайти проситимуть дозвіл на використання MIDI."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Застарілий нестандартизований атрибут `shadowroot` більше не підтримується і *перестане працювати* у версії M119. Натомість використовуйте новий стандартизований атрибут `shadowrootmode`."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification API більше не можна використовувати з незахищених джерел. Перенесіть свій додаток у захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Дозвіл на Notification API більше не можна запитувати з міждоменних елементів iframe. Запитайте дозвіл із фрейму верхнього рівня або відкрийте нове вікно."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Опція `imageOrientation: 'none'` у параметрі createImageBitmap не підтримується. Натомість використовуйте опцію \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Ваш партнер використовує застарілу версію (D)TLS. Щоб вирішити проблему, зверніться до партнера."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Якщо вказати властивість `overflow: visible` у тегах img, video й canvas, візуальний контент може відображатися за межами цих елементів. Докладніше: https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` не підтримується. Натомість скористайтесь актуальним інтерфейсом API для обробників платежів."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "Ваш виклик `PaymentRequest` обійшов директиву `connect-src` Правил щодо безпеки контенту (CSP). Такий обхід не підтримується. Додайте в директиву CSP `connect-src` ідентифікатор способу оплати з `PaymentRequest` API (у полі `supportedMethods`)."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` не підтримується. Натомість використовуйте стандартну властивість `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "Елемент `<source src>` із батьківським елементом `<picture>` недійсний і тому ігнорується. Натомість використовуйте `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "Метод webkitCancelAnimationFrame залежить від постачальника. Натомість використовуйте стандартний метод cancelAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "Метод webkitRequestAnimationFrame залежить від постачальника. Натомість використовуйте стандартний метод requestAnimationFrame."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "Метод HTMLVideoElement.webkitDisplayingFullscreen не підтримується. Натомість використовуйте метод Document.fullscreenElement."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "Метод HTMLVideoElement.webkitEnterFullScreen() не підтримується. Натомість використовуйте метод Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "Метод HTMLVideoElement.webkitEnterFullscreen() не підтримується. Натомість використовуйте метод Element.requestFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "Метод HTMLVideoElement.webkitExitFullScreen() не підтримується. Натомість використовуйте метод Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "Метод HTMLVideoElement.webkitExitFullscreen() не підтримується. Натомість використовуйте метод Document.exitFullscreen()."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "Метод HTMLVideoElement.webkitSupportsFullscreen не підтримується. Натомість використовуйте метод Document.fullscreenEnabled."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Ми припиняємо підтримку `chrome.privacy.websites.privacySandboxEnabled` API. Однак цей інтерфейс залишатиметься активним, щоб забезпечувати зворотну сумісність, доки не вийде версія M113. Натомість використовуйте `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` і `chrome.privacy.websites.adMeasurementEnabled`. Докладнішу інформацію наведено на сторінці https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Обмеження `DtlsSrtpKeyAgreement` вилучено. Ви вказали значення `false` для цього обмеження, що ми витлумачили як спробу застосувати вилучений метод \"`SDES key negotiation`\". Цю функцію вилучено; натомість використовуйте сервіс, що підтримує \"`DTLS key negotiation`\"."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Обмеження `DtlsSrtpKeyAgreement` вилучено. Ви вказали значення `true`, що не вплинуло на це обмеження, але можете вилучити його для більшої ясності."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Метод getStats() на основі зворотного виклику не підтримується, і його буде вилучено. Натомість використовуйте метод, що відповідає специфікаціям."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Метод Range.expand() не підтримується. Натомість використовуйте метод Selection.modify()."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Запити субресурсів за URL-адресами, що містять вставлені облікові дані (наприклад, `https://user:pass@host/`), блокуються."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "Опція `rtcpMuxPolicy` не підтримується, її буде вилучено."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "Для `SharedArrayBuffer` вимагатиметься ізоляція від міждоменних джерел. Докладніше читайте на сторінці https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "Виклик `speechSynthesis.speak()` без активації користувача не підтримується, і цю функцію буде вилучено."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Щоб і надалі використовувати `SharedArrayBuffer`, для розширень потрібно ввімкнути ізоляцію від міждоменних джерел. Докладніше читайте на сторінці https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL не підтримується. Використовуйте SQLite WebAssembly або Indexed Database."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "Дескриптор дозволів `window-placement` не підтримується. Натомість використовуйте `window-management`. Докладніше читайте на сторінці https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "Правило щодо дозволів `window-placement` не підтримується. Натомість використовуйте `window-management`. Докладніше читайте на сторінці https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "UTF-16 не підтримується відповіддю JSON у `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Синхронний виклик `XMLHttpRequest` в основному потоці не підтримується, оскільки негативно впливає на взаємодію з кінцевим користувачем. Докладніше читайте на сторінці https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` не підтримується. Натомість використовуйте `isSessionSupported()`, щоб перевірити передане логічне значення."
-  },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Час блокування основного ланцюжка"
   },
@@ -2322,22 +1845,22 @@
     "message": "URL-адреса"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Потенційне заощадження"
+    "message": "Очікуване заощадження"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Потенційне заощадження"
+    "message": "Очікуване заощадження"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Можна зменшити на {wastedBytes, number, bytes} КіБ"
+    "message": "Очікуване заощадження: {wastedBytes, number, bytes} КіБ"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Знайдено 1 елемент}one{Знайдено # елемент}few{Знайдено # елементи}many{Знайдено # елементів}other{Знайдено # елемента}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Потенційне заощадження – {wastedMs, number, milliseconds} мс"
+    "message": "Очікуване заощадження: {wastedMs, number, milliseconds} мс"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
@@ -2401,6 +1924,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Сторонні"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Усього"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2532,7 +2058,7 @@
     "message": "Отримати оцінку ефективності в Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Вимірювати показники ефективності завантаження сторінки, такі як візуалізація великого контенту й індекс швидкості."
+    "message": "Вимірювати показники ефективності завантаження сторінки, такі як Largest Contentful Paint і Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Оцінювати можливості прогресивного веб-додатка."
@@ -2621,68 +2147,545 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Звіт про послідовність переходів у Lighthouse"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "На авторизацію під час обробки CORS Access-Control-Allow-Headers не поширюватиметься символ підстановки (*)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "Щоб вимкнути інтеграцію Google Cast за умовчанням, використовуйте атрибут disableRemotePlayback замість засобу вибору -internal-media-controls-overlay-cast-button."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "Значення зовнішнього вигляду CSS slider-vertical не стандартизоване й буде вилучене."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Запити ресурсів до URL-адрес, які містять вилучені пробіли \\(n|r|t) та знаки менше (<), блокуються. Щоб завантажити ці ресурси, вилучіть символи нового рядка з таких місць, як значення атрибутів елементів, і закодуйте знаки менше."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() не підтримується. Натомість використовуйте стандартизований інтерфейс API: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() не підтримується, натомість використовуйте стандартизований інтерфейс API: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() не підтримується. Натомість використовуйте стандартизований метод API: nextHopProtocol у специфікації Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "Файли cookie, які містять символ \\(0|r|n), будуть відхилятися, а не скорочуватися."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Правило одного джерела більше не можна буде послаблювати, налаштувавши document.domain, і цю функцію буде вилучено. Це сповіщення про припинення міждоменного доступу, активованого завдяки налаштуванню document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "Запуск window.alert із міждоменних елементів iframe не підтримується, і в майбутньому цю функцію буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "Запуск window.confirm із міждоменних елементів iframe не підтримується, і в майбутньому цю функцію буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Обробка даних: підтримку URL-адрес у SVGUseElement припинено, і в майбутньому цю функцію буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() і watchPosition() більше не працюють із незахищеними джерелами. Щоб користуватися цією функцією, перенесіть свій додаток на захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() і watchPosition() з незахищених джерел не підтримуються. Щоб користуватися цією функцією, перенесіть свій додаток на захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() більше не працює з незахищеними джерелами. Щоб користуватися цією функцією, перенесіть свій додаток на захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate не підтримується. Натомість використовуйте RTCPeerConnectionIceErrorEvent.address або RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Джерело продавця й довільні дані події Service Worker canmakepayment не підтримуються. Їх буде вилучено: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Веб-сайт надіслав запит на субресурс у мережі, доступній лише завдяки повноваженням її користувачів. Такі запити відкривають інтернет-доступ до приватних пристроїв і серверів, що збільшує ризик атак із підробкою міжсайтових запитів (CSRF) і/або витоку інформації. Щоб знизити ці ризики, Chrome ігнорує запити до приватних субресурсів, які надходять із небезпечного контексту, і почне блокувати їх."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Поле InterestGroups у структурі dailyUpdateUrl, призначене виклику joinAdInterestGroup(), було перейменовано на updateUrl, щоб точніше відображати його поведінку."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator не підтримується. Натомість використовуйте Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS не можна завантажити з URL-адрес file:, які не мають розширення файлу .css."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "У зв’язку зі зміною специфікацій скасування асинхронного вилучення діапазону елемента remove() через SourceBuffer.abort() не підтримується. У майбутньому цю функцію буде вилучено. Натомість вам слід керуватися подією updateend. abort() слід використовувати лише для того, щоб скасувати асинхронне додавання медіафайлів або скинути стан синтаксичного аналізатора."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "У зв’язку зі зміною специфікацій налаштування значення MediaSource.duration нижче за найвищу відображувану позначку часу будь-яких закодованих фреймів у буфері не підтримується. У майбутньому неявне вилучення стиснених медіафайлів із буфера не підтримуватиметься. Натомість застосовуйте явну функцію remove(newDuration, oldDuration) для всіх елементів sourceBuffers, де newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Навіть якщо в MIDIOptions не вказано значення SysEx, веб-сайти проситимуть дозвіл на використання MIDI."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Notification API більше не можна використовувати з незахищених джерел. Перенесіть свій додаток на захищене джерело, наприклад HTTPS. Докладніше читайте на сторінці https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Дозвіл на Notification API більше не можна запитувати з міждоменних елементів iframe. Запитайте дозвіл із фрейму верхнього рівня або відкрийте нове вікно."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Опція imageOrientation: 'none' у параметрі createImageBitmap не підтримується. Натомість використовуйте опцію '\\\\{imageOrientation: 'from-image'\\\\}'."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Ваш партнер використовує застарілу версію (D)TLS. Щоб вирішити проблему, зверніться до партнера."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Якщо вказати властивість overflow: visible у тегах img, video й canvas, візуальний контент може відображатися за межами цих елементів. Докладніше: https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Застарілу вставку Flash-відео перетворено на елемент HTML iframe. Технологія Flash давно не використовується, тому цей спосіб не підтримується й може бути вилучений у майбутньому."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments не підтримується. Натомість скористайтесь актуальним API для обробників платежів."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "Ваш виклик PaymentRequest обійшов директиву connect-src Правил щодо безпеки контенту (CSP). Такий обхід не підтримується. Додайте в директиву CSP connect-src ідентифікатор способу оплати з PaymentRequest API (у полі supportedMethods)."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent не підтримується. Натомість використовуйте стандартний метод navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "Елемент <source src> із батьківським елементом <picture> недійсний і тому ігнорується. Натомість використовуйте <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "Метод webkitCancelAnimationFrame залежить від постачальника. Натомість використовуйте стандартний метод cancelAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "Метод webkitRequestAnimationFrame залежить від постачальника. Натомість використовуйте стандартний метод requestAnimationFrame."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "Метод HTMLVideoElement.webkitDisplayingFullscreen не підтримується. Натомість використовуйте метод Document.fullscreenElement."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "Метод HTMLVideoElement.webkitEnterFullScreen() не підтримується. Натомість використовуйте метод Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "Метод HTMLVideoElement.webkitEnterFullscreen() не підтримується. Натомість використовуйте метод Element.requestFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "Метод HTMLVideoElement.webkitExitFullScreen() не підтримується. Натомість використовуйте метод Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "Метод HTMLVideoElement.webkitExitFullscreen() не підтримується. Натомість використовуйте метод Document.exitFullscreen()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "Метод HTMLVideoElement.webkitSupportsFullscreen не підтримується. Натомість використовуйте метод Document.fullscreenEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Ми припиняємо підтримку chrome.privacy.websites.privacySandboxEnabled API. Однак цей інтерфейс залишатиметься активним, щоб забезпечувати зворотну сумісність, доки не вийде версія M113. Натомість використовуйте chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled і chrome.privacy.websites.adMeasurementEnabled. Докладнішу інформацію наведено на сторінці https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Обмеження DtlsSrtpKeyAgreement вилучено. Ви вказали значення false для цього обмеження, що ми витлумачили як спробу застосувати вилучений метод \"SDES key negotiation\". Цю функцію вилучено; натомість використовуйте сервіс, що підтримує \"DTLS key negotiation\"."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Обмеження DtlsSrtpKeyAgreement вилучено. Ви вказали значення true, що не вплинуло на це обмеження, але можете вилучити його для більшої ясності."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Метод getStats() на основі зворотного виклику не підтримується, і його буде вилучено. Натомість використовуйте метод, що відповідає специфікаціям."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Метод Range.expand() не підтримується. Натомість використовуйте метод Selection.modify()."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Запити субресурсів за URL-адресами, що містять вставлені облікові дані (наприклад, https://user:pass@host/), блокуються."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "Опція rtcpMuxPolicy не підтримується, її буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "Для SharedArrayBuffer вимагатиметься ізоляція від міждоменних джерел. Докладніше читайте на сторінці https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "Виклик speechSynthesis.speak() без активації користувача не підтримується, і цю функцію буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Вивантаження блоків прослуховування подій не підтримується, і їх буде вилучено."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Для розширень потрібно ввімкнути ізоляцію від міждоменних джерел, щоб і надалі використовувати SharedArrayBuffer. Докладніше читайте на сторінці https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "UTF-16 не підтримується відповіддю JSON у XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Синхронний виклик XMLHttpRequest в основному потоці не підтримується, оскільки негативно впливає на взаємодію з кінцевим користувачем. Докладніше читайте на сторінці https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Анімація"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Зміщення макета відбувається, коли елементи переміщуються без взаємодії з користувачем. [Дізнайтеся причини зміщення макета](https://web.dev/articles/optimize-cls), наприклад додавання або видалення елементів чи зміна шрифтів під час завантаження сторінки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Вставлено iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Кластер зміщення макета ({PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Не вдалося виявити причини зміщення макета"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Немає зміщень макета"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Причини зміщення макета"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Основні причини зміщення макета"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Елемент зображення, розміри якого не вказано"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Вебшрифт"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Найгірший кластер"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Кластер із найвищим показником зміщення макета"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "TTL кешу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Якщо зберігати кеш за тривалий період часу, сторінки можуть завантажуватися швидше під час повторних відвідувань. [Докладніше.](https://web.dev/uses-long-cache-ttl/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Немає запитів із неефективними правилами кешування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "Ще {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Використовуйте ефективні значення TTL кешу"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Через великий файл DOM використовується більше пам’яті, стилі обчислюються довше, а перекомпонування макетів потребує більше ресурсів. Це впливає на швидкість завантаження сторінки. [Дізнайтесь, як уникнути надмірного розміру DOM.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+    "message": "Через велике дерево DOM обчислення стилів і перекомпонування макетів може тривати довше, що впливає на адаптивність сторінки. Крім того, у такому разі використовується більше пам’яті. [Дізнайтесь, як уникнути надмірного розміру DOM.](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Тривалість"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Елемент"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Макет (кількість об’єктів: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Повторне обчислення стилю (кількість елементів: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Більшість дочірніх елементів"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "Глибина моделі DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Статистика"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Оптимізуйте розмір DOM"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Це найбільші події перерахунку макета й стилю. Щоб зменшити вплив на продуктивність, спростіть DOM."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Усього елементів"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Значення"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Перший запит мережі найважливіший.  Щоб зменшити його затримку, уникайте переспрямувань, забезпечте швидку відповідь сервера й увімкніть стиснення тексту."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Містить переспрямування ({PH1}, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Сервер відповідає повільно ({PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Без стиснення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Уникає переспрямувань"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Сервер відповідає швидко ({PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Застосовано стиснення тексту"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Переспрямування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Час відповіді сервера"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Затримка запиту на документ"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Завантаження без стиснення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Повторювані байти"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Видаліть великі копії модулів JavaScript із пакетів, щоб зменшити кількість непотрібних байтів під час мережевої активності."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Повторювані джерела JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Щоб текст завжди був видимим, змініть значення властивості [font-display](https://developer.chrome.com/blog/font-display) на swap або optional. Щоб зменшити зміщення макета, можна додатково оптимізувати swap за допомогою [перевизначення показників шрифту](https://developer.chrome.com/blog/font-fallbacks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Шрифт"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Відображення шрифту"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Витрачений час"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(анонімно)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Примусове перекомпонування відбувається, коли JavaScript запитує геометричні властивості (наприклад, offsetWidth) після того, як стилі стають недійсними через зміну стану DOM. Це може призвести до низької продуктивності. Докладніше про [примусове перекомпонування](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) й можливі способи його пом’якшення."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Трасування стека"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Примусове перекомпонування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Виклик функції, що займає найбільше часу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Загальний час перекомпонування"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[не визначено]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Почніть аналіз із найдовшого підрозділу. [Затримки можна зменшити.](https://web.dev/articles/optimize-inp#optimize_interactions) Щоб скоротити час обробки, [оптимізуйте витрати основного потоку](https://web.dev/articles/optimize-long-tasks), часто JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Тривалість"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Затримка відповіді"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Взаємодій не виявлено"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Затримка перед відображенням відповіді"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Тривалість обробки"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Підрозділ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Розподіл INP"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Зменшення часу завантаження зображень може прискорити візуалізацію сторінки й покращити показник LCP. [Докладніше про оптимізацію розміру зображень.](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (приблизний розмір – {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Немає зображень, які можна оптимізувати"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Оптимізація розміру файлу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "Ще {PH1}"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Покращте показ зображень"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Збільште коефіцієнт стиснення зображення, щоб зменшити його розмір (приблизний розмір – {PH1})."
+    "message": "Збільште коефіцієнт стиснення зображення, щоб зменшити його розмір."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Якщо використовувати сучасний формат зображень (WebP, AVIF) або збільшити їх стиснення, розмір завантажуваного зображення може зменшитися (приблизний розмір – {PH1})."
+    "message": "Якщо використовувати сучасний формат зображень (WebP, AVIF) або збільшити їх стиснення, розмір завантажуваного зображення може зменшитися."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Розмір файлу зображення ({PH2}) більший, ніж потрібно для показу ({PH3}). Щоб зменшити розмір завантаження, використовуйте адаптивні зображення (приблизний розмір – {PH1})."
+    "message": "Розмір файлу зображення ({PH1}) більший, ніж потрібно для показу ({PH2}). Щоб зменшити розмір завантаження, використовуйте адаптивні зображення."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Якщо використовувати відеоформати замість GIF, розмір завантаженого анімованого контенту може зменшитися (приблизний розмір – {PH1})."
+    "message": "Якщо використовувати відеоформати замість GIF, розмір завантаженого анімованого контенту може зменшитися."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
-    "message": "Почніть аналіз із найдовшої фази. [Затримки можна зменшити.](https://web.dev/articles/optimize-inp#optimize_interactions) Щоб скоротити час обробки, [оптимізуйте витрати основного потоку](https://web.dev/articles/optimize-long-tasks), часто JS."
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Для кожного підрозділу [передбачено конкретні стратегії оптимізації](https://web.dev/articles/optimize-lcp#lcp-breakdown). В ідеалі більшість часу LCP має витрачатися на завантаження ресурсів, а не в межах затримок."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
-    "message": "Показник INP за етапами"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Тривалість"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Затримка відображення елемента"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "75-й процентиль реальних користувачів"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "LCP не виявлено"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Затримка завантаження ресурсу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Тривалість завантаження ресурсу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Підрозділ"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Розподіл LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Щоб оптимізувати показник LCP, зробіть зображення LCP [видимим](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) у HTML-коді відразу й [не використовуйте відкладене завантаження](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "Застосовано параметр fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "Потрібно застосувати значення fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "відкладене завантаження не застосовується"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "Зображення LCP завантажилося за {PH1} від першої початкової точки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "LCP не виявлено"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "Не виявлено ресурсів LCP, оскільки LCP не є зображенням"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Запит можна знайти в початковому документі"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "Виявлення запитів LCP"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
-    "message": "Для кожного етапу передбачено [конкретні стратегії оптимізації](https://web.dev/articles/optimize-lcp#lcp-breakdown). В ідеалі більшість часу LCP має витрачатися на завантаження ресурсів, не в межах затримок."
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Скрипт"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
-    "message": "Показник LCP за етапами"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Заощаджені байти"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Поліфіли й перетворення дають вебпереглядачам старіших версій змогу використовувати нові функції JavaScript. Однак багато з них не потрібні для сучасних вебпереглядачів. Змініть процес складання JavaScript, щоб не транспілювати функції [базового набору](https://web.dev/articles/baseline-and-polyfills), якщо вам не потрібно підтримувати вебпереглядачі старіших версій. [Дізнайтеся, чому більшість сайтів можуть розгортати код ES6+ без транспілювання](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Застарілі функції JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "Протоколи HTTP/2 й HTTP/3 мають низку переваг над HTTP/1.1, наприклад мультиплексування. [Докладніше про використання сучасного протоколу HTTP.](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "Не було запитів із використанням протоколу HTTP/1.1 або його поточне використання не дає значних можливостей для оптимізації. Запити HTTP/1.1 позначаються лише в тому разі, якщо шість або більше статичних об’єктів походять з одного джерела й не обслуговуються в локальному середовищі розробки або стороннім джерелом."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Протокол"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Сучасний протокол HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Запит"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Джерело"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Час"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Очікуване заощадження LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Невикористане джерело для попереднього підключення. Переконайтеся, що атрибут crossorigin використовується правильно."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Щоб уникнути утворення ланцюжків критичних запитів](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. Це допоможе пришвидшити завантаження сторінки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Додайте підказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) для найважливіших джерел (бажано використовувати щонайбільше 4)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Варіанти джерел для попереднього підключення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Максимальна затримка критичного шляху:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Немає завдань відрисовки, на які впливають залежності мережі"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Немає додаткових джерел, для яких варто налаштувати попереднє підключення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "немає попередньо підключених джерел"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "Підказки [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) допомагають вебпереглядачу встановлювати з’єднання на початку завантаження сторінки, що заощаджує час під час першого запиту до відповідного джерела. Нижче наведено джерела, до яких сторінка підключатиметься заздалегідь."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Попередньо підключені джерела"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Дерево залежностей мережі"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "Знайдено більше ніж 4 підключення preconnect. Такі засоби слід використовувати зрідка й лише для найважливіших джерел."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Невикористане джерело для попереднього підключення. Використовуйте підказки preconnect тільки для джерел, яким сторінка, імовірно, надсилатиме запити."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Щоб уникнути утворення ланцюжків критичних запитів, зменште довжину ланцюжків і розмір завантажень або відкладіть завантаження непотрібних ресурсів. Це допоможе пришвидшити завантаження сторінки."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Запити блокують початкове відображення сторінки, що може викликати затримку завантаження елементів LCP. За допомогою [відкладання або вставки](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) можна усунути ці запити мережі з критичного шляху."
+    "message": "Запити блокують початкове відображення сторінки, що може викликати затримку завантаження елементів LCP. За допомогою [відкладання або вставки](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) можна усунути ці запити мережі з критичного шляху."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Тривалість"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Немає запитів, які блокують відображення цієї навігації"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Запит"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Запити, які блокують відображення"
@@ -2690,11 +2693,47 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Якщо витрати на повторне обчислення стилю залишаються високими, їх можна зменшити за допомогою оптимізації селектора. [Оптимізуйте селектори](https://developer.chrome.com/docs/devtools/performance/selector-stats), які мають і тривалий час виконання, і високий відсоток повільних шляхів. Щоб зменшити витрати на зіставлення, використовуйте менше селекторів, обирайте їх простіші варіанти, а також надавайте перевагу компактнішій і менш розгалуженій архітектурі інтерфейсу DOM."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Минуло часу"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "Дані селектора CSS не знайдено. Увімкніть статистику селектора CSS у налаштуваннях панелі ефективності."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Кількість спроб"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Кількість збігів"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Витрати на селектор CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Найкращий селектор за часом зіставлення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Найкращий селектор за кількістю спроб зіставлення"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Найкращі селектори"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Усього"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Час основного ланцюжка"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Сторонній постачальник"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Розмір передавання"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Сторонній код може значно погіршити швидкість завантаження. [Зменште обсяг стороннього коду й відкладіть його завантаження](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/), щоб надати пріоритет контенту сторінки."
+    "message": "Сторонній код може значно погіршити швидкість завантаження. [Зменште обсяг стороннього коду й відкладіть його завантаження](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/), щоб надати пріоритет контенту сторінки."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Сторонніх розробників не знайдено"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Сторонній код"
@@ -2702,8 +2741,374 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Якщо область перегляду не оптимізовано для мобільних пристроїв, взаємодія за допомогою дотику може відбуватися із затримкою [до 300 мс](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Затримка натискання на мобільному пристрої"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Оптимізуйте область перегляду для мобільних пристроїв"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Лише сторінки, завантажені через запити GET, підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Можна кешувати лише сторінки з кодом статусу 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Веб-переглядач Chrome виявив спробу виконання JavaScript для сторінки в кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "Сторінки, які надіслали запит на AppBanner, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Зворотний кеш вимкнено експериментальними параметрами. Щоб увімкнути його локально на цьому пристрої, перейдіть на сторінку chrome://flags/#back-forward-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Зворотний кеш вимкнено командним рядком."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Зворотний кеш вимкнено через недостатній обсяг пам’яті."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Зворотний кеш не підтримується делегатом."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Зворотний кеш вимкнено засобом попередньої обробки."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Сторінку не можна додати в кеш, оскільки вона містить екземпляр BroadcastChannel із зареєстрованими прослуховувачами."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Сторінки із заголовком cache-control:no-store не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Кеш було навмисно очищено."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Сторінку вилучено з кешу, щоб можна було кешувати іншу сторінку."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Сторінки з плагінами наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Не визначено"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "Сторінки, які використовують FileChooser API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "Сторінки, які використовують File System Access API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Сторінки, які використовують диспетчер носія, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Медіапрогравач відтворював контент під час виходу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "Сторінки, які використовують MediaSession API та для яких вибрано статус відтворення, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "Сторінки, які використовують MediaSession API та для яких налаштовано обробники дій, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Зворотний кеш вимкнено через програму зчитування з екрана."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "Сторінки, які використовують SecurityHandler, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Сторінки, які використовують Serial API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "Сторінки, які використовують WebAuthetication API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "Сторінки, які використовують WebBluetooth API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "Сторінки, які використовують WebUSB API, не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Зворотний кеш вимкнено, оскільки файли cookie не дозволено на сторінці, де використовується Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Сторінки, які використовують Dedicated Worker або Worklet, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Документ не було завантажено перед виходом."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Під час виходу відображався банер додатка."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Під час виходу відображався Менеджер паролів Chrome."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "Під час виходу тривала дистиляція DOM."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "Під час виходу працював засіб перегляду DOM Distiller."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Зворотний кеш вимкнено через розширення, що використовують Messaging API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Розширення з постійним з’єднанням мають розірвати його перед переходом у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Розширення з постійним з’єднанням намагалися надіслати повідомлення фреймам у зворотному кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Зворотний кеш вимкнено через розширення."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Під час виходу на сторінці відображалося діалогове вікно (наприклад, для повторного надсилання форми чи стосовно пароля http)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Під час виходу відображалася офлайн-сторінка."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Під час виходу відображалася панель втручання через нестачу пам’яті."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Під час виходу відображалися запити на дозволи."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Під час виходу працював блокувальник спливаючих вікон."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Під час виходу відображалася інформація від Безпечного перегляду."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Безпечний перегляд визначив, що ця сторінка містить порушення, і заблокував спливаюче вікно."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Синтаксис Service Worker активовано, коли сторінка була у зворотному кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Зворотний кеш вимкнено через помилку документа."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "Сторінки, які використовують FencedFrames, не можна зберегти у зворотному кеші"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Сторінку вилучено з кешу, щоб можна було кешувати іншу сторінку."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Сторінки, які надали доступ до потоку медіа, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Сторінки з певними типами вбудованого контенту (наприклад, файлами PDF) зараз не підтримують зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "Сторінки, які використовують IdleManager, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Сторінки з активованим з’єднанням IndexedDB наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Зворотний кеш вимкнено через подію IndexedDB."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Використано непридатні API."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Сторінки, на які розширення вставили фрагменти JavaScript, зараз не підтримуються для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Сторінки, на які розширення вставили фрагмент StyleSheet, зараз не підтримуються для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Внутрішня помилка."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Зворотний кеш вимкнено, оскільки за певним запитом мережі JavaScript отримано ресурс із заголовком Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Зворотний кеш вимкнено через запит повідомлення keepalive."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Сторінки, які використовують блокування клавіатури, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Сторінка не завершила завантаження перед тим, як ви вийшли з неї."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Сторінки, головний ресурс яких містить cache-control:no-store, не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Сторінки, головний ресурс яких містить cache-control:no-store, не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Перехід скасовано до того, як сторінку було відновлено зі зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Сторінку вилучено з кешу, оскільки активне з’єднання з мережею отримало забагато даних. У Chrome діють обмеження щодо обсягу даних, який кешована сторінка може отримувати."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Сторінки з надісланими запитами fetch() або XHR наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Сторінку вилучено зі зворотного кешу, оскільки активний запит мережі містив переспрямування."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Сторінку вилучено з кешу, оскільки з’єднання з мережею тривало занадто довго. У Chrome діють обмеження щодо тривалості часу, упродовж якого кешована сторінка може отримувати дані."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Сторінки, які не мають дійсного заголовка відповіді, не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Відбувся перехід не в головному фреймі."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Сторінки з активними індексованими трансакціями DB наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Сторінки з надісланими запитами мережі наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Сторінки з надісланими запитами мережі fetch наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Сторінки з надісланими запитами мережі наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Сторінки з надісланими запитами мережі XHR наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "Сторінки, які використовують PaymentManager, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Сторінки, які використовують функцію \"Картинка в картинці\", наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Сторінки, на яких відображається інтерфейс друку, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "Сторінку відкрито за допомогою \"window.open()\", а інша вкладка має посилання на неї, або сторінка відкрила вікно."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Відбувся збій під час процесу обробки для цієї сторінки у зворотному кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Процес обробки для цієї сторінки у зворотному кеші завершився."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Сторінки, які надіслали запит на дозвіл записувати аудіо, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Сторінки, які надіслали запит на доступ до датчиків, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Сторінки, які надіслали запит на синхронізацію у фоновому режимі чи запит на отримання даних, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "Сторінки, які надіслали запит на доступ до пристроїв MIDI, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Сторінки, які надіслали запит на доступ до сповіщень, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Сторінки, які надіслали запит на доступ до пам’яті, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Сторінки, які надіслали запит на дозвіл записувати відео, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "У кеш можна додавати лише сторінки, чиї схеми URL-адрес – це HTTP / HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Синтаксис Service Worker заявив права на цю сторінку, а її додано у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Синтаксис Service Worker намагався надіслати MessageEvent сторінці у зворотному кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "Реєстрацію ServiceWorker скасовано, коли сторінка була у зворотному кеші."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Сторінку вилучено зі зворотного кешу через активацію синтаксису Service Worker."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome перезапущено, записи зворотного кешу очищено."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "Сторінки, які використовують SharedWorker, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Сторінку вилучено з кешу, оскільки вона отримала повідомлення від SharedWorker"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "Сторінки, які використовують SpeechRecognizer, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "Сторінки, які використовують SpeechSynthesis, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Елемент iframe на сторінці розпочав перехід, який не було завершено."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Сторінки, субресурси яких містять cache-control:no-cache, не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Сторінки, субресурси яких містять cache-control:no-store, не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Ця сторінка перевищила максимальний час у зворотному кеші, її термін дії завершився."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Час очікування сторінки під час додавання у зворотний кеш минув (імовірно, через довготривалу роботу обробників приховування сторінки)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Сторінка містить обробник вивантаження в основному фреймі."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Сторінка містить обробник вивантаження в додатковому фреймі."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Веб-переглядач змінив заголовок перевизначення агента користувача."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Сторінки, які надали дозвіл на запис відео чи аудіо, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "Сторінки, які використовують WebDatabase, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "Сторінки, які використовують WebHID, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "Сторінки, які використовують WebLocks, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "Сторінки, які використовують WebNfc, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "Сторінки, які використовують WebOTPService, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "Сторінки з WebRTC не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Зворотний кеш вимкнено, оскільки використовується WebRTC."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "Сторінки, які використовують WebShare, наразі не підходять для зворотного кешу."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "Сторінки з WebSocket не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Зворотний кеш вимкнено, оскільки використовується WebSocket."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "Сторінки з WebTransport не можна додавати у зворотний кеш."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Зворотний кеш вимкнено, оскільки використовується WebTransport."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "Сторінки, які використовують WebXR, наразі не підходять для зворотного кешу."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Для анімованого контенту застосовуйте [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), щоб зменшити використання ЦП, коли контент поза межами екрана."
@@ -3233,8 +3638,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Повідомити про проблему"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Повернутися до перевірок ефективності"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Сховати"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Пізніше цього року перевірки ефективності замінить статистика ефективності. [Щоб дізнатися більше й надіслати відгук, перейдіть за цим посиланням.](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Дані тестів"
@@ -3335,6 +3746,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Спробувати статистику ефективності"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Атрибуція неможлива"
   },
@@ -3363,7 +3777,10 @@
     "message": "Дані про використання"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Задубльовані модулі"
+    "message": "Повторювані модулі"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Повторювані байти"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Розмір ресурсу в байтах"
@@ -3373,6 +3790,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Показати або сховати таблицю"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Розмір перенесеного файлу в байтах"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Невикористані байти"

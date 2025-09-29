@@ -14,7 +14,6 @@
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {TBTImpactTasks} from '../../computed/tbt-impact-tasks.js';
-import {Util} from '../../../shared/util.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -57,7 +56,7 @@ class DOMSize extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 1,
       requiredArtifacts: ['DOMStats', 'URL', 'GatherContext'],
-      __internalOptionalArtifacts: ['traces', 'devtoolsLogs'],
+      __internalOptionalArtifacts: ['Trace', 'DevtoolsLog', 'SourceMaps'],
     };
   }
 
@@ -83,14 +82,14 @@ class DOMSize extends Audit {
 
     // We still want to surface this audit in snapshot mode, but since we don't compute TBT
     // the impact should always be undefined.
-    const {GatherContext, devtoolsLogs, traces} = artifacts;
+    const {GatherContext, DevtoolsLog, Trace} = artifacts;
     if (GatherContext.gatherMode !== 'navigation') {
       return undefined;
     }
 
     // Since the artifacts are optional, it's still possible for them to be missing in navigation mode.
     // Navigation mode does compute TBT so we should surface a numerical savings of 0.
-    if (!devtoolsLogs?.[Audit.DEFAULT_PASS] || !traces?.[Audit.DEFAULT_PASS]) {
+    if (!DevtoolsLog || !Trace) {
       return 0;
     }
 
@@ -168,7 +167,6 @@ class DOMSize extends Audit {
 
     return {
       score,
-      scoreDisplayMode: score >= Util.PASS_THRESHOLD ? Audit.SCORING_MODES.INFORMATIVE : undefined,
       numericValue: stats.totalBodyElements,
       numericUnit: 'element',
       displayValue: str_(UIStrings.displayValue, {itemCount: stats.totalBodyElements}),

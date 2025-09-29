@@ -16,11 +16,9 @@ import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
 import errorsInfiniteLoop from './test-definitions/errors-infinite-loop.js';
-import fontSize from './test-definitions/font-size.js';
 import formsAutoComplete from './test-definitions/forms-autocomplete.js';
 import fpsMax from './test-definitions/fps-max.js';
 import fpsMaxPassive from './test-definitions/fps-max-passive.js';
-import fpsScaled from './test-definitions/fps-scaled.js';
 import fpsOverflowX from './test-definitions/fps-overflow-x.js';
 import issuesMixedContent from './test-definitions/issues-mixed-content.js';
 import hstsFullyPresent from './test-definitions/hsts-fully-present.js';
@@ -61,10 +59,13 @@ import screenshot from './test-definitions/screenshot.js';
 import seoFailing from './test-definitions/seo-failing.js';
 import seoPassing from './test-definitions/seo-passing.js';
 import seoStatus403 from './test-definitions/seo-status-403.js';
+import seoMixedLanguage from './test-definitions/seo-mixed-language.js';
 import serviceWorkerReloaded from './test-definitions/service-worker-reloaded.js';
 import shiftAttribution from './test-definitions/shift-attribution.js';
 import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
+import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
+import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -80,12 +81,10 @@ const smokeTests = [
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
   errorsInfiniteLoop,
-  fontSize,
   formsAutoComplete,
   fpsMax,
   fpsMaxPassive,
   fpsOverflowX,
-  fpsScaled,
   issuesMixedContent,
   hstsFullyPresent,
   hstsMissingDirectives,
@@ -125,10 +124,13 @@ const smokeTests = [
   seoFailing,
   seoPassing,
   seoStatus403,
+  seoMixedLanguage,
   serviceWorkerReloaded,
   shiftAttribution,
   sourceMaps,
   timing,
+  trustedTypesDirectivePresent,
+  trustedTypesDirectiveMissingDirective,
 ];
 
 export default smokeTests;

@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jestMock from 'jest-mock';
-
 import {
   createMockDriver,
   createMockBaseArtifacts,
@@ -33,7 +31,7 @@ const DevtoolsLogGatherer = (await import('../../gather/gatherers/devtools-log.j
 const TraceGatherer = (await import('../../gather/gatherers/trace.js')).default;
 const {initializeConfig} = await import('../../config/config.js');
 
-/** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
+/** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any>, startInstrumentation: Mock<any>, stopInstrumentation: Mock<any>, startSensitiveInstrumentation: Mock<any>, stopSensitiveInstrumentation:  Mock<any>}} MockGatherer */
 
 describe('NavigationRunner', () => {
   let requestedUrl = '';
@@ -251,8 +249,7 @@ describe('NavigationRunner', () => {
       if (!resolvedConfig.artifacts) throw new Error('No artifacts');
 
       const err = new Error('Error in dependency chain');
-      resolvedConfig.artifacts[0].gatherer.instance.startInstrumentation = jestMock
-        .fn()
+      resolvedConfig.artifacts[0].gatherer.instance.startInstrumentation = fnAny()
         .mockRejectedValue(err);
       resolvedConfig.artifacts[1].dependencies = {Accessibility: {id: 'Timespan'}};
       resolvedConfig.artifacts[2].dependencies = {Accessibility: {id: 'Timespan'}};
@@ -379,8 +376,6 @@ describe('NavigationRunner', () => {
       expect(artifacts).toEqual({
         DevtoolsLogError: expect.any(Array),
         TraceError: {traceEvents: []},
-        devtoolsLogs: {'pageLoadError-defaultPass': expect.any(Array)},
-        traces: {'pageLoadError-defaultPass': {traceEvents: []}},
       });
     });
 

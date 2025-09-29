@@ -28,6 +28,12 @@ const colors = {
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
+  // yarn build-types fails without this!
+  // https://github.com/microsoft/TypeScript/issues/41672#issuecomment-2303803072
+  constructor(options) {
+    super(options);
+  }
+
   /**
    * Fires off all status updates. Listen with
    * `require('lib/log').events.addListener('status', callback)`

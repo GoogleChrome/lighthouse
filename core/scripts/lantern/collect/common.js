@@ -44,7 +44,6 @@ class ProgressLogger {
   log(...args) {
     readline.clearLine(process.stdout, 0);
     readline.cursorTo(process.stdout, 0);
-    // eslint-disable-next-line no-console
     console.log(...args);
     this.progress(this._currentProgressMessage);
   }

@@ -146,8 +146,7 @@ export class TopbarFeatures {
    */
   onCopyButtonClick() {
     this._dom.fireEventOn('lh-analytics', this._dom.document(), {
-      cmd: 'send',
-      fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'},
+      name: 'copy',
     });
 
     try {
@@ -265,7 +264,7 @@ export class TopbarFeatures {
     this.categoriesEl = this._dom.find('div.lh-categories', this._dom.rootEl);
 
     // Defer behind rAF to avoid forcing layout.
-    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       // Only present in the DOM if it'll be used (>=2 categories)
       try {
         this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._dom.rootEl);

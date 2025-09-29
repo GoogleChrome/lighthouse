@@ -23,6 +23,11 @@ describe('PerfCategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
+  function swapLegacyAndExperimentalPerfInsights(rootEl) {
+    const section = rootEl.querySelector('.lh-perf-audits--swappable');
+    renderer.dom.swapSectionIfPossible(section);
+  }
+
   before(() => {
     Globals.apply({
       providedStrings: {},
@@ -33,6 +38,8 @@ describe('PerfCategoryRenderer', () => {
     const window = new jsdom.JSDOM().window;
     const document = window.document;
     global.HTMLElement = window.HTMLElement;
+    global.CustomEvent = window.CustomEvent;
+    global.requestAnimationFrame = fn => fn();
 
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
@@ -41,10 +48,18 @@ describe('PerfCategoryRenderer', () => {
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
     category = sampleResults.categories.performance;
+
+    // Enable experimental insights in the config.
+    category.auditRefs.forEach(a => {
+      if (a.id.match(/-insight$/)) {
+        a.group = 'insights';
+      }
+    });
   });
 
   after(() => {
     Globals.i18n = undefined;
+    global.requestAnimationFrame = undefined;
   });
 
   it('renders the category header', () => {
@@ -61,7 +76,11 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the sections', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
+    const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
+    // - Metrics
+    // Legacy view:
+    // - Diagnostics
+    // - Passed
     assert.equal(sections.length, 3);
   });
 
@@ -111,9 +130,12 @@ describe('PerfCategoryRenderer', () => {
     newCategory.auditRefs = category.auditRefs.filter(audit => audit.group !== 'metrics');
 
     const categoryDOM = renderer.render(newCategory, sampleResults.categoryGroups);
-    const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
+    const sections = categoryDOM.querySelectorAll('.lh-category .lh-audit-group');
     const metricSection = categoryDOM.querySelector('.lh-audit-group--metrics');
     assert.ok(!metricSection);
+    // Legacy view:
+    // - Diagnostics
+    // - Passed
     assert.equal(sections.length, 2);
   });
 
@@ -156,7 +178,7 @@ describe('PerfCategoryRenderer', () => {
   it('renders the failing diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
+        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
 
     const diagnosticAuditIds = category.auditRefs.filter(audit => {
       return audit.group === 'diagnostics' &&
@@ -169,15 +191,55 @@ describe('PerfCategoryRenderer', () => {
     assert.deepStrictEqual(diagnosticElementIds, diagnosticAuditIds);
   });
 
-  it('renders the passed audits', () => {
+  it('renders the failing insights', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const passedSection = categoryDOM.querySelector('.lh-clump--passed');
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
+    const insightSection = categoryDOM.querySelector(
+        '.lh-category .lh-audit-group.lh-audit-group--insights');
+
+    const insightAuditIds = category.auditRefs.filter(audit => {
+      return audit.group === 'insights' &&
+        !ReportUtils.showAsPassed(audit.result);
+    }).map(audit => audit.id).sort();
+    assert.ok(insightAuditIds.length > 0);
+
+    const insightElementIds = [...insightSection.querySelectorAll('.lh-audit')]
+      .map(el => el.id).sort();
+    assert.deepStrictEqual(insightElementIds, insightAuditIds);
+  });
+
+  it('renders the passed diagnostic audits', () => {
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    const passedSection = categoryDOM.querySelector('.lh-perf-audits--legacy .lh-clump--passed');
 
     const passedAudits = category.auditRefs.filter(audit =>
       audit.group === 'diagnostics' &&
       ReportUtils.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
+  });
+
+  it('renders the passed insight audits with passed diagnostics', () => {
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    swapLegacyAndExperimentalPerfInsights(categoryDOM);
+    const passedSection =
+      categoryDOM.querySelector('.lh-perf-audits--experimental .lh-clump--passed');
+
+    const passedInsights = category.auditRefs.filter(audit =>
+      audit.group === 'insights' &&
+      ReportUtils.showAsPassed(audit.result));
+
+    const replacedIds = new Set();
+    for (const audit of category.auditRefs) {
+      audit.result.replacesAudits?.forEach(id => replacedIds.add(id));
+    }
+
+    const passedDiagnostics = category.auditRefs.filter(audit =>
+      audit.group === 'diagnostics' &&
+      !replacedIds.has(audit.id) &&
+      ReportUtils.showAsPassed(audit.result));
+    const passedElements = passedSection.querySelectorAll('.lh-audit');
+    assert.equal(passedElements.length, passedInsights.length + passedDiagnostics.length);
   });
 
   // Unsupported by perf cat renderer right now.
@@ -196,12 +258,12 @@ describe('PerfCategoryRenderer', () => {
       const url = new URL(href);
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
-  "#FCP=6815",
-  "LCP=10954",
-  "TBT=1066",
+  "#FCP=6803",
+  "LCP=10894",
+  "TBT=1018",
   "CLS=0",
-  "SI=8471",
-  "TTI=8126",
+  "SI=8407",
+  "TTI=7992",
 ]
 `);
     });
@@ -216,12 +278,12 @@ Array [
       try {
         expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
-  "#FCP=6815",
-  "LCP=10954",
-  "TBT=1066",
+  "#FCP=6803",
+  "LCP=10894",
+  "TBT=1018",
   "CLS=0.1",
-  "SI=8471",
-  "TTI=8126",
+  "SI=8407",
+  "TTI=7992",
   "device=mobile",
   "version=6.0.0",
 ]
@@ -353,7 +415,7 @@ Array [
 
       const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
       const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
+        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
       const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')];
       expect(diagnosticElementIds.map(el => el.id)).toEqual(['audit-3', 'audit-1', 'audit-4', 'audit-2']); // eslint-disable-line max-len
     });
@@ -407,7 +469,7 @@ Array [
       const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
 
       const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
+        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
       let diagnosticElements = [...diagnosticSection.querySelectorAll('.lh-audit')];
       expect(diagnosticElements.map(el => el.id)).toEqual(['audit-3', 'audit-1', 'audit-4', 'audit-2']); // eslint-disable-line max-len
 
@@ -476,7 +538,7 @@ Array [
 
       const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
       const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
+        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
       const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')];
       expect(diagnosticElementIds.map(el => el.id)).toEqual(['audit-3', 'audit-1', 'audit-2', 'audit-4', 'audit-5']); // eslint-disable-line max-len
     });
@@ -522,7 +584,7 @@ Array [
 
       const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
       const diagnosticSection = categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group.lh-audit-group--diagnostics');
+        '.lh-category .lh-audit-group.lh-audit-group--diagnostics');
       const diagnosticElementIds = [...diagnosticSection.querySelectorAll('.lh-audit')];
       expect(diagnosticElementIds.map(el => el.id)).toEqual(['audit-1', 'audit-3', 'audit-2', 'audit-4']); // eslint-disable-line max-len
     });

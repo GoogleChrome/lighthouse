@@ -29,7 +29,6 @@ import * as puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import {launch} from 'chrome-launcher';
-import esMain from 'es-main';
 
 import {parseChromeFlags} from '../../cli/run.js';
 
@@ -101,7 +100,6 @@ async function evaluateInSession(session, fn, deps) {
  */
 async function waitForFunction(session, fn, deps) {
   let iterations = 0;
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await evaluateInSession(session, fn, deps);
@@ -394,7 +392,6 @@ async function main() {
   // Create output directory.
   if (fs.existsSync(outputDir)) {
     if (fs.readdirSync(outputDir).length) {
-      // eslint-disable-next-line no-console
       console.warn('WARNING: Output directory is not empty.');
     }
   } else {
@@ -445,7 +442,7 @@ async function main() {
   if (errorCount) process.exit(1);
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 

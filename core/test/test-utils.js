@@ -197,6 +197,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
 async function makeMocksForGatherRunner() {
   await td.replaceEsm('../gather/driver/environment.js', {
     getBenchmarkIndex: () => Promise.resolve(150),
+    getDevicePixelRatio: () => Promise.resolve(2),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
@@ -207,7 +208,7 @@ async function makeMocksForGatherRunner() {
   });
   await td.replaceEsm('../gather/driver/prepare.js', {
     prepareTargetForNavigationMode: jestMock.fn(),
-    prepareTargetForIndividualNavigation: jestMock.fn().mockResolvedValue({warnings: []}),
+    prepareTargetForIndividualNavigation: fnAny().mockResolvedValue({warnings: []}),
     enableAsyncStacks: jestMock.fn().mockReturnValue(jestMock.fn()),
   });
   await td.replaceEsm('../gather/driver/storage.js', {
@@ -216,7 +217,7 @@ async function makeMocksForGatherRunner() {
     getImportantStorageWarning: jestMock.fn(),
   });
   await td.replaceEsm('../gather/driver/navigation.js', {
-    gotoURL: jestMock.fn().mockResolvedValue({
+    gotoURL: fnAny().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],
     }),
@@ -225,9 +226,11 @@ async function makeMocksForGatherRunner() {
 
 /**
  * Same as jestMock.fn(), but uses `any` instead of `unknown`.
+ * This makes it simpler to override existing properties in test files that are
+ * typechecked.
  */
 const fnAny = () => {
-  return /** @type {Mock<any, any>} */ (jestMock.fn());
+  return /** @type {Mock<any>} */ (jestMock.fn());
 };
 
 /**
@@ -288,7 +291,7 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
  *
  * @param {string} modulePath
  * @param {ImportMeta} importMeta
- * @return {Promise<Record<string, Mock<any, any>>>}
+ * @return {Promise<Record<string, Mock<any>>>}
  */
 async function importMock(modulePath, importMeta) {
   const mock = await import(new URL(modulePath, importMeta.url).href);
@@ -304,7 +307,7 @@ async function importMock(modulePath, importMeta) {
  *
  * @param {string} modulePath
  * @param {ImportMeta} importMeta
- * @return {Record<string, Mock<any, any>>}
+ * @return {Record<string, Mock<any>>}
  */
 function requireMock(modulePath, importMeta) {
   const dir = path.dirname(url.fileURLToPath(importMeta.url));

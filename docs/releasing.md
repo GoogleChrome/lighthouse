@@ -36,16 +36,12 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 
 ### Update various dependencies
 
-In general, Lighthouse should be using the latest version of all of these dependencies:
+In general, Lighthouse should be using the latest version of its critical dependencies. These are listed in the following script. It's ok to not be on the very latest, use your judgement.
 
-1. https://github.com/GoogleChrome/lighthouse-stack-packs
-1. `puppeteer` and `puppeteer-core`
-1. `third-party-web`
-1. `axe-core`
-1. `js-library-detector`
-1. `chrome-launcher`
-1. `chrome-devtools-frontend`
-1. `devtools-protocol`
+```sh
+# first, ask Paul to publish chrome-devtools-frontend
+bash core/scripts/upgrade-deps.sh
+```
 
 ### On the scheduled release date
 

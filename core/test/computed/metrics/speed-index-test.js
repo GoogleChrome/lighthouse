@@ -10,7 +10,7 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/progressive-app/devtoolslog.json', import.meta);
 const trace1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/trace.json.gz', import.meta);
-const devtoolsLog1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/devtoolslog.json.gz', import.meta); // eslint-disable-line max-len
+const devtoolsLog1msLayout = readJson('../../fixtures/artifacts/speedindex-1ms/devtoolslog.json.gz', import.meta);
 
 describe('Metrics: Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};
@@ -19,8 +19,9 @@ describe('Metrics: Speed Index', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    const result = await SpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+        context);
 
     expect({
       timing: Math.round(result.timing),
@@ -53,6 +54,8 @@ Object {
         devtoolsLog: devtoolsLog1msLayout,
         settings,
         URL,
+        SourceMaps: [],
+        simulator: null,
       },
       context
     );
@@ -74,7 +77,8 @@ Object {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
+    const result = await SpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
       context);
 
     await expect(result).toMatchInlineSnapshot(`
@@ -89,8 +93,10 @@ Object {
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
-      context);
+    const result =
+      await SpeedIndex.request(
+        {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+        context);
 
     await expect(result).toMatchInlineSnapshot(`
 Object {

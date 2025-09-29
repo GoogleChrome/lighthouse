@@ -31,7 +31,7 @@ class ClickjackingMitigation extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['DevtoolsLog', 'URL'],
       supportedModes: ['navigation'],
     };
   }
@@ -42,7 +42,7 @@ class ClickjackingMitigation extends Audit {
    * @return {Promise<{cspHeaders: string[], xfoHeaders: string[]}>}
    */
   static async getRawCspsAndXfo(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const mainResource =
         await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 

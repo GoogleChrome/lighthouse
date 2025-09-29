@@ -138,7 +138,6 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
   /** @type {Promise<void>} */
   const promise = new Promise((resolve, reject) => {
     const onIdle = () => {
-      // eslint-disable-next-line no-use-before-define
       networkMonitor.once(busyEvent, onBusy);
       idleTimeout = setTimeout(() => {
         cancel();

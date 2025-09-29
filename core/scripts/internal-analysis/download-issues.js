@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /**
  * @fileoverview Used in conjunction with `./analyze-issues.js` to analyze our Issue and PR response times
  * as a team. This file downloads GitHub data to `.tmp/_issues.json` for analysis.
@@ -21,8 +19,6 @@
 
 import fs from 'fs';
 import path from 'path';
-
-import fetch from 'node-fetch';
 
 import {LH_ROOT} from '../../../shared/root.js';
 

@@ -228,7 +228,7 @@
     "message": "该页面包含一个标题、跳过链接或地标区域"
   },
   "core/audits/accessibility/color-contrast.js | description": {
-    "message": "对于许多用户而言，对比度低的文字都是难以阅读或无法阅读的。[了解如何提供足够高的色彩对比度](https://dequeuniversity.com/rules/axe/4.10/color-contrast)。"
+    "message": "对于许多用户而言，对比度低的文字都是难以阅读或无法阅读的。[了解如何提供足够高的颜色对比度](https://dequeuniversity.com/rules/axe/4.10/color-contrast)。"
   },
   "core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "背景色和前景色没有足够高的对比度。"
@@ -660,7 +660,10 @@
     "message": "使用视频格式提供动画内容"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，其中的很多函数对现代浏览器而言并不是必需的。对于捆绑的 JavaScript，请采用现代脚本部署策略，以便利用 module/nomodule 功能检测机制来减少传送到现代浏览器的代码量，同时保留对旧版浏览器的支持。[了解如何使用现代 JavaScript](https://web.dev/articles/publish-modern-javascript)"
+    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，很多功能对现代浏览器而言并不是必需的。请考虑修改 JavaScript 构建流程，以便不转译 [Baseline](https://web.dev/baseline) 功能，除非您知道必须支持旧版浏览器。[了解为什么大多数网站可以部署 ES6+ 代码而无需转译](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "在网页上检测到 core-js 的版本 2。您应该升级到版本 3，以获取诸多性能改进。"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "应避免向新型浏览器提供旧版 JavaScript"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "启用文本压缩"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) 标头或 `Content-Security-Policy` (CSP) 标头中的 `frame-ancestors` 指令控制网页可嵌入的位置。这些设置可以阻止部分或全部网站嵌入网页，从而缓解点击劫持攻击。[详细了解如何缓解点击劫持](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)。"
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "未找到任何框架控制政策"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "使用 XFO 或 CSP 缓解点击劫持问题"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "下面的关键请求链显示了以高优先级加载的资源。建议缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。[了解如何避免链接关键请求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)。"
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse 无法自动检查源 {fontOrigin} 的 `font-display` 值。}other{Lighthouse 无法自动检查源 {fontOrigin} 的 `font-display` 值。}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "指令"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "部署 HSTS 标头可显著降低 HTTP 连接降级和窃听攻击的风险。建议分阶段部署，从较低的 max-age 开始。[详细了解如何使用严格 HSTS 政策。](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "语法无效"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` 过低"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "未找到 HSTS 标题"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "没有 `max-age` 指令"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "未找到 `preload` 指令"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "未找到 `includeSubDomains` 指令"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "使用严格 HSTS 政策"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "宽高比（实际）"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "所提供的图片都采用了合适的分辨率"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "布局偏移分数"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "允许"
@@ -1081,9 +1129,6 @@
   },
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "注入的 iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "延迟的网络请求调整了页面布局"
   },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "媒体元素缺少明确的大小"
@@ -1187,6 +1232,24 @@
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "效果含有不受支持的时间参数"
   },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "指令"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Cross-Origin-Opener-Policy (COOP) 可用于将顶级窗口与其他文档（例如弹出式窗口）隔离。[详细了解如何部署 COOP 标头。](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "语法无效"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "未找到 COOP 标头"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "确保通过 COOP 实现适当的源隔离"
+  },
   "core/audits/preload-fonts.js | description": {
     "message": "请预加载 `optional` 字体以方便初访者使用。[详细了解如何预加载字体](https://web.dev/articles/preload-optional-fonts)"
   },
@@ -1252,36 +1315,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "链接都是可抓取的"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "其他无法辨认的文字"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "字号"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "网页文本百分比"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "选择器"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "12px 以下的字体过小，会导致用户无法辨认；此外，这样的字体需要移动设备访问者“张合双指进行缩放”才能阅读。请尽量让 60% 以上的页面文字不小于 12px。[详细了解清晰可辨的字体大小](https://developer.chrome.com/docs/lighthouse/seo/font-size/)。"
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} 清晰可辨的文字"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "无法辨认文字，因为缺少已针对移动设备屏幕进行优化的 viewport meta 标记。"
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "文档未使用清晰可辨的字体大小"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "清晰可辨的文字"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "文档所用的字体大小清晰可辨"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang 链接用于告知搜索引擎应在特定语言或地区的搜索结果中显示哪种版本的网页。[详细了解 `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)。"
@@ -1377,7 +1410,7 @@
     "message": "初始服务器响应用时较短"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome 将推出新的用户体验，使用户可以选择不使用第三方 Cookie 来浏览网页。[详细了解第三方 Cookie](https://developers.google.com/privacy-sandbox/cookies)。"
+    "message": "在某些情况下，第三方 Cookie 可能会被屏蔽。[详细了解如何为第三方 Cookie 限制做好准备](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 个 Cookie}other{找到 # 个 Cookie}}"
@@ -1429,6 +1462,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "尽量减少第三方使用"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "严重程度"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) 标头中的 `require-trusted-types-for` 指令会指示用户代理控制传递给 DOM XSS 接收器函数的数据。[详细了解如何使用 Trusted Types 缓解基于 DOM 的 XSS 攻击](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)。"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "未找到包含 Trusted Types 指令的 `Content-Security-Policy` 标头"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "使用 Trusted Types 缓解基于 DOM 的 XSS 攻击"
   },
   "core/audits/unsized-images.js | description": {
     "message": "请为图片元素设置明确的宽度值和高度值，以减少布局偏移并改善 CLS。[了解如何设置图片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1613,11 +1658,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "改进首次绘制"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "您还可在 Chrome 开发者工具的“性能”面板中查看这些数据分析。只要[记录跟踪信息](https://developer.chrome.com/docs/devtools/performance/reference)，即可查看更详细的信息。"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "数据分析"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指标"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "改善整体的加载体验，使该网页响应迅速且可尽快投入使用。关键指标：可交互前的耗时、速度指数"
+    "message": "改善整体的加载体验，使该网页响应迅速且可尽快投入使用。关键指标：可交互前的耗时、Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "整体改进"
@@ -1675,357 +1726,6 @@
   },
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "在运行期间检测到网页导航。不建议使用时间跨度模式审核网页导航。使用导航模式审核网页导航可以实现更好的第三方归因和主线程检测。"
-  },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "只有通过 GET 请求进行加载的网页才能储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "只有状态代码为 2XX 的网页才能被缓存。"
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome 检测到一项在储存于缓存期间执行 JavaScript 的意图。"
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "已请求 AppBanner 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "往返缓存已被停用，因为这是一项 keepalive 请求。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "往返缓存被相关 flag 停用了。请在此设备上访问 chrome://flags/#back-forward-cache 以从本地启用该功能。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "往返缓存已被命令行停用。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "因为内存不足，往返缓存已被停用。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "委托行为不支持往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "已针对预渲染程序停用往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "该网页无法缓存，因为它包含的 BroadcastChannel 实例具有已注册的监听器。"
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "含 cache-control:no-store 标头的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "缓存被刻意清除了。"
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "该网页被逐出了缓存，以使另一个网页能够缓存。"
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "包含插件的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "使用 FileChooser API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "使用 File System Access API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "使用媒体设备调度程序的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "媒体播放器正在播放内容时用户就离开了网页。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "使用 MediaSession API 并设置了播放状态的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "使用 MediaSession API 并设置了操作处理程序的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "往返缓存已被停用，因为受屏幕阅读器影响。"
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "使用 SecurityHandler 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "使用 Serial API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "使用 WebAuthentication API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "使用 WebBluetooth API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "使用 WebUSB API 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "往返缓存已被停用，因为在使用 `Cache-Control: no-store` 的网页上 Cookie 处于停用状态。"
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "使用专用 Worker 或 Worklet 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "该文档还未加载完毕时用户就离开了。"
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "用户离开网页时，系统显示了应用横幅。"
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "用户离开网页时，系统显示了 Chrome 密码管理工具。"
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "用户离开网页时，DOM 提取正在进行。"
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "用户离开网页时，系统显示了 DOM Distiller Viewer。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "往返缓存已被停用，因为扩展程序使用了 Messaging API。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "在进入往返缓存之前，采用长期有效连接的扩展程序应断开连接。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "采用长期有效连接的扩展程序试图将消息发送到往返缓存中的框架。"
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "往返缓存已被停用，因为受扩展程序影响。"
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "用户离开网页时，该网页上显示了模态对话框（例如表单重新提交）或 HTTP 密码对话框。"
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "用户离开网页时，系统显示了离线版网页。"
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "用户离开网页时，系统显示了 Out-Of-Memory 栏。"
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "用户离开网页时，系统显示了权限请求。"
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "用户离开网页时，系统显示了弹出式内容拦截器。"
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "用户离开网页时，系统显示了安全浏览详情。"
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "“安全浏览”功能认定该网页有滥用性质，因此拦截了弹出式窗口。"
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "在该网页储存于往返缓存期间，有一个 Service Worker 被启用了。"
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "往返缓存已被停用，因为文档出错了。"
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "采用 FencedFrame 的网页无法存储在 bfcache 中。"
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "该网页被逐出了缓存，以使另一个网页能够缓存。"
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "已被授予媒体流访问权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "使用门户的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "使用 IdleManager 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "具备开放的 IndexedDB 连接的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "往返缓存已被停用，因为发生了 IndexedDB 事件。"
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "使用了不符合条件的 API。"
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "已被扩展程序注入 `JavaScript` 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "已被扩展程序注入 `StyleSheet` 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "内部错误。"
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "往返缓存已被停用，因为这是一项 keepalive 请求。"
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "使用“键盘锁定”功能的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "该网页还未加载完毕时用户就离开了。"
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "主资源包含 ache-control:no-cache 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "主资源包含 cache-control:no-store 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "该网页还没从往返缓存中恢复时导航就被取消了。"
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "该网页被逐出了缓存，因为有一项使用中的网络连接收到了太多数据。Chrome 会限制网页在缓存期间可接收的数据量。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "包含传输中的 fetch() 或 XHR 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "该网页被逐出了往返缓存，因为有一项使用中的网络请求涉及了重定向。"
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "该网页被逐出了缓存，因为有一项网络连接处于开放状态的时间太长。Chrome 会限制网页在缓存期间可接收数据的时长。"
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "不含有效响应标头的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "导航是在主框架之外的某个框架中发生的。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "正在针对已建立索引的数据库处理事务的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "包含传输中的 fetch() 网络请求的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "包含传输中的 XHR 网络请求的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "使用 PaymentManager 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "使用“画中画”功能的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "使用门户的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "显示打印界面的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "该网页是使用“`window.open()`”打开的，而另一个标签页引用了该网页；或者，该网页打开了一个窗口。"
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "储存在往返缓存中的网页的渲染程序进程崩溃了。"
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "储存于往返缓存中的网页的渲染程序进程被终止了。"
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "已请求音频截取权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "已请求传感器使用权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "已请求后台同步或提取权限的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "已请求 MIDI 权限的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "已请求通知权限的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "已请求存储空间使用权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "已请求视频拍摄权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "只有网址架构为 HTTP/HTTPS 的网页才能被缓存。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "在储存于往返缓存期间，该网页被一个 Service Worker 认领了。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "有一个 Service Worker 尝试向储存于往返缓存中的网页发送 `MessageEvent`。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "在网页储存于往返缓存期间，ServiceWorker 被取消注册了。"
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "该网页被逐出了往返缓存，因为有一个 Service Worker 被启用了。"
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome 重启了，因而清除了往返缓存条目。"
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "使用 SharedWorker 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "使用 SpeechRecognizer 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "使用 SpeechSynthesis 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "该网页上某个 iframe 发起的导航并未完成。"
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "子资源包含 ache-control:no-cache 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "子资源包含 cache-control:no-store 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "该网页超出了往返缓存中的储存时长上限，因而已过期。"
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "该网页在储存至往返缓存时超时了（可能是因为 pagehide 处理程序长时间运行）。"
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "该网页的主框架中含有一款卸载处理程序。"
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "该网页的子框架中含有一款卸载处理程序。"
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "浏览器更改了用户代理替换标头。"
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "已被授予视频/音频录制权的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "使用 WebDatabase 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "使用 WebHID 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "使用 WebLocks 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "使用 WebNfc 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "使用 WebOTPService 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "使用 WebRTC 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "使用 Webshare 的网页目前无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "使用 WebSocket 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "使用 WebTransport 的网页无法储存至往返缓存。"
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "使用 WebXR 的网页目前无法储存至往返缓存。"
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "建议您添加 https: 和 http: 网址架构（会被支持 `'strict-dynamic'` 的浏览器忽略），以便向后兼容旧版浏览器。"
@@ -2093,183 +1793,6 @@
   "core/lib/deprecation-description.js | title": {
     "message": "使用了已弃用的功能"
   },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "处理 CORS `Access-Control-Allow-Headers` 时，授权将不在通配符 (*) 的涵盖范围内。"
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "若要停用默认 Cast 集成，应使用 `disableRemotePlayback` 属性，而非 `-internal-media-controls-overlay-cast-button` 选择器。"
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "如果资源请求的网址同时包含已移除的空白字符 `(n|r|t)` 和小于字符 (`<`)，相应资源请求会被屏蔽。请从元素属性值等位置移除换行符并编码小于字符，以便加载这些资源。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` 已被弃用，请改用标准化 API：Navigation Timing 2。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` 已被弃用，请改用标准化 API：Paint Timing。"
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` 已被弃用，请改用标准化 API：Navigation Timing 2 中的 `nextHopProtocol`。"
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "包含 `(0|r|n)` 字符的 Cookie 将被拒，而不是被截断。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "通过设置 `document.domain` 放宽同源政策的功能已被弃用，并将默认处于停用状态。此弃用警告针对的是通过设置 `document.domain` 启用的跨源访问。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "从跨源 iframe 触发 window.alert 的功能已被弃用，日后将被移除。"
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "从跨源 iframe 触发 window.confirm 的功能已被弃用，日后将被移除。"
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM 变更事件（包括 `DOMSubtreeModified`、`DOMNodeInserted`、`DOMNodeRemoved`、`DOMNodeRemovedFromDocument`、`DOMNodeInsertedIntoDocument` 和 `DOMCharacterDataModified`，详见 https://w3c.github.io/uievents/#legacy-event-types）已被弃用，并将被移除。请改用 `MutationObserver`。"
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "对 SVG <use> 元素中 data: URL 的支持已被弃用，日后将被移除。"
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "通过设置 `document.domain` 放宽同源政策的功能已被弃用，并将默认处于停用状态。若要继续使用此功能，请通过发送 `Origin-Agent-Cluster: ?0` 标头以及文档和框架的 HTTP 响应来选择停用以源为键的代理集群。如需了解详情，请访问 https://developer.chrome.com/blog/immutable-document-domain/。"
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "`Expect-CT` 标头已被弃用，并将被移除。Chrome 要求，在 2018 年 4 月 30 日之后颁发的所有受大众信任的证书均须遵守证书透明度政策。"
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` 和 `watchPosition()` 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` 和 `watchPosition()` 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` 已被弃用。请改用 `RTCPeerConnectionIceErrorEvent.address` 或 `RTCPeerConnectionIceErrorEvent.port`。"
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "`canmakepayment` Service Worker 事件中的商家源和任意数据已被弃用，并将被移除：`topOrigin`、`paymentRequestOrigin`、`methodData`、`modifiers`。"
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "该网站向网络请求了一项子资源，而且完全是因为其用户的特权网络位置才能够访问此项资源。此类请求会向互联网公开非公用设备和服务器，这会增加跨站请求伪造 (CSRF) 攻击和/或信息泄露的风险。为降低这类风险，Chrome 不再支持从非安全上下文发起针对非公用子资源的请求，并将开始阻止此类请求。"
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "向 `joinAdInterestGroup()` 传递的 `InterestGroups` 所含 `dailyUpdateUrl` 字段已被重命名为 `updateUrl`，以便更准确地反映其行为。"
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "无法从 `file:` 网址加载 CSS，除非它们以 `.css` 文件扩展名结尾。"
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "由于规范变更，使用 `SourceBuffer.abort()` 中止 `remove()` 移除异步范围的功能已被弃用。日后我们会移除相应支持。您应改为监听 `updateend` 事件。`abort()` 只应当用于中止异步媒体附加或重置解析状态。"
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "由于规范变更，我们不再支持将 `MediaSource.duration` 设为低于任何缓冲编码帧的最高呈现时间戳。日后我们将不再支持隐式移除被截断的缓冲媒体。您应改为对 `newDuration < oldDuration` 的所有 `sourceBuffers` 执行显式 `remove(newDuration, oldDuration)`。"
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "即使 `MIDIOptions` 中未指定 sysex，Web MIDI 也会请求获得使用许可。"
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "较旧的非标准化 `shadowroot` 属性已被弃用，自 M119 起将*不再起作用*。请改用新的标准化 `shadowrootmode` 属性。"
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "无法再从不安全的源使用 Notification API。您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "无法再从跨源 iframe 中请求 Notification API 权限。您应考虑改为从顶级框架中请求权限，或者打开一个新窗口。"
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "createImageBitmap 中的 `imageOrientation: 'none'` 选项已被弃用。请改用带有 \\{imageOrientation: 'from-image'\\} 选项的 createImageBitmap。"
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "您的合作伙伴正在协商某个已过时的 (D)TLS 版本。请与您的合作伙伴联系，以解决此问题。"
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "为 img、video 和 canvas 标记指定 `overflow: visible` 可能会导致这些标记在元素边界之外生成视觉内容。请参阅 https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md。"
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` 已被弃用。请改用即时安装方式安装付款处理程序。"
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "您的 `PaymentRequest` 调用已绕过内容安全政策 (CSP) `connect-src` 指令。此绕过方式已被弃用。请将 `PaymentRequest` API 中的付款方式标识符（在 `supportedMethods` 字段中）添加到 CSP `connect-src` 指令中。"
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` 已被弃用。请改用标准化 `navigator.storage`。"
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "带有 `<picture>` 父级的 `<source src>` 无效，因此会被忽略。请改用 `<source srcset>`。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame 因供应商而异。请改用标准 cancelAnimationFrame。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame 因供应商而异。请改用标准 requestAnimationFrame。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen 已被弃用。请改用 Document.fullscreenElement。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() 已被弃用。请改用 Element.requestFullscreen()。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() 已被弃用。请改用 Element.requestFullscreen()。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() 已被弃用。请改用 Document.exitFullscreen()。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() 已被弃用。请改用 Document.exitFullscreen()。"
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen 已被弃用。请改用 Document.fullscreenEnabled。"
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "我们即将弃用 API `chrome.privacy.websites.privacySandboxEnabled`，但为了保持向后兼容性，该 API 可持续使用到 M113 版。届时，请改用 `chrome.privacy.websites.topicsEnabled`、`chrome.privacy.websites.fledgeEnabled` 和 `chrome.privacy.websites.adMeasurementEnabled`。请参阅 https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled。"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "约束条件 `DtlsSrtpKeyAgreement` 已被移除。您已为此约束条件指定 `false` 值，系统会将这种情况解读为尝试使用已被移除的 `SDES key negotiation` 方法。此功能已被移除；请改用支持 `DTLS key negotiation`的服务。"
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "约束条件 `DtlsSrtpKeyAgreement` 已被移除。您已为此约束条件指定 `true` 值，这没有任何作用，但为整洁起见，您可以移除此约束条件。"
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "基于回调的 getStats() 已被弃用，并将被移除。请改用符合规范的 getStats()。"
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() 已被弃用。请改用 Selection.modify()。"
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "如果子资源请求的网址包含嵌入式凭据（例如 `https://user:pass@host/`），相应子资源请求会被屏蔽。"
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy` 选项已被弃用，并将被移除。"
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` 将要求进行跨域隔离。如需了解详情，请访问 https://developer.chrome.com/blog/enabling-shared-array-buffer/。"
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "无需用户激活的 `speechSynthesis.speak()` 已被弃用，并将被移除。"
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "扩展程序应选择启用跨域隔离，以便继续使用 `SharedArrayBuffer`。请参阅 https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/。"
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL 已被弃用。请使用 SQLite WebAssembly 或 Indexed Database"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "权限描述符 `window-placement` 已被弃用。请改用 `window-management`。如需更多帮助，请访问 https://bit.ly/window-placement-rename。"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "权限政策 `window-placement` 已被弃用。请改用 `window-management`。如需更多帮助，请访问 https://bit.ly/window-placement-rename。"
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "`XMLHttpRequest` 中的响应 JSON 不支持 UTF-16"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "主线程上的同步 `XMLHttpRequest` 已被弃用，因为它会对最终用户的体验产生不利影响。如需更多帮助，请访问 https://xhr.spec.whatwg.org/。"
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` 已被弃用。请改用 `isSessionSupported()` 并查看已解析的布尔值。"
-  },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "主线程拦截时间"
   },
@@ -2322,22 +1845,22 @@
     "message": "网址"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "可能达到的节省程度"
+    "message": "预计节省的字节数"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "可能达到的节省程度"
+    "message": "预计缩短的毫秒数"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "有望节省 {wastedBytes, number, bytes} KiB"
+    "message": "预计节省 {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{发现了 1 个元素}other{发现了 # 个元素}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "有望节省 {wastedMs, number, milliseconds} 毫秒"
+    "message": "预计缩短 {wastedMs, number, milliseconds} 毫秒"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文档"
@@ -2401,6 +1924,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "第三方"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "总计"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2621,68 +2147,545 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse 用户流报告"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "处理 CORS Access-Control-Allow-Headers 时，授权将不在通配符 (*) 的涵盖范围内。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "若要停用默认 Cast 集成，应使用 disableRemotePlayback 属性，而非 -internal-media-controls-overlay-cast-button 选择器。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS appearance 值 slider-vertical 未标准化，将会被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "如果对应的网址同时包含已移除的空白字符 \\(n|r|t) 和小于字符 (<)，资源请求会被屏蔽。请从元素属性值等位置移除换行符并编码小于字符，以便加载这些资源。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() 已被弃用，请改用标准化 API：Navigation Timing 2。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() 已被弃用，请改用标准化 API：Paint Timing。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() 已被弃用，请改用标准化 API：Navigation Timing 2 中的 nextHopProtocol。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "包含 \\(0|r|n) 字符的 Cookie 将被拒，而不是被截断。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "通过设置 document.domain 放宽同源政策的功能已被弃用，并将默认处于停用状态。此弃用警告针对的是通过设置 document.domain 启用的跨源访问。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "从跨源 iframe 触发 window.alert 的功能已被弃用，日后将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "从跨源 iframe 触发 window.confirm 的功能已被弃用，日后将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "对 SVGUseElement 中 data: URL 的支持已被弃用，日后将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() 和 watchPosition() 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() 和 watchPosition() 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() 不再适用于不安全的源。若要使用此功能，您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate 已被弃用。请改用 RTCPeerConnectionIceErrorEvent.address 或 RTCPeerConnectionIceErrorEvent.port。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "canmakepayment Service Worker 事件中的商家源和任意数据已被弃用，并将被移除：topOrigin、paymentRequestOrigin、methodData、modifiers。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "该网站向网络请求了一项子资源，而且仅仅因为其用户的特权网络位置而能够访问此项资源。此类请求会向互联网公开非公用设备和服务器，这会增加跨站请求伪造 (CSRF) 攻击和/或信息泄露的风险。为降低这类风险，Chrome 不再支持从非安全上下文发起针对非公用子资源的请求，并将开始阻止此类请求。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "向 joinAdInterestGroup() 传递的 InterestGroups 所含 dailyUpdateUrl 字段已被重命名为 updateUrl，以便更准确地反映其行为。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator 已被弃用。请改用 Intl.Segmenter。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "无法从 file: 网址加载 CSS，除非它们以 .css 文件扩展名结尾。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "由于规范变更，使用 SourceBuffer.abort() 中止 remove() 的异步范围移除的功能已被弃用。日后我们会移除相应支持。您应改为监听 updateend 事件。abort() 只应用于中止异步媒体附加或重置解析状态。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "由于规范变更，我们不再支持将 MediaSource.duration 设为低于任何缓冲编码帧的最高呈现时间戳。日后我们将不再支持隐式移除被截断的缓冲媒体。您应改为对 newDuration < oldDuration 的所有 sourceBuffers 执行显式 remove(newDuration, oldDuration)。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "即使 MIDIOptions 中未指定 sysex，Web MIDI 也会请求获得使用许可。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "无法再从不安全的源使用 Notification API。您应考虑将您的应用转移到安全的源，例如 HTTPS。如需了解详情，请访问 https://goo.gle/chrome-insecure-origins。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "无法再从跨源 iframe 中请求 Notification API 权限。您应考虑改为从顶级框架中请求权限，或者打开一个新窗口。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "createImageBitmap 中的 imageOrientation: 'none' 选项已被弃用。请改用带有 \\\\{imageOrientation: 'from-image'\\\\} 选项的 createImageBitmap。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "您的合作伙伴正在协商某个已过时的 (D)TLS 版本。请与您的合作伙伴联系，以解决此问题。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "为 img、video 和 canvas 标记指定 overflow: visible 可能会导致这些标记在元素边界之外生成视觉内容。请参阅 https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "旧版 Flash 视频嵌入方式已重写为 HTML iframe 形式。Flash 早已淘汰，这种临时重写方案现已弃用，并可能在未来版本中移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments 已被弃用。请改用即时安装方式安装付款处理程序。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "您的 PaymentRequest 调用已绕过内容安全政策 (CSP) connect-src 指令。此绕过方式已被弃用。请将 PaymentRequest API 中的付款方式标识符（在 supportedMethods 字段中）添加到 CSP connect-src 指令中。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent 已被弃用。请改用标准化 navigator.storage。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "带有 <picture> 父级的 <source src> 无效，因此会被忽略。请改用 <source srcset>。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame 因供应商而异。请改用标准 cancelAnimationFrame。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame 因供应商而异。请改用标准 requestAnimationFrame。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen 已被弃用。请改用 Document.fullscreenElement。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() 已被弃用。请改用 Element.requestFullscreen()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() 已被弃用。请改用 Element.requestFullscreen()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() 已被弃用。请改用 Document.exitFullscreen()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() 已被弃用。请改用 Document.exitFullscreen()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen 已被弃用。请改用 Document.fullscreenEnabled。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "我们即将弃用 API chrome.privacy.websites.privacySandboxEnabled，但为了保持向后兼容性，该 API 可持续使用到 M113 版。届时，请改用 chrome.privacy.websites.topicsEnabled、chrome.privacy.websites.fledgeEnabled 和 chrome.privacy.websites.adMeasurementEnabled。请参阅 https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "约束条件 DtlsSrtpKeyAgreement 已被移除。您已为此约束条件指定 false 值，系统会将这种情况解读为尝试使用已被移除的 SDES key negotiation 方法。此功能已被移除；请改用支持 DTLS key negotiation的服务。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "约束条件 DtlsSrtpKeyAgreement 已被移除。您已为此约束条件指定 true 值，这没有任何作用，但为整洁起见，您可以移除此约束条件。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "基于回调的 getStats() 已被弃用，并将被移除。请改用符合规范的 getStats()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() 已被弃用。请改用 Selection.modify()。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "如果对应的网址包含嵌入式凭据（例如 https://user:pass@host/），子资源请求会被屏蔽。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy 选项已被弃用，并将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer 将要求进行跨域隔离。如需了解详情，请访问 https://developer.chrome.com/blog/enabling-shared-array-buffer/。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "无需用户激活的 speechSynthesis.speak() 已被弃用，并将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "卸载事件监听器已被弃用，并且将被移除。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "扩展程序应选择启用跨域隔离，以便继续使用 SharedArrayBuffer。请参阅 https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "XMLHttpRequest 中的响应 JSON 不再支持 UTF-16"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "主线程上的同步 XMLHttpRequest 已被弃用，因为它会对最终用户的体验产生不利影响。如需更多帮助，请访问 https://xhr.spec.whatwg.org/。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "动画"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "当元素在没有任何用户互动的情况下移动时，就会发生布局偏移。[调查布局偏移的原因](https://web.dev/articles/optimize-cls)，例如在网页加载时添加、移除元素或元素字体发生了变化。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "注入的 iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "布局偏移集群开始于 {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "无法检测到任何布局偏移的根源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "无布局偏移"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "布局偏移原因"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "导致布局偏移的首要原因"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "未设置尺寸的图片元素"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "网络字体"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "最糟糕的集群"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "最糟糕的布局偏移集群"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "缓存 TTL"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "延长缓存生命周期可加快重访您网页的速度。[了解详情](https://web.dev/uses-long-cache-ttl/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "没有任何请求使用效率低下的缓存政策"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} 项其他内容"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "请求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "使用高效的缓存生命周期"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "大型 DOM 会增加内存用量、导致样式计算用时延长，并产生高昂的布局自动重排成本，从而影响网页响应速度。[了解如何避免 DOM 规模过大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
+    "message": "大型 DOM 可能会增加样式计算和布局自动重排的用时，从而影响网页响应速度。大型 DOM 也会增加内存用量。[了解如何避免 DOM 规模过大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "时长"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "元素"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "布局（{PH1} 个对象）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "样式重新计算（{PH1} 个元素）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "子级数量上限"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM 深度"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "统计信息"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "优化 DOM 大小"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "这些是规模最大的布局和样式重新计算事件。简化 DOM 或许可减轻它们对性能的影响。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "元素总数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "值"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "您的第一个网络请求最为重要。您可通过避免重定向、确保服务器快速响应以及启用文本压缩，缩短其延迟时间。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "有重定向 ({PH1} 次重定向，+{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "服务器响应缓慢（观察结果：{PH1}）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "未应用任何压缩"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "避免重定向"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "服务器响应迅速（观察结果：{PH1}）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "应用文本压缩"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "重定向"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "服务器响应时间"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "文档请求延迟"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "未压缩下载"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "重复的字节数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "来源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "从软件包中移除重复的大型 JavaScript 模块，即可避免网络活动带来不必要的字节消耗。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "重复的 JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "建议您将 [font-display](https://developer.chrome.com/blog/font-display) 设为 swap 或 optional，确保文本始终可见。通过[替换字体指标](https://developer.chrome.com/blog/font-fallbacks)可进一步优化 swap，缓解布局偏移。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "字体"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "字体显示"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "浪费的时间"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "（匿名）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "当 DOM 状态发生更改导致样式失效后，如果 JavaScript 查询几何属性（例如 offsetWidth），会引发强制自动重排。这可能会导致效果不佳。详细了解[强制自动重排](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)及可能的缓解措施。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "堆栈轨迹"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "强制自动重排"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "最耗时的函数调用"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "总自动重排时间"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[未归因]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "请从持续时间最长的子部分开始检查。[几处延迟可降到最低](https://web.dev/articles/optimize-inp#optimize_interactions)。如需缩短处理时长，请[优化主线程（通常是 JS）成本](https://web.dev/articles/optimize-long-tasks)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "时长"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "输入延迟"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "未检测到任何互动"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "展示延迟时间"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "处理用时"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "子部分"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP 细分"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "缩短图片下载时间可优化网页的感知加载时间和 LCP。[详细了解图片大小优化](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1}（预计 {PH2}）"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "没有可优化的图片"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "优化文件大小"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} 项其他内容"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "改进图片传送"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "提高图片压缩因子可以优化此图片的下载大小。（预计 {PH1}）"
+    "message": "提高图片压缩因子可以优化此图片的下载大小。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "使用现代图片格式（WebP、AVIF）或提高图片压缩率可以优化此图片的下载大小。（预计 {PH1}）"
+    "message": "使用现代图片格式（WebP、AVIF）或提高图片压缩率可以优化此图片的下载大小。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "此图片文件的大小 ({PH2}) 超过了所需显示大小 ({PH3})。请使用自适应图片来缩减图片下载大小。（预计 {PH1}）"
+    "message": "此图片文件的大小 ({PH1}) 超过了所需显示大小 ({PH2})。请使用自适应图片来缩减图片下载大小。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "使用视频格式而非 GIF 格式可以优化动画内容的下载大小。（预计 {PH1}）"
+    "message": "使用视频格式而非 GIF 格式可以优化动画内容的下载大小。"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
-    "message": "请从持续时间最长的阶段开始检查。[几处延迟可降低到最小](https://web.dev/articles/optimize-inp#optimize_interactions)。如需缩短处理时长，请[优化主线程（通常是 JS）成本](https://web.dev/articles/optimize-long-tasks)。"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "每个[子部分都有特定的改进策略](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想情况下，LCP 的大部分时间应该用于加载资源，而不是消耗在延迟上。"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
-    "message": "按阶段划分的 INP"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "时长"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "元素渲染延迟"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "实际用户数据第 75 百分位"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "未检测到 LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "资源加载延迟"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "资源加载时长"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "子部分"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "第一字节时间 (Time to First Byte)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP 细分"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "使 LCP 图像能够立即从 HTML 中[被发现](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)，并[避免延迟加载](https://web.dev/articles/lcp-lazy-loading)，以此优化 LCP"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "已应用 fetchpriority 的 high 属性值"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "应该应用 fetchpriority=high"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "未应用延迟加载"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP 图片会在最开始检测到后的 {PH1}之后加载完成。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "未检测到 LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "未检测到 LCP 资源，因为该 LCP 不是图片"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "可在初始文档中检测到请求"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "发现 LCP 请求"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
-    "message": "每个[阶段都有特定的改进策略](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想情况下，大部分 LCP 时间应该花在加载资源上，而不是浪费在延迟上。"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "脚本"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
-    "message": "按阶段划分的 LCP"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "浪费的字节数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，其中的很多函数对现代浏览器而言并不是必需的。请考虑修改 JavaScript 构建流程，以便不转译 [Baseline](https://web.dev/articles/baseline-and-polyfills) 功能，除非您知道必须支持旧版浏览器。[了解为什么大多数网站可以部署 ES6+ 代码而无需转译](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "旧版 JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 和 HTTP/3 拥有许多 HTTP/1.1 没有的优势，例如多路复用。[详细了解如何使用现代 HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "没有请求使用 HTTP/1.1，或者请求当前对 HTTP/1.1 的使用不存在显著的优化空间。只有当同一来源的静态资源达到六个或更多，且这些资源并非来自本地开发环境或第三方来源时，HTTP/1.1 请求才会被标记。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "协议"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "请求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "现代 HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "请求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "来源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "时间"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "预计 LCP 节省毫秒数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "未使用的 preconnect。请检查并确保正确使用了 crossorigin 属性。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[避免链接关键请求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)，方法是缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "为最重要的源添加 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但请尽量不要超过 4 个。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "预连接候选项"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "关键路径延迟时间上限："
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "没有任何渲染任务受到网络依赖项的影响"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "没有其他源是预连接的合适候选对象"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "未预连接任何源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示可帮助浏览器在加载网页时尽早建立连接，从而在向该源发出第一个请求时节省时间。以下是该网页预先连接到的源。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "预连接的源"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "网络依赖关系树"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "发现了超过 4 个 preconnect 连接。此类连接应尽量少用，且应仅用于指向最重要的源。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "未使用的 preconnect。请仅针对网页可能会请求的源使用 preconnect。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "避免链接关键请求，方法是缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "请求正在屏蔽网页的初始渲染，这可能会延迟 LCP。[延迟或内嵌](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/)可以将这些网络请求移出关键路径。"
+    "message": "请求正在屏蔽网页的初始渲染，这可能会延迟 LCP。[延迟或内嵌](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources)可以将这些网络请求移出关键路径。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "时长"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "此导航没有渲染阻塞请求"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "请求"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "渲染屏蔽请求"
@@ -2690,11 +2693,47 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "如果“重新计算样式”的成本仍然很高，优化选择器可以降低此成本。请对用时较长及慢路径所占百分比较高的[选择器进行优化](https://developer.chrome.com/docs/devtools/performance/selector-stats)。选择器越简单、数量越少，DOM 的规模越小、结构越简单，越能降低匹配成本。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "用时"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "未找到任何 CSS 选择器数据。需要在“性能”面板设置中启用 CSS 选择器统计信息。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "尝试匹配次数"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "匹配数"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS 选择器成本"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "耗时最长的选择器"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "匹配尝试次数最多的选择器"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "最耗时/耗力选择器"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "总计"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "主线程耗时"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "第三方"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "传输大小"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "第三方代码可能会显著影响加载性能。[请减少并推迟加载第三方代码](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)，以优先渲染您的网页内容。"
+    "message": "第三方代码可能会显著影响加载性能。[请减少并推迟加载第三方代码](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/)，以优先渲染您的网页内容。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "未找到第三方内容"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "第三方"
@@ -2702,8 +2741,374 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "如果视口未针对移动设备进行优化，点按互动可能会[延迟最多 300 毫秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "移动设备点按延迟"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "针对移动设备优化视口"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "只有通过 GET 请求进行加载的网页才能储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "只有状态代码为 2XX 的网页才能被缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome 检测到一项在储存于缓存期间执行 JavaScript 的意图。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "已请求 AppBanner 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "往返缓存被相关 flag 停用了。请在此设备上访问 chrome://flags/#back-forward-cache 以从本地启用该功能。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "往返缓存已被命令行停用。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "因为内存不足，往返缓存已被停用。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "委托行为不支持往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "已针对预渲染程序停用往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "该网页无法缓存，因为它包含的 BroadcastChannel 实例具有已注册的监听器。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "含 cache-control:no-store 标头的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "缓存被刻意清除了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "该网页被逐出了缓存，以使另一个网页能够缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "包含插件的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "未定义"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "使用 FileChooser API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "使用 File System Access API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "使用媒体设备调度程序的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "媒体播放器正在播放内容时用户就离开了网页。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "使用 MediaSession API 并设置了播放状态的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "使用 MediaSession API 并设置了操作处理程序的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "往返缓存已被停用，因为受屏幕阅读器影响。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "使用 SecurityHandler 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "使用 Serial API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "使用 WebAuthetication API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "使用 WebBluetooth API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "使用 WebUSB API 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "往返缓存已被停用，因为在使用 Cache-Control: no-store 的网页上 Cookie 处于停用状态。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "使用专用 Worker 或 Worklet 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "该文档还未加载完毕时用户就离开了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "用户离开网页时，系统显示了应用横幅。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "用户离开网页时，系统显示了 Chrome 密码管理工具。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "用户离开网页时，DOM 提取正在进行。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "用户离开网页时，系统显示了 DOM Distiller Viewer。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "往返缓存已被停用，因为扩展程序使用了 Messaging API。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "在进入往返缓存之前，采用长期有效连接的扩展程序应断开连接。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "采用长期有效连接的扩展程序试图将消息发送到往返缓存中的框架。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "往返缓存已被停用，因为受扩展程序影响。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "用户离开网页时，该网页上显示了模态对话框（例如表单重新提交）或 HTTP 密码对话框。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "用户离开网页时，系统显示了离线版网页。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "用户离开网页时，系统显示了 Out-Of-Memory Intervention 栏。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "用户离开网页时，系统显示了权限请求。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "用户离开网页时，系统显示了弹出式内容拦截器。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "用户离开网页时，系统显示了安全浏览详情。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "“安全浏览”功能认定该网页有滥用性质，因此拦截了弹出式窗口。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "在该网页储存于往返缓存期间，有一个 Service Worker 被启用了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "往返缓存已被停用，因为文档出错了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "采用 FencedFrame 的网页无法存储在 bfcache 中。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "该网页被逐出了缓存，以使另一个网页能够缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "已被授予媒体流访问权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "包含某些类型嵌入内容（例如 PDF）的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "使用 IdleManager 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "具备开放的 IndexedDB 连接的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "往返缓存已被停用，因为发生了 IndexedDB 事件。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "使用了不符合条件的 API。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "已被扩展程序注入 JavaScript 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "已被扩展程序注入 StyleSheet 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "内部出错了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "往返缓存已被停用，因为部分 JavaScript 网络请求收到了包含 Cache-Control: no-store 标头的资源。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "往返缓存已被停用，因为这是一项 keepalive 请求。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "使用“键盘锁定”功能的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "该网页还未加载完毕时用户就离开了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "主资源包含 ache-control:no-cache 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "主资源包含 cache-control:no-store 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "该网页还没从往返缓存中恢复时导航就被取消了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "该网页被逐出了缓存，因为有一项使用中的网络连接收到了太多数据。Chrome 会限制网页在缓存期间可接收的数据量。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "包含传输中的 fetch() 或 XHR 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "该网页被逐出了往返缓存，因为有一项使用中的网络请求涉及了重定向。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "该网页被逐出了缓存，因为有一项网络连接处于开放状态的时间太长。Chrome 会限制网页在缓存期间可接收数据的时长。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "不含有效响应标头的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "导航是在主框架之外的某个框架中发生的。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "正在针对已建立索引的数据库处理事务的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "包含传输中的 fetch() 网络请求的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "包含传输中的网络请求的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "包含传输中的 XHR 网络请求的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "使用 PaymentManager 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "使用“画中画”功能的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "显示打印界面的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "该网页是使用“window.open()”打开的，而另一个标签页引用了该网页；或者，该网页打开了一个窗口。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "储存在往返缓存中的网页的渲染程序进程崩溃了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "储存于往返缓存中的网页的渲染程序进程被终止了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "已请求音频截取权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "已请求传感器使用权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "已请求后台同步或提取权限的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "已请求 MIDI 权限的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "已请求通知权限的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "已请求存储空间使用权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "已请求视频拍摄权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "只有网址架构为 HTTP / HTTPS 的网页才能被缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "在储存于往返缓存期间，该网页被一个 Service Worker 认领了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "有一个 Service Worker 尝试向储存于往返缓存中的网页发送 MessageEvent。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "在网页储存于往返缓存期间，ServiceWorker 被取消注册了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "该网页被逐出了往返缓存，因为有一个 Service Worker 被启用了。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome 重启了，因而清除了往返缓存条目。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "使用 SharedWorker 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "该网页被逐出了缓存，因为它收到了来自 SharedWorker 的消息"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "使用 SpeechRecognizer 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "使用 SpeechSynthesis 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "该网页上某个 iframe 发起的导航并未完成。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "子资源包含 ache-control:no-cache 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "子资源包含 cache-control:no-store 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "该网页超出了往返缓存中的储存时长上限，因而已过期。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "该网页在储存至往返缓存时超时了（可能是因为 pagehide 处理程序长时间运行）。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "该网页的主框架中含有一款卸载处理程序。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "该网页的子框架中含有一款卸载处理程序。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "浏览器更改了用户代理替换标头。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "已被授予视频/音频录制权的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "使用 WebDatabase 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "使用 WebHID 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "使用 WebLocks 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "使用 WebNfc 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "使用 WebOTPService 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "使用 WebRTC 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "往返缓存已被停用，因为使用了 WebRTC。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "使用 Webshare 的网页目前无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "使用 WebSocket 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "往返缓存已被停用，因为使用了 WebSocket。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "使用 WebTransport 的网页无法储存至往返缓存。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "往返缓存已被停用，因为使用了 WebTransport。"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "使用 WebXR 的网页目前无法储存至往返缓存。"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "对于动画内容，请使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) 尽量减少当内容在屏幕外时的 CPU 使用量。"
@@ -3233,8 +3638,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "提交问题"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "返回审核部分"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "隐藏"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "今年晚些时候，数据分析将取代效果审核。[点击此处了解详情并提供反馈](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "实验室数据"
@@ -3335,6 +3746,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "此次 Lighthouse 运行并不顺利，原因如下："
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "试用数据分析功能"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "无法归因"
   },
@@ -3365,6 +3779,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "重复的模块"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "重复的字节数"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "资源字节数"
   },
@@ -3373,6 +3790,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "显示/隐藏表格"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "传输字节数"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "未使用的字节数"

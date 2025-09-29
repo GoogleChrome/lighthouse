@@ -30,7 +30,9 @@ class CSSUsage extends BaseGatherer {
 
     // Force style to recompute.
     // Doesn't appear to be necessary in newer versions of Chrome.
-    await executionContext.evaluateAsync('getComputedStyle(document.body)');
+    await executionContext.evaluate(() => window.getComputedStyle(document.body), {
+      args: [],
+    });
 
     const {ruleUsage} = await session.sendCommand('CSS.stopRuleUsageTracking');
     await session.sendCommand('CSS.disable');

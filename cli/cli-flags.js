@@ -149,7 +149,7 @@ function getYargsParser(manualArgv) {
       },
       'form-factor': {
         type: 'string',
-        describe: 'Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, --preset=desktop instead.',
+        describe: 'Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, use --preset=desktop instead.',
       },
       'screenEmulation': {
         describe: 'Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2',

@@ -214,7 +214,6 @@ class LighthouseError extends Error {
     if (typeof possibleError === 'object' && possibleError !== null) {
       if (possibleError.sentinel === LHERROR_SENTINEL) {
         // Include sentinel in destructuring so it doesn't end up in `properties`.
-        // eslint-disable-next-line no-unused-vars
         const {code, stack, cause, properties} = /** @type {SerializedLighthouseError} */ (possibleError);
         const errorDefinition = LighthouseError.errors[/** @type {keyof typeof ERRORS} */ (code)];
         const lhError = new LighthouseError(errorDefinition, properties, {cause});

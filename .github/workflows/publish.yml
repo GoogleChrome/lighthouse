@@ -17,12 +17,20 @@ jobs:
       - id: should_run
         continue-on-error: true
         if: ${{ github.event_name == 'schedule' }}
-        run: test -z $(git rev-list --after="1 day" ${{ github.sha }}) && echo "should_run=false" >> $GITHUB_OUTPUT
+        run: |
+          commit_count=$(git rev-list --count --after="1 day" ${{ github.sha }})
+
+          if [[ "$commit_count" -gt 0 ]]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
 
   publish:
     # Prevent scheduled job from running if...
     # 1) this is a fork
     # 2) there has not been a change in the last day
+    needs: check_date
     if: |
       github.event_name != 'schedule' ||
       (github.repository == 'GoogleChrome/lighthouse' && ${{ needs.check_date.outputs.should_run != 'false' }})
@@ -31,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: '22.19'
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
 

@@ -27,7 +27,6 @@ const mockStorage = {
 };
 
 describe('Lighthouse chrome popup', function() {
-  // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-extension');
 
   let browser;

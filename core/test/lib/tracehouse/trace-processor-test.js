@@ -206,13 +206,11 @@ describe('TraceProcessor', () => {
       const otherMainFrame = 'OTHER_TAB_FRAME';
       const cat = 'loading,rail,devtools.timeline';
       testTrace.traceEvents.push(
-        /* eslint-disable max-len */
         {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
         {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
         {name: 'Event1', cat, args: {frame: mainFrame}},
         {name: 'Event2', cat, args: {frame: childFrame}},
         {name: 'Event3', cat, args: {frame: otherMainFrame}}
-        /* eslint-enable max-len */
       );
       const trace = TraceProcessor.processTrace(testTrace);
       const frameTreeEventOutput = trace.frameTreeEvents.map((e) =>
@@ -682,11 +680,11 @@ Object {
           testTrace.traceEvents.filter(e => e.name !== 'firstContentfulPaint');
 
         testTrace.traceEvents.push(
-          /* eslint-disable max-len */
+
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}, ts: 910, duration: 10},
           {name: 'firstContentfulPaint', cat, args: {frame: childFrame}, ts: 1000, duration: 10},
           {name: 'firstContentfulPaint', cat, args: {frame: mainFrame}, ts: 1100, duration: 10}
-          /* eslint-enable max-len */
+
         );
         const trace = TraceProcessor.processTrace(testTrace);
         const navigation = TraceProcessor.processNavigation(trace);

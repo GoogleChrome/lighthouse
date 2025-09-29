@@ -94,7 +94,7 @@ async function internalRun(url, tmpPath, config, logger, options) {
 
   try {
     await fs.access(outputPath);
-  } catch (e) {
+  } catch {
     throw new ChildProcessError(`Lighthouse run failed to produce a report.`, logger.getLog());
   }
 

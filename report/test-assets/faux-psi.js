@@ -89,6 +89,7 @@ async function renderLHReport(lhr, container) {
       el.style.display = 'none';
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     container.textContent = 'Error: LHR failed to render.';
   }

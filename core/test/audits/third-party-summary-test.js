@@ -8,18 +8,19 @@ import {defaultSettings} from '../../config/constants.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const trace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const devtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const trace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const devtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 const noThirdPartyTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
 const noThirdPartyDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 
 describe('Third party summary', () => {
   it('surface the discovered third parties', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: devtoolsLog},
-      traces: {defaultPass: trace},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -36,10 +37,11 @@ describe('Third party summary', () => {
 
   it('account for simulated throttling', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: devtoolsLog},
-      traces: {defaultPass: trace},
+      DevtoolsLog: devtoolsLog,
+      Trace: trace,
       URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -56,14 +58,15 @@ describe('Third party summary', () => {
 
   it('be not applicable when no third parties are present', async () => {
     const artifacts = {
-      devtoolsLogs: {defaultPass: noThirdPartyDevtoolsLog},
-      traces: {defaultPass: noThirdPartyTrace},
+      DevtoolsLog: noThirdPartyDevtoolsLog,
+      Trace: noThirdPartyTrace,
       URL: {
         requestedUrl: 'http://localhost:65178/animation.html',
         mainDocumentUrl: 'http://localhost:65178/animation.html',
         finalDisplayedUrl: 'http://localhost:65178/animation.html',
       },
       GatherContext: {gatherMode: 'navigation'},
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -78,50 +81,48 @@ describe('Third party summary', () => {
 
   it('does not return third party entity that matches main resource entity', async () => {
     const externalArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://example.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
-      },
-      traces: {defaultPass: trace},
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://example.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
         requestedUrl: 'http://example.com',
         mainDocumentUrl: 'http://example.com',
         finalDisplayedUrl: 'http://example.com',
       },
+      SourceMaps: [],
     };
     const facebookArtifacts = {
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'http://facebook.com'},
-          {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
-          {url: 'https://pwa.rocks/'},
-          {url: 'https://pwa.rocks/script.js'},
-          {url: 'https://pwa.rocks/0ff789bf.js'},
-          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
-          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
-          {url: 'https://www.google-analytics.com/analytics.js'},
-          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
-        ]),
-      },
-      traces: {defaultPass: trace},
+      DevtoolsLog: networkRecordsToDevtoolsLog([
+        {url: 'http://facebook.com'},
+        {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+        {url: 'https://pwa.rocks/'},
+        {url: 'https://pwa.rocks/script.js'},
+        {url: 'https://pwa.rocks/0ff789bf.js'},
+        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+        {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+        {url: 'https://www.google-analytics.com/analytics.js'},
+        {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
+      ]),
+      Trace: trace,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
         requestedUrl: 'http://facebook.com',
         mainDocumentUrl: 'http://facebook.com',
         finalDisplayedUrl: 'http://facebook.com',
       },
+      SourceMaps: [],
     };
 
     const settings = JSON.parse(JSON.stringify(defaultSettings));

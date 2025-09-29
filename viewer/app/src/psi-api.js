@@ -34,7 +34,6 @@ class PSIApi {
    */
   fetchPSI(params) {
     const apiUrl = new URL(PSI_URL);
-    // eslint-disable-next-line prefer-const
     for (let [name, value] of Object.entries(params)) {
       if (Array.isArray(value)) continue;
       if (name === 'strategy') value = value || 'mobile';

@@ -8,7 +8,7 @@ import fs from 'fs';
 import assert from 'assert/strict';
 import {createRequire} from 'module';
 
-import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js'; // eslint-disable-line max-len
+import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js';
 import {LH_ROOT} from '../../../shared/root.js';
 
 const require = createRequire(import.meta.url);

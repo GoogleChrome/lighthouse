@@ -5,10 +5,8 @@
  */
 
 /**
-  * @fileoverview Determines optimized jpeg/webp filesizes for all same-origin and dataURI images by
-  *   running the images through canvas in the browser context.
+  * @fileoverview Determines optimized jpeg/webp filesizes for all same-origin and dataURI images
   */
-
 
 import log from 'lighthouse-logger';
 
@@ -133,7 +131,7 @@ class OptimizedImages extends BaseGatherer {
         const image = {failed: false, ...stats, ...record};
         results.push(image);
       } catch (err) {
-        log.warn('optimized-images', err.message);
+        log.warn('optimized-images', err.message, record.url);
 
         // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
         // want to tank the entire run due to a single image.
@@ -164,12 +162,7 @@ class OptimizedImages extends BaseGatherer {
       .filterImageRequests(networkRecords)
       .sort((a, b) => b.resourceSize - a.resourceSize);
 
-    const results = await this.computeOptimizedImages(context.driver.defaultSession, imageRecords);
-    const successfulResults = results.filter(result => !result.failed);
-    if (results.length && !successfulResults.length) {
-      throw new Error('All image optimizations failed');
-    }
-    return results;
+    return await this.computeOptimizedImages(context.driver.defaultSession, imageRecords);
   }
 }
 

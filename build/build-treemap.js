@@ -48,18 +48,12 @@ async function main() {
     appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
-      {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
       {path: 'styles/*'},
     ],
     javascripts: [
       buildStrings(),
       {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
-      {path: require.resolve('event-target-shim/umd')},
       {path: require.resolve('webtreemap-cdt')},
-      {path: require.resolve('tabulator-tables/dist/js/tabulator_core.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/sort.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
-      {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', esbuild: true},
     ],

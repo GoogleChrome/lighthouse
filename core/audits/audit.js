@@ -8,8 +8,6 @@ import * as LH from '../../types/lh.js';
 import {isUnderTest} from '../lib/lh-env.js';
 import {Util} from '../../shared/util.js';
 
-const DEFAULT_PASS = 'defaultPass';
-
 /** @type {Record<keyof LH.Audit.ProductMetricSavings, number>} */
 const METRIC_SAVINGS_PRECISION = {
   FCP: 50,
@@ -45,13 +43,6 @@ const METRIC_SAVINGS_PRECISION = {
 const clampTo2Decimals = val => Math.round(val * 100) / 100;
 
 class Audit {
-  /**
-   * @return {string}
-   */
-  static get DEFAULT_PASS() {
-    return DEFAULT_PASS;
-  }
-
   /**
    * @return {LH.Audit.ScoreDisplayModes}
    */
@@ -141,6 +132,17 @@ class Audit {
   }
 
   /**
+   * @param {LH.Audit.Details.Checklist['items']} items
+   * @return {LH.Audit.Details.Checklist}
+   */
+  static makeChecklistDetails(items) {
+    return {
+      type: 'checklist',
+      items,
+    };
+  }
+
+  /**
    * @param {LH.Audit.Details.Table['headings']} headings
    * @param {LH.Audit.Details.Table['items']} results
    * @param {TableOptions=} options
@@ -152,7 +154,7 @@ class Audit {
     if (results.length === 0) {
       return {
         type: 'table',
-        headings: [],
+        headings,
         items: [],
         summary,
       };
@@ -162,7 +164,7 @@ class Audit {
 
     return {
       type: 'table',
-      headings: headings,
+      headings,
       items: results,
       summary,
       sortedBy,
@@ -179,6 +181,21 @@ class Audit {
     return {
       type: 'list',
       items: items,
+    };
+  }
+
+  /**
+   * @param {LH.IcuMessage | string=} title
+   * @param {LH.IcuMessage | string=} description
+   * @param {LH.Audit.Details.ListableDetail} value
+   * @return {LH.Audit.Details.ListSectionItem}
+   */
+  static makeListDetailSectionItem(value, title, description) {
+    return {
+      type: 'list-section',
+      title,
+      description,
+      value,
     };
   }
 
@@ -467,6 +484,7 @@ class Audit {
 
       details: product.details,
       guidanceLevel: audit.meta.guidanceLevel,
+      replacesAudits: audit.meta.replacesAudits,
     };
   }
 
@@ -476,10 +494,12 @@ class Audit {
    * @returns {LH.Artifacts.MetricComputationDataInput}
    */
   static makeMetricComputationDataInput(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
-    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL: artifacts.URL};
+    const {URL, SourceMaps} = artifacts;
+    // eslint-disable-next-line max-len
+    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL, SourceMaps, simulator: null};
   }
 }
 

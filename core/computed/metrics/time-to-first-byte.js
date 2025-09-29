@@ -58,6 +58,6 @@ class TimeToFirstByte extends NavigationMetric {
 
 const TimeToFirstByteComputed = makeComputedArtifact(
   TimeToFirstByte,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
 );
 export {TimeToFirstByteComputed as TimeToFirstByte};

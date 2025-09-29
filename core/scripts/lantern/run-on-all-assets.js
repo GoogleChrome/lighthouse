@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 /** @typedef {{tracePath: string, devtoolsLogPath: string, lhrPath: string}} GoldenUnthrottled */
 /** @typedef {Record<string, number|undefined>} GoldenWpt3g */
 /**
@@ -20,12 +18,17 @@
 /** @typedef {{sites: GoldenSite[]}} Golden */
 
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
-import {execFileSync} from 'child_process';
+import childProcess from 'child_process';
+import util from 'util';
 
 import constants from './constants.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
+import {ConcurrentMapper} from '../../../cli/test/smokehouse/lib/concurrent-mapper.js';
+
+const execFile = util.promisify(childProcess.execFile);
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_PATH;
 const SITE_INDEX_PATH = path.resolve(process.cwd(), INPUT_PATH);
@@ -37,22 +40,25 @@ if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations fil
 /** @type {Golden} */
 const expectations = readJson(SITE_INDEX_PATH);
 
-for (const site of expectations.sites) {
+const concurrency = process.env.CI ?
+  os.cpus().length :
+  Math.max(os.cpus().length - 2, 1);
+console.log(`Running across ${concurrency} processes ...`);
+
+await ConcurrentMapper.map(expectations.sites, async (site) => {
   const trace = path.join(SITE_INDEX_DIR, site.unthrottled.tracePath);
   const log = path.join(SITE_INDEX_DIR, site.unthrottled.devtoolsLogPath);
 
   console.log('Running', site.url, '...');
   try {
-    const rawOutput = execFileSync(RUN_ONCE_PATH, [trace, log])
-      .toString()
-      .trim();
-    if (!rawOutput) console.log('ERROR EMPTY OUTPUT!');
+    const rawOutput = (await execFile(RUN_ONCE_PATH, [trace, log])).stdout.trim();
+    if (!rawOutput) console.log(site.url, 'ERROR EMPTY OUTPUT!');
     const lantern = JSON.parse(rawOutput);
     Object.assign(site, {lantern});
   } catch (e) {
-    console.error(e);
+    console.error(site.url, e);
   }
-}
+}, {concurrency});
 
 // eslint-disable-next-line max-len
 fs.writeFileSync(constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(expectations, null, 2));

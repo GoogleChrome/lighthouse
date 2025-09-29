@@ -6,7 +6,7 @@
 
 import assert from 'assert/strict';
 
-import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
+import {FirstContentfulPaint} from '../../../computed/metrics/first-contentful-paint.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/artifacts/progressive-app/trace.json', import.meta);
@@ -21,7 +21,7 @@ describe('Metrics: FCP', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings, URL},
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
       context);
 
     expect({
@@ -38,7 +38,9 @@ describe('Metrics: FCP', () => {
   it('should compute an observed value (desktop)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await FirstContentfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await FirstContentfulPaint.request(
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
       context);
 
     await expect(result).toMatchInlineSnapshot(`
@@ -53,7 +55,9 @@ Object {
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {gatherContext, trace, devtoolsLog, settings}, context);
+      // eslint-disable-next-line max-len
+      {gatherContext, trace, devtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
+      context);
 
     await expect(result).toMatchInlineSnapshot(`
 Object {

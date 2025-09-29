@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable no-console */
-
 import fs from 'fs';
 import assert from 'assert/strict';
 import path from 'path';

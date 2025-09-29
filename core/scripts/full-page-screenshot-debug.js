@@ -9,7 +9,6 @@
 
 import * as fs from 'fs';
 
-import esMain from 'es-main';
 import * as puppeteer from 'puppeteer-core';
 import {getChromePath} from 'chrome-launcher';
 
@@ -82,7 +81,7 @@ async function getDebugImage(lhr) {
   return debugDataUrl;
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   const lhr = JSON.parse(fs.readFileSync(process.argv[2], 'utf-8'));
   const imageUrl = await getDebugImage(lhr);
   const [type, base64Data] = imageUrl.split(',');

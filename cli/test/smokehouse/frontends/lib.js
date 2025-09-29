@@ -10,10 +10,6 @@
  * Supports skipping and modifiying expectations to match the environment.
  */
 
-/* eslint-disable no-console */
-
-import {cloneDeep} from 'lodash-es';
-
 import smokeTests from '../core-tests.js';
 import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 
@@ -23,7 +19,7 @@ import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 async function smokehouse(options) {
   const {urlFilterRegex, skip, modify, shardArg, ...smokehouseOptions} = options;
 
-  const clonedTests = cloneDeep(smokeTests);
+  const clonedTests = structuredClone(smokeTests);
   const modifiedTests = [];
   for (const test of clonedTests) {
     if (urlFilterRegex && !test.expectations.lhr.requestedUrl.match(urlFilterRegex)) {

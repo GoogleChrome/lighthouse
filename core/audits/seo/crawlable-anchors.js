@@ -18,6 +18,16 @@ const UIStrings = {
   columnFailingLink: 'Uncrawlable Link',
 };
 
+const hrefAssociatedAttributes = [
+  'target',
+  'download',
+  'ping',
+  'rel',
+  'hreflang',
+  'type',
+  'referrerpolicy',
+];
+
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class CrawlableAnchors extends Audit {
@@ -45,10 +55,14 @@ class CrawlableAnchors extends Audit {
       role = '',
       id,
       href,
+      attributeNames = [],
+      listeners = [],
+      ancestorListeners = [],
     }) => {
       rawHref = rawHref.replace( /\s/g, '');
       name = name.trim();
       role = role.trim();
+      const hasListener = Boolean(listeners.length || ancestorListeners.length);
 
       if (role.length > 0) return;
       // Ignore mailto links even if they use one of the failing patterns. See https://github.com/GoogleChrome/lighthouse/issues/11443#issuecomment-694898412
@@ -61,6 +75,19 @@ class CrawlableAnchors extends Audit {
 
       if (rawHref.startsWith('file:')) return true;
       if (name.length > 0) return;
+
+      // If the a element has no href attribute, then the element represents a
+      // placeholder for where a link might otherwise have been placed, if it had
+      // been relevant, consisting of just the element's contents. The target,
+      // download, ping, rel, hreflang, type, and referrerpolicy attributes must be
+      // omitted if the href attribute is not present.
+      // See https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
+      if (
+        !attributeNames.includes('href') &&
+        hrefAssociatedAttributes.every(attribute => !attributeNames.includes(attribute))
+      ) {
+        return hasListener;
+      }
 
       if (href === '') return true;
       if (javaScriptVoidRegExp.test(rawHref)) return true;

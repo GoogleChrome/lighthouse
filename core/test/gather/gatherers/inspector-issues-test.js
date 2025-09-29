@@ -247,14 +247,17 @@ describe('getArtifact', () => {
       genericIssue: [],
       lowTextContrastIssue: [],
       navigatorUserAgentIssue: [],
+      partitioningBlobURLIssue: [],
       propertyRuleIssue: [],
       quirksModeIssue: [],
-      selectElementAccessibilityIssue: [],
+      elementAccessibilityIssue: [],
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       federatedAuthRequestIssue: [],
+      sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
+      userReidentificationIssue: [],
     });
   });
 
@@ -314,14 +317,17 @@ describe('getArtifact', () => {
       genericIssue: [],
       lowTextContrastIssue: [],
       navigatorUserAgentIssue: [],
+      partitioningBlobURLIssue: [],
       propertyRuleIssue: [],
       quirksModeIssue: [],
-      selectElementAccessibilityIssue: [],
+      elementAccessibilityIssue: [],
       sharedArrayBufferIssue: [],
       sharedDictionaryIssue: [],
       federatedAuthRequestIssue: [],
+      sriMessageSignatureIssue: [],
       stylesheetLoadingIssue: [],
       federatedAuthUserInfoRequestIssue: [],
+      userReidentificationIssue: [],
     });
   });
 });

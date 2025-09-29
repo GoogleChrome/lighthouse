@@ -61,10 +61,10 @@ A Lighthouse plugin is just a node module with a name that starts with `lighthou
   "type": "module",
   "main": "plugin.js",
   "peerDependencies": {
-    "lighthouse": "^12.3.0"
+    "lighthouse": "^12.8.2"
   },
   "devDependencies": {
-    "lighthouse": "^12.3.0"
+    "lighthouse": "^12.8.2"
   }
 }
 ```
@@ -255,11 +255,9 @@ class HeaderPoliceAudit {
   }
 
   static async audit(artifacts, context) {
-    // Lighthouse loads the page multiple times: while offline, without javascript, etc.
-    // Use the devtools log from the default pass of the page.
-    const devtoolsLog = artifacts.DevtoolsLog;
     // Request the network records from the devtools log.
     // The `context` argument is passed in to allow Lighthouse to cache the result and not re-compute the network requests for every audit that needs them.
+    const devtoolsLog = artifacts.DevtoolsLog;
     const requests = await NetworkRecords.request(devtoolsLog, context);
 
     // Do whatever you need to with the network requests.

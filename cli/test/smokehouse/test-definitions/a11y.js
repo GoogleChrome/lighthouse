@@ -43,7 +43,7 @@ const expectations = {
         },
       },
       'aria-allowed-role': {
-        score: 0,
+        score: 1, // failing results, but this audit is informative
         details: {
           items: [
             {
@@ -134,7 +134,6 @@ const expectations = {
         score: 1,
         details: {
           'type': 'table',
-          'headings': [],
           'items': [],
         },
       },
@@ -664,7 +663,7 @@ const expectations = {
         },
       },
       'image-redundant-alt': {
-        score: 0,
+        score: 1, // failing results, but this audit is informative
         details: {
           items: [
             {
@@ -746,7 +745,7 @@ const expectations = {
         },
       },
       'landmark-one-main': {
-        score: 1,
+        score: 0,
         details: {
           items: [
             {
@@ -906,7 +905,7 @@ const expectations = {
         },
       },
       'table-duplicate-name': {
-        score: 0,
+        score: 1, // failing results, but this audit is informative
         details: {
           items: [
             {

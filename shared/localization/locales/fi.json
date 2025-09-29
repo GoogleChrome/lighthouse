@@ -660,7 +660,10 @@
     "message": "Jakele animaatiosisältöä videomuodossa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Käytä JavaScript-paketissasi nykyaikaista käyttöönottostrategiaa, jossa havaitaan moduuli/ei-moduuli-ominaisuus, minkä avulla vähennetään nykyaikaisiin selaimiin lähetetyn koodin määrää mutta säilytetään silti vanhojen selaimien tuki. [Lue lisää modernin JavaScriptin käyttämisestä](https://web.dev/articles/publish-modern-javascript)."
+    "message": "Polyfill- ja transform-merkintöjen avulla vanhat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Harkitse JavaScript-käännösprosessin muuttamista niin, että [Baseline](https://web.dev/baseline)-ominaisuuksia ei transpiloida, ellet tiedä, että sinun on tuettava vanhoja selaimia. [Lue lisää siitä, miksi useimmat sivustot voivat ottaa käyttöön ES6+-koodin ilman transpilointia](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
+    "message": "Sivulla havaittiin core-js:n versio 2. Päivitä versioon 3, niin saat käyttöösi useita suorituskyvyn parannuksia."
   },
   "core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Vältä vanhan JavaScriptin näyttämistä nykyaikaisilla selaimilla"
@@ -760,6 +763,18 @@
   },
   "core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Ota tekstin pakkaus käyttöön"
+  },
+  "core/audits/clickjacking-mitigation.js | columnSeverity": {
+    "message": "Vakavuus"
+  },
+  "core/audits/clickjacking-mitigation.js | description": {
+    "message": "`X-Frame-Options` (XFO) ‑otsikko tai `frame-ancestors`-sääntö `Content-Security-Policy` (CSP) ‑otsikossa määrittävät, mihin sivu voidaan upottaa. Ne voivat vähentää clickjacking-hyökkäyksiä estämällä joidenkin tai kaikkien sivustojen sivun upottamisen. [Lue lisää clickjacking-hyökkäysten torjumisesta](https://developer.chrome.com/docs/lighthouse/best-practices/clickjacking-mitigation)."
+  },
+  "core/audits/clickjacking-mitigation.js | noClickjackingMitigation": {
+    "message": "Kehyksen hallintaa koskevaa käytäntöä ei löydy"
+  },
+  "core/audits/clickjacking-mitigation.js | title": {
+    "message": "Pienennä clickjackauksen riskiä XFO:lla tai CSP:llä"
   },
   "core/audits/critical-request-chains.js | description": {
     "message": "Alla olevat kriittiset pyyntöketjut kertovat, minkä resurssien lataaminen priorisoidaan. Suosittelemme parantamaan sivun latausaikaa lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista. [Lue, miten voit välttää kriittisten pyyntöjen ketjuttamisen](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
@@ -977,6 +992,36 @@
   "core/audits/font-display.js | undeclaredFontOriginWarning": {
     "message": "{fontCountForOrigin,plural, =1{Lighthouse ei voinut automaattisesti tarkistaa lähteen ({fontOrigin}) arvoa: `font-display`.}other{Lighthouse ei voinut automaattisesti tarkistaa lähteen ({fontOrigin}) arvoja: `font-display`.}}"
   },
+  "core/audits/has-hsts.js | columnDirective": {
+    "message": "Sääntö"
+  },
+  "core/audits/has-hsts.js | columnSeverity": {
+    "message": "Vakavuus"
+  },
+  "core/audits/has-hsts.js | description": {
+    "message": "HSTS-otsikon käyttöönotto vähentää merkittävästi HTTP-yhteyksien alentamisen ja salakuunteluhyökkäysten riskiä. Suosittelemme käyttöönottoa vaiheittain, aloittaen alhaisesta enimmäisiästä. [Lue lisää vahvan HSTS-käytännön käyttämisestä.](https://developer.chrome.com/docs/lighthouse/best-practices/has-hsts)"
+  },
+  "core/audits/has-hsts.js | invalidSyntax": {
+    "message": "Virheellinen syntaksi"
+  },
+  "core/audits/has-hsts.js | lowMaxAge": {
+    "message": "`max-age` on liian alhainen"
+  },
+  "core/audits/has-hsts.js | noHsts": {
+    "message": "HSTS-otsikkoa ei löytynyt"
+  },
+  "core/audits/has-hsts.js | noMaxAge": {
+    "message": "Ei `max-age`-sääntöä"
+  },
+  "core/audits/has-hsts.js | noPreload": {
+    "message": "`preload`-sääntöä ei löytynyt"
+  },
+  "core/audits/has-hsts.js | noSubdomain": {
+    "message": "`includeSubDomains`-sääntöä ei löytynyt"
+  },
+  "core/audits/has-hsts.js | title": {
+    "message": "Käytä vahvaa HSTS-käytäntöä"
+  },
   "core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Kuvasuhde (todellinen)"
   },
@@ -1009,6 +1054,9 @@
   },
   "core/audits/image-size-responsive.js | title": {
     "message": "Näyttää kuvat sopivalla resoluutiolla"
+  },
+  "core/audits/insights/cls-culprits-insight.js | columnScore": {
+    "message": "Asettelun muutospisteet"
   },
   "core/audits/is-on-https.js | allowed": {
     "message": "Sallittu"
@@ -1082,9 +1130,6 @@
   "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
     "message": "Lisätty iframe"
   },
-  "core/audits/layout-shifts.js | rootCauseRenderBlockingRequest": {
-    "message": "Myöhästynyt verkkopyyntö muutti sivun asettelua"
-  },
   "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
     "message": "Mediaelementiltä puuttuu tarkka koko"
   },
@@ -1143,7 +1188,7 @@
     "message": "Käyttäjien ensitoiminnon suurin mahdollinen viive on sama kuin pisimmän tehtävän kesto. [Lue lisää Suurin mahdollinen ensimmäisen toiminnon viive ‑mittarista](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Nopeusindeksi kertoo, kuinka nopeasti sivun sisältö tulee näkyviin. [Lue lisää Nopeusindeksi-mittarista](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index kertoo, kuinka nopeasti sivun sisältö tulee näkyviin. [Lue lisää Speed Index -mittarista](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Kaikkien FCP:n ja interaktiivisuutta edeltävän ajan väliset ajanjaksot yhteenlaskettuna, kun tehtävän pituus on yli 50 ms (ilmoitettu millisekunteina). [Lue lisää Estoaika yhteensä ‐mittarista](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1186,6 +1231,24 @@
   },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Tehosteessa on ei-tuettuja ajoitusparametreja"
+  },
+  "core/audits/origin-isolation.js | columnDirective": {
+    "message": "Sääntö"
+  },
+  "core/audits/origin-isolation.js | columnSeverity": {
+    "message": "Vakavuus"
+  },
+  "core/audits/origin-isolation.js | description": {
+    "message": "Cross-Origin-Opener-Policy-käytännöllä (COOP) voidaan eristää ylimmän tason ikkuna muista dokumenteista, kuten ponnahdusikkunoista. [Lue lisää COOP-otsikon käyttöönotosta.](https://web.dev/articles/why-coop-coep#coop)"
+  },
+  "core/audits/origin-isolation.js | invalidSyntax": {
+    "message": "Virheellinen syntaksi"
+  },
+  "core/audits/origin-isolation.js | noCoop": {
+    "message": "COOP-otsikkoa ei löytynyt"
+  },
+  "core/audits/origin-isolation.js | title": {
+    "message": "Varmista alkuperän oikea eristäminen COOP:n avulla"
   },
   "core/audits/preload-fonts.js | description": {
     "message": "Esilataa `optional` fonttia ensikertalaisten kävijöiden saataville. [Lue lisää fonttien esilataamisesta](https://web.dev/articles/preload-optional-fonts)."
@@ -1252,36 +1315,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Linkit ovat indeksoitavissa"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Muu lukukelvoton teksti"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Fonttikoko"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% sivun tekstistä"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Valitsin"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Alle 12 pikselin kirjasinkoot ovat liian pieniä luettavaksi ja edellyttävät mobiilivierailijoiden zoomaavan nipistämällä voidakseen lukea. Pyri siihen, että >60 % sivun tekstistä on ≥12 px. [Lue lisää helppolukuisesta fonttikoosta](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} lukukelpoista tekstiä"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Teksti on lukukelvotonta, koska näkymän sisällönkuvauskenttää ei ole optimoitu mobiilinäytöille."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "Dokumentissa ei käytetä lukukelpoisia fonttikokoja"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Lukukelpoista tekstiä"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "Dokumentti käyttää lukukelpoisia fonttikokoja"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang-linkit kertovat hakukoneille, mikä sivuversio niiden pitäisi lisätä tietyn kielen tai alueen hakutuloksiin. [Lue lisää: `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
@@ -1377,7 +1410,7 @@
     "message": "Palvelimen vasteaika alussa oli lyhyt"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chromessa siirrytään uuteen käyttökokemukseen, jossa käyttäjät voivat valita selaamisen ilman kolmannen osapuolen evästeitä. [Lue lisää kolmannen osapuolen evästeistä](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Kolmannen osapuolen evästeet saatetaan estää joissakin yhteyksissä. [Lue lisää kolmannen osapuolen evästeiden rajoituksiin valmistautumisesta](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 eväste löytyi}other{# evästettä löytyi}}"
@@ -1429,6 +1462,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimoi kolmannen osapuolen käyttö"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Vakavuus"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) ‑otsikon `require-trusted-types-for`-sääntö kehottaa käyttäjäagentteja hallitsemaan DOM XSS ‑nielufunktioille välitettyä dataa. [Lue lisää DOM-pohjaisen XSS:n estämisestä luotettavilla tyypeillä](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Luotetut tyypit ‑säännön `Content-Security-Policy`-otsikkoa ei löytynyt"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "DOM-pohjaisen XSS:n lieventäminen Trusted Types ‑ominaisuudella"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Lisää kuvaelementeille kiinteä leveys ja pituus, jotta asettelu muuttuu vähemmän ja CLS paranee. [Katso, miten voit valita kuvan mitat](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1613,11 +1658,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Ensimmäistä renderöintiä koskevat parannusehdotukset"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Nämä vinkit ovat saatavilla myös Chrome DevToolsin tulospaneelissa – [tallenna jälki](https://developer.chrome.com/docs/devtools/performance/reference), niin näet tarkempia tietoja."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Tilastot"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Tiedot"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Paranna latauskokemusta kokonaisuutena, jotta sivu on responsiivisempi ja käytettävissä mahdollisimman pian. Tärkeimmät mittarit ovat interaktiivisuutta edeltävä aika ja nopeusindeksi."
+    "message": "Paranna latauskokemusta kokonaisuutena, jotta sivu on responsiivisempi ja käytettävissä mahdollisimman pian. Tärkeimmät mittarit ovat interaktiivisuutta edeltävä aika ja Speed Index."
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Yleiset parannusehdotukset"
@@ -1675,357 +1726,6 @@
   },
   "core/gather/timespan-runner.js | warningNavigationDetected": {
     "message": "Suorituksen aikana havaittiin sivulla navigointi. Aikajanatilan käyttämistä sivulla siirtymisten valvonnassa ei suositella. Navigointitilan avulla voit valvoaa sivulla navigointia ja parantaa kolmannen osapuolen attribuutiota ja pääsäikeen tunnistusta."
-  },
-  "core/lib/bf-cache-strings.js | HTTPMethodNotGET": {
-    "message": "Vain GET-pyynnön kautta ladattavat sivut voivat käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | HTTPStatusNotOK": {
-    "message": "Välimuistiin voi tallentaa vain sivuja, joilla on tilakoodi 2XX."
-  },
-  "core/lib/bf-cache-strings.js | JavaScriptExecution": {
-    "message": "Chrome havaitsi välimuistissa yrityksen suorittaa JavaScript."
-  },
-  "core/lib/bf-cache-strings.js | appBanner": {
-    "message": "AppBanneria pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | authorizationHeader": {
-    "message": "Keepalive-pyyntö estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabled": {
-    "message": "Merkinnät estävät siirtymisvälimuistin käytön. Ota se käyttöön paikallisesti tällä laitteella osoitteessa chrome://flags/#back-forward-cache."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByCommandLine": {
-    "message": "Komentorivi estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledByLowMemory": {
-    "message": "Riittämätön muisti estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForDelegate": {
-    "message": "Delegaatti ei tue siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | backForwardCacheDisabledForPrerender": {
-    "message": "Esirenderöijä estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | broadcastChannel": {
-    "message": "Sivua ei voi tallentaa välimuistiin, koska sillä on BroadcastChannel-esiintymä, jolla on rekisteröityjä kuuntelijoita."
-  },
-  "core/lib/bf-cache-strings.js | cacheControlNoStore": {
-    "message": "Sivut, joilla on cache-control:no-store-otsikko, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | cacheFlushed": {
-    "message": "Välimuisti tyhjennettiin tarkoituksella."
-  },
-  "core/lib/bf-cache-strings.js | cacheLimit": {
-    "message": "Sivu poistettiin välimuistista, jotta toinen sivu voitiin tallentaa välimuistiin."
-  },
-  "core/lib/bf-cache-strings.js | containsPlugins": {
-    "message": "Liitännäisiä sisältävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentFileChooser": {
-    "message": "FileChooser APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentFileSystemAccess": {
-    "message": "File System Access APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaDevicesDispatcherHost": {
-    "message": "Medialaitteen välittäjää käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaPlay": {
-    "message": "Mediasoitin oli käynnissä siirryttäessä pois."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSession": {
-    "message": "MediaSession APIa käyttävät ja toiston tilan asettavat sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentMediaSessionService": {
-    "message": "MediaSession APIa käyttävät ja toimintokäsittelijöitä asettavat sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentScreenReader": {
-    "message": "Näytönlukuohjelma estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | contentSecurityHandler": {
-    "message": "SecurityHandleria käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentSerial": {
-    "message": "Serial APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentWebAuthenticationAPI": {
-    "message": "WebAuthentication APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentWebBluetooth": {
-    "message": "WebBluetooth APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | contentWebUSB": {
-    "message": "WebUSB APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | cookieDisabled": {
-    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska evästeet on poistettu käytöstä sivulla, jolla on käytössä `Cache-Control: no-store`."
-  },
-  "core/lib/bf-cache-strings.js | dedicatedWorkerOrWorklet": {
-    "message": "Dedicated workeria tai workletia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | documentLoaded": {
-    "message": "Dokumentti ei latautunut kokonaan ennen pois siirtymistä."
-  },
-  "core/lib/bf-cache-strings.js | embedderAppBannerManager": {
-    "message": "Sovellusbanneri oli päällä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
-    "message": "Salasanat oli päällä Chromessa pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
-    "message": "DOM-tislaus oli kesken pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderDomDistillerViewerSource": {
-    "message": "DOM Distiller Viewer oli näkyvissä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessaging": {
-    "message": "Messaging APIa käyttävät laajennukset estävät siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionMessagingForOpenPort": {
-    "message": "Pitkään yhdistettyinä olleiden laajennusten pitäisi katkaista yhteys ennen siirtymisvälimuistiin siirtymistä."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensionSentMessageToCachedFrame": {
-    "message": "Pitkään yhdistettynä ollut laajennus yritti lähettää viestejä siirtymisvälimuistissa oleville kehyksille."
-  },
-  "core/lib/bf-cache-strings.js | embedderExtensions": {
-    "message": "Laajennukset estävät siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | embedderModalDialog": {
-    "message": "Sivun modaalivalintaikkuna (esim. lomakkeen uudelleenlähetys tai http-salasanavalintaikkuna) oli näkyvissä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderOfflinePage": {
-    "message": "Offline-sivu oli näkyvissä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderOomInterventionTabHelper": {
-    "message": "Muistin loppumisen muistutuspalkki oli näkyvissä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderPermissionRequestManager": {
-    "message": "Lupapyyntöjä oli aktiivisena pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderPopupBlockerTabHelper": {
-    "message": "Ponnahdusikkunoiden estotoiminto oli päällä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingThreatDetails": {
-    "message": "Selaussuojan tiedot olivat näkyvissä pois siirryttäessä."
-  },
-  "core/lib/bf-cache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
-    "message": "Selaussuoja katsoi sivun haitalliseksi ja esti ponnahdusikkunan."
-  },
-  "core/lib/bf-cache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
-    "message": "Service worker aktivoitiin, kun sivu oli siirtymisvälimuistissa."
-  },
-  "core/lib/bf-cache-strings.js | errorDocument": {
-    "message": "Dokumenttivirhe estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | fencedFramesEmbedder": {
-    "message": "bfcache ei voi tallentaa FencedFramesia käyttäviä sivuja."
-  },
-  "core/lib/bf-cache-strings.js | foregroundCacheLimit": {
-    "message": "Sivu poistettiin välimuistista, jotta toinen sivu voitiin tallentaa välimuistiin."
-  },
-  "core/lib/bf-cache-strings.js | grantedMediaStreamAccess": {
-    "message": "Sivut, joille on myönnetty pääsy median striimaukseen, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | haveInnerContents": {
-    "message": "Portaaleja käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | idleManager": {
-    "message": "IdleManageria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBConnection": {
-    "message": "Sivut, joilla on avoin IndexedDB-yhteys, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | indexedDBEvent": {
-    "message": "Siirtymisvälimuisti on poistettu käytöstä IndexedDB-tapahtuman vuoksi."
-  },
-  "core/lib/bf-cache-strings.js | ineligibleAPI": {
-    "message": "Käytetyt APIt eivät olleet soveltuvia."
-  },
-  "core/lib/bf-cache-strings.js | injectedJavascript": {
-    "message": "Sivut, joihin `JavaScript` lisätään laajennuksen avulla, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | injectedStyleSheet": {
-    "message": "Sivut, joihin `StyleSheet` lisätään laajennusten avulla, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | internalError": {
-    "message": "Sisäinen virhe."
-  },
-  "core/lib/bf-cache-strings.js | keepaliveRequest": {
-    "message": "Keepalive-pyyntö estää siirtymisvälimuistin käytön."
-  },
-  "core/lib/bf-cache-strings.js | keyboardLock": {
-    "message": "Näppäimistön lukitusta käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | loading": {
-    "message": "Sivu ei latautunut kokonaan ennen pois siirtymistä."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoCache": {
-    "message": "Sivut, joiden pääresurssilla on cache-control:no-cache, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | mainResourceHasCacheControlNoStore": {
-    "message": "Sivut, joiden pääresurssilla on cache-control:no-store, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | navigationCancelledWhileRestoring": {
-    "message": "Siirtyminen peruttiin ennen kuin sivu voitiin palauttaa siirtymisvälimuistista."
-  },
-  "core/lib/bf-cache-strings.js | networkExceedsBufferLimit": {
-    "message": "Sivu poistettiin välimuistista, koska aktiivinen verkkoyhteys vastaanotti liikaa dataa. Chrome rajoittaa välimuistissa olevien sivujen vastaanottaman datan määrää."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
-    "message": "Sivut, joiden fetch()- tai XHR-pyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestRedirected": {
-    "message": "Sivu poistettiin siirtymisvälimuistista, koska aktiiviseen verkkopyyntöön liittyi uudelleenohjaus."
-  },
-  "core/lib/bf-cache-strings.js | networkRequestTimeout": {
-    "message": "Sivu poistettiin välimuistista, koska verkkoyhteys oli auki liian pitkään. Chrome rajoittaa aikaa, jonka välimuistissa oleva sivu voi vastaanottaa dataa."
-  },
-  "core/lib/bf-cache-strings.js | noResponseHead": {
-    "message": "Sivut, joilla ei ole hyväksyttävää vastausotsikkoa, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | notMainFrame": {
-    "message": "Siirtyminen tapahtui muussa kuin pääkehyksessä."
-  },
-  "core/lib/bf-cache-strings.js | outstandingIndexedDBTransaction": {
-    "message": "Sivut, joilla on keskeneräisiä indeksoituja DB-tapahtumia, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestDirectSocket": {
-    "message": "Sivut, joiden verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestFetch": {
-    "message": "Sivut, joiden verkonhakupyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestOthers": {
-    "message": "Sivut, joiden verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | outstandingNetworkRequestXHR": {
-    "message": "Sivut, joiden XHR-verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | paymentManager": {
-    "message": "PaymentManageria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | pictureInPicture": {
-    "message": "Pikkuruutua käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | portal": {
-    "message": "Portaaleja käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | printing": {
-    "message": "Tulostus UI:n näyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | relatedActiveContentsExist": {
-    "message": "`window.open()` avasi sivun, ja toisella välilehdellä on viittaus siihen, tai sivu avasi ikkunan."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessCrashed": {
-    "message": "Siirtymisvälimuistissa olevan sivun renderöintiprosessi kaatui."
-  },
-  "core/lib/bf-cache-strings.js | rendererProcessKilled": {
-    "message": "Siirtymisvälimuistissa olevan sivun renderöintiprosessi lopetettiin."
-  },
-  "core/lib/bf-cache-strings.js | requestedAudioCapturePermission": {
-    "message": "Äänentallennuslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackForwardCacheBlockedSensors": {
-    "message": "Anturilupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedBackgroundWorkPermission": {
-    "message": "Taustasynkronointia tai hakulupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedMIDIPermission": {
-    "message": "MIDI-lupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedNotificationsPermission": {
-    "message": "Ilmoituslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedStorageAccessGrant": {
-    "message": "Sivut, jotka ovat pyytäneet pääsyä tallennustilaan, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | requestedVideoCapturePermission": {
-    "message": "Videontallennuslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | schemeNotHTTPOrHTTPS": {
-    "message": "Välimuistiin voi tallentaa vain sivuja, joiden URL-malli on HTTP/HTTPS."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerClaim": {
-    "message": "Service worker pyysi sivun, kun se oli siirtymisvälimuistissa."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerPostMessage": {
-    "message": "Service worker yritti lähettää siirtymisvälimuistissa olevalle sivulle tämän: `MessageEvent`."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerUnregistration": {
-    "message": "ServiceWorkerin rekisteröinti peruttiin, kun sivu oli siirtymisvälimuistissa."
-  },
-  "core/lib/bf-cache-strings.js | serviceWorkerVersionActivation": {
-    "message": "Sivu poistettiin siirtymisvälimuistista service workerin aktivoitumisen takia."
-  },
-  "core/lib/bf-cache-strings.js | sessionRestored": {
-    "message": "Chrome käynnistyi uudelleen ja tyhjensi siirtymisvälimuistin."
-  },
-  "core/lib/bf-cache-strings.js | sharedWorker": {
-    "message": "SharedWorkeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | speechRecognizer": {
-    "message": "SpeechRecognizeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | speechSynthesis": {
-    "message": "SpeechSynthesisia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | subframeIsNavigating": {
-    "message": "Sivulla oleva iframe aloitti siirtymisen, joka ei onnistunut."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoCache": {
-    "message": "Sivut, joiden alaresurssilla on cache-control:no-cache, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | subresourceHasCacheControlNoStore": {
-    "message": "Sivut, joiden alaresurssilla on cache-control:no-store, eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | timeout": {
-    "message": "Sivu ylitti enimmäisajan siirtymisvälimuistissa ja vanheni."
-  },
-  "core/lib/bf-cache-strings.js | timeoutPuttingInCache": {
-    "message": "Sivu aikakatkaistiin, kun se oli siirtymässä siirtymisvälimuistiin (tämä johtuu luultavasti pitkäkestoisista sivun piilotuksen käsittelijöistä)."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": {
-    "message": "Sivun pääkehyksessä on tyhjennyksen käsittelijä."
-  },
-  "core/lib/bf-cache-strings.js | unloadHandlerExistsInSubFrame": {
-    "message": "Sivun alakehyksessä on tyhjennyksen käsittelijä."
-  },
-  "core/lib/bf-cache-strings.js | userAgentOverrideDiffers": {
-    "message": "Selain on muuttanut käyttäjäagentin ohitusotsikkoa."
-  },
-  "core/lib/bf-cache-strings.js | wasGrantedMediaAccess": {
-    "message": "Sivut, joille on annettu lupa tallentaa videota tai ääntä, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webDatabase": {
-    "message": "WebDatabasea käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webHID": {
-    "message": "WebHID:iä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webLocks": {
-    "message": "WebLocksia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webNfc": {
-    "message": "WebNfc:tä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webOTPService": {
-    "message": "WebOTPServiceä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webRTC": {
-    "message": "WebRTC:tä käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webShare": {
-    "message": "WebSharea käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webSocket": {
-    "message": "WebSocketia käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webTransport": {
-    "message": "WebTransportia käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
-  },
-  "core/lib/bf-cache-strings.js | webXR": {
-    "message": "WebXR:ää käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Harkitse https:- ja http:-URL-mallien (jotka `'strict-dynamic'`-sääntöä tukevat selaimet ohittavat) lisäämistä, niin voit saavuttaa taaksepäinyhteensopivuuden vanhempien selainten kanssa."
@@ -2093,183 +1793,6 @@
   "core/lib/deprecation-description.js | title": {
     "message": "Käytöstä poistettua ominaisuutta käytetty"
   },
-  "core/lib/deprecations-strings.js | AuthorizationCoveredByWildcard": {
-    "message": "Jokerimerkki (*) CORS `Access-Control-Allow-Headers` ‑käsittelyssä ei kata valtuutusta."
-  },
-  "core/lib/deprecations-strings.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
-    "message": "`disableRemotePlayback` ‑attribuuttia pitäisi käyttää oletusarvoisen Cast-integraation käytöstä poistamiseen `-internal-media-controls-overlay-cast-button` ‑valitsimen sijaan."
-  },
-  "core/lib/deprecations-strings.js | CanRequestURLHTTPContainingNewline": {
-    "message": "Resurssipyynnöt, joiden URL-osoitteet sisälsivät sekä poistettuja tyhjätilamerkkejä (`(n|r|t)`) että pienempi kuin ‑merkkejä (`<`) on estetty. Poista newline-koodit ja koodaa pienempi kuin ‑merkkejä esimerkiksi elementin attribuuttiarvoista, jos haluat ladata näitä resursseja."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesConnectionInfo": {
-    "message": "`chrome.loadTimes()` on poistettu käytöstä, käytä sen sijaan standardoitua APIa: Navigation Timing 2."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
-    "message": "`chrome.loadTimes()` on poistettu käytöstä, käytä sen sijaan standardoitua APIa: Paint Timing."
-  },
-  "core/lib/deprecations-strings.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
-    "message": "`chrome.loadTimes()` on poistettu käytöstä, käytä sen sijaan standardoitua APIa: `nextHopProtocol` Navigation Timing 2:ssa."
-  },
-  "core/lib/deprecations-strings.js | CookieWithTruncatingChar": {
-    "message": "`(0|r|n)` ‑merkin sisältävät evästeet hylätään lyhentämisen sijaan."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginAccessBasedOnDocumentDomain": {
-    "message": "Saman alkuperän käytännön lieventäminen määrittämällä `document.domain` on poistettu käytöstä eikä näin ollen ole käytössä oletuksena. Tämä käytöstäpoistovaroitus koskee eri lähteistä peräisin olevaa pääsyoikeutta, joka on otettu käyttöön asetuksella `document.domain`."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowAlert": {
-    "message": "window.alertin käynnistäminen eri lähteistä peräisin olevista iframeista on poistettu käytöstä ja poistetaan kokonaan tulevaisuudessa."
-  },
-  "core/lib/deprecations-strings.js | CrossOriginWindowConfirm": {
-    "message": "window.confirmin käynnistäminen eri lähteistä peräisin olevista iframeista on poistettu käytöstä ja poistetaan kokonaan tulevaisuudessa."
-  },
-  "core/lib/deprecations-strings.js | DOMMutationEvents": {
-    "message": "DOM-muutostapahtumat, kuten `DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`, `DOMNodeRemovedFromDocument`, `DOMNodeInsertedIntoDocument` ja `DOMCharacterDataModified`, on poistettu käytöstä (https://w3c.github.io/uievents/#legacy-event-types) ja poistetaan. Käytä sen sijaan tätä: `MutationObserver`."
-  },
-  "core/lib/deprecations-strings.js | DataUrlInSvgUse": {
-    "message": "Datatuki: URL-osoitteet SVG:n <use>-elementissä on poistettu käytöstä, ja se poistetaan tulevaisuudessa."
-  },
-  "core/lib/deprecations-strings.js | DocumentDomainSettingWithoutOriginAgentClusterHeader": {
-    "message": "Saman alkuperän käytännön lieventäminen määrittämällä `document.domain` on poistettu käytöstä eikä näin ollen ole käytössä oletuksena. Jos haluat jatkaa tämän ominaisuuden käyttöä, poista käytöstä alkuperään sidotut agenttiklusterit lähettämällä `Origin-Agent-Cluster: ?0` ‑otsikko dokumentin ja kehysten HTTP-vastauksen mukana. Lue lisää osoitteesta https://developer.chrome.com/blog/immutable-document-domain/."
-  },
-  "core/lib/deprecations-strings.js | ExpectCTHeader": {
-    "message": "Otsikko (`Expect-CT`) on poistettu käytöstä ja poistetaan kokonaan. Chrome edellyttää Certificate Transparencya kaikille 30.4.2018 jälkeen myönnetyille julkisesti luotetuille varmenteille."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOrigin": {
-    "message": "`getCurrentPosition()` ja `watchPosition()` eivät enää toimi suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "`getCurrentPosition()` ja `watchPosition()` on poistettu käytöstä suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | GetUserMediaInsecureOrigin": {
-    "message": "`getUserMedia()` ei enää toimi suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | HostCandidateAttributeGetter": {
-    "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` on poistettu käytöstä. Valitse sen sijaan `RTCPeerConnectionIceErrorEvent.address` tai `RTCPeerConnectionIceErrorEvent.port`."
-  },
-  "core/lib/deprecations-strings.js | IdentityInCanMakePaymentEvent": {
-    "message": "Kauppiaan alkuperän ja satunnaisen datan määrä service worker ‑tapahtumasta (`canmakepayment`) on poistettu käytöstä, ja se poistetaan seuraavista: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
-  },
-  "core/lib/deprecations-strings.js | InsecurePrivateNetworkSubresourceRequest": {
-    "message": "Verkkosivusto pyysi aliresurssia verkosta, johon sillä oli pääsy vain käyttäjiensä oikeutetun verkkoaseman vuoksi. Nämä pyynnöt altistavat ei-julkisia laitteita ja palvelimia näkyville internetiin, mikä lisää sivustojen välisten pyyntöjen väärennykseen (CSRF) liittyvän hyökkäyksen ja/tai tietovuodon riskiä. Pienentääkseen riskiä Chrome poistaa käytöstä ei-julkisille aliresursseille osoitetut pyynnöt, jos ne ovat peräisin suojaamattomista konteksteista, ja alkaa estää niitä."
-  },
-  "core/lib/deprecations-strings.js | InterestGroupDailyUpdateUrl": {
-    "message": "`InterestGroups`-rakenteen `dailyUpdateUrl`-kenttä on siirretty `joinAdInterestGroup()`-kenttään, ja uusi nimi on toimintaa paremmin vastaava `updateUrl`."
-  },
-  "core/lib/deprecations-strings.js | LocalCSSFileExtensionRejected": {
-    "message": "CSS:ää ei voi ladata `file:` ‑URL-osoitteista, elleivät ne pääty `.css` ‑tiedostotunnisteeseen."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceAbortRemove": {
-    "message": "Kohteen `SourceBuffer.abort()` käyttö kohteen `remove()` asynkronisen välin poistamiseen on poistettu käytöstä määritysmuutoksen vuoksi. Tuki poistetaan tulevaisuudessa. Kuuntele sen sijaan tapahtuma `updateend`. `abort()` on tarkoitettu ainoastaan asynkronisen medialiitteen tai nollausjäsentäjän tilan keskeytykseen."
-  },
-  "core/lib/deprecations-strings.js | MediaSourceDurationTruncatingBuffered": {
-    "message": "Kohteen `MediaSource.duration` asettaminen puskuroidun koodatun kehyksen korkeinta esitysaikaleimaa alemmas on poistettu käytöstä määritysmuutoksen vuoksi. Lyhennetyn puskuroidun median implisiittisen poiston tuki poistetaan tulevaisuudessa. Tee sen sijaan eksplisiittinen `remove(newDuration, oldDuration)` kaikkien `sourceBuffers` ‑kohteiden kohdalla, joissa `newDuration < oldDuration`."
-  },
-  "core/lib/deprecations-strings.js | NoSysexWebMIDIWithoutPermission": {
-    "message": "Web MIDI pyytää käyttölupaa, vaikka `MIDIOptions` ei ole määrittänyt sysexiä."
-  },
-  "core/lib/deprecations-strings.js | NonStandardDeclarativeShadowDOM": {
-    "message": "Vanha, standardoimaton `shadowroot`‐määrite on poistettu käytöstä, *eikä se enää toimi* M119:ssä. Käytä sen sijaan uutta, standardoitua `shadowrootmode`-määritettä."
-  },
-  "core/lib/deprecations-strings.js | NotificationInsecureOrigin": {
-    "message": "Notification APIa ei saa enää käyttää suojaamattomista alkuperistä. Suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
-  },
-  "core/lib/deprecations-strings.js | NotificationPermissionRequestedIframe": {
-    "message": "Notification APIn lupaa ei välttämättä enää pyydetä eri lähteistä peräisin olevalta iframelta. Suosittelemme sen sijaan pyytämään lupaa ylätason kehykseltä tai avaamaan uuden ikkunan."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteCreateImageBitmapImageOrientationNone": {
-    "message": "Vaihtoehto `imageOrientation: 'none'` on poistettu käytöstä createImageBitmapissa. Käytä sen sijaan createImageBitmapia, jossa on vaihtoehto \\{imageOrientation: 'from-image'\\}."
-  },
-  "core/lib/deprecations-strings.js | ObsoleteWebRtcCipherSuite": {
-    "message": "Yhteistyökumppanisi neuvottelee vanhentuneesta (D)TLS-versiosta. Pyydä yhteistyökumppaniasi korjaamaan tämä."
-  },
-  "core/lib/deprecations-strings.js | OverflowVisibleOnReplacedElement": {
-    "message": "Jos `overflow: visible` määritetään img-, video- ja canvas-tageissa, ne voivat tuottaa visuaalista sisältöä elementtirajojen ulkopuolella. Lue lisää osoitteesta https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
-  },
-  "core/lib/deprecations-strings.js | PaymentInstruments": {
-    "message": "`paymentManager.instruments` on poistettu käytöstä. Käytä maksujen käsittelijöille sen sijaan heti asennettavaa (JIT) APIa."
-  },
-  "core/lib/deprecations-strings.js | PaymentRequestCSPViolation": {
-    "message": "`PaymentRequest`-kutsu ohitti Content-Security-Policy (CSP) ‑käytännön `connect-src`-säännön. Tämä ohitus on poistettu käytöstä. Lisää maksutavan tunniste `PaymentRequest` APIsta (`supportedMethods`-kentässä) CSP-käytännön `connect-src`-sääntöön."
-  },
-  "core/lib/deprecations-strings.js | PersistentQuotaType": {
-    "message": "`StorageType.persistent` on poistettu käytöstä. Valitse sen sijaan standardoitu `navigator.storage`."
-  },
-  "core/lib/deprecations-strings.js | PictureSourceSrc": {
-    "message": "`<source src>`, jolla on `<picture>`-ylätaso, on virheellinen ja jätetään näin ollen huomiotta. Käytä sen sijaan tätä: `<source srcset>`."
-  },
-  "core/lib/deprecations-strings.js | PrefixedCancelAnimationFrame": {
-    "message": "webkitCancelAnimationFrame on myyjäkohtainen. Käytä sen sijaan normaalia cancelAnimationFrame-menetelmää."
-  },
-  "core/lib/deprecations-strings.js | PrefixedRequestAnimationFrame": {
-    "message": "webkitRequestAnimationFrame on myyjäkohtainen. Käytä sen sijaan normaalia requestAnimationFrame-menetelmää."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoDisplayingFullscreen": {
-    "message": "HTMLVideoElement.webkitDisplayingFullscreen on poistettu käytöstä. Käytä sen sijaan Document.fullscreenElement-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullScreen": {
-    "message": "HTMLVideoElement.webkitEnterFullScreen() on poistettu käytöstä. Käytä sen sijaan Element.requestFullscreen()-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoEnterFullscreen": {
-    "message": "HTMLVideoElement.webkitEnterFullscreen() on poistettu käytöstä. Käytä sen sijaan Element.requestFullscreen()-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullScreen": {
-    "message": "HTMLVideoElement.webkitExitFullScreen() on poistettu käytöstä. Käytä sen sijaan Document.exitFullscreen()-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoExitFullscreen": {
-    "message": "HTMLVideoElement.webkitExitFullscreen() on poistettu käytöstä. Käytä sen sijaan Document.exitFullscreen()-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrefixedVideoSupportsFullscreen": {
-    "message": "HTMLVideoElement.webkitSupportsFullscreen on poistettu käytöstä. Käytä sen sijaan Document.fullscreenEnabled-APIa."
-  },
-  "core/lib/deprecations-strings.js | PrivacySandboxExtensionsAPI": {
-    "message": "Poistamme APIn `chrome.privacy.websites.privacySandboxEnabled` käytöstä, mutta se pysyy taaksepäinyhteensopivana M113-versioon asti. Ota sen sijaan käyttöön `chrome.privacy.websites.topicsEnabled`, `chrome.privacy.websites.fledgeEnabled` ja `chrome.privacy.websites.adMeasurementEnabled`. Lue lisää osoitteesta https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpFalse": {
-    "message": "Rajoitus `DtlsSrtpKeyAgreement` on poistettu. Olet määrittänyt `false` ‑arvon tälle rajoitukselle, mikä tulkitaan yrityksenä käyttää poistettua `SDES key negotiation` ‑metodia. Tämä toiminto on poistettu. Käytä sen sijaan palvelua, joka tukee tätä: `DTLS key negotiation`."
-  },
-  "core/lib/deprecations-strings.js | RTCConstraintEnableDtlsSrtpTrue": {
-    "message": "Rajoitus `DtlsSrtpKeyAgreement` on poistettu. Olet määrittänyt `true` ‑arvon tälle rajoitukselle, jolla ei ollut mitään vaikutusta, mutta voit poistaa rajoituksen siisteyden vuoksi."
-  },
-  "core/lib/deprecations-strings.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
-    "message": "Takaisinsoittopohjainen getStats() on poistettu käytöstä ja poistetaan kokonaan. Käytä sen sijaan vaatimusten mukaisia getStats()-sääntöjä."
-  },
-  "core/lib/deprecations-strings.js | RangeExpand": {
-    "message": "Range.expand() on poistettu käytöstä. Käytä sen sijaan Selection.modify()-APIa."
-  },
-  "core/lib/deprecations-strings.js | RequestedSubresourceWithEmbeddedCredentials": {
-    "message": "Aliresurssipyynnöt, joiden URL-osoitteet sisältävät upotettuja kirjautumistietoja (esim. `https://user:pass@host/`), on estetty."
-  },
-  "core/lib/deprecations-strings.js | RtcpMuxPolicyNegotiate": {
-    "message": "`rtcpMuxPolicy` ‑vaihtoehto on poistettu käytöstä ja poistetaan kokonaan."
-  },
-  "core/lib/deprecations-strings.js | SharedArrayBufferConstructedWithoutIsolation": {
-    "message": "`SharedArrayBuffer` edellyttää muista lähteistä eristämistä. Lue lisää osoitteesta https://developer.chrome.com/blog/enabling-shared-array-buffer/."
-  },
-  "core/lib/deprecations-strings.js | TextToSpeech_DisallowedByAutoplay": {
-    "message": "`speechSynthesis.speak()` ilman käyttäjän aktivointia on poistettu käytöstä ja poistetaan kokonaan."
-  },
-  "core/lib/deprecations-strings.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
-    "message": "Laajennusten pitäisi ottaa muista lähteistä eristäminen käyttöön, jotta ne voivat jatkaa tämän käyttöä: `SharedArrayBuffer`. Lue lisää osoitteesta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "core/lib/deprecations-strings.js | WebSQL": {
-    "message": "Web SQL on poistettu käytöstä. Käytä SQLite WebAssemblya tai Indexed Databasea"
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionDescriptorUsed": {
-    "message": "`window-placement`-luvan kuvaus on poistettu käytöstä. Valitse sen sijaan `window-management`. Lue lisäohjeita osoitteesta https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | WindowPlacementPermissionPolicyParsed": {
-    "message": "`window-placement`-lupakäytäntö on poistettu käytöstä. Valitse sen sijaan `window-management`. Lue lisäohjeita osoitteesta https://bit.ly/window-placement-rename."
-  },
-  "core/lib/deprecations-strings.js | XHRJSONEncodingDetection": {
-    "message": "Vastaus-JSON ei tue UTF-16:ta kohteessa `XMLHttpRequest`"
-  },
-  "core/lib/deprecations-strings.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
-    "message": "Pääsäikeen samanaikainen `XMLHttpRequest` on poistettu käytöstä, koska sillä oli haitallisia vaikutuksia loppukäyttäjän kokemukseen. Lue lisäohjeita osoitteesta https://xhr.spec.whatwg.org/."
-  },
-  "core/lib/deprecations-strings.js | XRSupportsSession": {
-    "message": "`supportsSession()` on poistettu käytöstä. Ota sen sijaan `isSessionSupported()` käyttöön ja tarkista ratkaistu looginen arvo."
-  },
   "core/lib/i18n/i18n.js | columnBlockingTime": {
     "message": "Pääsäikeen estoaika"
   },
@@ -2322,22 +1845,22 @@
     "message": "URL-osoite"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potentiaalinen säästö"
+    "message": "Arvioitu säästö"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potentiaalinen säästö"
+    "message": "Arvioitu säästö"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potentiaalinen säästö: {wastedBytes, number, bytes} KiB"
+    "message": "Arvioitu säästö: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 elementti löydetty}other{# elementtiä löydetty}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potentiaalinen säästö: {wastedMs, number, milliseconds} ms"
+    "message": "Arvioitu säästö: {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentti"
@@ -2401,6 +1924,9 @@
   },
   "core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Kolmas osapuoli"
+  },
+  "core/lib/i18n/i18n.js | total": {
+    "message": "Yhteensä"
   },
   "core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
@@ -2532,7 +2058,7 @@
     "message": "Nouda Lighthouse-suorituskykyprosentti."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Mittaa sivulatauksia sivun latautumisajan ja nopeusindeksin kaltaisilla mittareilla."
+    "message": "Mittaa sivulatauksia sivun latautumisajan ja Speed Indexin kaltaisilla mittareilla."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Arvioi progressiivisten web-sovellusten ominaisuuksia."
@@ -2621,68 +2147,545 @@
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthousen käyttökulkuraportti"
   },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | AuthorizationCoveredByWildcard": {
+    "message": "Jokerimerkki (*) CORS Access-Control-Allow-Headers ‑käsittelyssä ei kata valtuutusta."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSSelectorInternalMediaControlsOverlayCastButton": {
+    "message": "disableRemotePlayback ‑attribuuttia pitäisi käyttää oletusarvoisen Cast-integraation käytöstä poistamiseen -internal-media-controls-overlay-cast-button ‑valitsimen sijaan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CSSValueAppearanceSliderVertical": {
+    "message": "CSS-ulkoasun arvoa slider-vertical ei ole standardoitu, ja se poistetaan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CanRequestURLHTTPContainingNewline": {
+    "message": "Resurssipyynnöt, joiden URL-osoitteet sisälsivät sekä poistettuja tyhjätilamerkkejä (\\(n|r|t)) että pienempi kuin ‑merkkejä (<) on estetty. Poista newline-koodit ja koodaa pienempi kuin ‑merkkejä esimerkiksi elementin attribuuttiarvoista, jos haluat ladata näitä resursseja."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesConnectionInfo": {
+    "message": "chrome.loadTimes() on poistettu käytöstä, käytä sen sijaan standardoitua APIa: Navigation Timing 2."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesFirstPaintAfterLoadTime": {
+    "message": "chrome.loadTimes() on poistettu käytöstä, käytä sen sijaan standardoitua APIa: Paint Timing."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ChromeLoadTimesWasAlternateProtocolAvailable": {
+    "message": "chrome.loadTimes() on poistettu käytöstä, käytä sen sijaan standardoitua APIa: nextHopProtocol Navigation Timing 2:ssa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CookieWithTruncatingChar": {
+    "message": "\\(0|r|n) ‑merkin sisältävät evästeet hylätään lyhentämisen sijaan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginAccessBasedOnDocumentDomain": {
+    "message": "Saman alkuperän käytännön lieventäminen määrittämällä document.domain on poistettu käytöstä eikä näin ollen ole käytössä oletuksena. Tämä käytöstäpoistovaroitus koskee eri lähteistä peräisin olevaa pääsyoikeutta, joka on otettu käyttöön asetuksella document.domain."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowAlert": {
+    "message": "window.alertin käynnistäminen eri lähteistä peräisin olevista iframeista on poistettu käytöstä ja poistetaan kokonaan tulevaisuudessa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | CrossOriginWindowConfirm": {
+    "message": "window.confirmin käynnistäminen eri lähteistä peräisin olevista iframeista on poistettu käytöstä ja poistetaan kokonaan tulevaisuudessa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | DataUrlInSvgUse": {
+    "message": "Datatuki: URL-osoitteet SVGUseElement-elementissä on poistettu käytöstä, ja se poistetaan tulevaisuudessa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
+    "message": "getCurrentPosition() ja watchPosition() eivät enää toimi suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
+    "message": "getCurrentPosition() ja watchPosition() on poistettu käytöstä suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
+    "message": "getUserMedia() ei enää toimi suojaamattomien alkuperien kohdalla. Jos haluat käyttää tätä ominaisuutta, suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
+    "message": "RTCPeerConnectionIceErrorEvent.hostCandidate on poistettu käytöstä. Valitse sen sijaan RTCPeerConnectionIceErrorEvent.address tai RTCPeerConnectionIceErrorEvent.port."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
+    "message": "Kauppiaan alkuperän ja satunnaisen datan määrä service worker ‑tapahtumasta (canmakepayment) on poistettu käytöstä, ja se poistetaan seuraavista: topOrigin, paymentRequestOrigin, methodData, modifiers."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InsecurePrivateNetworkSubresourceRequest": {
+    "message": "Verkkosivusto pyysi aliresurssia verkosta, johon sillä oli pääsy vain käyttäjiensä oikeutetun verkkoaseman vuoksi. Nämä pyynnöt altistavat ei-julkisia laitteita ja palvelimia näkyville internetiin, mikä lisää sivustojen välisten pyyntöjen väärennykseen (CSRF) liittyvän hyökkäyksen ja/tai tietovuodon riskiä. Pienentääkseen riskiä Chrome poistaa käytöstä ei-julkisille aliresursseille osoitetut pyynnöt, jos ne ovat peräisin suojaamattomista konteksteista, ja alkaa estää niitä."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | InterestGroupDailyUpdateUrl": {
+    "message": "Rakenteen InterestGroups kenttä dailyUpdateUrl on siirretty kenttään joinAdInterestGroup(), jonka uusi nimi on updateUrl, jotta se vastaa paremmin sen toimintaa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IntlV8BreakIterator": {
+    "message": "Intl.v8BreakIterator on poistettu käytöstä. Käytä sen sijaan tätä: Intl.Segmenter."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | LocalCSSFileExtensionRejected": {
+    "message": "CSS:ää ei voi ladata file: ‑URL-osoitteista, elleivät ne pääty .css ‑tiedostotunnisteeseen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceAbortRemove": {
+    "message": "Kohteen SourceBuffer.abort() käyttö kohteen remove() asynkronisen välin poistamiseen on poistettu käytöstä määritysmuutoksen vuoksi. Tuki poistetaan tulevaisuudessa. Kuuntele sen sijaan tapahtuma updateend. abort() on tarkoitettu ainoastaan asynkronisen medialiitteen tai nollausjäsentäjän tilan keskeytykseen."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | MediaSourceDurationTruncatingBuffered": {
+    "message": "Kohteen MediaSource.duration asettaminen puskuroidun koodatun kehyksen korkeinta esitysaikaleimaa alemmas on poistettu käytöstä määritysmuutoksen vuoksi. Lyhennetyn puskuroidun median implisiittisen poiston tuki poistetaan tulevaisuudessa. Tee sen sijaan eksplisiittinen remove(newDuration, oldDuration) kaikkien sourceBuffers ‑kohteiden kohdalla, joissa newDuration < oldDuration."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NoSysexWebMIDIWithoutPermission": {
+    "message": "Web MIDI pyytää käyttölupaa, vaikka MIDIOptions ei ole määrittänyt sysexiä."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
+    "message": "Notification APIa ei saa enää käyttää suojaamattomista alkuperistä. Suosittelemme vaihtamaan sovelluksen turvalliseen alkuperään, esim. HTTPS:ään. Lue lisää osoitteesta https://goo.gle/chrome-insecure-origins."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
+    "message": "Notification APIn lupaa ei välttämättä enää pyydetä eri lähteistä peräisin olevalta iframelta. Suosittelemme sen sijaan pyytämään lupaa ylätason kehykseltä tai avaamaan uuden ikkunan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteCreateImageBitmapImageOrientationNone": {
+    "message": "Vaihtoehto imageOrientation: 'none' on poistettu käytöstä createImageBitmapissa. Käytä sen sijaan createImageBitmapia, jossa on vaihtoehto \"\\\\{imageOrientation: 'from-image'\\\\}\"."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | ObsoleteWebRtcCipherSuite": {
+    "message": "Yhteistyökumppanisi neuvottelee vanhentuneesta (D)TLS-versiosta. Pyydä yhteistyökumppaniasi korjaamaan tämä."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
+    "message": "Jos overflow: visible määritetään img-, video- ja canvas-tageissa, ne voivat tuottaa visuaalista sisältöä elementtirajojen ulkopuolella. Lue lisää osoitteesta https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Vanha Flash-videon upotus on kirjoitettu uudelleen HTML-iframeksi. Flash on poistunut jo kauan sitten, ja tämä uudelleenkirjoitushakkerointi on poistettu käytöstä ja saatetaan poistaa kokonaan tulevaisuudessa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
+    "message": "paymentManager.instruments on poistettu käytöstä. Käytä maksujen käsittelijöille sen sijaan heti asennettavaa (JIT) APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentRequestCSPViolation": {
+    "message": "PaymentRequest-kutsu ohitti Content-Security-Policy (CSP) ‑käytännön connect-src-säännön. Tämä ohitus on poistettu käytöstä. Lisää maksutavan tunniste PaymentRequest APIsta (supportedMethods-kentässä) CSP-käytännön connect-src-sääntöön."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PersistentQuotaType": {
+    "message": "StorageType.persistent on poistettu käytöstä. Valitse sen sijaan standardoitu navigator.storage."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PictureSourceSrc": {
+    "message": "<source src>, jolla on <picture>-ylätaso, on virheellinen ja jätetään näin ollen huomiotta. Käytä sen sijaan tätä: <source srcset>."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedCancelAnimationFrame": {
+    "message": "webkitCancelAnimationFrame on myyjäkohtainen. Käytä sen sijaan normaalia cancelAnimationFrame-menetelmää."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedRequestAnimationFrame": {
+    "message": "webkitRequestAnimationFrame on myyjäkohtainen. Käytä sen sijaan normaalia requestAnimationFrame-menetelmää."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoDisplayingFullscreen": {
+    "message": "HTMLVideoElement.webkitDisplayingFullscreen on poistettu käytöstä. Käytä sen sijaan Document.fullscreenElement-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullScreen": {
+    "message": "HTMLVideoElement.webkitEnterFullScreen() on poistettu käytöstä. Käytä sen sijaan Element.requestFullscreen()-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoEnterFullscreen": {
+    "message": "HTMLVideoElement.webkitEnterFullscreen() on poistettu käytöstä. Käytä sen sijaan Element.requestFullscreen()-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullScreen": {
+    "message": "HTMLVideoElement.webkitExitFullScreen() on poistettu käytöstä. Käytä sen sijaan Document.exitFullscreen()-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoExitFullscreen": {
+    "message": "HTMLVideoElement.webkitExitFullscreen() on poistettu käytöstä. Käytä sen sijaan Document.exitFullscreen()-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrefixedVideoSupportsFullscreen": {
+    "message": "HTMLVideoElement.webkitSupportsFullscreen on poistettu käytöstä. Käytä sen sijaan Document.fullscreenEnabled-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PrivacySandboxExtensionsAPI": {
+    "message": "Poistamme APIn chrome.privacy.websites.privacySandboxEnabled käytöstä, mutta se pysyy taaksepäinyhteensopivana M113-versioon asti. Ota sen sijaan käyttöön chrome.privacy.websites.topicsEnabled, chrome.privacy.websites.fledgeEnabled ja chrome.privacy.websites.adMeasurementEnabled. Lue lisää osoitteesta https://developer.chrome.com/docs/extensions/reference/privacy/#property-websites-privacySandboxEnabled."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpFalse": {
+    "message": "Rajoitus DtlsSrtpKeyAgreement on poistettu. Olet määrittänyt false ‑arvon tälle rajoitukselle, mikä tulkitaan yrityksenä käyttää poistettua SDES key negotiation ‑metodia. Tämä toiminto on poistettu. Käytä sen sijaan palvelua, joka tukee tätä: DTLS key negotiation."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCConstraintEnableDtlsSrtpTrue": {
+    "message": "Rajoitus DtlsSrtpKeyAgreement on poistettu. Olet määrittänyt true ‑arvon tälle rajoitukselle, jolla ei ollut mitään vaikutusta, mutta voit poistaa rajoituksen siisteyden vuoksi."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RTCPeerConnectionGetStatsLegacyNonCompliant": {
+    "message": "Takaisinsoittopohjainen getStats() on poistettu käytöstä ja poistetaan kokonaan. Käytä sen sijaan vaatimusten mukaisia getStats()-sääntöjä."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RangeExpand": {
+    "message": "Range.expand() on poistettu käytöstä. Käytä sen sijaan Selection.modify()-APIa."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RequestedSubresourceWithEmbeddedCredentials": {
+    "message": "Aliresurssipyynnöt, joiden URL-osoitteet sisältävät upotettuja kirjautumistietoja (esim. https://user:pass@host/), on estetty."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | RtcpMuxPolicyNegotiate": {
+    "message": "rtcpMuxPolicy ‑vaihtoehto on poistettu käytöstä ja poistetaan kokonaan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | SharedArrayBufferConstructedWithoutIsolation": {
+    "message": "SharedArrayBuffer edellyttää muista lähteistä eristämistä. Lue lisää osoitteesta https://developer.chrome.com/blog/enabling-shared-array-buffer/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | TextToSpeech_DisallowedByAutoplay": {
+    "message": "speechSynthesis.speak() ilman käyttäjän aktivointia on poistettu käytöstä ja poistetaan kokonaan."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | UnloadHandler": {
+    "message": "Unload-tapahtumaseuraimet on poistettu käytöstä ja ne poistetaan selaimesta"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
+    "message": "Laajennusten pitäisi ottaa muista lähteistä eristäminen käyttöön, jotta ne voivat jatkaa tämän käyttöä: SharedArrayBuffer. Lue lisää osoitteesta https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
+    "message": "Vastaus-JSON ei tue UTF-16:ta kohteessa XMLHttpRequest"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload": {
+    "message": "Pääsäikeen samanaikainen XMLHttpRequest on poistettu käytöstä, koska sillä oli haitallisia vaikutuksia loppukäyttäjän kokemukseen. Lue lisäohjeita osoitteesta https://xhr.spec.whatwg.org/."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | animation": {
+    "message": "Animaatio"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | description": {
     "message": "Asettelun muutoksia tapahtuu, kun elementit liikkuvat ilman käyttäjän interaktioita. [Tutki asettelun muutosten syitä](https://web.dev/articles/optimize-cls), kuten elementtien lisäämistä, poistamista tai fonttien vaihtumista sivun latauksen aikana."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | injectedIframe": {
+    "message": "Lisätty iframe"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | layoutShiftCluster": {
+    "message": "Asettelun muutosklusteri: {PH1}"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noCulprits": {
+    "message": "Asettelun muutoksen aiheuttajia ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | noLayoutShifts": {
+    "message": "Ei asettelun muutoksia"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | title": {
     "message": "Asettelun muutoksen aiheuttajat"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
+    "message": "Asettelun muutoksen yleisimmät aiheuttajat"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Kuvaelementti, jonka kokoa ei ole asetettu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Verkkofontti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
+    "message": "Huonoin klusteri"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstLayoutShiftCluster": {
+    "message": "Huonoin asettelun muutosklusteri"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | cacheTTL": {
+    "message": "Välimuistin käyttöikä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | description": {
+    "message": "Pitkä välimuistin käyttöikä voi nopeuttaa sivun lataamista, kun käyttäjä avaa sen uudelleen. [Lue lisää](https://web.dev/uses-long-cache-ttl/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | noRequestsToCache": {
+    "message": "Ei pyyntöjä, joissa on tehottomat välimuistikäytännöt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | others": {
+    "message": "{PH1} muuta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | requestColumn": {
+    "message": "Pyyntö"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Cache.js | title": {
+    "message": "Käytä tehokasta välimuistin käyttöikää"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
-    "message": "Suuri DOM lisää muistin käyttöä, pidentää tyylilaskelmia ja aiheuttaa työläitä asettelun uudelleenjuoksutuksia, jotka vaikuttavat sivun responsiivisuuteen. [Katso, miten voit välttää liian suuren DOM:n](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+    "message": "Suuri DOM voi pidentää tyylilaskelmien ja asettelun uudelleenjuoksutusten kestoa, mikä vaikuttaa sivun responsiivisuuteen. Suuri DOM lisää myös muistin käyttöä. [Katso, miten voit välttää liian suuren DOM:n](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
+    "message": "Elementti"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Asettelu ({PH1} kohdetta)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Tyylin uudelleenlaskenta ({PH1} elementtiä)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
+    "message": "Useimmat alatasot"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxDOMDepth": {
+    "message": "DOM-syvyys"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | statistic": {
+    "message": "Tilastotieto"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimoi DOM-koko"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Nämä ovat suurimmat asettelun ja tyylin uudelleenlaskentatapahtumat. DOM:n yksinkertaistaminen voi vähentää niiden vaikutusta suorituskykyyn."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
+    "message": "Elementit yhteensä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | value": {
+    "message": "Arvo"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | description": {
     "message": "Ensimmäinen verkkopyyntö on tärkein.  Vähennä viivettä välttämällä uudelleenohjauksia, varmistamalla nopea palvelimen vaste ja ottamalla tekstin pakkaus käyttöön."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedRedirects": {
+    "message": "Uudelleenohjauksia ({PH1} uudelleenohjausta, +{PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
+    "message": "Palvelin vastasi hitaasti (havaittu {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
+    "message": "Ei pakattu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingRedirects": {
+    "message": "Välttää uudelleenohjaukset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
+    "message": "Palvelin vastaa nopeasti (havaittu {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
+    "message": "Pakkaa tekstin"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | redirectsLabel": {
+    "message": "Uudelleenohjaukset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | serverResponseTimeLabel": {
+    "message": "Palvelimen vastausaika"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | title": {
     "message": "Dokumentin pyynnön viive"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | uncompressedDownload": {
+    "message": "Purkamaton lataus"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnDuplicatedBytes": {
+    "message": "Päällekkäiset tavut"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | columnSource": {
+    "message": "Lähde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | description": {
+    "message": "Poista suuret, kopioidut JavaScript-moduulit paketeista pienentääksesi verkkotoiminnan tarpeetonta tavunkulutusta."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DuplicatedJavaScript.js | title": {
+    "message": "Päällekkäinen JavaScript"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | description": {
     "message": "Harkitse asettavasi [font-display](https://developer.chrome.com/blog/font-display) arvoon swap tai optional, niin varmistat, että teksti on aina näkyvissä. Optimointia (swap) voidaan lisätä, jotta asettelumuutoksia voidaan vähentää [fonttimittarin ohitusarvojen](https://developer.chrome.com/blog/font-fallbacks) avulla."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | fontColumn": {
+    "message": "Fontti"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | title": {
     "message": "Fontin näyttö"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/FontDisplay.js | wastedTimeColumn": {
+    "message": "Hukattu aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | anonymous": {
+    "message": "(nimettömät)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
+    "message": "Pakotettu uudelleenlaskenta tapahtuu, kun JavaScript kysyy geometrisiä ominaisuuksia (esim. offsetWidth) sen jälkeen, kun DOM-tilan muutos on mitätöinyt tyylit. Tämä voi johtaa huonoihin tuloksiin. Lue lisää [pakotetuista uudelleenlaskemisista](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) ja mahdollisista torjuntakeinoista."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
+    "message": "Jäljityslista"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | title": {
+    "message": "Pakotettu uudelleenlaskeminen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | topTimeConsumingFunctionCall": {
+    "message": "Pisimpään kestävä toimintokutsu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | totalReflowTime": {
+    "message": "Uudelleenlaskemisaika yhteensä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
+    "message": "[määrittämätön]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Aloita tutkinta pisimmästä osasta. [Viiveet voidaan minimoida](https://web.dev/articles/optimize-inp#optimize_interactions). Voit lyhentää käsittelyaikaa [optimoimalla pääsäikeen kustannukset](https://web.dev/articles/optimize-long-tasks), usein JS:n."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Syötteen viive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Interaktioita ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Esityksen viive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Käsittelyn kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Alakohta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP-erittely"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Kuvien latausajan lyhentäminen voi parantaa sivun havaittua latausaikaa ja LCP:tä. [Lue lisää kuvakoon optimoinnista](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | estimatedSavings": {
+    "message": "{PH1} (arvio: {PH2})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | noOptimizableImages": {
+    "message": "Ei optimoitavia kuvia"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | optimizeFile": {
+    "message": "Optimoi tiedoston koko"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | others": {
+    "message": "{PH1} muuta"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | title": {
     "message": "Paranna kuvien toimitusta"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useCompression": {
-    "message": "Kuvan pakkauskertoimen lisääminen voi pienentää tämän kuvan latauskokoa. (Arvio: {PH1})"
+    "message": "Kuvan pakkauskertoimen lisääminen voi pienentää tämän kuvan latauskokoa."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useModernFormat": {
-    "message": "Modernin kuvamuodon (WebP, AVIF) käyttö tai kuvan pakkauksen lisääminen voi pienentää tämän kuvan latauskokoa. (Arvio: {PH1})"
+    "message": "Modernin kuvamuodon (WebP, AVIF) käyttö tai kuvan pakkauksen lisääminen voi pienentää tämän kuvan latauskokoa."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useResponsiveSize": {
-    "message": "Tämä kuvatiedosto on suurempi kuin sen näytettävien mittojen ({PH3}) perusteella tarvittava koko ({PH2}). Pienennä kuvan latauskokoa käyttämällä responsiivisia kuvia. (Arvio: {PH1})"
+    "message": "Tämä kuvatiedosto on suurempi kuin sen näytettävien mittojen ({PH2}) perusteella tarvittava koko ({PH1}). Pienennä kuvan latauskokoa käyttämällä responsiivisia kuvia."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
-    "message": "Videomuotojen käyttö GIF-tiedostojen sijaan voi parantaa animoidun sisällön latauskokoa. (Arvio: {PH1})"
+    "message": "Videomuotojen käyttö GIF-tiedostojen sijaan voi parantaa animoidun sisällön latauskokoa."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | description": {
-    "message": "Aloita tutkinta pisimmästä vaiheesta. [Viiveet voidaan minimoida](https://web.dev/articles/optimize-inp#optimize_interactions). Voit lyhentää käsittelyaikaa [optimoimalla pääsäikeen kustannukset](https://web.dev/articles/optimize-long-tasks), usein JS:n."
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Kullakin [osavaiheella on omat parantamisen strategiat](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ihanteellisesti suurin osa LCP-ajasta pitäisi käyttää resurssien lataamiseen, ei viivästyksiin."
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/InteractionToNextPaint.js | title": {
-    "message": "INP vaiheittain"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Elementin renderöintiviive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Kenttä p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "LCP:tä ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Resurssin latausviive"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Resurssin latauksen kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Alakohta"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Ensimmäistä tavua edeltävä aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP-erittely"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimoi LCP tekemällä LCP-kuvasta [löydettävä](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) HTML:stä heti ja [välttämällä laiskaa latautumista](https://web.dev/articles/lcp-lazy-loading)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityApplied": {
+    "message": "fetchpriority=high applied"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | fetchPriorityShouldBeApplied": {
+    "message": "\"fetchpriority=high\" tulisi käyttää"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lazyLoadNotApplied": {
+    "message": "laiska latautuminen ei käytössä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | lcpLoadDelay": {
+    "message": "LCP-kuva ladattu ({PH1}) aikaisimman aloituspisteen jälkeen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcp": {
+    "message": "LCP:tä ei havaittu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | noLcpResource": {
+    "message": "LCP-resurssia ei havaittu, koska LCP ei ole kuva"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | requestDiscoverable": {
+    "message": "Pyyntö on löydettävissä alkuperäisestä dokumentista"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | title": {
     "message": "LCP-pyynnön löytäminen"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | description": {
-    "message": "Kullakin [vaiheella on omat parantamisen strategiat](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ihanteellisesti suurin osa LCP-ajasta pitäisi käyttää resurssien lataamiseen, ei viivästyksiin."
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnScript": {
+    "message": "Skripti"
   },
-  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPPhases.js | title": {
-    "message": "LCP vaiheittain"
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | columnWastedBytes": {
+    "message": "Hukatut tavut"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | description": {
+    "message": "Polyfill- ja transform-merkintöjen avulla vanhemmat selaimet voivat käyttää uusia JavaScript-ominaisuuksia. Monia ei kuitenkaan tarvita nykyaikaisissa selaimissa. Harkitse JavaScript-käännösprosessin muuttamista niin, että [Baseline](https://web.dev/articles/baseline-and-polyfills)-ominaisuuksien ohjelmkointikoodin kieltä ei käännetä, ellet tiedä, että sinun on tuettava vanhempia selaimia. [Lue lisää siitä, miksi useimmat sivustot voivat ottaa käyttöön ES6+-koodin ilman ohjelmointikoodin kielen kääntämistä](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LegacyJavaScript.js | title": {
+    "message": "Vanha JavaScript"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | description": {
+    "message": "HTTP/2 ja HTTP/3 tarjoavat monia etuja HTTP/1.1:een verrattuna, esimerkiksi kanavoinnin. [Lue lisää modernin HTTP:n käytöstä](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
+    "message": "HTTP/1.1 ei ollut käytössä millään pyynnöllä, tai sen nykyinen käyttö ei tarjoa merkittävää optimointimahdollisuutta. HTTP/1.1-pyynnöt merkitään vain, jos kuusi tai useampi staattinen elementti on peräisin samasta alkuperästä eikä niitä tarjota paikallisesta kehitysympäristöstä tai kolmannen osapuolen lähteestä."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
+    "message": "Protokolla"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | request": {
+    "message": "Pyyntö"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | title": {
+    "message": "Moderni HTTP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnOrigin": {
+    "message": "Alkuperä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnRequest": {
+    "message": "Pyyntö"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnSource": {
+    "message": "Lähde"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnTime": {
+    "message": "Aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | columnWastedMs": {
+    "message": "Arvioidut LCP-säästöt"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | crossoriginWarning": {
+    "message": "Käyttämätön ennakkoyhteys. Varmista, että crossorigin-määritettä käytetään oikein."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | description": {
+    "message": "[Vältä kriittisten pyyntöjen ketjuttamista](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
+    "message": "Lisää [ennakkoyhdistämisen](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) vihjeitä tärkeimpiin alkuperiin, mutta pyri käyttämään enintään neljää."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
+    "message": "Ennakkoyhteydet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | maxCriticalPathLatency": {
+    "message": "Kriittisen polun enimmäisviive:"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noNetworkDependencyTree": {
+    "message": "Verkko-ohjelmat eivät vaikuta mihinkään renderöintitehtävään"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectCandidates": {
+    "message": "Yksikään muu alkuperä ei sovellu ennakkoyhteyden muodostamiseen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | noPreconnectOrigins": {
+    "message": "lähteitä ei yhdistetty ennakkoon"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableDescription": {
+    "message": "[ennakkoyhdistämisen](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) vihjeet auttavat selainta muodostamaan yhteyden aikaisemmin sivun latauksen aikana, jolloin kyseisen kohteen ensimmäinen pyyntö on nopeampi. Seuraavat ovat alkuperä, joihin sivu on muodostanut yhteyden etukäteen."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | preconnectOriginsTableTitle": {
+    "message": "Ennakkoon yhdistetyt alkuperät"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | title": {
+    "message": "Verkon riippuvuuspuu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | tooManyPreconnectLinksWarning": {
+    "message": "preconnect-yhteyksiä löytyi enemmän kuin neljä. Niitä tulee käyttää säästeliäästi ja vain tärkeimpiin alkuperiin."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | unusedWarning": {
+    "message": "Käyttämätön ennakkoyhteys. Valitse preconnect vain alkuperille, joita sivu todennäköisesti pyytää."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | warningDescription": {
+    "message": "Vältä kriittisten pyyntöjen ketjuttamista lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista sivun latausajan parantamiseksi."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | description": {
-    "message": "Pyynnöt estävät sivun ensimmäisen renderöinnin, joten LCP:ssä voi olla viiveitä. [Siirtäminen myöhemmäksi tai sisällyttäminen](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources/) voi poistaa nämä verkkopyynnöt kriittiseltä polulta."
+    "message": "Pyynnöt estävät sivun ensimmäisen renderöinnin, joten LCP:ssä voi olla viiveitä. [Siirtäminen myöhemmäksi tai sisällyttäminen](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) voi poistaa nämä verkkopyynnöt kriittiseltä polulta."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | duration": {
+    "message": "Kesto"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | noRenderBlocking": {
+    "message": "Tälle navigoinnille ei ole renderöinnin estopyyntöjä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | renderBlockingRequest": {
+    "message": "Pyyntö"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/RenderBlocking.js | title": {
     "message": "Renderöinnin estopyyntö"
@@ -2690,11 +2693,47 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | description": {
     "message": "Jos \"Laske tyyli uudelleen\" ‑kustannukset ovat edelleen korkeita, valitsimen optimointi voi alentaa niitä. [Optimoi valitsimet](https://developer.chrome.com/docs/devtools/performance/selector-stats), kun sekä kulunut aika että hidas polku ovat korkeita. Yksinkertaiset valitsimet, vähemmän valitsimia, pienempi DOM ja matalampi DOM vähentävät vastaavuuskustannuksia."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | elapsed": {
+    "message": "Kulunut aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | enableSelectorData": {
+    "message": "CSS-valitsindataa ei löytynyt. CSS-valitsimen tilastot on otettava käyttöön tulospaneelin asetuksista."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchAttempts": {
+    "message": "Vastaavuuksien hakuyritykset"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | matchCount": {
+    "message": "Vastaavuuksien määrä"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS-valitsimen kustannukset"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Suosituimman valitsimen kulunut aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Suosituimman valitsimen vastaavuusyritys"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
+    "message": "Suosituimmat valitsimet"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | total": {
+    "message": "Yhteensä"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnMainThreadTime": {
+    "message": "Pääsäikeen aika"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnThirdParty": {
+    "message": "Kolmas osapuoli"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | columnTransferSize": {
+    "message": "Siirron koko"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | description": {
-    "message": "Kolmannen osapuolen koodi voi vaikuttaa lataustehokkuuteen merkittävästi. [Vähennä ja lykkää kolmannen osapuolen koodin lataamista](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/) sivun sisällön priorisoimiseksi."
+    "message": "Kolmannen osapuolen koodi voi vaikuttaa lataustehokkuuteen merkittävästi. [Vähennä ja lykkää kolmannen osapuolen koodin lataamista](https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript/) sivun sisällön priorisoimiseksi."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | noThirdParties": {
+    "message": "Kolmansia osapuolia ei löytynyt"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ThirdParties.js | title": {
     "message": "Kolmannet osapuolet"
@@ -2702,8 +2741,374 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Napautusinteraktiot voivat [viivästyä jopa 300 ms:lla](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/), jos näkymää ei ole optimoitu mobiililaitteille."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Mobiililaitteen napautuksen viive"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimoi näkymä mobiililaitteille"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPMethodNotGET": {
+    "message": "Vain GET-pyynnön kautta ladattavat sivut voivat käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | HTTPStatusNotOK": {
+    "message": "Välimuistiin voi tallentaa vain sivuja, joilla on tilakoodi 2XX."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | JavaScriptExecution": {
+    "message": "Chrome havaitsi välimuistissa yrityksen suorittaa JavaScript."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | appBanner": {
+    "message": "AppBanneria pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabled": {
+    "message": "Merkinnät estävät siirtymisvälimuistin käytön. Ota se käyttöön paikallisesti tällä laitteella osoitteessa chrome://flags/#back-forward-cache."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Komentorivi estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Riittämätön muisti estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Delegaatti ei tue siirtymisvälimuistia"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Esirenderöijä estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | broadcastChannel": {
+    "message": "Sivua ei voi tallentaa välimuistiin, koska sillä on BroadcastChannel-esiintymä, jolla on rekisteröityjä kuuntelijoita."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheControlNoStore": {
+    "message": "Sivut, joilla on cache-control:no-store-otsikko, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheFlushed": {
+    "message": "Välimuisti tyhjennettiin tarkoituksella."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cacheLimit": {
+    "message": "Sivu poistettiin välimuistista, jotta toinen sivu voitiin tallentaa välimuistiin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | containsPlugins": {
+    "message": "Liitännäisiä sisältävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentDiscarded": {
+    "message": "Määrittelemätön"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileChooser": {
+    "message": "FileChooser APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentFileSystemAccess": {
+    "message": "File System Access APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Medialaitteen välittäjää käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaPlay": {
+    "message": "Mediasoitin oli käynnissä siirryttäessä pois."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSession": {
+    "message": "MediaSession APIa käyttävät ja toiston tilan asettavat sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentMediaSessionService": {
+    "message": "MediaSession APIa käyttävät ja toimintokäsittelijöitä asettavat sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentScreenReader": {
+    "message": "Näytönlukuohjelma estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSecurityHandler": {
+    "message": "SecurityHandleria käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentSerial": {
+    "message": "Serial APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebAuthenticationAPI": {
+    "message": "WebAuthetication APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebBluetooth": {
+    "message": "WebBluetooth APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | contentWebUSB": {
+    "message": "WebUSB APIa käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | cookieDisabled": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska evästeet on poistettu käytöstä sivulla, jolla on käytössä Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | dedicatedWorkerOrWorklet": {
+    "message": "Dedicated workeria tai workletia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | documentLoaded": {
+    "message": "Dokumentti ei latautunut kokonaan ennen pois siirtymistä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderAppBannerManager": {
+    "message": "Sovellusbanneri oli päällä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chromen Salasanojen ylläpito oli päällä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM-tislaus oli kesken pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer oli näkyvissä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessaging": {
+    "message": "Messaging APIa käyttävät laajennukset estävät siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Pitkään yhdistettyinä olleiden laajennusten pitäisi katkaista yhteys ennen siirtymisvälimuistiin siirtymistä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Pitkään yhdistettynä ollut laajennus yritti lähettää viestejä siirtymisvälimuistissa oleville kehyksille."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderExtensions": {
+    "message": "Laajennukset estävät siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderModalDialog": {
+    "message": "Sivun modaalivalintaikkuna (esim. lomakkeen uudelleenlähetys tai http-salasanavalintaikkuna) oli näkyvissä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOfflinePage": {
+    "message": "Offline-sivu oli näkyvissä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderOomInterventionTabHelper": {
+    "message": "Muistin loppumisen muistutuspalkki oli näkyvissä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPermissionRequestManager": {
+    "message": "Lupapyyntöjä oli aktiivisena pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderPopupBlockerTabHelper": {
+    "message": "Ponnahdusikkunoiden estotoiminto oli päällä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Selaussuojan tiedot olivat näkyvissä pois siirryttäessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Selaussuoja katsoi sivun haitalliseksi ja esti ponnahdusikkunan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "Service worker aktivoitiin, kun sivu oli siirtymisvälimuistissa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | errorDocument": {
+    "message": "Dokumenttivirhe estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | fencedFramesEmbedder": {
+    "message": "bfcache ei voi tallentaa FencedFramesia käyttäviä sivuja."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | foregroundCacheLimit": {
+    "message": "Sivu poistettiin välimuistista, jotta toinen sivu voitiin tallentaa välimuistiin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | grantedMediaStreamAccess": {
+    "message": "Sivut, joille on myönnetty pääsy median striimaukseen, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | haveInnerContents": {
+    "message": "Sivut, joilla on tietynlaista upotettua sisältöä (esim. PDF-tiedostoja), eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | idleManager": {
+    "message": "IdleManageria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBConnection": {
+    "message": "Sivut, joilla on avoin IndexedDB-yhteys, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | indexedDBEvent": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä IndexedDB-tapahtuman vuoksi."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | ineligibleAPI": {
+    "message": "Käytetyt APIt eivät olleet soveltuvia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedJavascript": {
+    "message": "Sivut, joihin JavaScript lisätään laajennuksen avulla, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | injectedStyleSheet": {
+    "message": "Sivut, joihin StyleSheet lisätään laajennusten avulla, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | internalError": {
+    "message": "Sisäinen virhe."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | jsNetworkRequestReceivedCacheControlNoStoreResource": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska jokin JavaScript-verkkopyyntö vastaanotti resurssin, jonka otsikko on Cache-Control: no-store."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keepaliveRequest": {
+    "message": "Keepalive-pyyntö estää siirtymisvälimuistin käytön."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | keyboardLock": {
+    "message": "Näppäimistön lukitusta käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | loading": {
+    "message": "Sivu ei latautunut kokonaan ennen pois siirtymistä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Sivut, joiden pääresurssilla on cache-control:no-cache, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Sivut, joiden pääresurssilla on cache-control:no-store, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | navigationCancelledWhileRestoring": {
+    "message": "Siirtyminen peruttiin ennen kuin sivu voitiin palauttaa siirtymisvälimuistista."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkExceedsBufferLimit": {
+    "message": "Sivu poistettiin välimuistista, koska aktiivinen verkkoyhteys vastaanotti liikaa dataa. Chrome rajoittaa välimuistissa olevien sivujen vastaanottaman datan määrää."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Sivut, joiden fetch()- tai XHR-pyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestRedirected": {
+    "message": "Sivu poistettiin siirtymisvälimuistista, koska aktiiviseen verkkopyyntöön liittyi uudelleenohjaus."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | networkRequestTimeout": {
+    "message": "Sivu poistettiin välimuistista, koska verkkoyhteys oli auki liian pitkään. Chrome rajoittaa aikaa, jonka välimuistissa oleva sivu voi vastaanottaa dataa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | noResponseHead": {
+    "message": "Sivut, joilla ei ole hyväksyttävää vastausotsikkoa, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | notMainFrame": {
+    "message": "Siirtyminen tapahtui muussa kuin pääkehyksessä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingIndexedDBTransaction": {
+    "message": "Sivut, joilla on keskeneräisiä indeksoituja DB-tapahtumia, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Sivut, joiden verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestFetch": {
+    "message": "Sivut, joiden verkonhakupyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestOthers": {
+    "message": "Sivut, joiden verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | outstandingNetworkRequestXHR": {
+    "message": "Sivut, joiden XHR-verkkopyyntö on kesken, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | paymentManager": {
+    "message": "PaymentManageria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | pictureInPicture": {
+    "message": "Pikkuruutua käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | printing": {
+    "message": "Tulostus UI:n näyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | relatedActiveContentsExist": {
+    "message": "window.open() avasi sivun, ja toisella välilehdellä on viittaus siihen, tai sivu avasi ikkunan."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessCrashed": {
+    "message": "Siirtymisvälimuistissa olevan sivun renderöintiprosessi kaatui."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | rendererProcessKilled": {
+    "message": "Siirtymisvälimuistissa olevan sivun renderöintiprosessi lopetettiin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedAudioCapturePermission": {
+    "message": "Äänentallennuslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Anturilupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedBackgroundWorkPermission": {
+    "message": "Taustasynkronointia tai hakulupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedMIDIPermission": {
+    "message": "MIDI-lupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedNotificationsPermission": {
+    "message": "Ilmoituslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedStorageAccessGrant": {
+    "message": "Sivut, jotka ovat pyytäneet pääsyä tallennustilaan, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | requestedVideoCapturePermission": {
+    "message": "Videontallennuslupia pyytäneet sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Välimuistiin voi tallentaa vain sivuja, joiden URL-malli on HTTP/HTTPS."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerClaim": {
+    "message": "Service worker pyysi sivun, kun se oli siirtymisvälimuistissa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerPostMessage": {
+    "message": "Service worker yritti lähettää siirtymisvälimuistissa olevalle sivulle omaisuuden: MessageEvent."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorkerin rekisteröinti peruttiin, kun sivu oli siirtymisvälimuistissa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | serviceWorkerVersionActivation": {
+    "message": "Sivu poistettiin siirtymisvälimuistista service workerin aktivoitumisen takia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sessionRestored": {
+    "message": "Chrome käynnistyi uudelleen ja tyhjensi siirtymisvälimuistin."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
+    "message": "SharedWorkeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Sivu poistettiin välimuistista, koska se sai viestin SharedWorkerilta"
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
+    "message": "SpeechRecognizeria käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechSynthesis": {
+    "message": "SpeechSynthesisia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subframeIsNavigating": {
+    "message": "Sivulla oleva iframe aloitti siirtymisen, joka ei onnistunut."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoCache": {
+    "message": "Sivut, joiden alaresurssilla on cache-control:no-cache, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | subresourceHasCacheControlNoStore": {
+    "message": "Sivut, joiden alaresurssilla on cache-control:no-store, eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeout": {
+    "message": "Sivu ylitti enimmäisajan siirtymisvälimuistissa ja vanheni."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | timeoutPuttingInCache": {
+    "message": "Sivu aikakatkaistiin, kun se oli siirtymässä siirtymisvälimuistiin (tämä johtuu luultavasti pitkäkestoisista sivun piilotuksen käsittelijöistä)."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInMainFrame": {
+    "message": "Sivun pääkehyksessä on tyhjennyksen käsittelijä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | unloadHandlerExistsInSubFrame": {
+    "message": "Sivun alakehyksessä on tyhjennyksen käsittelijä."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | userAgentOverrideDiffers": {
+    "message": "Selain on muuttanut käyttäjäagentin ohitusotsikkoa."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | wasGrantedMediaAccess": {
+    "message": "Sivut, joille on annettu lupa tallentaa videota tai ääntä, eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webDatabase": {
+    "message": "WebDatabasea käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webHID": {
+    "message": "WebHID:iä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webLocks": {
+    "message": "WebLocksia käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webNfc": {
+    "message": "WebNfc:tä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webOTPService": {
+    "message": "WebOTPServiceä käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
+    "message": "WebRTC:tä käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska WebRTC:tä on käytetty."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
+    "message": "WebSharea käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
+    "message": "WebSocketia käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska WebSocketia on käytetty."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
+    "message": "WebTransportia käyttävät sivut eivät voi käyttää siirtymisvälimuistia."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+    "message": "Siirtymisvälimuisti on poistettu käytöstä, koska WebTransportia on käytetty."
+  },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
+    "message": "WebXR:ää käyttävät sivut eivät voi tällä hetkellä käyttää siirtymisvälimuistia."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Käytä animoidun sisällön kanssa [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)-ominaisuutta, joka minimoi suoritinkäytön, kun sisältö ei ole näytöllä."
@@ -3233,8 +3638,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Ilmoita ongelmasta"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Palaa tarkastuksiin"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Piilota"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Myöhemmin tänä vuonna vinkit korvaavat tulostarkastukset. [Lue lisää ja anna palautetta täällä](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Laboratoriodata"
@@ -3335,6 +3746,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthousen suorituksessa havaittiin ongelmia:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Kokeile vinkkejä"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Ei määritettävissä"
   },
@@ -3365,14 +3779,20 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Moduulien kaksoiskappaleet"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Päällekkäiset tavut"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resurssin tavut"
+    "message": "Tiedoston tavut"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "Nimi"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Näytä/piilota taulukko"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Siirrettävät tavut"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Käyttämättömät tavut"

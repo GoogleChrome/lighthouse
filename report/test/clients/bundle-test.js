@@ -24,9 +24,10 @@ describe('lighthouseRenderer bundle', () => {
     document = window.document;
 
     global.window = global.self = window;
-    global.window.requestAnimationFrame = fn => fn();
+    global.requestAnimationFrame = fn => fn();
     global.HTMLElement = window.HTMLElement;
     global.HTMLInputElement = window.HTMLInputElement;
+    global.CustomEvent = window.CustomEvent;
     // Stub out matchMedia for Node.
     global.self.matchMedia = function() {
       return {
@@ -42,6 +43,7 @@ describe('lighthouseRenderer bundle', () => {
   after(() => {
     global.window = global.self = undefined;
     global.HTMLInputElement = undefined;
+    global.CustomEvent = undefined;
   });
 
   it('renders an LHR to DOM', () => {

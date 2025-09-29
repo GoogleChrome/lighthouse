@@ -20,7 +20,7 @@ class NetworkRequests extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Network Requests',
       description: 'Lists the network requests that were made during page load.',
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'GatherContext'],
+      requiredArtifacts: ['DevtoolsLog', 'URL', 'GatherContext'],
     };
   }
 
@@ -30,7 +30,7 @@ class NetworkRequests extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.DevtoolsLog;
     const records = await NetworkRecords.request(devtoolsLog, context);
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
@@ -121,9 +121,21 @@ class NetworkRequests extends Audit {
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
     const networkStartTimeTs = Number.isFinite(earliestRendererStartTime) ?
         earliestRendererStartTime * 1000 : undefined;
+
+    const initiators = records.filter((record) => record.initiator.url).map((record) => {
+      const {type, url, lineNumber, columnNumber} = record.initiator;
+      return {
+        type,
+        url: url ? UrlUtils.elideDataURI(url) : undefined,
+        lineNumber,
+        columnNumber,
+      };
+    });
+
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,
+      initiators,
     };
 
     return {

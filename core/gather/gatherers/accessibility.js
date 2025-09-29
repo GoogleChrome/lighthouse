@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* global window, document, getNodeDetails */
+/* global getNodeDetails */
 
 import BaseGatherer from '../base-gatherer.js';
 import {axeSource} from '../../lib/axe.js';
