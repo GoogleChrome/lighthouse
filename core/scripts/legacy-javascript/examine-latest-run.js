@@ -29,8 +29,8 @@ async function main() {
   const devtoolsLog = readJson(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
   const trace = readJson(`${LATEST_RUN_DIR}/defaultPass.trace.json`);
   const scripts = artifacts.Scripts;
-  artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
-  artifacts.traces = {defaultPass: trace};
+  artifacts.DevtoolsLog = devtoolsLog;
+  artifacts.Trace = trace;
 
   const auditResults = await LegacyJavascript.audit(artifacts, {
     computedCache: new Map(),
@@ -54,11 +54,17 @@ async function main() {
     if (typeof item.url !== 'string') continue;
 
     const script = scripts.find(s => s.url === item.url);
-    const signals = Array.isArray(item.signals) ? item.signals : [];
-    const locations = Array.isArray(item.locations) ? item.locations : [];
+    const signals = Array.isArray(item.subItems?.items) ?
+      item.subItems?.items.map(item => item.signal) :
+      [];
+    const locations = Array.isArray(item.subItems?.items) ?
+      item.subItems?.items.map(item => item.location) :
+      [];
+    const wastedBytes = item.wastedBytes ?? 0;
 
     console.log('---------------------------------');
     console.log(`URL: ${item.url}`);
+    console.log(`Wasted bytes: ${Math.floor(10 * wastedBytes / 1024) / 10} KiB`);
     console.log(`Signals: ${signals.length}`);
     if (!script || !script.content) {
       console.log('\nFailed to find script content! :/');
@@ -71,7 +77,7 @@ async function main() {
       const signal = signals[i];
       const location = locations[i];
       if (typeof location !== 'object' || format.isIcuMessage(location) ||
-          location.type !== 'source-location') {
+          location.type !== 'source-location' || !signal) {
         continue;
       }
 
