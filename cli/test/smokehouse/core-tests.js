@@ -41,7 +41,6 @@ import originIsolationCoopHeaderMissing from './test-definitions/origin-isolatio
 import originIsolationCoopPresent from './test-definitions/origin-isolation-coop-present.js';
 import perfDebug from './test-definitions/perf-debug.js';
 import perfDiagnosticsAnimations from './test-definitions/perf-diagnostics-animations.js';
-import perfDiagnosticsThirdParty from './test-definitions/perf-diagnostics-third-party.js';
 import perfDiagnosticsUnsizedImages from './test-definitions/perf-diagnostics-unsized-images.js';
 import perfFonts from './test-definitions/perf-fonts.js';
 import perfFrameMetrics from './test-definitions/perf-frame-metrics.js';
@@ -106,7 +105,6 @@ const smokeTests = [
   originIsolationCoopPresent,
   perfDebug,
   perfDiagnosticsAnimations,
-  perfDiagnosticsThirdParty,
   perfDiagnosticsUnsizedImages,
   perfFonts,
   perfFrameMetrics,

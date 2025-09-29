@@ -219,7 +219,6 @@ export class ReportUIFeatures {
     const thirdPartyFilterAuditExclusions = [
       // These audits deal explicitly with third party resources.
       'uses-rel-preconnect',
-      'third-party-facades',
       // Too much work to support.
       'network-dependency-tree-insight',
     ];
