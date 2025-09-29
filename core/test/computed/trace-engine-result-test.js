@@ -10,7 +10,7 @@ import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 import {defaultSettings} from '../../config/constants.js';
 import {readJson} from '../test-utils.js';
 
-const bigTrace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
+const bigTrace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
 const basicTrace = readJson('../fixtures/artifacts/iframe/trace.json', import.meta);
 
 describe('TraceEngineResult', () => {

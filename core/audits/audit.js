@@ -8,8 +8,6 @@ import * as LH from '../../types/lh.js';
 import {isUnderTest} from '../lib/lh-env.js';
 import {Util} from '../../shared/util.js';
 
-const DEFAULT_PASS = 'defaultPass';
-
 /** @type {Record<keyof LH.Audit.ProductMetricSavings, number>} */
 const METRIC_SAVINGS_PRECISION = {
   FCP: 50,
@@ -45,14 +43,6 @@ const METRIC_SAVINGS_PRECISION = {
 const clampTo2Decimals = val => Math.round(val * 100) / 100;
 
 class Audit {
-  /**
-   * @return {string}
-   */
-  static get DEFAULT_PASS() {
-    // TODO(v13): remove.
-    return DEFAULT_PASS;
-  }
-
   /**
    * @return {LH.Audit.ScoreDisplayModes}
    */
@@ -504,8 +494,8 @@ class Audit {
    * @returns {LH.Artifacts.MetricComputationDataInput}
    */
   static makeMetricComputationDataInput(artifacts, context) {
-    const trace = artifacts.Trace ?? artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.DevtoolsLog ?? artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.Trace;
+    const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
     const {URL, SourceMaps} = artifacts;
     // eslint-disable-next-line max-len

@@ -34,8 +34,8 @@ function formatBytes(bytes) {
 async function main() {
   /** @type {LH.Artifacts} */
   const artifacts = readJson(`${LATEST_RUN_DIR}/artifacts.json`);
-  const devtoolsLog = readJson(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
-  const trace = readJson(`${LATEST_RUN_DIR}/defaultPass.trace.json`);
+  const devtoolsLog = readJson(`${LATEST_RUN_DIR}/devtoolslog.json`);
+  const trace = readJson(`${LATEST_RUN_DIR}/trace.json`);
   const scripts = artifacts.Scripts;
   artifacts.DevtoolsLog = devtoolsLog;
   artifacts.Trace = trace;

@@ -102,8 +102,8 @@ async function runUnthrottledLocally(url) {
   });
   const lhr = JSON.parse(stdout);
   assertLhr(lhr);
-  const devtoolsLog = fs.readFileSync(`${artifactsFolder}/defaultPass.devtoolslog.json`, 'utf-8');
-  const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
+  const devtoolsLog = fs.readFileSync(`${artifactsFolder}/devtoolslog.json`, 'utf-8');
+  const trace = fs.readFileSync(`${artifactsFolder}/trace.json`, 'utf-8');
   return {
     devtoolsLog,
     lhr: JSON.stringify(lhr),

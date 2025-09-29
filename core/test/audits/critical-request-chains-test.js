@@ -11,7 +11,7 @@ import {createTestTrace} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {readJson} from '../test-utils.js';
 
-const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
+const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/devtoolslog.json', import.meta);
 
 const FAILING_CHAIN_RECORDS = [
   {

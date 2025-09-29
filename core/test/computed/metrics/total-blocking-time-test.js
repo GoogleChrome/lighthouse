@@ -9,8 +9,8 @@ import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/artifacts/blocking-time/trace.json.gz', import.meta);
 const devtoolsLog = readJson('../../fixtures/artifacts/blocking-time/devtoolslog.json.gz', import.meta);
-const cnnTrace = readJson('../../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const cnnDevtoolsLog = readJson('../../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const cnnTrace = readJson('../../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const cnnDevtoolsLog = readJson('../../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 

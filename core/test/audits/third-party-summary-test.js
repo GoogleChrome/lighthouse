@@ -8,8 +8,8 @@ import {defaultSettings} from '../../config/constants.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
-const trace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const devtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const trace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const devtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 const noThirdPartyTrace = readJson('../fixtures/artifacts/animation/trace.json.gz', import.meta);
 const noThirdPartyDevtoolsLog = readJson('../fixtures/artifacts/animation/devtoolslog.json.gz', import.meta);
 

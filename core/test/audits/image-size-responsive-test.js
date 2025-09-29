@@ -36,8 +36,7 @@ function generateDevToolsLogs() {
   const networkRecords = [
     {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
   ];
-  const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
-  return {[ImageSizeResponsiveAudit.DEFAULT_PASS]: devtoolsLogs};
+  return networkRecordsToDevtoolsLog(networkRecords);
 }
 
 describe('Images: size audit', () => {

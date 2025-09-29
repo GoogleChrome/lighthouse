@@ -147,10 +147,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   TraceError: Trace;
   /** Elements associated with metrics (ie: Largest Contentful Paint element). */
   TraceElements: Artifacts.TraceElement[];
-  /** COMPAT: A set of traces, keyed by passName. */
-  traces: {[passName: string]: Trace};
-  /** COMPAT: A set of DevTools debugger protocol records, keyed by passName. */
-  devtoolsLogs: {[passName: string]: DevtoolsLog};
 }
 
 declare module Artifacts {

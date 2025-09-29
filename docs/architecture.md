@@ -9,8 +9,8 @@ _Some incomplete notes_
 * **Driver** - Interfaces with [Puppeteer](https://github.com/puppeteer/puppeteer) and [Chrome Debugging Protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)  ([API viewer](https://chromedevtools.github.io/debugger-protocol-viewer/))
 * **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.  Run Lighthouse with `--gather-mode` to see the 3 primary outputs from gathering:
   1. `artifacts.json`: The output from all [gatherers](../core/gather/gatherers).
-  2. `defaultPass.trace.json`: Most performance characteristics come from here. You can view it in the DevTools Peformance panel.
-  3. `defaultPass.devtoolslog.json`: A log of all the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) events. Primary signal about network requests and page state.
+  2. `trace.json`: Most performance characteristics come from here. You can view it in the DevTools Peformance panel.
+  3. `devtoolslog.json`: A log of all the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) events. Primary signal about network requests and page state.
 * **Audit** - The [audits](../core/audits) are tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
   * **Computed Artifacts** - [Generated](../core/computed) on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
 * **Report** - The report UI, created client-side from the LHR. See [HTML Report Generation Overview](../report/README.md) for details.
