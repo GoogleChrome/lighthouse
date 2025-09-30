@@ -9,7 +9,7 @@ import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/ImageDeli
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {adaptInsightToAuditProduct} from './insight-audit.js';
+import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 import {TraceEngineResult} from '../../computed/trace-engine-result.js';
 
 // eslint-disable-next-line max-len
@@ -49,6 +49,7 @@ class ImageDeliveryInsight extends Audit {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         /* eslint-disable max-len */
+        {key: 'node', valueType: 'node', label: ''},
         {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL), subItemsHeading: {key: 'reason', valueType: 'text'}},
         {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnResourceSize)},
         {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes), subItemsHeading: {key: 'wastedBytes', valueType: 'bytes'}},
@@ -57,6 +58,8 @@ class ImageDeliveryInsight extends Audit {
 
       /** @type {LH.Audit.Details.Table['items']} */
       const items = insight.optimizableImages.map(image => ({
+        node:
+          makeNodeItemForNodeId(artifacts.TraceElements, image.largestImagePaint.args.data.nodeId),
         url: image.request.args.data.url,
         totalBytes: image.request.args.data.decodedBodyLength,
         wastedBytes: image.byteSavings,
