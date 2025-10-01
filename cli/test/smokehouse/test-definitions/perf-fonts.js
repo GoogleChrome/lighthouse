@@ -27,7 +27,7 @@ const expectations = {
   networkRequests: {
     // DevTools loads the page three times, so this request count will not be accurate.
     _excludeRunner: 'devtools',
-    length: 5,
+    length: 3,
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/fonts.html',
@@ -53,18 +53,6 @@ const expectations = {
           ],
         },
       },
-      // Disabled for now, see https://github.com/GoogleChrome/lighthouse/issues/11960
-      // 'preload-fonts': {
-      //   scoreDisplayMode: 'notApplicable',
-      //   score: 0,
-      //   details: {
-      //     items: [
-      //       {
-      //         url: 'http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?delay=1000',
-      //       },
-      //     ],
-      //   },
-      // },
     },
   },
 };
