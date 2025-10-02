@@ -35,7 +35,12 @@ const MAX_LAYOUT_SHIFTS = 15;
  */
 /* c8 ignore start */
 function getNodeDetailsData() {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
+  /** @type {Element|null} */
+  let elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
+  if (!elem && this instanceof ShadowRoot) {
+    elem = this.host;
+  }
+
   let traceElement;
   if (elem) {
     // @ts-expect-error - getNodeDetails put into scope via stringification
