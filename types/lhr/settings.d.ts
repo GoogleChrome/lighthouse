@@ -112,7 +112,7 @@ export type ScreenEmulationSettings = {
   pauseAfterFcpMs?: number;
   /** The number of milliseconds to wait after the load event until the page should be considered loaded. */
   pauseAfterLoadMs?: number;
-  /** The number of milliseconds to wait between high priority network requests or 3 simulataneous requests before the page should be considered loaded. */
+  /** The number of milliseconds to wait between high priority network requests or 3 simultaneous requests before the page should be considered loaded. */
   networkQuietThresholdMs?: number;
   /** The number of milliseconds to wait between long tasks until the page should be considered loaded. */
   cpuQuietThresholdMs?: number;
