@@ -892,6 +892,7 @@ export interface TraceEvent {
       initiator?: {type: string, url?: string, stack?: any};
       protocol?: string;
       finishTime?: number;
+      headers?: Array<{name: string, value: string}>;
     };
     frame?: string;
     name?: string;

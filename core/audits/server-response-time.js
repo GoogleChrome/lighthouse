@@ -6,7 +6,7 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import {MainResource} from '../computed/main-resource.js';
+import {NavigationInsights} from '../computed/navigation-insights.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on how long it took from starting a request to when the server started responding. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -21,9 +21,6 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
-// Due to the way that DevTools throttling works we cannot see if server response took less than ~570ms.
-// We set our failure threshold to 600ms to avoid those false positives but we want devs to shoot for 100ms.
-const TOO_SLOW_THRESHOLD_MS = 600;
 const TARGET_MS = 100;
 
 class ServerResponseTime extends Audit {
@@ -38,22 +35,9 @@ class ServerResponseTime extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 1,
-      requiredArtifacts: ['DevtoolsLog', 'URL', 'GatherContext'],
+      requiredArtifacts: ['Trace', 'SourceMaps'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
-  }
-
-  /**
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {number|null}
-   */
-  static calculateResponseTime(record) {
-    // Lightrider does not have timings for sendEnd, but we do have this timing which should be
-    // close to the response time.
-    if (global.isLightrider && record.lrStatistics) return record.lrStatistics.requestMs;
-
-    if (!record.timing) return null;
-    return record.timing.receiveHeadersStart - record.timing.sendEnd;
   }
 
   /**
@@ -62,17 +46,19 @@ class ServerResponseTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.DevtoolsLog;
+    const settings = context.settings;
+    const trace = artifacts.Trace;
+    const SourceMaps = artifacts.SourceMaps;
+    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
+    const responseTime = navInsights.model.DocumentLatency.data?.serverResponseTime;
+    const url = navInsights.model.DocumentLatency.data?.documentRequest?.args.data.url;
 
-    /** @type {LH.Artifacts.NetworkRequest} */
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-
-    const responseTime = ServerResponseTime.calculateResponseTime(mainResource);
-    if (responseTime === null) {
+    if (responseTime === undefined || !url) {
       throw new Error('no timing found for main resource');
     }
 
-    const passed = responseTime < TOO_SLOW_THRESHOLD_MS;
+    const passed =
+      Boolean(navInsights.model.DocumentLatency.data?.checklist.serverResponseIsFast.value);
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
@@ -84,7 +70,7 @@ class ServerResponseTime extends Audit {
     const overallSavingsMs = Math.max(responseTime - TARGET_MS, 0);
     const details = Audit.makeOpportunityDetails(
       headings,
-      [{url: mainResource.url, responseTime}],
+      [{url, responseTime}],
       {overallSavingsMs}
     );
 
