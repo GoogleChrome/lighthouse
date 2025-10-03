@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import log from 'lighthouse-logger';
-
 import {Audit} from '../audits/audit.js';
 
 /** @type {Record<keyof LH.BaseArtifacts, string>} */
@@ -176,20 +174,19 @@ function filterCategoriesByExplicitFilters(categories, onlyCategories) {
 }
 
 /**
- * Logs a warning if any specified onlyCategory is not a known category that can
+ * Throw an error if any specified onlyCategory is not a known category that can
  * be included.
  *
  * @param {LH.Config.ResolvedConfig['categories']} allCategories
  * @param {string[] | null} onlyCategories
  * @return {void}
  */
-function warnOnUnknownOnlyCategories(allCategories, onlyCategories) {
+function errorOnUnknownOnlyCategories(allCategories, onlyCategories) {
   if (!onlyCategories) return;
 
-  for (const onlyCategoryId of onlyCategories) {
-    if (!allCategories?.[onlyCategoryId]) {
-      log.warn('config', `unrecognized category in 'onlyCategories': ${onlyCategoryId}`);
-    }
+  const unknown = onlyCategories.filter(c => !allCategories?.[c]);
+  if (unknown.length) {
+    throw new Error(`unrecognized category in 'onlyCategories': ${unknown.join(', ')}`);
   }
 }
 
@@ -271,7 +268,7 @@ function filterConfigByExplicitFilters(resolvedConfig, filters) {
     throw new Error(`onlyCategories cannot be an empty array.`);
   }
 
-  warnOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
+  errorOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
 
   let baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, undefined);
   if (onlyCategories) {
