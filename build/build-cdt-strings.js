@@ -85,7 +85,7 @@ ${extraCode}`.trimStart();
       [`{imageOrientation: 'from-image'}`, `\\\\{imageOrientation: 'from-image'\\\\}`],
     ]),
   ].join('');
-  generatedDeprecationSourceText = generatedDeprecationSourceText.replace('https://goo.gle/chrome-insecure-origins', 'https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/');
+  generatedDeprecationSourceText = generatedDeprecationSourceText.replaceAll('https://goo.gle/chrome-insecure-origins', 'https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/');
   fs.writeFileSync(`${LH_ROOT}/core/lib/deprecations-strings.js`, generatedDeprecationSourceText);
 }
 
@@ -101,9 +101,12 @@ ${extraCode}`.trimStart();
     [' as const', ''],
   ]);
   const notRestoredReasonDescriptionDeclare =
-    extract(input, 'const NotRestoredReasonDescription', '};', [
+    extract(input, 'const NotRestoredReasonDescription', '} as const;', [
       [/i18nLazyString/g, 'str_'],
       [/i18n\.i18n\.lockedLazyString/g, ''],
+      [': NotRestoredReason', ''],
+      [' as const', ''],
+      ['@ts-expect-error ', ''],
     ]);
 
   const extraCode = `

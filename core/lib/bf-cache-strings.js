@@ -534,17 +534,17 @@ const UIStrings = {
   cookieDisabled:
       'Back/forward cache is disabled because cookies are disabled on a page that uses `Cache-Control: no-store`.',
   /**
-   * @description Description text for not restored reason WebRTCSticky.
+   * @description Description text for not restored reason WebRTCUsedWithCCNS.
    */
-  webRTCSticky: 'Back/forward cache is disabled because WebRTC has been used.',
+  webRTCUsedWithCCNS: 'Back/forward cache is disabled because WebRTC has been used.',
   /**
-   * @description Description text for not restored reason WebTransportSticky.
+   * @description Description text for not restored reason WebTransportUsedWithCCNS.
    */
-  webTransportSticky: 'Back/forward cache is disabled because WebTransport has been used.',
+  webTransportUsedWithCCNS: 'Back/forward cache is disabled because WebTransport has been used.',
   /**
-   * @description Description text for not restored reason WebSocketSticky.
+   * @description Description text for not restored reason WebSocketUsedWithCCNS.
    */
-  webSocketSticky: 'Back/forward cache is disabled because WebSocket has been used.',
+  webSocketUsedWithCCNS: 'Back/forward cache is disabled because WebSocket has been used.',
 
 };
 
@@ -567,6 +567,7 @@ const NotRestoredReasonDescription = {
   JavaScriptExecution: {name: str_(UIStrings.JavaScriptExecution)},
   RendererProcessKilled: {name: str_(UIStrings.rendererProcessKilled)},
   RendererProcessCrashed: {name: str_(UIStrings.rendererProcessCrashed)},
+  // kept for backwards compatibly
   GrantedMediaStreamAccess: {name: str_(UIStrings.grantedMediaStreamAccess)},
   CacheFlushed: {name: str_(UIStrings.cacheFlushed)},
   ServiceWorkerVersionActivation: {name: str_(UIStrings.serviceWorkerVersionActivation)},
@@ -691,9 +692,9 @@ const NotRestoredReasonDescription = {
       {name: str_(UIStrings.jsNetworkRequestReceivedCacheControlNoStoreResource)},
   IndexedDBEvent: {name: str_(UIStrings.indexedDBEvent)},
   CookieDisabled: {name: str_(UIStrings.cookieDisabled)},
-  WebRTCSticky: {name: str_(UIStrings.webRTCSticky)},
-  WebTransportSticky: {name: str_(UIStrings.webTransportSticky)},
-  WebSocketSticky: {name: str_(UIStrings.webSocketSticky)},
+  WebRTCUsedWithCCNS: {name: str_(UIStrings.webRTCUsedWithCCNS)},
+  WebTransportUsedWithCCNS: {name: str_(UIStrings.webTransportUsedWithCCNS)},
+  WebSocketUsedWithCCNS: {name: str_(UIStrings.webSocketUsedWithCCNS)},
   HTTPAuthRequired: {name: ('HTTPAuthRequired')},
   CookieFlushed: {name: ('CookieFlushed')},
   SmartCard: {name: ('SmartCard')},
