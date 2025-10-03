@@ -61,7 +61,7 @@ class ThirdPartiesInsight extends Audit {
    */
   static async audit(artifacts, context) {
     return adaptInsightToAuditProduct(artifacts, context, 'ThirdParties', (insight, extras) => {
-      const urlSummaries = summarizeByURL(extras.parsedTrace, extras.insights.bounds);
+      const urlSummaries = summarizeByURL(extras.data, extras.insights.bounds);
 
       const thirdPartySummaries = insight.entitySummaries
         .filter(summary => summary.entity !== insight.firstPartyEntity || null)

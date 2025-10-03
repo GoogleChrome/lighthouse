@@ -477,7 +477,7 @@ declare module Artifacts {
   }
 
   interface TraceEngineResult {
-    parsedTrace: TraceEngine.Handlers.Types.ParsedTrace;
+    data: TraceEngine.Handlers.Types.HandlerData;
     insights: TraceEngine.Insights.Types.TraceInsightSets;
   }
 

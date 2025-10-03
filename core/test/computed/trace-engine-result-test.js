@@ -31,7 +31,7 @@ describe('TraceEngineResult', () => {
         context
       );
       assert.ok(result.insights);
-      assert.ok(result.parsedTrace);
+      assert.ok(result.data);
       Array.from(result.insights.values()).forEach(insightSet => {
         Object.entries(insightSet.model).forEach(([_, value]) => {
           expect(value).not.toBeInstanceOf(Error);
@@ -77,7 +77,7 @@ describe('TraceEngineResult', () => {
 
       it('parses', async () => {
         assert.ok(result.insights);
-        assert.ok(result.parsedTrace);
+        assert.ok(result.data);
       });
 
 
@@ -91,7 +91,7 @@ describe('TraceEngineResult', () => {
 
 
       it('numeric values are set and look legit', () => {
-        const data = result.parsedTrace;
+        const data = result.data;
         const shouldBeNumbers = [
           data.Meta.traceBounds.min,
           data.Meta.traceBounds.max,
@@ -114,7 +114,7 @@ describe('TraceEngineResult', () => {
       });
 
       it('string values are set and look legit', () => {
-        const data = result.parsedTrace;
+        const data = result.data;
         const shouldBeStrings = [
           data.Meta.mainFrameId,
           data.Meta.mainFrameURL,
