@@ -155,36 +155,10 @@ class AnchorElements extends BaseGatherer {
     });
     await session.sendCommand('DOM.enable');
 
-    console.time('getdoc');
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
     // if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
-    console.timeEnd('getdoc');
 
-
-    console.time('simpelisteners');
-
-
-    const listeners = await Promise.all(anchors.map(anchor => getEventListeners(session, anchor.node.devtoolsNodePath)));
-    const paralellresult = anchors.map((anchor, i) => ({
-      ...anchor,
-      listeners: listeners[i],
-    }));
-    console.timeEnd('simpelisteners');
-
-    // // const anchorsWithEventListeners = anchors.map(async anchor => {
-    // //   const listeners = getEventListeners(session, anchor.node.devtoolsNodePath);
-
-
-    // //   return {
-    // //     ...anchor,
-    // //     listeners,
-    // //   };
-    // // });
-
-    // const resultsimple = await Promise.all(anchorsWithEventListeners);
-
-    // console.timeEnd('simpelisteners');
 
     console.time('listeners');
 
@@ -240,14 +214,6 @@ class AnchorElements extends BaseGatherer {
     });
 
     console.timeEnd('listeners');
-
-
-    console.time('getSnapshot');
-    // It'd be faster (on complex pages like cnn.com to use `sendCommand('DOMSnapshot.getSnapshot', {includeEventListeners: true, computedStyleWhitelist: []});`
-    // However that'd require a large refactor of how we collect/match dom nodes.
-    // If this remains a performance concern we should try to get rid of the ancestor listener consideration.
-    console.timeEnd('getSnapshot');
-
 
     await session.sendCommand('DOM.disable');
     return result;
