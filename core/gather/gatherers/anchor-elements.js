@@ -155,36 +155,78 @@ class AnchorElements extends BaseGatherer {
     });
     await session.sendCommand('DOM.enable');
 
-    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
+    console.time('getdoc');
+    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
+    // if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
-    const anchorsWithEventListeners = anchors.map(async anchor => {
-      const listeners = await getEventListeners(session, anchor.node.devtoolsNodePath);
+    console.timeEnd('getdoc');
 
-      /** @type {Set<{type: string}>} */
-      const ancestorListeners = new Set();
+
+    console.time('listeners');
+
+    // Phase 1: Collect all unique node paths from anchors and their ancestors.
+    const allPaths = new Set();
+    for (const anchor of anchors) {
+      allPaths.add(anchor.node.devtoolsNodePath);
       const splitPath = anchor.node.devtoolsNodePath.split(',');
-      const ancestorListenerPromises = [];
+      while (splitPath.length > 2) {
+        splitPath.length -= 2;
+        allPaths.add(splitPath.join(','));
+      }
+    }
+
+    // Phase 2: Fetch event listeners for all unique paths in parallel.
+    /** @type {Map<string, Array<{type: string}>>} */
+    const listenersByPath = new Map();
+    const listenerPromises = Array.from(allPaths).map(path => {
+      return getEventListeners(session, path)
+        .then(listeners => {
+          if (listeners.length) {
+            listenersByPath.set(path, listeners);
+          }
+        })
+        .catch(() => {}); // Ignore errors, e.g. node not found.
+    });
+    await Promise.all(listenerPromises);
+
+    // Phase 3: Augment anchor data with the fetched listeners.
+    const result = anchors.map(anchor => {
+      const listeners = listenersByPath.get(anchor.node.devtoolsNodePath) || [];
+
+      /** @type {Map<string, {type: string}>} */
+      const ancestorListeners = new Map();
+      const splitPath = anchor.node.devtoolsNodePath.split(',');
       while (splitPath.length > 2) {
         splitPath.length -= 2;
         const path = splitPath.join(',');
-        const promise = getEventListeners(session, path).then(listeners => {
-          for (const listener of listeners) {
-            ancestorListeners.add(listener);
+        const pathListeners = listenersByPath.get(path);
+        if (pathListeners) {
+          for (const listener of pathListeners) {
+            ancestorListeners.set(listener.type, listener);
           }
-        }).catch(() => {});
-        ancestorListenerPromises.push(promise);
+        }
       }
 
-      await Promise.all(ancestorListenerPromises);
 
       return {
         ...anchor,
         listeners,
-        ancestorListeners: Array.from(ancestorListeners),
+        ancestorListeners: Array.from(ancestorListeners.values()),
       };
     });
 
-    const result = await Promise.all(anchorsWithEventListeners);
+    console.timeEnd('listeners');
+
+
+    console.time('getSnapshot');
+    const snapshot = await session.sendCommand('DOMSnapshot.getSnapshot', {
+      includeEventListeners: true,
+      computedStyleWhitelist: [],
+    });
+    console.log(snapshot.domNodes.length)
+    console.timeEnd('getSnapshot');
+
+
     await session.sendCommand('DOM.disable');
     return result;
   }
