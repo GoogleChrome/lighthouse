@@ -160,42 +160,14 @@ class AnchorElements extends BaseGatherer {
 
     console.time('listeners');
 
-    /** @type {Map<string,  ReturnType<typeof getEventListeners>>} */
-    const listenerCache = new Map();
 
-    const anchorsWithEventListeners = anchors.map(async anchor => {
-      const listeners = await getEventListeners(session, anchor.node.devtoolsNodePath);
-
-      // Doesn't make sense as a set, since objects with the same type are still different.
-      /** @type {Array<{type: string}>} */
-      const ancestorListeners = [];
-      const splitPath = anchor.node.devtoolsNodePath.split(',');
-      const ancestorListenerPromises = [];
-      while (splitPath.length > 2) {
-        splitPath.length -= 2;
-        const path = splitPath.join(',');
-        // Check cache to avoid duplicate CDP calls for ancestors shared between multiple anchors.
-        if (listenerCache.has(path)) {
-          ancestorListenerPromises.push(listenerCache.get(path)?.then(listeners => {
-            ancestorListeners.push(...listeners);
-          }));
-        } else {
-          const promise = getEventListeners(session, path).then(listeners => {
-            ancestorListeners.push(...listeners);
-            return listeners;
-          });
-          listenerCache.set(path, promise);
-          ancestorListenerPromises.push(promise);
-        }
-      }
-
-      await Promise.all(ancestorListenerPromises);
-
-      return {
-        ...anchor,
-        listeners,
-        ancestorListeners: Array.from(ancestorListeners),
-      };
+    const anchorsWithEventListeners = anchors.map( anchor => {
+      return getEventListeners(session, anchor.node.devtoolsNodePath).then(listeners => {
+        return {
+          ...anchor,
+          listeners,
+        };
+      });
     });
 
 
