@@ -141,17 +141,7 @@ allAuditIds.sort();
   const auditListCode = allAuditIds.map(id => `    'insights/${id}',\n`).join('') + '  ';
   defaultConfigText = insert(defaultConfigText, `'bf-cache',\n`, ']', auditListCode);
 
-  const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'hidden'},`).join('\n');
+  const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'insights'},`).join('\n');
   defaultConfigText = insert(defaultConfigText, 'Insight audits.\n', '\n\n', auditRefListCode);
   fs.writeFileSync(defaultConfigPath, defaultConfigText);
-}
-
-{
-  const experimentalConfigPath = `${LH_ROOT}/core/config/experimental-config.js`;
-  let experimentalConfigText = fs.readFileSync(experimentalConfigPath, 'utf-8');
-
-  const auditRefListCode = allAuditIds.map(id => `        {id: '${id}', weight: 0, group: 'insights'},`).join('\n');
-  experimentalConfigText = insert(experimentalConfigText, 'Insight audits.\n', '\n      ]', auditRefListCode);
-
-  fs.writeFileSync(experimentalConfigPath, experimentalConfigText);
 }
