@@ -121,9 +121,21 @@ class NetworkRequests extends Audit {
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
     const networkStartTimeTs = Number.isFinite(earliestRendererStartTime) ?
         earliestRendererStartTime * 1000 : undefined;
+
+    const initiators = records.filter((record) => record.initiator.url).map((record) => {
+      const {type, url, lineNumber, columnNumber} = record.initiator;
+      return {
+        type,
+        url: url ? UrlUtils.elideDataURI(url) : undefined,
+        lineNumber,
+        columnNumber,
+      };
+    });
+
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,
+      initiators,
     };
 
     return {

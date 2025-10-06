@@ -1,3 +1,110 @@
+<a name="12.8.2"></a>
+# 12.8.2 (2025-08-28)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.1...v12.8.2)
+
+We expect this release to ship in the DevTools of [Chrome 141](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- uthem150 @uthem150
+- Nirav Gondaliya @niravzxv
+
+## Core
+
+* errors-in-console: truncate large errors ([#16619](https://github.com/GoogleChrome/lighthouse/pull/16619))
+* insights: passing score (not n/a) for empty results ([#16639](https://github.com/GoogleChrome/lighthouse/pull/16639))
+* non-composited-animations: separate custom CSS properties ([#16627](https://github.com/GoogleChrome/lighthouse/pull/16627))
+
+## Report
+
+* viewer: only disable save-gist button on successful save ([#16618](https://github.com/GoogleChrome/lighthouse/pull/16618))
+
+## Deps
+
+* upgrade deps ([#16660](https://github.com/GoogleChrome/lighthouse/pull/16660))
+* upgrade trace_engine to 0.0.59 ([#16659](https://github.com/GoogleChrome/lighthouse/pull/16659))
+* remove semver ([#16655](https://github.com/GoogleChrome/lighthouse/pull/16655))
+* upgrade tldts-icann ([#16657](https://github.com/GoogleChrome/lighthouse/pull/16657))
+* upgrade esbuild to 0.25.9 ([#16652](https://github.com/GoogleChrome/lighthouse/pull/16652))
+* upgrade / drop many dev deps ([#16651](https://github.com/GoogleChrome/lighthouse/pull/16651))
+* upgrade trace_engine to 0.0.58 ([#16649](https://github.com/GoogleChrome/lighthouse/pull/16649))
+
+## I18n
+
+* import ([#16662](https://github.com/GoogleChrome/lighthouse/pull/16662))
+
+## Tests
+
+* disable startTimespan api test ([#16653](https://github.com/GoogleChrome/lighthouse/pull/16653))
+* disable trusted-types-directive-present smoke test ([#16620](https://github.com/GoogleChrome/lighthouse/pull/16620))
+* smokehouse: log specific error message when missing tests path ([#16648](https://github.com/GoogleChrome/lighthouse/pull/16648))
+
+## Misc
+
+* use structuredClone instead of lodash cloneDeep ([#16656](https://github.com/GoogleChrome/lighthouse/pull/16656))
+
+<a name="12.8.1"></a>
+# 12.8.1 (2025-08-01)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.0...v12.8.1)
+
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Boluwatife Omosowon @bolu-tife
+- Jonas Thelemann @dargmuesli
+
+
+## Core
+
+* network-requests: add initiators to debugData ([#16605](https://github.com/GoogleChrome/lighthouse/pull/16605))
+
+## I18n
+
+* import ([#16616](https://github.com/GoogleChrome/lighthouse/pull/16616))
+
+## Tests
+
+* disable csp-block-all smoke test ([#16598](https://github.com/GoogleChrome/lighthouse/pull/16598))
+
+## Misc
+
+* revert json modules to fully support Node 20 ([#16613](https://github.com/GoogleChrome/lighthouse/pull/16613))
+* ci: clear devtools build cache ([#16615](https://github.com/GoogleChrome/lighthouse/pull/16615))
+* logger: bump to 2.0.2 ([#16604](https://github.com/GoogleChrome/lighthouse/pull/16604))
+* logger: update debug dep to v4 ([#16601](https://github.com/GoogleChrome/lighthouse/pull/16601))
+* treemap: fix sizes not showing for source map nodes ([#16593](https://github.com/GoogleChrome/lighthouse/pull/16593))
+
+<a name="12.8.0"></a>
+# 12.8.0 (2025-07-11)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.1...v12.8.0)
+
+We expect this release to ship in the DevTools of [Chrome 140](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 1 week.
+
+## New Audits
+
+* mitigate dom-based xss with trusted types ([#16493](https://github.com/GoogleChrome/lighthouse/pull/16493))
+
+## Core
+
+* tracehouse: fix OOM when computing attributable URLs ([#16585](https://github.com/GoogleChrome/lighthouse/pull/16585))
+* trusted-types-xss: add link to lighthouse docs ([#16590](https://github.com/GoogleChrome/lighthouse/pull/16590))
+
+## Deps
+
+* upgrade trace_engine to 0.0.57 ([#16589](https://github.com/GoogleChrome/lighthouse/pull/16589))
+
+## Tests
+
+* disable issues-mixed-content smoke test ([#16586](https://github.com/GoogleChrome/lighthouse/pull/16586))
+* add test for trace-engine-result ([#16574](https://github.com/GoogleChrome/lighthouse/pull/16574))
+* update expectations ([#16580](https://github.com/GoogleChrome/lighthouse/pull/16580))
+* devtools: avoid failure on Unknown VE Context ([#16581](https://github.com/GoogleChrome/lighthouse/pull/16581))
+
 <a name="12.7.1"></a>
 # 12.7.1 (2025-07-02)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.7.0...v12.7.1)

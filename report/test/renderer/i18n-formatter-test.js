@@ -141,7 +141,7 @@ describe('i18n formatter', () => {
     // Yes, this is actually backwards (s h d).
     i18n = new I18nFormatter('ar');
     /* eslint-disable no-irregular-whitespace */
-    if (nodeMajor >= 20 && nodeMinor >= 19) {
+    if ((nodeMajor >= 20 && nodeMinor >= 19) || nodeMajor >= 21) {
       assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}د`);
       assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}س 5${NBSP}ث`);
       assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1 ي 4 س 5 ث`);

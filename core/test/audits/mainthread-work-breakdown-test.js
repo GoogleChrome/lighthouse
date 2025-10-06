@@ -12,8 +12,8 @@ import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js
 import {defaultSettings} from '../../config/constants.js';
 import {createTestTrace} from '../create-test-trace.js';
 
-const acceptableTrace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const acceptableDevtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const acceptableTrace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const acceptableDevtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 const siteWithRedirectTrace = readJson('../fixtures/artifacts/redirect/trace.json', import.meta);
 const siteWithRedirectDevtoolsLog = readJson('../fixtures/artifacts/redirect/devtoolslog.json', import.meta);
 const loadTraceOld = readJson('../fixtures/traces/load.json', import.meta);

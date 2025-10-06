@@ -376,8 +376,6 @@ describe('NavigationRunner', () => {
       expect(artifacts).toEqual({
         DevtoolsLogError: expect.any(Array),
         TraceError: {traceEvents: []},
-        devtoolsLogs: {'pageLoadError-defaultPass': expect.any(Array)},
-        traces: {'pageLoadError-defaultPass': {traceEvents: []}},
       });
     });
 

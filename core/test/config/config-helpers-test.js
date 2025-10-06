@@ -398,7 +398,7 @@ describe('.resolveGathererToDefn', () => {
   it('throws but not for missing gatherer when it has a node dependency error', async () => {
     const resultPromise =
       resolveGathererToDefn('../fixtures/invalid-gatherers/require-error.js', [], moduleDir);
-    await expect(resultPromise).rejects.toThrow(/no such file or directory/);
+    await expect(resultPromise).rejects.toThrow(/no such file or directory|Cannot find module/);
   });
 });
 
@@ -476,7 +476,7 @@ describe('.resolveAuditsToDefns', () => {
     const resultPromise = resolveAuditsToDefns([
       '../fixtures/invalid-audits/require-error.js',
     ], moduleDir);
-    await expect(resultPromise).rejects.toThrow(/no such file or directory/);
+    await expect(resultPromise).rejects.toThrow(/no such file or directory|Cannot find module/);
   });
 });
 

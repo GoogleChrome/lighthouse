@@ -1229,6 +1229,9 @@
   "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
     "message": "{propertyCount, plural,\n    =1 {Unsupported CSS Property: {properties}}\n    other {Unsupported CSS Properties: {properties}}\n  }"
   },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount, plural,\n    =1 {Custom CSS properties cannot be animated on the compositor: {properties}}\n    other {Custom CSS properties cannot be animated on the compositor: {properties}}\n  }"
+  },
   "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effect has unsupported timing parameters"
   },
@@ -1249,15 +1252,6 @@
   },
   "core/audits/origin-isolation.js | title": {
     "message": "Ensure proper origin isolation with COOP"
-  },
-  "core/audits/preload-fonts.js | description": {
-    "message": "Preload `optional` fonts so first-time visitors may use them. [Learn more about preloading fonts](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "Fonts with `font-display: optional` are not preloaded"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "Fonts with `font-display: optional` are preloaded"
   },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
@@ -1316,36 +1310,6 @@
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Links are crawlable"
   },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} legible text"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Text is illegible because there's no viewport meta tag optimized for mobile screens."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "Document doesn't use legible font sizes"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "Document uses legible font sizes"
-  },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
   },
@@ -1392,7 +1356,7 @@
     "message": "Links have descriptive text"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Run the [Structured Data Testing Tool](https://developers.google.com/search/docs/appearance/structured-data/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Structured data is valid"
@@ -1451,33 +1415,6 @@
   "core/audits/third-party-cookies.js | title": {
     "message": "Avoids third-party cookies"
   },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (Customer Success)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (Marketing)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (Social)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (Video)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "Product"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)."
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# facade alternative available}\n  other {# facade alternatives available}\n  }"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "Some third-party resources can be lazy loaded with a facade"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "Lazy load third-party resources with facades"
-  },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-Party"
   },
@@ -1492,6 +1429,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimize third-party usage"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "The `require-trusted-types-for` directive in the `Content-Security-Policy` (CSP) header instructs user agents to control the data passed to DOM XSS sink functions. [Learn more about mitigating DOM-based XSS with Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "No `Content-Security-Policy` header with Trusted Types directive found"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Mitigate DOM-based XSS with Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn how to set image dimensions](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1477,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "A `<link rel=preconnect>` was found for \"{securityOrigin}\" but was not used by the browser. Only use `preconnect` for important origins that the page will certainly request."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "A preload `<link>` was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "Preload key requests"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "Map URL"
@@ -2202,22 +2142,16 @@
     "message": "Support for data: URLs in SVGUseElement is deprecated and it will be removed in the future."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOrigin": {
-    "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GeolocationInsecureOriginDeprecatedNotRemoved": {
-    "message": "getCurrentPosition() and watchPosition() are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "getCurrentPosition() and watchPosition() are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
-    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Found an <h1> tag within an <article>, <aside>, <nav>, or <section> which does not have a specified font-size. The size of this heading text will be changing in this browser in the near future. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information."
+    "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is deprecated. Please use RTCPeerConnectionIceErrorEvent.address or RTCPeerConnectionIceErrorEvent.port instead."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "This format for the navigator.credentials.get() request for digital credentials is deprecated, please update your call to use the new format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "The merchant origin and arbitrary data from the canmakepayment service worker event are deprecated and will be removed: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2244,7 +2178,7 @@
     "message": "Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationInsecureOrigin": {
-    "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
+    "message": "The Notification API may no longer be used from insecure origins. You should consider switching your application to a secure origin, such as HTTPS. See https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/ for more details."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | NotificationPermissionRequestedIframe": {
     "message": "Permission for the Notification API may no longer be requested from a cross-origin iframe. You should consider requesting permission from a top-level frame or opening a new window instead."
@@ -2257,6 +2191,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Specifying overflow: visible on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Legacy flash video embed has been rewritten to HTML iframe. Flash is long gone, this rewriting hack is deprecated and may be removed in the future."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments is deprecated. Please use just-in-time install for payment handlers instead."
@@ -2326,9 +2263,6 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt into cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "The GPUAdapter isFallbackAdapter attribute is deprecated, instead use the GPUAdapterInfo isFallbackAdapter attribute."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response json in XMLHttpRequest"
@@ -2631,7 +2565,7 @@
     "message": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "No requests used HTTP/1.1"
+    "message": "No requests used HTTP/1.1, or its current use of HTTP/1.1 does not present a significant optimization opportunity. HTTP/1.1 requests are only flagged if six or more static assets originate from the same origin, and they are not served from a local development environment or a third-party source."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocol"
@@ -2731,6 +2665,12 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS Selector costs"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Top selector elapsed time"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Top selector match attempt"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Top selectors"
@@ -3053,6 +2993,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Pages that use SharedWorker are not currently eligible for back/forward cache."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "The page was evicted from the cache because it received a message from a SharedWorker"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Pages that use SpeechRecognizer are not currently eligible for back/forward cache."
   },
@@ -3104,7 +3047,7 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Pages with WebRTC cannot enter back/forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCUsedWithCCNS": {
     "message": "Back/forward cache is disabled because WebRTC has been used."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
@@ -3113,13 +3056,13 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Pages with WebSocket cannot enter back/forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketUsedWithCCNS": {
     "message": "Back/forward cache is disabled because WebSocket has been used."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "Pages with WebTransport cannot enter back/forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportUsedWithCCNS": {
     "message": "Back/forward cache is disabled because WebTransport has been used."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
@@ -3213,43 +3156,43 @@
     "message": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. Consider using a CDN that natively supports this, or configure the web server to perform this operation. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Optimize Fonts` to automatically leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Optimize Fonts` to automatically leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Next-Gen Formats` to convert images to WebP."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Next-Gen Formats` to convert images to WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Lazy Load Images` to defer loading off-screen images until they are needed."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Lazy Load Images` to defer loading off-screen images until they are needed."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Critical CSS` and `Script Delay` to defer non-critical JS/CSS."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Script Delay` to defer non-critical JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Use [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) to cache your content across our world wide network, improving time to first byte."
+    "message": "Use [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) to cache your content across our world wide network, improving time to first byte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Minify CSS` to automatically minify your CSS to reduce network payload sizes."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Minify CSS` to automatically minify your CSS to reduce network payload sizes."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Minify Javascript` to automatically minify your JS to reduce network payload sizes."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Minify Javascript` to automatically minify your JS to reduce network payload sizes."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Remove Unused CSS` to help with this issue. It will identify the CSS classes that are actually used on each page of your site, and remove any others to keep the file size small."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Remove Unused CSS` to help with this issue. It will identify the CSS classes that are actually used on each page of your site, and remove any others to keep the file size small."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Efficient Static Cache Policy` to set recommended values in the caching header for static assests."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Efficient Static Cache Policy` to set recommended values in the caching header for static assests."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Next-Gen Formats` to convert images to WebP."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Next-Gen Formats` to convert images to WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Pre-Connect Origins` to automatically add `preconnect` resource hints to establish early connections to important third-party origins."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Pre-Connect Origins` to automatically add `preconnect` resource hints to establish early connections to important third-party origins."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Preload Fonts` and `Preload Background Images` to add `preload` links to prioritize fetching resources that are currently requested later in page load."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Preload Fonts` and `Preload Background Images` to add `preload` links to prioritize fetching resources that are currently requested later in page load."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Resize Images` to resize images to a device appropriate size, reducing network payload sizes."
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/leap) and enable `Resize Images` to resize images to a device appropriate size, reducing network payload sizes."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Use the `gatsby-plugin-image` component instead of `<img>` to automatically optimize image format. [Learn more](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -3357,16 +3300,16 @@
     "message": "`<link rel=preload>` tags can be added by [modifying a themes's layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Use the `next/image` component instead of `<img>` to automatically optimize image format. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Use the `next/image` component instead of `<img>` to automatically optimize image format. [Learn more](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Use the `next/image` component instead of `<img>` to automatically lazy-load images. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Use the `next/image` component instead of `<img>` to automatically lazy-load images. [Learn more](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Use the `next/image` component and set \"priority\" to true to preload LCP image. [Learn more](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Use the `next/script` component to defer loading of non-critical third-party scripts. [Learn more](https://nextjs.org/docs/basic-features/script)."
+    "message": "Use the `next/script` component to defer loading of non-critical third-party scripts. [Learn more](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Use the `next/image` component to make sure images are always sized appropriately. [Learn more](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -3378,13 +3321,13 @@
     "message": "Use `Webpack Bundle Analyzer` to detect unused JavaScript code. [Learn more](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Consider using `Next.js Analytics` to measure your app's real-world performance. [Learn more](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Consider using `Next.js Analytics` to measure your app's real-world performance. [Learn more](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Configure caching for immutable assets and `Server-side Rendered` (SSR) pages. [Learn more](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Configure caching for immutable assets and `Server-side Rendered` (SSR) pages. [Learn more](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Use the `next/image` component instead of `<img>` to adjust image quality. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Use the `next/image` component instead of `<img>` to adjust image quality. [Learn more](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Use the `next/image` component to set the appropriate `sizes`. [Learn more](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3427,9 +3370,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "Enable [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site) to preemptively optimize your images and make them match the dimensions of the containers they’re displayed in across all devices."
-  },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "Use [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) in NitroPack to reduce the size of the files that are sent to the browser."
   },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "Use the `nuxt/image` component and set `format=\"webp\"`. [Learn more](https://image.nuxt.com/usage/nuxt-img#format)."
@@ -3507,7 +3447,7 @@
     "message": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "If you are not server-side rendering, [split your JavaScript bundles](https://web.dev/code-splitting-suspense/) with `React.lazy()`. Otherwise, code-split using a third-party library such as [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "If you are not server-side rendering, [split your JavaScript bundles](https://web.dev/code-splitting-suspense/) with `React.lazy()`. Otherwise, code-split using a third-party library such as [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Use the React DevTools Profiler, which makes use of the Profiler API, to measure the rendering performance of your components. [Learn more.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3766,6 +3706,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Unattributable"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Unscored"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "This audit does not contribute to the overall category score."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics."

@@ -660,7 +660,7 @@
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கங்களுக்கு வீடியோ வடிவமைப்புகளைப் பயன்படுத்தவும்"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "புதிய JavaScript அம்சங்களைப் பழைய பிரவுசர்கள் பயன்படுத்த பாலிஃபில்களும் டிரான்ஸ்ஃபார்ம்களும் உதவுகின்றன. எனினும், நவீன பிரவுசர்களுக்கு இவற்றில் பல தேவைப்படுவதில்லை. [பேஸ்லைன்](https://web.dev/baseline) அம்சங்களை டிரான்ஸ்பைல் செய்யாமல் இருக்கும்படி உங்கள் JavaScript பதிப்புச் செயல்முறையை மாற்றுங்கள். இல்லையெனில் பழைய பிரவுசர்களுக்கான ஆதரவை வழங்க வேண்டியிருக்கும். [டிரான்ஸ்பைல் செய்யாமல் ES6+ குறியீட்டைப் பெரும்பாலான தளங்கள் ஏன் பயன்படுத்தலாம் என்று தெரிந்துகொள்ளுங்கள்](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "இந்தப் பக்கத்தில் core-js 2ம் பதிப்பு கண்டறியப்பட்டுள்ளது. இன்னும் கூடுதல் செயல்திறன் மேம்பாடுகளுக்கு 3ம் பதிப்புக்கு மேம்படுத்த வேண்டும்."
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "COOP மூலம் ஆரிஜின் ஐசொலேஷன் சரியாக அமைக்கப்பட்டிருப்பதை உறுதிசெய்யுங்கள்"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "`optional` என அமைக்கப்பட்டுள்ள எழுத்து வடிவங்களை முன்கூட்டியே ஏற்றுவதால் முதல் முறையாக வரும் பயனர்கள் அவற்றைப் பயன்படுத்தக்கூடும். [எழுத்து வடிவங்களை முன்கூட்டியே ஏற்றுவது குறித்து மேலும் அறிக](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "`font-display: optional` என அமைக்கப்பட்டுள்ள எழுத்துருக்கள் முன்கூட்டியே ஏற்றப்படவில்லை"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "`font-display: optional` என அமைக்கப்பட்டுள்ள எழுத்துருக்கள் முன்கூட்டியே ஏற்றப்பட்டன"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "பக்கத்தில் LCP உறுப்பு மாறிக்கொண்டே இருக்கும் வகையில் சேர்க்கப்பட்டிருந்தால் LCPயை மேம்படுத்த படத்தை முன்கூட்டியே ஏற்ற வேண்டும். [LCP உறுப்புகளை முன்கூட்டியே ஏற்றுதல் குறித்து மேலும் அறிக](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "இணைப்புகள் கிரால் செய்யக்கூடியவை"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "தெளிவற்ற கூடுதல் உரை"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "எழுத்து வடிவ அளவு"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "பக்க உரையின் சதவீதம் (%)"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "தேர்வி"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "12 பிக்சலுக்குக் குறைவான எழுத்து வடிவ அளவுகள் படிப்பதற்கு மிகச் சிறியவை. மொபைலில் இந்தத் தளத்தைப் பார்ப்பவர்கள் வார்த்தைகளைப் படிக்க “அளவை மாற்ற பின்ச் செய்தல்” அம்சத்தைப் பயன்படுத்த வேண்டியிருக்கும். எனவே பக்கத்தின் 60%க்கும் அதிகமான எழுத்துகளுக்கு 12px அல்லது அதற்கு அதிகமான எழுத்துவடிவ அளவை அமைக்க முயலவும். [தெளிவான எழுத்து வடிவ அளவுகள் குறித்து மேலும் அறிக](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} தெளிவான உரை"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "மொபைல் திரைகளுக்கேற்ப காட்சிப் பகுதி மேலதிகத் தகவல் மேம்படுத்தப்படாததால் உரையைச் சரியாகப் படிக்க முடியவில்லை."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "ஆவணத்தில் தெளிவான எழுத்துரு அளவுகள் பயன்படுத்தப்படவில்லை"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "தெளிவான உரை"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "ஆவணத்தில் தெளிவான எழுத்துரு அளவுகள் பயன்படுத்தப்பட்டுள்ளன"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang இணைப்புகள் என்பவை குறிப்பிட்ட ஒரு மொழியிலான அல்லது பகுதிக்கான தேடல் முடிவுகளில், ஒரு பக்கத்தின் எந்தப் பதிப்பைப் பட்டியலிட வேண்டும் என்பதைத் தேடல் இன்ஜின்களுக்குச் சொல்கின்றன. [`hreflang` குறித்து மேலும் அறிக](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
@@ -1440,7 +1401,7 @@
     "message": "சேவையகப் பதிலளிப்புக்கான தொடக்க நேரம் குறைவானது"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "மூன்றாம் தரப்புக் குக்கீகள் இல்லாமல் பிரவுஸ் செய்ய பயனர்களை அனுமதிக்கும் புதிய வசதி Chromeமில் வரவுள்ளது. [மூன்றாம் தரப்புக் குக்கீகள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "சில சூழல்களில் மூன்றாம் தரப்புக் குக்கீகள் தடுக்கப்படலாம். [மூன்றாம் தரப்புக் குக்கீகள் மீதான கட்டுப்பாடுகளுக்குத் தயாராவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 குக்கீ கண்டறியப்பட்டது}other{# குக்கீகள் கண்டறியப்பட்டன}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "மூன்றாம் தரப்புக் குக்கீகளைத் தவிர்க்கிறது"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (வாடிக்கையாளர் சேவை)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (மார்க்கெட்டிங்)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (சமூகம்)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (வீடியோ)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "தயாரிப்பு"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "உட்பொதிக்கப்பட்ட சில மூன்றாம் தரப்புக் குறியீடுகள் தேவையுள்ளபோது காட்டப்படும். தேவைப்படாத வரை அவற்றுக்குப் பதிலாக ஃபஸாடைப் பயன்படுத்தவும். [ஃபஸாடைப் பயன்படுத்தும் மூன்றாம் தரப்புகளைத் தாமதப்படுத்துவது எப்படி என அறிக](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)."
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{# மாற்று ஃபஸாடு உள்ளது}other{# மாற்று ஃபஸாடுகள் உள்ளன}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "சில மூன்றாம் தரப்பு மூலங்கள் ஃபஸாடு மூலம் மெதுவாக ஏற்றப்படும்"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "ஃபஸாடுகளுடன் மூன்றாம் தரப்பு மூலங்களைத் தேவையுள்ளபோது ஏற்றுதல்"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "மூன்றாம் தரப்பு"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "மூன்றாம் தரப்பு உபயோகத்தைக் குறைத்தல்"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "தீவிரத்தன்மை"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) தலைப்பில் உள்ள `require-trusted-types-for` டைரெக்டிவ், DOM XSS சின்க் செயல்பாடுகளுக்கு அனுப்பப்படும் தரவைக் கட்டுப்படுத்தும்படி பயனர் ஏஜெண்ட்டுகளுக்கு அறிவுறுத்துகிறது. [நம்பகமான வகைகள் மூலம் DOM அடிப்படையிலான XSS பாதிப்பைக் குறைப்பது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "நம்பகமான வகைகள் டைரெக்டிவ் உள்ள `Content-Security-Policy` தலைப்பு எதுவும் இல்லை"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "நம்பகமான வகைகள் மூலம் DOM அடிப்படையிலான XSS பாதிப்பைக் குறைத்தல்"
   },
   "core/audits/unsized-images.js | description": {
     "message": "தளவமைப்பு மாற்றங்களைக் குறைப்பதற்கும் CLSஸை மேம்படுத்துவதற்கும் படத்தின் துல்லியமான அகலத்தையும் உயரத்தையும் அமைக்கவும். [படத்தின் பரிமாணங்களை அமைப்பது எப்படி என அறிக](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "\"{securityOrigin}\" தளத்திற்கான முன்னிணைப்பு (`<link rel=preconnect>`) கண்டறியப்பட்டது, ஆனால் உலாவி அதைப் பயன்படுத்தவில்லை. பக்கம் நிச்சயமாகக் கோரும் முக்கியமான தளங்களுக்கு மட்டுமே `preconnect` ஐப் பயன்படுத்தவும்."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "\"{preloadURL}\" தளத்திற்கான முன்கூட்டியே ஏற்றப்பட்ட இணைப்பு (`<link>`) கண்டறியப்பட்டது, ஆனால் உலாவி அதைப் பயன்படுத்தவில்லை. `crossorigin` பண்புக்கூறைச் சரியாகப் பயன்படுத்துகிறீர்களா என்று பார்க்கவும்."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "பக்கம் ஏற்றப்படும்போது தற்சமயம் பின்னர் கோரிக்கையளிக்கப்படும் ஆதாரங்களுக்கு முன்னுரிமை அளிக்க `<link rel=preload>` ஐப் பயன்படுத்தவும். [முக்கியக் கோரிக்கைகளை முன்கூட்டியே ஏற்றுவது எப்படி என அறிக](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "முக்கியக் கோரிக்கைகளை முன்கூட்டியே ஏற்றவும்"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "சோர்ஸ் மேப்பிற்கான URL"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "முதல் தோற்ற மேம்பாடுகள்"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "இந்தப் புள்ளிவிவரங்கள் அம்சம், Chrome டெவெலப்பர் கருவிகளில் உள்ள செயல்திறன் பேனலிலும் கிடைக்கும். [டிரேஸைப் பதிவுசெய்து](https://developer.chrome.com/docs/devtools/performance/reference) மேலும் விரிவான தகவலைப் பாருங்கள்."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "புள்ளிவிவரங்கள்"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "அளவீடுகள்"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "ஒட்டுமொத்தமாகப் பக்கம் ஏற்றப்படும் அனுபவத்தை மேம்படுத்தவும், இதனால் பக்கம் விரைவாக எதிர்வினையாற்றும், அத்துடன் முடிந்தளவு விரைவாகப் பயன்படுத்தத் தயாராக இருக்கும். முக்கிய அளவீடுகள்: 'எதிர்வினை நேரம்', 'வேக அட்டவணை'"
+    "message": "ஒட்டுமொத்தமாகப் பக்கம் ஏற்றப்படும் அனுபவத்தை மேம்படுத்தவும், இதனால் பக்கம் விரைவாக எதிர்வினையாற்றும், அத்துடன் முடிந்தளவு விரைவாகப் பயன்படுத்தத் தயாராக இருக்கும். முக்கிய அளவீடுகள்: எதிர்வினை நேரம், Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "ஒட்டுமொத்த மேம்பாடுகள்"
@@ -1857,22 +1800,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "சேமிக்கப்படக்கூடியது"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "சேமிக்கப்படக்கூடியது"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "சேமிக்கக்கூடிய அளவு: {wastedBytes, number, bytes} KiB"
+    "message": "கணக்கிடப்பட்ட சேமிப்பு: {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 உறுப்பு உள்ளது}other{# உறுப்புகள் உள்ளன}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "சேமிக்கக்கூடிய நேரம்: {wastedMs, number, milliseconds} மி.வி."
+    "message": "கணக்கிடப்பட்ட சேமிப்பு: {wastedMs, number, milliseconds} மி.வி"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ஆவணம்"
@@ -2070,7 +2013,7 @@
     "message": "Lighthouseஸின் செயல்திறன் ஸ்கோரைப் பெறுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரம், ஸ்பீடு இண்டெக்ஸ் போன்ற ‘பக்க ஏற்றச் செயல்திறன் அளவீடுகளை’ அளவிடுதல்."
+    "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரம், Speed Index போன்ற ‘பக்க ஏற்றச் செயல்திறன் அளவீடுகளை’ அளவிடுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "மேம்பட்ட இணைய ஆப்ஸின் திறன்களை மதிப்பாய்வு செய்தல்."
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "பாதுகாப்பற்ற ஆரிஜின்களில் getUserMedia() இனி செயல்படாது. இந்த அம்சத்தைப் பயன்படுத்த உங்கள் ஆப்ஸை HTTPS போன்ற பாதுகாப்பான ஆரிஜின்களுக்கு மாற்றவும். கூடுதல் தகவல்களுக்கு https://goo.gle/chrome-insecure-origins தளத்தைப் பார்க்கவும்."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "<article>, <aside>, <nav> அல்லது <section> இல் குறிப்பிட்ட எழுத்து வடிவ அளவு இல்லாத <h1> குறிச்சொல் கண்டறியப்பட்டுள்ளது. இந்தத் தலைப்பு வார்த்தைகளின் அளவு இந்த பிரவுசரில் வெகுவிரைவில் மாற்றப்படும். மேலும் தகவலுக்கு https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 பக்கத்தைப் பாருங்கள்."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate நிறுத்தப்பட்டது. இதற்குப் பதிலாக RTCPeerConnectionIceErrorEvent.address அல்லது RTCPeerConnectionIceErrorEvent.port ஐப் பயன்படுத்தவும்."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "டிஜிட்டல் அனுமதிச் சான்றிதழ்களுக்கான navigator.credentials.get() கோரிக்கைக்கான இந்த வடிவமைப்பு நிறுத்தப்பட்டது, புதிய வடிவமைப்பைப் பயன்படுத்தி உங்கள் கோரிக்கையை அனுப்பவும்."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "canmakepayment service worker நிகழ்வில் இருந்து பெறப்பட்ட வணிகரின் ஆரிஜின் மற்றும் தன்னிச்சையான தரவு நிறுத்தப்பட்டு அகற்றப்படும்: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2248,6 +2185,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "படம், வீடியோ மற்றும் கேன்வாஸ் குறிச்சொற்களில் overflow: visible ஐக் குறிப்பிடுவது, உறுப்பு வரம்புகளைத் தாண்டிய காட்சி உள்ளடக்கத்திற்கு வழிவகுக்கலாம். https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md என்ற இணைப்பைப் பார்க்கவும்."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "பழைய ஃபிளாஷ் வீடியோ உட்பொதிவு, HTML iframe ஆக மாற்றி எழுதப்பட்டுள்ளது. ஃபிளாஷ் இப்போது பயன்படுத்தப்படுவதில்லை, மாற்றி எழுதும் முறையும் நிறுத்தப்பட்டுவிட்டது. இது எதிர்காலத்தில் அகற்றப்படலாம்."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments நிறுத்தப்பட்டது. அதற்குப் பதிலாகப் பேமெண்ட் ஹேண்ட்லர்களுக்கான just-in-time நிறுவலைப் பயன்படுத்தவும்."
@@ -2318,9 +2258,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer ஐத் தொடர்ந்து பயன்படுத்த நீட்டிப்புகள் கிராஸ் ஆரிஜின் ஐசொலேஷனைப் பயன்படுத்த வேண்டும். https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/ தளத்தைப் பார்வையிடவும்."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "GPUAdapter isFallbackAdapter பண்புக்கூறு நிறுத்தப்பட்டது, அதற்குப் பதிலாக GPUAdapterInfo isFallbackAdapter பண்புக்கூறைப் பயன்படுத்தவும்."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest இல் உள்ள json பதிலில் UTF-16 ஆதரிக்கப்படுவதில்லை"
   },
@@ -2351,6 +2288,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "லே-அவுட் ஷிஃப்ட்டுக்கான முக்கியமான காரணங்கள்"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "அளவு குறிப்பிடப்படாத பட எலிமெண்ட்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "இணைய எழுத்து வடிவம்"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "மோசமான கிளஸ்டர்"
   },
@@ -2378,8 +2321,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM அளவு பெரிதாக இருப்பதால் ஸ்டைல் கணக்கீடுகள் மற்றும் தளவமைப்பு மறுசீராக்கங்களின் கால அளவு அதிகரிக்கலாம், இதனால் பக்கத்தின் பதிலளிக்கும் தன்மையும் பாதிக்கப்படலாம். ஒரு பெரிய DOM நினைவக உபயோகத்தையும் அதிகரிக்கும். [அதிகப்படியான DOM அளவைத் தவிர்ப்பது எப்படி என்று தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "கால அளவு"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "எலிமெண்ட்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "லே-அவுட் ({PH1} ஆப்ஜெக்ட்டுகள்)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "ஸ்டைல் மறுகணக்கீடு ({PH1} எலிமெண்ட்டுகள்)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "அதிகபட்ச உபநிலைகள்"
@@ -2392,6 +2344,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM அளவு மேம்பாடு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "இவைதான் இருப்பதிலேயே பெரிய லே-அவுட் மற்றும் ஸ்டைல் மறுகணக்கீடு நிகழ்வுகள் ஆகும். எளிய DOM பயன்படுத்துவதால் அவற்றின் செயல்திறன் பாதிப்பு குறையலாம்."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "மொத்த எலிமெண்ட்டுகள்"
@@ -2406,7 +2361,7 @@
     "message": "திசைதிருப்புதல்கள் இருந்தன ({PH1} திசைதிருப்புதல்கள், +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "சேவையகம் மெதுவாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1}) "
+    "message": "சேவையகம் மெதுவாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "சுருக்குதல் பயன்படுத்தப்படவில்லை"
@@ -2415,7 +2370,7 @@
     "message": "திசைதிருப்புதல்களைத் தவிர்க்கும்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "சேவையகம் வேகமாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1}) "
+    "message": "சேவையகம் வேகமாகப் பதிலளித்தது (கண்டறியப்பட்டது {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "வார்த்தைச் சுருக்குதலைப் பயன்படுத்துகிறது"
@@ -2460,7 +2415,7 @@
     "message": "(அறியப்படாதது)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "பல APIகள் (பொதுவாக, லே-அவுட் வடிவியலை ஸ்கேன் செய்பவை) ஸ்டைல் மற்றும் லே-அவுட்டைக் கணக்கிடுவதற்காக ஸ்கிரிப்ட் செயல்படுத்தலை இடைநிறுத்தும்படி ரென்டரிங் இன்ஜினைக் கட்டாயப்படுத்துகின்றன. [கட்டாய ரீஃப்ளோ](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) மற்றும் அதன் மிட்டிகேஷன்கள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்."
+    "message": "DOM நிலையின் மாற்றம் காரணமாக ஸ்டைல்கள் செல்லாததாக்கப்பட்ட பின்னர் வடிவியல் பிராப்பர்ட்டிகளை (offsetWidth போன்றவை) JavaScript கேட்கும்போது கட்டாய ரீஃப்ளோ நிகழும். இதனால் செயல்திறன் மோசமடையலாம். [கட்டாய ரீஃப்ளோக்கள்](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) மற்றும் சாத்தியமான மிட்டிகேஷன்கள் குறித்து மேலும் தெரிந்துகொள்ளுங்கள்."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "ஸ்டாக் டிரேஸ்"
@@ -2476,6 +2431,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[குறிப்பிடாதவை]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "நீளமான துணைப்பிரிவில் இருந்து ஆய்வைத் தொடங்கவும். [தாமதங்களைக் குறைக்கலாம்](https://web.dev/articles/optimize-inp#optimize_interactions). செயலாக்க நேரத்தைக் குறைக்க, [முக்கிய த்ரட்டை (பெரும்பாலும் JS) செயல்திறன்மிக்கதாக மேம்படுத்தவும்](https://web.dev/articles/optimize-long-tasks)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "கால அளவு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "உள்ளீட்டுத் தாமதம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "இன்டராக்ஷன்கள் எதுவும் கண்டறியப்படவில்லை"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "காட்சிப்படுத்தல் தாமதம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "செயலாக்க நேரம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "துணைப்பிரிவு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP பிரிவுகள்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "படங்களின் பதிவிறக்க நேரத்தைக் குறைப்பதால் பக்கம் மற்றும் LCP ஏற்றப்படும் நேரம் மேம்படலாம். [பட அளவை மேம்படுத்துவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2506,6 +2485,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "GIFகளுக்குப் பதிலாக வீடியோ வடிவமைப்புகளைப் பயன்படுத்துவது அனிமேஷன் செய்யப்படும் உள்ளடக்கத்தின் பதிவிறக்க அளவை மேம்படுத்தும்."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "ஒவ்வொரு [துணைப்பிரிவிற்கும் குறிப்பிட்ட மேம்பாட்டு உத்திகள் உள்ளன](https://web.dev/articles/optimize-lcp#lcp-breakdown). பொதுவாக, LCP நேரம் பெரும்பாலும் ரிசோர்ஸ்களை ஏற்றுவதற்காகச் செலவிடப்பட வேண்டுமே தவிர தாமதங்களில் அல்ல."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "கால அளவு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "எலிமெண்ட் ரென்டரிங் தாமதம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "நிஜப் பயனர் தரவில் 75வது சதமானம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "LCP எதுவும் கண்டறியப்படவில்லை"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "ரிசோர்ஸை ஏற்றுவதில் தாமதம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "ரிசோர்ஸ் ஏற்றப்படும் கால அளவு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "துணைப்பிரிவு"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "முதல் பைட்டுக்கான நேரம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP பிரிவுகள்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "HTMLலில் உள்ள LCP படத்தை உடனடியாகக் [கண்டறியப்படும்படி](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) அமைப்பது, ['தேவையுள்ளபோது காண்பித்தல்' அம்சத்தைத் தவிர்ப்பது](https://web.dev/articles/lcp-lazy-loading) ஆகியவற்றின் மூலம் LCPயை மேம்படுத்தலாம்"
@@ -2550,7 +2559,7 @@
     "message": "HTTP/2, HTTP/3 ஆகியவை HTTP/1.1ஐ விடக் கூடுதல் பலன்களை வழங்குகின்றன. உதாரணம்: மல்டிப்ளக்ஸிங். [நவீன HTTPயைப் பயன்படுத்துவது குறித்து மேலும் தெரிந்துகொள்ளுங்கள்](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "எந்தவொரு கோரிக்கையும் HTTP/1.1 பயன்படுத்தவில்லை"
+    "message": "எந்தவொரு கோரிக்கையும் HTTP/1.1 பயன்படுத்தவில்லை அல்லது தற்போது HTTP/1.1 பயன்படுத்தும் கோரிக்கைகள் அந்த அளவுக்கு மேம்பாட்டுக்கான வாய்ப்பை வழங்கவில்லை. ஒரே ஆரிஜினில் இருந்து 6 அல்லது அதற்கு மேற்பட்ட நிலையான அசெட்டுகள் உருவாக்கப்பட்டு, அவை லோக்கல் டெவெலப்மெண்ட் என்விரான்மெண்ட் அல்லது மூன்றாம் தரப்பு மூலத்தில் இருந்து வழங்கப்படவில்லை என்றால் மட்டுமே HTTP/1.1 கோரிக்கைகள் கொடியிடப்படும்."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "நெறிமுறை"
@@ -2583,7 +2592,7 @@
     "message": "செயின்களின் நீளத்தைக் குறைத்தல், ஆதாரங்களின் பதிவிறக்க அளவைக் குறைத்தல், பக்கம் ஏற்றப்படுவதன் வேகத்தை அதிகரிக்க தேவையற்ற ஆதாரங்களைப் பதிவிறக்குவதைத் தவிர்த்தல் போன்றவற்றின் மூலம் [முக்கியக் கோரிக்கைகளின் செயினிங்கைத் தவிர்க்கலாம்](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "உங்களின் மிகவும் முக்கியமான ஆரிஜின்களுடன் [முன்னிணைப்புக்](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) குறிப்புகளைச் சேர்க்கவும், ஆனால் 4க்கும் குறைவாகப் பயன்படுத்தவும்."
+    "message": "உங்களின் மிகவும் முக்கியமான ஆரிஜின்களுடன் [முன்னிணைப்புக்](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) குறிப்புகளைச் சேர்க்கவும், ஆனால் 4க்கும் அதிகமாகப் பயன்படுத்தவும்."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "முன்னிணைப்புக்கான ஆரிஜின்கள்"
@@ -2651,6 +2660,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS தேர்விக்கான செயல்திறன் பாதிப்பு"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "பிரதானத் தேர்வி எடுத்துக்கொண்ட நேரம்"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "பிரதானத் தேர்விக்கான பொருத்த முயற்சி"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "முதன்மைத் தேர்விகள்"
   },
@@ -2677,6 +2692,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "காட்சிப் பகுதி மொபைலுக்கு ஏற்றவாறு மேம்படுத்தப்படவில்லை என்றால் தட்டுதல் செயல்பாடுகள் [300 மிவி வரை தாமதம் ஆகக்கூடும்](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "மொபைல் தட்டல் தாமதம்"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "காட்சிப் பகுதியை மொபைலுக்கு ஏற்றதாக மேம்படுத்துதல்"
@@ -2969,6 +2987,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "SharedWorkerரைப் பயன்படுத்தும் பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் தற்போது சேமிக்க முடியாது."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "SharedWorkerரின் மெசேஜ் கிடைத்ததால் இந்தப் பக்கம் தற்காலிகச் சேமிப்பில் இருந்து அகற்றப்பட்டது"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "SpeechRecognizerரைப் பயன்படுத்தும் பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் தற்போது சேமிக்க முடியாது."
   },
@@ -3020,23 +3041,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "WebRTCயுடன் கூடிய பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் சேர்க்க முடியாது."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "WebRTC பயன்படுத்தப்பட்டுள்ளதால் ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சம் முடக்கப்பட்டுள்ளது."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "WebShareரைப் பயன்படுத்தும் பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் தற்போது சேமிக்க முடியாது."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "WebSocketடுடன் கூடிய பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் சேர்க்க முடியாது."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "WebSocket பயன்படுத்தப்பட்டுள்ளதால் ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சம் முடக்கப்பட்டுள்ளது."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "WebTransportடுடன் கூடிய பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் சேமிக்க முடியாது."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "WebTransport பயன்படுத்தப்பட்டுள்ளதால் ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சம் முடக்கப்பட்டுள்ளது."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "WebXRரைப் பயன்படுத்தும் பக்கங்களை ‘முன் பின் பக்கங்களைத் தற்காலிகமாகச் சேமித்தல்’ அம்சத்தில் தற்போது சேமிக்க முடியாது."
@@ -3344,9 +3356,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "உங்கள் படங்களை முன்கூட்டியே மேம்படுத்தவும், அவை காட்டப்படும் அனைத்து சாதனங்களிலும் உள்ள கண்டெய்னர்களின் பரிமாணங்களுக்குப் பொருந்தும் வகையில் அமைக்கவும் [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site) ஐ இயக்குங்கள்."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "உலாவிக்கு அனுப்பப்படும் ஃபைல்களின் அளவைக் குறைக்க, NitroPackகில் [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) ஐ பயன்படுத்துங்கள்."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "`nuxt/image` காம்பனென்ட்டைப் பயன்படுத்தி, `format=\"webp\"` வடிவமைப்பை அமைக்கவும். [மேலும் அறிக](https://image.nuxt.com/usage/nuxt-img#format)."
   },
@@ -3569,8 +3578,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "சிக்கலைப் புகார் செய்க"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "'தணிக்கைகள்' அம்சத்திற்குத் திரும்பு"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "மறை"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "இந்த ஆண்டின் பிற்பகுதியில், செயல்திறன் தணிக்கைகளுக்குப் பதிலாக 'புள்ளிவிவரங்கள்' அம்சம் அறிமுகம் செய்யப்படவுள்ளது. [இங்கே மேலும் தெரிந்துகொள்ளலாம், கருத்தை வழங்கலாம்](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "ஆய்வகத் தரவு"
@@ -3671,6 +3686,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouseஸின் இந்த இயக்கத்தைச் சில சிக்கல்கள் பாதிக்கின்றன:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "'புள்ளிவிவரங்கள்' அம்சத்தைப் பயன்படுத்திப் பாருங்கள்"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "இணைக்க முடியாதவை"
   },
@@ -3701,6 +3719,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "நகல் மாடியூல்கள்"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "நகல் பைட்டுகள்"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "ஃபைலின் அளவு (பைட்டுகள்)"
   },
@@ -3708,9 +3729,12 @@
     "message": "பெயர்"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "டேபிளைக் காட்டு/மறை"
+    "message": "அட்டவணையைக் காட்டு/மறை"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "பரிமாற்றப்பட்ட பைட்டுகள்"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "பயன்படுத்தப்படாத பைட்டுகள்"
+    "message": "பயன்படுத்தாத பைட்டுகள்"
   }
 }

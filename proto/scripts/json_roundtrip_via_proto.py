@@ -28,7 +28,7 @@ cmd = [
     "--in={0}/../../core/test/results/sample_v2.json".format(path_dir),
     "--out={0}/sample_v2_processed.json".format(path_dir)
 ]
-process = subprocess.call(cmd)
+process = subprocess.check_call(cmd)
 
 # open json
 with open(path_sample_preprocessed, 'r') as f:

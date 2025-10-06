@@ -35,7 +35,12 @@ const MAX_LAYOUT_SHIFTS = 15;
  */
 /* c8 ignore start */
 function getNodeDetailsData() {
-  const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
+  /** @type {Element|null} */
+  let elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement;
+  if (!elem && this instanceof ShadowRoot) {
+    elem = this.host;
+  }
+
   let traceElement;
   if (elem) {
     // @ts-expect-error - getNodeDetails put into scope via stringification
@@ -173,13 +178,13 @@ class TraceElements extends BaseGatherer {
    * that may have caused the shift.
    *
    * @param {LH.Trace} trace
-   * @param {LH.Artifacts.TraceEngineResult['parsedTrace']} traceEngineResult
+   * @param {LH.Artifacts.TraceEngineResult} traceEngineResult
    * @param {LH.Gatherer.Context} context
    * @return {Promise<Array<{nodeId: number}>>}
    */
   static async getTopLayoutShifts(trace, traceEngineResult, context) {
     const {impactByNodeId} = await CumulativeLayoutShift.request(trace, context);
-    const clusters = traceEngineResult.LayoutShifts.clusters ?? [];
+    const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
     const layoutShiftEvents =
       /** @type {import('../../lib/trace-engine.js').SaneSyntheticLayoutShift[]} */(
         clusters.flatMap(c => c.events)
@@ -369,7 +374,7 @@ class TraceElements extends BaseGatherer {
       traceEngineResult, navigationId);
     const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
-      trace, traceEngineResult.parsedTrace, context);
+      trace, traceEngineResult, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 

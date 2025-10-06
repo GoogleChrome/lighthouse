@@ -16,7 +16,7 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 /**
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
- * @return {Promise<{insights: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined, parsedTrace: LH.Artifacts.TraceEngineResult['parsedTrace']}>}
+ * @return {Promise<{insights: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet|undefined, data: LH.Artifacts.TraceEngineResult['data']}>}
  */
 async function getInsightSet(artifacts, context) {
   const settings = context.settings;
@@ -29,13 +29,13 @@ async function getInsightSet(artifacts, context) {
   const key = navigationId ?? NO_NAVIGATION;
   const insights = traceEngineResult.insights.get(key);
 
-  return {insights, parsedTrace: traceEngineResult.parsedTrace};
+  return {insights, data: traceEngineResult.data};
 }
 
 /**
  * @typedef CreateDetailsExtras
  * @property {import('@paulirish/trace_engine/models/trace/insights/types.js').InsightSet} insights
- * @property {LH.Artifacts.TraceEngineResult['parsedTrace']} parsedTrace
+ * @property {LH.Artifacts.TraceEngineResult['data']} data
  */
 
 /**
@@ -47,7 +47,7 @@ async function getInsightSet(artifacts, context) {
  * @return {Promise<LH.Audit.Product>}
  */
 async function adaptInsightToAuditProduct(artifacts, context, insightName, createDetails) {
-  const {insights, parsedTrace} = await getInsightSet(artifacts, context);
+  const {data, insights} = await getInsightSet(artifacts, context);
   if (!insights) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
@@ -65,7 +65,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   }
 
   const cbResult = createDetails(insight, {
-    parsedTrace,
+    data,
     insights,
   });
 
@@ -79,7 +79,7 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
     details = cbResult;
   }
 
-  if (!details || (details.type === 'table' && details.items.length === 0)) {
+  if (!details) {
     return {
       scoreDisplayMode: Audit.SCORING_MODES.NOT_APPLICABLE,
       score: null,
@@ -92,6 +92,17 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
       details.debugData = {type: 'debugdata'};
     }
     details.debugData.wastedBytes = insight.wastedBytes;
+  }
+
+  // TODO: FontDisplay insight (and maybe others) can return -Infinity savings when
+  // passing. That's weird. For now, just delete those.
+  if (insight.metricSavings) {
+    for (const [metric, value] of Object.entries(insight.metricSavings)) {
+      if (!Number.isFinite(value)) {
+        // @ts-expect-error
+        delete insight.metricSavings[metric];
+      }
+    }
   }
 
   // This hack is to add metric adorners if an insight category links it to a metric,

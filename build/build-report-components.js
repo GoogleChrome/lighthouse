@@ -15,7 +15,6 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
-import esMain from 'es-main';
 
 import {LH_ROOT} from '../shared/root.js';
 
@@ -215,7 +214,7 @@ ${makeGenericCreateComponentFunctionCode(compiledTemplates)}
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 

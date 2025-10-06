@@ -14,12 +14,15 @@ function headersParam(headers) {
 }
 
 /**
- * Some script are required for the test.
- * Allow scripts with the attribute nonce="00000000".
+ * `default-src 'none'` is wildly restrictive and not realsistic to what we'd see in the wild.
+ * Therefore, `connect-src 'self'` is needed for our Fetcher to load robots.txt and sourcemaps.
+ * Without it the 'none' wouldn't let a same-origin fetch succeed, even when going through `Network.loadNetworkResource`. https://github.com/GoogleChrome/lighthouse/issues/16597
+ *
+ * Some script are required for the test, so allow via the attribute nonce="00000000".
  */
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; script-src 'nonce-00000000'`,
+  `default-src 'none'; connect-src 'self'; script-src 'nonce-00000000'`,
 ]]);
 
 /**
@@ -47,7 +50,7 @@ const expectations = {
 };
 
 const testDefn = {
-  id: 'csp-block-all',
+  id: 'csp-block',
   expectations,
 };
 

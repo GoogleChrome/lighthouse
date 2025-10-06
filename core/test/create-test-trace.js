@@ -323,6 +323,7 @@ function createTestTrace(options) {
           connectionId: record.connectionId ?? 140,
           connectionReused: record.connectionReused ?? false,
           protocol: record.protocol ?? 'http/1.1',
+          headers: record.responseHeaders,
         },
       },
     });

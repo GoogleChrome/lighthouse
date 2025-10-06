@@ -62,6 +62,12 @@ export class CategoryRenderer {
       adornEl.textContent = relevantMetric.acronym || relevantMetric.id;
     }
 
+    if (audit.weight === 0) {
+      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn');
+      adornEl.title = Globals.strings.unscoredTitle;
+      adornEl.textContent = Globals.strings.unscoredLabel;
+    }
+
     if (audit.stackPacks) {
       audit.stackPacks.forEach(pack => {
         const packElmImg = this.dom.createElement('img', 'lh-audit__stackpack__img');

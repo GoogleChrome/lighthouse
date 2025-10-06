@@ -15,7 +15,7 @@ import {getModuleDirectory} from '../../../shared/esm-utils.js';
 import {readJson} from '../test-utils.js';
 
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
-const dbwTrace = readJson('../results/artifacts/defaultPass.trace.json', import.meta);
+const dbwTrace = readJson('../results/artifacts/trace.json', import.meta);
 const dbwResults = readJson('../results/sample_v2.json', import.meta);
 const fullTraceObj = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -257,8 +257,6 @@ describe('asset-saver helper', () => {
       const artifacts = await assetSaver.loadArtifacts(artifactsPath);
       assert.strictEqual(artifacts.LighthouseRunWarnings.length, 2);
       assert.strictEqual(artifacts.URL.requestedUrl, 'https://www.reddit.com/r/nba');
-      assert.strictEqual(artifacts.devtoolsLogs.defaultPass.length, 555);
-      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 14);
       assert.strictEqual(artifacts.DevtoolsLog.length, 555);
       assert.strictEqual(artifacts.Trace.traceEvents.length, 14);
     });

@@ -6,8 +6,6 @@
 
 import fs from 'fs';
 
-import fetch from 'node-fetch';
-
 import {Server} from './static-server.js';
 
 describe('Server', () => {

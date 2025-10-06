@@ -14,7 +14,6 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import {cloneDeep} from 'lodash-es';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
@@ -92,7 +91,7 @@ function getDefinitionsToRun(allTestDefns, requestedIds, excludedTests) {
 function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
   const pruneNetworkRequests = !takeNetworkRequestUrls;
 
-  const clonedDefns = cloneDeep(testDefns);
+  const clonedDefns = structuredClone(testDefns);
   for (const {id, expectations, runSerially} of clonedDefns) {
     if (!runSerially && expectations.networkRequests) {
       throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
@@ -188,6 +187,11 @@ async function begin() {
   }
   const {runLighthouse, setup} = await import(runnerPath);
   runLighthouse.runnerName = argv.runner;
+
+  if (!argv.testsPath && !fs.existsSync(coreTestDefnsPath)) {
+    console.error('Set --tests-path to provide the file that defines the smoke tests for your Lighthouse plugin. See https://github.com/GoogleChrome/lighthouse/blob/main/cli/test/smokehouse/readme.md for more information');
+    process.exit(1);
+  }
 
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;

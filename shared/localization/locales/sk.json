@@ -660,7 +660,7 @@
     "message": "Pre animovaný obsah použite formáty videa"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfilly a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Ak nutne nemusíte podporovať staršie prehliadače, zvážte úpravu procesu kompilácie JavaScriptu tak, aby nedochádzalo k transpilovaniu [základných](https://web.dev/baseline) funkcií. [Prečo väčšina webov môže nasadiť kód ES6+ bez transpilácie](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Na stránke bola zistená 2. verzia knižnice core-js. Ak chcete získať množstvo zlepšení výkonu, mali by ste inovovať na 3. verziu."
@@ -1188,7 +1188,7 @@
     "message": "Maximálne potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy. [Ďalšie informácie o metrike Maximálne potenciálne oneskorenie prvého vstupu](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Index rýchlosti znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie o metrike Index rýchlosti](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie o metrike Speed Index](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Súčet všetkých časových období medzi prvým vykreslením obsahu a časom do interaktivity, kedy dĺžka úlohy presiahla 50 ms (vyjadrený v milisekundách). [Ďalšie informácie o metrike Celkový čas blokovania](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Zabezpečte správne izolovanie pôvodného zdroja pomocou hlavičky COOP"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "Prednačítajte písma s atribútom `optional`, aby ich mohli používať noví návštevníci. [Ďalšie informácie o prednačítavaní písiem](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "Písma s atribútom `font-display: optional` nie sú prednačítané"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "Písma s atribútom `font-display: optional` sú prednačítané"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "Ak bol na stránku dynamicky pridaný prvok vykreslenia najväčšieho obsahu, obrázok by ste mali prednačítať, aby ste zlepšili vykreslenie najväčšieho obsahu. [Ďalšie informácie o prednačítaní prvkov vykreslenia najväčšieho obsahu](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Odkazy je možné prehľadávať"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Ďalší nečitateľný text"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Veľkosť písma"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% textu na stránke"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selektor"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Veľkosti písma menšie ako 12 px sú príliš malé na to, aby boli čitateľné, a nútia používateľov mobilných zariadení, aby si ich priblížili stiahnutím prstov. Zaistite, aby viac ako 60 % textu na stránke malo veľkosť ≥ 12 px. [Ďalšie informácie o čitateľných veľkostiach písma](https://developer.chrome.com/docs/lighthouse/seo/font-size/)"
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} čitateľného textu"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Text nie je čitateľný, pretože neexistuje žiadna metaznačka oblasti zobrazenia optimalizovaná pre mobilné obrazovky."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "Dokument nepoužíva čitateľné veľkosti písma"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Čitateľný text"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "Dokument používa čitateľné veľkosti písma"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "Odkazy hreflang informujú vyhľadávače, akú verziu stránky by mali uviesť vo výsledkoch vyhľadávania pre daný jazyk alebo oblasť. [Ďalšie informácie o útržku `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)"
@@ -1440,7 +1401,7 @@
     "message": "Počiatočný čas odpovede servera bol krátky"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "V Chrome bude k dispozícii nové prostredie, ktoré umožní používateľom prehliadať bez súborov cookie tretích strán. [Ďalšie informácie o súboroch cookie tretích strán](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "V niektorých kontextoch môžu byť súbory cookie tretích strán blokované. [Ďalšie informácie o príprave na obmedzenia súborov cookie tretích strán](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Bol nájdený 1 súbor cookie}few{Boli nájdené # súbory cookie}many{# cookies found}other{Bolo nájdených # súborov cookie}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Nepoužíva súbory cookie tretej strany"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (zákaznícka podpora)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (marketing)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (sociálne)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (video)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "Služba"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "Niektoré vložené prvky tretej strany je možné načítať lenivo. Než budú požadované, zvážte ich nahradenie fasádou. [Ako odložiť tretie strany pomocou fasády](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)"
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{K dispozícii je # alternatíva fasády}few{K dispozícii sú # alternatívy fasády}many{# facade alternatives available}other{K dispozícii je # alternatív fasády}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "Niektoré zdroje tretej strany je možné odložene načítať s fasádou"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "Odložené načítanie zdrojov tretej strany s fasádami"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tretia strana"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimalizujte použitie riešení tretích strán"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Závažnosť"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Direktíva `require-trusted-types-for` v hlavičke `Content-Security-Policy` (PZO) dáva pokyny používateľským agentom, aby kontrolovali údaje odovzdávané funkciám prijímača DOM XSS. [Ďalšie informácie o zmiernení rizika útoku XSS založeného na DOM pomocou direktívy Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Nenašla sa žiadna hlavička `Content-Security-Policy` s direktívou Trusted Types"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Zmiernite riziko skriptovania medzi webmi založeného na modeli DOM pomocou direktívy Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "V prvkoch obrázka nastavte explicitnú šírku aj výšku, aby ste znížili posuny rozloženia a zlepšili kumulatívnu zmenu rozloženia. [Ako nastaviť rozmery obrázkov](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "Pre web {securityOrigin} sa našiel atribút `<link rel=preconnect>`, prehliadač ho však nepoužil. `preconnect` používajte iba v prípade dôležitých zdrojov, o ktoré stránka určite požiada."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Pre web {preloadURL} sa našiel atribút `<link>`, prehliadač ho však nepoužil. Skontrolujte, či atribút `crossorigin` používate správne."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "Zvážte použitie funkcie `<link rel=preload>`, čím uprednostníte načítanie zdrojov momentálne požadovaných v neskoršej fáze načítania stránky. [Ako prednačítavať kľúčové žiadosti](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)"
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "Predbežne načítavajte kľúčové žiadosti"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "Webová adresa mapy"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Vylepšenia prvého vyfarbenia"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Tieto štatistiky sú k dispozícii aj v nástrojoch pre vývojárov v prehliadači Chrome na paneli výkonnosti. Ak si chcete zobraziť podrobnejšie informácie, [zaznamenajte stopu](https://developer.chrome.com/docs/devtools/performance/reference)."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Štatistiky"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metriky"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Vylepšite celkové načítavanie, aby bola stránka čo najskôr responzívna a pripravená na použitie. Kľúčové metriky: Čas do interaktívneho vykreslenia, Index rýchlosti"
+    "message": "Vylepšite celkové načítavanie, aby bola stránka čo najskôr responzívna a pripravená na použitie. Kľúčové metriky: Čas do interaktívneho vykreslenia, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Celkové vylepšenia"
@@ -1857,22 +1800,22 @@
     "message": "Webová adresa"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potenciálna úspora"
+    "message": "Odhadovaná redukcia veľkosti"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potenciálna úspora"
+    "message": "Odhadovaný čas skrátenia uloženia"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potenciálna úspora: {wastedBytes, number, bytes} KiB"
+    "message": "Môže byť menšia o {wastedBytes, number, bytes} kB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Bol nájdený 1 prvok}few{Boli nájdené # prvky}many{# elements found}other{Bolo nájdených # prvkov}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potenciálna úspora: {wastedMs, number, milliseconds} ms"
+    "message": "Uloží sa asi o {wastedMs, number, milliseconds} ms rýchlejšie"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
@@ -2070,7 +2013,7 @@
     "message": "Získať skóre výkonnosti v nástroji Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Merať metriky výkonnosti načítania stránok, ako sú vykreslenie najväčšieho obsahu a index rýchlosti."
+    "message": "Merať metriky výkonnosti načítania stránok, ako sú vykreslenie najväčšieho obsahu a Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Získať prístup k možnostiam progresívnych webových aplikácií."
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() už nefunguje v nezabezpečených zdrojoch. Ak chcete túto funkciu používať, mali by ste zvážiť prechod svojej aplikácie na zabezpečený zdroj, ako je HTTPS. Viac sa dozviete na https://goo.gle/chrome-insecure-origins."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "V prvku <article>, <aside>, <nav> alebo <section> bola nájdená značka <h1>, ktorá nemá špecifikovanú veľkosť písma. V blízkej budúcnosti sa veľkosť tohto textu nadpisu v tomto prehliadači zmení. Viac sa dozviete na https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "Podpora funkcie RTCPeerConnectionIceErrorEvent.hostCandidate bola ukončená. Použite namiesto nej funkciu RTCPeerConnectionIceErrorEvent.address alebo RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Tento formát žiadosti navigator.credentials.get() o digitálne prihlasovacie údaje je zastaraný. Aktualizujte volanie tak, aby používalo nový formát."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Podpora údajov o zdroji obchodníka a ľubovoľných údajov z udalosti obsluhy canmakepaymentbola ukončená a tieto údaje budú odstránené: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Ak v značkách img, značkách videa a značkách canvas špecifikujete atribútoverflow: visible, môže to spôsobiť, že vytvoria vizuálny obsah mimo hraníc prvku. Prejdite na https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Vloženie starého videa vo formáte Flash bolo prepísané na prvok iframe HTML. Flash už dávno nie je podporovaný, podpora tohto riešenia spočívajúceho v prepísaní bola ukončená a v budúcnosti môže byť odstránené."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "Podpora funkcie paymentManager.instruments bola ukončená. Použite namiesto nej inštaláciu v pravej chvíli pre obslužné nástroje platieb."
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Rozšírenia by sa mali prihlásiť do izolovania od iných zdrojov, ak chcú ďalej používať funkciu SharedArrayBuffer. Prejdite na https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "Podpora atribútu GPUAdapter isFallbackAdapter bola ukončená. Použite namiesto neho atribút GPUAdapterInfo isFallbackAdapter."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "JSON odpovede nepodporuje kódovanie UTF‑16 v rámci funkcie XMLHttpRequest"
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Najčastejšie príčiny zmien rozloženia"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Obrázkový prvok bez rozmerov"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Webový font"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Najhorší klaster"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Rozsiahly model DOM môže predĺžiť výpočty štýlov a preformátovaní rozložení, čím ovplyvní responzívnosť stránky. Okrem toho zvýši využitie pamäte. [Ako sa vyhnúť nadmernej veľkosti modelu DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Trvanie"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Prvok"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Rozloženie (počet objektov: {PH1})"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Prepočítanie štýlu (počet prvkov: {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Najviac podradených položiek"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimalizácia veľkosti modelu DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Toto sú najväčšie udalosti prepočítania rozloženia a štýlu. Vplyv na výkonnosť môžete znížiť zjednodušením prvku DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Celkový počet prvkov"
@@ -2409,7 +2364,7 @@
     "message": "Požiadavka obsahovala presmerovania (počet: {PH1}, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "Server odpovedal pomaly (pozorované {PH1}) "
+    "message": "Server odpovedal pomaly (pozorované {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Nebola použitá žiadna kompresia"
@@ -2418,7 +2373,7 @@
     "message": "Vyhýba sa presmerovaniam"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "Server odpovedá rýchlo (pozorované {PH1}) "
+    "message": "Server odpovedá rýchlo (pozorované {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Používa sa kompresia textu"
@@ -2463,7 +2418,7 @@
     "message": "(anonymné)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Mnohé rozhrania API, ktoré zvyčajne čítajú geometriu rozloženia, nútia vykresľovací modul pozastaviť spustenie skriptu, aby mohli vypočítať štýl a rozloženie. [Ďalšie informácie o vynútenom preformátovaní a jeho zmierňovaní](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)"
+    "message": "K vynútenému preformátovaniu dochádza, keď JavaScript dopytuje geometrické vlastnosti (napríklad offsetWidth) po zneplatnení štýlov zmenou stavu prvku DOM. Môže to viesť k nízkej výkonnosti. Prečítajte si viac o [vynútených preformátovaniach](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) a prípadných opatrení na minimalizáciu problémov."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Sledovanie zásobníka"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[bez atribútu]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Začnite skúmať najdlhšiu podčasť. [Oneskorenia sa dajú minimalizovať](https://web.dev/articles/optimize-inp#optimize_interactions). Ak chcete skrátiť čas spracovania, [optimalizujte náklady hlavného vlákna](https://web.dev/articles/optimize-long-tasks), vo väčšine prípadov JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Trvanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Oneskorenie vstupu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Neboli zistené žiadne interakcie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Oneskorenie prezentácie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Trvanie spracovania"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Podčasť"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Rozdelenie oneskorenia vykreslenia po interakcii"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Znížením času sťahovania obrázkov môžete zlepšiť registrovaný čas načítania stránky a vykreslenie najväčšieho prvku. [Ďalšie informácie o optimalizácii veľkosti obrázkov](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Používanie videoformátov namiesto gifov môže zlepšiť veľkosť animovaného obsahu na stiahnutie."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Každá [ podčasť má špecifické stratégie zlepšenia](https://web.dev/articles/optimize-lcp#lcp-breakdown). V ideálnom prípade by väčšina času vykreslenia najväčšieho prvku mala byť vynaložená na načítanie zdrojov, ktoré nie sú v rozsahu oneskorenia."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Trvanie"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Oneskorenie vykreslenia prvku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "75. percentil poľa"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Nebolo zistené žiadne vykreslenie najväčšieho prvku"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Oneskorenie načítania zdroja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Trvanie načítania zdroja"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Podčasť"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Oneskorenie prvého bajtu"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Rozdelenie vykreslenia najväčšieho prvku"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimalizujte vykreslenie najväčšieho prvku tým, že jeho obrázok okamžite [zviditeľníte](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) v jazyku HTML a [zabránite lenivému načítaniu](https://web.dev/articles/lcp-lazy-loading)"
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 a HTTP/3 ponúkajú v porovnaní s protokolom HTTP/1.1 mnoho výhod, napríklad multiplexnú moduláciu. [Ďalšie informácie o používaní moderného protokolu HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Žiadna požiadavka nepoužila HTTP/1.1"
+    "message": "Žiadna požiadavka nepoužila protokol HTTP/1.1 alebo jeho aktuálne používanie nepredstavuje významnú príležitosť na optimalizáciu. Požiadavky HTTP/1.1 sa nahlasujú iba vtedy, keď šesť alebo viac statických zdrojov pochádza z rovnakého zdroja a nie sú poskytované z miestneho vývojového prostredia ani zdroja tretej strany."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protokol"
@@ -2586,7 +2595,7 @@
     "message": "[Vyhnite sa zreťazeniu kľúčových žiadostí](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) skrátením dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Pridajte indikátory [predbežného pripojenia](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) pre najdôležitejšie zdroje, ale snažte sa použiť menej ako štyri."
+    "message": "Pridajte indikátory [predbežného pripojenia](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) pre najdôležitejšie zdroje, ale snažte sa použiť najviac štyri."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Kandidáti na predbežné pripojenie"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Náklady selektora CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Uplynutý čas najčastejšieho selektora"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Pokus o zhodu s najčastejším selektorom"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Najčastejšie selektory"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Ak oblasť zobrazenia nie je optimalizovaná pre mobily, interakcie klepnutím môžu byť [oneskorené až o 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Oneskorenie klepnutia v mobilnom zariadení"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimalizácia oblasti zobrazenia pre mobily"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Stránky s rozhraním SharedWorker momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Stránka bola vylúčená z vyrovnávacej pamäte, pretože dostala správu z rozhrania SharedWorker"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Stránky s rozhraním SpeechRecognizer momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Stránky s rozhraním WebRTC nemajú prístup do spätnej vyrovnávacej pamäte."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "Spätná vyrovnávacia pamäť bola deaktivovaná, pretože bol použitý protokol WebRTC."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "Stránky s rozhraním WebShare momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Stránky s rozhraním WebSocket nemajú prístup do spätnej vyrovnávacej pamäte."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože bol použitý protokol WebSocket."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "Stránky s rozhraním WebTransport nemajú prístup do spätnej vyrovnávacej pamäte."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "Spätná vyrovnávacia pamäť je deaktivovaná, pretože bol použitý protokol WebTransport."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "Stránky s rozhraním WebXR momentálne nemôžu používať spätnú vyrovnávaciu pamäť."
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "Ak chcete preventívne optimalizovať svoje obrázky a prispôsobiť ich veľkosti kontajnerov, v ktorých sa zobrazujú vo všetkých zariadeniach, povoľte nastavenie [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site)."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "Pomocou funkcie [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) v sekcii NitroPack zmenšite veľkosť súborov odosielaných do prehliadača."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "Použite komponent `nuxt/image` a nastavte `format=\"webp\"`. [Ďalšie informácie](https://image.nuxt.com/usage/nuxt-img#format)"
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Nahlásiť problém"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Prejsť späť na kontroly"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Skryť"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Neskôr v tomto roku nahradia štatistiky kontroly výkonnosti. [Tu môžete zistiť viac a poskytnúť spätnú väzbu](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Údaje laboratória"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Vyskytli sa problémy ovplyvňujúce funkčnosť nástroja Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Vyskúšať štatistiky"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nie je možné priradiť"
   },
@@ -3704,6 +3722,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Duplikovať moduly"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Duplicitné bajty"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Počet bajtov zdroja"
   },
@@ -3712,6 +3733,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Prepnúť tabuľku"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Prenos bajtov"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Nepoužité bajty"

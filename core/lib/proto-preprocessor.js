@@ -6,8 +6,6 @@
 
 import fs from 'fs';
 
-import esMain from 'es-main';
-
 /**
  * @fileoverview Helper functions to transform an LHR into a proto-ready LHR.
  *
@@ -109,7 +107,7 @@ function processForProto(lhr) {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (import.meta.main) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);
   let input;
@@ -126,6 +124,10 @@ if (esMain(import.meta)) {
     const report = processForProto(JSON.parse(fs.readFileSync(input, 'utf-8')));
     // write to output from argv
     fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
+    // eslint-disable-next-line no-console
+    console.log(`file written to ${output}`);
+  } else {
+    process.exit(1);
   }
 }
 

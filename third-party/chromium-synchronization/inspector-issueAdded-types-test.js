@@ -6,7 +6,6 @@
 'use strict';
 
 import fs from 'fs';
-import fetch from 'node-fetch';
 import { LH_ROOT } from '../../shared/root.js';
 
 const inspectorIssuesGathererPath = LH_ROOT +
@@ -56,6 +55,7 @@ Array [
   "sharedDictionaryIssueDetails",
   "sriMessageSignatureIssueDetails",
   "stylesheetLoadingIssueDetails",
+  "unencodedDigestIssueDetails",
   "userReidentificationIssueDetails",
 ]
 `);

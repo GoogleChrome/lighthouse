@@ -11,7 +11,7 @@ import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js
 import {readJson} from '../test-utils.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 
-const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
+const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/devtoolslog.json', import.meta);
 const prefetchedScriptDevtoolsLog = readJson('../fixtures/prefetched-script.devtoolslog.json', import.meta);
 const redirectsDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);
 const redirectsScriptDevtoolsLog = readJson('../fixtures/redirects-from-script.devtoolslog.json', import.meta);

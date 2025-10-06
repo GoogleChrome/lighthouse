@@ -8,6 +8,9 @@ import assert from 'assert/strict';
 
 import ErrorLogsAudit from '../../audits/errors-in-console.js';
 
+const KB = 1024;
+const MAX_CONSOLE_ERRORS = 1000;
+
 describe('ConsoleMessages error logs audit', () => {
   it('passes when no console messages were found', async () => {
     const context = {options: {}, computedCache: new Map()};
@@ -177,21 +180,38 @@ describe('ConsoleMessages error logs audit', () => {
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('does nothing with an empty description', async () => {
-      const options = {ignoredPatterns: 'pattern'};
-      const context = {options, computedCache: new Map()};
+    it('should limit console errors length to 1000', async () => {
+      const context = {options: {}, computedCache: new Map()};
+
+      const result = await ErrorLogsAudit.audit({
+        ConsoleMessages: Array.from({length: MAX_CONSOLE_ERRORS * 2}, () => ({
+        level: 'error',
+        source: 'network',
+        text: `Error message`,
+      })),
+        SourceMaps: [],
+        Scripts: [],
+      }, context);
+
+      expect(result.details.items).toHaveLength(MAX_CONSOLE_ERRORS);
+    });
+
+    it('should limit description to 10kb', async () => {
+      const context = {options: {}, computedCache: new Map()};
+
       const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
+            source: 'network',
+            text: `Error message`.repeat(KB),
           },
         ],
         SourceMaps: [],
         Scripts: [],
       }, context);
 
-      expect(result.score).toBe(0);
-      expect(result.details.items).toHaveLength(1);
+      expect(result.details.items[0].description).toHaveLength(10 * KB);
     });
 
     it('filters console messages as a string', async () => {

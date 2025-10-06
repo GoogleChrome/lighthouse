@@ -11,7 +11,6 @@
 
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
-import esMain from 'es-main';
 
 /**
  * @param {puppeteer.Page} page
@@ -66,7 +65,7 @@ async function main() {
   console.log(JSON.stringify(result.lhr, null, 2));
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 

@@ -158,14 +158,11 @@ async function _computeNavigationResult(
 
     /** @type {Partial<LH.GathererArtifacts>} */
     const artifacts = {};
-    const pageLoadErrorId = 'pageLoadError-defaultPass';
     if (debugData.devtoolsLog) {
       artifacts.DevtoolsLogError = debugData.devtoolsLog;
-      artifacts.devtoolsLogs = {[pageLoadErrorId]: debugData.devtoolsLog};
     }
     if (debugData.trace) {
       artifacts.TraceError = debugData.trace;
-      artifacts.traces = {[pageLoadErrorId]: debugData.trace};
     }
 
     navigationContext.baseArtifacts.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);

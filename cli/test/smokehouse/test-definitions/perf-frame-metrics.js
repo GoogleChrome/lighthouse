@@ -9,10 +9,7 @@ const config = {
   extends: 'lighthouse:default',
   settings: {
     throttlingMethod: 'devtools',
-    // preload-fonts isn't a performance audit, but can easily leverage the font
-    // webpages present here, hence the inclusion of 'best-practices'.
-    onlyCategories: ['performance', 'best-practices'],
-
+    onlyCategories: ['performance'],
     // BF cache will request the page again, initiating additional network requests.
     // Disable the audit so we only detect requests from the normal page load.
     skipAudits: ['bf-cache'],

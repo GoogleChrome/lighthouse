@@ -38,15 +38,15 @@ async function getComputationDataParamsFromTrace(data, context) {
 
   const graph = await PageDependencyGraph.request({...data, fromTrace: true}, context);
   const traceEngineResult = await TraceEngineResult.request(data, context);
-  const frameId = traceEngineResult.parsedTrace.Meta.mainFrameId;
+  const frameId = traceEngineResult.data.Meta.mainFrameId;
   const navigationId =
-    traceEngineResult.parsedTrace.Meta.mainFrameNavigations[0].args.data?.navigationId;
+    traceEngineResult.data.Meta.mainFrameNavigations[0].args.data?.navigationId;
   if (!navigationId) {
     throw new Error(`Lantern metrics could not be calculated due to missing navigation id`);
   }
 
   const processedNavigation = Lantern.TraceEngineComputationData.createProcessedNavigation(
-    traceEngineResult.parsedTrace, frameId, navigationId);
+    traceEngineResult.data, frameId, navigationId);
   const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
   return {simulator, graph, processedNavigation};

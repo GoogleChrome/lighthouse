@@ -62,7 +62,7 @@ class LayoutShifts extends Audit {
     const SourceMaps = artifacts.SourceMaps;
     const traceEngineResult =
       await TraceEngineResult.request({trace, settings, SourceMaps}, context);
-    const clusters = traceEngineResult.parsedTrace.LayoutShifts.clusters ?? [];
+    const clusters = traceEngineResult.data.LayoutShifts.clusters ?? [];
     const {cumulativeLayoutShift: clsSavings, impactByNodeId} =
       await CumulativeLayoutShiftComputed.request(trace, context);
     const traceElements = artifacts.TraceElements

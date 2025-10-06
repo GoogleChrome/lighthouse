@@ -660,7 +660,7 @@
     "message": "애니메이션 콘텐츠에 동영상 형식 사용하기"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "폴리필 및 변환을 통해 레거시 브라우저에서 새로운 JavaScript 기능을 사용할 수 있습니다. 하지만 최신 브라우저에서는 대부분 필요하지 않습니다. 레거시 브라우저를 지원해야 하는 경우가 아니라면 [Baseline](https://web.dev/baseline) 기능을 트랜스파일하지 않도록 JavaScript 빌드 프로세스를 수정해 보세요. [대부분의 사이트에서 트랜스파일링 없이 ES6+ 코드를 배포할 수 있는 이유 알아보기](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "페이지에서 core-js 버전 2가 감지되었습니다. 다양한 성능 개선사항을 적용하려면 버전 3으로 업그레이드해야 합니다."
@@ -1188,7 +1188,7 @@
     "message": "사용자가 경험할 수 있는 최초 입력 반응 시간의 최댓값은 가장 긴 작업의 길이입니다. [최초 입력 반응 시간 최댓값 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "속도 색인은 페이지 콘텐츠가 얼마나 빨리 표시되는지 보여줍니다. [속도 색인 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
+    "message": "Speed Index는 페이지 콘텐츠가 얼마나 빨리 표시되는지 보여줍니다. [Speed Index 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "FCP와 상호작용 시간 사이의 모든 시간의 합으로, 작업 지속 시간이 50ms를 넘으면 밀리초 단위로 표현됩니다. [총 차단 시간 측정항목에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)"
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "COOP을 통해 적절한 출처 분리 보장"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "신규 방문자가 사용할 수 있도록 `optional` 글꼴을 미리 로드하세요 [글꼴 미리 로드에 관해 자세히 알아보기](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "`font-display: optional`을 사용하는 글꼴이 미리 로드되지 않음"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "`font-display: optional`을 사용하는 글꼴이 미리 로드됨"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "LCP(최대 콘텐츠 렌더링 시간) 요소가 페이지에 동적으로 추가되는 경우 LCP를 개선하기 위해 이미지를 미리 로드해야 합니다. [LCP 요소 미리 로드에 관해 자세히 알아보기](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "링크를 크롤링할 수 있음"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "읽을 수 없는 추가 텍스트"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "글꼴 크기"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "페이지 텍스트 비율(%)"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "선택기"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "12px보다 글꼴 크기가 작으면 읽기 어렵기 때문에 모바일 방문자가 '손가락으로 확대'해야만 읽을 수 있습니다. 페이지 텍스트의 60% 이상을 12px 이상으로 유지하도록 노력하세요. [읽을 수 있는 글꼴 크기에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/seo/font-size/)"
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} 읽기 쉬운 텍스트"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "모바일 화면에 최적화된 표시 영역 메타 태그가 없어서 텍스트를 알아볼 수 없음"
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "문서에서 읽기 쉬운 글꼴 크기를 사용하지 않음"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "읽기 쉬운 텍스트"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "문서가 읽기 쉬운 글꼴 크기를 사용함"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang 링크는 검색엔진에 특정 언어나 지역에서 페이지의 어떤 버전을 검색결과로 표시해야 할지 알려줍니다. [`hreflang`에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)"
@@ -1440,7 +1401,7 @@
     "message": "초기 서버 응답 시간 짧음"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome은 사용자가 서드 파티 쿠키 없이 탐색할 수 있는 새로운 환경으로 전환하고 있습니다. [서드 파티 쿠키에 관해 자세히 알아보기](https://developers.google.com/privacy-sandbox/cookies)"
+    "message": "일부 상황에서는 서드 파티 쿠키가 차단될 수 있습니다. [서드 파티 쿠키 제한에 대비하는 방법 자세히 알아보기](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{쿠키 1개 찾음}other{쿠키 #개 찾음}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "서드 파티 쿠키 방지"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName}(고객 성공 사례)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName}(마케팅)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName}(소셜)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName}(동영상)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "제품"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "일부 서드 파티 임베딩은 지연 로드될 수 있습니다. 필요할 때까지 퍼사드로 대체해 보세요. [퍼사드로 서드 파티를 지연하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)"
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{대체 퍼사드 #개 사용 가능}other{대체 퍼사드 #개 사용 가능}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "일부 타사 리소스는 퍼사드와 함께 지연 로드될 수 있음"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "퍼사드로 타사 리소스 지연 로드"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "타사"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "타사 사용량 최소화"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "심각도"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy`(CSP) 헤더의 `require-trusted-types-for` 지시어는 사용자 에이전트에 DOM XSS 싱크 함수로 전달되는 데이터를 제어하도록 지시합니다. [신뢰할 수 있는 유형으로 DOM 기반 XSS를 완화하는 방법 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "신뢰할 수 있는 유형 지시어가 포함된 `Content-Security-Policy` 헤더를 찾을 수 없음"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "신뢰할 수 있는 유형으로 DOM 기반 XSS 완화"
   },
   "core/audits/unsized-images.js | description": {
     "message": "이미지 요소에 명시적인 너비 및 높이를 설정하여 레이아웃 변경 횟수를 줄이고 누적 레이아웃 변경을 개선합니다. [이미지 크기 설정 방법 알아보기](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "'{securityOrigin}'에 `<link rel=preconnect>` 링크가 있으나 브라우저에서 사용되지 않았습니다. 페이지에서 확실하게 요청하는 중요 출처에만 `preconnect`를 사용합니다."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "'{preloadURL}'에 미리 로드된 `<link>` 링크가 있으나 브라우저에서 사용되지 않았습니다. `crossorigin` 속성을 올바르게 사용하고 있는지 확인하세요."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "`<link rel=preload>`를 사용하여 현재 요청되는 리소스를 나중에 페이지 로드에 가져올 때 우선순위를 정하는 것이 좋습니다. [중요한 요청을 미리 로드하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)"
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "중요한 요청을 미리 로드하기"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "맵 URL"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "최초 페인트 개선"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "이러한 통계는 Chrome DevTools 성능 패널에서도 확인할 수 있습니다. [트레이스를 기록](https://developer.chrome.com/docs/devtools/performance/reference)하여 자세한 정보를 확인하세요."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "인사이트"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "측정항목"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "페이지가 빠르게 반응하고 가능한 한 빨리 사용할 수 있는 준비가 되도록 전반적인 로드 환경을 강화하세요. 주요 측정항목: 상호작용 시간, 속도 색인"
+    "message": "페이지가 빠르게 반응하고 가능한 한 빨리 사용할 수 있는 준비가 되도록 전반적인 로드 환경을 강화하세요. 주요 측정항목: 상호작용 시간, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "전반적인 개선사항"
@@ -1857,22 +1800,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "가능한 절감 효과"
+    "message": "예상 절감 용량"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "가능한 절감 효과"
+    "message": "예상 절감 시간"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "절감 가능치: {wastedBytes, number, bytes}KiB"
+    "message": "예상 절감 용량: {wastedBytes, number, bytes}KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{요소 1개 발견됨}other{요소 #개 발견됨}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "절감 가능치: {wastedMs, number, milliseconds} 밀리초"
+    "message": "예상 절감 시간: {wastedMs, number, milliseconds}밀리초"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "문서"
@@ -2070,7 +2013,7 @@
     "message": "Lighthouse 성능 점수를 받습니다."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "최대 콘텐츠 렌더링 시간 및 속도 색인과 같은 페이지 로드 성능 측정항목을 측정합니다."
+    "message": "최대 콘텐츠 렌더링 시간 및 Speed Index와 같은 페이지 로드 성능 측정항목을 측정합니다."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "프로그레시브 웹 앱 기능을 평가합니다."
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia()는 더 이상 안전하지 않은 출처에서 작동하지 않습니다. 이 기능을 사용하려면 애플리케이션을 HTTPS와 같은 안전한 출처로 전환하는 것을 고려해야 합니다. 자세한 내용은 다음 페이지를 참고하세요. https://goo.gle/chrome-insecure-origins"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "<article>, <aside>, <nav> 또는 <section> 내에 지정된 글꼴 크기가 없는 <h1> 태그가 있습니다. 이 브라우저에서 이 제목 텍스트의 크기가 조만간 변경될 예정입니다. 자세한 내용은 다음을 참고하세요. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate는 지원 중단되었습니다. 대신 RTCPeerConnectionIceErrorEvent.address 또는 RTCPeerConnectionIceErrorEvent.port를 사용하세요."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "디지털 사용자 인증 정보에 대한 navigator.credentials.get() 요청의 이 형식은 지원 중단되었으므로 호출을 업데이트하여 새 형식을 사용하세요."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "canmakepayment 서비스 워커 이벤트의 판매자 원본 및 임의 데이터인 topOrigin, paymentRequestOrigin, methodData, modifiers가 지원 중단되었으며 삭제될 예정입니다."
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "img, video, canvas 태그에 overflow: visible을(를) 지정하면 요소 경계 외부에 시각적 콘텐츠가 생성될 수 있습니다. 다음을 참고하세요. https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "레거시 Flash 동영상 임베드가 HTML iframe으로 재작성되었습니다. Flash는 오래전에 사라졌으며 이 재작성 방식은 지원 중단되었고 향후 삭제될 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments 지원이 중단됩니다. 대신 결제 핸들러에 적시 설치를 사용하세요."
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "SharedArrayBuffer를 계속 사용하려면 확장 프로그램에서 교차 출처 분리를 사용해야 합니다. 다음 페이지를 참고하세요. https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "GPUAdapter isFallbackAdapter 속성은 지원 중단되었습니다. 대신 GPUAdapterInfo isFallbackAdapter 속성을 사용하세요."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16은 XMLHttpRequest의 response.json에서 지원되지 않습니다."
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "상위 레이아웃 변경 원인"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "크기가 지정되지 않은 이미지 요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "웹 글꼴"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "최악의 클러스터"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM이 크면 스타일 계산 및 레이아웃 리플로우 시간이 길어져 페이지 반응성에 영향을 미칠 수 있습니다. DOM이 크면 메모리 사용량도 늘어납니다. [과도한 DOM 크기를 방지하는 방법 알아보기](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "기간"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "요소"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "레이아웃(객체 {PH1}개)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "스타일 재계산(요소 {PH1}개)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "대부분의 하위 요소"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "DOM 크기 최적화"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "가장 큰 레이아웃 및 스타일 재계산 이벤트입니다. DOM을 단순화하면 성능에 미치는 영향이 줄어들 수 있습니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "총 요소 수"
@@ -2409,7 +2364,7 @@
     "message": "리디렉션 있음(리디렉션 {PH1}개, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "서버 응답이 느림({PH1} 관찰됨) "
+    "message": "서버 응답이 느림({PH1} 관측됨)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "적용된 압축 없음"
@@ -2418,7 +2373,7 @@
     "message": "리디렉션 방지"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "서버 응답이 빠름({PH1} 관찰됨) "
+    "message": "서버 응답이 빠름({PH1} 관측됨)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "텍스트 압축 적용"
@@ -2463,7 +2418,7 @@
     "message": "(익명)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "많은 API가 일반적으로 레이아웃 도형을 읽으며, 스타일과 레이아웃을 계산하기 위해 렌더링 엔진이 스크립트 실행을 일시중지하도록 강제합니다. [강제 리플로우](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) 및 완화에 관해 자세히 알아보세요."
+    "message": "DOM 상태 변경으로 인해 스타일이 무효화된 후 JavaScript가 기하학적 속성(예: offsetWidth)을 쿼리하면 강제 리플로우가 발생합니다. 이로 인해 성능이 저하될 수 있습니다. [강제 리플로우](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) 및 가능한 완화 조치에 관해 자세히 알아보세요."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "스택 트레이스"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[출처 불명]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "가장 긴 하위 파트부터 조사를 시작하세요. [지연을 최소화할 수 있습니다](https://web.dev/articles/optimize-inp#optimize_interactions). 처리 시간을 줄이려면 [기본 스레드 비용(JS인 경우가 많음)을 최적화](https://web.dev/articles/optimize-long-tasks)하세요."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "입력 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "상호작용이 감지되지 않음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "표시 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "처리 기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "하위 파트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP 분석"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "이미지의 다운로드 시간을 줄이면 페이지의 체감 로드 시간과 LCP를 개선할 수 있습니다. [이미지 크기 최적화에 대해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "GIF 대신 동영상 형식을 사용하면 애니메이션 콘텐츠의 다운로드 크기를 개선할 수 있습니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "각 [하위 파트에는 해당 파트에 맞는 개선 전략이 있습니다](https://web.dev/articles/optimize-lcp#lcp-breakdown). 이상적으로는 대부분의 LCP 시간이 지연이 아닌 리소스 로드에 소요되어야 합니다."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "기간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "요소 렌더링 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "실사용자 75번째 백분위수"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "감지된 LCP 없음"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "리소스 로드 지연"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "리소스 로드 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "하위 파트"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "첫 바이트까지의 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP 분석"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "HTML에서 LCP 이미지를 즉시 [검색 가능](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)하게 만들고 [지연 로드](https://web.dev/articles/lcp-lazy-loading)를 방지하여 LCP를 최적화합니다."
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 및 HTTP/3은 HTTP/1.1에 비해 다중화와 같은 많은 이점을 제공합니다. [최신 HTTP 사용에 관해 자세히 알아보기](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "HTTP/1.1을 사용한 요청 없음"
+    "message": "HTTP/1.1을 사용한 요청이 없거나, 현재 HTTP/1.1 사용이 상당한 최적화 기회를 제공하지 않습니다. HTTP/1.1 요청은 6개 이상의 정적 애셋이 동일한 출처에서 발생하고 로컬 개발 환경 또는 서드 파티 소스에서 제공되지 않는 경우에만 플래그가 지정됩니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "프로토콜"
@@ -2586,7 +2595,7 @@
     "message": "체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 개선하는 방식으로 [크리티컬 요청 체이닝을 방지](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)합니다."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "가장 중요한 출처에 [사전 연결](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 힌트를 추가하되 4개 미만으로 사용하세요."
+    "message": "가장 중요한 출처에 [사전 연결](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 힌트를 추가하되 4개 이하로 사용하세요."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "후보 사전 연결"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS 선택자 비용"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "상위 선택자 소요 시간"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "상위 선택자 일치 시도"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "상위 선택기"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "표시 영역이 모바일에 최적화되어 있지 않으면 탭 상호작용이 [최대 300밀리초 지연될 수 있습니다](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "모바일 탭 지연"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "모바일 표시 영역 최적화"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "SharedWorker를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "SharedWorker에서 메시지를 수신하여 페이지가 캐시에서 삭제되었습니다."
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "SpeechRecognizer를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "WebRTC가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "WebRTC가 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "WebShare를 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "WebSocket이 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "WebSocket이 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "WebTransport가 있는 페이지에서는 뒤로-앞으로 캐시를 시작할 수 없습니다."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "WebTransport가 사용되었기 때문에 뒤로-앞으로 캐시가 사용 중지되었습니다."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "WebXR을 사용하는 페이지에서는 현재 뒤로-앞으로 캐시를 사용할 수 없습니다."
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "이미지를 사전에 최적화하고 모든 기기에서 이미지가 표시되는 컨테이너의 크기와 일치시키려면 [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site)을 사용 설정합니다."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "브라우저로 전송되는 파일의 크기를 줄이려면 NitroPack에서 [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression)을 사용합니다."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "`nuxt/image` 구성요소를 사용해 `format=\"webp\"` 형식을 설정하세요. [자세히 알아보기](https://image.nuxt.com/usage/nuxt-img#format)"
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "문제 신고"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "감사로 돌아가기"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "숨기기"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "올해 말에는 통계가 성능 감사를 대체할 예정입니다. [여기에서 자세히 알아보고 의견을 제공하세요](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "실험실 데이터"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouse 실행에 영향을 미치는 문제가 발생했습니다."
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "통계 사용해 보기"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "확인되지 않음"
   },
@@ -3704,6 +3722,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "중복 모듈"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "중복된 바이트"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "리소스 바이트"
   },
@@ -3712,6 +3733,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "표 전환"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "전송 바이트"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "사용하지 않은 바이트"

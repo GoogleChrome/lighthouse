@@ -9,7 +9,6 @@
  * against the results actually collected from Lighthouse.
  */
 
-import {cloneDeep} from 'lodash-es';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';
@@ -317,7 +316,7 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
     delete obj._excludeRunner;
   }
 
-  const cloned = cloneDeep(expected);
+  const cloned = structuredClone(expected);
 
   pruneRecursively(cloned);
   return cloned;

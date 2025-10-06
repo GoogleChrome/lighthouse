@@ -14,7 +14,6 @@ import path from 'path';
 import {execSync} from 'child_process';
 import {createRequire} from 'module';
 
-import esMain from 'es-main';
 import esbuild from 'esbuild';
 // @ts-expect-error: plugin has no types.
 import SoftNavPlugin from 'lighthouse-plugin-soft-navigation';
@@ -279,7 +278,7 @@ async function cli(argv) {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await cli(process.argv);
 }
 

@@ -32,6 +32,14 @@ const UIStrings = {
     =1 {Unsupported CSS Property: {properties}}
     other {Unsupported CSS Properties: {properties}}
   }`,
+  /**
+   * @description [ICU Syntax] Descriptive reason for why a user-provided animation failed to be optimized by the browser due to custom CSS properties (CSS variables) not being supported on the compositor. Shown in a table with a list of other potential failure reasons.
+   * @example {--swing-y, --rotation} properties
+   */
+  unsupportedCustomCSSProperty: `{propertyCount, plural,
+    =1 {Custom CSS properties cannot be animated on the compositor: {properties}}
+    other {Custom CSS properties cannot be animated on the compositor: {properties}}
+  }`,
   /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `transform` property being dependent on the size of the element itself. Shown in a table with a list of other potential failure reasons.  */
   transformDependsBoxSize: 'Transform-related property depends on box size',
   /** Descriptive reason for why a user-provided animation failed to be optimized by the browser due to a `filter` property possibly moving pixels. Shown in a table with a list of other potential failure reasons.  */
@@ -90,14 +98,44 @@ function getActionableFailureReasons(failureCode, unsupportedProperties) {
   return ACTIONABLE_FAILURE_REASONS
     .filter(reason => failureCode & reason.flag)
     .map(reason => {
+      // Handle both regular CSS properties and custom CSS properties
       if (reason.text === UIStrings.unsupportedCSSProperty) {
-        return str_(reason.text, {
-          propertyCount: unsupportedProperties.length,
-          properties: unsupportedProperties.join(', '),
-        });
+        const customProperties = new Set();
+        const nonCustomProperties = new Set();
+
+        // Separate custom properties (starting with '--') from regular properties
+        for (const property of unsupportedProperties) {
+          if (property.startsWith('--')) {
+            customProperties.add(property);
+          } else {
+            nonCustomProperties.add(property);
+          }
+        }
+
+        const reasons = [];
+
+        // Add regular CSS properties message if any exist
+        if (nonCustomProperties.size > 0) {
+          reasons.push(str_(UIStrings.unsupportedCSSProperty, {
+            propertyCount: nonCustomProperties.size,
+            properties: Array.from(nonCustomProperties).join(', '),
+          }));
+        }
+
+        // Add custom CSS properties message if any exist
+        if (customProperties.size > 0) {
+          reasons.push(str_(UIStrings.unsupportedCustomCSSProperty, {
+            propertyCount: customProperties.size,
+            properties: Array.from(customProperties).join(', '),
+          }));
+        }
+
+        return reasons;
       }
+
       return str_(reason.text);
-    });
+    })
+    .flat(); // Flatten array since we might return multiple messages for unsupported properties
 }
 
 class NonCompositedAnimations extends Audit {

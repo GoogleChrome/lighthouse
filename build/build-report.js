@@ -5,7 +5,6 @@
  */
 
 import esbuild from 'esbuild';
-import esMain from 'es-main';
 
 import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../shared/root.js';
@@ -60,7 +59,7 @@ async function buildFlowReport() {
     format: 'iife',
     charset: 'utf8',
     bundle: true,
-    minify: true,
+    minify: !process.env.DEBUG,
     plugins: [
       plugins.replaceModules({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
@@ -117,7 +116,7 @@ export const format = {registerLocaleData, hasLocale};
     outfile: 'dist/report/bundle.esm.js',
     format: 'esm',
     bundle: true,
-    minify: true,
+    minify: !process.env.DEBUG,
     plugins: [
       plugins.replaceModules({
         // Exclude this 30kb from the devtools bundle for now.
@@ -173,7 +172,7 @@ async function main() {
   }
 }
 
-if (esMain(import.meta)) {
+if (import.meta.main) {
   await main();
 }
 
