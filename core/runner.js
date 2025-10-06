@@ -133,6 +133,7 @@ class Runner {
         assetSaver.saveLhr(lhr, path);
       }
 
+      console.log(global.calls);
       // Create the HTML, JSON, and/or CSV string
       const report = ReportGenerator.generateReport(lhr, settings.output);
 
