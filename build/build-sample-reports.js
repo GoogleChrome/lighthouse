@@ -169,7 +169,7 @@ async function generateErrorLHR() {
   const errorLhr = errorRunnerResult.lhr;
 
   // Add audit warnings to font-display
-  errorLhr.audits['font-display'].warnings = [
+  errorLhr.audits['font-display-insight'].warnings = [
     'Lighthouse was unable to automatically check the font-display value for the following URL: https://secure-ds.serving-sys.com/resources/PROD/html5/105657/20190307/1074580285/43862346571980472/fonts/IBMPlexSans-Light-Latin1.woff.',
     'Lighthouse was unable to automatically check the font-display value for the following URL: https://secure-ds.serving-sys.com/resources/PROD/html5/105657/20190307/1074580285/43862346571980472/fonts/IBMPlexSans-Bold-Latin1.woff.',
   ];
