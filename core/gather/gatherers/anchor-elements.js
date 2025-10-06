@@ -164,7 +164,7 @@ class AnchorElements extends BaseGatherer {
       const ancestorListeners = new Set();
       const splitPath = anchor.node.devtoolsNodePath.split(',');
       const ancestorListenerPromises = [];
-      while (splitPath.length >= 2) {
+      while (splitPath.length > 2) {
         splitPath.length -= 2;
         const path = splitPath.join(',');
         const promise = getEventListeners(session, path).then(listeners => {
