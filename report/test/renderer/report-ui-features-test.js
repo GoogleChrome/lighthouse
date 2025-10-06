@@ -159,7 +159,9 @@ describe('ReportUIFeatures', () => {
       let lhrJson;
 
       before(() => {
-        const lhr = JSON.parse(JSON.stringify(sampleResults));
+        const lh12ResultsOrig = readJson('../../../core/test/fixtures/lhr-12-compat.json', import.meta);
+        const sampleResults = ReportUtils.prepareReportResult(lh12ResultsOrig);
+        const lhr = JSON.parse(JSON.stringify(lh12ResultsOrig));
         lhr.requestedUrl = lhr.finalDisplayedUrl = 'http://www.example.com';
 
         const webpAuditItemTemplate = {
