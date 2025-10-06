@@ -158,9 +158,6 @@ class AnchorElements extends BaseGatherer {
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 
-    console.time('listeners');
-
-
     const anchorsWithEventListeners = anchors.map( anchor => {
       return getEventListeners(session, anchor.node.devtoolsNodePath).then(listeners => {
         return {
@@ -172,7 +169,6 @@ class AnchorElements extends BaseGatherer {
 
 
     const result = await Promise.all(anchorsWithEventListeners);
-    console.timeEnd('listeners');
     await session.sendCommand('DOM.disable');
     return result;
   }

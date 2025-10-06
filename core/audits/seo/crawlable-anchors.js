@@ -57,12 +57,10 @@ class CrawlableAnchors extends Audit {
       href,
       attributeNames = [],
       listeners = [],
-      ancestorListeners = [],
     }) => {
       rawHref = rawHref.replace( /\s/g, '');
       name = name.trim();
       role = role.trim();
-      const hasListener = Boolean(listeners.length || ancestorListeners.length);
 
       if (role.length > 0) return;
       // Ignore mailto links even if they use one of the failing patterns. See https://github.com/GoogleChrome/lighthouse/issues/11443#issuecomment-694898412
@@ -86,7 +84,8 @@ class CrawlableAnchors extends Audit {
         !attributeNames.includes('href') &&
         hrefAssociatedAttributes.every(attribute => !attributeNames.includes(attribute))
       ) {
-        return hasListener;
+        // If it has an even listener (e.g. onclick) then we can't assume it's a placeholder. Therefore we consider it failing
+        return Boolean(listeners.length);
       }
 
       if (href === '') return true;
