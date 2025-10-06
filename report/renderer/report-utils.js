@@ -489,6 +489,11 @@ const UIStrings = {
   tryInsights: 'Try insights',
   /** Text for a button for going back to normal "Performance audits", instead of using the new set of performance insight audits that will replace performance audits. */
   goBackToAudits: 'Go back to audits',
+
+  /** Descriptive explanation used when an audit is not part of the calculated score. */
+  unscoredLabel: 'Unscored',
+  /** Descriptive explanation used when an audit is not part of the calculated score. */
+  unscoredTitle: 'This audit is not part of the category score.',
 };
 
 export {
