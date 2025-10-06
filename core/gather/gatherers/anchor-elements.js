@@ -155,58 +155,51 @@ class AnchorElements extends BaseGatherer {
     });
     await session.sendCommand('DOM.enable');
 
-    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
-    // if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
+    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 
     console.time('listeners');
-    // For each anchor, compute its ancestor paths. Store all paths in a single set
-    // for deduplication, and store the ancestor paths for each anchor in a map.
-    const allPaths = new Set();
-    const anchorAncestorPaths = new Map(
-      anchors.map(anchor => {
-        const anchorPath = anchor.node.devtoolsNodePath;
-        allPaths.add(anchorPath);
 
-        const ancestorPaths = [];
-        const splitPath = anchorPath.split(',');
-        while (splitPath.length > 2) {
-          splitPath.length -= 2;
-          const ancestorPath = splitPath.join(',');
-          ancestorPaths.push(ancestorPath);
-          allPaths.add(ancestorPath);
+    /** @type {Map<string,  ReturnType<typeof getEventListeners>>} */
+    const listenerCache = new Map();
+
+    const anchorsWithEventListeners = anchors.map(async anchor => {
+      const listeners = await getEventListeners(session, anchor.node.devtoolsNodePath);
+
+      // Doesn't make sense as a set, since objects with the same type are still different.
+      /** @type {Array<{type: string}>} */
+      const ancestorListeners = [];
+      const splitPath = anchor.node.devtoolsNodePath.split(',');
+      const ancestorListenerPromises = [];
+      while (splitPath.length > 2) {
+        splitPath.length -= 2;
+        const path = splitPath.join(',');
+        // Check cache to avoid duplicate CDP calls for ancestors shared between multiple anchors.
+        if (listenerCache.has(path)) {
+          ancestorListenerPromises.push(listenerCache.get(path)?.then(listeners => {
+            ancestorListeners.push(...listeners);
+          }));
+        } else {
+          const promise = getEventListeners(session, path).then(listeners => {
+            ancestorListeners.push(...listeners);
+            return listeners;
+          });
+          listenerCache.set(path, promise);
+          ancestorListenerPromises.push(promise);
         }
-        return [anchorPath, ancestorPaths];
-      })
-    );
+      }
 
-    // Fetch event listeners for all unique paths in parallel.
-    const listenersByPath = new Map();
-    const listenerPromises = [...allPaths].map(async path => {
-      const listeners = await getEventListeners(session, path).catch(() => {});
-      if (listeners?.length) listenersByPath.set(path, listeners);
-    });
-    await Promise.all(listenerPromises);
-
-    // Augment anchor data with the fetched listeners.
-    const result = anchors.map(anchor => {
-      const anchorPath = anchor.node.devtoolsNodePath;
-      const listeners = listenersByPath.get(anchorPath) || [];
-      const ancestorPaths = anchorAncestorPaths.get(anchorPath) || [];
-
-      const ancestorListeners = new Map(
-        ancestorPaths
-          .flatMap(path => listenersByPath.get(path) || [])
-          .map(listener => [listener.type, listener])
-      );
+      await Promise.all(ancestorListenerPromises);
 
       return {
         ...anchor,
         listeners,
-        ancestorListeners: [...ancestorListeners.values()],
+        ancestorListeners: Array.from(ancestorListeners),
       };
     });
 
+
+    const result = await Promise.all(anchorsWithEventListeners);
     console.timeEnd('listeners');
     await session.sendCommand('DOM.disable');
     return result;
