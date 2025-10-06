@@ -15,7 +15,7 @@ const page = await browser.newPage();
 const config: lhApi.Config = {
   extends: 'lighthouse:default',
   settings: {
-    skipAudits: ['uses-http2'],
+    skipAudits: ['modern-http-insight'],
   },
 };
 

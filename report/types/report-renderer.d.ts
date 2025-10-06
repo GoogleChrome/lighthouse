@@ -5,7 +5,6 @@
  */
 
 import { Result as AuditResult } from "../../types/lhr/audit-result";
-import { ReportUIFeatures } from "../renderer/report-ui-features.js";
 
 declare module Renderer {
   function renderReport(lhr: AuditResult, options?: Options): HTMLElement;
@@ -47,11 +46,6 @@ declare module Renderer {
      * data, which can be gotten from the artifacts.
      */
     onViewTrace?: () => void;
-    /**
-     * Called when the performance audits/insights are swapped out.
-     * TODO(v13): remove
-     */
-    _onSwapHook?: () => void;
   }
 }
 

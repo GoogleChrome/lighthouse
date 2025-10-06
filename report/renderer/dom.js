@@ -28,10 +28,6 @@ export class DOM {
     /** @type {HTMLElement} */
     // For legacy Report API users, this'll be undefined, but set in renderReport
     this.rootEl = rootEl;
-    /** @type {WeakMap<Element, Element>} */
-    this._swappableSections = new WeakMap();
-    this._onSwap = () => {};
-    this._onSwapHook = () => {};
   }
 
   /**
@@ -326,39 +322,5 @@ export class DOM {
     // cleanup.
     this._document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
-  }
-
-  /**
-   * @param {Element} section1
-   * @param {Element} section2
-   */
-  registerSwappableSections(section1, section2) {
-    this._swappableSections.set(section1, section2);
-    this._swappableSections.set(section2, section1);
-  }
-
-  /**
-   * @param {Element} section
-   */
-  swapSectionIfPossible(section) {
-    const newSection = this._swappableSections.get(section);
-    if (!newSection) return;
-
-    const parent = section.parentNode;
-    if (!parent) return;
-
-    // LH Report enforces that only the first instance of a component will include the styles.
-    // If these single-instance happen to be in `section` then they could be lost once `section` is
-    // removed from the DOM.
-    // Therefore we need to transfer any styles that only exist in `section` into `newSection`.
-    const stylesToTransfer = section.querySelectorAll('style');
-    newSection.append(...stylesToTransfer);
-
-    parent.insertBefore(newSection, section);
-    section.remove();
-    this._onSwap();
-    if (this._onSwapHook) {
-      this._onSwapHook();
-    }
   }
 }

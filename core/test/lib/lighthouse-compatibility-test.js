@@ -10,7 +10,7 @@ import {upgradeLhrForCompatibility} from '../../lib/lighthouse-compatibility.js'
 import {readJson} from '../../../core/test/test-utils.js';
 
 /** @type {LH.Result} */
-const sampleResult = readJson('../../../core/test/results/sample_v2.json', import.meta);
+const sampleResult = readJson('../../../core/test/fixtures/lhr-12-compat.json', import.meta);
 
 /**
  * @param {LH.Result} original

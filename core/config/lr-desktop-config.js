@@ -18,7 +18,6 @@ const config = {
     emulatedUserAgent: constants.userAgents.desktop,
     skipAudits: [
       // Skip the h2 audit so it doesn't lie to us. See https://github.com/GoogleChrome/lighthouse/issues/6539
-      'uses-http2',
       'modern-http-insight',
       // There are always bf-cache failures when testing in headless. Reenable when headless can give us realistic bf-cache insights.
       'bf-cache',

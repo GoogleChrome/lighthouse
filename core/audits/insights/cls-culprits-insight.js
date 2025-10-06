@@ -38,7 +38,7 @@ class CLSCulpritsInsight extends Audit {
       description: insightStr_(InsightUIStrings.description),
       guidanceLevel: 3,
       requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
-      replacesAudits: ['layout-shifts', 'non-composited-animations', 'unsized-images'],
+      replacesAudits: ['layout-shifts'],
     };
   }
 

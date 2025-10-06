@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "JavaScript の実行にかかる時間"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "重複する大きい JavaScript モジュールをバンドルから削除すると、データ通信量を減らすことができます。 "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "JavaScript バンドル内の重複モジュールを削除する"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "サイズの大きい GIF は、アニメーション コンテンツの配信方法として効率的ではありません。ネットワークの通信量を抑えるため、GIF を使用する代わりに、アニメーションには MPEG4 か WebM、静止画像には PNG か WebP を使用することをご検討ください。[効果的な動画フォーマットの詳細](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "アニメーション コンテンツでの動画フォーマットの使用"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "ポリフィルと変換を使用すると、従来のブラウザで新しい JavaScript 機能を使用できるようになります。ただし、その機能の多くは最新ブラウザでは必要ありません。従来のブラウザをサポートする必要がある場合を除き、[Baseline](https://web.dev/baseline) の機能をトランスパイルしないように JavaScript ビルドプロセスを変更することを検討してください。[ほとんどのサイトでトランスパイルせずに ES6+ コードをデプロイできる理由](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "ページで core-js のバージョン 2 が検出されました。パフォーマンスのさまざまな改善を適用するには、バージョン 3 にアップグレードする必要があります。"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "WebP や AVIF などの画像形式は、一般的に PNG や JPEG より圧縮率が高く、ダウンロード時間やデータ消費量を抑えられます。[最新の画像形式の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "次世代フォーマットでの画像の配信"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "オフスクリーンの非表示の画像は、重要なリソースをすべて読み込んだ後に遅れて読み込むようにして、操作可能になるまでの時間を短縮することをご検討ください。[オフスクリーンの画像を保留する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)"
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "オフスクリーン画像の遅延読み込み"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "ページの First Paint をリソースがブロックしています。重要な JavaScript や CSS はインラインで配信し、それ以外の JavaScript やスタイルはすべて遅らせることをご検討ください。[レンダリング ブロック リソースを削除する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "レンダリングを妨げるリソースの除外"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "ネットワーク ペイロードのサイズが大きいと、ユーザーの金銭的負担が大きくなり、多くの場合、読み込み時間が長くなります。[ペイロード サイズを小さくする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)"
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "使用していない JavaScript の削減"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "キャッシュの有効期間を長くすると、再訪問したユーザーへのページの読み込み速度を向上できます。[効果的なキャッシュ ポリシーの詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 件のリソースが見つかりました}other{# 件のリソースが見つかりました}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "静的なアセットと効率的なキャッシュ ポリシーの配信"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "静的なアセットでの効率的なキャッシュ ポリシーの使用"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "画像を最適化すると、読み込み時間を短縮しモバイルデータ量を抑えることができます。[画像を効率的にエンコードする方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "効率的な画像フォーマット"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "実際のサイズ"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "表示サイズ"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "画像は表示サイズより大きいサイズとなっています"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "画像は表示サイズに合ったサイズとなっています"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "適切なサイズの画像を配信して、モバイルデータ量を節約し読み込み時間を短縮します。[画像サイズの調整方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "適切なサイズの画像"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "テキストベースのリソースは圧縮（gzip、deflate、または brotli）して配信し、ネットワークの全体的な通信量を最小限に抑えてください。[テキスト圧縮の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "テキスト圧縮の有効化"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "重大度"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "XFO または CSP を使用してクリックジャッキングを軽減する"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "下のクリティカル リクエスト チェーンでは、高い優先度で読み込まれたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどの手段を行って、ページの読み込み速度を改善することをご検討ください。[重要なリクエストのチェーンを回避する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 件のチェーンが見つかりました}other{# 件のチェーンが見つかりました}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "クリティカル リクエスト チェーンを回避してください"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "ディレクティブ"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "ページに HTML doctype が指定されています"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "統計情報"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "値"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生します。[過度な DOM サイズの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 件の要素}other{# 件の要素}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "過大な DOM サイズの回避"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "DOM の最大深さ"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "合計 DOM 要素数"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "子要素の上限数"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "過大な DOM サイズの回避"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "サイトから脈絡なしに位置情報の許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[位置情報の権限に関する詳細](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "ユーザーは入力フィールドに貼り付けできます"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "プロトコル"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 には、バイナリ ヘッダー、多重化など、HTTP/1.1 と比べて多くのメリットがあります。[HTTP/2 の詳細](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{HTTP/2 経由で配信されなかったリクエストが 1 件あります}other{HTTP/2 経由で配信されなかったリクエストが # 件あります}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "HTTP/2 を使用してください"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "ページのスクロール パフォーマンスを高めるには、touch および wheel イベント リスナーを `passive` として指定することをご検討ください。[パッシブ イベント リスナーの採用についての詳細](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)"
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "コンソールに記録されたブラウザのエラーはありません"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "`font-display` の CSS 機能を使用して、Web フォントの読み込み中にユーザーがテキストを読めるようにしてください。[`font-display` の詳細](https://developer.chrome.com/docs/lighthouse/performance/font-display/)"
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "ウェブフォント読み込み中のテキストの表示"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "ウェブフォント読み込み中の全テキストの表示"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}other{オリジンの {fontOrigin} の `font-display` の値を Lighthouse で確認できませんでした。}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "ディレクティブ"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "許可（警告あり）"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "LCP の割合"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "位相"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "タイミング"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "ビューポート内で描画された最大のコンテンツ要素です。[Largest Contentful Paint 要素の詳細](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "読み込み遅延"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "読み込み時間"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "レンダリング遅延"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "「最大コンテンツの描画」要素"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "レイアウト シフトのスコア"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "これらは、ページで確認された最大のレイアウト シフトです。表の各項目は 1 つのレイアウト シフトを表し、最もシフトの大きかった要素が表示されます。各項目の下には、レイアウト シフトにつながったと考えられる根本原因が表示されます。[ウィンドウ処理](https://web.dev/articles/cls#what_is_cls)が原因で、これらのレイアウト シフトの一部が CLS 指標値に含まれていない場合があります。[CLS を改善する方法について](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{1 件のレイアウト シフトが見つかりました}other{# 件のレイアウト シフトが見つかりました}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "ウェブフォントを読み込みました"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "挿入された iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "メディア要素に明示的なサイズが含まれていません"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "レイアウトが大きく変わらないようにする"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "スクロールせずに見える範囲にある画像が遅延読み込みによってページのライフサイクルの後半にレンダリングされると、Largest Contentful Paint の遅延につながります。[最適な遅延読み込みの詳細](https://web.dev/articles/lcp-lazy-loading)"
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "Largest Contentful Paint の画像が遅延読み込みされています"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "Largest Contentful Paint の画像は遅延読み込みされていません"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[長いメインスレッド タスクの回避方法の詳細](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "サーバーのバックエンド待ち時間"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "合成されていないアニメーションは動きが不自然になり、CLS が大きくなることがあります。[合成されていないアニメーションを避ける方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{# 件のアニメーション要素が見つかりました}other{# 件のアニメーション要素が見つかりました}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "filter 関連のプロパティはピクセルの移動につながる可能性があります"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "ターゲットに互換性のない別のアニメーションが含まれています"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "エフェクトに「replace」以外の合成モードが含まれています"
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "合成されていないアニメーションは使用しないでください"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "transform 関連のプロパティがボックスのサイズに依存しています"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{サポートされていない CSS プロパティ: {properties}}other{サポートされていない CSS プロパティ: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "サポートされていないタイミング パラメータがエフェクトで使用されています"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "ディレクティブ"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "COOP でオリジン分離が適切に行われていることを確認する"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "LCP 要素がページに動的に追加された場合、LCP を改善するため画像をプリロードする必要があります。[LCP 要素のプリロードの詳細](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "Largest Contentful Paint の画像のプリロード"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "すべてのユーザーに安全なウェブ機能を提供できるように、すべての HTTP トラフィックが HTTPS にリダイレクトされることを確認してください。[詳細](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "HTTP トラフィックは HTTPS にリダイレクトされます"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[ページ リダイレクトの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
-  },
-  "core/audits/redirects.js | title": {
-    "message": "複数のページ リダイレクトの回避"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "正規リンクで、検索結果に表示する URL を指定します。[正規リンクの詳細](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt は有効です"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "メイン ドキュメントのサーバー応答時間は、他のすべてのリクエストに影響するため、速くする必要があります。[Time to First Byte 指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "ルート ドキュメントの読み込みに {timeInMs, number, milliseconds} ミリ秒かかりました"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "最初のサーバー応答時間を速くしてください"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "最初のサーバー応答時間は問題ない速さです"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "サードパーティ Cookie は、状況によってはブロックされることがあります。[サードパーティ Cookie の制限に備える方法について](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "サードパーティ Cookie は使用されていません"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "第三者"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "サードパーティのコードによって、読み込み速度が著しく低下する可能性があります。重複するサードパーティ プロバイダの数を制限したうえで、ページのメインの部分を読み込み終えた後にサードパーティのコードを読み込んでみてください。[サードパーティの影響を最小限に抑える方法の詳細](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "第三者コードによってメインスレッドが {timeInMs, number, milliseconds} ミリ秒間ブロックされました"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "第三者コードの影響を抑えてください"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "第三者の使用の最小化"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "重大度"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "Trusted Types を使用して DOM ベースの XSS に対処する"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "画像要素で幅と高さを明示的に設定すると、レイアウト シフトを減らして、CLS を改善できます。[画像サイズの設定方法の詳細](https://web.dev/articles/optimize-cls#images_without_dimensions)"
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "画像要素で `width` と `height` が明示的に指定されていない"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "画像要素で `width` と `height` が明示的に指定されている"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "タイプ"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "カスタム速度の記録と計測"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "「{securityOrigin}」で `<link rel=preconnect>` が見つかりましたが、ブラウザで使用されませんでした。`crossorigin` 属性を適切に使用していることをご確認ください。"
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "重要な第三者ドメインへの接続を早期に確立できるように、`preconnect` または `dns-prefetch` のリソースヒントを追加することを検討してください。[必要なオリジンに事前接続する方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)"
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "必須のドメインへの事前接続"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "3 つ以上の `<link rel=preconnect>` 接続が見つかりました。これらの接続は控えめに、重要なソースにのみ使用してください。"
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "「{securityOrigin}」で `<link rel=preconnect>` が見つかりましたが、ブラウザで使用されませんでした。`preconnect` は、ページで確実にリクエストされる重要なソースにのみ使用してください。"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "マップ URL"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "ページで有効なソースマップが使用されています"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` を使用すると、モバイル画面サイズ向けにアプリを最適化できるほか、[ユーザー入力の遅延を 300 ミリ秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)短縮できます。[ビューポート メタタグの使用の詳細](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)"
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "`<meta name=\"viewport\">` タグが見つかりません"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがありません"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがあります"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "これは、Interaction to Next Paint の測定時に行われるスレッド ブロッキング処理です。[Interaction to Next Paint 指標の詳細](https://web.dev/articles/inp)"
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "イベント「{interactionType}」に費やした時間（{timeInMs, number, milliseconds} ミリ秒）"
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "イベント ターゲット"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "キー操作時の作業を最小限に抑える"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "入力遅延"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "表示の遅延"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "処理期間"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "キー操作時の作業を最小限に抑える"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "ここには、アプリでの ARIA の使用方法に関する改善点が表示されます。修正すると、支援技術（スクリーン リーダーなど）の利便性が向上する可能性があります。"
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "問題を提出"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "監査に戻る"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "非表示"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "今年後半に、パフォーマンスの監査はインサイトに置き換えられます。[詳細およびフィードバックについては、こちらにアクセスしてください](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "ラボデータ"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Lighthouse の実行に影響する問題が発生しました。"
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "インサイトを利用してみる"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "アトリビューション不可"

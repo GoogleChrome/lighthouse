@@ -9,7 +9,7 @@ const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
-      'legacy-javascript',
+      'legacy-javascript-insight',
       'unused-javascript',
       'redirects',
     ],
@@ -40,7 +40,7 @@ const expectations = {
           ],
         },
       },
-      'legacy-javascript': {
+      'legacy-javascript-insight': {
         details: {
           items: [
             {

@@ -1899,7 +1899,7 @@ The user flow api has moved to the top level node entrypoint and can be imported
 
 New `flow.startNavigation()` and `flow.endNavigation()` functions let you define a user triggered navigation without any callback function. See the user flow docs for [an example](https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md#triggering-a-navigation-via-user-interactions).
 
-To change settings for a single user flow step, define the settings overrides on the toplevel flags options `flow.snapshot({skipAduits: ['uses-http2']})` instead of on the `settingsOverride` property.
+To change settings for a single user flow step, define the settings overrides on the toplevel flags options `flow.snapshot({skipAduits: ['modern-http-insight']})` instead of on the `settingsOverride` property.
 
 To give a flow step a custom name, use `flow.snapshot({name: 'Custom name'})`. Previously this was done via `stepName`.
 

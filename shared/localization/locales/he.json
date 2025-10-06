@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "זמן ביצוע של JavaScript"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "אם קיימים מודולים משוכפלים גדולים בחבילות JavaScript, יש להסיר אותם מהחבילות האלה כדי לצמצם צריכה של בייטים מיותרים על ידי פעילות הרשת. "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "יש להסיר עותקים כפולים של מודולים בחבילות JavaScript"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "קובצי GIF גדולים לא פועלים באופן יעיל להצגת אנימציה. כדי לצמצם את מספר הבייטים שמועברים ברשת, במקום קובצי GIF כדאי לשקול את האפשרות להשתמש בסרטוני MPEG4/‏WebM בשביל אנימציות ובקובצי PNG/‏WebP בשביל תמונות סטטיות. [מידע נוסף על פורמטים יעילים של סרטונים](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "יש להשתמש בפורמטים של וידאו כדי להציג תוכן אנימציה"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "רכיבי Polyfill וטרנספורמציות מאפשרים לדפדפנים מדור קודם להשתמש בתכונות JavaScript חדשות. עם זאת, רבים מהם לא נחוצים לדפדפנים מודרניים. כדאי לשקול לשנות את תהליך ה-build של JavaScript כדי לא להמיר [תכונות בסיסיות](https://web.dev/baseline), אלא אם ידוע לך שנדרשת תמיכה בדפדפנים מדור קודם. [למה רוב האתרים יכולים לפרוס קוד ES6+‎ ללא טרנספילציה](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "זוהתה בדף גרסה 2 של core-js. כדאי לשדרג לגרסה 3 כדי ליהנות משיפורים רבים בביצועים."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "יש להימנע משימוש ב-JavaScript מדור קודם בדפדפנים מודרניים"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "לרוב, פורמטים של תמונות כמו WebP ו-AVIF מספקים רמה טובה יותר של דחיסת נתונים מאשר PNG או JPEG. הדחיסה המשופרת מקצרת את זמן ההורדות ומצמצמת את צריכת הנתונים. [מידע נוסף על פורמטים מודרניים של תמונות](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "יש להציג תמונות בפורמטים עדכניים"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "כדי לקצר את הזמן עד לפעילות מלאה, כדאי לשקול לבצע טעינה מדורגת של תמונות מוסתרות ותמונות שלא מופיעות מיד במסך, כך שייטענו רק אחרי סיום הטעינה של כל המשאבים הקריטיים. [איך לעכב טעינה של תמונות שלא מופיעות מיד במסך](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)?"
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "יש לעכב טעינה של תמונות שאינן מופיעות במסך"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "משאבים חוסמים את הצגת התמונה הראשונית (FP) של הדף במסך. כדאי לשקול את האפשרות לספק תוכן קריטי של JS/‏CSS באופן מוטבע ולדחות את הטעינה של כל תוכן ה-JS/הסגנונות שאינם קריטיים. [כך אפשר להסיר משאבים שחוסמים עיבוד](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)."
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "יש להימנע ממשאבים שחוסמים עיבוד"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "מטענים ייעודיים (payload) בנפח גדול המועברים ברשת עולים למשתמשים כסף ולרוב מאריכים את זמני הטעינה. [כאן מוסבר איך להקטין נפח של מטען ייעודי (payload)](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "הפחתת תוכן JavaScript שאינו בשימוש"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "עם מטמון בעל משך חיים ארוך, טעינת הדף שלך במסגרת ביקורים חוזרים יכולה להיות מהירה יותר. [מידע נוסף על המדיניות בנושא מטמון יעיל](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{נמצא משאב אחד}one{נמצאו # משאבים}two{נמצאו # משאבים}other{נמצאו # משאבים}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "יש להציג נכסים סטטיים בעזרת מדיניות מטמון יעילה"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "יש להשתמש במדיניות מטמון יעילה בנכסים סטטיים"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "תמונות שעברו אופטימיזציה נטענות מהר יותר וצורכות פחות נתונים בחבילת הגלישה. [כך מקודדים תמונות ביעילות](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "יש לקודד תמונות בצורה יעילה"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "הממדים בפועל"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "הממדים המוצגים"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "התמונות גדולות יותר מגודל התצוגה שלהן"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "התמונות מתאימות לגודל התצוגה שלהן"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "כדאי להציג תמונות שהגודל שלהן הוגדר בצורה נכונה כדי לחסוך בניצול חבילת הגלישה ולקצר את זמן הטעינה. [כך מגדירים גודל של תמונות](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)."
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "יש להגדיר את גודל התמונות בצורה נכונה"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "הצגת משאבים המבוססים על טקסט צריכה להתבצע בעזרת דחיסת נתונים (gzip‏, deflate או brotli) כדי לצמצם את כמות הבייטים שמועברים ברשת. [מידע נוסף על דחיסת טקסט](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "יש להפעיל דחיסת טקסט"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "מידת החומרה"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "צמצום מתקפות clickjacking באמצעות XFO או CSP"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "בקטע 'שרשראות בקשה קריטיות' שבהמשך מוצגים המשאבים שנטענים עם עדיפות גבוהה. כדי לשפר את מהירות טעינת הדף, מומלץ לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים. [כאן מוסבר איך להימנע משרשור של בקשות קריטיות](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{נמצאה שרשרת אחת}one{נמצאו # שרשראות}two{נמצאו # שרשראות}other{נמצאו # שרשראות}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "יש להימנע משרשור של בקשות קריטיות"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "הוראה"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "ה-doctype של הדף מוגדר ל-HTML"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "נתון סטטיסטי"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "ערך"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "נפח DOM גדול מגביר את מידת השימוש בזיכרון, מאריך את הזמן הדרוש ל[חישובי סגנונות](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ומוביל ל[הזרמה חוזרת של פריסות](https://developers.google.com/speed/articles/reflow) שגוזלת משאבים יקרים. [כאן מוסבר איך להימנע מנפח DOM גדול מדי](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{רכיב אחד}one{# רכיבים}two{# רכיבים}other{# רכיבים}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "יש להימנע מ-DOM גדול מדי"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "עומק DOM מרבי"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "סך רכיבי DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "מקסימום רכיבי צאצא"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "נמנע מ-DOM גדול מדי"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "אתרים שמבקשים לקבל גישה למיקום של המשתמשים בלי לציין הקשר, מעוררים אצל המשתמשים תחושת בלבול או חשדנות. במקום זאת, כדאי לקשר את הבקשות לפעולה של המשתמשים. [מידע נוסף על הרשאת המיקום הגיאוגרפי](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "משתמשים יכולים להדביק בשדות להזנת קלט"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "פרוטוקול"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "ל-HTTP/2 יש הרבה יתרונות על-פני HTTP/1.1, ביניהם כותרות בינאריות וריבוב. [מידע נוסף על HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{בקשה אחת לא מולאה דרך HTTP/2}one{בקשה אחת לא מולאה דרך HTTP/2}two{# בקשות לא מולאו דרך HTTP/2}other{# בקשות לא מולאו דרך HTTP/2}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "עליך להשתמש ב-HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "כדי לשפר את ביצועי הגלילה של הדף, מומלץ לשקול להוסיף סימון `passive` לפונקציות ה-event listener הקשורות למגע ולגלגלת. [מידע נוסף על הטמעה של פונקציות event listener פסיביות](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)"
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "לא נרשמו במסוף שגיאות דפדפן"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "כדאי להשתמש בתכונת ה-CSS של `font-display` כדי שהטקסט יהיה גלוי למשתמשים במהלך הטעינה של פונטים מסוג webfont. [מידע נוסף על `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)"
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "יש לוודא שטקסט ממשיך להופיע במהלך טעינת webfont"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "כל הטקסט ממשיך להופיע במהלך טעינות של webfont"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{מערכת Lighthouse לא הצליחה לבדוק את הערך `font-display` של המקור {fontOrigin} באופן אוטומטי.}one{מערכת Lighthouse לא הצליחה לבדוק את ערכי `font-display` של המקור {fontOrigin} באופן אוטומטי.}two{מערכת Lighthouse לא הצליחה לבדוק את ערכי `font-display` של המקור {fontOrigin} באופן אוטומטי.}other{מערכת Lighthouse לא הצליחה לבדוק את ערכי `font-display` של המקור {fontOrigin} באופן אוטומטי.}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "הוראה"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "הכתובת אושרה עם אזהרה"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "אחוז LCP"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "שלב"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "תזמון"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "זהו הרכיב הגדול ביותר המכיל תוכן שמוצג בתוך אזור התצוגה. [מידע נוסף על הרכיב מסוג Largest Contentful Paint ‏(LCP)](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "השהיית טעינה"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "זמן טעינה"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "השהיית רינדור"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "רכיב ה-Largest Contentful Paint (‏LCP)"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "הציון של שינוי הפריסה"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "אלה שינויי הפריסה הגדולים ביותר שזוהו בדף. כל פריט בטבלה מייצג שינוי פריסה אחד, ומוצג בו הרכיב שהשתנה במידה הרבה ביותר. מתחת לכל פריט מופיעות הסיבות האפשריות לשינוי הפריסה. יכול להיות שחלק משינויי הפריסה האלה לא ייכללו בערך של מדד CLS בגלל [עיבוד החלק הנצפה בלבד](https://web.dev/articles/cls#what_is_cls). [איך לשפר את ה-CLS](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{נמצא שינוי פריסה אחד}one{נמצאו # שינויי פריסה}two{נמצאו # שינויי פריסה}other{נמצאו # שינויי פריסה}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "טעינת גופן אינטרנט"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "החדרת iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "רכיב מדיה שהגודל שלו לא מוגדר"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "יש להימנע משינויים משמעותיים בפריסה"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "תמונות בחלק העליון והקבוע שנטענות באופן מדורג יעברו רינדור בשלב מאוחר יותר במחזור החיים של הדף, לכן עשוי להיות עיכוב ב-Largest Contentful Paint ‏(LCP). [מידע נוסף על טעינה מדורגת אופטימלית](https://web.dev/articles/lcp-lazy-loading)"
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "התמונה מסוג Largest Contentful Paint ‏(LCP) נטענה באופן מדורג"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "התמונה מסוג Largest Contentful Paint ‏(LCP) לא נטענה באופן מדורג"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "הבדיקה מציינת את המשימות הארוכות ביותר ב-thread הראשי. היא עוזרת לזהות את המשימות שמאטות את הקלט במידה הרבה ביותר. [איך להימנע ממשימות שנדרש להן משך זמן ארוך ב-thread הראשי](https://web.dev/articles/optimize-long-tasks)?"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "זמני אחזור בקצה עורפי של שרת"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "אנימציות שאינן מורכבות עלולות להיות איטיות ולהגדיל את ה-CLS. [איך להימנע מאנימציות לא מורכבות](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)?"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{נמצא אלמנט אנימציה אחד}one{נמצאו # אלמנטים של אנימציה}two{נמצאו # אלמנטים של אנימציה}other{נמצאו # אלמנטים של אנימציה}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "נכס הקשור למסנן יכול להניע פיקסלים"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "קיימת אנימציה נוספת ביעד, שאינה תואמת"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "באפקט יש מצב הרכבה, השונה ממצב \"החלפה\""
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "אין להשתמש באנימציות ללא הרכבת שכבות"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "מאפיין הקשור לטרנספורמציה תלוי בגודל התיבה"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{מאפיין CSS שלא נתמך: {properties}}one{מאפייני CSS שלא נתמכים: {properties}}two{מאפייני CSS שלא נתמכים: {properties}}other{מאפייני CSS שלא נתמכים: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "האפקט כולל פרמטרים של תזמון שאינם נתמכים"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "הוראה"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "צריך להשתמש ב-COOP כדי להבטיח חסימת גישה נכונה של המקור"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "אם רכיב ה-LCP נוסף באופן דינמי לדף, צריך לטעון מראש את התמונה כדי לשפר את ה-LCP. [מידע נוסף על טעינה מראש של רכיבי LCP](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "טעינה מראש של תמונת ה-Largest Contentful Paint (‏LCP)"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "חשוב לוודא שכל תנועת ה-HTTP מופנית אוטומטית ל-HTTPS כדי להפעיל תכונות אינטרנט מאובטחות לכל המשתמשים. [מידע נוסף](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "הפניות אוטומטיות מעכבות את טעינת הדף. [איך להימנע מהפניות אוטומטיות לדפים](https://developer.chrome.com/docs/lighthouse/performance/redirects/)?"
-  },
-  "core/audits/redirects.js | title": {
-    "message": "יש להימנע מהפניות אוטומטיות מרובות"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "קישורים קנוניים מציעים את כתובת ה-URL שיש להציג בתוצאות החיפוש. [מידע נוסף על קישורים קנוניים](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "הקובץ robots.txt חוקי"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "כדאי לוודא שזמן התגובה של השרת בנוגע למסמך הראשי הוא קצר, כי כל שאר הבקשות תלויות בו. [מידע נוסף על המדד Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "טעינת מסמך השורש ארכה {timeInMs, number, milliseconds} אלפיות שנייה"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "יש לקצר את זמן התגובה הראשונית של השרת"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "זמן התגובה הראשונית של השרת היה קצר"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "יכול להיות שקובצי Cookie של צד שלישי יהיו חסומים בהקשרים מסוימים. [איך להתכונן להגבלות על קובצי Cookie של צד שלישי](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "אין שימוש בקובצי Cookie של צד שלישי"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "צד שלישי"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "קוד של צד שלישי עשוי להשפיע בצורה משמעותית על ביצועי הטעינה. מומלץ להגביל את הכמות של ספקי צד שלישי שאינם הכרחיים, ולהשתדל לטעון קודים של צדדים שלישיים רק אחרי שמסתיימת הטעינה העיקרית של הדף. [איך אפשר לצמצם את ההשפעה של צדדים שלישיים](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)?"
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "קוד של צד שלישי חסם את התהליכון הראשי למשך {timeInMs, number, milliseconds} אלפיות השנייה"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "עליך להפחית את השפעת הקוד של צד שלישי"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "צמצום השימוש בצדדים שלישיים"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "מידת החומרה"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "צמצום של פרצות אבטחה מסוג XSS מבוסס-DOM באמצעות Trusted Types"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "כדי להפחית שינויים בפריסה וכדי לשפר את ה-CLS, יש להגדיר רוחב וגובה מפורשים ברכיבי תמונות. [כך מגדירים מידות תמונה](https://web.dev/articles/optimize-cls#images_without_dimensions)."
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "יש רכיבי תמונה ללא מאפייני `width` ו-`height` מפורשים"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "לרכיבי תמונה יש מאפייני `width` ו-`height` מפורשים"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "סוג"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "סימונים ומדידות של User Timing"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "נמצא `<link rel=preconnect>` עבור \"{securityOrigin}\", אבל הדפדפן לא השתמש בו. יש לוודא שנעשה שימוש תקין במאפיין `crossorigin`."
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "כדאי לשקול להוסיף את ההינטים של המשאבים `preconnect` או `dns-prefetch` כדי ליצור מראש קישורים אל מקורות חשובים של צדדים שלישיים. [מידע נוסף על יצירת קישור מראש למקורות נדרשים](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)"
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "יש להתחבר מראש למקורות נדרשים"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "נמצאו יותר משני קישורים `<link rel=preconnect>`. השימוש בקישורים מקדימים צריך להיות מצומצם מאוד ומוגבל למקורות החשובים ביותר."
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "נמצא `<link rel=preconnect>` עבור \"{securityOrigin}\", אבל הדפדפן לא השתמש בו. יש לבצע `preconnect` רק למקורות חשובים שהדף יבקש בוודאות."
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "כתובת URL של מפה"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "הדף מכיל מפות מקור חוקיות"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` מבצע אופטימיזציה באפליקציה לגדלים של מסכים בניידים, וגם מונע [עיכוב של 300 אלפיות השנייה בקלט של המשתמשים](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [מידע נוסף על השימוש במטא תג של אזור התצוגה](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)"
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "לא נמצא תג `<meta name=\"viewport\">`"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "אין תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "יש תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "זו המשימה של חסימת thread המתרחשת במהלך המדידה 'מאינטראקציה ועד הצגת התגובה'. [מידע נוסף על המדד 'מאינטראקציה ועד הצגת התגובה'](https://web.dev/articles/inp)"
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "עיבוד האירוע '{interactionType}' נמשך {timeInMs, number, milliseconds} אלפיות השנייה"
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "יעד האירוע"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "יש להפחית את משך העיבוד שמבוצע במהלך אינטראקציה חשובה"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "השהיה לאחר קלט"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "השהיה של הצגת תגובה"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "משך העיבוד"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "המערכת מפחיתה את כמות העבודה שמבוצעת במהלך אינטראקציה חשובה"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "אלו הזדמנויות לשיפור השימוש ב-ARIA באפליקציה, והן יכולות לשפר את החוויה של משתמשים שנעזרים בטכנולוגיות לנגישות, כמו קוראי מסך."
@@ -3578,14 +3260,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "דיווח על בעיה"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "חזרה לביקורות"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "הסתרה"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "בהמשך השנה, תובנות יחליפו את ביקורות הביצועים. [כאן אפשר לקבל מידע נוסף ולשלוח משוב](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "נתוני בדיקה"
@@ -3685,9 +3361,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "היו בעיות שהשפיעו על ההרצה הזו של Lighthouse:"
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "לתובנות"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "לא ניתנת לשיוך"

@@ -12,7 +12,7 @@ const config = {
       'performance',
     ],
     onlyAudits: [
-      'legacy-javascript',
+      'legacy-javascript-insight',
     ],
   },
 };
@@ -26,7 +26,7 @@ const expectations = {
     requestedUrl: 'http://localhost:10200/legacy-javascript.html',
     finalDisplayedUrl: 'http://localhost:10200/legacy-javascript.html',
     audits: {
-      'legacy-javascript': {
+      'legacy-javascript-insight': {
         details: {
           items: [
             {

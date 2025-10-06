@@ -91,62 +91,101 @@ const expectations = {
     requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
     finalDisplayedUrl: 'http://localhost:10200/perf/trace-elements.html',
     audits: {
-      'largest-contentful-paint-element': {
-        score: 0,
-        displayValue: /\d+\xa0ms/,
-        details: {
-          items: {
-            0: {
-              items: [{
-                node: {
-                  type: 'node',
-                  nodeLabel: 'section > img',
-                  path: '0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG',
-                },
-              }],
-            },
-          },
-        },
-      },
-      'lcp-lazy-loaded': {
-        score: 0,
+      'lcp-breakdown-insight': {
+        // TODO(v13): currently always 1.
+        // score: 0,
+        // TODO(v13): should we add displayValue for this insight?
+        // displayValue: /\d+\xa0ms/,
         details: {
           items: [
             {
-              node: {
-                type: 'node',
-                nodeLabel: 'section > img',
-              },
+              items: [
+                {
+                  subpart: 'timeToFirstByte',
+                  duration: '>0',
+                },
+                {
+                  subpart: 'resourceLoadDelay',
+                  duration: '>0',
+                },
+                {
+                  subpart: 'resourceLoadDuration',
+                  duration: '>0',
+                },
+                {
+                  subpart: 'elementRenderDelay',
+                  duration: '>0',
+                },
+              ],
+            },
+            {
+              type: 'node',
+              nodeLabel: 'section > img',
+              path: '0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG',
             },
           ],
         },
       },
-      'layout-shifts': {
-        score: 1,
-        displayValue: '2 layout shifts found',
+      'lcp-discovery-insight': {
+        score: 0,
         details: {
           items: [
             {
-              node: {
-                selector: 'body > h1',
-                nodeLabel: 'Please don\'t move me',
-                snippet: '<h1>',
-                boundingRect: {
-                  top: 465,
-                  bottom: 502,
-                  left: 8,
-                  right: 404,
-                  width: 396,
-                  height: 37,
-                },
+              type: 'checklist',
+              items: {
+                priorityHinted: {value: false},
+                requestDiscoverable: {value: false},
+                // TODO(v13): waiting for https://chromium-review.git.corp.google.com/c/chromium/src/+/7001499
+                // eagerlyLoaded: {value: false},
               },
-              score: '0.05 +/- 0.01',
             },
             {
-              node: {
-                nodeLabel: /Sorry|Please don't move me/,
-              },
-              score: '0.001 +/- 0.005',
+              type: 'node',
+              nodeLabel: 'section > img',
+              path: '0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG',
+            },
+          ],
+        },
+      },
+      'cls-culprits-insight': {
+        score: 1,
+        // TODO(v13): should we add displayValue for this insight?
+        // displayValue: '2 layout shifts found',
+        details: {
+          items: [
+            {
+              type: 'table',
+              items: [
+                {
+                  node: {
+                    type: 'text',
+                    value: 'Total',
+                  },
+                  score: '0.05 +/- 0.005',
+                },
+                {
+                  node: {
+                    selector: 'body > h1',
+                    nodeLabel: 'Please don\'t move me',
+                    snippet: '<h1>',
+                    boundingRect: {
+                      top: 465,
+                      bottom: 502,
+                      left: 8,
+                      right: 404,
+                      width: 396,
+                      height: 37,
+                    },
+                  },
+                  score: '0.05 +/- 0.01',
+                },
+                {
+                  node: {
+                    nodeLabel: /Sorry|Please don't move me/,
+                  },
+                  score: '0.001 +/- 0.005',
+                },
+              ],
             },
           ],
         },
@@ -160,24 +199,6 @@ const expectations = {
               duration: '>500',
               startTime: '5000 +/- 5000', // make sure it's on the right time scale, but nothing more
             },
-          },
-        },
-      },
-      'prioritize-lcp-image': {
-        score: 1,
-        numericValue: 0,
-        details: {
-          items: [],
-          debugData: {
-            initiatorPath: [{
-              url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg',
-              // Dynamically-added, lazy-loaded images currently have broken initiator chains.
-              initiatorType: 'fallbackToMain',
-            }, {
-              url: 'http://localhost:10200/perf/trace-elements.html',
-              initiatorType: 'other',
-            }],
-            pathLength: 2,
           },
         },
       },

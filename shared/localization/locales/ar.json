@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "وقت تنفيذ JavaScript"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "يمكنك إزالة وحدات JavaScript الكبيرة المكررة من الحِزم لتقليل وحدات البايت غير الضرورية التي يستهلكها نشاط الشبكة. "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "عليك إزالة الوحدات المكررة في حِزم JavaScript"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "ملفات GIF الكبيرة غير فعّالة في عرض محتوى الصور المتحركة. يمكنك استخدام فيديوهات بتنسيق MPEG4 أو WebM للصور المتحركة وتنسيق PNG أو WebP للصور الثابتة بدلاً من ملف GIF لتوفير وحدات البايت على الشبكة. [مزيد من المعلومات حول صيغ الفيديوهات الفعّالة](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "استخدام تنسيقات الفيديو لمحتوى الصور المتحركة"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "تساعد الرموز البرمجية polyfills وtransforms المتصفّحات القديمة في استخدام ميزات JavaScript الجديدة. ومع ذلك، يكون العديد منها غير ضروري للمتصفّحات الحديثة. من الأفضل تعديل عملية إنشاء رموز JavaScript لتجنُّب تحويل رموز ميزات [Baseline](https://web.dev/baseline)، إلّا في حال ضرورة دعم المتصفِّحات القديمة. [التعرُّف على سبب إمكانية نشر معظم المواقع الإلكترونية لرمز ES6+‎ بدون تحويله](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "تم رصد الإصدار 2 من core-js على الصفحة. ويجب الترقية إلى الإصدار 3 للحصول على العديد من التحسينات على مستوى الأداء."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "تجنُّب عرض ميزات JavaScript القديمة في المتصفحات الحديثة"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "غالبًا ما توفِّر تنسيقات الصور، مثل WebP وAVIF، ضغطًا أفضل للصور من تنسيق PNG أو JPEG، وهذا بدوره يعني تنزيلاً أسرع واستهلاكًا أقل للبيانات. [مزيد من المعلومات عن تنسيقات الصور الحديثة](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "عرض الصور بتنسيقات الجيل القادم"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "يمكنك استخدام طريقة التحميل الكسول للصور خارج الشاشة والصور المخفية بعد الانتهاء من تحميل جميع الموارد المُهمّة لتقليل وقت التفاعل. تعرَّف على [كيفية تأجيل تحميل الصور خارج الشاشة](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)."
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "تأجيل الصور خارج الشاشة"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "تحظر الموارد عرض محتوى صفحتك. يمكنك تضمين محتوى JavaScript أو CSS المُهم وتأجيل جميع الأنماط أو محتوى JavaScript غير المُهم. تعرَّف على [كيفية إزالة الموارد التي تحظر العرض](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)."
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "استبعاد موارد حظر العرض"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "الحمولات الكبيرة للبيانات على الشبكة تُكلِّف المستخدمين الكثير من الأموال وترتبط إلى حد كبير بأوقات التحميل الطويلة. [تعرَّف على طريقة تقليل حمولات البيانات على الشبكة](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "الحدّ من محتوى JavaScript غير المستخدَم"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "يمكن لفترة التخزين المؤقت الطويلة زيادة سرعة الزيارات المتكررة إلى صفحتك. [مزيد من المعلومات حول سياسات ذاكرة التخزين المؤقت الفعّالة](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{تم العثور على مورد واحد}zero{تم العثور على # مورد}two{تم العثور على مورديْنِ (#)}few{تم العثور على # موارد}many{تم العثور على # موردًا}other{تم العثور على # مورد}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "عرض الأصول الثابتة من خلال سياسة ذاكرة التخزين المؤقت الفعالة"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "استخدام سياسة ذاكرة التخزين المؤقت الفعالة على الأصول الثابتة"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "يتم تحميل الصور المحسَّنة بشكلٍ أسرع وتستهلك كمية أقل من بيانات شبكة الجوّال. تعرَّف على [كيفية ترميز الصور بكفاءة](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "ترميز الصور بكفاءة"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "الأبعاد الفعلية"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "الأبعاد المعروضة"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "كانت الصور أكبر من حجمها المعروض"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "كانت الصور مناسبة لحجمها المعروض"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "يمكنك عرض صور بحجم مناسب لحفظ بيانات شبكة الجوّال وتحسين وقت التحميل. تعرَّف على [طريقة تحديد حجم الصور](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)."
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "الصور ذات الحجم المناسب"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "يجب عرض الموارد المستنِدة إلى النص باستخدام أدوات الضغط (من خلال gzip أو deflate أو brotli) لتقليل إجمالي وحدات البايت على الشبكة. [مزيد من المعلومات حول ضغط النص](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "تفعيل ضغط النص"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "درجة الخطورة"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "الحدّ من هجمات clickjacking باستخدام XFO أو CSP"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "توضّح لك \"سلاسل الطلبات المُهمّة\" أدناه الموارد التي تم تحميلها بأولوية عالية. ويمكنك تقليل طول السلاسل أو تقليل حجم تنزيل الموارد أو تأجيل تنزيل الموارد غير الضرورية لتحسين تحميل الصفحة. تعرَّف على [كيفية تجنُّب تسلسل الطلبات المُهمّة](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{تم العثور على سلسلة واحدة}zero{تم العثور على # سلسلة}two{تم العثور على سلسلتيْنِ (#)}few{تم العثور على # سلاسل}many{تم العثور على # سلسلةً}other{تم العثور على # سلسلة}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "تجنَّب سلاسل الطلبات المهمة"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "التوجيه"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "الصفحة تحتوي على HTML DOCTYPE"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "الإحصائية"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "القيمة"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "سيزيد حجم عناصر DOM الكبير من استخدام الذاكرة، وسيتسبب في إجراء [حسابات للأنماط](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) تستغرق مدة أطول، بالإضافة إلى إنتاج عمليات مُكلِفة [لإعادة تدفق التنسيقات](https://developers.google.com/speed/articles/reflow). تعرَّف على [كيفية تجنُّب زيادة حجم عناصر DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{عنصر واحد}zero{# عنصر}two{عنصرين (#)}few{# عناصر}many{# عنصرًا}other{# عنصر}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "تجنُب حجم DOM الزائد"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "الحد الأقصى لعمق DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "إجمالي عدد عناصر DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "الحد الأقصى من عناصر الأطفال"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "تجنُب حجم DOM الزائد"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "لا يثق المستخدمون في المواقع الإلكترونية التي تطلب مواقعهم الجغرافية بدون سياق أو قد يؤدي ذلك إلى إرباكهم. يمكنك ربط الطلب بإجراء المستخدم بدلاً من ذلك. [مزيد من المعلومات حول إذن رصد الموقع الجغرافي](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "يتم السماح للمستخدمين باللصق في حقول الإدخال"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "البروتوكول"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "يوفّر HTTP/2 العديد من المزايا مقارنةً بمزايا HTTP/1.1، بما في ذلك عناوين البرامج الثنائية وعملية مضاعفة توجيه الإشارات. [مزيد من المعلومات حول مزايا HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{لم يتم عرض طلب واحد عبر HTTP/2}zero{لم يتم عرض # طلب عبر HTTP/2}two{لم يتم عرض طلبين (#) عبر HTTP/2}few{لم يتم عرض # طلبات عبر HTTP/2}many{لم يتم عرض # طلبًا عبر HTTP/2}other{لم يتم عرض # طلب عبر HTTP/2}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "استخدام HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "يمكنك وضع علامة على \"أدوات معالجة أحداث لمس الشاشة وتحريك الماوس\" بصفتها `passive` لتحسين عملية التنقل في صفحتك. [مزيد من المعلومات حول استخدام أدوات معالجة الأحداث السلبية](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)"
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "لم يتم تسجيل أخطاء المتصفح في وحدة التحكّم"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "يمكنك الاستفادة من ميزة `font-display` في CSS لضمان أن يكون النص مرئيًا للمستخدم أثناء تحميل خطوط موقع ويب. [مزيد من المعلومات حول `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)"
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "التأكد من بقاء النص مرئيًا أثناء تحميل خط موقع إلكتروني"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "تظل جميع النصوص مرئية أثناء تحميل خط موقع إلكتروني"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيمة `font-display` في الأصل التالي: {fontOrigin}.}zero{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}two{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصلَين التاليَين: {fontOrigin}.}few{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}many{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}other{لم تتمكّن أداة Lighthouse من التحقّق تلقائيًا من قيم `font-display` في الأصول التالية: {fontOrigin}.}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "التوجيه"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "مسموح به مع التحذير"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "نسبة سرعة عرض أكبر محتوى مرئي"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "المرحلة"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "المدة الزمنية"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "هذا هو الجزء الأكبر من المحتوى الذي تم عرضه على الصفحة ضمن إطار العرض. [مزيد من المعلومات حول مقياس \"سرعة عرض أكبر جزء من المحتوى على الصفحة\"](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "تأخير التحميل"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "وقت التحميل"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "تأخير العرض"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "مدة تحميل أول بايت (TTFB)"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "عنصر \"سرعة عرض أكبر جزء من المحتوى على الصفحة\""
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "نتيجة متغيّرات التصميم"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "هذه هي أكبر متغيّرات التصميم التي تم رصدها في الصفحة. يُمثّل كل عنصر في الجدول متغيّر تصميم واحدًا مع توضيح العنصر الأكثر تغيُّرًا. وتتوفّر أسفل كل عنصر الأسباب الأساسية المحتمَلة التي أدّت إلى حدوث متغيّرات التصميم. قد لا يتم تضمين بعض متغيّرات التصميم هذه في قيمة مقياس متغيّرات التصميم التراكمية (CLS) بسبب [المدة الزمنية المخصّصة لعرض الأحداث](https://web.dev/articles/cls#what_is_cls). [التعرُّف على كيفية تحسين متغيّرات التصميم التراكمية](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{تم العثور على متغيّر تصميم واحد.}zero{تم العثور على # متغيّر تصميم.}two{تم العثور على متغيّرَي تصميم.}few{تم العثور على # متغيّرات تصميم.}many{تم العثور على # متغيّر تصميم.}other{تم العثور على # متغيّر تصميم.}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "خط صفحة الويب الذي تم تحميله"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "إطار iframe الذي تم إدخاله"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "لم يتم تحديد حجم واضح لعنصر الوسائط."
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "تجنُّب متغيّرات التصميم الكبيرة"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "تُعرَض لاحقًا الصور التي تم تحميلها في الجزء المرئي من الصفحة باستخدام طريقة التحميل الكسول، ما يتسبب في تأخير عرض أكبر جزء من المحتوى على الصفحة. [مزيد من المعلومات حول طريقة التحميل الكسول المحسَّنة](https://web.dev/articles/lcp-lazy-loading)"
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "تم عرض أكبر صورة ظاهرة في الصفحة بسرعة غير مناسبة"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "تم عرض أكبر صورة ظاهرة في الصفحة بسرعة مناسبة"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "يتم إدراج المهام التي تستغرق وقتًا أطول في سلسلة التعليمات الرئيسية، ما يساعد في تحديد أكثر العوامل التي تسبِّب تأخيرًا في عملية الإدخال. تعرَّف على [كيفية تجنُّب المهام التي تستغرق وقتًا طويلاً والمُدرَجة في سلسلة التعليمات الرئيسية](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "أوقات الاستجابة لواجهة الخادم الخلفية"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "يمكن للصور المتحركة غير المركّبة أن تكون بجودة رديئة وأن تزيد متغيّرات التصميم التراكمية (CLS). تعرَّف على [كيفية تجنُّب استخدام الصور المتحركة غير المركّبة](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{تم العثور على عنصر متحرك واحد}zero{تم العثور على # عنصر متحرك}two{تم العثور على عنصرَين متحركَين}few{تم العثور على # عناصر متحركة}many{تم العثور على # عنصرًا متحركًا}other{تم العثور على # عنصر متحرك}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "قد تحرّك الخاصية المتعلّقة بالفلتر وحدات بكسل."
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "يتم استهداف صورة متحركة أخرى غير متوافقة."
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "يحتوي \"التأثير\" على وضع مركّب غير \"replace\"."
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "تجنُّب الصور المتحركة غير المركّبة"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "تعتمد الخاصية المتعلّقة بالتحويل على حجم المربع."
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{خاصية CSS غير المتوافقة: {properties}}zero{خصائص CSS غير المتوافقة: {properties}}two{خاصيتا CSS غير المتوافقتَين: {properties}}few{خصائص CSS غير المتوافقة: {properties}}many{خصائص CSS غير المتوافقة: {properties}}other{خصائص CSS غير المتوافقة: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "يحتوي \"التأثير\" على مَعلَمات توقيت غير متوافقة"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "التوجيه"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "ضمان عزل النطاق بشكلٍ صحيح باستخدام سياسة COOP"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "في حال إضافة المقياس \"سرعة عرض أكبر جزء من المحتوى على الصفحة\" (LCP) إلى الصفحة بشكل ديناميكي، يجب تحميل الصورة مسبقًا لتحسين مقياس LCP. [مزيد من المعلومات حول التحميل المسبق لعناصر LCP](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "التحميل المُسبَق لصورة المقياس \"سرعة عرض أكبر جزء من المحتوى على الصفحة\""
-  },
   "core/audits/redirects-http.js | description": {
     "message": "تأكَّد من إعادة توجيه جميع الزيارات على HTTP إلى HTTPS لتفعيل ميزات الويب الآمنة لجميع المستخدمين. [مزيد من المعلومات](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "إعادة توجيه زيارات HTTP إلى HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "تؤدي عمليات إعادة التوجيه إلى حدوث تأخيرات إضافية قبل أن يتم تحميل الصفحة. تعرَّف على [كيفية تجنُّب عمليات إعادة توجيه الصفحة](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
-  },
-  "core/audits/redirects.js | title": {
-    "message": "تجنُب عمليات إعادة توجيه الصفحات المتعددة"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "تقترح الروابط الأساسية عنوان URL للعرض في نتائج البحث. [مزيد من المعلومات حول الروابط الأساسية](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "ملف \"robots.txt\" صالح"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "يجب إبقاء وقت استجابة الخادم للمستند الرئيسي قصيرًا، حيث تعتمد جميع الطلبات الأخرى على هذا الإجراء. [مزيد من المعلومات حول مقياس \"وقت وصول أول بايت\"](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "استغرق مستند الجذر {timeInMs, number, milliseconds} مللي ثانية"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "تقليل وقت استجابة الخادم الأوّلي"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "وقت استجابة الخادم الأوّلي قصير"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "قد يتم حظر ملفات تعريف الارتباط الخارجية في بعض السياقات. [مزيد من المعلومات حول الاستعداد للقيود المفروضة على ملفات تعريف الارتباط الخارجية](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "هذه الصفحة لا تستخدم ملفات تعريف ارتباط تابعة لجهات خارجية"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "الجهة الخارجية"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "يمكن أن يؤثر الرمز البرمجي التابع لجهة خارجية بشكل كبير في أداء التحميل. يمكنك تحديد عدد مقدِّمي الخدمة المكرّرين والتابعين لجهات خارجية ومحاولة تحميل الرمز البرمجي الخاص بالجهة الخارجية بعد انتهاء تحميل صفحتك بشكل أساسي. تعرَّف على [كيفية تقليل تأثير الرموز التابعة للجهات الخارجية](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "لقد حظر رمز الجهة الخارجية سلسلة المحادثات الرئيسية لمدة {timeInMs, number, milliseconds} مللي ثانية"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "تقليل تأثير رمز الجهة الخارجية"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "تقليل استخدام الرموز التابعة لجهات خارجية"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "درجة الخطورة"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "الحدّ من هجمات XSS المستنِدة إلى DOM باستخدام Trusted Types"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "يجب ضبط قيَم واضحة للعرض والارتفاع في عناصر الصور للحدّ من متغيّرات التصميم وتحسين متغيّرات التصميم التراكمية (CLS). تعرَّف على [كيفية ضبط أبعاد الصور](https://web.dev/articles/optimize-cls#images_without_dimensions)."
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "عناصر الصور لا تحتوي على قيَم `width` و`height` محدَّدة"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "عناصر الصورة تحتوي على قيَم `width` و`height` محدَّدة"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "النوع"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "علامات أوقات المستخدم وقياساتها"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "تم العثور على رابط `<link rel=preconnect>` لـ \"{securityOrigin}\"، ولكن لم يتم استخدامه من خلال المتصفّح. يُرجى التحقّق من استخدام السمة `crossorigin` بشكل صحيح."
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "يمكنك إضافة تعديلات المورد `preconnect` أو `dns-prefetch` لإنشاء اتصالات مبكرة بالمصادر المُهمّة التابعة لجهات خارجية. تعرَّف على [كيفية الاتصال مسبقًا بالمصادر المطلوبة](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)."
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "الاتصال المسبق للأصول المطلوبة"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "تم العثور على أكثر من رابطَيّ `<link rel=preconnect>`. ننصحك بعدم استخدام هذه الروابط بشكل كبير واقتصارها على المصادر الأكثر أهمية فقط."
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "تم العثور على رابط `<link rel=preconnect>` لـ \"{securityOrigin}\"، ولكن لم يتم استخدامه من خلال المتصفّح. يجب فقط استخدام `preconnect` للمواقع الإلكترونية المهمّة التي ستطلبها الصفحة خلال عملية التحميل."
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "عنوان URL لخريطة المصدر"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "تحتوي الصفحة على خرائط مصدر صالحة"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "لا يساعد إطار العرض `<meta name=\"viewport\">` على تحسين تطبيقك ليناسب أحجام شاشات الأجهزة الجوّالة فحسب، بل يمنع أيضًا [تأخُّر البيانات التي يدخلها المستخدم بمقدار 300 ملي ثانية](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [مزيد من المعلومات حول استخدام العلامة الوصفية لإطار العرض](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)"
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "لم يتم العثور على علامة `<meta name=\"viewport\">`"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "عدم الاحتواء على علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "تضمين علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "يشير هذا إلى إجراء حظر سلسلة التعليمات الذي يحدث أثناء قياس \"مدة عرض الاستجابة لتفاعل المستخدم\". [مزيد من المعلومات حول مقياس \"مدة عرض الاستجابة لتفاعل المستخدم\"](https://web.dev/articles/inp)"
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "تم استغراق {timeInMs, number, milliseconds} ملي ثانية لإكمال الحدث \"{interactionType}\"."
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "هدف الحدث"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "تقليل العمل أثناء التفاعل الأساسي للمستخدم"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "تأخير عملية الإدخال"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "تأخير عرض الاستجابة"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "مدة المعالجة"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "تقليل العمل أثناء التفاعل الأساسي للمستخدم"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "هذه هي فرص لتحسين استخدام ARIA في تطبيقك، ما قد يحسّن تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "الإبلاغ عن مشكلة"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "الرجوع إلى عمليات التدقيق"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "إخفاء"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "ستحلّ الإحصاءات محل عمليات تدقيق الأداء في وقت لاحق من هذا العام. [يمكنك هنا التعرّف على مزيد من المعلومات وتقديم الملاحظات](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "بيانات المختبَر"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "حدثت مشاكل تؤثر في تشغيل Lighthouse:"
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "تجربة الإحصاءات"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "موارد لا يمكن تحديد مصدرها"

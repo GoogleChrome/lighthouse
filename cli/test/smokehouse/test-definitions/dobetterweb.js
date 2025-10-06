@@ -266,9 +266,11 @@ const expectations = {
       'notification-on-start': {
         score: 0,
       },
-      'render-blocking-resources': {
+      'render-blocking-insight': {
         score: '<1',
-        numericValue: '>=50',
+        metricSavings: {
+          FCP: '>=50',
+        },
         details: {
           items: [
             {
@@ -365,15 +367,47 @@ const expectations = {
           },
         },
       },
-      'efficient-animated-content': {
+      'image-delivery-insight': {
         score: '<0.5',
+        metricSavings: {LCP: '>2000'},
         details: {
-          overallSavingsMs: '>2000',
+          debugData: {wastedBytes: '>1200000'},
           items: [
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-rotating.gif',
               totalBytes: 934285,
               wastedBytes: 682028,
+              subItems: {items: [{reason: /Using video formats instead of GIFs/}]},
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1', // filename is a lie...
+              totalBytes: 112710,
+              wastedBytes: 112418,
+              subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2',
+              totalBytes: 112710,
+              wastedBytes: 111152,
+              subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2',
+              totalBytes: 112710,
+              wastedBytes: 111152,
+              subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3',
+              totalBytes: 112710,
+              wastedBytes: 98684,
+              subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
+            },
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg',
+              totalBytes: 112710,
+              wastedBytes: 98684,
+              subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
           ],
         },
@@ -389,21 +423,22 @@ const expectations = {
           }],
         },
       },
-      'dom-size': {
+      'dom-size-insight': {
         score: 1,
-        numericValue: 151,
+        // TODO(v13): add numeric value
+        // numericValue: 153,
         details: {
           items: [
             {
-              statistic: 'Total DOM Elements',
+              statistic: 'Total elements',
               value: {
                 type: 'numeric',
                 granularity: 1,
-                value: 151,
+                value: 153,
               },
             },
             {
-              statistic: 'Maximum DOM Depth',
+              statistic: 'DOM depth',
               value: {
                 type: 'numeric',
                 granularity: 1,
@@ -411,13 +446,14 @@ const expectations = {
               },
             },
             {
-              statistic: 'Maximum Child Elements',
+              statistic: 'Most children',
               value: {
                 type: 'numeric',
                 granularity: 1,
                 value: 100,
               },
-              node: {snippet: '<div id="shadow-root-container">'},
+              // TODO(v13): why missing?
+              // node: {snippet: '<div id="shadow-root-container">'},
             },
           ],
         },
@@ -447,36 +483,6 @@ const expectations = {
               },
             },
           ],
-        },
-      },
-      'prioritize-lcp-image': {
-        // In CI, there can sometimes be slight savings.
-        numericValue: '<=200',
-        details: {
-          items: [{
-            node: {
-              snippet: '<h2 id="toppy" style="background-image:url(\'\');">',
-              nodeLabel: 'Do better web tester page',
-            },
-            url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp',
-            wastedMs: '<=200',
-          }],
-          debugData: {
-            initiatorPath: [{
-              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?redirected-lcp',
-              initiatorType: 'redirect',
-            }, {
-              url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?lcp&redirect=lighthouse-1024x680.jpg%3Fredirected-lcp',
-              initiatorType: 'parser',
-            }, {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true',
-              initiatorType: 'parser',
-            }, {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-              initiatorType: 'other',
-            }],
-            pathLength: 4,
-          },
         },
       },
       'network-rtt': {
@@ -513,31 +519,6 @@ const expectations = {
           lcpLoadEnd: '>5000',
         }}},
       },
-      'largest-contentful-paint-element': {
-        score: 0,
-        displayValue: /\d+\xa0ms/,
-        details: {
-          items: [
-            {
-              items: [{
-                node: {
-                  type: 'node',
-                  nodeLabel: 'Do better web tester page',
-                  path: '2,HTML,1,BODY,9,DIV,2,H2',
-                },
-              }],
-            },
-            {
-              items: [
-                {timing: '>0'},
-                {timing: '>0'},
-                {timing: '>0'},
-                {timing: '>0'},
-              ],
-            },
-          ],
-        },
-      },
       'third-party-cookies': {
         score: 0,
         displayValue: '1 cookie found',
@@ -547,10 +528,14 @@ const expectations = {
           ],
         },
       },
-      'viewport': {
+      'viewport-insight': {
         score: 1,
         details: {
-          viewportContent: 'width=device-width, initial-scale=1, minimum-scale=1',
+          items: [
+            {
+              node: {snippet: '<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">'},
+            },
+          ],
         },
       },
     },

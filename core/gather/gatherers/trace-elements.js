@@ -378,6 +378,7 @@ class TraceElements extends BaseGatherer {
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
     const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
+    // TODO(v13): remove unnecessary entries.
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['trace-engine', traceEngineData],

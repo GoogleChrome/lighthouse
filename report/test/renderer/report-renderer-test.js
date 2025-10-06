@@ -295,8 +295,7 @@ describe('ReportRenderer', () => {
     const hiddenAuditIds = new Set();
     for (const category of Object.values(clonedSampleResult.categories)) {
       for (const auditRef of category.auditRefs) {
-        // TODO: Remove insights condition when insights become the default
-        if (auditRef.group === 'hidden' || auditRef.group === 'insights') {
+        if (auditRef.group === 'hidden') {
           hiddenAuditIds.add(auditRef.id);
         }
       }

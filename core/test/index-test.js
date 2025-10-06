@@ -99,9 +99,7 @@ describe('Module Tests', function() {
         artifacts: [
           {id: 'MetaElements', gatherer: 'meta-elements'},
         ],
-        audits: [
-          'viewport',
-        ],
+        audits: [],
       });
 
       assert.ok(/<html/.test(result.report), 'did not create html report');
@@ -111,9 +109,6 @@ describe('Module Tests', function() {
       assert.equal(result.lhr.finalDisplayedUrl, exampleUrl);
       assert.equal(result.lhr.requestedUrl, exampleUrl);
       assert.equal(Object.values(result.lhr.categories).length, 0);
-      assert.ok(result.lhr.audits.viewport);
-      assert.strictEqual(result.lhr.audits.viewport.score, 0);
-      assert.ok(result.lhr.audits.viewport.explanation);
       assert.ok(result.lhr.timing);
       assert.ok(result.lhr.timing.entries.length > 3, 'timing entries not populated');
     });

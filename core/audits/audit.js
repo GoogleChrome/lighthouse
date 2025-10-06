@@ -484,7 +484,6 @@ class Audit {
 
       details: product.details,
       guidanceLevel: audit.meta.guidanceLevel,
-      replacesAudits: audit.meta.replacesAudits,
     };
   }
 

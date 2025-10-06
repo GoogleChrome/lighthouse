@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "Körningstid för JavaScript"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "Ta bort stora, duplicerade JavaScript-moduler från paket så att färre onödiga byte skickas via nätverket. "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "Ta bort dubblettmoduler i JavaScript-paket"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "Stora giffar är inte ett effektivt sätt att visa animerat innehåll. I stället för giffar kan du använda videor i MPEG4-/WebM-format för animationer och PNG-/WebP-format för statiska bilder. Då minskar antalet byte som skickas via nätverket. [Läs mer om effektiva videoformat](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "Använd videoformat för animationer"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Med polyfill-koder och transformeringar går det att använda nya JavaScript-funktioner i äldre webbläsare. Många av dem är dock inte nödvändiga för moderna webbläsare. Överväg att ändra JavaScript-byggprocessen så att du inte transpilerar [Baseline](https://web.dev/baseline)-funktioner, förutom om du vet att du måste ha stöd för äldre webbläsare. [Läs mer om varför de flesta webbplatser kan implementera ES6+-kod utan transpilering](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "Version 2 av core-js hittades på sidan. Du bör uppgradera till version 3 för att få prestandaförbättringar."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "Undvik att skicka äldre JavaScript till moderna webbläsare"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "Bildformat som WebP och AVIF ger ofta bättre komprimering än PNG eller JPEG. Det gör att nedladdningen går snabbare och ger minskad dataförbrukning. [Läs mer om moderna bildformat](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)."
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "Skicka bilder i modernare bildformat"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Låt bilder utanför skärmen och dolda bilder läsas in med uppskjuten inläsning efter att alla viktiga resurser är inlästa så att tiden till interaktivt tillstånd minskar. [Läs mer om hur du skjuter upp bilder utanför skärmen](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)."
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Skjut upp inläsningen av bilder som inte visas på skärmen"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Resurser blockerar sidans första rendering. Infoga nödvändig JS-/CSS-kod direkt på sidan och skjut upp inläsningen av JS-kod/formatmallar som är mindre viktiga. [Läs mer om hur du tar bort resurser som blockerar renderingen](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)."
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "Ta bort resurser som blockerar renderingen"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "Hög nätverksbelastning kostar användarna pengar och har ett starkt samband med lång hämtningstid. [Läs mer om hur du minskar nätverksbelastningen](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Reducera JavaScript som inte används"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Om filerna cachelagras under längre tid kan upprepade besök på sidan gå snabbare. [Läs mer om hur du tillämpar effektiva policyer för cachelagring](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)."
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 resurs hittades}other{# resurser hittades}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Skicka statiska tillgångar med en effektiv cachelagringspolicy"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "Använder en effektiv cachelagringspolicy för statiska tillgångar"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "Optimerade bilder läses in snabbare och förbrukar mindre mobildata. [Läs om hur du kodar bilder på ett effektivt sätt](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "Koda bilder effektivt"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "Faktiska mått"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "Visade mått"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "Bilderna var större än visad storlek"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "Bilderna matchade visad storlek"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "Minska mobildataförbrukningen och förbättra hämtningstiden genom att visa bilder i rätt storlek. [Läs mer om hur du ändrar storlek på bilder](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)."
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "Använd bilder med rätt storlek"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Textresurser bör visas komprimerade (gzip, deflate eller brotli) så att färre byte skickas via nätverket. [Läs mer om textkomprimering](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)."
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "Aktivera textkomprimering"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "Allvarlighetsgrad"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "Förhindra clickjacking med XFO eller CSP"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "Kedjorna av kritiska förfrågningar nedan visar vilka resurser som läses in med hög prioritet. Se om du kan förbättra sidhämtningstiden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser. [Läs mer om hur du undviker att kedja kritiska förfrågningar](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 kedja hittades}other{# kedjor hittades}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "Undvik att kedjekoppla kritiska förfrågningar"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "Direktiv"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "Sidan har HTML som doctype"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Värde"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Antal"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "En stor DOM leder till att minnesanvändning ökar, [formatberäkningarna](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) förlängs och att kostsamma [flödesomformningar för layout](https://developers.google.com/speed/articles/reflow) produceras. [Läs om hur du undviker en för stor DOM-storlek](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 element}other{# element}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Undvik ett onödigt stort DOM-träd"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "Största DOM-djup"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "Totalt antal DOM-element"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Högsta antal underordnade element"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "Undviker ett onödigt stort DOM-träd"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Användare blir misstänksamma eller förvirrade av webbplatser som ber om åtkomst till deras plats utan sammanhang. Det kan vara bättre att koppla begäran till något användaren gör. [Läs mer om behörigheten för geolokalisering](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "Tillåter att användare klistrar in i inmatningsfält"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "Protokoll"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 ger många fördelar jämfört med HTTP/1.1, inklusive binära fält och multiplexning. [Läs mer om HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 begäran visades inte via HTTP/2}other{# begäranden visades inte via HTTP/2}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Använd HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Det kan vara bra att märka dina händelselyssnare för tryck och hjul som `passive` för att förbättra sidans scrollningsfunktion. [Läs mer om hur du använder passiva händelselyssnare](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)."
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "Inga webbläsarfel loggades i konsolen"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "Använd CSS-funktionen `font-display` för att säkerställa att texten är synlig för användaren medan webbteckensnitten läses in. [Läs mer om `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)."
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "Se till att all text förblir synlig medan webbteckensnitten läses in"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "All text förblir synlig medan webbteckensnitten läses in"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{Det gick inte att kontrollera `font-display`-värdet för ursprunget {fontOrigin} automatiskt i Lighthouse.}other{Det gick inte att kontrollera `font-display`-värdena för ursprunget {fontOrigin} automatiskt i Lighthouse.}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "Direktiv"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Tillåts med varning"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "% av LCP"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "Fas"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "Tid"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "Detta är det största innehållselementet som ritades upp i visningsområdet. [Läs mer om elementet för den största uppritningen av innehåll](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "Inläsningsfördröjning"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "Hämtningstid"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "Renderingsfördröjning"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "Element som största uppritningen av innehåll gjordes för"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "Resultat för layoutförskjutning"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "Det här är de största layoutförskjutningarna som observerats på sidan. Varje tabellobjekt representerar en enskild layoutförskjutning och visar elementet som försköts mest. Under varje objekt visas möjliga grundorsaker till layoutförskjutningen. Vissa av dessa layoutförskjutningar kanske inte tas med i CLS-mätvärdet på grund av [windowing](https://web.dev/articles/cls#what_is_cls). [Läs mer om hur du kan förbättra CLS](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{1 layoutförskjutning hittades}other{# layoutförskjutningar hittades}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "Webbteckensnittet har lästs in"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "Injicerad iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "Medieelementet har ingen angiven storlek"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "Undvik större layoutförskjutningar"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "Bilder ovanför mitten med uppskjuten inläsning renderas senare än sidans livscykel, vilket kan fördröja den största uppritningen av innehåll. [Läs mer om optimal uppskjuten inläsning](https://web.dev/articles/lcp-lazy-loading)."
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "Bildinläsningen var uppskjuten vid största uppritningen av innehåll"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "Bildinläsningen var inte uppskjuten vid största uppritningen av innehåll"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "Visar de uppgifter i huvudtråden som har körts under längst tid, vilket kan identifiera de viktigaste flaskhalsarna som fördröjer inmatningen. [Läs om hur du undviker uppgifter i huvudtrådar som har körts under lång tid](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Serverlatens"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "Animationer som inte är sammansatta kan vara hackiga och orsaka ökad CLS. [Läs om hur du undviker animationer som inte är sammansatta](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{# animerat element hittades}other{# animerade element hittades}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "Den filterrelaterade egenskapen kan flytta pixlar"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "Målet har en annan animation som är inkompatibel"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "Effekten har ett annat sammansatt läge än ”replace”"
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "Undvik icke sammansatta animationer"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "En ”transform”-relaterad egenskap beror på rutans storlek"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{CSS-egenskap som inte stöds: {properties}}other{CSS-egenskaper som inte stöds: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "Effekten har tidsparametrar som inte stöds"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktiv"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Säkerställ korrekt isolering för ursprung med COOP"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "Om LCP-elementet läggs till på sidan dynamiskt bör du läsa in bilden i förväg för att förbättra LCP. [Läs mer om att läsa in LCP-element i förväg](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "Läs in bilden i förväg för största uppritningen av innehåll"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "Omdirigera all HTTP-trafik till HTTPS för att se till att webbfunktionerna är säkra för alla användare. [Läs mer](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Omdirigerar HTTP-trafik till HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "Omdirigeringar medför en ytterligare fördröjning innan sidan kan läsas in. [Läs mer om hur du undviker omdirigeringar av sidor](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
-  },
-  "core/audits/redirects.js | title": {
-    "message": "Undvik upprepade omdirigeringar"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanoniska länkar föreslår vilka webbadresser som ska visas i sökresultat. [Läs mer om kanoniska länkar](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt är giltig"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "Se till att serverns svarstid för huvuddokumentet är kort, eftersom alla andra förfrågningar är beroende av det. [Läs mer om mätvärdet Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "Rotdokumentet tog {timeInMs, number, milliseconds} ms"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "Minska serverns första svarstid"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "Serverns första svarstid var kort"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Tredjepartscookies kan blockeras i vissa sammanhang. [Läs mer om hur du förbereder dig för begränsningar av tredjepartscookies](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Undviker tredjepartscookies"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "Tredje part"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "Kod från tredje part kan påverka inläsningsprestandan betydligt. Begränsa antalet överflödiga tredjepartsleverantörer och testa att låta tredjepartskod läsas in efter att sidans huvudinnehåll har lästs in helt. [Läs mer om hur du minimerar inverkan från tredje part](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "Tredjepartskod blockerade huvudtråden i {timeInMs, number, milliseconds} ms"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "Minska påverkan från tredjepartskod"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "Minimera användning av tredjepartskod"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "Allvarlighetsgrad"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "Minska risken med DOM-baserad XSS med hjälp av Trusted Types"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "Reducera layoutförskjutningarna och förbättra CLS genom att ange explicit bredd och höjd för bildelement. [Läs mer om hur du ställer in bildmått](https://web.dev/articles/optimize-cls#images_without_dimensions)"
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "Alla bildelement har inte `width` och `height`"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "Alla bildelement har explicit `width` och `height`"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "Typ"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "User Timing API – tidsstämplar och mått"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "En `<link rel=preconnect>` hittades för {securityOrigin} men ignorerades av webbläsaren. Kontrollera att attributet `crossorigin` används korrekt."
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "Lägg till signaler för `preconnect` eller `dns-prefetch` så att viktiga anslutningar till tredje part upprättas tidigt. [Läs mer om hur du förhandsansluter till de ursprung som krävs](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)."
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "Föranslut till obligatoriska källor"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Fler än 2 `<link rel=preconnect>`-anslutningar hittades. Dessa ska användas sparsamt och bara med de viktigaste källorna."
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "En `<link rel=preconnect>` hittades för {securityOrigin} men ignorerades av webbläsaren. Använd endast `preconnect` för viktiga ursprung som sidan säkerligen kommer att begära."
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "Kartans webbadress"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "Sidan har giltiga källkartor"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "En `<meta name=\"viewport\">` optimerar appen för mobila skärmstorlekar och förhindrar även [en fördröjning på 300 millisekunder vid indata från användare](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Läs mer om hur du använder metataggen för visningsområdet](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)."
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "Ingen `<meta name=\"viewport\">`-tagg hittades"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "Har inte en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "Det här är det trådblockerande arbetet som sker under mätningen av interaktion till nästa uppritning. [Läs mer om mätvärdet Interakation till nästa uppritning](https://web.dev/articles/inp)."
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "Händelsen {interactionType} behandlades i {timeInMs, number, milliseconds} ms"
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "Händelsemål"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "Minimera arbetet under viktiga interaktioner"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "Inmatningsfördröjning"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "Presentationsfördröjning"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "Behandlingstid"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "Minimerar arbetet under viktiga interaktioner"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Rapportera ett problem"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "Gå tillbaka till granskningar"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "Dölj"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "Senare i år ersätts granskningar av prestanda med insikter. [Läs mer och lämna feedback här](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Labbdata"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Problem uppstod med den här körningen av Lighthouse."
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "Prova insikter"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Kan inte tillskrivas"

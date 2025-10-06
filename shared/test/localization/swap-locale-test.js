@@ -25,15 +25,15 @@ describe('swap-locale', () => {
     const lhrDe = swapLocale(lhrEn, 'de').lhr;
 
     // Basic replacement
-    expect(lhrEn.audits['viewport'].title).toEqual(
-      'Has a `<meta name="viewport">` tag with `width` or `initial-scale`');
-    expect(lhrDe.audits['viewport'].title).toEqual(
-      'Hat ein `<meta name="viewport">`-Tag mit `width` oder `initial-scale`');
+    expect(lhrEn.audits['accesskeys'].title).toEqual('`[accesskey]` values are unique');
+    expect(lhrDe.audits['accesskeys'].title).toEqual('`[accesskey]`-Werte sind eindeutig');
 
     // With ICU string argument values
-    expect(lhrEn.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"151 elements"`);
+    expect(lhrEn.audits['is-on-https'].displayValue).toMatchInlineSnapshot(
+      `"1 insecure request found"`);
     /* eslint-disable no-irregular-whitespace */
-    expect(lhrDe.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"151 Elemente"`);
+    expect(lhrDe.audits['is-on-https'].displayValue).toMatchInlineSnapshot(
+      `"1 unsichere Anfrage gefunden"`);
 
     // Renderer formatted strings
     expect(lhrEn.i18n.rendererFormattedStrings.labDataTitle).toEqual('Lab Data');
@@ -91,6 +91,7 @@ toMatchInlineSnapshot(`"2,1 s"`);
     // Updated strings are not found, so these remain in the original language
     expect(missingIcuMessageIds).toMatchInlineSnapshot(`
 Array [
+  "core/audits/redirects.js | title",
   "core/audits/redirects.js | doesntExist",
   "core/audits/fakeaudit.js | title",
 ]

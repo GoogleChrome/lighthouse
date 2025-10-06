@@ -59,21 +59,21 @@ class DOMSizeInsight extends Audit {
           },
         },
         {
-          statistic: str_(UIStrings.maxChildren),
-          node: makeNodeItemForNodeId(artifacts.TraceElements, maxChildren.nodeId),
-          value: {
-            type: 'numeric',
-            granularity: 1,
-            value: maxChildren.numChildren,
-          },
-        },
-        {
           statistic: str_(UIStrings.maxDOMDepth),
           node: makeNodeItemForNodeId(artifacts.TraceElements, maxDepth.nodeId),
           value: {
             type: 'numeric',
             granularity: 1,
             value: maxDepth.depth,
+          },
+        },
+        {
+          statistic: str_(UIStrings.maxChildren),
+          node: makeNodeItemForNodeId(artifacts.TraceElements, maxChildren.nodeId),
+          value: {
+            type: 'numeric',
+            granularity: 1,
+            value: maxChildren.numChildren,
           },
         },
       ];

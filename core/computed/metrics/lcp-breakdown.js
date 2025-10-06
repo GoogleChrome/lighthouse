@@ -11,6 +11,7 @@ import {ProcessedNavigation} from '../processed-navigation.js';
 import {TimeToFirstByte} from './time-to-first-byte.js';
 import {LCPImageRecord} from '../lcp-image-record.js';
 
+// TODO(v13): should use LCPBreakdown insight
 class LCPBreakdown {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data

@@ -30,16 +30,6 @@ const expectations = {
     requestedUrl: 'http://localhost:10200/perf/fonts.html',
     finalDisplayedUrl: 'http://localhost:10200/perf/fonts.html',
     audits: {
-      'font-display': {
-        score: 0.5,
-        details: {
-          items: [
-            {
-              url: 'http://localhost:10200/perf/lobster-v20-latin-regular.woff2',
-            },
-          ],
-        },
-      },
       'font-display-insight': {
         score: 0,
         details: {

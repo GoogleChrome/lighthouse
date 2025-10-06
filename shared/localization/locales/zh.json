@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "JavaScript 执行用时"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "从软件包中移除重复的大型 JavaScript 模块可减少网络传输时不必要的流量消耗。 "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "请移除 JavaScript 软件包中的重复模块"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "使用大型 GIF 提供动画内容会导致效率低下。建议您改用 MPEG4/WebM 视频（来提供动画）和 PNG/WebP（来提供静态图片）以减少网络活动消耗的字节数。[详细了解高效视频格式](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "使用视频格式提供动画内容"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfill 和 transform 让旧版浏览器能够使用新的 JavaScript 功能。不过，很多功能对现代浏览器而言并不是必需的。请考虑修改 JavaScript 构建流程，以便不转译 [Baseline](https://web.dev/baseline) 功能，除非您知道必须支持旧版浏览器。[了解为什么大多数网站可以部署 ES6+ 代码而无需转译](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "在网页上检测到 core-js 的版本 2。您应该升级到版本 3，以获取诸多性能改进。"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "应避免向新型浏览器提供旧版 JavaScript"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "WebP 和 AVIF 等图片格式的压缩效果通常优于 PNG 或 JPEG，因而下载速度更快，消耗的数据流量更少。[详细了解现代图片格式](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)。"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "采用新一代格式提供图片"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "建议您在所有关键资源加载完毕后再加载屏幕外图片和处于隐藏状态的图片，从而缩短 Time to Interactive。[了解如何推迟加载屏幕外图片](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)。"
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "推迟加载屏幕外图片"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "资源阻止了系统对您网页的首次绘制。建议以内嵌方式提供关键的 JS/CSS，并推迟提供所有非关键的 JS/样式。[了解如何移除阻塞渲染的资源](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)。"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "移除阻塞渲染的资源"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "网络载荷过大不仅会让用户付出真金白银，还极有可能会延长加载用时。[了解如何缩减载荷大小](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)。"
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "减少未使用的 JavaScript"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "延长缓存期限可加快重访您网页的速度。[详细了解高效缓存政策](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)。"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{找到了 1 项资源}other{找到了 # 项资源}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "采用高效的缓存策略提供静态资源"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "针对静态资源使用高效的缓存策略"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "经过优化的图片有助于提升加载速度，并减少消耗的移动数据网络流量。[了解如何高效地对图片进行编码](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)。"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "对图片进行高效编码"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "实际尺寸"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "显示时的尺寸"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "图片大于其显示时的尺寸"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "图片适合其显示时的尺寸"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "提供大小合适的图片可节省移动数据网络流量并缩短加载用时。[了解如何调整图片大小](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)。"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "适当调整图片大小"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "对于文本资源，应先压缩（gzip、deflate 或 brotli），然后再提供，以最大限度地减少网络活动消耗的字节总数。[详细了解文本压缩](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)。"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "启用文本压缩"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "严重程度"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "使用 XFO 或 CSP 缓解点击劫持问题"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "下面的关键请求链显示了以高优先级加载的资源。建议缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。[了解如何避免链接关键请求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)。"
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{找到了 1 条请求链}other{找到了 # 条请求链}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "避免链接关键请求"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "指令"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "页面包含 HTML DOCTYPE"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "统计信息"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "值"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "大型 DOM 会增加内存用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局自动重排](https://developers.google.com/speed/articles/reflow)成本。[了解如何避免 DOM 规模过大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 个元素}other{# 个元素}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "避免 DOM 规模过大"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "最大 DOM 深度"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "DOM 元素总数"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "子元素数量最大值"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "避免 DOM 规模过大"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "如果网站在缺少上下文的情况下请求位置信息，会导致用户不信任网站或感到困惑。建议将请求与用户操作进行绑定。[详细了解地理定位权限](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)。"
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "允许用户将内容粘贴到输入字段中"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "协议"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 提供了许多优于 HTTP/1.1 的益处，包括二进制标头和多路复用。[详细了解 HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)。"
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 条请求未通过 HTTP/2 传送}other{# 条请求未通过 HTTP/2 传送}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "使用 HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "建议您将轻触和滚轮事件监听器标记为 `passive`，以提高页面的滚动性能。[详细了解如何采用被动事件监听器](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)。"
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "控制台日志中未记录浏览器错误"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "利用 `font-display` CSS 功能来确保用户在网页字体加载期间能看到文字。[详细了解 `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)。"
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "确保文本在网页字体加载期间保持可见状态"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "在网页字体加载期间，所有文本都保持可见状态"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{Lighthouse 无法自动检查源 {fontOrigin} 的 `font-display` 值。}other{Lighthouse 无法自动检查源 {fontOrigin} 的 `font-display` 值。}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "指令"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "允许（附带警告）"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "LCP 占比 (%)"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "阶段"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "用时"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "这是此视口内绘制的最大内容元素。[详细了解 Largest Contentful Paint 元素](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "加载延迟"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "加载时间"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "渲染延迟"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "最大内容渲染时间元素"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "布局偏移分数"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "这些是在网页上观察到的最大幅的布局偏移。表格中的每个项均表示一次布局偏移，并显示了发生最大幅偏移的元素。每个项的下方列出了哪些可能的根本原因导致了相应的布局偏移。由于[窗口化](https://web.dev/articles/cls#what_is_cls)的原因，所显示的某些布局偏移可能未包含在 CLS 指标值中。[了解如何改善 CLS](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{发现了 1 次布局偏移}other{发现了 # 次布局偏移}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "加载了网络字体"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "注入的 iframe"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "媒体元素缺少明确的大小"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "请避免出现大幅度的布局偏移"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "被延迟加载的首屏图片会在页面生命周期内的较晚时间渲染，这可能会致使系统延迟 Largest Contentful Paint。[详细了解最佳延迟加载](https://web.dev/articles/lcp-lazy-loading)。"
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "Largest Contentful Paint 所对应的图片被延迟加载了"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "Largest Contentful Paint 所对应的图片未被延迟加载"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "列出了主线程中运行时间最长的任务，有助于识别出导致输入延迟的最主要原因。[了解如何避免出现长时间运行的主线程任务](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "服务器后端延迟"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "未合成的动画可能会卡顿并增加 CLS。[了解如何避免使用未合成的动画](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{发现了 # 个动画元素}other{发现了 # 个动画元素}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "某个过滤相关属性可能会移动像素"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "目标中另有一个不兼容的动画"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "效果中含有除了“replace”以外的合成模式"
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "避免使用未合成的动画"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "某个转换相关属性取决于元素边界框的大小"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{不受支持的 CSS 属性：{properties}}other{不受支持的 CSS 属性：{properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "效果含有不受支持的时间参数"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "指令"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "确保通过 COOP 实现适当的源隔离"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "如果向网页中动态添加 LCP 元素，您应预加载图片以缩短 LCP 用时。[详细了解如何预加载 LCP 元素](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)。"
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "预加载 LCP 元素所用图片"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "请务必将所有 HTTP 流量都重定向到 HTTPS，以便为所有用户启用安全的网络功能。[了解详情](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)。"
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "将 HTTP 流量重定向到 HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "重定向会在网页可加载前引入更多延迟。[了解如何避免网页重定向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
-  },
-  "core/audits/redirects.js | title": {
-    "message": "避免多次网页重定向"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "规范链接用于建议应在搜索结果中显示哪个网址。[详细了解规范链接](https://developer.chrome.com/docs/lighthouse/seo/canonical/)。"
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt 有效"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "请确保服务器响应主文档的用时较短，因为这会影响到所有其他请求的响应时长。[详细了解 Time to First Byte 指标](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)。"
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "根文档花费了 {timeInMs, number, milliseconds} 毫秒"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "请缩短初始服务器响应用时"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "初始服务器响应用时较短"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "在某些情况下，第三方 Cookie 可能会被屏蔽。[详细了解如何为第三方 Cookie 限制做好准备](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "避免使用第三方 Cookie"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "第三方"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "第三方代码可能会显著影响加载性能。请限制冗余第三方提供商的数量，并尝试在页面完成主要加载后再加载第三方代码。[了解如何将第三方的影响降至最低](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)。"
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "第三方代码将主线程阻止了 {timeInMs, number, milliseconds} 毫秒"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "降低第三方代码的影响"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "尽量减少第三方使用"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "严重程度"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "使用 Trusted Types 缓解基于 DOM 的 XSS 攻击"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "请为图片元素设置明确的宽度值和高度值，以减少布局偏移并改善 CLS。[了解如何设置图片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "图片元素没有明确的`width`和`height`"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "图片元素都有明确的`width`和`height`"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "类型"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "User Timing 标记和测量结果"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "“{securityOrigin}”已有 `<link rel=preconnect>`，但浏览器未使用该链接。请检查并确保您正确地使用了 `crossorigin` 属性。"
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "建议添加 `preconnect` 或 `dns-prefetch` 资源提示，以尽早连接到重要的第三方源。[了解如何预先连接到必需的源](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)。"
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "预先连接到必要的来源"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "发现了不止 2 个 `<link rel=preconnect>` 连接。此类连接应尽量少用，且应仅用于指向最重要的来源。"
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "“{securityOrigin}”已有 `<link rel=preconnect>`，但浏览器未使用该链接。请仅针对网页肯定会请求的重要来源使用 `preconnect`。"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "映射网址"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "页面包含有效的源代码映射"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` 不仅会针对移动设备屏幕尺寸优化您的应用，还会阻止[系统在响应用户输入前出现 300 毫秒的延迟](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。[详细了解如何使用视口元标记](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)。"
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "未找到任何 `<meta name=\"viewport\">` 标记"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "没有包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 标记"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "具有包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 标记"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "这是在 Interaction to Next Paint 测量期间发生的线程阻塞工作。[详细了解 Interaction to Next Paint 指标](https://web.dev/articles/inp)。"
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "事件“{interactionType}”花费了 {timeInMs, number, milliseconds} 毫秒"
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "事件目标"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "尽量减少关键互动期间的工作量"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "输入延迟"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "展示延迟时间"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "处理用时"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "尽量减少关键互动期间的工作量"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "这些提示旨在帮助改进 ARIA 在您的应用内的使用情况，从而改善辅助技术（例如屏幕阅读器）用户的体验。"
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "提交问题"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "返回审核部分"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "隐藏"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "今年晚些时候，数据分析将取代效果审核。[点击此处了解详情并提供反馈](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "实验室数据"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "此次 Lighthouse 运行并不顺利，原因如下："
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "试用数据分析功能"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "无法归因"

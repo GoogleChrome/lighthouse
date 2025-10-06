@@ -74,7 +74,7 @@ async function waitForImagesToLoad(page) {
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    skipAudits: ['uses-http2'],
+    skipAudits: ['modern-http-insight'],
   },
 };
 

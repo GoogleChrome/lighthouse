@@ -21,20 +21,6 @@ const config = {
  * Expected Lighthouse audit values for preload tests.
  */
 const expectations = {
-  artifacts: {
-    LinkElements: {
-      _includes: [{
-        rel: 'preload',
-        href: 'http://localhost:10200/perf/level-2.js?warning&delay=500',
-        hrefRaw: '/perf/level-2.js?warning&delay=500',
-        hreflang: '',
-        as: 'script',
-        crossOrigin: 'use-credentials',
-        source: 'head',
-        fetchPriority: 'high',
-      }],
-    },
-  },
   networkRequests: {
     // DevTools loads the page three times, so this request count will not be accurate.
     _excludeRunner: 'devtools',
@@ -68,9 +54,20 @@ const expectations = {
           },
         },
       },
-      'uses-rel-preconnect': {
-        score: 1,
-        warnings: [/localhost:10503/],
+      'network-dependency-tree-insight': {
+        details: {
+          items: [
+            {},
+            {
+              title: 'Preconnected origins',
+              value: {items: [
+                {origin: 'http://localhost:10503/'},
+                {origin: 'http://localhost:10420/'},
+              ]},
+            },
+            {},
+          ],
+        },
       },
     },
   },

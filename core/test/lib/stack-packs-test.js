@@ -11,7 +11,10 @@ import {stackPacksToInclude, getStackPacks} from '../../lib/stack-packs.js';
 
 async function getAuditIds() {
   const {resolvedConfig} = await initializeConfig('navigation');
-  return resolvedConfig.audits.map(a => a.implementation.meta.id);
+  return resolvedConfig.audits.flatMap(a => [
+    a.implementation.meta.id,
+    ...a.implementation.meta.replacesAudits ?? [],
+  ]);
 }
 
 describe('stack-packs lib', () => {

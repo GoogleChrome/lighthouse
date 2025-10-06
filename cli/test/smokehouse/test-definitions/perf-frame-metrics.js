@@ -53,15 +53,11 @@ const expectations = {
         // Non-all-frames value.
         numericValue: '>5000',
       },
-      'largest-contentful-paint-element': {
+      'lcp-breakdown-insight': {
         details: {
-          items: {0: {
-            items: [{
-              node: {
-                // Element should be from main frame while metric is not LCPAllFrames.
-                nodeLabel: 'This is the main frame LCP and FCP.',
-              },
-            }],
+          items: {1: {
+            // Element should be from main frame while metric is not LCPAllFrames.
+            nodeLabel: 'This is the main frame LCP and FCP.',
           }},
         },
       },

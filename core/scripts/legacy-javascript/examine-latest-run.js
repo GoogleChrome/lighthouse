@@ -16,7 +16,7 @@ import path from 'path';
 
 import colors from 'colors';
 
-import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import LegacyJavaScriptInsight from '../../audits/insights/legacy-javascript-insight.js';
 import * as format from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../shared/root.js';
 import {readJson} from '../../test/test-utils.js';
@@ -34,13 +34,11 @@ function formatBytes(bytes) {
 async function main() {
   /** @type {LH.Artifacts} */
   const artifacts = readJson(`${LATEST_RUN_DIR}/artifacts.json`);
-  const devtoolsLog = readJson(`${LATEST_RUN_DIR}/devtoolslog.json`);
   const trace = readJson(`${LATEST_RUN_DIR}/trace.json`);
   const scripts = artifacts.Scripts;
-  artifacts.DevtoolsLog = devtoolsLog;
   artifacts.Trace = trace;
 
-  const auditResults = await LegacyJavascript.audit(artifacts, {
+  const auditResults = await LegacyJavaScriptInsight.audit(artifacts, {
     computedCache: new Map(),
     options: {},
     /** @type {any} */

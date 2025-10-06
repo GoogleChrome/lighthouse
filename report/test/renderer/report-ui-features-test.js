@@ -111,7 +111,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr, {onViewTrace});
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(4);
+        expect(buttons).toHaveLength(3);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);
@@ -131,7 +131,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr, {onViewTrace});
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(3);
+        expect(buttons).toHaveLength(2);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);
@@ -147,7 +147,7 @@ describe('ReportUIFeatures', () => {
         const container = render(lhr);
 
         const buttons = dom.findAll('.lh-button', container);
-        expect(buttons).toHaveLength(3);
+        expect(buttons).toHaveLength(2);
 
         const viewUnthrottledTraceButton =
           dom.find('a[data-action="view-unthrottled-trace"]', container);

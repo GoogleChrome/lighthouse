@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "Thời gian thực thi JavaScript"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "Xóa các mô-đun JavaScript lớn, trùng lặp khỏi gói để giảm số byte mà hoạt động mạng tiêu thụ một cách không cần thiết. "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "Xóa các mô-đun trùng lặp trong gói JavaScript"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "Ảnh GIF lớn không có hiệu quả trong việc phân phối nội dung động. Hãy cân nhắc sử dụng video MPEG4/WebM cho ảnh động và PNG/WebP cho ảnh tĩnh thay vì ảnh GIF để tiết kiệm dữ liệu mạng. [Tìm hiểu thêm về định dạng video hiệu quả](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "Sử dụng các định dạng video cho nội dung động"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Mã Polyfill và Transform cho phép trình duyệt cũ dùng các tính năng mới của JavaScript. Tuy nhiên, nhiều tính năng không cần thiết cho trình duyệt hiện đại. Hãy cân nhắc sửa đổi quy trình xây dựng JavaScript để không chuyển đổi mã nguồn các tính năng [Đường cơ sở](https://web.dev/baseline), trừ phi bạn biết rằng mình phải hỗ trợ các trình duyệt cũ. [Tìm hiểu lý do hầu hết các trang web có thể triển khai mã ES6+ mà không cần chuyển đổi mã nguồn](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "Phát hiện phiên bản 2 của core-js trên trang này. Bạn nên nâng cấp lên phiên bản 3 để sử dụng nhiều cải tiến về hiệu suất."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "Tránh phân phối JavaScript cũ tới các trình duyệt hiện đại"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "Các định dạng hình ảnh như WebP và AVIF thường nén tốt hơn so với các định dạng PNG hoặc JPEG. Điều này có nghĩa là tốc độ tải hình ảnh xuống sẽ nhanh hơn và tiêu tốn ít dữ liệu hơn. [Tìm hiểu thêm về định dạng hình ảnh mới](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)."
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "Phân phối hình ảnh ở định dạng mới và hiệu quả hơn"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Hãy cân nhắc tải từng phần các hình ảnh ẩn và nằm ngoài màn hình sau khi tải xong tất cả tài nguyên quan trọng nhằm giảm thời gian tương tác. [Tìm hiểu cách trì hoãn hình ảnh ngoài màn hình](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)."
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Trì hoãn tải các hình ảnh ngoài màn hình"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Các tài nguyên đang chặn lần hiển thị đầu tiên của trang. Hãy cân nhắc phân phối nội dòng JS/Biểu định kiểu xếp chồng (CSS) quan trọng và trì hoãn mọi JS/kiểu không quan trọng. [Tìm hiểu cách loại bỏ các tài nguyên chặn hiển thị](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)."
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "Loại bỏ các tài nguyên chặn hiển thị"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "Tải trọng mạng lớn gây tốn kém cho người dùng và thường khiến thời gian tải kéo dài. [Tìm hiểu cách giảm kích thước tải trọng](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Giảm JavaScript không dùng đến"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Bộ nhớ đệm có thời gian hữu dụng dài có thể giúp tăng tốc số lượt truy cập lặp lại vào trang của bạn. [Tìm hiểu thêm về chính sách bộ nhớ đệm hiệu quả](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)."
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{Đã tìm thấy 1 tài nguyên}other{Đã tìm thấy # tài nguyên}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Phân phối các nội dung tĩnh bằng chính sách bộ nhớ đệm hiệu quả"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "Sử dụng chính sách bộ nhớ đệm hiệu quả cho các nội dung tĩnh"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "Hình ảnh được tối ưu hoá sẽ tải nhanh hơn và tiêu tốn ít dữ liệu di động hơn. [Tìm hiểu cách mã hoá hình ảnh hiệu quả](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)."
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "Mã hóa hình ảnh hiệu quả"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "Kích thước thực"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "Kích thước hiển thị"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "Hình ảnh có kích thước lớn hơn kích thước hiển thị"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "Hình ảnh có kích thước hiển thị phù hợp"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "Phân phát hình ảnh có kích thước phù hợp để tiết kiệm dữ liệu di động và cải thiện thời gian tải. [Tìm hiểu cách định cỡ hình ảnh](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)."
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "Thay đổi kích thước hình ảnh cho phù hợp"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Phải phân phát các tài nguyên dựa trên văn bản ở định dạng nén (gzip, deflate hoặc brotli) để giảm thiểu tổng số byte mạng. [Tìm hiểu thêm về việc nén văn bản](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)."
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "Bật tính năng nén văn bản"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "Mức độ nghiêm trọng"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "Giảm thiểu các cuộc tấn công clickjacking bằng XFO hoặc CSP"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "Các Chuỗi yêu cầu quan trọng dưới đây cho bạn biết những tài nguyên được tải ở mức độ ưu tiên cao. Hãy cân nhắc giảm độ dài chuỗi, giảm kích thước tài nguyên tải xuống hoặc trì hoãn tải xuống các tài nguyên không cần thiết để cải thiện tốc độ tải trang. [Tìm hiểu cách tránh tạo chuỗi yêu cầu quan trọng](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)."
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{Đã tìm thấy 1 chuỗi}other{Đã tìm thấy # chuỗi}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "Tránh tạo chuỗi các yêu cầu quan trọng"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "Lệnh"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "Trang có loại tài liệu HTML"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Thống kê"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Giá trị"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Một DOM lớn sẽ làm tăng mức sử dụng bộ nhớ, khiến [các phép tính về kiểu](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) kéo dài hơn, đồng thời tạo ra [các quy trình trình bày lại bố cục](https://developers.google.com/speed/articles/reflow) tốn kém. [Tìm hiểu cách tránh kích thước DOM quá lớn](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 phần tử}other{# phần tử}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Tránh kích thước DOM quá lớn"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "Độ sâu DOM tối đa"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "Tổng số các phần tử DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Phần tử con tối đa"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "Tránh kích thước DOM quá lớn"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Các trang web yêu cầu vị trí của người dùng mà không cung cấp ngữ cảnh sẽ khiến người dùng không tin tưởng hoặc bối rối. Hãy cân nhắc liên kết yêu cầu với hành động của người dùng. [Tìm hiểu thêm về quyền truy cập vị trí địa lý](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)."
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "Cho phép người dùng dán nội dung vào các trường nhập dữ liệu"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "Giao thức"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "So với HTTP/1.1 thì HTTP/2 mang lại nhiều lợi ích hơn, trong đó có khả năng đa hợp và tiêu đề nhị phân. [Tìm hiểu thêm về HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{Chưa phân phát 1 yêu cầu qua HTTP/2}other{Chưa phân phát # yêu cầu qua HTTP/2}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Sử dụng HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Hãy cân nhắc đánh dấu trình nghe sự kiện chạm và di chuyển con lăn là `passive` để cải thiện hiệu suất cuộn trên trang. [Tìm hiểu thêm về cách sử dụng trình nghe sự kiện thụ động](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)."
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "Chưa ghi lỗi nào của trình duyệt vào bảng điều khiển"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "Tận dụng tính năng CSS `font-display` nhằm đảm bảo người dùng thấy được văn bản trong lúc phông chữ web đang tải. [Tìm hiểu thêm về `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)."
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "Đảm bảo văn bản vẫn hiển thị trong khi tải phông chữ web"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "Tất cả văn bản vẫn hiển thị trong khi tải phông chữ web"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{Lighthouse không thể tự động kiểm tra `font-display` giá trị cho nguồn gốc {fontOrigin}.}other{Lighthouse không thể tự động kiểm tra `font-display` giá trị cho nguồn gốc {fontOrigin}.}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "Lệnh"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Được phép nhưng có cảnh báo"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "% LCP (Nội dung lớn nhất hiển thị)"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "Giai đoạn"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "Thời gian"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "Đây là thành phần nội dung lớn nhất hiển thị trong khung nhìn. [Tìm hiểu thêm về thành phần Thời gian hiển thị nội dung lớn nhất](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "Độ trễ khi tải"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "Thời gian tải"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "Độ trễ khi hiển thị"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB (Thời gian cho byte đầu tiên)"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "Thành phần Thời gian hiển thị nội dung lớn nhất"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "Điểm số về mức thay đổi bố cục"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "Đây là những thay đổi lớn nhất về bố cục được ghi nhận trên trang. Mỗi mục trong bảng đại diện cho một lần thay đổi bố cục và cho biết phần tử đã thay đổi nhiều nhất. Bên dưới mỗi mục là các nguyên nhân gốc có thể dẫn đến sự thay đổi bố cục. Một vài trong số những thay đổi về bố cục này có thể không được tính vào giá trị chỉ số CLS (Mức thay đổi bố cục tích luỹ) do phương pháp [kết xuất cửa sổ hiện tại](https://web.dev/articles/cls#what_is_cls). [Tìm hiểu cách cải thiện CLS (Mức thay đổi bố cục tích luỹ)](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{Đã nhận thấy 1 lần thay đổi bố cục}other{Đã nhận thấy # lần thay đổi bố cục}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "Phông chữ trên web đã tải"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "iframe được chèn"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "Phần tử nội dung đa phương tiện không có kích thước rõ ràng"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "Tránh các thay đổi lớn về bố cục"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "Hình ảnh trong màn hình đầu tiên được tải từng phần sẽ hiển thị sau trong vòng đời của trang, điều này có thể làm chậm thời gian hiển thị nội dung lớn nhất. [Tìm hiểu thêm về tính năng tải từng phần tối ưu](https://web.dev/articles/lcp-lazy-loading)."
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "Hình ảnh Thời gian hiển thị nội dung lớn nhất đã được tải từng phần"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "Hình ảnh Thời gian hiển thị nội dung lớn nhất không được tải từng phần"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "Liệt kê những việc cần nhiều thời gian thực hiện nhất trong chuỗi chính. Thông tin này khá hữu ích trong việc xác định những thành phần có thời gian phản hồi tương tác chậm nhất. [Tìm hiểu cách tránh những việc cần nhiều thời gian thực hiện trong chuỗi chính](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Thời gian dưới nền của máy chủ"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "Các ảnh động không được ghép có thể kém chất lượng và làm tăng CLS (Điểm số tổng hợp về mức thay đổi bố cục). [Tìm hiểu cách tránh ảnh động không được ghép](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{Tìm thấy # phần tử ảnh động}other{Tìm thấy # phần tử ảnh động}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "Thuộc tính liên quan đến bộ lọc có thể di chuyển pixel"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "Mục tiêu có một ảnh động khác không tương thích"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "Hiệu ứng có chế độ ghép không phải là \"replace\""
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "Tránh dùng các ảnh động không được ghép"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "Thuộc tính liên quan đến biến đổi phụ thuộc vào kích thước hộp"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{Thuộc tính CSS không được hỗ trợ: {properties}}other{Các thuộc tính CSS không được hỗ trợ: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "Hiệu ứng có tham số thời gian không được hỗ trợ"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Lệnh"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Đảm bảo tách biệt nguồn gốc theo cách phù hợp bằng COOP"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "Nếu phần tử LCP được thêm vào trang qua phương thức động, bạn nên tải trước hình ảnh để cải thiện LCP. [Tìm hiểu thêm về cách tải trước phần tử LCP](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "Tải trước hình ảnh có Thời gian hiển thị nội dung lớn nhất"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "Hãy nhớ chuyển hướng tất cả lưu lượng truy cập HTTP tới HTTPS để bật các tính năng web an toàn cho tất cả người dùng. [Tìm hiểu thêm](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)."
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "Các lần chuyển hướng sẽ khiến tốc độ tải trang chậm thêm. [Tìm hiểu cách tránh các lần chuyển hướng trang](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
-  },
-  "core/audits/redirects.js | title": {
-    "message": "Tránh chuyển hướng trang nhiều lần"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Đường liên kết chính tắc đề xuất URL nào nên hiển thị trong kết quả tìm kiếm. [Tìm hiểu thêm về đường liên kết chính tắc](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt hợp lệ"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "Giữ cho máy chủ phản hồi trong thời gian ngắn đối với tài liệu chính vì tất cả các yêu cầu khác phụ thuộc vào thời gian đó. [Tìm hiểu thêm về chỉ số Thời gian cho byte đầu tiên](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "Tài liệu gốc mất {timeInMs, number, milliseconds} mili giây"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "Giảm thời gian phản hồi ban đầu của máy chủ"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "Thời gian phản hồi ban đầu của máy chủ là ngắn"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Cookie của bên thứ ba có thể bị chặn trong một số trường hợp. [Tìm hiểu thêm về việc chuẩn bị cho các hạn chế đối với cookie của bên thứ ba](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Tránh sử dụng cookie của bên thứ ba"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "Bên thứ ba"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "Mã của bên thứ ba có thể tác động đáng kể đến hiệu suất tải. Hãy hạn chế số nhà cung cấp bên thứ ba dư thừa và cố gắng tải mã của bên thứ ba sau khi trang của bạn hoàn thành phần lớn quá trình tải. [Tìm hiểu cách giảm thiểu tác động từ mã của bên thứ ba](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "Mã của bên thứ ba đã chặn chuỗi chính trong {timeInMs, number, milliseconds} mili giây"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "Giảm mức ảnh hưởng của mã bên thứ ba"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "Giảm thiểu mức sử dụng của bên thứ ba"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "Mức độ nghiêm trọng"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "Giảm thiểu XSS dựa trên DOM bằng Trusted Types"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "Đặt chiều rộng và chiều cao rõ ràng đối với các phần tử hình ảnh để giảm sự thay đổi về bố cục và cải thiện CLS (Điểm số tổng hợp về mức thay đổi bố cục). [Tìm hiểu cách đặt kích thước hình ảnh](https://web.dev/articles/optimize-cls#images_without_dimensions)"
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "Các phần tử hình ảnh không có `width` và `height` rõ ràng"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "Các phần tử hình ảnh có `width` và `height` rõ ràng"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "Loại"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "Các thời điểm cụ thể và khoảng thời gian được ghi lại bằng API Thời gian người dùng"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Đã tìm thấy `<link rel=preconnect>` cho \"{securityOrigin}\" nhưng trình duyệt không sử dụng thuộc tính này. Hãy kiểm tra để đảm bảo rằng bạn đang sử dụng thuộc tính `crossorigin` đúng cách."
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "Hãy cân nhắc thêm các gợi ý về tài nguyên `preconnect` hoặc `dns-prefetch` để thiết lập kết nối sớm tới những nguồn gốc quan trọng của bên thứ ba. [Tìm hiểu cách kết nối trước với những nguồn gốc bắt buộc](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)."
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "Kết nối trước với các tên miền bắt buộc"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Đã phát hiện có hơn 2 đường kết nối `<link rel=preconnect>`. Bạn nên dùng những đường kết nối này một cách hợp lý và chỉ dùng cho các điểm gốc quan trọng nhất."
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "Đã tìm thấy `<link rel=preconnect>` cho \"{securityOrigin}\" nhưng trình duyệt không sử dụng thuộc tính này. Chỉ sử dụng `preconnect` cho những điểm gốc quan trọng mà trang chắc chắn sẽ yêu cầu."
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "URL của bản đồ"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "Trang có bản đồ nguồn hợp lệ"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` không chỉ tối ưu hoá ứng dụng của bạn cho các kích thước màn hình trên thiết bị di động mà còn ngăn [độ trễ 300 mili giây xảy ra đối với hoạt động đầu vào của người dùng](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Tìm hiểu thêm về cách sử dụng thẻ meta cửa sổ xem](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)."
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "Không tìm thấy thẻ `<meta name=\"viewport\">`"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "Không có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "Có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "Đây là công việc chặn chuỗi xảy ra trong quá trình đo lường Hoạt động tương tác với thời gian hiển thị tiếp theo. [Tìm hiểu thêm về chỉ số Hoạt động tương tác với thời gian hiển thị tiếp theo](https://web.dev/articles/inp)."
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "Khoảng thời gian dành cho sự kiện \"{interactionType}\" là {timeInMs, number, milliseconds} mili giây"
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "Mục tiêu của sự kiện"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "Giảm thiểu công việc trong hoạt động tương tác chính"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "Độ trễ khi nhập thông tin"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "Độ trễ khi trình bày"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "Thời gian xử lý"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "Giảm thiểu công việc trong hoạt động tương tác chính"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Đây là những cơ hội giúp cải thiện việc sử dụng ARIA trong ứng dụng của bạn, nhờ đó có thể nâng cao trải nghiệm cho người dùng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình."
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Tạo vấn đề"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "Quay lại phần kiểm tra"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ẩn"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "Vào cuối năm nay, các báo cáo kiểm tra thông tin chi tiết sẽ thay thế cho báo cáo kiểm tra hiệu suất. [Tìm hiểu thêm và đưa ra ý kiến phản hồi tại đây](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Dữ liệu của phòng thí nghiệm"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Đã xảy ra sự cố ảnh hưởng đến lần chạy Lighthouse này:"
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "Thử tính năng kiểm tra thông tin chi tiết"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Không thể phân bổ"

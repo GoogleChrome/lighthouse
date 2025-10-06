@@ -130,7 +130,6 @@ describe('Navigation', function() {
 
       await navigateToLighthouseTab(undefined, devToolsPage, inspectedPage);
 
-      // TODO: currently the "LighthouseReportRenderer.linkifyNodeDetails" doesn't run for swappable sections.
       await reportEl.$eval('.lh-button-insight-toggle', el => (el as HTMLElement).click());
 
       // Test element link behavior
@@ -196,7 +195,6 @@ describe('Navigation', function() {
 
       // [crbug.com/1347220] DevTools throttling can force resources to load slow enough for these audits to fail sometimes.
       const flakyAudits = [
-        'server-response-time',
         'render-blocking-resources',
         'render-blocking-insight',
         'document-latency-insight',

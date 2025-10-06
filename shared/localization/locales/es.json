@@ -647,44 +647,11 @@
   "core/audits/bootup-time.js | title": {
     "message": "Tiempo de ejecución de JavaScript"
   },
-  "core/audits/byte-efficiency/duplicated-javascript.js | description": {
-    "message": "Quita los módulos de JavaScript grandes y duplicados de los paquetes para reducir el número de bytes innecesarios que consume la actividad de red. "
-  },
-  "core/audits/byte-efficiency/duplicated-javascript.js | title": {
-    "message": "Quita los módulos duplicados de los paquetes de JavaScript"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "Los GIFs de gran tamaño no son eficientes para mostrar contenido animado. Para usar menos bytes de la red, te recomendamos que utilices los formatos de vídeo MPEG4 o WebM para incluir animaciones y los formatos PNG o WebP para añadir imágenes estáticas en lugar del formato GIF. [Más información sobre formatos de vídeo eficientes](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)"
-  },
-  "core/audits/byte-efficiency/efficient-animated-content.js | title": {
-    "message": "Usa formatos de vídeo para incluir contenido animado"
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Los polyfills y los transforms permiten que los navegadores antiguos utilicen las nuevas funciones de JavaScript. Sin embargo, muchos de estos polyfills y transforms no son necesarios para los navegadores modernos. Te recomendamos que modifiques tu proceso de compilación de JavaScript para que no transpile las funciones de [Baseline](https://web.dev/baseline), a menos que sepas que debes admitir navegadores antiguos. [Descubre por qué la mayoría de los sitios pueden implementar código ES6+ sin transpilación](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
-    "message": "Se ha detectado la versión 2 de core-js en la página. Debes actualizar a la versión 3 para disfrutar de muchas mejoras de rendimiento."
-  },
-  "core/audits/byte-efficiency/legacy-javascript.js | title": {
-    "message": "Evita usar JavaScript antiguo en navegadores modernos"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "Los formatos como WebP y AVIF suelen comprimir mejor las imágenes que los formatos PNG o JPEG, lo que hace que se descarguen más rápido y consuman menos datos. [Más información sobre formatos de imagen modernos](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)"
-  },
-  "core/audits/byte-efficiency/modern-image-formats.js | title": {
-    "message": "Publica imágenes con formatos de próxima generación"
-  },
   "core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Te recomendamos que uses la carga en diferido con imágenes ocultas y que no aparecen en pantalla una vez que todos los recursos críticos hayan terminado de cargarse para reducir el tiempo que pasa hasta que la página es interactiva. [Consulta cómo posponer las imágenes que no aparecen en pantalla](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/)"
   },
   "core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Pospón la carga de imágenes que no aparecen en pantalla"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Hay recursos que bloquean el primer renderizado de tu página. Te recomendamos que muestres los elementos de JavaScript y CSS críticos insertados y pospongas todos los que no sean esenciales. [Consulta cómo eliminar recursos que bloquean el renderizado](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)"
-  },
-  "core/audits/byte-efficiency/render-blocking-resources.js | title": {
-    "message": "Elimina los recursos que bloqueen el renderizado"
   },
   "core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "Si la carga útil de la red es muy grande, los usuarios consumen más datos móviles y las páginas tardan más en cargarse. [Consulta cómo reducir el tamaño de la carga útil](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)"
@@ -722,48 +689,6 @@
   "core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Reduce el contenido JavaScript que no se use"
   },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Una duración en caché más larga puede aumentar el número de visitas repetidas a tu página. [Más información sobre las políticas de caché eficaces](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
-    "message": "{itemCount,plural, =1{Se ha encontrado 1 recurso}other{Se han encontrado # recursos}}"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Publica recursos estáticos con una política de caché eficaz"
-  },
-  "core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
-    "message": "Usa una política de caché eficaz en recursos estáticos"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "Las imágenes optimizadas se cargan más rápido y consumen menos datos móviles. [Consulta cómo codificar imágenes de forma eficaz](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
-  },
-  "core/audits/byte-efficiency/uses-optimized-images.js | title": {
-    "message": "Codifica las imágenes de forma eficaz"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
-    "message": "Dimensiones reales"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
-    "message": "Dimensiones mostradas"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
-    "message": "Las imágenes eran más grandes que el tamaño mostrado"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
-    "message": "Las imágenes eran adecuadas para el tamaño mostrado"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "Muestra imágenes con un tamaño adecuado para ahorrar datos móviles y mejorar el tiempo de carga. [Consulta cómo cambiar el tamaño de las imágenes](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/)"
-  },
-  "core/audits/byte-efficiency/uses-responsive-images.js | title": {
-    "message": "Usa un tamaño adecuado para las imágenes"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Los recursos de texto se deberían publicar comprimidos (gzip, deflate o brotli) para minimizar el total de bytes de la red. [Más información sobre la compresión de texto](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)"
-  },
-  "core/audits/byte-efficiency/uses-text-compression.js | title": {
-    "message": "Habilita la compresión de texto"
-  },
   "core/audits/clickjacking-mitigation.js | columnSeverity": {
     "message": "Gravedad"
   },
@@ -775,15 +700,6 @@
   },
   "core/audits/clickjacking-mitigation.js | title": {
     "message": "Mitiga el secuestro de clics con XFO o CSP"
-  },
-  "core/audits/critical-request-chains.js | description": {
-    "message": "Las cadenas de solicitud crítica que se muestran a continuación indican qué recursos son de alta prioridad. Te recomendamos que reduzcas la longitud de las cadenas, disminuyas el tamaño de los recursos o pospongas la descarga de recursos innecesarios para mejorar la carga de la página. [Consulta cómo evitar encadenar solicitudes críticas](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/)"
-  },
-  "core/audits/critical-request-chains.js | displayValue": {
-    "message": "{itemCount,plural, =1{Se ha encontrado 1 cadena}other{Se han encontrado # cadenas}}"
-  },
-  "core/audits/critical-request-chains.js | title": {
-    "message": "Evita encadenar solicitudes críticas"
   },
   "core/audits/csp-xss.js | columnDirective": {
     "message": "Directiva"
@@ -860,33 +776,6 @@
   "core/audits/dobetterweb/doctype.js | title": {
     "message": "La página tiene el DOCTYPE de HTML"
   },
-  "core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Estadística"
-  },
-  "core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Valor"
-  },
-  "core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Los DOM de gran tamaño aumentan el uso de memoria, hacen que los [cálculos de estilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) duren más y generan costosas [redistribuciones del diseño](https://developers.google.com/speed/articles/reflow). [Consulta cómo evitar un tamaño de DOM excesivo](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)"
-  },
-  "core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 elemento}other{# elementos}}"
-  },
-  "core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Evita un tamaño excesivo de DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
-    "message": "Profundidad máxima de DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "Total de elementos DOM"
-  },
-  "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Número máximo de elementos secundarios"
-  },
-  "core/audits/dobetterweb/dom-size.js | title": {
-    "message": "Evita un tamaño excesivo de DOM"
-  },
   "core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Los usuarios dudan o desconfían de los sitios web que solicitan su ubicación sin contexto. Como alternativa, puedes vincular la solicitud a una acción del usuario. [Más información sobre el permiso de geolocalización](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/)"
   },
@@ -950,18 +839,6 @@
   "core/audits/dobetterweb/paste-preventing-inputs.js | title": {
     "message": "Permite que los usuarios peguen texto en campos de entrada"
   },
-  "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
-    "message": "Protocolo"
-  },
-  "core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 ofrece muchas ventajas con respecto a HTTP/1.1, como los encabezados binarios y la multiplexación. [Más información sobre HTTP/2](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)"
-  },
-  "core/audits/dobetterweb/uses-http2.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 solicitud no atendida mediante HTTP/2}other{# solicitudes no atendidas mediante HTTP/2}}"
-  },
-  "core/audits/dobetterweb/uses-http2.js | title": {
-    "message": "Usa HTTP/2"
-  },
   "core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
     "message": "Se recomienda que los procesadores de eventos táctiles y de la rueda sean `passive` para mejorar el desplazamiento de tu página. [Más información sobre cómo adoptar procesadores de eventos pasivos](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/)"
   },
@@ -979,18 +856,6 @@
   },
   "core/audits/errors-in-console.js | title": {
     "message": "No se ha registrado en la consola ningún error del navegador"
-  },
-  "core/audits/font-display.js | description": {
-    "message": "Usa la función CSS `font-display` para asegurarte de que los usuarios puedan ver el texto mientras se cargan las fuentes web. [Más información sobre `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/)"
-  },
-  "core/audits/font-display.js | failureTitle": {
-    "message": "Asegúrate de que el texto permanece visible mientras se carga la fuente web"
-  },
-  "core/audits/font-display.js | title": {
-    "message": "Todo el texto permanece visible mientras se carga la fuente web"
-  },
-  "core/audits/font-display.js | undeclaredFontOriginWarning": {
-    "message": "{fontCountForOrigin,plural, =1{Lighthouse no ha podido comprobar automáticamente el valor `font-display` de la URL de origen: {fontOrigin}.}other{Lighthouse no ha podido comprobar automáticamente los valores `font-display` de la URL de origen: {fontOrigin}.}}"
   },
   "core/audits/has-hsts.js | columnDirective": {
     "message": "Directiva"
@@ -1088,63 +953,6 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Permitida con advertencia"
   },
-  "core/audits/largest-contentful-paint-element.js | columnPercentOfLCP": {
-    "message": "Porcentaje de LCP"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnPhase": {
-    "message": "Fase"
-  },
-  "core/audits/largest-contentful-paint-element.js | columnTiming": {
-    "message": "Tiempos"
-  },
-  "core/audits/largest-contentful-paint-element.js | description": {
-    "message": "Este es el mayor elemento con contenido renderizado en el viewport. [Más información sobre el renderizado del mayor elemento con contenido](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadDelay": {
-    "message": "Retraso de carga"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemLoadTime": {
-    "message": "Tiempo de carga"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemRenderDelay": {
-    "message": "Retraso de renderizado"
-  },
-  "core/audits/largest-contentful-paint-element.js | itemTTFB": {
-    "message": "TTFB"
-  },
-  "core/audits/largest-contentful-paint-element.js | title": {
-    "message": "Renderizado del mayor elemento con contenido"
-  },
-  "core/audits/layout-shifts.js | columnScore": {
-    "message": "Puntuación del cambio de diseño"
-  },
-  "core/audits/layout-shifts.js | description": {
-    "message": "Estos son los mayores cambios de diseño que se han observado en la página. Cada entrada de la tabla representa un solo cambio de diseño y muestra el elemento que más ha cambiado. Debajo de cada elemento se indican las posibles causas que han provocado el cambio de diseño. Puede que algunos de estos cambios de diseño no se incluyan en el valor de la métrica de CLS debido a la [normalización](https://web.dev/articles/cls#what_is_cls). [Descubre cómo mejorar el CLS](https://web.dev/articles/optimize-cls)"
-  },
-  "core/audits/layout-shifts.js | displayValueShiftsFound": {
-    "message": "{shiftCount,plural, =1{1 cambio de diseño detectado}other{# cambios de diseño detectados}}"
-  },
-  "core/audits/layout-shifts.js | rootCauseFontChanges": {
-    "message": "Fuente web cargada"
-  },
-  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
-    "message": "Iframe inyectado"
-  },
-  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
-    "message": "Elemento multimedia sin tamaño concreto"
-  },
-  "core/audits/layout-shifts.js | title": {
-    "message": "Evitar cambios de diseño importantes"
-  },
-  "core/audits/lcp-lazy-loaded.js | description": {
-    "message": "Las imágenes de la parte visible a primera vista que se cargan en diferido se renderizan más tarde en el ciclo de vida de la página, lo que puede retrasar el renderizado del mayor elemento con contenido. [Más información sobre la carga en diferido óptima](https://web.dev/articles/lcp-lazy-loading)"
-  },
-  "core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "La imagen del renderizado del mayor elemento con contenido se ha cargado en diferido"
-  },
-  "core/audits/lcp-lazy-loaded.js | title": {
-    "message": "La imagen del renderizado del mayor elemento con contenido no se ha cargado en diferido"
-  },
   "core/audits/long-tasks.js | description": {
     "message": "Enumera las tareas más largas del hilo principal, lo que es útil para identificar las que más contribuyen a la latencia. [Consulta cómo evitar tareas largas del hilo principal](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -1205,33 +1013,6 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latencias de backend del servidor"
   },
-  "core/audits/non-composited-animations.js | description": {
-    "message": "Las animaciones no compuestas pueden aparecer entrecortadas e incrementar el CLS. [Consulta cómo evitar las animaciones no compuestas](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
-  },
-  "core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount,plural, =1{# elemento animado encontrado}other{# elementos animados encontrados}}"
-  },
-  "core/audits/non-composited-animations.js | filterMayMovePixels": {
-    "message": "La propiedad \"filter\" relacionada puede tener píxeles en movimiento"
-  },
-  "core/audits/non-composited-animations.js | incompatibleAnimations": {
-    "message": "El destino contiene otra animación no compatible"
-  },
-  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
-    "message": "El efecto tiene un modo compuesto distinto de \"replace\""
-  },
-  "core/audits/non-composited-animations.js | title": {
-    "message": "Evita las animaciones no compuestas"
-  },
-  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
-    "message": "La propiedad \"transform\" relacionada depende del tamaño de la caja"
-  },
-  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
-    "message": "{propertyCount,plural, =1{Propiedad CSS no admitida: {properties}}other{Propiedades CSS no admitidas: {properties}}}"
-  },
-  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
-    "message": "Este efecto incluye parámetros de temporización no compatibles"
-  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Directiva"
   },
@@ -1250,12 +1031,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Asegúrate de que el aislamiento de orígenes sea adecuado con COOP"
   },
-  "core/audits/prioritize-lcp-image.js | description": {
-    "message": "Si el elemento LCP se añade de forma dinámica a la página, tendrás que precargar la imagen para mejorar el LCP. [Más información sobre cómo precargar los elementos LCP](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)"
-  },
-  "core/audits/prioritize-lcp-image.js | title": {
-    "message": "Precargar la imagen de renderizado del mayor elemento con contenido"
-  },
   "core/audits/redirects-http.js | description": {
     "message": "Asegúrate de redirigir todo el tráfico HTTP a HTTPS para habilitar funciones web seguras para todos los usuarios. [Más información](https://developer.chrome.com/docs/lighthouse/pwa/redirects-http/)"
   },
@@ -1264,12 +1039,6 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Redirige el tráfico HTTP a HTTPS"
-  },
-  "core/audits/redirects.js | description": {
-    "message": "Las redirecciones provocan retrasos adicionales antes de que la página se pueda cargar. [Consulta cómo evitar las redirecciones de página](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
-  },
-  "core/audits/redirects.js | title": {
-    "message": "Evita que haya varias redirecciones de página"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Los enlaces canónicos sugieren qué URL se debe mostrar en los resultados de búsqueda. [Más información sobre los enlaces canónicos](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1388,18 +1157,6 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt es válido"
   },
-  "core/audits/server-response-time.js | description": {
-    "message": "Mantén breve el tiempo de respuesta del servidor para el documento principal, puesto que todas las demás solicitudes dependen de él. [Más información sobre la métrica Tiempo hasta el primer byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
-  },
-  "core/audits/server-response-time.js | displayValue": {
-    "message": "El documento raíz ha tardado {timeInMs, number, milliseconds} ms"
-  },
-  "core/audits/server-response-time.js | failureTitle": {
-    "message": "Reducir el tiempo de respuesta inicial del servidor"
-  },
-  "core/audits/server-response-time.js | title": {
-    "message": "El tiempo de respuesta inicial del servidor fue breve"
-  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Las cookies de terceros podrían estar bloqueadas en algunos contextos. [Más información sobre cómo prepararse para las restricciones de las cookies de terceros](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1411,21 +1168,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "No usa cookies de terceros"
-  },
-  "core/audits/third-party-summary.js | columnThirdParty": {
-    "message": "Proveedor externo"
-  },
-  "core/audits/third-party-summary.js | description": {
-    "message": "El código externo puede afectar mucho a la velocidad de carga. Limita el número de proveedores externos redundantes e intenta cargar el código externo cuando se haya completado la carga principal de tu página. [Consulta cómo minimizar el impacto de terceros](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "core/audits/third-party-summary.js | displayValue": {
-    "message": "El código de un tercero ha bloqueado el hilo principal durante {timeInMs, number, milliseconds} ms"
-  },
-  "core/audits/third-party-summary.js | failureTitle": {
-    "message": "Reduce el impacto del código de terceros"
-  },
-  "core/audits/third-party-summary.js | title": {
-    "message": "Reducir el uso de código de terceros"
   },
   "core/audits/trusted-types-xss.js | columnSeverity": {
     "message": "Gravedad"
@@ -1439,15 +1181,6 @@
   "core/audits/trusted-types-xss.js | title": {
     "message": "Mitigar el XSS basado en DOM con Trusted Types"
   },
-  "core/audits/unsized-images.js | description": {
-    "message": "En los elementos de imagen, especifica un ancho y una altura explícitos para reducir los cambios de diseño y mejorar el CLS. [Consulta cómo configurar las dimensiones de una imagen](https://web.dev/articles/optimize-cls#images_without_dimensions)"
-  },
-  "core/audits/unsized-images.js | failureTitle": {
-    "message": "Los elementos de imagen no tienen `width` y `height` explícitos"
-  },
-  "core/audits/unsized-images.js | title": {
-    "message": "Los elementos de imagen tienen `width` y `height` explícitos"
-  },
   "core/audits/user-timings.js | columnType": {
     "message": "Tipo"
   },
@@ -1459,21 +1192,6 @@
   },
   "core/audits/user-timings.js | title": {
     "message": "Medidas y marcas de User Timing"
-  },
-  "core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Se ha encontrado un elemento `<link rel=preconnect>` para \"{securityOrigin}\", pero el navegador no lo ha usado. Comprueba que el atributo `crossorigin` se esté usando correctamente."
-  },
-  "core/audits/uses-rel-preconnect.js | description": {
-    "message": "Puedes añadir sugerencias de recursos `preconnect` o `dns-prefetch` para establecer conexiones previas con orígenes importantes de terceros. [Consulta cómo establecer conexión previamente con orígenes necesarios](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/)"
-  },
-  "core/audits/uses-rel-preconnect.js | title": {
-    "message": "Establece conexión previamente con los orígenes necesarios"
-  },
-  "core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Se han encontrado más de 2 conexiones `<link rel=preconnect>`. Se deben usar con moderación y solo deben conectar con los orígenes más importantes."
-  },
-  "core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "Se ha encontrado un elemento `<link rel=preconnect>` para \"{securityOrigin}\", pero el navegador no lo ha usado. Usa `preconnect` solo para los orígenes importantes que seguramente solicitará la página."
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "URL de mapa"
@@ -1492,42 +1210,6 @@
   },
   "core/audits/valid-source-maps.js | title": {
     "message": "La página tiene mapas de origen válidos"
-  },
-  "core/audits/viewport.js | description": {
-    "message": "El `<meta name=\"viewport\">` no solo optimiza tu aplicación para los tamaños de pantalla de los dispositivos móviles, sino que también evita [el retraso de 300 milisegundos de las entradas del usuario](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Más información sobre cómo usar la etiqueta meta de viewport](https://developer.chrome.com/docs/lighthouse/pwa/viewport/)"
-  },
-  "core/audits/viewport.js | explanationNoTag": {
-    "message": "No se ha encontrado ninguna etiqueta `<meta name=\"viewport\">`"
-  },
-  "core/audits/viewport.js | failureTitle": {
-    "message": "No tiene una etiqueta `<meta name=\"viewport\">` con `width` o `initial-scale`"
-  },
-  "core/audits/viewport.js | title": {
-    "message": "Contiene una etiqueta `<meta name=\"viewport\">` con `width` o `initial-scale`"
-  },
-  "core/audits/work-during-interaction.js | description": {
-    "message": "Se trata del trabajo de bloqueo del hilo que se produce mientras se aplica la métrica Interacción con el siguiente renderizado. [Más información sobre la métrica Interacción con el siguiente renderizado](https://web.dev/articles/inp)"
-  },
-  "core/audits/work-during-interaction.js | displayValue": {
-    "message": "{timeInMs, number, milliseconds} ms invertidos en el evento \"{interactionType}\""
-  },
-  "core/audits/work-during-interaction.js | eventTarget": {
-    "message": "Objetivo de evento"
-  },
-  "core/audits/work-during-interaction.js | failureTitle": {
-    "message": "Minimizar el trabajo durante una interacción clave"
-  },
-  "core/audits/work-during-interaction.js | inputDelay": {
-    "message": "Latencia de la interacción"
-  },
-  "core/audits/work-during-interaction.js | presentationDelay": {
-    "message": "Retraso de la presentación"
-  },
-  "core/audits/work-during-interaction.js | processingDuration": {
-    "message": "Duración del procesamiento"
-  },
-  "core/audits/work-during-interaction.js | title": {
-    "message": "Minimiza el trabajo durante una interacción clave"
   },
   "core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "A continuación se indican consejos para optimizar el uso de ARIA en tu aplicación, lo que puede mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
@@ -3581,14 +3263,8 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Notificar un problema"
   },
-  "report/renderer/report-utils.js | goBackToAudits": {
-    "message": "Volver a las auditorías"
-  },
   "report/renderer/report-utils.js | hide": {
     "message": "Ocultar"
-  },
-  "report/renderer/report-utils.js | insightsNotice": {
-    "message": "A finales de este año, las estadísticas reemplazarán a las auditorías de rendimiento. [Más información y comentarios](https://github.com/GoogleChrome/lighthouse/discussions/16462)"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Datos de experimentos"
@@ -3688,9 +3364,6 @@
   },
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Algunos problemas han afectado a la ejecución de Lighthouse:"
-  },
-  "report/renderer/report-utils.js | tryInsights": {
-    "message": "Probar las estadísticas"
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "No atribuible"

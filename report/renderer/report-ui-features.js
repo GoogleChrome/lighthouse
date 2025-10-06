@@ -40,7 +40,6 @@ export class ReportUIFeatures {
     this._opts = opts;
 
     this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
-    this._tablesHandledFor3p = new WeakSet();
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
   }
 
@@ -60,9 +59,6 @@ export class ReportUIFeatures {
     this._setupMediaQueryListeners();
     this._setupThirdPartyFilter();
     this._setupElementScreenshotOverlay(this._dom.rootEl);
-
-    // TODO(v13): remove.
-    this._dom._onSwap = () => this._setupThirdPartyFilter();
 
     // Do not query the system preferences for DevTools - DevTools should only apply dark theme
     // if dark is selected in the settings panel.
@@ -215,10 +211,13 @@ export class ReportUIFeatures {
   }
 
   _setupThirdPartyFilter() {
+    // Note: do not remove deleted audits from the below arrays.
+
     // Some audits should not display the third party filter option.
     const thirdPartyFilterAuditExclusions = [
       // These audits deal explicitly with third party resources.
       'uses-rel-preconnect',
+      'third-party-facades',
       // Too much work to support.
       'network-dependency-tree-insight',
     ];
@@ -241,15 +240,6 @@ export class ReportUIFeatures {
       });
 
     tablesWithUrls.forEach((tableEl) => {
-      // The "toggle insights/audits" button means that not all tables are on the DOM on init.
-      // So we call this whole setup function multiple times for now, once every time we toggle.
-      // TODO(v13): remove.
-      if (this._tablesHandledFor3p.has(tableEl)) {
-        return;
-      }
-
-      this._tablesHandledFor3p.add(tableEl);
-
       const rowEls = getTableRows(tableEl);
       const nonSubItemRows = rowEls.filter(rowEl => !rowEl.classList.contains('lh-sub-item-row'));
       const thirdPartyRowEls = this._getThirdPartyRows(nonSubItemRows,

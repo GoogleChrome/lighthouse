@@ -407,7 +407,7 @@ describe('UserFlow', () => {
       const flowConfig = {
         extends: 'lighthouse:default',
         settings: {
-          skipAudits: ['uses-http2'],
+          skipAudits: ['modern-http-insight'],
         },
       };
 
@@ -459,7 +459,7 @@ describe('UserFlow', () => {
           {
             resolvedConfig: {
               settings: {
-                skipAudits: ['uses-http2'],
+                skipAudits: ['modern-http-insight'],
               },
             },
           },

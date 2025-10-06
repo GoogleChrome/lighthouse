@@ -8,7 +8,7 @@
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    onlyAudits: ['viewport'],
+    onlyAudits: ['viewport-insight'],
   },
 };
 

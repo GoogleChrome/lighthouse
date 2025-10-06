@@ -34,7 +34,6 @@ describe('CLI run', function() {
 
       const samplev2ArtifactsPath = LH_ROOT + '/core/test/results/artifacts/';
 
-
       const flags = getFlags([
         '--output=json',
         `--output-path=${filename}`,
@@ -61,13 +60,14 @@ describe('CLI run', function() {
 
     it('returns results that match the saved results', () => {
       const {lhr} = passedResults;
-      assert.equal(fileResults.audits.viewport.score, 1);
+      assert.equal(fileResults.audits['viewport-insight'].score, 1);
 
       // passed results match saved results
       assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);
       assert.strictEqual(fileResults.requestedUrl, lhr.requestedUrl);
       assert.strictEqual(fileResults.finalDisplayedUrl, lhr.finalDisplayedUrl);
-      assert.strictEqual(fileResults.audits.viewport.score, lhr.audits.viewport.score);
+      assert.strictEqual(
+        fileResults.audits['viewport-insight'].score, lhr.audits['viewport-insight'].score);
       assert.strictEqual(
           Object.keys(fileResults.audits).length,
           Object.keys(lhr.audits).length);

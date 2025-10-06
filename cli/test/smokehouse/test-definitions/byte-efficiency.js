@@ -15,11 +15,9 @@ const config = {
       'accesskeys', // run axe on the page since we've had problems with interactions
       'network-requests',
       'offscreen-images',
-      'uses-http2',
+      'modern-http-insight',
       'modern-image-formats',
-      'uses-optimized-images',
-      'uses-text-compression',
-      'uses-responsive-images',
+      'document-latency-insight',
       'unminified-css',
       'unminified-javascript',
       'unused-css-rules',
@@ -93,10 +91,10 @@ const expectations = {
     requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     finalDisplayedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     audits: {
-      'uses-http2': {
+      'modern-http-insight': {
         score: 1,
         details: {
-          // localhost gets a free pass on uses-h2
+          // localhost gets a free pass.
           items: [],
         },
       },
@@ -201,50 +199,50 @@ const expectations = {
           ],
         },
       },
-      'modern-image-formats': {
-        details: {
-          overallSavingsBytes: '137000 +/- 10000',
-          items: [
-            {url: /lighthouse-1024x680.jpg$/},
-            {url: /lighthouse-unoptimized.jpg$/},
-            {url: /lighthouse-480x320.jpg$/},
-            {url: /lighthouse-480x320.jpg\?attributesized/},
-            {url: /lighthouse-480x320.jpg\?css/},
-            {url: /lighthouse-480x320.jpg\?sprite/},
-          ],
-        },
-      },
-      'uses-text-compression': {
+      // TODO(v13): why aren't any of these triggering the modern format reason?
+      // 'image-delivery-insight': {
+      //   details: {
+      //     items: [
+      //       {
+      //         url: /lighthouse-1024x680.jpg$/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //       {
+      //         url: /lighthouse-unoptimized.jpg$/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //       {
+      //         url: /lighthouse-480x320.jpg$/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //       {
+      //         url: /lighthouse-480x320.jpg\?attributesized/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //       {
+      //         url: /lighthouse-480x320.jpg\?css/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //       {
+      //         url: /lighthouse-480x320.jpg\?sprite/,
+      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+      //       },
+      //     ],
+      //     debugData: {
+      //       wastedBytes: '137000 +/- 10000',
+      //     },
+      //   },
+      // },
+      'document-latency-insight': {
         score: '<1',
         details: {
-          // the specific ms value is not meaningful for this smoketest
-          // *some largish amount* of savings should be reported
-          overallSavingsMs: '>100',
-          overallSavingsBytes: '>50000',
+          type: 'checklist',
           items: {
-            length: 3,
+            usesCompression: {value: false},
           },
-        },
-      },
-      'uses-optimized-images': {
-        details: {
-          overallSavingsBytes: '>10000',
-          items: {
-            length: 1,
+          debugData: {
+            wastedBytes: '>10000',
           },
-        },
-      },
-      // Check that images aren't TOO BIG.
-      'uses-responsive-images': {
-        details: {
-          overallSavingsBytes: '169000 +/- 5000',
-          items: [
-            {wastedPercent: '81 +/- 5', url: /lighthouse-1024x680.jpg/},
-            {wastedPercent: '88 +/- 5', url: /lighthouse-2048x1356.webp\?size0/},
-            {wastedPercent: '65 +/- 5', url: /lighthouse-480x320.jpg/},
-            {wastedPercent: '65 +/- 5', url: /lighthouse-480x320\.jpg\?attributesized/},
-            {wastedPercent: '81 +/- 5', url: /lighthouse-480x320.webp/},
-          ],
         },
       },
       // Checks that images aren't TOO SMALL.

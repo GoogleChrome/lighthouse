@@ -127,7 +127,7 @@ describe('Runner', () => {
       artifacts: [
         {id: 'MetaElements', gatherer: 'meta-elements'},
       ],
-      audits: ['viewport'],
+      audits: ['seo/meta-description'],
       settings,
     }).then(r => r.resolvedConfig);
     const artifactsPath = '.tmp/test_artifacts';
@@ -190,7 +190,7 @@ describe('Runner', () => {
           auditMode: moduleDir + '/fixtures/artifacts/perflog/',
         },
         audits: [
-          'viewport',
+          'seo/meta-description',
         ],
       });
 
@@ -314,7 +314,7 @@ describe('Runner', () => {
         gatherer: 'meta-elements',
       }],
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
     });
 
@@ -392,7 +392,7 @@ describe('Runner', () => {
         gatherer: 'meta-elements',
       }],
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
     });
     const options1 = {resolvedConfig, driverMock, computedCache: new Map()};
@@ -465,7 +465,7 @@ describe('Runner', () => {
         },
         audits: [
           // requires the MetaElements artifact
-          'viewport',
+          'seo/meta-description',
         ],
         artifacts: [
           {id: 'MetaElements', gatherer: 'meta-elements'},
@@ -473,7 +473,7 @@ describe('Runner', () => {
       });
 
       return runGatherAndAudit({}, {resolvedConfig}).then(results => {
-        const auditResult = results.lhr.audits['viewport'];
+        const auditResult = results.lhr.audits['meta-description'];
         assert.strictEqual(auditResult.score, null);
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
         assert.ok(auditResult.errorMessage.includes('MetaElements'));
@@ -502,7 +502,7 @@ describe('Runner', () => {
         },
         audits: [
           // requires MetaElements artifact
-          'viewport',
+          'seo/meta-description',
         ],
         artifacts: [
           {id: 'MetaElements', gatherer: 'meta-elements'},
@@ -510,7 +510,7 @@ describe('Runner', () => {
       });
 
       const results = await runGatherAndAudit({}, {resolvedConfig});
-      const auditResult = results.lhr.audits['viewport'];
+      const auditResult = results.lhr.audits['meta-description'];
       assert.strictEqual(auditResult.score, null);
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
@@ -684,7 +684,7 @@ describe('Runner', () => {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
-        'critical-request-chains',
+        'network-requests',
       ],
       artifacts: [
         {id: 'Trace', gatherer: 'trace'},
@@ -696,8 +696,8 @@ describe('Runner', () => {
 
     return runGatherAndAudit({}, {resolvedConfig, computedCache: new Map()}).then(results => {
       const audits = results.lhr.audits;
-      assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
-      assert.equal(audits['critical-request-chains'].details.longestChain.transferSize, 2468);
+      const audit = audits['network-requests'];
+      assert.equal(audit.details.items.length, 76);
     });
   });
 
@@ -722,7 +722,7 @@ describe('Runner', () => {
     const url = 'https://example.com/';
     const {resolvedConfig} = await initializeConfig('navigation', {
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
       artifacts: [
         {id: 'MetaElements', gatherer: 'meta-elements'},
@@ -734,7 +734,7 @@ describe('Runner', () => {
       assert.ok(results.lhr.lighthouseVersion);
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.requestedUrl, url);
-      assert.equal(results.lhr.audits['viewport'].id, 'viewport');
+      assert.equal(results.lhr.audits['meta-description'].id, 'meta-description');
       expect(mockGatherImpl).toHaveBeenCalled();
     });
   });
@@ -747,14 +747,14 @@ describe('Runner', () => {
         gatherer: 'meta-elements',
       }],
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
       categories: {
         category: {
           title: 'Category',
           description: '',
           auditRefs: [
-            {id: 'viewport', weight: 1},
+            {id: 'meta-description', weight: 1},
           ],
         },
       },
@@ -766,8 +766,8 @@ describe('Runner', () => {
       assert.ok(results.lhr.lighthouseVersion);
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.requestedUrl, url);
-      assert.equal(results.lhr.audits['viewport'].id, 'viewport');
-      assert.equal(results.lhr.categories.category.auditRefs[0].id, 'viewport');
+      assert.equal(results.lhr.audits['meta-description'].id, 'meta-description');
+      assert.equal(results.lhr.categories.category.auditRefs[0].id, 'meta-description');
     });
   });
 
@@ -787,7 +787,7 @@ describe('Runner', () => {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
     });
 
@@ -805,7 +805,7 @@ describe('Runner', () => {
       ],
 
       audits: [
-        'viewport',
+        'seo/meta-description',
       ],
     });
 

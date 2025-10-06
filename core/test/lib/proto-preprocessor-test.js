@@ -85,7 +85,7 @@ Object {
   it('cleans up audits', () => {
     const input = {
       'audits': {
-        'critical-request-chains': {
+        'network-dependency-tree': {
           'scoreDisplayMode': 'not-applicable',
           'numericValue': 14.3,
           'displayValue': ['hello %d', 123],
@@ -94,7 +94,7 @@ Object {
     };
     const expectation = {
       'audits': {
-        'critical-request-chains': {
+        'network-dependency-tree': {
           'scoreDisplayMode': 'notApplicable',
           'displayValue': 'hello %d | 123',
         },
@@ -125,7 +125,7 @@ Object {
   it('removes empty strings', () => {
     const input = {
       'audits': {
-        'critical-request-chains': {
+        'network-dependency-tree': {
           'details': {
             'chains': {
               '1': '',
@@ -148,7 +148,7 @@ Object {
     };
     const expectation = {
       'audits': {
-        'critical-request-chains': {
+        'network-dependency-tree': {
           'details': {
             'chains': {},
           },
@@ -173,7 +173,7 @@ Object {
 
     const input = {
       'audits': {
-        'critical-request-chains': {
+        'network-dependency-tree': {
           'details': {
             'chains': {
               '1': 'hello \uD83E',
@@ -184,7 +184,7 @@ Object {
     };
     const output = processForProto(input);
 
-    expect(output.audits['critical-request-chains'].details.chains[1]).toEqual('hello �');
+    expect(output.audits['network-dependency-tree'].details.chains[1]).toEqual('hello �');
   });
 });
 

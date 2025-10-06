@@ -12,7 +12,7 @@ function stall(ms) {
   while (performance.now() - start < ms) ;
 }
 
-// largest-contentful-paint-element: add the largest element later in page load
+// lcp-breakdown-insight: add the largest element later in page load
 // layout-shifts: shift down the `<h1>` in the page
 setTimeout(() => {
   const imgEl = document.createElement('img');
