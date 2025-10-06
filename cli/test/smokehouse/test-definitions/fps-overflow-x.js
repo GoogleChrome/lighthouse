@@ -33,14 +33,14 @@ const expectations = {
       nodes: {
         _includes: [
           [
-            /-BODY$/,
+            /-HTML$/,
             {
-              top: 21,
-              bottom: 58,
-              left: 8,
-              right: 816,
-              width: 808,
-              height: 37,
+              top: 0,
+              bottom: 80,
+              left: 0,
+              right: 824,
+              width: 824,
+              height: 80,
             },
           ],
           [

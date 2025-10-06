@@ -69,7 +69,7 @@ describe('Snapshot', function() {
     });
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-    assert.lengthOf(auditResults, 87);
+    assert.lengthOf(auditResults, 84);
     assert.deepEqual(erroredAudits, []);
     assert.deepEqual(failedAudits.map(audit => audit.id), [
       'document-title',

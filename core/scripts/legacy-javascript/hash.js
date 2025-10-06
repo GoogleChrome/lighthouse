@@ -21,7 +21,7 @@ export function makeHash() {
     .update(fs.readFileSync(`${LH_ROOT}/core/lib/legacy-javascript/legacy-javascript.js`, 'utf8'))
     .update(fs.readFileSync(`${LH_ROOT}/core/lib/legacy-javascript/polyfill-graph-data.json`, 'utf8'))
     .update(fs.readFileSync(`${LH_ROOT}/core/lib/legacy-javascript/polyfill-module-data.json`, 'utf8'))
-    .update(fs.readFileSync(`${LH_ROOT}/core/audits/byte-efficiency/legacy-javascript.js`, 'utf8'))
+    .update(fs.readFileSync(`${LH_ROOT}/core/audits/insights/legacy-javascript-insight.js`, 'utf8'))
     /* eslint-enable max-len */
     .digest('hex');
 }
