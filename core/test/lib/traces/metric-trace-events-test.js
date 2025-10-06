@@ -9,7 +9,7 @@ import assert from 'assert/strict';
 import {MetricTraceEvents} from '../../../lib/traces/metric-trace-events.js';
 import {readJson} from '../../test-utils.js';
 
-const dbwTrace = readJson('../../results/artifacts/defaultPass.trace.json', import.meta);
+const dbwTrace = readJson('../../results/artifacts/trace.json', import.meta);
 const dbwResults = readJson('../../results/sample_v2.json', import.meta);
 
 describe('metrics events class', () => {

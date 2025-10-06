@@ -515,8 +515,8 @@ class MainThreadTasks {
       if (!url) continue;
       // Add unique URLs to our overall tree.
       if (!allURLsInTree.includes(url)) allURLsInTree.push(url);
-      // Don't add consecutive, duplicate URLs
-      if (attributableURLs[attributableURLs.length - 1] === url) continue;
+      // Don't add duplicate URLs
+      if (attributableURLs.includes(url)) continue;
       attributableURLs.push(url);
     }
 

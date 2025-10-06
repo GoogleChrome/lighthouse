@@ -12,8 +12,6 @@ import fs from 'fs';
 import {execFile} from 'child_process';
 import {promisify} from 'util';
 
-import fetch from 'node-fetch';
-
 import defaultTestUrls from './urls.js';
 import * as common from './common.js';
 import {LH_ROOT} from '../../../../shared/root.js';
@@ -104,8 +102,8 @@ async function runUnthrottledLocally(url) {
   });
   const lhr = JSON.parse(stdout);
   assertLhr(lhr);
-  const devtoolsLog = fs.readFileSync(`${artifactsFolder}/defaultPass.devtoolslog.json`, 'utf-8');
-  const trace = fs.readFileSync(`${artifactsFolder}/defaultPass.trace.json`, 'utf-8');
+  const devtoolsLog = fs.readFileSync(`${artifactsFolder}/devtoolslog.json`, 'utf-8');
+  const trace = fs.readFileSync(`${artifactsFolder}/trace.json`, 'utf-8');
   return {
     devtoolsLog,
     lhr: JSON.stringify(lhr),

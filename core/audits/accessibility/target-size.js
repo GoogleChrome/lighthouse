@@ -13,9 +13,9 @@ import AxeAudit from './axe-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
-  /** Title of an accesibility audit that checks if all touch targets have sufficient size and spacing. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accessibility audit that checks if all touch targets have sufficient size and spacing. This title is descriptive of the successful state and is shown to users when no user action is required. */
   title: 'Touch targets have sufficient size and spacing.',
-  /** Title of an accesibility audit that checks if all touch targets have sufficient size and spacing. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  /** Title of an accessibility audit that checks if all touch targets have sufficient size and spacing. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'Touch targets do not have sufficient size or spacing.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Touch targets with sufficient size and spacing help users who may have ' +

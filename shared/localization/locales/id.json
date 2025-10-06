@@ -660,7 +660,7 @@
     "message": "Gunakan format video untuk konten animasi"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill dan transformasi memungkinkan browser lama menggunakan fitur JavaScript yang baru. Namun, banyak di antara fitur tersebut yang tidak diperlukan browser modern. Pertimbangkan untuk mengubah proses build JavaScript Anda agar tidak mentranspilasi fitur [Baseline](https://web.dev/baseline), kecuali jika Anda tahu bahwa Anda harus mendukung browser lama. [Pelajari alasan sebagian besar situs dapat men-deploy kode ES6+ tanpa mentranspilasi](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Versi 2 dari core-js terdeteksi di halaman. Anda harus mengupgrade ke versi 3 untuk mendapatkan berbagai peningkatan performa."
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Memastikan isolasi origin yang tepat dengan COOP"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "Pramuat font `optional` agar pengunjung kali pertama dapat menggunakannya. [Pelajari lebih lanjut cara pramuat font](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "Font dengan `font-display: optional` tidak dipramuat"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "Font dengan `font-display: optional` telah dipramuat"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "Jika elemen LCP ditambahkan secara dinamis ke halaman, Anda harus melakukan pramuat gambar untuk mengoptimalkan waktu LCP. [Pelajari lebih lanjut cara melakukan pramuat elemen LCP](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Link dapat di-crawl"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Teks tambahan yang tidak terbaca"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Ukuran Font"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% Teks Halaman"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Pemilih"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Ukuran font di bawah 12 piksel terlalu kecil untuk dapat dibaca dan memaksa pengunjung seluler “mencubit untuk memperbesar\" agar dapat membacanya. Usahakan untuk menampilkan >60% teks halaman dalam ukuran ≥12 piksel. [Pelajari lebih lanjut ukuran font yang dapat dibaca](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "Teks yang dapat dibaca {decimalProportion, number, extendedPercent}"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Teks tidak terbaca karena tidak ada tag meta viewport yang dioptimalkan untuk layar seluler."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "Dokumen tidak menggunakan ukuran font yang terbaca"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Teks yang dapat dibaca"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "Dokumen menggunakan ukuran font yang terbaca"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "Link hreflang memberi tahu mesin telusur versi halaman yang harus dicantumkan dalam hasil penelusuran untuk wilayah atau bahasa tertentu. [Pelajari lebih lanjut `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
@@ -1440,7 +1401,7 @@
     "message": "Respons server awal memakan waktu singkat"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome beralih ke pengalaman baru yang memungkinkan pengguna memilih untuk menjelajah tanpa cookie pihak ketiga. [Pelajari lebih lanjut cookie pihak ketiga](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Cookie pihak ketiga mungkin diblokir dalam beberapa konteks. [Pelajari lebih lanjut cara mempersiapkan pembatasan cookie pihak ketiga](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 cookie ditemukan}other{# cookie ditemukan}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Menghindari cookie pihak ketiga"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (Keberhasilan Dukungan Pelanggan)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (Pemasaran)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (Media Sosial)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (Video)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "Produk"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "Beberapa sematan pihak ketiga dapat lambat dimuat. Sebaiknya ganti sematan dengan facade sampai diperlukan. [Pelajari cara menunda pihak ketiga dengan facade](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)."
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{# alternatif fasad tersedia}other{# alternatif fasad tersedia}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "Beberapa resource pihak ketiga dapat lambat dimuat dengan fasad"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "Memuat lambat resource pihak ketiga dengan fasad"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Pihak Ketiga"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Meminimalkan penggunaan pihak ketiga"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Keparahan"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Perintah `require-trusted-types-for` dalam header `Content-Security-Policy` (CSP) menginstruksikan agen pengguna untuk mengontrol data yang dikirim ke fungsi sink DOM XSS. [Pelajari lebih lanjut cara memitigasi XSS berbasis DOM dengan Trusted Types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Header `Content-Security-Policy` dengan perintah Trusted Types tidak ditemukan"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Memitigasi XSS berbasis DOM dengan Trusted Types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Setel lebar dan tinggi yang jelas pada elemen gambar untuk mengurangi pergeseran tata letak dan memperbaiki CLS. [Pelajari cara menyetel dimensi gambar](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "Sebuah `<link rel=preconnect>` ditemukan untuk \"{securityOrigin}\", tetapi tidak digunakan oleh browser. Hanya gunakan `preconnect` untuk asal yang penting dan pasti akan diminta halaman."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Sebuah `<link>` pramuat ditemukan untuk \"{preloadURL}\", tetapi tidak digunakan oleh browser. Pastikan Anda menggunakan atribut `crossorigin` dengan benar."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "Sebaiknya gunakan `<link rel=preload>` untuk memprioritaskan pengambilan resource yang saat ini diminta selama pemuatan halaman. [Pelajari cara melakukan pramuat permintaan kunci](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "Muat permintaan utama terlebih dahulu"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "URL Peta"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Penyempurnaan First Paint"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Insight ini juga tersedia di Panel Performa Chrome DevTools - [rekam aktivitas](https://developer.chrome.com/docs/devtools/performance/reference) untuk melihat informasi yang lebih mendetail."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Insight"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrik"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Menyempurnakan pengalaman pemuatan halaman keseluruhan, sehingga halaman responsif dan siap untuk digunakan secepatnya. Metrik utama: Waktu untuk Interaktif, Indeks Kecepatan"
+    "message": "Menyempurnakan pengalaman pemuatan halaman keseluruhan, sehingga halaman responsif dan siap untuk digunakan secepatnya. Metrik utama: Waktu untuk Interaktif, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Penyempurnaan Keseluruhan"
@@ -1857,22 +1800,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potensi Penghematan"
+    "message": "Perkiraan Penghematan"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potensi Penghematan"
+    "message": "Perkiraan Penghematan"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potensi penghematan {wastedBytes, number, bytes} KiB"
+    "message": "Perkiraan penghematan {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 elemen ditemukan}other{# elemen ditemukan}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potensi penghematan {wastedMs, number, milliseconds} md"
+    "message": "Perkiraan penghematan {wastedMs, number, milliseconds} md"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumen"
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() tidak lagi berfungsi pada asal yang tidak aman. Untuk menggunakan fitur ini, sebaiknya Anda mengalihkan aplikasi ke asal yang aman, seperti HTTPS. Lihat https://goo.gle/chrome-insecure-origins untuk detail selengkapnya."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Ditemukan tag <h1> dalam <article>, <aside>, <nav>, atau <section> yang tidak memiliki ukuran font yang ditentukan. Ukuran teks judul ini akan berubah di browser ini dalam waktu dekat. Lihat https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 untuk mengetahui informasi selengkapnya."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate tidak digunakan lagi. Sebagai gantinya, gunakan RTCPeerConnectionIceErrorEvent.address atau RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Format permintaan navigator.credentials.get() untuk kredensial digital ini tidak digunakan lagi. Perbarui panggilan Anda untuk menggunakan format baru."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Data arbitrer dan asal penjual dari peristiwa pekerja layanan canmakepayment tidak digunakan lagi dan akan dihapus: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Menentukan overflow: visible pada tag img, video, dan canvas dapat menyebabkannya menghasilkan konten visual di luar batas elemen. Lihat https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Penyematan video Flash lama telah ditulis ulang ke iframe HTML. Flash sudah lama tidak digunakan, metode penulisan ulang ini sudah tidak digunakan lagi dan mungkin akan dihapus pada masa mendatang."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments tidak digunakan lagi. Sebagai gantinya, gunakan penginstalan tepat waktu untuk pengendali pembayaran."
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Ekstensi harus ikut serta dalam isolasi lintas asal untuk terus menggunakan SharedArrayBuffer. Lihat https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "Atribut isFallbackAdapter GPUAdapter tidak digunakan lagi, gunakan atribut isFallbackAdapter GPUAdapterInfo sebagai gantinya."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 tidak didukung oleh respons JSON di XMLHttpRequest"
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Penyebab utama perubahan tata letak"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Elemen gambar dengan ukuran tidak diketahui"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Font web"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Cluster terburuk"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "DOM yang besar dapat meningkatkan durasi penghitungan gaya dan perubahan posisi/geometri tata letak, yang memengaruhi responsivitas halaman. DOM yang besar juga akan meningkatkan penggunaan memori. [Pelajari cara menghindari ukuran DOM yang berlebihan](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Durasi"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Elemen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Tata letak ({PH1} objek)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Penghitungan ulang gaya ({PH1} elemen)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Sebagian besar turunan"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimalkan ukuran DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Berikut adalah peristiwa penghitungan ulang tata letak dan gaya terbesar. Dampak performanya dapat dikurangi dengan membuat DOM yang lebih sederhana."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Total elemen"
@@ -2409,7 +2364,7 @@
     "message": "Memiliki pengalihan ({PH1} pengalihan, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "Server merespons dengan lambat ({PH1} dalam pengamatan) "
+    "message": "Server merespons dengan lambat ({PH1} dalam pengamatan)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Tidak ada kompresi yang diterapkan"
@@ -2418,7 +2373,7 @@
     "message": "Menghindari pengalihan"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "Server merespons dengan cepat ({PH1} dalam pengamatan) "
+    "message": "Server merespons dengan cepat ({PH1} dalam pengamatan)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Menerapkan kompresi teks"
@@ -2463,7 +2418,7 @@
     "message": "(anonim)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Banyak API, yang biasanya membaca geometri tata letak, memaksa mesin rendering menjeda eksekusi skrip untuk menghitung gaya dan tata letak. Pelajari lebih lanjut [perubahan posisi/geometri paksa](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) dan mitigasinya."
+    "message": "Perubahan posisi/geometri paksa terjadi saat JavaScript meminta properti geometris (seperti offsetWidth) setelah gaya dibatalkan karena perubahan pada status DOM. Hal ini dapat menyebabkan performa yang buruk. Pelajari lebih lanjut [perubahan posisi/geometri paksa](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) dan kemungkinan mitigasinya."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Stack trace"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[tanpa atribut]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Mulai investigasi dengan subbagian terpanjang. [Penundaan dapat diminimalkan](https://web.dev/articles/optimize-inp#optimize_interactions). Untuk mengurangi durasi pemrosesan, [optimalkan biaya thread utama](https://web.dev/articles/optimize-long-tasks), yang sering kali berupa JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Durasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Penundaan input"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Tidak ada interaksi yang terdeteksi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Penundaan presentasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Durasi pemrosesan"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Subbagian"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Perincian INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Mengurangi waktu download gambar dapat meningkatkan waktu pemuatan halaman dan LCP. [Pelajari lebih lanjut cara mengoptimalkan ukuran gambar](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Menggunakan format video, bukan GIF, dapat meningkatkan ukuran download konten animasi."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Setiap [subbagian memiliki strategi peningkatan tertentu](https://web.dev/articles/optimize-lcp#lcp-breakdown). Idealnya, sebagian besar waktu LCP harus digunakan untuk memuat resource, bukan untuk penundaan."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Durasi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Penundaan render elemen"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "P75 sebenarnya"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Tidak ada LCP yang terdeteksi"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Penundaan pemuatan resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Durasi pemuatan resource"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Subbagian"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to first byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Perincian LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimalkan LCP dengan membuat gambar LCP [dapat ditemukan](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) dari HTML secara langsung, dan [menghindari pemuatan lambat](https://web.dev/articles/lcp-lazy-loading)"
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 dan HTTP/3 menawarkan banyak manfaat dibandingkan HTTP/1.1, seperti multiplexing. [Pelajari lebih lanjut cara menggunakan HTTP modern](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Tidak ada permintaan yang menggunakan HTTP/1.1"
+    "message": "Tidak ada permintaan yang menggunakan HTTP/1.1, atau penggunaan HTTP/1.1 saat ini tidak memberikan peluang pengoptimalan yang signifikan. Permintaan HTTP/1.1 hanya ditandai jika ada enam atau lebih aset statis berasal dari origin yang sama, dan tidak disalurkan dari lingkungan pengembangan lokal atau sumber pihak ketiga."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protokol"
@@ -2586,7 +2595,7 @@
     "message": "[Hindari perantaian permintaan penting](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) dengan mengurangi panjang rantai, mengurangi ukuran download resource, atau menunda download resource yang tidak penting untuk mempercepat pemuatan halaman."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Tambahkan petunjuk [prakoneksi](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ke origin yang paling penting, tapi usahakan untuk menggunakan kurang dari 4 petunjuk."
+    "message": "Tambahkan petunjuk [prakoneksi](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) ke origin yang paling penting, tetapi usahakan untuk menggunakan tidak lebih dari 4 petunjuk."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Kandidat prakoneksi"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Biaya Pemilih CSS"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Waktu berlalu pemilih teratas"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Upaya pencocokan pemilih teratas"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Pemilih teratas"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Interaksi ketuk mungkin [tertunda hingga 300 md](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) jika area tampilan tidak dioptimalkan untuk seluler."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Penundaan ketuk di perangkat seluler"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Mengoptimalkan area tampilan untuk seluler"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Halaman yang menggunakan SharedWorker saat ini tidak dapat disimpan dengan benar dalam back-forward cache."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Halaman dihapus dari cache karena menerima pesan dari SharedWorker"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Halaman yang menggunakan SpeechRecognizer saat ini tidak dapat disimpan dengan benar dalam back-forward cache."
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Halaman dengan WebRTC tidak dapat disimpan dalam back-forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "Back-forward cache dinonaktifkan karena WebRTC telah digunakan."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "Halaman yang menggunakan WebShare saat ini tidak dapat disimpan dengan benar dalam back-forward cache."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Halaman dengan WebSocket tidak dapat disimpan dalam back-forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "Back-forward cache dinonaktifkan karena WebSocket telah digunakan."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "Halaman dengan WebTransport tidak dapat disimpan dalam back-forward cache."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "Back-forward cache dinonaktifkan karena WebTransport telah digunakan."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "Halaman yang menggunakan WebXR saat ini tidak dapat disimpan dengan benar dalam back-forward cache."
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "Aktifkan [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site) untuk mengoptimalkan gambar Anda secara preemptive dan membuatnya cocok dengan dimensi penampung yang menampilkannya di semua perangkat."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "Gunakan [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) di NitroPack untuk mengurangi ukuran file yang dikirim ke browser."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "Gunakan komponen `nuxt/image` dan setel `format=\"webp\"`. [Pelajari lebih lanjut](https://image.nuxt.com/usage/nuxt-img#format)."
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Laporkan masalah"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Kembali ke audit"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Sembunyikan"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Akhir tahun ini, insight akan menggantikan audit performa. [Pelajari lebih lanjut dan berikan masukan di sini](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Data Lab"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Ada masalah yang memengaruhi jalannya Lighthouse ini:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Coba insight"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Tidak dapat diatribusikan"
   },
@@ -3696,24 +3714,30 @@
     "message": "Semua"
   },
   "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Semua Skrip"
+    "message": "Semua skrip"
   },
   "treemap/app/src/util.js | coverageColumnName": {
     "message": "Cakupan"
   },
   "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Modul Duplikat"
+    "message": "Modul duplikat"
+  },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Byte duplikat"
   },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Byte Resource"
+    "message": "Byte resource"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "Nama"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Tampilkan/Sembunyikan Tabel"
+    "message": "Tampilkan/sembunyikan tabel"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Ukuran byte yang ditransfer"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Byte yang Tidak Digunakan"
+    "message": "Byte yang tidak digunakan"
   }
 }

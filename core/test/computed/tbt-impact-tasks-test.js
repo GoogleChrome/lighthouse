@@ -12,8 +12,8 @@ import {createTestTrace, rootFrame} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {MainThreadTasks} from '../../computed/main-thread-tasks.js';
 
-const trace = readJson('../fixtures/artifacts/cnn/defaultPass.trace.json.gz', import.meta);
-const devtoolsLog = readJson('../fixtures/artifacts/cnn/defaultPass.devtoolslog.json.gz', import.meta);
+const trace = readJson('../fixtures/artifacts/cnn/trace.json.gz', import.meta);
+const devtoolsLog = readJson('../fixtures/artifacts/cnn/devtoolslog.json.gz', import.meta);
 
 describe('TBTImpactTasks', () => {
   const mainDocumentUrl = 'https://example.com';

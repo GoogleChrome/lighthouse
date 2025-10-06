@@ -660,7 +660,7 @@
     "message": "Използвайте видеоформати за анимираното съдържание"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Полифиловете и трансформациите дават възможност на старите браузъри да използват нови функции на JavaScript, но в голяма степен не са необходими за съвременните браузъри. Добре е да промените процеса на компилиране на JavaScript, така че да не се транскомпилират функциите на [Baseline](https://web.dev/baseline), освен ако не знаете, че трябва да поддържате наследени браузъри. [Научете защо повечето сайтове могат да внедряват код ES6+ без транскомпилиране](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "На страницата бе открита версия 2 на core-js. Трябва да надстроите до версия 3 за много подобрения в ефективността."
@@ -1188,7 +1188,7 @@
     "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността на най-времеемката задача. [Научете повече за този показател](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "Индексът на скоростта показва колко бързо се постига визуална завършеност на страницата. [Научете повече за този показател](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
+    "message": "Speed Index показва колко бързо се постига визуална завършеност на страницата. [Научете повече за този показател](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)."
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "Сумата в милисекунди от всички периоди от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек. [Научете повече за показателя „Общо време на блокиране“](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)."
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Осигурете правилното изолиране на източника с COOP"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "Заредете предварително шрифтовете със свойство `optional`, за да могат да се ползват от новите посетители. [Научете повече за предварителното зареждане на шрифтове](https://web.dev/articles/preload-optional-fonts)."
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "Шрифтовете, които използват собствеността `font-display: optional`, не са заредени предварително"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "Шрифтовете, които използват собствеността `font-display: optional`, са заредени предварително"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "Ако най-големият елемент се добавя динамично към страницата, трябва да заредите предварително изображението, за да подобрите LCP. [Научете повече за предварителното зареждане на най-големите елементи](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Обхождането на връзките е възможно"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Още нечетлив текст"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Размер на шрифта"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% от текста на страницата"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Селектор"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Шрифтовете с размер под 12 пиксела са твърде малки и се налага посетителите от мобилни устройства да увеличат мащаба с разтваряне на пръсти, за да прочетат текста. Старайте се над 60% от текста на страницата да е с размер поне 12 пиксела. [Научете повече за четливите размери на шрифта](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} от текста е четлив"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Текстът не е четлив, тъй като няма мета маркер viewport, оптимизиран за мобилни екрани."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "В документа не се използва шрифт с четлив размер"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Четлив текст"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "В документа се използва шрифт с четлив размер"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "Връзките от типа hreflang указват на търсещите машини коя версия на страницата да бъде включена в резултатите от търсенето за даден език или регион. [Научете повече за `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
@@ -1440,7 +1401,7 @@
     "message": "Началното време за реакция на сървъра бе кратко"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome се насочва към нова практическа работа, която дава възможност на потребителите да сърфират без „бисквитки“ на трети страни. [Научете повече за „бисквитките“ на трети страни](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "„Бисквитките“ на трети страни може да са блокирани в някои контексти. [Научете повече за подготовката за ограниченията за „бисквитките“ на трети страни](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{Намерена е 1 „бисквитка“}other{Намерени са # „бисквитки“}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Избягва „бисквитки“ на трети страни"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (поддръжка на клиенти)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (маркетинг)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (социални контакти)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (видеосъдържание)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "Продукт"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "Зареждането на някои вградени елементи на трети страни може да бъде забавено. Бихте могли да ги замените с фасада, докато не станат необходими. [Научете как да отложите зареждането на елементи на трети страни чрез фасада](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)."
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{Налице е # алтернативна фасада}other{Налице са # алтернативни фасади}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "Зареждането на някои ресурси на трети страни може да бъде забавено с помощта на фасада"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "Забавете зареждането на ресурсите на трети страни с помощта на фасади"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Трета страна"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Сведете до минимум използването на код на трети страни"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Сериозност"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "Директивата `require-trusted-types-for` в заглавката `Content-Security-Policy` (CSP) инструктира потребителските агенти да контролират данните, предавани към функциите за приемане на XSS въз основа на DOM. [Научете повече за намаляването на риска от XSS въз основа на DOM чрез надеждни типове](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "Няма намерена заглавка `Content-Security-Policy` с директива за надеждни типове"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Намаляване на риска от XSS въз основа на DOM чрез надеждни типове"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Задайте изрично широчина и височина за елементите на изображенията, за да намалите промените в оформлението и подобрите CLS. [Научете как да задавате размери за изображенията](https://web.dev/articles/optimize-cls#images_without_dimensions)."
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "Намерен бе елемент `<link rel=preconnect>` за {securityOrigin}, който обаче не бе използван от браузъра. Прилагайте `preconnect` само за важни източници, за които е сигурно, че страницата ще изпрати заявка."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Намерен бе елемент `<link>` за предварително зареждане за {preloadURL}, който обаче не бе използван от браузъра. Проверете дали използвате правилно атрибута `crossorigin`."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "Препоръчваме да използвате `<link rel=preload>`, за да укажете по-ранно извличане на ресурсите, които понастоящем се заявяват на по-късен етап от зареждането на страницата. [Научете как да зареждате предварително ключовите заявки](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "Задайте ключовите заявки да се зареждат предварително"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "URL адрес на карта"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Подобрения, свързани с първото изобразяване"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "Тази статистика е налице и в панела за ефективността в Chrome DevTools – [запишете трасиране](https://developer.chrome.com/docs/devtools/performance/reference), за да прегледате по-подробна информация."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Статистика"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Показатели"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "Подобрете зареждането като цяло, така че страницата да реагира бързо и да е готова за използване възможно най-скоро. Ключови показатели: време до интерактивност, индекс на скоростта"
+    "message": "Подобрете зареждането като цяло, така че страницата да реагира бързо и да е готова за използване възможно най-скоро. Ключови показатели: време до интерактивност, Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "Цялостни подобрения"
@@ -1857,22 +1800,22 @@
     "message": "URL адрес"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Потенциална икономия"
+    "message": "Приблизителни икономии"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Потенциална икономия"
+    "message": "Приблизителни икономии"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Потенциално спестяване на {wastedBytes, number, bytes} KiB"
+    "message": "Приблизителни икономии от {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{Бе открит 1 елемент}other{Бяха открити # елемента}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Потенциално спестяване на {wastedMs, number, milliseconds} мсек"
+    "message": "Приблизителни икономии на {wastedMs, number, milliseconds} мсек"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
@@ -2070,7 +2013,7 @@
     "message": "Получаване на резултат за ефективността от Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Измерване на показатели за ефективността при зареждане на страниците, като например изобразяване на най-голямото съдържание (LCP) и индекс на скоростта."
+    "message": "Измерване на показатели за ефективността при зареждане на страниците, като например изобразяване на най-голямото съдържание (LCP) и Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Тестване на възможностите на прогресивни уеб приложения."
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() вече не работи за незащитени източници. За да използвате тази функция, препоръчваме да прехвърлите приложението си към защитен източник, като например HTTPS. За повече подробности вижте https://goo.gle/chrome-insecure-origins."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Намерен бе маркер <h1> в <article>, <aside>, <nav> или <section>, за който не е посочен размер на шрифта. В близко бъдеще размерът на заглавието ще се промени в този браузър. За повече информация посетете https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "Полето RTCPeerConnectionIceErrorEvent.hostCandidate е оттеглено. Вместо него използвайте RTCPeerConnectionIceErrorEvent.address или RTCPeerConnectionIceErrorEvent.port."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "Този формат на заявката navigator.credentials.get() за дигитални идентификационни данни е оттеглен. Актуализирайте извикването си така, че да използва новия формат."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "Източникът на търговеца и произволни данни от събитието canmakepayment на service worker са оттеглени и ще бъдат премахнати: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Посочването на overflow: visible в маркери img, video и canvas може да доведе до показване на визуално съдържание извън границите на елемента. Вижте https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Наследеното вграждане на видеоклип с Flash е преобразувано във вложена рамка на HTML. Flash отдавна не се използва, а този метод на преобразуване е оттеглен и може да бъде премахнат в бъдеще."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "Приложният програмен интерфейс paymentManager.instruments е оттеглен. Вместо него използвайте функцията за навременно инсталиране на инструменти за обработване на плащания."
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Разширенията трябва да се включат в изолирането от външни източници, за да продължат да използват SharedArrayBuffer. Вижте https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "Атрибутът isFallbackAdapter за GPUAdapter е оттеглен. Вместо него използвайте атрибута isFallbackAdapter за GPUAdapterInfo."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 не се поддържа от JSON отговора в XMLHttpRequest"
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Водещи причинители на структурни промени"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Графичен елемент без размери"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Уеб шрифт"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Най-лошата група"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "Големият размер на DOM може да увеличи продължителността на стиловите изчисления и преоформянията, което засяга реакцията на страницата. Той води и до използване на повече памет. [Научете как да избягвате прекалено големия размер на DOM](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Продължителност"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Елемент"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Оформление ({PH1} обекта)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Преизчисляване на стила ({PH1} елемента)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Най-много дъщерни елементи"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Оптимизиране на размера на DOM"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "Това са най-големите събития за преизчисляване на оформлението и стила. Въздействието им върху ефективността може да бъде намалено, като опростите DOM."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Общ брой елементи"
@@ -2409,7 +2364,7 @@
     "message": "Имаше пренасочвания ({PH1} пренасочвания, + {PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "Сървърът отговори бавно (отчетено време: {PH1}) "
+    "message": "Сървърът отговори бавно (отчетено време: {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "Не е приложена компресия"
@@ -2418,7 +2373,7 @@
     "message": "Избягва пренасочванията"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "Сървърът отговаря бързо (отчетено време: {PH1}) "
+    "message": "Сървърът отговаря бързо (отчетено време: {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Прилага се компресиране на текста"
@@ -2463,7 +2418,7 @@
     "message": "(анонимно)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Голям брой API, които обикновено четат геометричното оформление, принуждават софтуера за рендериране да постави на пауза изпълнението на скрипта, за да изчислят стила и оформлението. Научете повече за [принудителното преоформяне](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) и начините за намаляване на въздействието му."
+    "message": "Принудителното преоформяне възниква, когато JavaScript извършва заявки за геометрични свойства (например offsetWidth), след като валидността на стиловете е анулирана от промяна в състоянието на DOM. Това може да доведе до ниска ефективност. Научете повече за [принудителното преоформяне](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) и възможните начини за намаляване на въздействието му."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Трасиране на стека"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[неприписани]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Започнете проверката от най-продължителната подчаст. [Забавянията могат да бъдат сведени до минимум](https://web.dev/articles/optimize-inp#optimize_interactions). За да ускорите обработката, [оптимизирайте работата на основната нишка](https://web.dev/articles/optimize-long-tasks), която често е JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Продължителност"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Забавяне след входящи данни от действие"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "Не са открити взаимодействия"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Забавяне на представянето"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Продължителност на обработването"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Подчаст"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "Разбивка на INP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Намаляването на времето за изтегляне на изображенията може да подобри възприеманото време за зареждане на страницата и LCP. [Научете повече за оптимизирането на размера на изображенията](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Използването на видеоформати вместо GIF файлове може да подобри размера за изтегляне на анимираното съдържание."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "За всяка [подчаст има конкретни стратегии за подобряване](https://web.dev/articles/optimize-lcp#lcp-breakdown). В идеалния случай по-голямата част от времето за LCP трябва да премине в зареждане на ресурсите, а не да е свързана със забавяния."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Продължителност"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Забавяне при рендерирането на елемента"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Поле със 75-и процентил"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "Не е открито изобразяване на най-голямото съдържание (LCP)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Забавяне при зареждането на ресурсите"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Продължителност на зареждането на ресурсите"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Подчаст"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Време до първия байт"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "Разбивка на LCP"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Оптимизирайте LCP, като направите изображението, представляващо LCP, незабавно [откриваемо](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) в HTML кода и [избягвате забавеното зареждане](https://web.dev/articles/lcp-lazy-loading)"
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 и HTTP/3 предлагат много предимства спрямо HTTP/1.1, като например мултиплексинг. [Научете повече за използването на съвременни HTTP връзки](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "Няма заявки, използвали HTTP/1.1"
+    "message": "Няма заявки, използвали HTTP/1.1, или няма значителна възможност за оптимизиране въз основа на текущото използване на HTTP/1.1. Заявките HTTP/1.1 се означават само ако шест или повече статични актива произхождат от един и същ източник и не се предоставят от локална среда за програмиране или източник на трета страна."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Протокол"
@@ -2586,7 +2595,7 @@
     "message": "За да ускорите зареждането на страницата, [избягвайте верижни последователности от критични заявки](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains), като скъсите веригите, намалите размера за изтегляне на ресурсите или отложите изтеглянето на ненужните от тях."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Добавете подсказки за [предварително свързване](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) към най-важните си източници, но опитайте да използвате по-малко от 4."
+    "message": "Добавете подсказки за [предварително свързване](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) към най-важните си източници, но опитайте да използвате не повече от 4."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Подходящи за предварително свързване"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "Бавни CSS селектори"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Водещият селектор по изминало време"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Водещият селектор по опити за намиране на съответствие"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Водещи селектори"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "При взаимодействията с докосване може да има [забавяне до 300 мсек](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/), ако прозоречният изглед не е оптимизиран за мобилни устройства."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Забавяне при докосване на мобилно устройство"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Оптимизиране на прозоречния изглед за мобилни устройства"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Страниците, които използват SharedWorker, понастоящем не отговарят на условията за кеша за назад/напред."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "Страницата бе извадена от кеша, защото получи съобщение от SharedWorker"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Страниците, които използват SpeechRecognizer, понастоящем не отговарят на условията за кеша за назад/напред."
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Страниците с WebRTC не могат да бъдат добавени към кеша за назад/напред."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "Кешът за назад/напред е деактивиран поради използване на WebRTC."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "Страниците, които използват WebShare, понастоящем не отговарят на условията за кеша за назад/напред."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Страниците с WebSocket не могат да бъдат добавени към кеша за назад/напред."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "Кешът за назад/напред е деактивиран поради използване на WebSocket."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "Страниците с WebTransport не могат да бъдат добавени към кеша за назад/напред."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "Кешът за назад/напред е деактивиран поради използване на WebTransport."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "Страниците, които използват WebXR, понастоящем не отговарят на условията за кеша за назад/напред."
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "Активирайте функцията [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site), така че изображенията ви да се оптимизират предварително спрямо размерите на контейнерите, в които се показват, на всички устройства."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "Използвайте функцията [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) в NitroPack, за да намалите размера на файловете, които се изпращат до браузъра."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "Използвайте компонента `nuxt/image` и задайте `format=\"webp\"`. [Научете повече](https://image.nuxt.com/usage/nuxt-img#format)."
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "Добавяне на проблем"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Назад към проверките"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Скриване"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "По-късно тази година статистиката ще замени проверката на ефективността. [Научете повече и изпратете отзиви тук](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Данни от контролиран тест"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Възникнаха проблеми при изготвянето на този отчет от Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Изпробване на статистиката"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Без възможност за приписване"
   },
@@ -3704,6 +3722,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Дублиращи се модули"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Дублиращи се байтове"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Байтове на ресурсите"
   },
@@ -3712,6 +3733,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Превключване на таблицата"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Прехвърляне на байтове"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Неизползвани байтове"

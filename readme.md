@@ -53,7 +53,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
 > [!NOTE]
-> Lighthouse requires Node 18.20 or later.
+> Lighthouse requires Node 22 (LTS) or later.
 
 **Installation**:
 
@@ -95,7 +95,7 @@ Configuration:
                                  Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 66.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.  [string] [default: ""]
   --port                         The port to use for the debugging protocol. Use 0 for a random port  [number] [default: 0]
   --hostname                     The hostname to use for the debugging protocol.  [string] [default: "localhost"]
-  --form-factor                  Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, --preset=desktop instead.  [string] [choices: "mobile", "desktop"]
+  --form-factor                  Determines how performance metrics are scored and if mobile-only audits are skipped. For desktop, use --preset=desktop instead.  [string] [choices: "mobile", "desktop"]
   --screenEmulation              Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2
   --emulatedUserAgent            Sets useragent emulation  [string]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue. WARNING: Very high values can lead to large traces and instability  [number]

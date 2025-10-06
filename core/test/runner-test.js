@@ -373,7 +373,6 @@ describe('Runner', () => {
       ],
       artifacts: [
         {id: 'Trace', gatherer: 'trace'},
-        {id: 'traces', gatherer: 'trace-compat'},
       ],
     });
 
@@ -690,8 +689,6 @@ describe('Runner', () => {
       artifacts: [
         {id: 'Trace', gatherer: 'trace'},
         {id: 'DevtoolsLog', gatherer: 'devtools-log'},
-        {id: 'traces', gatherer: 'trace-compat'},
-        {id: 'devtoolsLogs', gatherer: 'devtools-log-compat'},
         {id: 'Scripts', gatherer: 'scripts'},
         {id: 'SourceMaps', gatherer: 'source-maps'},
       ],

@@ -660,7 +660,7 @@
     "message": "使用影片格式的動畫內容"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfill 和轉換作業可讓舊版瀏覽器使用新版 JavaScript 的功能，但對新式瀏覽器來說，很多都是不需要的功能。除非你認為必須支援舊版瀏覽器，否則建議修改 JavaScript 建構程序，不要轉譯[基準](https://web.dev/baseline)功能。[瞭解為何大多數網站不需要轉譯，就能部署 ES6+ 程式碼](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "系統偵測到網頁採用 core-js 第 2 版。第 3 版大幅提升效能，請務必升級。"
@@ -1188,7 +1188,7 @@
     "message": "使用者可能會遇到的最長「首次輸入延遲時間」就是耗時最久的工作持續時間。[進一步瞭解「可能的最長首次輸入延遲時間」指標](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)。"
   },
   "core/audits/metrics/speed-index.js | description": {
-    "message": "速度指數會顯示網頁可見內容的填入速度。[進一步瞭解「速度指數」指標](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)。"
+    "message": "速度指數會顯示網頁可見內容的填入速度。[進一步瞭解「Speed Index」指標](https://developer.chrome.com/docs/lighthouse/performance/speed-index/)。"
   },
   "core/audits/metrics/total-blocking-time.js | description": {
     "message": "當工作長度超過 50 毫秒時，從 FCP 到互動準備時間的時間範圍總計 (以毫秒為單位)。[進一步瞭解「總封鎖時間」指標](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/)。"
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "使用 COOP 確保正確的來源隔離"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "請預先載入 `optional` 字型，以便新訪客使用。[進一步瞭解如何預先載入字型](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "並未預先載入使用 `font-display: optional` 的字型"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "已預先載入使用 `font-display: optional` 的字型"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "如果 LCP 元素是以動態方式新增到網頁，則必須預先載入圖片才能改善 LCP。[進一步瞭解如何預先載入 LCP 元素](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)。"
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "可檢索的連結"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "其他難以辨識的文字"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "字型大小"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "頁面文字百分比"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "選取器"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "如果字型小於 12 像素，文字會太小而難以辨識；行動裝置訪客必須「以雙指撥動縮放」才能閱讀內容。網頁中應有超過 60% 的文字採用 12 像素以上的大小。[進一步瞭解清晰易讀的字型大小](https://developer.chrome.com/docs/lighthouse/seo/font-size/)。"
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} 的文字清晰易讀"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "文字難以辨識，這是因為網頁沒有針對行動裝置螢幕設定合適的可視區域中繼標記。"
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "文件使用的字型大小難以辨識"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "清晰易讀的文字"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "文件使用的字型大小清晰易讀"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang 連結會告訴搜尋引擎在特定語言或區域的搜尋結果中應顯示哪種版本的網頁。[進一步瞭解 `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)。"
@@ -1440,7 +1401,7 @@
     "message": "初始伺服器回應時間很短"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "在 Chrome 中瀏覽網頁時，將可選擇不用第三方 Cookie。[進一步瞭解第三方 Cookie](https://developers.google.com/privacy-sandbox/cookies)。"
+    "message": "第三方 Cookie 可能會在某些情況下遭到封鎖。[進一步瞭解如何因應第三方 Cookie 限制](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 個 Cookie}other{找到 # 個 Cookie}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "避免使用第三方 Cookie"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (客戶成功案例)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (行銷)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (社交)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (影片)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "產品"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "某些第三方內嵌內容可延遲載入。建議你以門面元件取代這些內容，等到需要顯示時再載入。[瞭解如何使用門面元件延遲載入第三方內容](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)。"
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{# 個可用的替代門面元件}other{# 個可用的替代門面元件}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "某些第三方資源可使用門面元件延遲載入"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "使用門面元件延遲載入第三方資源"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "第三方"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "盡量減少第三方程式碼的使用量"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "嚴重程度"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "`Content-Security-Policy` (CSP) 標頭中的 `require-trusted-types-for` 指令會指示使用者代理程式控管傳遞至 DOM XSS sink 函式的資料。[進一步瞭解如何使用 Trusted Types 減輕 DOM 型 XSS 攻擊的影響](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)。"
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "找不到含有 Trusted Types 指令的 `Content-Security-Policy` 標頭"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "使用 Trusted Types 減輕 DOM 型 XSS 攻擊的影響"
   },
   "core/audits/unsized-images.js | description": {
     "message": "請明確設定圖片元素的寬度和高度，以減少版面配置轉移並改善 CLS。[瞭解如何設定圖片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "「{securityOrigin}」有「`<link rel=preconnect>`」，但未獲瀏覽器使用。「`preconnect`」僅應用於網頁一定會要求的重要來源。"
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "「{preloadURL}」有預先載入的「`<link>`」，但未獲瀏覽器使用。請檢查你使用 `crossorigin` 屬性的方式是否正確。"
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "建議使用 `<link rel=preload>` 優先擷取目前在網頁載入時較晚要求的資源。[瞭解如何預先載入關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)。"
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "預先載入重要要求"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "對應網址"
@@ -1676,11 +1613,17 @@
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "改進首次繪製程序"
   },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "你也可以前往 Chrome 開發人員工具的「效能」面板查看這些深入分析結果。只要[記錄追蹤記錄](https://developer.chrome.com/docs/devtools/performance/reference)，即可查看更詳細的資訊。"
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "深入分析"
+  },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "指標"
   },
   "core/config/default-config.js | overallImprovementsGroupDescription": {
-    "message": "改進整體載入體驗，採用回應式頁面設計，儘快為使用者提供服務。重點指標：可互動時間、速度指數"
+    "message": "改進整體載入體驗，採用回應式頁面設計，儘快為使用者提供服務。重點指標：可互動時間、Speed Index"
   },
   "core/config/default-config.js | overallImprovementsGroupTitle": {
     "message": "整體改進"
@@ -1857,22 +1800,22 @@
     "message": "網址"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "可節省的數據用量"
+    "message": "預估可節省的 KiB"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "可節省的時間"
+    "message": "預估可節省的毫秒數"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "可減少 {wastedBytes, number, bytes} KiB"
+    "message": "預估可省下 {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{找到 1 個元素}other{找到 # 個元素}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "可減少 {wastedMs, number, milliseconds} 毫秒"
+    "message": "預估可省下 {wastedMs, number, milliseconds} 毫秒"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文件"
@@ -2070,7 +2013,7 @@
     "message": "取得 Lighthouse 效能分數。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "評估載入網頁的效能指標，例如最大內容繪製和速度指數。"
+    "message": "評估載入網頁的效能指標，例如最大內容繪製和 Speed Index。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "評估漸進式網頁應用程式功能。"
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() 不再適用於不安全的來源。如要使用這個功能，請考慮將應用程式轉移至安全來源，例如 HTTPS。詳情請參閱 https://goo.gle/chrome-insecure-origins。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "在 <article>、<aside>、<nav> 或 <section> 中，系統發現有一個 <h1> 標記未指定字型大小。不久後，這個標題文字在此瀏覽器中的大小將有變動。詳情請參閱 https://developer.mozilla.org/zh-TW/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate 已淘汰，請改用 RTCPeerConnectionIceErrorEvent.address 或 RTCPeerConnectionIceErrorEvent.port。"
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "數位憑證的 navigator.credentials.get() 要求格式已淘汰，請更新呼叫，以使用新格式。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "「canmakepayment」Service Worker 事件的服務商家來源和任意資料目前已淘汰，並將在之後移除：topOrigin、paymentRequestOrigin、methodData、modifiers。"
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "如果指定 img、video 和 canvas 標記的「overflow: visible」，可能會導致這些標記產生的視覺內容超出元素邊界。詳情請參閱 https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md。"
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "舊版 Flash 影片嵌入內容已改寫為 HTML iframe。Flash 早已淘汰，這個重寫技巧也已淘汰，日後可能會移除。"
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "「paymentManager.instruments」已淘汰。請改用付款處理常式的即時安裝方法。"
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "擴充功能應選擇啟用跨來源隔離功能，以便繼續使用 SharedArrayBuffer。詳情請參閱 https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/。"
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "GPUAdapter 的 isFallbackAdapter 屬性已淘汰，請改用 GPUAdapterInfo 的 isFallbackAdapter 屬性。"
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "XMLHttpRequest 中的 JSON 回應不支援 UTF-16"
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "版面配置位移的常見主因"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "原寸圖片元素"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "網站字型"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "最嚴重的叢集"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "大型 DOM 可能會增加樣式運算和版面配置自動重排的時間，影響網頁的回應速度。大型 DOM 也會增加記憶體用量。[瞭解如何避免 DOM 過大](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)。"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "時間長度"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "元素"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "版面配置 ({PH1} 個物件)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "重新計算樣式 ({PH1} 個元素)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "子項數量上限"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "最佳化 DOM 大小"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "這些是最大的版面配置和樣式重新計算事件。簡化 DOM 可減少對效能的影響。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "元素總數"
@@ -2409,7 +2364,7 @@
     "message": "有重新導向 ({PH1} 次重新導向，+{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "伺服器回應緩慢 (觀測結果：{PH1}) "
+    "message": "伺服器回應緩慢 (觀測結果：{PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "未套用壓縮功能"
@@ -2418,7 +2373,7 @@
     "message": "避免重新導向"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "伺服器回應迅速 (觀測結果：{PH1}) "
+    "message": "伺服器回應迅速 (觀測結果：{PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "套用文字壓縮"
@@ -2463,7 +2418,7 @@
     "message": "(匿名)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "許多 API (通常是讀取版面配置幾何圖形) 會強制轉譯引擎暫停指令碼執行，以計算樣式和版面配置。進一步瞭解[強制自動重排](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)及其因應措施。"
+    "message": "如果 JavaScript 在樣式因 DOM 狀態變更而失效後查詢幾何屬性 (例如 offsetWidth)，就會強制自動重排。這可能會導致效能不佳。進一步瞭解[強制自動重排](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts)和可能的因應措施。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "堆疊追蹤"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[找不到出處]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "從最長的子部分開始調查，[可盡量縮短延遲時間](https://web.dev/articles/optimize-inp#optimize_interactions)。如要縮短處理時間，請[盡量降低主執行緒的成本](https://web.dev/articles/optimize-long-tasks)，通常是針對 JavaScript。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "時間長度"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "輸入延遲"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "未偵測到任何互動"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "簡報顯示延遲"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "處理時間"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "子部分"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP 細目"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "縮短圖片下載時間，可縮減使用者感知的網頁載入時間，並提升 LCP 指標的表現。[進一步瞭解如何最佳化圖片大小](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "建議使用影片格式 (而非 GIF)，可縮減動畫內容的下載大小。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "每個[子部分都有特定改善策略](https://web.dev/articles/optimize-lcp#lcp-breakdown)。理想狀態下，大部分的 LCP 時間應該用於載入資源，而非延遲。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "時間長度"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "元素算繪延遲"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "實際使用者的第 75 個百分位數"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "未偵測到 LCP"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "資源載入延遲"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "資源載入時長"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "子部分"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP 細目"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "如要提升 LCP，請讓 LCP 圖片立即[顯示](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay)在 HTML 中，[避免延遲載入](https://web.dev/articles/lcp-lazy-loading)"
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 和 HTTP/3 擁有許多 HTTP/1.1 沒有的優點，例如多工處理。[進一步瞭解如何使用新式 HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "沒有任何要求使用 HTTP/1.1"
+    "message": "沒有任何要求使用 HTTP/1.1，或是目前使用 HTTP/1.1 的情況沒有顯著的最佳化空間。只有當六項以上的靜態素材資源來自相同來源，且並非從本機開發環境或第三方來源提供時，系統才會標記 HTTP/1.1 要求。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "通訊協定"
@@ -2586,7 +2595,7 @@
     "message": "如要[避免鏈結關鍵要求](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains)，可以縮短鏈結長度、降低資源的下載大小或延後下載非必要資源，提高頁面載入速度。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "請為最重要的來源新增 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但盡量不要超過 4 個。"
+    "message": "請新增最重要來源的 [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) 提示，但盡量不要超過 4 個。"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "預先連結候選來源"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS 選取器成本"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "最耗費時間的選取器"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "最常嘗試比對的選取器"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "最耗費資源的選取器"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "如果可視區域未針對行動裝置進行最佳化調整，輕觸互動可能會[延遲最多 300 毫秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "行動裝置輕觸延遲"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "針對行動裝置最佳化可視區域"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "使用 SharedWorker 的網頁目前不適用往返快取。"
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "網頁收到來自 SharedWorker 的訊息，因此已從快取中移除"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "使用 SpeechRecognizer 的網頁目前不適用往返快取。"
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "使用 WebRTC 的網頁無法儲存至往返快取。"
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "已使用 WebRTC，因此停用往返快取功能。"
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "使用 WebShare 的網頁目前不適用往返快取。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "使用 WebSocket 的網頁無法儲存至往返快取。"
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "已使用 WebSocket，因此停用往返快取功能。"
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "使用 WebTransport 的網頁無法儲存至往返快取。"
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "已使用 WebTransport，因此停用往返快取功能。"
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "使用 WebXR 的網頁目前不適用往返快取。"
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "啟用「[`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site)」可預先將圖片最佳化，讓圖片能吻合所有裝置上的顯示容器尺寸。"
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "在 NitroPack 中使用「[`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression)」，可減少傳送至瀏覽器的檔案大小。"
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "請使用 `nuxt/image` 元件並設定 `format=\"webp\"`。[瞭解詳情](https://image.nuxt.com/usage/nuxt-img#format)。"
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "回報問題"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "返回稽核"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "隱藏"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "深入分析功能將於今年內取代效能審查。如要瞭解詳情並提供意見，請按[這裡](https://github.com/GoogleChrome/lighthouse/discussions/16462)。"
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "研究資料"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "有問題導致 Lighthouse 無法順利執行這項作業："
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "善用深入分析資料"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "無法歸因"
   },
@@ -3704,16 +3722,22 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "重複模組"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "重複的位元組數"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "資源位元組"
+    "message": "資源位元組數"
   },
   "treemap/app/src/util.js | tableColumnName": {
     "message": "名稱"
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "顯示/隱藏表格"
+    "message": "顯示或隱藏表格"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "傳輸位元組數"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "未使用的位元組"
+    "message": "未使用的位元組數"
   }
 }

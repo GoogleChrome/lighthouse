@@ -1,12 +1,10 @@
-// Copyright 2022 The Chromium Authors. All rights reserved.
+// Copyright 2022 The Chromium Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 import {assert} from 'chai';
 
 import {expectError} from '../../conductor/events.js';
-import {$textContent, getBrowserAndPages} from '../../shared/helper.js';
-
 import {
   clickStartButton,
   getAuditsBreakdown,
@@ -15,7 +13,7 @@ import {
   registerServiceWorker,
   selectMode,
   waitForResult,
-} from '../helpers/lighthouse-helpers.js';
+} from '../../e2e/helpers/lighthouse-helpers.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
@@ -26,7 +24,7 @@ describe('Snapshot', function() {
     this.timeout(60_000);
   }
 
-  beforeEach(() => {
+  it('successfully returns a Lighthouse report for the page state', async ({devToolsPage, inspectedPage}) => {
     // https://github.com/GoogleChrome/lighthouse/issues/14572
     expectError(/Request CacheStorage\.requestCacheNames failed/);
 
@@ -36,14 +34,11 @@ describe('Snapshot', function() {
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
-  });
 
-  it('successfully returns a Lighthouse report for the page state', async () => {
-    await navigateToLighthouseTab('lighthouse/hello.html');
-    await registerServiceWorker();
+    await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
+    await registerServiceWorker(inspectedPage);
 
-    const {target} = await getBrowserAndPages();
-    await target.evaluate(() => {
+    await inspectedPage.evaluate(() => {
       const makeTextFieldBtn = document.querySelector('button');
       if (!makeTextFieldBtn) {
         throw new Error('Button not found');
@@ -54,18 +49,18 @@ describe('Snapshot', function() {
     });
 
     let numNavigations = 0;
-    target.on('framenavigated', () => ++numNavigations);
+    inspectedPage.page.on('framenavigated', () => ++numNavigations);
 
-    await selectMode('snapshot');
-    await clickStartButton();
+    await selectMode('snapshot', devToolsPage);
+    await clickStartButton(devToolsPage);
 
-    const {lhr, artifacts, reportEl} = await waitForResult();
+    const {lhr, artifacts, reportEl} = await waitForResult(devToolsPage, inspectedPage);
 
     assert.strictEqual(numNavigations, 0);
 
     assert.strictEqual(lhr.gatherMode, 'snapshot');
 
-    assert.deepStrictEqual(artifacts.ViewportDimensions, {
+    assert.deepEqual(artifacts.ViewportDimensions, {
       innerHeight: 823,
       innerWidth: 412,
       outerHeight: 823,
@@ -74,26 +69,27 @@ describe('Snapshot', function() {
     });
 
     const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-    assert.strictEqual(auditResults.length, 88);
-    assert.deepStrictEqual(erroredAudits, []);
-    assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
+    assert.lengthOf(auditResults, 87);
+    assert.deepEqual(erroredAudits, []);
+    assert.deepEqual(failedAudits.map(audit => audit.id), [
       'document-title',
       'html-has-lang',
       'label',
+      'landmark-one-main',
       'target-size',
       'meta-description',
     ]);
 
     // These a11y violations are not present on initial page load.
-    assert.strictEqual(lhr.audits['label'].details.items.length, 3);
+    assert.lengthOf(lhr.audits['label'].details.items, 3);
 
     // No trace was collected in snapshot mode.
-    const viewTrace = await $textContent('View Trace', reportEl);
-    assert.strictEqual(viewTrace, null);
-    const viewOriginalTrace = await $textContent('View Original Trace', reportEl);
-    assert.strictEqual(viewOriginalTrace, null);
+    const viewTrace = await devToolsPage.$textContent('View Trace', reportEl);
+    assert.isNull(viewTrace);
+    const viewOriginalTrace = await devToolsPage.$textContent('View Original Trace', reportEl);
+    assert.isNull(viewOriginalTrace);
 
     // Ensure service worker is not cleared in snapshot mode.
-    assert.strictEqual(await getServiceWorkerCount(), 1);
+    assert.strictEqual(await getServiceWorkerCount(inspectedPage), 1);
   });
 });

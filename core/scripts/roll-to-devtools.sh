@@ -73,12 +73,12 @@ rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
 
 # copy e2e tests
-lh_e2e_dir="third-party/devtools-tests/e2e/lighthouse/"
-fe_e2e_dir="$dt_dir/test/e2e/lighthouse"
-rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --delete
+lh_e2e_dir="third-party/devtools-tests/e2e_non_hosted/lighthouse/"
+fe_e2e_dir="$dt_dir/test/e2e_non_hosted/lighthouse"
+rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 lh_e2e_res_dir="third-party/devtools-tests/e2e/resources/lighthouse/"
 fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
-rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --delete
+rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --exclude="DIR_METADATA" --delete
 
 PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
 REVISION=$(git rev-parse HEAD)
@@ -86,13 +86,21 @@ echo "Name: Lighthouse
 Short Name: lighthouse
 Version: $PKG_VERSION
 Revision: $REVISION
+Update Mechanism: Manual
 URL: https://github.com/GoogleChrome/lighthouse
-License: Apache License 2.0
+License: Apache-2.0
 License File: LICENSE
 Security Critical: no
 Shipped: yes
 
-This directory contains Chromium's version of the lighthouse report assets, including renderer." > "$fe_lh_dir/README.chromium"
+This directory contains Chromium's version of Lighthouse. It includes:
+
+- locale strings
+- report assets
+- report renderer
+- worker bundle for running Lighthouse core
+
+Build documentation: https://github.com/GoogleChrome/lighthouse/blob/main/build/readme.md#building-for-devtools" > "$fe_lh_dir/README.chromium"
 
 echo ""
 echo "Done. To run the e2e tests: "

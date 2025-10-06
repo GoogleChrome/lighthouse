@@ -171,6 +171,7 @@ const modulesToSkip = [
   'es.regexp.constructor',
   'es.regexp.dot-all',
   'es.regexp.exec',
+  'es.regexp.flags',
   'es.regexp.sticky',
   'es.regexp.test',
   'es.regexp.to-string',

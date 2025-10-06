@@ -660,7 +660,7 @@
     "message": "Use video formats for animated content"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | description": {
-    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
+    "message": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile [Baseline](https://web.dev/baseline) features, unless you know that you must support legacy browsers. [Learn why most sites can deploy ES6+ code without transpiling](https://philipwalton.com/articles/the-state-of-es5-on-the-web/)"
   },
   "core/audits/byte-efficiency/legacy-javascript.js | detectedCoreJs2Warning": {
     "message": "Version 2 of core-js was detected on the page. You should upgrade to version 3 for many performance improvements."
@@ -1250,15 +1250,6 @@
   "core/audits/origin-isolation.js | title": {
     "message": "Ensure proper origin isolation with COOP"
   },
-  "core/audits/preload-fonts.js | description": {
-    "message": "Preload `optional` fonts so that first-time visitors may use them. [Learn more about preloading fonts](https://web.dev/articles/preload-optional-fonts)"
-  },
-  "core/audits/preload-fonts.js | failureTitle": {
-    "message": "Fonts with `font-display: optional` are not preloaded"
-  },
-  "core/audits/preload-fonts.js | title": {
-    "message": "Fonts with `font-display: optional` are preloaded"
-  },
   "core/audits/prioritize-lcp-image.js | description": {
     "message": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered)."
   },
@@ -1315,36 +1306,6 @@
   },
   "core/audits/seo/crawlable-anchors.js | title": {
     "message": "Links are crawlable"
-  },
-  "core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
-  },
-  "core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font size"
-  },
-  "core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of page text"
-  },
-  "core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
-  },
-  "core/audits/seo/font-size.js | description": {
-    "message": "Font sizes less than 12px are too small to be legible and require mobile visitors to 'pinch to zoom' in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://developer.chrome.com/docs/lighthouse/seo/font-size/)."
-  },
-  "core/audits/seo/font-size.js | displayValue": {
-    "message": "{decimalProportion, number, extendedPercent} legible text"
-  },
-  "core/audits/seo/font-size.js | explanationViewport": {
-    "message": "Text is illegible because there's no viewport meta tag optimised for mobile screens."
-  },
-  "core/audits/seo/font-size.js | failureTitle": {
-    "message": "Document doesn't use legible font sizes"
-  },
-  "core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
-  },
-  "core/audits/seo/font-size.js | title": {
-    "message": "Document uses legible font sizes"
   },
   "core/audits/seo/hreflang.js | description": {
     "message": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/)."
@@ -1440,7 +1401,7 @@
     "message": "Initial server response time was short"
   },
   "core/audits/third-party-cookies.js | description": {
-    "message": "Chrome is moving towards a new experience that allows users to choose to browse without third-party cookies. [Learn more about third-party cookies](https://developers.google.com/privacy-sandbox/cookies)."
+    "message": "Third-party cookies may be blocked in some contexts. [Learn more about preparing for third-party cookie restrictions](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
   "core/audits/third-party-cookies.js | displayValue": {
     "message": "{itemCount,plural, =1{1 cookie found}other{# cookies found}}"
@@ -1450,33 +1411,6 @@
   },
   "core/audits/third-party-cookies.js | title": {
     "message": "Avoids third-party cookies"
-  },
-  "core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (Customer success)"
-  },
-  "core/audits/third-party-facades.js | categoryMarketing": {
-    "message": "{productName} (Marketing)"
-  },
-  "core/audits/third-party-facades.js | categorySocial": {
-    "message": "{productName} (Social)"
-  },
-  "core/audits/third-party-facades.js | categoryVideo": {
-    "message": "{productName} (Video)"
-  },
-  "core/audits/third-party-facades.js | columnProduct": {
-    "message": "Product"
-  },
-  "core/audits/third-party-facades.js | description": {
-    "message": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/)."
-  },
-  "core/audits/third-party-facades.js | displayValue": {
-    "message": "{itemCount,plural, =1{# facade alternative available}other{# facade alternatives available}}"
-  },
-  "core/audits/third-party-facades.js | failureTitle": {
-    "message": "Some third-party resources can be lazy loaded with a facade"
-  },
-  "core/audits/third-party-facades.js | title": {
-    "message": "Lazy load third-party resources with facades"
   },
   "core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Third-party"
@@ -1492,6 +1426,18 @@
   },
   "core/audits/third-party-summary.js | title": {
     "message": "Minimise third-party usage"
+  },
+  "core/audits/trusted-types-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
+  "core/audits/trusted-types-xss.js | description": {
+    "message": "The `require-trusted-types-for` directive in the `Content-Security-Policy` (CSP) header instructs user agents to control the data passed to DOM XSS sink functions. [Learn more about mitigating DOM-based XSS with trusted types](https://developer.chrome.com/docs/lighthouse/best-practices/trusted-types-xss)."
+  },
+  "core/audits/trusted-types-xss.js | noTrustedTypesToMitigateXss": {
+    "message": "No `Content-Security-Policy` header with trusted types directive found"
+  },
+  "core/audits/trusted-types-xss.js | title": {
+    "message": "Mitigate DOM-based XSS with trusted types"
   },
   "core/audits/unsized-images.js | description": {
     "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn how to set image dimensions](https://web.dev/articles/optimize-cls#images_without_dimensions)"
@@ -1528,15 +1474,6 @@
   },
   "core/audits/uses-rel-preconnect.js | unusedWarning": {
     "message": "A `<link rel=preconnect>` was found for '{securityOrigin}' but was not used by the browser. Only use `preconnect` for important origins that the page will certainly request."
-  },
-  "core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "A preload `<link>` was found for '{preloadURL}' but was not used by the browser. Check that you are using the `crossorigin` attribute properly."
-  },
-  "core/audits/uses-rel-preload.js | description": {
-    "message": "Consider using `<link rel=preload>` to prioritise fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/)."
-  },
-  "core/audits/uses-rel-preload.js | title": {
-    "message": "Pre-load key requests"
   },
   "core/audits/valid-source-maps.js | columnMapURL": {
     "message": "Map URL"
@@ -1675,6 +1612,12 @@
   },
   "core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "First Paint Improvements"
+  },
+  "core/config/default-config.js | insightsGroupDescription": {
+    "message": "These insights are also available in the Chrome DevTools performance panel – [record a trace](https://developer.chrome.com/docs/devtools/performance/reference) to view more detailed information."
+  },
+  "core/config/default-config.js | insightsGroupTitle": {
+    "message": "Insights"
   },
   "core/config/default-config.js | metricGroupTitle": {
     "message": "Metrics"
@@ -1857,22 +1800,22 @@
     "message": "URL"
   },
   "core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potential savings"
+    "message": "Est savings"
   },
   "core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potential Savings"
+    "message": "Est savings"
   },
   "core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
     "message": "Cumulative Layout Shift"
   },
   "core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KiB"
+    "message": "Est savings of {wastedBytes, number, bytes} KiB"
   },
   "core/lib/i18n/i18n.js | displayValueElementsFound": {
     "message": "{nodeCount,plural, =1{1 element found}other{# elements found}}"
   },
   "core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "Potential savings of {wastedMs, number, milliseconds} ms"
+    "message": "Est savings of {wastedMs, number, milliseconds} ms"
   },
   "core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
@@ -2070,7 +2013,7 @@
     "message": "Obtain a Lighthouse performance score."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load performance metrics, such as largest contentful paint and speed index."
+    "message": "Measure page load performance metrics, such as Largest Contentful Paint and Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
     "message": "Assess progressive web app capabilities."
@@ -2204,14 +2147,8 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | GetUserMediaInsecureOrigin": {
     "message": "getUserMedia() no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | H1UserAgentFontSizeInSection": {
-    "message": "Found an <h1> tag within an <article>, <aside>, <nav> or <section> which does not have a specified font-size. The size of this heading text will be changing in this browser in the near future. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#specifying_a_uniform_font_size_for_h1 for more information."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | HostCandidateAttributeGetter": {
     "message": "RTCPeerConnectionIceErrorEvent.hostCandidate is deprecated. Please use RTCPeerConnectionIceErrorEvent.address or RTCPeerConnectionIceErrorEvent.port instead."
-  },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityDigitalCredentials": {
-    "message": "This format for the navigator.credentials.get() request for digital credentials is deprecated, please update your call to use the new format."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | IdentityInCanMakePaymentEvent": {
     "message": "The merchant origin and arbitrary data from the canmakepayment service worker event are deprecated and will be removed: topOrigin, paymentRequestOrigin, methodData, modifiers."
@@ -2251,6 +2188,9 @@
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverflowVisibleOnReplacedElement": {
     "message": "Specifying overflow: visible on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | OverrideFlashEmbedwithHTML": {
+    "message": "Legacy flash video embed has been rewritten to HTML iframe. Flash is long gone, this rewriting hack has been deprecated and may be removed in the future."
   },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | PaymentInstruments": {
     "message": "paymentManager.instruments is deprecated. Please use just-in-time install for payment handlers instead."
@@ -2321,9 +2261,6 @@
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | V8SharedArrayBufferConstructedInExtensionWithoutIsolation": {
     "message": "Extensions should opt in to cross-origin isolation to continue using SharedArrayBuffer. See https://developer.chrome.com/docs/extensions/mv3/cross-origin-isolation/."
   },
-  "node_modules/@paulirish/trace_engine/generated/Deprecation.js | WebGPUAdapterIsFallbackAdapter": {
-    "message": "The GPUAdapter isFallbackAdapter attribute is deprecated. Instead, use the GPUAdapterInfo isFallbackAdapter attribute."
-  },
   "node_modules/@paulirish/trace_engine/generated/Deprecation.js | XHRJSONEncodingDetection": {
     "message": "UTF-16 is not supported by response JSON in XMLHttpRequest"
   },
@@ -2354,6 +2291,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | topCulprits": {
     "message": "Top layout shift culprits"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | unsizedImage": {
+    "message": "Unsized image element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | webFont": {
+    "message": "Web font"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/CLSCulprits.js | worstCluster": {
     "message": "Worst cluster"
   },
@@ -2381,8 +2324,17 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | description": {
     "message": "A large DOM can increase the duration of style calculations and layout reflows, impacting page responsiveness. A large DOM will also increase memory usage. [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/)."
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | duration": {
+    "message": "Duration"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | element": {
     "message": "Element"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeLayout": {
+    "message": "Layout ({PH1} objects)"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | largeStyleRecalc": {
+    "message": "Style recalculation ({PH1} elements)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | maxChildren": {
     "message": "Most children"
@@ -2395,6 +2347,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | title": {
     "message": "Optimise DOM size"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | topUpdatesDescription": {
+    "message": "These are the largest layout and style recalculation events. Their performance impact may be reduced by making the DOM simpler."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DOMSize.js | totalElements": {
     "message": "Total elements"
@@ -2409,7 +2364,7 @@
     "message": "Had redirects ({PH1} redirects, +{PH2})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedServerResponseTime": {
-    "message": "Server responded slowly (observed {PH1}) "
+    "message": "Server responded slowly (observed {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | failedTextCompression": {
     "message": "No compression applied"
@@ -2418,7 +2373,7 @@
     "message": "Avoids redirects"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingServerResponseTime": {
-    "message": "Server responds quickly (observed {PH1}) "
+    "message": "Server responds quickly (observed {PH1})"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/DocumentLatency.js | passingTextCompression": {
     "message": "Applies text compression"
@@ -2463,7 +2418,7 @@
     "message": "(anonymous)"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | description": {
-    "message": "Many APIs, typically reading layout geometry, force the rendering engine to pause script execution in order to calculate the style and layout. Learn more about [forced reflow](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and its mitigations."
+    "message": "A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts) and possible mitigations."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | relatedStackTrace": {
     "message": "Stack trace"
@@ -2479,6 +2434,30 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ForcedReflow.js | unattributed": {
     "message": "[unattributed]"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | description": {
+    "message": "Start investigating with the longest sub-part. [Delays can be minimised](https://web.dev/articles/optimize-inp#optimize_interactions). To reduce processing duration, [optimise the main-thread costs](https://web.dev/articles/optimize-long-tasks), often JS."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | duration": {
+    "message": "Duration"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | inputDelay": {
+    "message": "Input delay"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | noInteractions": {
+    "message": "No interactions detected"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | presentationDelay": {
+    "message": "Presentation delay"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | processingDuration": {
+    "message": "Processing duration"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | subpart": {
+    "message": "Sub-part"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/INPBreakdown.js | title": {
+    "message": "INP breakdown"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | description": {
     "message": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimising image size](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/)"
@@ -2509,6 +2488,36 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ImageDelivery.js | useVideoFormat": {
     "message": "Using video formats instead of GIFs can improve the download size of animated content."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | description": {
+    "message": "Each [sub-part has specific improvement strategies](https://web.dev/articles/optimize-lcp#lcp-breakdown). Ideally, most of the LCP time should be spent on loading the resources, not within delays."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | duration": {
+    "message": "Duration"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | elementRenderDelay": {
+    "message": "Element render delay"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | fieldDuration": {
+    "message": "Field p75"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | noLcp": {
+    "message": "No LCP detected"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDelay": {
+    "message": "Resource load delay"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | resourceLoadDuration": {
+    "message": "Resource load duration"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | subpart": {
+    "message": "Sub-part"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | timeToFirstByte": {
+    "message": "Time to First Byte"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/LCPBreakdown.js | title": {
+    "message": "LCP breakdown"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/LCPDiscovery.js | description": {
     "message": "Optimise LCP by making the LCP image [discoverable](https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay) from the HTML immediately and [avoiding lazy loading](https://web.dev/articles/lcp-lazy-loading)"
@@ -2553,7 +2562,7 @@
     "message": "HTTP/2 and HTTP/3 offer many benefits over HTTP/1.1, such as multiplexing. [Learn more about using modern HTTP](https://developer.chrome.com/docs/lighthouse/best-practices/uses-http2/)."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | noOldProtocolRequests": {
-    "message": "No requests used HTTP/1.1"
+    "message": "No requests used HTTP/1.1, or its current use of HTTP/1.1 does not present a significant optimisation opportunity. HTTP/1.1 requests are only flagged if six or more static assets originate from the same origin, and they are not served from a local development environment or a third-party source."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/ModernHTTP.js | protocol": {
     "message": "Protocol"
@@ -2586,7 +2595,7 @@
     "message": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources or deferring the download of unnecessary resources to improve page load."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableDescription": {
-    "message": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use fewer than 4."
+    "message": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4."
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/NetworkDependencyTree.js | estSavingTableTitle": {
     "message": "Preconnect candidates"
@@ -2654,6 +2663,12 @@
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | title": {
     "message": "CSS selector costs"
   },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorElapsedTime": {
+    "message": "Top selector elapsed time"
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectorMatchAttempt": {
+    "message": "Top selector match attempt"
+  },
   "node_modules/@paulirish/trace_engine/models/trace/insights/SlowCSSSelector.js | topSelectors": {
     "message": "Top selectors"
   },
@@ -2680,6 +2695,9 @@
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | description": {
     "message": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) if the viewport is not optimised for mobile."
+  },
+  "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | mobileTapDelayLabel": {
+    "message": "Mobile tap delay"
   },
   "node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js | title": {
     "message": "Optimise viewport for mobile"
@@ -2972,6 +2990,9 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorker": {
     "message": "Pages that use SharedWorker are not currently eligible for back-forward cache."
   },
+  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | sharedWorkerMessage": {
+    "message": "The page was evicted from the cache because it received a message from a SharedWorker"
+  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | speechRecognizer": {
     "message": "Pages that use SpeechRecogniser are not currently eligible for back-forward cache."
   },
@@ -3023,23 +3044,14 @@
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTC": {
     "message": "Pages with WebRTC cannot enter back-forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webRTCSticky": {
-    "message": "Back-forward cache is disabled because WebRTC has been used."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webShare": {
     "message": "Pages that use WebShare are not currently eligible for back-forward cache."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocket": {
     "message": "Pages with WebSocket cannot enter back-forward cache."
   },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webSocketSticky": {
-    "message": "Back-forward cache is disabled because WebSocket has been used."
-  },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransport": {
     "message": "Pages with WebTransport cannot enter back-forward cache."
-  },
-  "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webTransportSticky": {
-    "message": "Back-forward cache is disabled because WebTransport has been used."
   },
   "node_modules/@paulirish/trace_engine/panels/application/components/BackForwardCacheStrings.js | webXR": {
     "message": "Pages that use WebXR are not currently eligible for back-forward cache."
@@ -3347,9 +3359,6 @@
   "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-responsive-images": {
     "message": "Enable [`Adaptive Image Sizing`](https://support.nitropack.io/hc/en-us/articles/10123833029905-How-to-Enable-Adaptive-Image-Sizing-For-Your-Site) to preemptively optimise your images and make them match the dimensions of the containers they’re displayed in across all devices."
   },
-  "node_modules/lighthouse-stack-packs/packs/nitropack.js | uses-text-compression": {
-    "message": "Use [`Gzip compression`](https://support.nitropack.io/hc/en-us/articles/13229297479313-Enabling-GZIP-compression) in NitroPack to reduce the size of the files that are sent to the browser."
-  },
   "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
     "message": "Use the `nuxt/image` component and set `format=\"webp\"`. [Learn more](https://image.nuxt.com/usage/nuxt-img#format)."
   },
@@ -3572,8 +3581,14 @@
   "report/renderer/report-utils.js | footerIssue": {
     "message": "File an issue"
   },
+  "report/renderer/report-utils.js | goBackToAudits": {
+    "message": "Go back to audits"
+  },
   "report/renderer/report-utils.js | hide": {
     "message": "Hide"
+  },
+  "report/renderer/report-utils.js | insightsNotice": {
+    "message": "Later this year, insights will replace performance audits. [Learn more and provide feedback here](https://github.com/GoogleChrome/lighthouse/discussions/16462)."
   },
   "report/renderer/report-utils.js | labDataTitle": {
     "message": "Lab Data"
@@ -3674,6 +3689,9 @@
   "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "There were issues affecting this run of Lighthouse:"
   },
+  "report/renderer/report-utils.js | tryInsights": {
+    "message": "Try insights"
+  },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Unattributable"
   },
@@ -3704,6 +3722,9 @@
   "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "Duplicate modules"
   },
+  "treemap/app/src/util.js | duplicatedBytesLabel": {
+    "message": "Duplicated bytes"
+  },
   "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "Resource bytes"
   },
@@ -3712,6 +3733,9 @@
   },
   "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "Toggle table"
+  },
+  "treemap/app/src/util.js | transferBytesLabel": {
+    "message": "Transfer bytes"
   },
   "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "Unused bytes"

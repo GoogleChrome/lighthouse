@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {getBrowserVersion} from '../gather/driver/environment.js';
+
 const NO_THROTTLING_METRICS = {
   latency: 0,
   downloadThroughput: 0,
@@ -16,13 +18,11 @@ const NO_CPU_THROTTLE_METRICS = {
 };
 
 /**
- * @param {string} userAgent
+ * @param {string} fullVersion
  * @param {LH.Config.Settings['formFactor']} formFactor
  * @return {LH.Crdp.Emulation.SetUserAgentOverrideRequest['userAgentMetadata']}
  */
-function parseUseragentIntoMetadata(userAgent, formFactor) {
-  const match = userAgent.match(/Chrome\/([\d.]+)/); // eg 'Chrome/(71.0.3577.0)'
-  const fullVersion = match?.[1] || '99.0.1234.0';
+function parseUseragentIntoMetadata(fullVersion, formFactor) {
   const [version] = fullVersion.split('.', 1);
   const brands = [
     {brand: 'Chromium', version},
@@ -55,6 +55,19 @@ function parseUseragentIntoMetadata(userAgent, formFactor) {
 }
 
 /**
+ * Tweak a useragent to have the milestone match the host's Chrome version.
+ * @param {LH.Gatherer.ProtocolSession} session
+ * @param {string} userAgent
+ * @returns {Promise<{tweakedUA: string, fullVersion: string}>}
+ */
+async function matchHostUAVersion(session, userAgent) {
+  const {milestone} = await getBrowserVersion(session);
+  const tweakedUA = userAgent.replace(/(Chrome\/)[\d.]+/, `$1${milestone}.0.0.0`);
+  const fullVersion = `${milestone}.0.0.0`;
+  return {tweakedUA, fullVersion};
+}
+
+/**
  * @param {LH.Gatherer.ProtocolSession} session
  * @param {LH.Config.Settings} settings
  * @return {Promise<void>}
@@ -62,9 +75,10 @@ function parseUseragentIntoMetadata(userAgent, formFactor) {
 async function emulate(session, settings) {
   if (settings.emulatedUserAgent !== false) {
     const userAgent = /** @type {string} */ (settings.emulatedUserAgent);
+    const {tweakedUA, fullVersion} = await matchHostUAVersion(session, userAgent);
     await session.sendCommand('Network.setUserAgentOverride', {
-      userAgent,
-      userAgentMetadata: parseUseragentIntoMetadata(userAgent, settings.formFactor),
+      userAgent: tweakedUA,
+      userAgentMetadata: parseUseragentIntoMetadata(fullVersion, settings.formFactor),
     });
   }
   // See devtools-entry for one usecase for disabling screenEmulation
@@ -157,4 +171,5 @@ export {
   clearNetworkThrottling,
   enableCPUThrottling,
   clearCPUThrottling,
+  matchHostUAVersion,
 };

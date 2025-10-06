@@ -11,16 +11,14 @@ import clickjackingMissingHeaders from './test-definitions/clickjacking-missing-
 import clickjackingMitigationPresent from './test-definitions/clickjacking-mitigation-headers-present.js';
 import crash from './test-definitions/crash.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
-import cspBlockAll from './test-definitions/csp-block-all.js';
+import cspBlock from './test-definitions/csp-block.js';
 import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
 import errorsInfiniteLoop from './test-definitions/errors-infinite-loop.js';
-import fontSize from './test-definitions/font-size.js';
 import formsAutoComplete from './test-definitions/forms-autocomplete.js';
 import fpsMax from './test-definitions/fps-max.js';
 import fpsMaxPassive from './test-definitions/fps-max-passive.js';
-import fpsScaled from './test-definitions/fps-scaled.js';
 import fpsOverflowX from './test-definitions/fps-overflow-x.js';
 import issuesMixedContent from './test-definitions/issues-mixed-content.js';
 import hstsFullyPresent from './test-definitions/hsts-fully-present.js';
@@ -43,7 +41,6 @@ import originIsolationCoopHeaderMissing from './test-definitions/origin-isolatio
 import originIsolationCoopPresent from './test-definitions/origin-isolation-coop-present.js';
 import perfDebug from './test-definitions/perf-debug.js';
 import perfDiagnosticsAnimations from './test-definitions/perf-diagnostics-animations.js';
-import perfDiagnosticsThirdParty from './test-definitions/perf-diagnostics-third-party.js';
 import perfDiagnosticsUnsizedImages from './test-definitions/perf-diagnostics-unsized-images.js';
 import perfFonts from './test-definitions/perf-fonts.js';
 import perfFrameMetrics from './test-definitions/perf-frame-metrics.js';
@@ -66,6 +63,8 @@ import serviceWorkerReloaded from './test-definitions/service-worker-reloaded.js
 import shiftAttribution from './test-definitions/shift-attribution.js';
 import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
+import trustedTypesDirectivePresent from './test-definitions/trusted-types-directive-present.js';
+import trustedTypesDirectiveMissingDirective from './test-definitions/trusted-types-missing-directives.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -76,17 +75,15 @@ const smokeTests = [
   clickjackingMitigationPresent,
   crash,
   cspAllowAll,
-  cspBlockAll,
+  cspBlock,
   dbw,
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
   errorsInfiniteLoop,
-  fontSize,
   formsAutoComplete,
   fpsMax,
   fpsMaxPassive,
   fpsOverflowX,
-  fpsScaled,
   issuesMixedContent,
   hstsFullyPresent,
   hstsMissingDirectives,
@@ -108,7 +105,6 @@ const smokeTests = [
   originIsolationCoopPresent,
   perfDebug,
   perfDiagnosticsAnimations,
-  perfDiagnosticsThirdParty,
   perfDiagnosticsUnsizedImages,
   perfFonts,
   perfFrameMetrics,
@@ -131,6 +127,8 @@ const smokeTests = [
   shiftAttribution,
   sourceMaps,
   timing,
+  trustedTypesDirectivePresent,
+  trustedTypesDirectiveMissingDirective,
 ];
 
 export default smokeTests;

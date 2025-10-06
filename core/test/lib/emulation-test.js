@@ -17,7 +17,17 @@ describe('emulation', () => {
       session.sendCommand
         .mockResponse('Network.setUserAgentOverride')
         .mockResponse('Emulation.setDeviceMetricsOverride')
-        .mockResponse('Emulation.setTouchEmulationEnabled');
+        .mockResponse('Emulation.setTouchEmulationEnabled')
+        .mockResponse('Browser.getVersion', {
+          protocolVersion: '1.3',
+          // This matches the UA in constants for easier snapshotting.
+          product: 'Chrome/136.0.0.0',
+          revision: '@1bbc3cb89f49c1e317f65ea88795d2a87b4b9a13',
+          userAgent:
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+            '(KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+          jsVersion: '14.2.72',
+        });
     });
 
     /**
@@ -171,6 +181,41 @@ describe('emulation', () => {
           architecture: 'x86',
         },
       });
+    });
+  });
+
+  describe('matchHostUAVersion', () => {
+    let session;
+
+    beforeEach(() => {
+      session = createMockSession();
+      session.sendCommand
+        .mockResponse('Browser.getVersion', {
+          protocolVersion: '1.3',
+          // 169 doesn't match what's in constants... So validate the emulation changes things.
+          product: 'Chrome/169.0.0.0',
+          revision: '@1bbc3cb89f49c1e317f65ea88795d2a87b4b9a13',
+          userAgent:
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+            '(KHTML, like Gecko) Chrome/169.0.0.0 Safari/537.36',
+          jsVersion: '14.2.72',
+        });
+    });
+
+    it('should tweak the UA and return the full version', async () => {
+      const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36';
+      const {tweakedUA, fullVersion} = await emulation.matchHostUAVersion(session, ua);
+      expect(tweakedUA).toEqual('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ' +
+      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/169.0.0.0 Safari/537.36');
+      expect(fullVersion).toEqual('169.0.0.0');
+    });
+
+    it('should do nothing for non-chrome UAs', async () => {
+      const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:70.0) ' +
+        'Gecko/20100101 Firefox/70.0';
+      const {tweakedUA} = await emulation.matchHostUAVersion(session, ua);
+      expect(tweakedUA).toEqual(ua);
     });
   });
 });
