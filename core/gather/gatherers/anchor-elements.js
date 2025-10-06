@@ -159,7 +159,7 @@ class AnchorElements extends BaseGatherer {
     // if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
     await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 
-console.time('listeners');
+    console.time('listeners');
     // For each anchor, compute its ancestor paths. Store all paths in a single set
     // for deduplication, and store the ancestor paths for each anchor in a map.
     const allPaths = new Set();
@@ -183,12 +183,8 @@ console.time('listeners');
     // Fetch event listeners for all unique paths in parallel.
     const listenersByPath = new Map();
     const listenerPromises = [...allPaths].map(async path => {
-      try {
-        const listeners = await getEventListeners(session, path);
-        if (listeners.length) listenersByPath.set(path, listeners);
-      } catch {
-        // Ignore errors, e.g. node not found.
-      }
+      const listeners = await getEventListeners(session, path).catch(() => {});
+      if (listeners?.length) listenersByPath.set(path, listeners);
     });
     await Promise.all(listenerPromises);
 
@@ -211,7 +207,7 @@ console.time('listeners');
       };
     });
 
-console.timeEnd('listeners');
+    console.timeEnd('listeners');
     await session.sendCommand('DOM.disable');
     return result;
   }
