@@ -84,7 +84,7 @@ class CrawlableAnchors extends Audit {
         !attributeNames.includes('href') &&
         hrefAssociatedAttributes.every(attribute => !attributeNames.includes(attribute))
       ) {
-        // If it has an even listener (e.g. onclick) then we can't assume it's a placeholder. Therefore we consider it failing
+        // If it has an even listener (e.g. onclick) then we can't assume it's a placeholder. Therefore we consider it failing.
         return Boolean(listeners.length);
       }
 

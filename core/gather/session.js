@@ -14,10 +14,6 @@ import {LighthouseError} from '../lib/lh-error.js';
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 const PPTR_BUFFER = 50;
 
-let i = 0;
-const calls = {};
-global.calls = calls;
-
 /**
  * Puppeteer timeouts must fit into an int32 and the maximum timeout for `setTimeout` is a *signed*
  * int32. However, this also needs to account for the puppeteer buffer we add to the timeout later.
@@ -116,7 +112,7 @@ class ProtocolSession extends CrdpEventEmitter {
   sendCommand(method, ...params) {
     const timeoutMs = this.getNextProtocolTimeout();
     this._nextProtocolTimeout = undefined;
-    calls[method] = (calls[method] || 0) + 1;
+
     /** @type {NodeJS.Timeout|undefined} */
     let timeout;
     const timeoutPromise = new Promise((resolve, reject) => {
@@ -131,7 +127,7 @@ class ProtocolSession extends CrdpEventEmitter {
       // Add 50ms to the Puppeteer timeout to ensure the Lighthouse timeout finishes first.
       timeout: timeoutMs + PPTR_BUFFER,
     }).catch((error) => {
-      log.formatProtocol('method <= browser ERR', {method, params}, 'error');
+      log.formatProtocol('method <= browser ERR', {method}, 'error');
       throw LighthouseError.fromProtocolMessage(method, error);
     });
     const resultWithTimeoutPromise =
