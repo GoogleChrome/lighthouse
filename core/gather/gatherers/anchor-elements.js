@@ -162,6 +162,30 @@ class AnchorElements extends BaseGatherer {
     console.timeEnd('getdoc');
 
 
+    console.time('simpelisteners');
+
+
+    const listeners = await Promise.all(anchors.map(anchor => getEventListeners(session, anchor.node.devtoolsNodePath)));
+    const paralellresult = anchors.map((anchor, i) => ({
+      ...anchor,
+      listeners: listeners[i],
+    }));
+    console.timeEnd('simpelisteners');
+
+    // // const anchorsWithEventListeners = anchors.map(async anchor => {
+    // //   const listeners = getEventListeners(session, anchor.node.devtoolsNodePath);
+
+
+    // //   return {
+    // //     ...anchor,
+    // //     listeners,
+    // //   };
+    // // });
+
+    // const resultsimple = await Promise.all(anchorsWithEventListeners);
+
+    // console.timeEnd('simpelisteners');
+
     console.time('listeners');
 
     // Phase 1: Collect all unique node paths from anchors and their ancestors.
@@ -219,11 +243,9 @@ class AnchorElements extends BaseGatherer {
 
 
     console.time('getSnapshot');
-    const snapshot = await session.sendCommand('DOMSnapshot.getSnapshot', {
-      includeEventListeners: true,
-      computedStyleWhitelist: [],
-    });
-    console.log(snapshot.domNodes.length)
+    // It'd be faster (on complex pages like cnn.com to use `sendCommand('DOMSnapshot.getSnapshot', {includeEventListeners: true, computedStyleWhitelist: []});`
+    // However that'd require a large refactor of how we collect/match dom nodes.
+    // If this remains a performance concern we should try to get rid of the ancestor listener consideration.
     console.timeEnd('getSnapshot');
 
 
