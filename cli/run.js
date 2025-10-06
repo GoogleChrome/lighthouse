@@ -182,16 +182,30 @@ async function saveResults(runnerResult, flags) {
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function runLighthouse(url, flags, config) {
-  /** @param {any} reason */
-  function handleTheUnhandled(reason) {
-    process.stderr.write(`Unhandled Rejection. Reason: ${reason}\n`);
-    launchedChrome?.kill();
-    process.exit(1);
-  }
-  process.on('unhandledRejection', handleTheUnhandled);
-
+  /**
+   * Guarded unhandled rejection handler to ensure a single, clean exit path
+   * with Chrome cleanup and consistent error formatting.
+   * @param {any} reason
+   */
+  let hasExited = false;
   /** @type {ChromeLauncher.LaunchedChrome|undefined} */
   let launchedChrome;
+
+  const handleTheUnhandled = (reason) => {
+    if (hasExited) return; // prevent double handling
+    hasExited = true;
+    try {
+      // Normalize reason into an Error-like shape
+      /** @type {ExitError} */
+      const err = typeof reason === 'object' && reason !== null ? reason : /** @type {any} */({message: String(reason)});
+      launchedChrome?.kill();
+      // Route through existing exit logic for consistent codes and messaging
+      printErrorAndExit(err);
+    } finally {
+      process.removeListener('unhandledRejection', handleTheUnhandled);
+    }
+  };
+  process.on('unhandledRejection', handleTheUnhandled);
 
   try {
     if (url && flags.auditMode && !flags.gatherMode) {
@@ -233,7 +247,8 @@ async function runLighthouse(url, flags, config) {
     return runnerResult;
   } catch (err) {
     launchedChrome?.kill();
-    return printErrorAndExit(err);
+    process.removeListener('unhandledRejection', handleTheUnhandled);
+    return printErrorAndExit(/** @type {ExitError} */(err));
   }
 }
 
