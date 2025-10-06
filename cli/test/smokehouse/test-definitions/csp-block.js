@@ -25,7 +25,6 @@ const blockAllExceptInlineScriptCsp = headersParam([[
   `default-src 'none'; connect-src 'self'; script-src 'nonce-00000000'`,
 ]]);
 
-console.log(blockAllExceptInlineScriptCsp);
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  */
