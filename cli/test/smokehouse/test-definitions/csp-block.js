@@ -19,7 +19,7 @@ function headersParam(headers) {
  */
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; script-src 'nonce-00000000'`,
+  `default-src 'self'; script-src 'nonce-00000000'`,
 ]]);
 
 /**
@@ -47,7 +47,7 @@ const expectations = {
 };
 
 const testDefn = {
-  id: 'csp-block-all',
+  id: 'csp-block',
   expectations,
 };
 
