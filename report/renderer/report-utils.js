@@ -493,7 +493,7 @@ const UIStrings = {
   /** Descriptive explanation used when an audit is not part of the calculated score. */
   unscoredLabel: 'Unscored',
   /** Descriptive explanation used when an audit is not part of the calculated score. */
-  unscoredTitle: 'This audit is not part of the category score.',
+  unscoredTitle: 'This audit does not contribute to the overall category score.',
 };
 
 export {
