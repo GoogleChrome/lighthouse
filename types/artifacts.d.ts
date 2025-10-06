@@ -477,7 +477,7 @@ declare module Artifacts {
   }
 
   interface TraceEngineResult {
-    parsedTrace: TraceEngine.Handlers.Types.ParsedTrace;
+    data: TraceEngine.Handlers.Types.HandlerData;
     insights: TraceEngine.Insights.Types.TraceInsightSets;
   }
 
@@ -892,6 +892,7 @@ export interface TraceEvent {
       initiator?: {type: string, url?: string, stack?: any};
       protocol?: string;
       finishTime?: number;
+      headers?: Array<{name: string, value: string}>;
     };
     frame?: string;
     name?: string;

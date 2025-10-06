@@ -27,7 +27,7 @@ class PageDependencyGraph {
     if (data.fromTrace) {
       const traceEngineResult =
         await TraceEngineResult.request({trace, settings, SourceMaps}, context);
-      const parsedTrace = traceEngineResult.parsedTrace;
+      const parsedTrace = traceEngineResult.data;
       const requests =
         Lantern.TraceEngineComputationData.createNetworkRequests(trace, parsedTrace);
       const graph =

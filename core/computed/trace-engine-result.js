@@ -62,10 +62,10 @@ class TraceEngineResult {
         return new SDK.SourceMap(compiledUrl, mapUrl, sourceMap.map);
       },
     });
-    if (!processor.parsedTrace) throw new Error('No data');
+    if (!processor.data) throw new Error('No data');
     if (!processor.insights) throw new Error('No insights');
     this.localizeInsights(processor.insights);
-    return {parsedTrace: processor.parsedTrace, insights: processor.insights};
+    return {data: processor.data, insights: processor.insights};
   }
 
   /**

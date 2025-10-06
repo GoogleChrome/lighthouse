@@ -11,7 +11,7 @@ import clickjackingMissingHeaders from './test-definitions/clickjacking-missing-
 import clickjackingMitigationPresent from './test-definitions/clickjacking-mitigation-headers-present.js';
 import crash from './test-definitions/crash.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
-import cspBlockAll from './test-definitions/csp-block-all.js';
+import cspBlock from './test-definitions/csp-block.js';
 import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
@@ -75,7 +75,7 @@ const smokeTests = [
   clickjackingMitigationPresent,
   crash,
   cspAllowAll,
-  cspBlockAll,
+  cspBlock,
   dbw,
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
