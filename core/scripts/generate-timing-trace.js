@@ -43,7 +43,19 @@ function saveTraceFromCLI() {
     printErrorAndQuit('Lighthouse JSON results not found.');
   }
 
-  const lhrObject = JSON.parse(fs.readFileSync(filename, 'utf8'));
+  let text = fs.readFileSync(filename, 'utf8');
+  // Support reading from HTML too.
+  if (filename.endsWith('.html') || text.startsWith('<')) {
+    const startMarker = '__LIGHTHOUSE_JSON__ = ';
+    const start = text.indexOf(startMarker) + startMarker.length;
+    const end = text.indexOf(';</script>', start);
+    if (start === -1 || end === -1) {
+      printErrorAndQuit('No Lighthouse JSON found in HTML file.');
+    }
+    text = text.slice(start, end);
+  }
+
+  const lhrObject = JSON.parse(text);
   const jsonStr = createTraceString(lhrObject);
 
   const pathObj = path.parse(filename);
