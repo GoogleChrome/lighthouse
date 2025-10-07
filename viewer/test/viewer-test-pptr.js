@@ -163,18 +163,13 @@ describe('Lighthouse Viewer', () => {
       );
     });
 
-    // TODO(v13) - kinda complicated to keep working right now.
-    // Restore when non-insight perf audits are gone.
-    it.skip('should contain audits of all categories', async () => {
+    it('should contain audits of all categories', async () => {
       const nonNavigationAudits = [
         'interaction-to-next-paint',
-        'uses-responsive-images-snapshot',
-        'work-during-interaction',
       ];
       for (const category of lighthouseCategories) {
         const expectedAuditIds = getAuditsOfCategory(category)
-          .filter(a => a.group !== 'hidden' && a.group !== 'insights' &&
-            !nonNavigationAudits.includes(a.id))
+          .filter(a => a.group !== 'hidden' && !nonNavigationAudits.includes(a.id))
           .map(a => a.id);
         const elementIds = await getAuditElementsIds({category, selector: selectors.audits});
 
