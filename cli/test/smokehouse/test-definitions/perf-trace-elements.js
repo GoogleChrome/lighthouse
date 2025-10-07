@@ -130,8 +130,6 @@ const expectations = {
       },
       'cls-culprits-insight': {
         score: 1,
-        // TODO(v13): should we add displayValue for this insight?
-        // displayValue: '2 layout shifts found',
         details: {
           items: [
             {

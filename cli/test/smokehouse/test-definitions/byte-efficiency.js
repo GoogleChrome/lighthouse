@@ -28,6 +28,7 @@ const config = {
       // unsized-images is not a byte-efficiency audit but can easily leverage the variety of images present in
       // byte-efficiency tests & thus makes sense to test together.
       'unsized-images',
+      'image-delivery-insight',
     ],
     throttlingMethod: 'devtools',
   },
@@ -199,40 +200,40 @@ const expectations = {
           ],
         },
       },
-      // TODO(v13): why aren't any of these triggering the modern format reason?
-      // 'image-delivery-insight': {
-      //   details: {
-      //     items: [
-      //       {
-      //         url: /lighthouse-1024x680.jpg$/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //       {
-      //         url: /lighthouse-unoptimized.jpg$/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //       {
-      //         url: /lighthouse-480x320.jpg$/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //       {
-      //         url: /lighthouse-480x320.jpg\?attributesized/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //       {
-      //         url: /lighthouse-480x320.jpg\?css/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //       {
-      //         url: /lighthouse-480x320.jpg\?sprite/,
-      //         subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
-      //       },
-      //     ],
-      //     debugData: {
-      //       wastedBytes: '137000 +/- 10000',
-      //     },
-      //   },
-      // },
+      'image-delivery-insight': {
+        details: {
+          // TODO: modern image format suggestions need to be improved. See https://crbug.com/450085873
+          // items: [
+          //   {
+          //     url: /lighthouse-1024x680.jpg$/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          //   {
+          //     url: /lighthouse-unoptimized.jpg$/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          //   {
+          //     url: /lighthouse-480x320.jpg$/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          //   {
+          //     url: /lighthouse-480x320.jpg\?attributesized/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          //   {
+          //     url: /lighthouse-480x320.jpg\?css/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          //   {
+          //     url: /lighthouse-480x320.jpg\?sprite/,
+          //     subItems: {items: {_includes: [{reason: /Using a modern image format/}]}},
+          //   },
+          // ],
+          debugData: {
+            wastedBytes: '160000 +/- 10000',
+          },
+        },
+      },
       'document-latency-insight': {
         score: '<1',
         details: {
