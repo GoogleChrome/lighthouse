@@ -47,8 +47,8 @@ function makeGolden(log, summary) {
         speedIndex: wptMetrics.speedIndex,
         largestContentfulPaint: wptMetrics.largestContentfulPaint,
         timeToFirstByte: wptMetrics.timeToFirstByte,
-        lcpLoadStart: wptMetrics.lcpLoadStart,
-        lcpLoadEnd: wptMetrics.lcpLoadEnd,
+        lcpLoadDelay: wptMetrics.lcpLoadDelay,
+        lcpLoadDuration: wptMetrics.lcpLoadDuration,
       },
       unthrottled: {
         tracePath: unthrottled.trace,

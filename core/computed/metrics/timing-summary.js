@@ -96,8 +96,9 @@ class TimingSummary {
       cumulativeLayoutShift,
       cumulativeLayoutShiftMainFrame,
 
-      lcpLoadStart: lcpBreakdown?.loadStart,
-      lcpLoadEnd: lcpBreakdown?.loadEnd,
+      lcpLoadDelay: lcpBreakdown?.loadDelay,
+      lcpLoadDuration: lcpBreakdown?.loadDuration,
+      lcpRenderDelay: lcpBreakdown?.renderDelay,
 
       timeToFirstByte: ttfb?.timing,
       timeToFirstByteTs: ttfb?.timestamp,
