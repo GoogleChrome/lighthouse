@@ -515,8 +515,8 @@ const expectations = {
         _excludeRunner: 'devtools',
         details: {items: {0: {
           timeToFirstByte: '450+/-100',
-          lcpLoadStart: '>5000',
-          lcpLoadEnd: '>5000',
+          lcpLoadDelay: '>5000',
+          lcpLoadDuration: '>5000',
         }}},
       },
       'third-party-cookies': {
