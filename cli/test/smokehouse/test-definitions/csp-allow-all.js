@@ -13,7 +13,7 @@ const expectations = {
     RobotsTxt: {
       status: 200,
     },
-    InspectorIssues: {contentSecurityPolicyIssue: []},
+    InspectorIssues: {contentSecurityPolicyIssue: undefined},
     SourceMaps: [{
       sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
       map: {},
