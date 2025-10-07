@@ -76,10 +76,7 @@ const expectations = {
     finalDisplayedUrl: 'http://localhost:10200/perf/trace-elements.html',
     audits: {
       'lcp-breakdown-insight': {
-        // TODO(v13): currently always 1.
-        // score: 0,
-        // TODO(v13): should we add displayValue for this insight?
-        // displayValue: /\d+\xa0ms/,
+        score: 0,
         details: {
           items: [
             {
