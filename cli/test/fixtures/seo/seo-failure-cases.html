@@ -50,7 +50,7 @@
     document.querySelector('.some-link').addEventListener('mousedown', () => {});
   </script>
 
-  <!-- FAIL(crawlable-anchors): Link event listener on parent -->
+  <!-- PASS(crawlable-anchors): Link event listener on parent. No biggie. https://github.com/GoogleChrome/lighthouse/pull/16731 -->
   <div class="link-parent"><a>Some link</a></div>
   <script>
     document.querySelector('.link-parent').addEventListener('click', () => {});

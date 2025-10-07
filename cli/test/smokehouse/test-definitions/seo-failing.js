@@ -57,7 +57,7 @@ const expectations = {
         score: 0,
         details: {
           items: {
-            length: 4,
+            length: 3,
           },
         },
       },
