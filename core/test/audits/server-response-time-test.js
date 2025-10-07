@@ -101,35 +101,6 @@ describe('Performance: server-response-time audit', () => {
     });
   });
 
-  // TODO(v13): remove M116. See _backfillReceiveHeaderStartTiming.
-  // eslint-disable-next-line max-len
-  it('succeeds when response time of root document is lower than 600ms (receiveHeadersEnd fallback)', async () => {
-    const mainResource = {
-      url: 'https://example.com/',
-      requestId: 'NAVIGATION_ID',
-      timing: {receiveHeadersEnd: 400, sendEnd: 200},
-    };
-    const trace = createTestTrace({networkRecords: [mainResource]});
-
-    const artifacts = {
-      Trace: trace,
-      URL: {mainDocumentUrl: 'https://example.com/'},
-      GatherContext: {gatherMode: 'navigation'},
-      SourceMaps: [],
-    };
-
-    const context = {computedCache: new Map(), settings: {}};
-    const result = await ServerResponseTime.audit(artifacts, context);
-    expect(result).toMatchObject({
-      numericValue: 200,
-      score: 1,
-      metricSavings: {
-        FCP: 100,
-        LCP: 100,
-      },
-    });
-  });
-
   it('throws error if no timing could be found', async () => {
     const trace = createTestTrace({});
 

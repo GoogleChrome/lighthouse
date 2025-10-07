@@ -13,17 +13,6 @@ describe('NetworkRequest', () => {
     global.isLightrider = undefined;
   });
 
-  it('backcompat for receiveHeadersStart', function() {
-    const req = {
-      timing: {receiveHeadersEnd: 123},
-    };
-    const devtoolsLog = networkRecordsToDevtoolsLog([req]);
-    const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
-
-    expect(record.timing.receiveHeadersStart).toEqual(123);
-    expect(record.timing.receiveHeadersEnd).toEqual(123);
-  });
-
   describe('update transfer size for Lightrider', () => {
     function getRequest() {
       return {
