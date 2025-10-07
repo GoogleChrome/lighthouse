@@ -70,14 +70,13 @@ describe('Performance: server-response-time audit', () => {
     });
   });
 
-  // TODO(v13): waiting for upstream fix.
-  it.skip('use timing from lrStatistics when available', async () => {
+  it('use timing from lrStatistics when available', async () => {
     global.isLightrider = true;
     const mainResource = {
       url: 'https://example.com/',
       requestId: 'NAVIGATION_ID',
       responseHeaders: [
-        {name: 'X-RequestMs', value: '1234'},
+        {name: 'X-ResponseMs', value: '1234'},
       ],
     };
     const trace = createTestTrace({networkRecords: [mainResource]});
