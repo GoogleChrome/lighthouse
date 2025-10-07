@@ -452,8 +452,7 @@ const expectations = {
                 granularity: 1,
                 value: 100,
               },
-              // TODO(v13): why missing?
-              // node: {snippet: '<div id="shadow-root-container">'},
+              node: {snippet: '<div id="shadow-root-container">'},
             },
           ],
         },
