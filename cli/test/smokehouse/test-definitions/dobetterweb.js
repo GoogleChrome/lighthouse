@@ -425,8 +425,7 @@ const expectations = {
       },
       'dom-size-insight': {
         score: 1,
-        // TODO(v13): add numeric value
-        // numericValue: 153,
+        numericValue: 153,
         details: {
           items: [
             {
