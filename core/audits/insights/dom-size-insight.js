@@ -85,7 +85,11 @@ class DOMSizeInsight extends Audit {
         maxChildren: maxChildren.numChildren,
         maxDepth: maxDepth.depth,
       };
-      return details;
+      return {
+        details,
+        numericValue: totalElements,
+        numericUnit: 'element',
+      };
     });
   }
 }

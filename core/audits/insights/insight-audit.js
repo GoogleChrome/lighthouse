@@ -42,7 +42,7 @@ async function getInsightSet(artifacts, context) {
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
  * @param {T} insightName
- * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => {details: LH.Audit.Details, warnings: Array<string | LH.IcuMessage>}|LH.Audit.Details|undefined} createDetails
+ * @param {(insight: import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModels[T], extras: CreateDetailsExtras) => {details: LH.Audit.Details, warnings?: Array<string | LH.IcuMessage>, numericValue?: number, numericUnit?: LH.Audit.NumericProduct['numericUnit']}|LH.Audit.Details|undefined} createDetails
  * @template {keyof import('@paulirish/trace_engine/models/trace/insights/types.js').InsightModelsType} T
  * @return {Promise<LH.Audit.Product>}
  */
@@ -70,11 +70,17 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   });
 
   const warnings = [...insight.warnings ?? []];
+  /** @type {number|undefined} */
+  let numericValue;
+  /** @type {LH.Audit.NumericProduct['numericUnit']|undefined} */
+  let numericUnit;
 
   let details;
-  if (cbResult && 'warnings' in cbResult) {
+  if (cbResult && 'details' in cbResult) {
     details = cbResult.details;
-    warnings.push(...cbResult.warnings);
+    if (cbResult.warnings) warnings.push(...cbResult.warnings);
+    numericValue = cbResult.numericValue;
+    numericUnit = cbResult.numericUnit;
   } else {
     details = cbResult;
   }
@@ -161,6 +167,19 @@ async function adaptInsightToAuditProduct(artifacts, context, insightName, creat
   } else {
     score = null;
     scoreDisplayMode = Audit.SCORING_MODES.INFORMATIVE;
+  }
+
+  if (numericValue !== undefined && numericUnit !== undefined) {
+    return {
+      scoreDisplayMode,
+      score,
+      numericValue,
+      numericUnit,
+      metricSavings,
+      warnings: warnings.length ? warnings : undefined,
+      displayValue,
+      details,
+    };
   }
 
   return {
