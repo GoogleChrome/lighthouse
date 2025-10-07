@@ -89,7 +89,6 @@ class Redirects extends Audit {
     const gatherContext = artifacts.GatherContext;
     const {URL, SourceMaps} = artifacts;
 
-    // TODO(v13): use trace processor / network tree insight.
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const documentRequests = Redirects.getDocumentRequestChain(networkRecords, processedTrace);

@@ -119,8 +119,8 @@ const expectations = {
               items: {
                 priorityHinted: {value: false},
                 requestDiscoverable: {value: false},
-                // TODO(v13): waiting for https://chromium-review.git.corp.google.com/c/chromium/src/+/7001499
-                // eagerlyLoaded: {value: false},
+                // https://crrev.com/c/7001499
+                eagerlyLoaded: {value: false, _minChromiumVersion: '143'},
               },
             },
             {
