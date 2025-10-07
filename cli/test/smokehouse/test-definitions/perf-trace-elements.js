@@ -35,22 +35,6 @@ const expectations = {
       {traceEventType: 'trace-engine'},
       {traceEventType: 'trace-engine'},
       {
-        traceEventType: 'largest-contentful-paint',
-        node: {
-          nodeLabel: 'section > img',
-          snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg" loading="lazy">',
-          boundingRect: {
-            top: 108,
-            bottom: 426,
-            left: 8,
-            right: 488,
-            width: 480,
-            height: 318,
-          },
-        },
-        type: 'image',
-      },
-      {
         traceEventType: 'layout-shift',
         node: {
           nodeLabel: `Please don't move me`,

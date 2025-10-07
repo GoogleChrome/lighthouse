@@ -265,11 +265,6 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         nodeId: 5,
       },
       {
-        ...LCPNodeData,
-        traceEventType: 'largest-contentful-paint',
-        nodeId: 6,
-      },
-      {
         ...layoutShiftNodeData,
         traceEventType: 'layout-shift',
         nodeId: 4,
@@ -422,11 +417,6 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         ...animationNodeData,
         traceEventType: 'trace-engine',
         nodeId: 6,
-      },
-      {
-        ...LCPNodeData,
-        traceEventType: 'largest-contentful-paint',
-        nodeId: 7,
       },
       {
         ...animationNodeData,

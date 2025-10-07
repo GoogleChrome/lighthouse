@@ -18,8 +18,6 @@ import {pageFunctions} from '../../lib/page-functions.js';
 import {Sentry} from '../../lib/sentry.js';
 import Trace from './trace.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
-import {ProcessedNavigation} from '../../computed/processed-navigation.js';
-import {LighthouseError} from '../../lib/lh-error.js';
 import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 import {CumulativeLayoutShift} from '../../computed/metrics/cumulative-layout-shift.js';
 import {ExecutionContext} from '../driver/execution-context.js';
@@ -277,35 +275,6 @@ class TraceElements extends BaseGatherer {
   }
 
   /**
-   * @param {LH.Trace} trace
-   * @param {LH.Gatherer.Context} context
-   * @return {Promise<{nodeId: number, type: string} | undefined>}
-   */
-  static async getLcpElement(trace, context) {
-    let processedNavigation;
-    try {
-      processedNavigation = await ProcessedNavigation.request(trace, context);
-    } catch (err) {
-      // If we were running in timespan mode and there was no paint, treat LCP as missing.
-      if (context.gatherMode === 'timespan' && err.code === LighthouseError.errors.NO_FCP.code) {
-        return;
-      }
-
-      throw err;
-    }
-
-    // Use main-frame-only LCP to match the metric value.
-    const lcpData = processedNavigation.largestContentfulPaintEvt?.args?.data;
-    // These should exist, but trace types are loose.
-    if (lcpData?.nodeId === undefined || !lcpData.type) return;
-
-    return {
-      nodeId: lcpData.nodeId,
-      type: lcpData.type,
-    };
-  }
-
-  /**
    * @param {LH.Gatherer.Context} context
    */
   async startInstrumentation(context) {
@@ -372,20 +341,16 @@ class TraceElements extends BaseGatherer {
 
     const traceEngineData = await TraceElements.getTraceEngineElements(
       traceEngineResult, navigationId);
-    const lcpNodeData = await TraceElements.getLcpElement(trace, context);
     const shiftsData = await TraceElements.getTopLayoutShifts(
       trace, traceEngineResult, context);
     const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
-    const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
     // TODO(v13): remove unnecessary entries.
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['trace-engine', traceEngineData],
-      ['largest-contentful-paint', lcpNodeData ? [lcpNodeData] : []],
       ['layout-shift', shiftsData],
       ['animation', animatedElementData],
-      ['responsiveness', responsivenessElementData ? [responsivenessElementData] : []],
     ]);
 
     /** @type {Map<number, LH.Crdp.Runtime.CallFunctionOnResponse | null>} */
