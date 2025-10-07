@@ -22,6 +22,7 @@ function mockData(networkRecords) {
     trace: createTestTrace({
       traceEnd: 6000,
       largestContentfulPaint: 4500,
+      networkRecords,
     }),
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {
@@ -37,7 +38,7 @@ function mockData(networkRecords) {
 
 function mockNetworkRecords() {
   return [{
-    requestId: '2',
+    requestId: 'NAVIGATION_ID',
     priority: 'High',
     isLinkPreload: false,
     networkRequestTime: 0,
@@ -50,7 +51,7 @@ function mockNetworkRecords() {
     responseHeaders: [{name: 'Content-Encoding', value: 'gzip'}],
   },
   {
-    requestId: '2:redirect',
+    requestId: 'NAVIGATION_ID:redirect',
     resourceType: 'Document',
     priority: 'High',
     isLinkPreload: false,

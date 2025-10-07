@@ -43,7 +43,7 @@ function mockData(networkRecords) {
 
 function mockNetworkRecords() {
   return [{
-    requestId: '2',
+    requestId: 'NAVIGATION_ID',
     priority: 'High',
     isLinkPreload: false,
     networkRequestTime: 0,
@@ -55,7 +55,7 @@ function mockNetworkRecords() {
     frameId: 'ROOT_FRAME',
   },
   {
-    requestId: '2:redirect',
+    requestId: 'NAVIGATION_ID:redirect',
     resourceType: 'Document',
     priority: 'High',
     isLinkPreload: false,
@@ -110,11 +110,11 @@ describe('LCPBreakdown', () => {
     expect(result.ttfb).toBeCloseTo(1245.5, 0.1);
     // TODO(15841): investigate difference.
     if (process.env.INTERNAL_LANTERN_USE_TRACE !== undefined) {
-      expect(result.loadStart).toBeCloseTo(3429.1, 0.1);
-      expect(result.loadEnd).toBeCloseTo(3812.8, 0.1);
+      expect(result.loadDelay).toBeCloseTo(3429.1, 0.1);
+      expect(result.loadDuration).toBeCloseTo(3812.8, 0.1);
     } else {
-      expect(result.loadStart).toBeCloseTo(3558.6, 0.1);
-      expect(result.loadEnd).toBeCloseTo(3956.8, 0.1);
+      expect(result.loadDelay).toBeCloseTo(3558.6, 0.1);
+      expect(result.loadDuration).toBeCloseTo(3956.8, 0.1);
     }
   });
 
@@ -132,8 +132,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(1014.7, 0.1);
-    expect(result.loadStart).toBeUndefined();
-    expect(result.loadEnd).toBeUndefined();
+    expect(result.loadDelay).toBeUndefined();
+    expect(result.loadDuration).toBeUndefined();
   });
 
   it('returns breakdown for image LCP', async () => {
@@ -143,8 +143,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadStart).toBeCloseTo(2579.5, 0.1);
-    expect(result.loadEnd).toBeCloseTo(5804, 0.1);
+    expect(result.loadDelay).toBeCloseTo(2579.5, 0.1);
+    expect(result.loadDuration).toBeCloseTo(5804, 0.1);
   });
 
   it('returns observed for image LCP', async () => {
@@ -155,8 +155,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadStart).toBeCloseTo(2000, 0.1);
-    expect(result.loadEnd).toBeCloseTo(4500, 0.1);
+    expect(result.loadDelay).toBeCloseTo(1200, 0.1);
+    expect(result.loadDuration).toBeCloseTo(2500, 0.1);
   });
 
   it('returns breakdown for text LCP', async () => {
@@ -169,8 +169,8 @@ describe('LCPBreakdown', () => {
     const result = await LCPBreakdown.request(data, {computedCache: new Map()});
 
     expect(result.ttfb).toBeCloseTo(800, 0.1);
-    expect(result.loadStart).toBeUndefined();
-    expect(result.loadEnd).toBeUndefined();
+    expect(result.loadDelay).toBeUndefined();
+    expect(result.loadDuration).toBeUndefined();
   });
 
   it('throws if there was no LCP', async () => {

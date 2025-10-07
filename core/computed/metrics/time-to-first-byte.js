@@ -4,10 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {calculateDocFirstByteTs} from '@paulirish/trace_engine/models/trace/insights/Common.js';
+
 import {makeComputedArtifact} from '../computed-artifact.js';
 import {NavigationMetric} from './navigation-metric.js';
 import {MainResource} from '../main-resource.js';
 import {NetworkAnalysis} from '../network-analysis.js';
+import {NavigationInsights} from '../navigation-insights.js';
+import {TraceEngineResult} from '../trace-engine-result.js';
 
 class TimeToFirstByte extends NavigationMetric {
   /**
@@ -41,18 +45,37 @@ class TimeToFirstByte extends NavigationMetric {
    * @return {Promise<LH.Artifacts.Metric>}
    */
   static async computeObservedMetric(data, context) {
-    const mainResource = await MainResource.request(data, context);
-    if (!mainResource.timing) {
-      throw new Error('missing timing for main resource');
+    const {trace, settings, SourceMaps} = data;
+    const traceEngineResult =
+      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
+    const lcpBreakdown = navInsights.model.LCPBreakdown;
+
+    // Defer to LCP breakdown, but if there's no LCP fallback to manual calculation.
+    if (!(lcpBreakdown instanceof Error) && lcpBreakdown.subparts) {
+      return {
+        timing: lcpBreakdown.subparts.ttfb.range / 1000,
+        timestamp: lcpBreakdown.subparts.ttfb.max,
+      };
+    } else if (navInsights.navigation?.args.data?.navigationId) {
+      const request = traceEngineResult.data.NetworkRequests.byId.get(
+        navInsights.navigation.args.data.navigationId);
+      if (!request) {
+        throw new Error();
+      }
+
+      const timestamp = calculateDocFirstByteTs(request);
+      if (timestamp === null) {
+        throw new Error('cannot calculate ttfb');
+      }
+
+      return {
+        timing: (timestamp - navInsights.navigation.ts) / 1000,
+        timestamp,
+      };
     }
 
-    const {processedNavigation} = data;
-    const timeOriginTs = processedNavigation.timestamps.timeOrigin;
-    const timestampMs =
-      mainResource.timing.requestTime * 1000 + mainResource.timing.receiveHeadersStart;
-    const timestamp = timestampMs * 1000;
-    const timing = (timestamp - timeOriginTs) / 1000;
-    return {timing, timestamp};
+    throw new Error('cannot determine ttfb');
   }
 }
 
