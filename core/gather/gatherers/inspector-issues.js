@@ -61,34 +61,7 @@ class InspectorIssues extends BaseGatherer {
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     /** @type {LH.Artifacts.InspectorIssues} */
-    const artifact = {
-      // TODO(v13): remove empty arrays.
-      attributionReportingIssue: [],
-      blockedByResponseIssue: [],
-      bounceTrackingIssue: [],
-      clientHintIssue: [],
-      contentSecurityPolicyIssue: [],
-      cookieDeprecationMetadataIssue: [],
-      corsIssue: [],
-      deprecationIssue: [],
-      federatedAuthRequestIssue: [],
-      genericIssue: [],
-      heavyAdIssue: [],
-      lowTextContrastIssue: [],
-      mixedContentIssue: [],
-      navigatorUserAgentIssue: [],
-      partitioningBlobURLIssue: [],
-      propertyRuleIssue: [],
-      quirksModeIssue: [],
-      cookieIssue: [],
-      elementAccessibilityIssue: [],
-      sharedArrayBufferIssue: [],
-      sharedDictionaryIssue: [],
-      stylesheetLoadingIssue: [],
-      sriMessageSignatureIssue: [],
-      federatedAuthUserInfoRequestIssue: [],
-      userReidentificationIssue: [],
-    };
+    const artifact = {};
 
     for (const issue of this._issues) {
       const detailsKey = /** @type {keyof LH.Crdp.Audits.InspectorIssueDetails} */(

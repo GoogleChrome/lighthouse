@@ -215,7 +215,6 @@ describe('getArtifact', () => {
         cookieExclusionReasons: [],
         operation: 'ReadCookie',
       }],
-      bounceTrackingIssue: [],
       blockedByResponseIssue: [{
         request: {requestId: '3', url: 'https://example.com/3'},
         reason: 'CorpNotSameOrigin',
@@ -232,7 +231,6 @@ describe('getArtifact', () => {
         isReportOnly: false,
         contentSecurityPolicyViolationType: 'kInlineViolation',
       }],
-      cookieDeprecationMetadataIssue: [],
       deprecationIssue: [{
         type: 'AuthorizationCoveredByWildcard',
         sourceCodeLocation: {
@@ -241,23 +239,6 @@ describe('getArtifact', () => {
           lineNumber: 10,
         },
       }],
-      attributionReportingIssue: [],
-      clientHintIssue: [],
-      corsIssue: [],
-      genericIssue: [],
-      lowTextContrastIssue: [],
-      navigatorUserAgentIssue: [],
-      partitioningBlobURLIssue: [],
-      propertyRuleIssue: [],
-      quirksModeIssue: [],
-      elementAccessibilityIssue: [],
-      sharedArrayBufferIssue: [],
-      sharedDictionaryIssue: [],
-      federatedAuthRequestIssue: [],
-      sriMessageSignatureIssue: [],
-      stylesheetLoadingIssue: [],
-      federatedAuthUserInfoRequestIssue: [],
-      userReidentificationIssue: [],
     });
   });
 
@@ -302,32 +283,10 @@ describe('getArtifact', () => {
         cookieExclusionReasons: [],
         operation: 'ReadCookie',
       }],
-      bounceTrackingIssue: [],
       blockedByResponseIssue: [{
         request: {requestId: '5', url: 'https://example.com/5'},
         reason: 'CorpNotSameOrigin',
       }],
-      heavyAdIssue: [],
-      clientHintIssue: [],
-      contentSecurityPolicyIssue: [],
-      cookieDeprecationMetadataIssue: [],
-      deprecationIssue: [],
-      attributionReportingIssue: [],
-      corsIssue: [],
-      genericIssue: [],
-      lowTextContrastIssue: [],
-      navigatorUserAgentIssue: [],
-      partitioningBlobURLIssue: [],
-      propertyRuleIssue: [],
-      quirksModeIssue: [],
-      elementAccessibilityIssue: [],
-      sharedArrayBufferIssue: [],
-      sharedDictionaryIssue: [],
-      federatedAuthRequestIssue: [],
-      sriMessageSignatureIssue: [],
-      stylesheetLoadingIssue: [],
-      federatedAuthUserInfoRequestIssue: [],
-      userReidentificationIssue: [],
     });
   });
 });
