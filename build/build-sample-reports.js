@@ -173,14 +173,14 @@ async function generateErrorLHR() {
     'Lighthouse was unable to automatically check the font-display value for the following URL: https://secure-ds.serving-sys.com/resources/PROD/html5/105657/20190307/1074580285/43862346571980472/fonts/IBMPlexSans-Light-Latin1.woff.',
     'Lighthouse was unable to automatically check the font-display value for the following URL: https://secure-ds.serving-sys.com/resources/PROD/html5/105657/20190307/1074580285/43862346571980472/fonts/IBMPlexSans-Bold-Latin1.woff.',
   ];
-  // perf/offscreen-images - set as passing but with a warning
-  const offscreenImagesAudit = errorLhr.audits['offscreen-images'];
-  offscreenImagesAudit.warnings = [
-    'Invalid image sizing information: https://cdn.cnn.com/cnn/.e1mo/img/4.0/vr/vr_new_asset.png',
+  // unminified-css - set as passing but with a warning
+  const auditWithWarning = errorLhr.audits['unminified-css'];
+  auditWithWarning.warnings = [
+    'Some bogus warning: https://cdn.cnn.com/cnn/.e1mo/img/4.0/vr/vr_new_asset.png',
   ];
-  offscreenImagesAudit.errorMessage = undefined;
-  offscreenImagesAudit.scoreDisplayMode = 'binary';
-  offscreenImagesAudit.score = 1;
+  auditWithWarning.errorMessage = undefined;
+  auditWithWarning.scoreDisplayMode = 'binary';
+  auditWithWarning.score = 1;
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;

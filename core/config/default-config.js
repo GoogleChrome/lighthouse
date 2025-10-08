@@ -260,7 +260,6 @@ const defaultConfig = {
     'accessibility/manual/use-landmarks',
     'accessibility/manual/visual-order-follows-dom',
     'byte-efficiency/total-byte-weight',
-    'byte-efficiency/offscreen-images',
     'byte-efficiency/unminified-css',
     'byte-efficiency/unminified-javascript',
     'byte-efficiency/unused-css-rules',
@@ -409,7 +408,6 @@ const defaultConfig = {
         {id: 'max-potential-fid', weight: 0, group: 'hidden'},
         {id: 'first-meaningful-paint', weight: 0, acronym: 'FMP', group: 'hidden'},
 
-        {id: 'offscreen-images', weight: 0, group: 'diagnostics'},
         {id: 'unminified-css', weight: 0, group: 'diagnostics'},
         {id: 'unminified-javascript', weight: 0, group: 'diagnostics'},
         {id: 'unused-css-rules', weight: 0, group: 'diagnostics'},

@@ -98,7 +98,7 @@ describe('DevTools', function() {
       assert.deepEqual(await getTargetViewport(inspectedPage), IPAD_MINI_LANDSCAPE_VIEWPORT_DIMENSIONS);
 
       await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
-      await selectCategories(['performance'], devToolsPage);
+      await selectCategories(['performance', 'best-practices'], devToolsPage);
       await clickStartButton(devToolsPage);
 
       const {artifacts} = await waitForResult(devToolsPage, inspectedPage);

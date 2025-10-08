@@ -14,7 +14,6 @@ const config = {
     onlyAudits: [
       'accesskeys', // run axe on the page since we've had problems with interactions
       'network-requests',
-      'offscreen-images',
       'modern-http-insight',
       'modern-image-formats',
       'document-latency-insight',
@@ -181,21 +180,6 @@ const expectations = {
                   {source: '…webpack/bootstrap', sourceBytes: '2809 +/- 50', sourceWastedBytes: '1259 +/- 50'},
                 ],
               },
-            },
-          ],
-        },
-      },
-      'offscreen-images': {
-        details: {
-          items: [
-            {
-              url: /lighthouse-unoptimized.jpg$/,
-            }, {
-              url: /lighthouse-480x320.webp$/,
-            }, {
-              url: /lighthouse-480x320.webp\?invisible$/,
-            }, {
-              url: /large.svg$/,
             },
           ],
         },
