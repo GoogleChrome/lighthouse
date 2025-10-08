@@ -116,8 +116,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
       All properties default to an empty string if not present */
   Doctype: Artifacts.Doctype | null;
-  /** Information on the size of all DOM nodes in the page and the most extreme members. */
-  DOMStats: Artifacts.DOMStats;
   /** All the iframe elements in the page. */
   IFrameElements: Artifacts.IFrameElement[];
   /** All the input elements, including associated form and label elements. */
@@ -222,13 +220,6 @@ declare module Artifacts {
     publicId: string;
     systemId: string;
     documentCompatMode: string;
-  }
-
-  interface DOMStats {
-    /** The total number of elements found within the page's body. */
-    totalBodyElements: number;
-    width: NodeDetails & {max: number;};
-    depth: NodeDetails & {max: number;};
   }
 
   interface IFrameElement {

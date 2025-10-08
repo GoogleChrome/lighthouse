@@ -118,7 +118,6 @@ const defaultConfig = {
     {id: 'ConsoleMessages', gatherer: 'console-messages'},
     {id: 'CSSUsage', gatherer: 'css-usage'},
     {id: 'Doctype', gatherer: 'dobetterweb/doctype'},
-    {id: 'DOMStats', gatherer: 'dobetterweb/domstats'},
     {id: 'Inputs', gatherer: 'inputs'},
     {id: 'IFrameElements', gatherer: 'iframe-elements'},
     {id: 'ImageElements', gatherer: 'image-elements'},
