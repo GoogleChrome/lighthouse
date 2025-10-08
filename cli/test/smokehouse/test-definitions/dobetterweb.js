@@ -255,14 +255,6 @@ const expectations = {
       'geolocation-on-start': {
         score: 0,
       },
-      'no-document-write': {
-        score: 0.5,
-        details: {
-          items: {
-            length: 3,
-          },
-        },
-      },
       'notification-on-start': {
         score: 0,
       },

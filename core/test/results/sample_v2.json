@@ -4227,53 +4227,6 @@
         "items": []
       }
     },
-    "no-document-write": {
-      "id": "no-document-write",
-      "title": "Avoid `document.write()`",
-      "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/).",
-      "score": 0.5,
-      "scoreDisplayMode": "metricSavings",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "valueType": "source-location",
-            "label": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 284,
-              "column": 11
-            }
-          },
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 285,
-              "column": 11
-            }
-          },
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 286,
-              "column": 11
-            }
-          }
-        ]
-      },
-      "guidanceLevel": 2
-    },
     "js-libraries": {
       "id": "js-libraries",
       "title": "Detected JavaScript libraries",
@@ -5881,11 +5834,6 @@
         },
         {
           "id": "uses-passive-event-listeners",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "no-document-write",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -8859,12 +8807,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:no-document-write",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:js-libraries",
         "duration": 100,
         "entryType": "measure"
@@ -9261,7 +9203,6 @@
         "audits[errors-in-console].details.headings[0].label",
         "audits.deprecations.details.headings[1].label",
         "audits[geolocation-on-start].details.headings[0].label",
-        "audits[no-document-write].details.headings[0].label",
         "audits[notification-on-start].details.headings[0].label",
         "audits[uses-passive-event-listeners].details.headings[0].label",
         "audits[forced-reflow-insight].details.items[0].headings[0].label"
@@ -10150,12 +10091,6 @@
       ],
       "core/audits/dobetterweb/inspector-issues.js | columnIssueType": [
         "audits[inspector-issues].details.headings[0].label"
-      ],
-      "core/audits/dobetterweb/no-document-write.js | failureTitle": [
-        "audits[no-document-write].title"
-      ],
-      "core/audits/dobetterweb/no-document-write.js | description": [
-        "audits[no-document-write].description"
       ],
       "core/audits/dobetterweb/js-libraries.js | title": [
         "audits[js-libraries].title"
