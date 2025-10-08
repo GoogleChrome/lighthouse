@@ -126,7 +126,6 @@ const defaultConfig = {
     {id: 'MainDocumentContent', gatherer: 'main-document-content'},
     {id: 'MetaElements', gatherer: 'meta-elements'},
     {id: 'NetworkUserAgent', gatherer: 'network-user-agent'},
-    {id: 'ResponseCompression', gatherer: 'dobetterweb/response-compression'},
     {id: 'RobotsTxt', gatherer: 'seo/robots-txt'},
     {id: 'Scripts', gatherer: 'scripts'},
     {id: 'SourceMaps', gatherer: 'source-maps'},
