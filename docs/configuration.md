@@ -106,7 +106,7 @@ The audits property controls which audits to run and include with your Lighthous
 {
   audits: [
     'first-contentful-paint',
-    'byte-efficiency/uses-optimized-images',
+    'byte-efficiency/unminified-css',
   ]
 }
 ```

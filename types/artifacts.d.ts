@@ -131,8 +131,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts {
   JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
   /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
   NetworkUserAgent: string;
-  /** Size and compression opportunity information for all the images in the page. */
-  OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
   /** Size info of all network records sent without compression and their size after gzipping. */
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
@@ -441,28 +439,6 @@ declare module Artifacts {
     loading?: string;
     /** The fetch priority hint for HTMLImageElements. */
     fetchPriority?: string;
-  }
-
-  interface OptimizedImage {
-    failed: false;
-    originalSize: number;
-    jpegSize?: number;
-    webpSize?: number;
-
-    requestId: string;
-    url: string;
-    mimeType: string;
-    resourceSize: number;
-  }
-
-  interface OptimizedImageError {
-    failed: true;
-    errMsg: string;
-
-    requestId: string;
-    url: string;
-    mimeType: string;
-    resourceSize: number;
   }
 
   interface TraceElement {
