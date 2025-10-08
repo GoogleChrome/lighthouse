@@ -328,6 +328,7 @@ Array [
 
     expect([...unrecognizedKeys]).toMatchInlineSnapshot(`
       Array [
+        "offscreen-images",
         "unminified-warning",
         "uses-rel-preload",
         "disable-bundling",
