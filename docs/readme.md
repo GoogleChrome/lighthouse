@@ -77,7 +77,6 @@ In order to extend the Lighthouse configuration programmatically, you need to pa
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
-      'first-meaningful-paint',
       'speed-index',
       'interactive',
     ],

@@ -14,7 +14,6 @@ export default {
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
-      'first-meaningful-paint',
       'speed-index',
       'interactive',
     ],
@@ -126,7 +125,6 @@ The categories property controls how to score and organize the audit results in 
       title: 'Performance',
       description: 'This category judges your performance',
       auditRefs: [
-        {id: 'first-meaningful-paint', weight: 2, group: 'metrics'},
         {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'interactive', weight: 5, group: 'metrics'},
       ],
