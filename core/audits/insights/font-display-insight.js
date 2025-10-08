@@ -46,7 +46,9 @@ class FontDisplayInsight extends Audit {
         url: font.request.args.data.url,
         wastedMs: font.wastedTime,
       }));
-      return Audit.makeTableDetails(headings, items);
+      const details = Audit.makeTableDetails(headings, items);
+      details.skipSumming = ['wastedMs'];
+      return details;
     });
   }
 }
