@@ -9,7 +9,7 @@ const config = {
   extends: 'lighthouse:default',
   settings: {
     usePassiveGathering: true,
-    onlyCategories: ['performance'],
+    onlyCategories: ['best-practices'],
   },
 };
 

@@ -8,7 +8,7 @@
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    onlyCategories: ['performance'],
+    onlyCategories: ['best-practices'],
   },
 };
 
