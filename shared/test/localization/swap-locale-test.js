@@ -91,7 +91,6 @@ toMatchInlineSnapshot(`"2,1 s"`);
     // Updated strings are not found, so these remain in the original language
     expect(missingIcuMessageIds).toMatchInlineSnapshot(`
 Array [
-  "core/audits/redirects.js | title",
   "core/audits/redirects.js | doesntExist",
   "core/audits/fakeaudit.js | title",
 ]
