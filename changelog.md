@@ -1,3 +1,98 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+Benjamin R Gibson @brgibson
+Gareth Jones @G-Rath
+Leonardo Poletto @leopoletto
+ <a name="13.0.0"></a>
+# 13.0.0 (2025-10-10)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.2...v13.0.0)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* remove ResponseCompression artifact ([#16755](https://github.com/GoogleChrome/lighthouse/pull/16755))
+* remove OptimizedImages artifact ([#16754](https://github.com/GoogleChrome/lighthouse/pull/16754))
+* remove DOMStats artifact ([#16753](https://github.com/GoogleChrome/lighthouse/pull/16753))
+* remove CacheContents artifact ([#16752](https://github.com/GoogleChrome/lighthouse/pull/16752))
+* remove uses-passive-event-listeners audit ([#16751](https://github.com/GoogleChrome/lighthouse/pull/16751))
+* remove no-document-write audit ([#16750](https://github.com/GoogleChrome/lighthouse/pull/16750))
+* remove empty first-meaningful-paint audit ([#16749](https://github.com/GoogleChrome/lighthouse/pull/16749))
+* remove offscreen-images audit ([#16748](https://github.com/GoogleChrome/lighthouse/pull/16748))
+* remove some unused computed artifacts ([#16735](https://github.com/GoogleChrome/lighthouse/pull/16735))
+* defer to trace engine for lcp-breakdown, ttfb ([#16733](https://github.com/GoogleChrome/lighthouse/pull/16733))
+* error on unknown category in onlyCategories ([#16720](https://github.com/GoogleChrome/lighthouse/pull/16720))
+* remove preload-fonts, uses-rel-preload audits ([#16716](https://github.com/GoogleChrome/lighthouse/pull/16716))
+* remove third-party-facades audit ([#16710](https://github.com/GoogleChrome/lighthouse/pull/16710))
+* drop compat traces / devtoolsLogs artifacts ([#16708](https://github.com/GoogleChrome/lighthouse/pull/16708))
+* remove font-size audit ([#16701](https://github.com/GoogleChrome/lighthouse/pull/16701))
+* import json as modules ([#16700](https://github.com/GoogleChrome/lighthouse/pull/16700))
+* anchor-elements: don't consider ancestorListeners ([#16731](https://github.com/GoogleChrome/lighthouse/pull/16731))
+* dom-size-insight: add numericValue ([#16741](https://github.com/GoogleChrome/lighthouse/pull/16741))
+* emulation: always match host browser's version milestone ([#16677](https://github.com/GoogleChrome/lighthouse/pull/16677))
+* font-display-insight: disable entity sum for est. savings ([#16746](https://github.com/GoogleChrome/lighthouse/pull/16746))
+* image-delivery-insight: add node item for image ([#16714](https://github.com/GoogleChrome/lighthouse/pull/16714))
+* inspector-issues: remove empty arrays ([#16736](https://github.com/GoogleChrome/lighthouse/pull/16736))
+* legacy-javascript: update caniuse data ([#16699](https://github.com/GoogleChrome/lighthouse/pull/16699))
+* network-request: remove receiveHeadersStart M115 compat ([#16738](https://github.com/GoogleChrome/lighthouse/pull/16738))
+* performance: remove audits replaced by insights ([#16729](https://github.com/GoogleChrome/lighthouse/pull/16729))
+* scoring: adjust a11y weights and document approach ([#16624](https://github.com/GoogleChrome/lighthouse/pull/16624))
+* server-response-time: defer to Document Latency insight ([#16715](https://github.com/GoogleChrome/lighthouse/pull/16715))
+* trace-elements: remove unused event types ([#16734](https://github.com/GoogleChrome/lighthouse/pull/16734))
+* trace-elements: handle shadow roots ([#16718](https://github.com/GoogleChrome/lighthouse/pull/16718))
+
+## CLI
+
+* improve description for `form-factor` flag ([#16682](https://github.com/GoogleChrome/lighthouse/pull/16682))
+
+## Report
+
+* add adornment to audit description when not scored ([#13014](https://github.com/GoogleChrome/lighthouse/pull/13014))
+
+## Deps
+
+* upgrade deps ([#16760](https://github.com/GoogleChrome/lighthouse/pull/16760))
+* remove parse-cache-control ([#16747](https://github.com/GoogleChrome/lighthouse/pull/16747))
+* upgrade trace_engine to 0.0.61 ([#16745](https://github.com/GoogleChrome/lighthouse/pull/16745))
+* upgrade @esbuild-kit/esm-loader to 2.6.5 ([#16730](https://github.com/GoogleChrome/lighthouse/pull/16730))
+* upgrade deps ([#16724](https://github.com/GoogleChrome/lighthouse/pull/16724))
+* upgrade trace_engine to 0.0.60 ([#16723](https://github.com/GoogleChrome/lighthouse/pull/16723))
+* remove es-main ([#16697](https://github.com/GoogleChrome/lighthouse/pull/16697))
+* bump chrome-launcher to 1.2.1 ([#16696](https://github.com/GoogleChrome/lighthouse/pull/16696))
+* upgrade testdouble, fix mock tests in Node 21+ ([#16664](https://github.com/GoogleChrome/lighthouse/pull/16664))
+* lighthouse-stack-packs: upgrade to 1.12.3 ([#16727](https://github.com/GoogleChrome/lighthouse/pull/16727))
+
+## I18n
+
+* import ([#16759](https://github.com/GoogleChrome/lighthouse/pull/16759))
+
+## Tests
+
+* update some comments ([#16744](https://github.com/GoogleChrome/lighthouse/pull/16744))
+* re-enable smoke test for lcp-breakdown-insight score ([#16743](https://github.com/GoogleChrome/lighthouse/pull/16743))
+* re-enable dom-size-insight node smoke test ([#16742](https://github.com/GoogleChrome/lighthouse/pull/16742))
+* enable smoke test for lcp lazy load in shadow tree ([#16739](https://github.com/GoogleChrome/lighthouse/pull/16739))
+* re-enable csp block smoke test, make less restrictive ([#16728](https://github.com/GoogleChrome/lighthouse/pull/16728))
+* re-enable startTimespan api test ([#16703](https://github.com/GoogleChrome/lighthouse/pull/16703))
+* devtools: sync e2e ([#16694](https://github.com/GoogleChrome/lighthouse/pull/16694))
+* server-response-time: enable lightrider test ([#16737](https://github.com/GoogleChrome/lighthouse/pull/16737))
+* viewer: re-enable test ([#16740](https://github.com/GoogleChrome/lighthouse/pull/16740))
+
+## Misc
+
+* replace dead link for insecure origins deprecation ([#16711](https://github.com/GoogleChrome/lighthouse/pull/16711))
+* upgrade typescript target to es2023 ([#16316](https://github.com/GoogleChrome/lighthouse/pull/16316))
+* fix core/scripts/legacy-javascript/examine-latest-run.js ([#16706](https://github.com/GoogleChrome/lighthouse/pull/16706))
+* update min supported node version to 22.19 ([#16668](https://github.com/GoogleChrome/lighthouse/pull/16668))
+* fix typos in a11y i18n doc comments ([#16665](https://github.com/GoogleChrome/lighthouse/pull/16665))
+* build: update devtools 3p readme, document debug build ([#16695](https://github.com/GoogleChrome/lighthouse/pull/16695))
+* proto: add ConfigSettings fields ([#15616](https://github.com/GoogleChrome/lighthouse/pull/15616))
+* structured-data: remove dead link ([#16709](https://github.com/GoogleChrome/lighthouse/pull/16709))
+
 <a name="12.8.2"></a>
 # 12.8.2 (2025-08-28)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.1...v12.8.2)
