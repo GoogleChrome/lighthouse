@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Tilladt med advarsel"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Resultat for layoutskift"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Dette er de mest omfattende layoutskift, der er blevet registreret på siden. Hvert tabelelement repræsenterer et enkelt layoutskift og viser det element, hvor der er blevet foretaget de største ændringer. Under hvert element er der mulige årsager, der kan have forårsaget layoutskiftet. Nogle af disse layoutskift medtages muligvis ikke i CLS-metricværdien som følge af [windowing](https://web.dev/articles/cls#what_is_cls). [Se, hvordan du forbedrer CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Der er blevet registreret 1 layoutskift}one{Der er blevet registreret # layoutskift}other{Der er blevet registreret # layoutskift}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Webskrifttypen er indlæst"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Iframe er indsat"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Medieelementet mangler en klar angivelse af størrelse"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Undgå store layoutskift"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Angiver lange opgaver i hovedtråden, hvilket er nyttigt til at identificere de bidragydere, der forårsager mest forsinkelse. [Få flere oplysninger om, hvordan du undgår lange opgaver i hovedtråden](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Forsinkelser for serverens backend"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animationer, der ikke er sammensat, kan være langsomme og øge CLS. [Få oplysninger om, hvordan du undgår ikke-sammensatte animationer](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# animeret element blev fundet}one{# animeret element blev fundet}other{# animerede elementer blev fundet}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Den \"filter\"-relaterede ejendom flytter muligvis pixels"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Den brugerangivne animation har en anden animation, der ikke er kompatibel"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Effekten har en sammensætningstilstand, der ikke er \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Undgå ikke-sammensatte animationer"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "En \"transform\"-relateret ejendom afhænger af boksens størrelse"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Ikke-understøttet CSS-ejendom: {properties}}one{Ikke-understøttet CSS-ejendom: {properties}}other{Ikke-understøttede CSS-ejendomme: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Tilpassede CSS-egenskaber kan ikke animeres i kompositionslaget: {properties}}one{Custom CSS properties cannot be animated on the compositor: {properties}}other{Tilpassede CSS-egenskaber kan ikke animeres i kompositionslaget: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Effekten har timingparametre, der ikke understøttes"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktiv"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Omdirigerer HTTP-trafik til HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Omdirigeringer medfører yderligere forsinkelser, inden siden kan indlæses. [Få oplysninger om, hvordan du undgår sideomdirigeringer](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Undgå mange sideomdirigeringer"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanoniske links foreslår, hvilken webadresse der skal vises i søgeresultater. [Få flere oplysninger om kanoniske links](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "Linkene har beskrivende tekst"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Kør [testværktøjet til strukturerede data](https://search.google.com/structured-data/testing-tool/) og [Structured Data Linter](http://linter.structured-data.org/) for at validere strukturerede data. [Få flere oplysninger om strukturerede data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Kør [testværktøjet til strukturerede data](https://developers.google.com/search/docs/appearance/structured-data/) for at validere strukturerede data. [Få flere oplysninger om strukturerede data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "De strukturerede data er gyldige"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt er gyldig"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Sørg for at holde serversvartiden for hoveddokumentet kort, da alle andre anmodninger afhænger af den. [Få flere oplysninger om metric'en Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Roddokumentet tog {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Reducer den indledende serversvartid"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Den indledende serversvartid var kort"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Tredjepartscookies blokeres muligvis i nogle sammenhænge. [Få flere oplysninger om, hvordan du forbereder dig på begrænsninger af tredjepartscookies](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Reducer DOM-baseret XSS med Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Anvend en fast bredde og højde for billedelementer for at reducere layoutskift og forbedre CLS. [Få flere oplysninger om, hvordan du angiver billedmål](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Billedelementerne har ikke eksplicit `width` og `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Billedelementerne har eksplicit `width` og `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Type"
@@ -2808,43 +2886,43 @@
     "message": "Tekstbaserede ressourcer bør vises i komprimeret format (gzip, Deflate eller Brotli), så netværkets samlede antal bytes formindskes. Overvej at bruge et CDN, der understøtter dette, eller konfigurere webserveren til at udføre denne handling. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Optimize Fonts` for automatisk at benytte funktionen for prissammenligningstjenesten (CSS) (`font-display`-funktionen), der sikrer, at tekst vises til brugerne, mens der indlæses webfonts."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Optimize Fonts` for automatisk at benytte funktionen for prissammenligningstjenesten (CSS) (`font-display`-funktionen), der sikrer, at tekst vises til brugerne, mens der indlæses webfonts."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Next-Gen Formats` for at konvertere billeder til WebP."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Next-Gen Formats` for at konvertere billeder til WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Lazy Load Images` for at udsætte indlæsning af billeder, der ikke vises på skærmen, indtil der er behov for dem."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Lazy Load Images` for at udsætte indlæsning af billeder, der ikke vises på skærmen, indtil der er behov for dem."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Critical CSS` og `Script Delay` for at udsætte ikke-kritisk JavaScript/CSS  (CSS)."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Script Delay` for at udskyde ikke-kritisk JavaScript."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Brug [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) for at cachelagre dit indhold på vores verdensomspændende netværk, hvilket forbedrer Time To First Byte."
+    "message": "Brug [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) for at cachelagre dit indhold på vores verdensomspændende netværk, hvilket forbedrer Time To First Byte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Minify CSS` for automatisk at formindske din CSS  (CSS) med henblik på at reducere størrelsen på netværkets datapakker."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Minify CSS` for automatisk at formindske din CSS  (CSS) med henblik på at reducere størrelsen på netværkets datapakker."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Minify Javascript` for automatisk at formindske JavaScript med henblik på at reducere størrelsen på netværkets datapakker."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Minify Javascript` for automatisk at formindske JavaScript med henblik på at reducere størrelsen på netværkets datapakker."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Remove Unused CSS` for at hjælpe med at løse dette problem. Dette vil identificere de prissammenligningstjenesteklasser, der aktuelt anvendes på hver side på dit website, og fjerne eventuelle andre for at sikre, at filstørrelsen forbliver lille."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Remove Unused CSS` for at hjælpe med at løse dette problem. Dette vil identificere de prissammenligningstjenesteklasser, der aktuelt anvendes på hver side på dit website, og fjerne eventuelle andre for at sikre, at filstørrelsen forbliver lille."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Efficient Static Cache Policy` for at angive anbefalede værdier i cacheheaderen for statiske aktiver."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Efficient Static Cache Policy` for at angive anbefalede værdier i cacheheaderen for statiske aktiver."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Next-Gen Formats` for at konvertere billeder til WebP."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Next-Gen Formats` for at konvertere billeder til WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Pre-Connect Origins` for automatisk at tilføje `preconnect`-ressourcehints med henblik på at etablere tidlige forbindelser til vigtige tredjepartsoprindelser."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Pre-Connect Origins` for automatisk at tilføje `preconnect`-ressourcehints med henblik på at etablere tidlige forbindelser til vigtige tredjepartsoprindelser."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Preload Fonts` og `Preload Background Images` for at tilføje `preload`-links med henblik på at prioritere hentning af ressourcer, der aktuelt anmodes om, senere i sideindlæsningen."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Preload Fonts` og `Preload Background Images` for at tilføje `preload`-links med henblik på at prioritere hentning af ressourcer, der aktuelt anmodes om, senere i sideindlæsningen."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/speed), og aktivér `Resize Images` for at personligt tilpasse størrelsen på billeder til en størrelse, der er passende for en enhed, hvilket reducerer størrelsen på netværkets datapakker."
+    "message": "Brug [Ezoic Leap](https://pubdash.ezoic.com/leap), og aktivér `Resize Images` for at personligt tilpasse størrelsen på billeder til en størrelse, der er passende for en enhed, hvilket reducerer størrelsen på netværkets datapakker."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Brug komponenten `gatsby-plugin-image` i stedet for `<img>` til automatisk at optimere billedformatet. [Få flere oplysninger](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>`-tags kan tilføjes ved at [ændre layoutet for et tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Brug komponenten `next/image` i stedet for `<img>` til automatisk at optimere billedformatet. [Få flere oplysninger](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Brug komponenten `next/image` i stedet for `<img>` til automatisk at optimere billedformatet. [Få flere oplysninger](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Brug komponenten `next/image` i stedet for `<img>` til automatisk at udføre lazy loading af billeder. [Få flere oplysninger](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Brug komponenten `next/image` i stedet for `<img>` til automatisk at udføre lazy loading af billeder. [Få flere oplysninger](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Brug `next/image`-komponenten, og angiv \"prioritet\" som sand for at forudindlæse LCP-billedet [Få flere oplysninger](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Brug komponenten `next/script` til at udskyde indlæsning af tredjepartsscripts, som ikke er kritiske. [Få flere oplysninger](https://nextjs.org/docs/basic-features/script)."
+    "message": "Brug komponenten `next/script` til at udskyde indlæsning af tredjepartsscripts, som ikke er kritiske. [Få flere oplysninger](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Brug komponenten `next/image` til at sikre, at billeder altid har den korrekte størrelse. [Få flere oplysninger](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Brug `Webpack Bundle Analyzer` til at registrere ubrugt JavaScript-kode. [Få flere oplysninger](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Overvej at bruge `Next.js Analytics` til at måle din apps ydeevne i den virkelige verden. [Få flere oplysninger](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Overvej at bruge `Next.js Analytics` til at måle din apps ydeevne i den virkelige verden. [Få flere oplysninger](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurer cachelagring for uforanderlige aktiver og SSR-sider (`Server-side Rendered`). [Få flere oplysninger](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurer cachelagring for uforanderlige aktiver og SSR-sider (`Server-side Rendered`). [Få flere oplysninger](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Brug komponenten `next/image` i stedet for `<img>` til at justere billedkvaliteten. [Få flere oplysninger](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Brug komponenten `next/image` i stedet for `<img>` til at justere billedkvaliteten. [Få flere oplysninger](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Brug komponenten `next/image` til at angive de rigtige `sizes`. [Få flere oplysninger](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Hvis dit buildsystem formindsker JS-filer automatisk, skal du sørge for, at du implementerer produktionsbuildet af din app. Du kan tjekke dette med udvidelsen React Developer Tools. [Få flere oplysninger](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Hvis du ikke gengiver på serveren, [kan du opdele JavaScript-pakker](https://web.dev/code-splitting-suspense/) med `React.lazy()`. Du kan også kodesplitte ved hjælp at et tredjepartsbibliotek som f.eks.[indlæsbare komponenter](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Hvis du ikke gengiver på serveren, [kan du opdele JavaScript-pakker](https://web.dev/code-splitting-suspense/) med `React.lazy()`. Du kan også kodesplitte ved hjælp at et tredjepartsbibliotek som f.eks.[indlæsbare komponenter](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Brug React DevTools Profiler, som anvender Profiler API til at måle effektiviteten og gengivelsen af dine komponenter. [Få flere oplysninger.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Kan ikke tilskrives"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Ikke medregnet"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Denne audit medregnes ikke i den samlede kategoriscore."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Værdierne er estimater og kan variere. [Resultatet beregnes](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) direkte på baggrund af disse metrics."

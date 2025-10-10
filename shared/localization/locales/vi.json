@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Được phép nhưng có cảnh báo"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Điểm số về mức thay đổi bố cục"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Đây là những thay đổi lớn nhất về bố cục được ghi nhận trên trang. Mỗi mục trong bảng đại diện cho một lần thay đổi bố cục và cho biết phần tử đã thay đổi nhiều nhất. Bên dưới mỗi mục là các nguyên nhân gốc có thể dẫn đến sự thay đổi bố cục. Một vài trong số những thay đổi về bố cục này có thể không được tính vào giá trị chỉ số CLS (Mức thay đổi bố cục tích luỹ) do phương pháp [kết xuất cửa sổ hiện tại](https://web.dev/articles/cls#what_is_cls). [Tìm hiểu cách cải thiện CLS (Mức thay đổi bố cục tích luỹ)](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Đã nhận thấy 1 lần thay đổi bố cục}other{Đã nhận thấy # lần thay đổi bố cục}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Phông chữ trên web đã tải"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "iframe được chèn"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Phần tử nội dung đa phương tiện không có kích thước rõ ràng"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Tránh các thay đổi lớn về bố cục"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Liệt kê những việc cần nhiều thời gian thực hiện nhất trong chuỗi chính. Thông tin này khá hữu ích trong việc xác định những thành phần có thời gian phản hồi tương tác chậm nhất. [Tìm hiểu cách tránh những việc cần nhiều thời gian thực hiện trong chuỗi chính](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Thời gian dưới nền của máy chủ"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Các ảnh động không được ghép có thể kém chất lượng và làm tăng CLS (Điểm số tổng hợp về mức thay đổi bố cục). [Tìm hiểu cách tránh ảnh động không được ghép](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Tìm thấy # phần tử ảnh động}other{Tìm thấy # phần tử ảnh động}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Thuộc tính liên quan đến bộ lọc có thể di chuyển pixel"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Mục tiêu có một ảnh động khác không tương thích"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Hiệu ứng có chế độ ghép không phải là \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Tránh dùng các ảnh động không được ghép"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Thuộc tính liên quan đến biến đổi phụ thuộc vào kích thước hộp"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Thuộc tính CSS không được hỗ trợ: {properties}}other{Các thuộc tính CSS không được hỗ trợ: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Không thể tạo ảnh động cho các thuộc tính CSS tuỳ chỉnh trên trình tổng hợp: {properties}}other{Không thể tạo ảnh động cho các thuộc tính CSS tuỳ chỉnh trên trình tổng hợp: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Hiệu ứng có tham số thời gian không được hỗ trợ"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Lệnh"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Các lần chuyển hướng sẽ khiến tốc độ tải trang chậm thêm. [Tìm hiểu cách tránh các lần chuyển hướng trang](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Tránh chuyển hướng trang nhiều lần"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Đường liên kết chính tắc đề xuất URL nào nên hiển thị trong kết quả tìm kiếm. [Tìm hiểu thêm về đường liên kết chính tắc](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Các phần tử liên kết có văn bản mô tả"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Chạy [Công cụ kiểm tra dữ liệu có cấu trúc](https://search.google.com/structured-data/testing-tool/) và [Công cụ khử lỗi dữ liệu có cấu trúc](http://linter.structured-data.org/) để xác thực loại dữ liệu này. [Tìm hiểu thêm về Dữ liệu có cấu trúc](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Chạy [Công cụ kiểm tra dữ liệu có cấu trúc](https://developers.google.com/search/docs/appearance/structured-data/) để xác thực dữ liệu có cấu trúc. [Tìm hiểu thêm về Dữ liệu có cấu trúc](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Dữ liệu có cấu trúc là hợp lệ"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt hợp lệ"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Giữ cho máy chủ phản hồi trong thời gian ngắn đối với tài liệu chính vì tất cả các yêu cầu khác phụ thuộc vào thời gian đó. [Tìm hiểu thêm về chỉ số Thời gian cho byte đầu tiên](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Tài liệu gốc mất {timeInMs, number, milliseconds} mili giây"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Giảm thời gian phản hồi ban đầu của máy chủ"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Thời gian phản hồi ban đầu của máy chủ là ngắn"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Cookie của bên thứ ba có thể bị chặn trong một số trường hợp. [Tìm hiểu thêm về việc chuẩn bị cho các hạn chế đối với cookie của bên thứ ba](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Giảm thiểu XSS dựa trên DOM bằng Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Đặt chiều rộng và chiều cao rõ ràng đối với các phần tử hình ảnh để giảm sự thay đổi về bố cục và cải thiện CLS (Điểm số tổng hợp về mức thay đổi bố cục). [Tìm hiểu cách đặt kích thước hình ảnh](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Các phần tử hình ảnh không có `width` và `height` rõ ràng"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Các phần tử hình ảnh có `width` và `height` rõ ràng"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Loại"
@@ -2808,43 +2886,43 @@
     "message": "Phải phân phát các tài nguyên dựa trên văn bản ở định dạng nén (gzip, deflate hoặc brotli) để giảm thiểu tổng số byte mạng. Hãy cân nhắc sử dụng một CDN vốn hỗ trợ tính năng này hoặc định cấu hình máy chủ web để thực hiện thao tác này. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Optimize Fonts` để tự động tận dụng tính năng CSS `font-display` nhằm đảm bảo người dùng thấy được văn bản trong lúc phông chữ web đang tải."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Optimize Fonts` để tự động tận dụng tính năng CSS `font-display` nhằm đảm bảo người dùng thấy được văn bản trong lúc phông chữ web đang tải."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Next-Gen Formats` để chuyển đổi định dạng hình ảnh thành WebP."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Next-Gen Formats` để chuyển đổi định dạng hình ảnh thành WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Lazy Load Images` để hoãn quá trình tải hình ảnh ngoài màn hình cho đến khi cần những hình ảnh đó."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Lazy Load Images` để hoãn quá trình tải hình ảnh ngoài màn hình cho đến khi cần những hình ảnh đó."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) đồng thời bật `Critical CSS` và `Script Delay` để hoãn mọi JS/CSS không thiết yếu."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Script Delay` để hoãn JS không thiết yếu."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Dùng [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) để lưu vào bộ nhớ đệm các nội dung của bạn trên mạng toàn cầu của chúng tôi, qua đó làm giảm thời gian tải byte đầu tiên."
+    "message": "Dùng [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) để lưu vào bộ nhớ đệm các nội dung của bạn trên mạng toàn cầu của chúng tôi, qua đó làm giảm thời gian tải byte đầu tiên."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Minify CSS` để tự động rút gọn CSS nhằm giảm dung lượng dữ liệu truyền qua mạng."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Minify CSS` để tự động rút gọn CSS nhằm giảm dung lượng dữ liệu truyền qua mạng."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Minify Javascript` để tự động rút gọn JS nhằm giảm dung lượng dữ liệu truyền qua mạng."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Minify Javascript` để tự động rút gọn JS nhằm giảm dung lượng dữ liệu truyền qua mạng."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Remove Unused CSS` để khắc phục vấn đề này. Cách làm này sẽ xác định các loại CSS đang được dùng trên mỗi trang thuộc trang web của bạn và xoá tất cả những loại còn lại để giảm kích thước tệp."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Remove Unused CSS` để khắc phục vấn đề này. Cách làm này sẽ xác định các loại CSS đang được dùng trên mỗi trang thuộc trang web của bạn và xoá tất cả những loại còn lại để giảm kích thước tệp."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Efficient Static Cache Policy` để thiết lập giá trị đề xuất trong tiêu đề bộ nhớ đệm cho các tài sản tĩnh."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Efficient Static Cache Policy` để thiết lập giá trị đề xuất trong tiêu đề bộ nhớ đệm cho các tài sản tĩnh."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Next-Gen Formats` để chuyển đổi định dạng hình ảnh thành WebP."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Next-Gen Formats` để chuyển đổi định dạng hình ảnh thành WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Pre-Connect Origins` để tự động thêm dấu hiệu tài nguyên `preconnect` nhằm thiết lập kết nối sớm với các nguồn gốc quan trọng của bên thứ ba."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Pre-Connect Origins` để tự động thêm dấu hiệu tài nguyên `preconnect` nhằm thiết lập kết nối sớm với các nguồn gốc quan trọng của bên thứ ba."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) đồng thời bật `Preload Fonts` và `Preload Background Images` để thêm các đường liên kết `preload` nhằm ưu tiên việc tìm nạp tài nguyên đang được yêu cầu trong lúc tải trang."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) đồng thời bật `Preload Fonts` và `Preload Background Images` để thêm các đường liên kết `preload` nhằm ưu tiên việc tìm nạp tài nguyên đang được yêu cầu trong lúc tải trang."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/speed) và bật `Resize Images` để thay đổi kích thước hình ảnh sao cho phù hợp với thiết bị, qua đó làm giảm dung lượng dữ liệu truyền qua mạng."
+    "message": "Dùng [Ezoic Leap](https://pubdash.ezoic.com/leap) và bật `Resize Images` để thay đổi kích thước hình ảnh sao cho phù hợp với thiết bị, qua đó làm giảm dung lượng dữ liệu truyền qua mạng."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Sử dụng thành phần `gatsby-plugin-image` thay cho `<img>` để tự động tối ưu hoá định dạng hình ảnh. [Tìm hiểu thêm](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Có thể thêm thẻ `<link rel=preload>` bằng cách [sửa đổi bố cục của một giao diện](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để tự động tối ưu hoá định dạng hình ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để tự động tối ưu hoá định dạng hình ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để tự động tải từng phần của hình ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để tự động tải từng phần của hình ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Dùng thành phần `next/image` và thiết lập giá trị \"mức độ ưu tiên\" thành đúng (true) để tải trước hình ảnh LCP. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Hãy dùng phần tử `next/script` để trì hoãn việc tải các tập lệnh không quan trọng của bên thứ ba. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/script)."
+    "message": "Hãy dùng phần tử `next/script` để trì hoãn việc tải các tập lệnh không quan trọng của bên thứ ba. [Tìm hiểu thêm](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Sử dụng thành phần `next/image` để đảm bảo hình ảnh luôn có kích thước phù hợp. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Sử dụng `Webpack Bundle Analyzer` để phát hiện mã JavaScript không được sử dụng. [Tìm hiểu thêm](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Hãy cân nhắc dùng `Next.js Analytics` để đo lường hiệu suất của ứng dụng trong thực tế. [Tìm hiểu thêm](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Hãy cân nhắc dùng `Next.js Analytics` để đo lường hiệu suất của ứng dụng trong thực tế. [Tìm hiểu thêm](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Định cấu hình bộ nhớ đệm cho các trang `Server-side Rendered` (SSR) và thành phần không thay đổi được. [Tìm hiểu thêm](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Định cấu hình bộ nhớ đệm cho các trang `Server-side Rendered` (SSR) và thành phần không thay đổi được. [Tìm hiểu thêm](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để điều chỉnh chất lượng ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Sử dụng thành phần `next/image` thay cho `<img>` để điều chỉnh chất lượng ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Hãy dùng phần tử `next/image` để đặt `sizes` phù hợp. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Nếu hệ thống bản dựng của bạn tự động giảm kích thước tệp JS, hãy đảm bảo rằng bạn đang triển khai bản phát hành chính thức của ứng dụng. Bạn có thể kiểm tra điều này bằng tiện ích React Developer Tools. [Tìm hiểu thêm](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Nếu bạn không định hiển thị phía máy chủ, hãy [phân tách các gói JavaScript](https://web.dev/code-splitting-suspense/) bằng `React.lazy()`. Nếu không, hãy phân tách mã bằng một thư viện của bên thứ ba như [các thành phần có thể tải](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Nếu bạn không định hiển thị phía máy chủ, hãy [phân tách các gói JavaScript](https://web.dev/code-splitting-suspense/) bằng `React.lazy()`. Nếu không, hãy phân tách mã bằng một thư viện của bên thứ ba như [các thành phần có thể tải](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Sử dụng Trình phân tích tài nguyên React DevTools, công cụ dùng API Trình phân tích tài nguyên để đo lường hiệu suất hiển thị của các thành phần. [Tìm hiểu thêm.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Không thể phân bổ"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Không được tính"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Quá trình kiểm tra này không được tính vào điểm số tổng thể của danh mục."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Các giá trị chỉ là ước tính và có thể thay đổi. [Điểm hiệu quả được tính](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) trực tiếp từ những chỉ số này."

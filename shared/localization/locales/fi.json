@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Sallittu varoituksen kanssa"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Asettelun muutospisteet"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Nämä ovat suurimmat sivun asettelun muutokset. Kukin taulukon kohde vastaa yhtä asettelumuutosta ja näyttää eniten siirtyneen elementin. Jokaisen kohteen alla on mahdollisia juurisyitä, jotka ovat johtaneet asettelumuutokseen. Osa näistä asettelumuutoksista ei välttämättä sisälly CLS-mittarin arvoon [ikkunoinnin](https://web.dev/articles/cls#what_is_cls) takia. [Katso, miten voit parantaa CLS:ää](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 asettelumuutos löydetty}other{# asettelumuutosta löydetty}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Verkkofontti ladattu"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Lisätty iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Mediaelementiltä puuttuu tarkka koko"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Vältä suuria asettelun muutoksia"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Näyttää pääsäikeen pitkäkestoisimmat tehtävät, mistä on apua syöttöviiveen pahimpien aiheuttajien tunnistamisessa. [Katso, miten voit välttää pitkät pääsäikeen tehtävät](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Palvelimen taustaviiveet"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Sommittelemattomat animaatiot voivat olla huonolaatuisia ja nostaa CLS:ää. [Katso, miten voit välttää sommittelemattomia animaatioita](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# animaatioelementti löydetty}other{# animaatioelementtiä löydetty}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "filter-omaisuus voi siirtää pikseleitä"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Kohteessa on toinen yhteensopimaton animaatio"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Tehosteen sommittelutila on muu kuin replace"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Vältä sommittelemattomia animaatioita"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "transform-omaisuus riippuu kentän koosta"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Ei-tuettu CSS-omaisuus: {properties}}other{Ei-tuetut CSS-omaisuudet: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Mukautettuja CSS-muuttujia ei voi animoida kompositoijassa: {properties}}other{Mukautettuja CSS-muuttujia ei voi animoida kompositoijassa: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Tehosteessa on ei-tuettuja ajoitusparametreja"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Sääntö"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Uudelleenohjaa HTTP-liikennettä HTTPS:ään"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Uudelleenohjaukset viivästyttävät sivun lataamista. [Lue, miten voit välttää sivujen uudelleenohjaukset](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Vältä useita uudelleenohjauksia"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Ensisijaiset linkit ehdottavat, mitä URL-osoitteita näyttää hakutuloksissa. [Lue lisää ensisijaisista linkeistä](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Linkeissä on kuvailevaa tekstiä"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Suorita [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) ja [Structured Data Linter](http://linter.structured-data.org/) vahvistaaksesi strukturoidun datan. [Lue lisää strukturoidusta datasta](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Vahvista strukturoitu data [Structured Data Testing Toolilla](https://developers.google.com/search/docs/appearance/structured-data/). [Lue lisää strukturoidusta datasta](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Strukturoitu data on kelvollinen"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt on kelvollinen"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Varmista, että päädokumentin palvelimen vasteaika on lyhyt, koska kaikki muut pyynnöt ovat riippuvaisia siitä. [Lue lisää Ensimmäistä tavua edeltävä aika ‐mittarista](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Päädokumentti käytti {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Lyhennä palvelimen vasteaikaa alussa"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Palvelimen vasteaika alussa oli lyhyt"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Kolmannen osapuolen evästeet saatetaan estää joissakin yhteyksissä. [Lue lisää kolmannen osapuolen evästeiden rajoituksiin valmistautumisesta](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "DOM-pohjaisen XSS:n lieventäminen Trusted Types ‑ominaisuudella"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Lisää kuvaelementeille kiinteä leveys ja pituus, jotta asettelu muuttuu vähemmän ja CLS paranee. [Katso, miten voit valita kuvan mitat](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Kuvaelementeiltä puuttuu kiinteä `width` ja `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Kuvaelementeillä on kiinteä `width` ja `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Tyyppi"
@@ -2808,43 +2886,43 @@
     "message": "Tekstipohjaiset resurssit on hyvä pakata ennen jakelua (gzip, deflate tai brotli), jotta ladattavien tavujen määrä voidaan minimoida. Voit käyttää CDN:ää, joka tukee tätä ominaisuutta, tai määrittää verkkopalvelimen suorittamaan tämän toiminnon. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Optimize Fonts` käyttöön hyödyntääksesi `font-display` CSS ‑ominaisuutta automaattisesti, jotta voit varmistaa tekstin näkymisen käyttäjille verkkofonttien latautuessa."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Optimize Fonts` käyttöön hyödyntääksesi `font-display` CSS ‑ominaisuutta automaattisesti, jotta voit varmistaa tekstin näkymisen käyttäjille verkkofonttien latautuessa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Next-Gen Formats` käyttöön konvertoidaksesi kuvia WebP-muotoon."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Next-Gen Formats` käyttöön konvertoidaksesi kuvia WebP-muotoon."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Lazy Load Images` käyttöön lykätäksesi näytön ulkopuolisten kuvien lataamista, kunnes niitä tarvitaan."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Lazy Load Images` käyttöön lykätäksesi näytön ulkopuolisten kuvien lataamista, kunnes niitä tarvitaan."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Critical CSS` ja `Script Delay` käyttöön lykätäksesi ei-kriittiset JS/CSS:t."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Script Delay` käyttöön lykätäksesi ei-kriittistä JS:ää."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Käytä [Ezoic Cloud Cachingia](https://pubdash.ezoic.com/speed/caching) sisältösi tallentamiseen välimuistiin maailmanlaajuisessa verkossamme, mikä lyhentää aikaa linkin valinnan ja sisällön ensimmäisen tavun latauksen välillä"
+    "message": "Käytä [Ezoic Cloud Cachingia](https://pubdash.ezoic.com/leap/caching) sisältösi tallentamiseen välimuistiin maailmanlaajuisessa verkossamme, mikä lyhentää aikaa linkin valinnan ja sisällön ensimmäisen tavun latauksen välillä"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Minify CSS` käyttöön pienentääksesi CSS:ää automaattisesti, jotta voit vähentää verkkoresurssien kokoja."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Minify CSS` käyttöön pienentääksesi CSS:ää automaattisesti, jotta voit vähentää verkkoresurssien kokoja."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Minify Javascript` käyttöön pienentääksesi JS:ää automaattisesti, jotta voit vähentää verkkoresurssien kokoja."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Minify Javascript` käyttöön pienentääksesi JS:ää automaattisesti, jotta voit vähentää verkkoresurssien kokoja."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Remove Unused CSS` käyttöön saadaksesi apua ongelmaan. Se tunnistaa jokaisen sivustosi sivun käyttämät CSS-luokat ja poistaa kaikki muut, jotta tiedoston koko pysyy pienenä."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Remove Unused CSS` käyttöön saadaksesi apua ongelmaan. Se tunnistaa jokaisen sivustosi sivun käyttämät CSS-luokat ja poistaa kaikki muut, jotta tiedoston koko pysyy pienenä."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Efficient Static Cache Policy` käyttöön asettaaksesi suositellut arvot välimuistin otsikossa pysyville sisällöille."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Efficient Static Cache Policy` käyttöön asettaaksesi suositellut arvot välimuistin otsikossa pysyville sisällöille."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Next-Gen Formats` käyttöön konvertoidaksesi kuvia WebP-muotoon."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Next-Gen Formats` käyttöön konvertoidaksesi kuvia WebP-muotoon."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Pre-Connect Origins` käyttöön lisätäksesi automaattisesti `preconnect`-materiaalivihjeitä, jotta voit muodostaa aikaisia yhteyksiä tärkeisiin kolmannen osapuolen alkuperiin."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Pre-Connect Origins` käyttöön lisätäksesi automaattisesti `preconnect`-materiaalivihjeitä, jotta voit muodostaa aikaisia yhteyksiä tärkeisiin kolmannen osapuolen alkuperiin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Preload Fonts` ja `Preload Background Images` käyttöön lisätäksesi`preload`‑linkit, jotta voit priorisoida nykyisten pyydettyjen resurssien hakemista myöhemmin sivun latauksessa."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Preload Fonts` ja `Preload Background Images` käyttöön lisätäksesi`preload`‑linkit, jotta voit priorisoida nykyisten pyydettyjen resurssien hakemista myöhemmin sivun latauksessa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/speed) ja ota `Resize Images` käyttöön muuttaaksesi kuvien kokoa laitteisiin sopivaksi, jotta voit vähentää verkkoresurssien kokoja."
+    "message": "Käytä [Ezoic Leapia](https://pubdash.ezoic.com/leap) ja ota `Resize Images` käyttöön muuttaaksesi kuvien kokoa laitteisiin sopivaksi, jotta voit vähentää verkkoresurssien kokoja."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Optimoi kuvamuoto automaattisesti käyttämällä `gatsby-plugin-image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>`-tagit voidaan lisätä [muuttamalla teeman asettelua](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Optimoi kuvamuoto automaattisesti käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Optimoi kuvamuoto automaattisesti käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Lataa kuvat automaattisesti laiskasti käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Lataa kuvat automaattisesti laiskasti käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Käytä `next/image`-komponenttia ja aseta prioriteetti todeksi, jotta voit esiladata LCP-kuvan. [Lue lisää](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Lykkää ei-kriittisten kolmannen osapuolen skriptien lataamista suorittamalla `next/script`. [Lue lisää](https://nextjs.org/docs/basic-features/script)."
+    "message": "Lykkää ei-kriittisten kolmannen osapuolen skriptien lataamista suorittamalla `next/script`. [Lue lisää](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Käytä `next/image`-komponenttia ja varmista, että kuvat ovat aina oikean kokoisia. [Lue lisää](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Valitse `Webpack Bundle Analyzer`, jotta voit havaita käyttämättömän JavaScript-ohjelmakoodin. [Lue lisää](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Sinun kannattaa ehkä valita `Next.js Analytics`, jotta voit mitata sovelluksen todellista toimivuutta. [Lue lisää](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Sinun kannattaa ehkä valita `Next.js Analytics`, jotta voit mitata sovelluksen todellista toimivuutta. [Lue lisää](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Määritä muuttumattomien kohteiden ja `Server-side Rendered` (SSR) ‑sivujen välimuistiin siirtäminen. [Lue lisää](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Määritä muuttumattomien kohteiden ja `Server-side Rendered` (SSR) ‑sivujen välimuistiin siirtäminen. [Lue lisää](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Säädä kuvanlaatua käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Säädä kuvanlaatua käyttämällä `next/image`-komponenttia `<img>`-komponentin sijaan. [Lue lisää](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Suorita `next/image`, jotta `sizes` voi saada sopivan arvon. [Lue lisää](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Jos versiojärjestelmäsi kutistaa JS-tiedostoja automaattisesti, varmista että käyttöönotto koskee sovelluksen tuotantoversiota. Voit tarkistaa tämän Reactin kehittäjätyökalut ‑laajennuksella. [Lue lisää](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Jos et vielä renderöi palvelinpuolella, [jaa JavaScript-niput osiin](https://web.dev/code-splitting-suspense/) – `React.lazy()` voi auttaa. Jaa muussa tapauksessa koodi osiin kolmannen osapuolen kirjastolla, esimerkiksi [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Jos et vielä renderöi palvelinpuolella, [jaa JavaScript-niput osiin](https://web.dev/code-splitting-suspense/) – `React.lazy()` voi auttaa. Jaa muussa tapauksessa koodi osiin kolmannen osapuolen kirjastolla, esimerkiksi [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Käytä React DevTools Profileria, joka käyttää React-sovellusliittymää, komponenttien renderöinnin mittaamiseen. [Lue lisää.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Ei määritettävissä"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Ei laskettu mukaan"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Tämä tarkastus ei vaikuta kategorian kokonaispisteisiin."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Arvot ovat arvioita ja voivat vaihdella. [Tehokkuusprosentti lasketaan](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) suoraan näistä mittareista."

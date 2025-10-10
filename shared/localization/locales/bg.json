@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Разрешено с предупреждение"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Резултат за структурната промяна"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Това са най-големите структурни промени на страницата. Всеки елемент в таблицата представлява една структурна промяна и показва компонента с най-голямо изменение. Под всеки елемент са посочени възможните основни причини, довели до структурната промяна. Някои от тези структурни промени може да не бъдат включени в стойността на показателя CLS поради [рендериране на текущия прозорец](https://web.dev/articles/cls#what_is_cls). [Научете как да подобрите CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Намерена е 1 структурна промяна}other{Намерени са # структурни промени}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Зареден уеб шрифт"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Вмъкната вложена рамка"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Липсва конкретен размер за мултимедийния елемент"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Избягвайте големи промени в оформлението"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Посочва най-продължителните задачи в основната нишка и ви помага да идентифицирате главните причинители на забавяне при взаимодействие. [Научете как да избягвате времеемките задачи в основната нишка](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Забавяния в задния слой на сървъра"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Анимациите, които не са комбинирани, могат да са с лошо качество и да увеличат стойността на показателя CLS. [Научете как да ги избягвате](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Бе открит # анимиран елемент}other{Бяха открити # анимирани елемента}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Различните варианти на собствеността filter може да преместват пикселите"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Целевата анимация съдържа друга, която е несъвместима"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Ефектът съдържа комбиниран режим, различен от replace"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Избягване на анимации, които не са комбинирани"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Различните варианти на собствеността transform зависят от размера на елемента"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Неподдържана собственост на CSS: {properties}}other{Неподдържани собствености на CSS: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Персонализираните свойства на CSS не могат да бъдат анимирани в инструмента за композитинг: {properties}}other{Персонализираните свойства на CSS не могат да бъдат анимирани в инструмента за композитинг: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Ефектът съдържа неподдържани параметри за време"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Директива"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "HTTP трафикът се пренасочва към HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Пренасочванията водят до допълнително забавяне на зареждането на страницата. [Научете как да ги избягвате](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Не използвайте пренасочвания през няколко страници"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Каноничните връзки указват кой URL адрес да се показва в резултатите от търсенето. [Научете повече за каноничните връзки](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Текстът на връзките е описателен"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Стартирайте [инструмента за тестване на структурирани данни](https://search.google.com/structured-data/testing-tool/) и [анализатора на структурирани данни](http://linter.structured-data.org/), за да проверите структурираните данни. [Научете повече за тези данни](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Стартирайте [инструмента за тестване на структурирани данни](https://developers.google.com/search/docs/appearance/structured-data/), за да проверите структурираните данни. [Научете повече за тях](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Структурираните данни са валидни"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "Файлът robots.txt е валиден"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Времето за реакция на сървъра за главния документ трябва да бъде кратко, тъй като всички други заявки зависят от него. [Научете повече за показателя „Време до първия байт“](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "За основния документ бяха необходими {timeInMs, number, milliseconds} мсек"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Намалете началното време за реакция на сървъра"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Началното време за реакция на сървъра бе кратко"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "„Бисквитките“ на трети страни може да са блокирани в някои контексти. [Научете повече за подготовката за ограниченията за „бисквитките“ на трети страни](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Намаляване на риска от XSS въз основа на DOM чрез надеждни типове"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Задайте изрично широчина и височина за елементите на изображенията, за да намалите промените в оформлението и подобрите CLS. [Научете как да задавате размери за изображенията](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Елементите на изображенията не са с изрично посочени `width` и `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Елементите на изображенията са с изрично посочени `width` и `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Тип"
@@ -2808,43 +2886,43 @@
     "message": "При показването на текстови ресурси трябва да се използва компресиране (gzip, deflate или brotli), за да се намали общият пренос на данни. Бихте могли да използвате CDN, която поддържа това по подразбиране, или да конфигурирате уеб сървъра така, че да изпълнява тази операция. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Optimize Fonts`, за да се възползвате автоматично от функцията `font-display` на CSS, така че текстът да е видим за потребителите, докато уеб шрифтовете се зареждат."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Optimize Fonts`, за да се възползвате автоматично от функцията `font-display` на CSS, така че текстът да е видим за потребителите, докато уеб шрифтовете се зареждат."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Next-Gen Formats`, за да преобразувате изображенията в WebP."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Next-Gen Formats`, за да преобразувате изображенията в WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Lazy Load Images`, така че изображенията извън екрана да не се зареждат, преди да е необходимо."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Lazy Load Images`, така че изображенията извън екрана да не се зареждат, преди да е необходимо."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Critical CSS` и `Script Delay` за отлагане на зареждането на некритичните JS/CSS елементи."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Script Delay`, за да отложите зареждането на некритичните JS елементи."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Използвайте [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching), за да кеширате съдържанието си в световната ни мрежа и да подобрите показателя за времето до първия байт."
+    "message": "Използвайте [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching), за да кеширате съдържанието си в световната ни мрежа и да подобрите показателя за времето до първия байт."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Minify CSS`, така че CSS елементите да се минимизират автоматично с цел намаляване на размера на мрежовите ресурси."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Minify CSS`, така че CSS елементите да се минимизират автоматично с цел намаляване на размера на мрежовите ресурси."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Minify Javascript`, така че JS елементите да се минимизират автоматично с цел намаляване на размера на мрежовите ресурси."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Minify Javascript`, така че JS елементите да се минимизират автоматично с цел намаляване на размера на мрежовите ресурси."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Remove Unused CSS`, за да помогнете за решаването на този проблем. Ще бъдат идентифицирани CSS класовете, които действително се използват в отделните страници на сайта ви, а останалите ще бъдат премахнати с цел намаляване на размера на файловете."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Remove Unused CSS`, за да помогнете за решаването на този проблем. Ще бъдат идентифицирани CSS класовете, които действително се използват в отделните страници на сайта ви, а останалите ще бъдат премахнати с цел намаляване на размера на файловете."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Efficient Static Cache Policy`, за да зададете препоръчителни стойности в заглавката за кеширане за статичните активи."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Efficient Static Cache Policy`, за да зададете препоръчителни стойности в заглавката за кеширане за статичните активи."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Next-Gen Formats`, за да преобразувате изображенията в WebP."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Next-Gen Formats`, за да преобразувате изображенията в WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Pre-Connect Origins`, така че автоматично да се добавят подсказки `preconnect` за ресурсите с цел ранно установяване на връзка с важни източници от трети страни."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Pre-Connect Origins`, така че автоматично да се добавят подсказки `preconnect` за ресурсите с цел ранно установяване на връзка с важни източници от трети страни."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Preload Fonts` и `Preload Background Images`, за да добавите връзки от типа `preload` с цел приоритизиране на извличането на ресурсите, които понастоящем се заявяват на по-късен етап от зареждането на страницата."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Preload Fonts` и `Preload Background Images`, за да добавите връзки от типа `preload` с цел приоритизиране на извличането на ресурсите, които понастоящем се заявяват на по-късен етап от зареждането на страницата."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/speed) и активирайте `Resize Images` с цел преоразмеряване на изображенията до размер, подходящ за конкретно устройство, за да намалите необходимите мрежови ресурси."
+    "message": "Използвайте [Ezoic Leap](https://pubdash.ezoic.com/leap) и активирайте `Resize Images` с цел преоразмеряване на изображенията до размер, подходящ за конкретно устройство, за да намалите необходимите мрежови ресурси."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Използвайте компонента `gatsby-plugin-image` вместо `<img>` с цел автоматично оптимизиране на графичния формат. [Научете повече](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Можете да добавите маркери `<link rel=preload>`, като [промените оформлението на дадената тема](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Използвайте компонента `next/image` вместо `<img>` с цел автоматично оптимизиране на графичния формат. [Научете повече](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Използвайте компонента `next/image` вместо `<img>` с цел автоматично оптимизиране на графичния формат. [Научете повече](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Използвайте компонента `next/image` вместо `<img>` с цел автоматично забавяне на зареждането на изображенията. [Научете повече](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Използвайте компонента `next/image` вместо `<img>` с цел автоматично забавяне на зареждането на изображенията. [Научете повече](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Използвайте компонента `next/image` и задайте true за priority с цел предварително зареждане на най-голямото изображение (LCP). [Научете повече](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Използвайте компонента `next/script`, за да отложите зареждането на некритични скриптове от трети страни. [Научете повече](https://nextjs.org/docs/basic-features/script)."
+    "message": "Използвайте компонента `next/script`, за да отложите зареждането на некритични скриптове от трети страни. [Научете повече](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Използвайте компонента `next/image`, така че изображенията винаги да се оразмеряват правилно. [Научете повече](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Използвайте `Webpack Bundle Analyzer`, за да откриете неизползван JavaScript код. [Научете повече](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Добре е да използвате `Next.js Analytics`, за да измервате действителната ефективност на приложението си. [Научете повече](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Добре е да използвате `Next.js Analytics`, за да измервате действителната ефективност на приложението си. [Научете повече](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Конфигурирайте кеширането на непроменливите активи и SSR (`Server-side Rendered`) страници. [Научете повече](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Конфигурирайте кеширането на непроменливите активи и SSR (`Server-side Rendered`) страници. [Научете повече](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Използвайте компонента `next/image` вместо `<img>`, за да коригирате качеството на изображенията. [Научете повече](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Използвайте компонента `next/image` вместо `<img>`, за да коригирате качеството на изображенията. [Научете повече](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Използвайте компонента `next/image`, за да зададете подходяща стойност за `sizes`. [Научете повече](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Ако системата ви за компилиране автоматично минимизира JavaScript файловете, уверете се, че внедрявате стандартната версия на приложението си. Можете да проверите това с разширението React Developer Tools. [Научете повече](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Ако не извършвате рендериране върху сървъра, [разделете пакетите си с JavaScript](https://web.dev/code-splitting-suspense/) с `React.lazy()`. В противен случай разделете кода чрез библиотека на трета страна, напр. [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Ако не извършвате рендериране върху сървъра, [разделете пакетите си с JavaScript](https://web.dev/code-splitting-suspense/) с `React.lazy()`. В противен случай разделете кода чрез библиотека на трета страна, напр. [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Използвайте инструмента за анализ в React DevTools, който използва съответното API, за да измерите ефективността на компонентите си при рендериране. [Научете повече](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Без възможност за приписване"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Без оценка"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Тази проверка не допринася за цялостната оценка на категорията."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Стойностите са приблизителни и може да варират. [Рейтингът за ефективността се изчислява](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) директно от тези показатели."

@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Atļauts ar brīdinājumu"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Izkārtojuma nobīdes rādītājs"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Šīs ir lielākās lapā novērotās izkārtojuma nobīdes. Katrs tabulas vienums apzīmē vienu izkārtojuma nobīdi, un tajā tiek rādīts elements, kurā bija vislielākā nobīde. Zem katra vienuma ir norādīti iespējamie galvenie cēloņi, kas izraisīja izkārtojuma nobīdi. Dažas no šīm izkārtojuma nobīdēm var nebūt iekļautas CLS metrikas vērtībā [logošanas](https://web.dev/articles/cls#what_is_cls) dēļ. [Uzziniet, kā uzlabot CLS](https://web.dev/articles/optimize-cls)."
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Tika atrasta 1 izkārtojuma nobīde}zero{Tika atrastas # izkārtojuma nobīdes}one{Tika atrasta # izkārtojuma nobīde}other{Tika atrastas # izkārtojuma nobīdes}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Tika ielādēts tīmekļa fonts"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Tika iepludināts iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Multivides elementam nav skaidra lieluma"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Centieties novērst lielas izkārtojuma nobīdes"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Šeit ir norādīti galvenā pavediena uzdevumi ar visilgāko izpildes laiku, lai palīdzētu noteikt, kuri uzdevumi visvairāk palielina ievades aizkavi. [Uzziniet, kā izvairīties no ilgiem galvenā pavediena uzdevumiem](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Servera aizmugursistēmas latentums"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Nesaliktas animācijas var būt lēnas un palielināt kopējo izkārtojuma nobīdi. [Uzziniet, kā izvairīties no nesaliktām animācijām](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Tika atrasts # animēts elements}zero{Tika atrasti # animēti elementi}one{Tika atrasts # animēts elements}other{Tika atrasti # animēti elementi}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Ar filtru saistītais īpašums var pārvietot pikseļus"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Mērķī ir cita, nesaderīga animācija"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efektam tiek lietots cits salikšanas režīms, nevis “replace”."
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Nesaliktas animācijas nav ieteicams izmantot"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Ar pārveidošanu saistītā īpašuma darbība ir atkarīga no lodziņa lieluma"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Neatbalstīts CSS īpašums: {properties}}zero{Neatbalstīti CSS īpašumi: {properties}}one{Neatbalstīti CSS īpašumi: {properties}}other{Neatbalstīti CSS īpašumi: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Salicējā nevar animēt pielāgotus CSS parametrus: {properties}}zero{Salicējā nevar animēt pielāgotus CSS parametrus: {properties}}one{Salicējā nevar animēt pielāgotus CSS parametrus: {properties}}other{Salicējā nevar animēt pielāgotus CSS parametrus: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efektam ir norādīti neatbalstīti laika parametri"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktīva"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "HTTP datplūsma tiek novirzīta uz HTTPS lapām"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Novirzīšana rada papildu aizkaves pirms lapas ielādes. [Uzziniet, kā izvairīties no lapu novirzīšanas.](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Nepieļaujiet vairākas lapas novirzīšanas"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanoniskās saites iesaka, kurus URL rādīt meklēšanas rezultātos. [Uzziniet vairāk par kanoniskajām saitēm](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Saitēm ir aprakstošs teksts"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Lai validētu strukturētos datus, palaidiet [strukturētu datu testēšanas rīku](https://search.google.com/structured-data/testing-tool/) un rīku [Structured Data Linter](http://linter.structured-data.org/). [Uzziniet vairāk par strukturētajiem datiem](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Lai validētu strukturētos datus, palaidiet [strukturētu datu testēšanas rīku](https://developers.google.com/search/docs/appearance/structured-data/). [Uzziniet vairāk par strukturētajiem datiem](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Strukturētie dati ir derīgi"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt ir derīgs"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Galvenā dokumenta servera atbildes laikam jābūt īsam, jo no tā ir atkarīga pārējo pieprasījumu izpilde. [Uzziniet vairāk par rādītāju “Laiks līdz pirmajam baitam”](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Saknes dokumentam nepieciešamais laiks: {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Samaziniet servera sākotnējās atbildes laiku"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Sākotnējās servera atbildes laika bija īss"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Dažos gadījumos var tikt bloķēti trešo pušu sīkfaili. [Uzziniet vairāk par sagatavošanos trešo pušu sīkfailu ierobežojumiem](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "DOM XSS uzbrukumu ierobežošana, izmantojot direktīvu Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Iestatiet konkrētu platumu un augstumu attēlu elementiem, lai samazinātu izkārtojuma nobīdes un uzlabotu CLS. [Uzziniet, kā iestatīt attēlu izmērus](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Attēlu elementiem nav konkrēts `width` un `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Attēlu elementiem ir konkrēts `width` un `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Veids"
@@ -2808,43 +2886,43 @@
     "message": "Lai samazinātu kopējo tīkla lietojumu (baitos), vēlams izmantot tekstuālo datu saspiešanu (Gzip, Deflate vai Brotli). Ieteicams izmantot CDN, kas iebūvētā veidā atbalsta šo funkciju, vai konfigurēt tīmekļa serveri, lai veiktu šo darbību. [Uzziniet vairāk](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Optimize Fonts`, lai automātiski izmantotu CSS funkciju `font-display` un nodrošinātu, ka tīmekļa fontu ielādes laikā teksts ir redzams lietotājiem."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Optimize Fonts`, lai automātiski izmantotu CSS funkciju `font-display` un nodrošinātu, ka tīmekļa fontu ielādes laikā teksts ir redzams lietotājiem."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Next-Gen Formats`, lai konvertētu attēlus uz WebP formātu."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Next-Gen Formats`, lai konvertētu attēlus uz WebP formātu."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Lazy Load Images`, lai atliktu ekrānā pagaidām neredzamo attēlu ielādi, kamēr tie nav nepieciešami."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Lazy Load Images`, lai atliktu ekrānā pagaidām neredzamo attēlu ielādi, kamēr tie nav nepieciešami."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opcijas `Critical CSS` un `Script Delay`, lai atliktu visu nesvarīgo JS/CSS kodu."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet `Script Delay`, lai atliktu mazāk svarīgu JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Izmantojiet [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching), lai savu saturu saglabātu kešatmiņā mūsu vispasaules tīklā, tādējādi uzlabojot laiku līdz pirmajam baitam."
+    "message": "Izmantojiet [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching), lai savu saturu saglabātu kešatmiņā mūsu vispasaules tīklā, tādējādi uzlabojot laiku līdz pirmajam baitam."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Minify CSS`, lai automātiski samazinātu CSS, tādējādi samazinot tīkla lietderīgo slodzi."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Minify CSS`, lai automātiski samazinātu CSS, tādējādi samazinot tīkla lietderīgo slodzi."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Minify Javascript`, lai automātiski samazinātu JS, tādējādi samazinot tīkla lietderīgo slodzi."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Minify Javascript`, lai automātiski samazinātu JS, tādējādi samazinot tīkla lietderīgo slodzi."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Remove Unused CSS`, lai novērstu šo problēmu. Tiks identificētas CSS klases, kas faktiski tiek lietotas katrā vietnes lapā, un tiks noņemtas citas klases, lai samazinātu faila lielumu."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Remove Unused CSS`, lai novērstu šo problēmu. Tiks identificētas CSS klases, kas faktiski tiek lietotas katrā vietnes lapā, un tiks noņemtas citas klases, lai samazinātu faila lielumu."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Efficient Static Cache Policy`, lai kešatmiņas galvenē iestatītu statiskajiem līdzekļiem ieteicamās vērtības."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Efficient Static Cache Policy`, lai kešatmiņas galvenē iestatītu statiskajiem līdzekļiem ieteicamās vērtības."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Next-Gen Formats`, lai konvertētu attēlus uz WebP formātu."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Next-Gen Formats`, lai konvertētu attēlus uz WebP formātu."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opciju `Pre-Connect Origins`, lai automātiski pievienotu “`preconnect`” resursu norādes, tādējādi agri izveidojot savienojumus ar svarīgiem trešās puses avotiem."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opciju `Pre-Connect Origins`, lai automātiski pievienotu “`preconnect`” resursu norādes, tādējādi agri izveidojot savienojumus ar svarīgiem trešās puses avotiem."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet opcijas `Preload Fonts` un `Preload Background Images`, lai pievienotu “`preload`” saites un piešķirtu prioritāti to resursu ienešanai, kas pašreiz lapas ielādes laikā tiek pieprasīti vēlāk."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet opcijas `Preload Fonts` un `Preload Background Images`, lai pievienotu “`preload`” saites un piešķirtu prioritāti to resursu ienešanai, kas pašreiz lapas ielādes laikā tiek pieprasīti vēlāk."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/speed) un iespējojiet `Resize Images`, lai mainītu attēlu izmērus atbilstoši ierīcei, tādējādi samazinot tīkla lietderīgo slodzi."
+    "message": "Izmantojiet [Ezoic Leap](https://pubdash.ezoic.com/leap) un iespējojiet `Resize Images`, lai mainītu attēlu izmērus atbilstoši ierīcei, tādējādi samazinot tīkla lietderīgo slodzi."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Lai automātiski optimizētu attēlu formātu, izmantojiet komponentu `gatsby-plugin-image`, nevis `<img>`. [Uzziniet vairāk](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Varat pievienot `<link rel=preload>` tagus, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Lai automātiski optimizētu attēlu formātu, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Lai automātiski optimizētu attēlu formātu, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Lai automātiski atliktu attēlu ielādi, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Lai automātiski atliktu attēlu ielādi, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Izmantojiet komponentu `next/image` un iestatiet opcijai “priority” vērtību “true”, lai iepriekš ielādētu LCP attēlu. [Uzziniet vairāk](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Izmantojiet komponentu `next/script`, lai atliktu mazāk svarīgu trešās puses skriptu ielādi. [Uzziniet vairāk](https://nextjs.org/docs/basic-features/script)."
+    "message": "Izmantojiet komponentu `next/script`, lai atliktu mazāk svarīgu trešās puses skriptu ielādi. [Uzziniet vairāk](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Izmantojiet komponentu `next/image`, lai nodrošinātu vienmēr pareizu lielumu attēliem. [Uzziniet vairāk](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Lai noteiktu neizmantotu JavaScript kodu, izmantojiet `Webpack Bundle Analyzer`. [Uzziniet vairāk](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Lai novērtētu lietotnes faktisko veiktspēju ieteicams izmantot `Next.js Analytics`. [Uzziniet vairāk](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Lai novērtētu lietotnes faktisko veiktspēju ieteicams izmantot `Next.js Analytics`. [Uzziniet vairāk](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurējiet nemainīgu līdzekļu un `Server-side Rendered` (SSR) lapu saglabāšanu kešatmiņā. [Uzziniet vairāk](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurējiet nemainīgu līdzekļu un `Server-side Rendered` (SSR) lapu saglabāšanu kešatmiņā. [Uzziniet vairāk](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Lai pielāgotu attēlu kvalitāti, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Lai pielāgotu attēlu kvalitāti, izmantojiet komponentu `next/image`, nevis `<img>`. [Uzziniet vairāk](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Lai iestatītu atbilstošās elementa `sizes` vērtības, izmantojiet komponentu `next/image`. [Uzziniet vairāk](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Ja būvējuma sistēmā JavaScript faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Ja neveicat renderēšanu servera pusē, [sadaliet JavaScript pakas](https://web.dev/code-splitting-suspense/), izmantojot `React.lazy()`. Pretējā gadījumā sadaliet kodu, izmantojot trešās puses bibliotēku, piemēram, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Ja neveicat renderēšanu servera pusē, [sadaliet JavaScript pakas](https://web.dev/code-splitting-suspense/), izmantojot `React.lazy()`. Pretējā gadījumā sadaliet kodu, izmantojot trešās puses bibliotēku, piemēram, [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Varat mērīt komponentu renderēšanas veiktspēju ar spraudni React DevTools Profiler, kurā tiek izmantots Profiler API. [Uzziniet vairāk.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Neattiecināmi"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Neuzskaitītie"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Šī pārbaude neietekmē kategorijas kopējo rādītāju."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Vērtības ir aptuvenas un var atšķirties. [Veiktspējas rezultāts tiek aprēķināts](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/), pamatojoties tieši uz šiem metrikas veidiem."

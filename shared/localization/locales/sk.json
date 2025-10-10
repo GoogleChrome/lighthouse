@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Povolené s upozornením"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Skóre posunu rozloženia"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Toto sú najväčšie posuny rozloženia zaznamenané na danej stránke. Každá položka tabuľky predstavuje jeden posun rozloženia a zobrazuje prvok, ktorý sa posunul najviac. Pod každou položkou sú uvedené možné hlavné príčiny, ktoré viedli k posunu rozloženia. Niektoré z týchto posunov rozloženia nemusia byť zahrnuté v hodnote metriky Súhrn posunov rozloženia stránky v dôsledku [windowingu](https://web.dev/articles/cls#what_is_cls). [Ako zlepšiť súhrn posunov rozloženia stránky](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Bol nájdený 1 posun rozloženia}few{Boli nájdené # posuny rozloženia}many{# layout shifts found}other{Bolo nájdených # posunov rozloženia}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Webové písmo bolo načítané"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Vložený prvok iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Mediálny prvok nemá explicitnú veľkosť"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Nepoužívajte veľké posuny rozloženia"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Sú tu uvedené najdlhšie úlohy hlavného vlákna slúžiace na identifikáciu faktorov, ktoré najväčšou mierou prispievajú k oneskoreniu vstupu. [Ako sa vyhnúť dlhým úlohám hlavného vlákna](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latencie na strane servera"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Nezložené animácie môžu byť nekvalitné a môžu zvýšiť kumulatívnu zmenu rozloženia. [Ako sa vyhnúť nezloženým animáciám](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Bol nájdený # animovaný prvok}few{Boli nájdené # animované prvky}many{# animated elements found}other{Bolo nájdených # animovaných prvkov}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Vlastnosť súvisiaca s filtrom môže posunúť pixely"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Cieľ obsahuje inú animáciu, ktorá nie je kompatibilná"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efekt má zložený režim, ktorý je iný ako „nahradiť“"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Nepoužívajte nezložené animácie"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Vlastnosť súvisiaca s transformáciou závisí od veľkosti poľa"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Nepodporovaná vlastnosť šablóny CSS: {properties}}few{Nepodporované vlastnosti šablóny CSS: {properties}}many{Unsupported CSS Properties: {properties}}other{Nepodporované vlastnosti šablóny CSS: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Vlastnosti vlastných šablón CSS sa v zostavovacom nástroji nedajú animovať: {properties}}few{Vlastnosti vlastných šablón CSS sa v zostavovacom nástroji nedajú animovať: {properties}}many{Vlastnosti vlastných šablón CSS sa v zostavovacom nástroji nedajú animovať: {properties}}other{Vlastnosti vlastných šablón CSS sa v zostavovacom nástroji nedajú animovať: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efekt má nepodporované parametre časovania"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktíva"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Presmerúva návštevnosť cez HTTP na HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Presmerovania spôsobujú ďalšie oneskorenia pri načítavaní stránky. [Ako sa vyhnúť presmerovaniam stránky](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Vyhnite sa viacnásobným presmerovaniam stránky"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanonické odkazy navrhujú, ktorá webová adresa sa má zobraziť vo výsledkoch vyhľadávania. [Ďalšie informácie o kanonických odkazoch](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "Odkazy majú popisný text"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Spustite [tester štruktúrovaných dát](https://search.google.com/structured-data/testing-tool/) a nástroj [Structured Data Linter](http://linter.structured-data.org/) na overenie štruktúrovaných dát. [Ďalšie informácie o štruktúrovaných dátach](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "Spustite [tester štruktúrovaných dát](https://developers.google.com/search/docs/appearance/structured-data/) na overenie štruktúrovaných dát. [Ďalšie informácie o štruktúrovaných dátach](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Štruktúrované dáta sú platné"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "Súbor robots.txt je platný"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Zaistite, aby bol čas odozvy servera pre hlavný dokument krátky, pretože od neho závisia všetky ostatné žiadosti. [Ďalšie informácie o metrike Čas do prvého bajtu](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Hlavný dokument trval {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Skráťte počiatočný čas odpovede servera"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Počiatočný čas odpovede servera bol krátky"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "V niektorých kontextoch môžu byť súbory cookie tretích strán blokované. [Ďalšie informácie o príprave na obmedzenia súborov cookie tretích strán](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Zmiernite riziko skriptovania medzi webmi založeného na modeli DOM pomocou direktívy Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "V prvkoch obrázka nastavte explicitnú šírku aj výšku, aby ste znížili posuny rozloženia a zlepšili kumulatívnu zmenu rozloženia. [Ako nastaviť rozmery obrázkov](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Prvky obrázkov nemajú explicitné hodnoty `width` a `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Prvky obrázka majú explicitné hodnoty `width` a `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Typ"
@@ -2808,43 +2886,43 @@
     "message": "Textové zdroje by sa mali zobrazovať komprimované (gzip, deflate alebo brotli), aby sa minimalizovala celková spotreba bajtov v sieti. Zvážte použitie siete na distribúciu obsahu, ktorá toto natívne podporuje, alebo nakonfigurujte webový server tak, aby túto operáciu vykonával. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Použím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Optimize Fonts` automaticky zaisťujte pomocou funkcie CSS `font-display` viditeľnosť textu pre používateľov pri načítavaní webfontov."
+    "message": "Použím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Optimize Fonts` automaticky zaisťujte pomocou funkcie CSS `font-display` viditeľnosť textu pre používateľov pri načítavaní webfontov."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Next-Gen Formats` konvertujte obrázky na formát WebP."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Next-Gen Formats` konvertujte obrázky na formát WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Lazy Load Images` odložte načítavanie obrázkov mimo obrazovky, dokým nebudú potrebné."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Lazy Load Images` odložte načítavanie obrázkov mimo obrazovky, dokým nebudú potrebné."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponentov `Critical CSS` aj `Script Delay` odložte nepodstatný JavaScript a šablóny CSS."
+    "message": "Použite [Ezoic Leap](https://pubdash.ezoic.com/leap) a povoľte komponent `Script Delay` a odložte nedôležitý JavaScript."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Použitím funkcie [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) uložte svoj obsah do vyrovnávacej pamäte v našej globálnej sieti, čím sa skráti čas do prvého bajtu."
+    "message": "Použitím funkcie [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) uložte svoj obsah do vyrovnávacej pamäte v našej globálnej sieti, čím sa skráti čas do prvého bajtu."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Minify CSS` automaticky minifikujte svoje šablóny CSS, aby sa znížili veľkosti sieťových prenosov dát."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Minify CSS` automaticky minifikujte svoje šablóny CSS, aby sa znížili veľkosti sieťových prenosov dát."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Minify Javascript` automaticky minifikujte svoj JavaScript, aby sa znížili veľkosti sieťových prenosov dát."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Minify Javascript` automaticky minifikujte svoj JavaScript, aby sa znížili veľkosti sieťových prenosov dát."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Remove Unused CSS` pomôžte s týmto problémom. Identifikuje triedy šablón CSS, ktoré sú skutočne použité na každej stránke vášho webu, a odstráni všetky ostatné, aby súbor zostal malý."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Remove Unused CSS` pomôžte s týmto problémom. Identifikuje triedy šablón CSS, ktoré sú skutočne použité na každej stránke vášho webu, a odstráni všetky ostatné, aby súbor zostal malý."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Efficient Static Cache Policy` nastavte odporúčané hodnoty statických podkladov v hlavičke vyrovnávacej pamäte."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Efficient Static Cache Policy` nastavte odporúčané hodnoty statických podkladov v hlavičke vyrovnávacej pamäte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Next-Gen Formats` konvertujte obrázky na formát WebP."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Next-Gen Formats` konvertujte obrázky na formát WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Pre-Connect Origins` automaticky pridávajte návrhy zdrojov `preconnect` a nadväzujte tak skoré pripojenia k dôležitým zdrojom tretích strán."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Pre-Connect Origins` automaticky pridávajte návrhy zdrojov `preconnect` a nadväzujte tak skoré pripojenia k dôležitým zdrojom tretích strán."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponentov `Preload Fonts` aj `Preload Background Images` pridajte odkazy `preload` umožňujúce priorizovať momentálne požadované zdroje načítavania neskôr pri načítaní stránky."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponentov `Preload Fonts` aj `Preload Background Images` pridajte odkazy `preload` umožňujúce priorizovať momentálne požadované zdroje načítavania neskôr pri načítaní stránky."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/speed) a povolením komponenta `Resize Images` zmeňte obrázky na veľkosť vhodnú pre zariadenie, aby sa znížili veľkosti sieťových prenosov dát."
+    "message": "Použitím súpravy [Ezoic Leap](https://pubdash.ezoic.com/leap) a povolením komponenta `Resize Images` zmeňte obrázky na veľkosť vhodnú pre zariadenie, aby sa znížili veľkosti sieťových prenosov dát."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Formát obrázkov neoptimalizujte automaticky pomocou komponenta `<img>`, ale `gatsby-plugin-image`. [Ďalšie informácie](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2952,16 +3030,16 @@
     "message": "Značky `<link rel=preload>` je možné pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Formát obrázkov neoptimalizujte automaticky pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Formát obrázkov neoptimalizujte automaticky pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Lenivé načítanie obrázkov nespúšťajte automaticky pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Lenivé načítanie obrázkov nespúšťajte automaticky pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Nastavte použitím komponenta `next/image` prioritu na pravdu, aby sa prednačítaval obrázok vykreslenia najväčšieho obsahu. [Ďalšie informácie](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Odložte načítanie nepodstatných skriptov tretej strany pomocou komponentu `next/script`. [Ďalšie informácie](https://nextjs.org/docs/basic-features/script)"
+    "message": "Odložte načítanie nepodstatných skriptov tretej strany pomocou komponentu `next/script`. [Ďalšie informácie](https://nextjs.org/docs/app/guides/scripts)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Pomocou komponenta `next/image` zaistite, aby obrázky vždy mali náležitú veľkosť. [Ďalšie informácie](https://nextjs.org/docs/api-reference/next/image#width)"
@@ -2973,13 +3051,13 @@
     "message": "Nepoužitý kód JavaScriptu rozpoznávajte pomocou komponenta `Webpack Bundle Analyzer`. [Ďalšie informácie](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Zvážte meranie skutočnej výkonnosti svojej aplikácie pomocou nástroja `Next.js Analytics`. [Ďalšie informácie](https://nextjs.org/docs/advanced-features/measuring-performance)"
+    "message": "Zvážte meranie skutočnej výkonnosti svojej aplikácie pomocou nástroja `Next.js Analytics`. [Ďalšie informácie](https://nextjs.org/docs/pages/guides/analytics)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Nakonfigurujte ukladanie nemenných podkladov a stránok `Server-side Rendered` do vyrovnávacej pamäte. [Ďalšie informácie](https://nextjs.org/docs/going-to-production#caching)"
+    "message": "Nakonfigurujte ukladanie nemenných podkladov a stránok `Server-side Rendered` do vyrovnávacej pamäte. [Ďalšie informácie](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Kvalitu obrázkov neupravujte pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Kvalitu obrázkov neupravujte pomocou komponenta `<img>`, ale `next/image`. [Ďalšie informácie](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Príslušné `sizes` nastavte pomocou komponentu `next/image`. [Ďalšie informácie](https://nextjs.org/docs/api-reference/next/image#sizes)"
@@ -3099,7 +3177,7 @@
     "message": "Ak váš systém zostavy automaticky minifikuje súbory JS, mali by ste nasadzovať ostrú verziu zostavy aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Ak nevykresľujete na strane servera, [rozdeľte balíky súborov JavaScript](https://web.dev/code-splitting-suspense/) pomocou funkcie `React.lazy()`. V opačnom prípade rozdeľte kód pomocou knižnice tretej strany, napríklad [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Ak nevykresľujete na strane servera, [rozdeľte balíky súborov JavaScript](https://web.dev/code-splitting-suspense/) pomocou funkcie `React.lazy()`. V opačnom prípade rozdeľte kód pomocou knižnice tretej strany, napríklad [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Na meranie výkonnosti vykresľovania svojich komponentov použite profilovač React DevTools Profiler, ktorý využíva rozhranie Profiler API. [Ďalšie informácie](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nie je možné priradiť"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Bez hodnotenia"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Tento audit neprispieva k celkovému skóre kategórie."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Hodnoty sú odhady, ktoré sa môžu líšiť. [Skóre výkonnosti sa vypočítava](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) priamo z týchto metrík."

@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Dopušteno uz upozorenje"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Pokazatelj pomaka izgleda"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "To su najveći pomaci izgleda koji su primijećeni na stranici. Svaka stavka tablice predstavlja jedan pomak izgleda i prikazuje element koji se najviše pomaknuo. Ispod svake stavke navode se mogući glavni uzroci koji su doveli do pomaka izgleda. Neki pomaci izgleda možda neće biti uključeni u vrijednost mjernog podatka CLS-a zbog [prikaza u prozorima](https://web.dev/articles/cls#what_is_cls). [Saznajte kako poboljšati CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Pronađen je jedan pomak izgleda}one{Pronađen je # pomak izgleda}few{Pronađena su # pomaka izgleda}other{Pronađeno je # pomaka izgleda}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Učitan web-font"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Ugrađeni iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Medijski element bez eksplicitne veličine"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Izbjegavajte velike pomake izgleda"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Navodi najduže zadatke na glavnoj niti, što je korisno za otkrivanje onih koji najviše doprinose kašnjenju unosa. [Saznajte kako izbjeći duge zadatke na glavnoj niti](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Pozadinske latencije poslužitelja"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animacije koje nisu kompozitne mogu biti lošije kvalitete i povisiti CLS. [Saznajte kako izbjeći nekompozitne animacije](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Pronađen je # animirani element}one{Pronađen je # animirani element}few{Pronađena su # animirana elementa}other{Pronađeno je # animiranih elemenata}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Svojstvo koje se odnosi na filtar može pomicati piksele"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Cilj ima neku drugu animaciju koja nije kompatibilna"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efekt sadrži kompozitni način koji nije \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Izbjegavajte animacije koje nisu kompozitne"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Svojstvo koje se odnosi na preobrazbu ovisi o veličini okvira"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Nepodržano svojstvo CSS-a: {properties}}one{Nepodržana svojstva CSS-a: {properties}}few{Nepodržana svojstva CSS-a: {properties}}other{Nepodržana svojstva CSS-a: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Prilagođena svojstva CSS-a ne mogu se animirati na sastavljaču: {properties}}one{Prilagođena svojstva CSS-a ne mogu se animirati na sastavljaču: {properties}}few{Prilagođena svojstva CSS-a ne mogu se animirati na sastavljaču: {properties}}other{Prilagođena svojstva CSS-a ne mogu se animirati na sastavljaču: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efekt sadrži parametre tempiranja koji nisu podržani"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Smjernica"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Preusmjerava HTTP promet na HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Preusmjeravanja uvode dodatna kašnjenja prije nego što se stranica može učitati. [Saznajte kako izbjeći preusmjeravanja stranica](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Izbjegavajte višestruka preusmjeravanja stranica"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanonske veze ukazuju na to koji URL prikazati u rezultatima pretraživanja. [Saznajte više o kanonskim vezama](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Veze sadrže deskriptivan tekst"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Pokrenite [alat za testiranje strukturiranih podataka](https://search.google.com/structured-data/testing-tool/) i [datoteku za provjeru koda (linter) strukturiranih podataka](http://linter.structured-data.org/) da biste potvrdili strukturirane podatke. [Saznajte više o strukturiranim podacima](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Pokrenite [alat za testiranje strukturiranih podataka](https://developers.google.com/search/docs/appearance/structured-data/) da biste potvrdili strukturirane podatke. [Saznajte više o strukturiranim podacima](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Strukturirani su podaci važeći"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt je valjan"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Neka vrijeme odgovora poslužitelja za glavni dokument bude kratko jer svi ostali zahtjevi ovise o njemu. [Saznajte više o mjernom podatku Vrijeme do prvog bajta](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Za korijenski dokument bilo je potrebno {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Skratite inicijalno vrijeme odgovora poslužitelja"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Inicijalno vrijeme odgovora poslužitelja bilo je kratko"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Kolačići trećih strana mogu se blokirati u nekim kontekstima. [Saznajte više o pripremi za ograničenja kolačića trećih strana](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Ublažavanje XSS-a na temelju DOM-a pomoću pouzdanih vrsta"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Postavite eksplicitnu širinu i visinu na elementima slika da bi se smanjili pomaci izgleda i poboljšao CLS. [Saznajte kako postaviti dimenzije slika](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Elementi slike nemaju eksplicitnu `width` i `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Elementi slike imaju eksplicitnu `width` i `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Vrsta"
@@ -2808,43 +2886,43 @@
     "message": "Tekstualni resursi trebaju se posluživati s kompresijom (gzip, deflate ili brotli) radi minimiziranja ukupne količine mrežnih bajtova. Savjetujemo vam upotrebu CDN-a koji to izvorno podržava ili konfigurirajte web-poslužitelj da vrši tu operaciju. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Optimize Fonts` da biste automatski iskoristili `font-display` CSS značajku kako bi tekst bio vidljiv korisnicima dok se web-fontovi učitavaju."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Optimize Fonts` da biste automatski iskoristili `font-display` CSS značajku kako bi tekst bio vidljiv korisnicima dok se web-fontovi učitavaju."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Next-Gen Formats` radi konvertiranja slika u WebP."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Next-Gen Formats` radi konvertiranja slika u WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Lazy Load Images` da bi se odgodilo učitavanje slika izvan zaslona dok ne budu potrebne."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Lazy Load Images` da bi se odgodilo učitavanje slika izvan zaslona dok ne budu potrebne."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Critical CSS` i `Script Delay` da bi se odgodio nekritični JS/CSS."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Script Delay` da bi se odgodio nekritični JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Koristite [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) kako biste predmemorirali svoj sadržaj na našoj svjetskoj mreži i poboljšali vrijeme do prvog bajta."
+    "message": "Koristite [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) kako biste predmemorirali svoj sadržaj na našoj svjetskoj mreži i poboljšali vrijeme do prvog bajta."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Minify CSS` da biste automatski umanjili CSS kako bi se smanjile veličine mrežnih resursa."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Minify CSS` da biste automatski umanjili CSS kako bi se smanjile veličine mrežnih resursa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Minify Javascript` da biste automatski umanjili JS kako bi se smanjile veličine mrežnih resursa."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Minify Javascript` da biste automatski umanjili JS kako bi se smanjile veličine mrežnih resursa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Remove Unused CSS` radi lakšeg rješavanja tog problema. Identificirat će CSS klase koje se doista koriste na svakoj stranici vaše web-lokacije i ukloniti sve druge kako bi datoteka ostala male veličine."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Remove Unused CSS` radi lakšeg rješavanja tog problema. Identificirat će CSS klase koje se doista koriste na svakoj stranici vaše web-lokacije i ukloniti sve druge kako bi datoteka ostala male veličine."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Efficient Static Cache Policy` da biste postavili preporučene vrijednosti u zaglavlju predmemoriranja za statičke elemente."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Efficient Static Cache Policy` da biste postavili preporučene vrijednosti u zaglavlju predmemoriranja za statičke elemente."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Next-Gen Formats` radi konvertiranja slika u WebP."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Next-Gen Formats` radi konvertiranja slika u WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Pre-Connect Origins` da biste automatski dodali nagovještaje resursa `preconnect` radi uspostavljanja ranih veza s važnim izvorima trećih strana."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Pre-Connect Origins` da biste automatski dodali nagovještaje resursa `preconnect` radi uspostavljanja ranih veza s važnim izvorima trećih strana."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Preload Fonts` i `Preload Background Images` da biste dodali veze za `preload` kako bi se prednost dala dohvaćanju resursa koji se trenutačno traže kasnije tijekom učitavanja stranice."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Preload Fonts` i `Preload Background Images` da biste dodali veze za `preload` kako bi se prednost dala dohvaćanju resursa koji se trenutačno traže kasnije tijekom učitavanja stranice."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/speed) i omogućite `Resize Images` da bi se veličina slika promijenila ovisno o uređaju i time smanjila veličina mrežnih resursa."
+    "message": "Koristite [Ezoic Leap](https://pubdash.ezoic.com/leap) i omogućite `Resize Images` da bi se veličina slika promijenila ovisno o uređaju i time smanjila veličina mrežnih resursa."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Upotrijebite komponentu `gatsby-plugin-image` umjesto komponente `<img>` da biste automatski optimizirali format slike. [Saznajte više](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>` oznake mogu se dodati [promjenom izgleda tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da biste automatski optimizirali format slike. [Saznajte više](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da biste automatski optimizirali format slike. [Saznajte više](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da bi se slike automatski učitale s odgodom. [Saznajte više](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da bi se slike automatski učitale s odgodom. [Saznajte više](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Koristite komponentu `next/image` i postavite \"priority\" na \"true\" kako bi se LCP slika predučitala. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Pomoću komponente `next/script` odgodite učitavanje nekritičnih skripti trećih strana. [Saznajte više](https://nextjs.org/docs/basic-features/script)."
+    "message": "Pomoću komponente `next/script` odgodite učitavanje nekritičnih skripti trećih strana. [Saznajte više](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Upotrijebite komponentu `next/image` kako bi slike uvijek bile odgovarajuće veličine. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Koristite `Webpack Bundle Analyzer` za otkrivanje nekorištenog JavaScript koda. [Saznajte više](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Savjetujemo vam da koristite `Next.js Analytics` radi mjerenja izvedbe aplikacije u stvarnom svijetu. [Saznajte više](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Savjetujemo vam da koristite `Next.js Analytics` radi mjerenja izvedbe aplikacije u stvarnom svijetu. [Saznajte više](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurirajte predmemoriranje za nepromjenjive elemente i stranice `Server-side Rendered` (SSR). [Saznajte više](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurirajte predmemoriranje za nepromjenjive elemente i stranice `Server-side Rendered` (SSR). [Saznajte više](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da biste prilagodili kvalitetu slike. [Saznajte više](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Upotrijebite komponentu `next/image` umjesto komponente `<img>` da biste prilagodili kvalitetu slike. [Saznajte više](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Koristite komponentu `next/image` da biste postavili odgovarajuće `sizes`. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Ako vaš sustav za izradu automatski umanjuje JS datoteke, trebate implementirati produkcijsku međuverziju aplikacije. To možete provjeriti pomoću proširenja React Developer Tools. [Saznajte više](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Ako ne generirate na poslužitelju, [podijelite svoje JavaScript pakete](https://web.dev/code-splitting-suspense/) pomoću `React.lazy()`. U suprotnom razdvojite kôd pomoću zbirke treće strane, primjerice [komponenti koje se mogu učitati](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Ako ne generirate na poslužitelju, [podijelite svoje JavaScript pakete](https://web.dev/code-splitting-suspense/) pomoću `React.lazy()`. U suprotnom razdvojite kôd pomoću zbirke treće strane, primjerice [komponenti koje se mogu učitati](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Upotrebljavajte React DevTools Profiler, koji se koristi Profiler API-jem, za mjerenje uspješnosti generiranja komponenti. [Saznajte više.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Ne može se dodijeliti"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Bez rezultata"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Ova revizija nije uključena u ukupni rezultat kategorije."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Vrijednosti se procjenjuju i mogu se razlikovati. [Rezultat izvedbe računa se](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) izravno pomoću tih mjernih podataka."

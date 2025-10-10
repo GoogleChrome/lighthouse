@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "อนุญาตแบบมีคำเตือน"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "คะแนนการเปลี่ยนเลย์เอาต์"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "สิ่งเหล่านี้เป็นการเปลี่ยนเลย์เอาต์ที่ใหญ่ที่สุดที่พบบนหน้าเว็บ แต่ละรายการในตารางจะแสดงการเปลี่ยนเลย์เอาต์รายการเดียว พร้อมระบุองค์ประกอบที่มีการเปลี่ยนแปลงมากที่สุด ด้านล่างของแต่ละรายการคือสาเหตุที่เป็นไปได้ซึ่งนำไปสู่การเปลี่ยนเลย์เอาต์ การเปลี่ยนเลย์เอาต์เหล่านี้บางรายการอาจไม่รวมอยู่ในค่าเมตริก CLS อันเนื่องมาจาก[การจัดกรอบเวลา](https://web.dev/articles/cls#what_is_cls) [ดูวิธีเพิ่มประสิทธิภาพ CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{พบการเปลี่ยนเลย์เอาต์ 1 รายการ}other{พบการเปลี่ยนเลย์เอาต์ # รายการ}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "มีการโหลดแบบอักษรเว็บ"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "มีการแทรก iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "องค์ประกอบสื่อมีขนาดที่ไม่เหมาะสม"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "หลีกเลี่ยงการเลื่อนเลย์เอาต์ขนาดใหญ่"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "ระบุงานที่ใช้เวลานานที่สุดในเทรดหลัก เหมาะสำหรับการระบุปัจจัยที่แย่ที่สุดที่ทำให้อินพุตล่าช้า [ดูวิธีหลีกเลี่ยงงานในเทรดหลักที่ใช้เวลานาน](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "เวลาในการตอบสนองจากแบ็กเอนด์ของเซิร์ฟเวอร์"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "ภาพเคลื่อนไหวที่ไม่ได้ทำการ Composite อาจมีคุณภาพต่ำและทำให้ CLS เพิ่มขึ้น [ดูวิธีหลีกเลี่ยงภาพเคลื่อนไหวที่ไม่ได้ทำการ Composite](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{พบองค์ประกอบของภาพเคลื่อนไหว # รายการ}other{พบองค์ประกอบของภาพเคลื่อนไหว # รายการ}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "พร็อพเพอร์ตี้ที่เกี่ยวข้องกับตัวกรองอาจทำให้พิกเซลเคลื่อนที่"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "เป้าหมายมีภาพเคลื่อนไหวอื่นที่ใช้ร่วมกันไม่ได้"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "เอฟเฟกต์มีโหมด Composite อื่นที่ไม่ใช่ \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "หลีกเลี่ยงการใช้ภาพเคลื่อนไหวที่ไม่ได้ทำการ Composite"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "พร็อพเพอร์ตี้ที่เกี่ยวข้องกับการเปลี่ยนรูปแบบจะขึ้นอยู่กับขนาดช่อง"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{มีพร็อพเพอร์ตี้ CSS ที่ไม่รองรับ {properties}}other{มีพร็อพเพอร์ตี้ CSS ที่ไม่รองรับ {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{พร็อพเพอร์ตี้ CSS ที่กำหนดเองไม่สามารถเคลื่อนไหวใน Compositor ได้: {properties}}other{พร็อพเพอร์ตี้ CSS ที่กำหนดเองไม่สามารถเคลื่อนไหวใน Compositor ได้: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "เอฟเฟกต์มีพารามิเตอร์การจับเวลาที่ไม่รองรับ"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "คำสั่ง"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "การเปลี่ยนเส้นทางทำให้เกิดความล่าช้ามากขึ้นก่อนที่หน้าเว็บจะโหลดได้ [ดูวิธีหลีกเลี่ยงการเปลี่ยนเส้นทางหน้าเว็บ](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "หลีกเลี่ยงการเปลี่ยนเส้นทางหลายหน้า"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "ลิงก์ Canonical จะบอกถึง URL ที่จะแสดงในผลการค้นหา [ดูข้อมูลเพิ่มเติมเกี่ยวกับลิงก์ Canonical](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "ลิงก์มีข้อความอธิบาย"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "เรียกใช้[เครื่องมือทดสอบ Structured Data](https://search.google.com/structured-data/testing-tool/) และ [Structured Data Linter](http://linter.structured-data.org/) เพื่อตรวจสอบความถูกต้องของ Structured Data [ดูข้อมูลเพิ่มเติมเกี่ยวกับ Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "เรียกใช้[เครื่องมือทดสอบ Structured Data](https://developers.google.com/search/docs/appearance/structured-data/) เพื่อตรวจสอบความถูกต้องของ Structured Data [ดูข้อมูลเพิ่มเติมเกี่ยวกับ Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": " Structured Data ถูกต้อง"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt ถูกต้อง"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "พยายามทำให้การตอบกลับของเซิร์ฟเวอร์สำหรับเอกสารหลักใช้เวลาน้อยเนื่องจากคำขออื่นทั้งหมดจะขึ้นอยู่กับเวลานี้ [ดูข้อมูลเพิ่มเติมเกี่ยวกับเมตริก Time To First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "เอกสารรากใช้เวลา {timeInMs, number, milliseconds} มิลลิวินาที"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "ลดเวลาในการตอบกลับของเซิร์ฟเวอร์ขณะเริ่มแรก"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "การตอบกลับของเซิร์ฟเวอร์ขณะเริ่มแรกใช้เวลาน้อย"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "คุกกี้ของบุคคลที่สามอาจถูกบล็อกในบางบริบท [ดูข้อมูลเพิ่มเติมเกี่ยวกับการเตรียมพร้อมสําหรับข้อจํากัดคุกกี้ของบุคคลที่สาม](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "ลดความเสี่ยงของ XSS ที่อิงตาม DOM ด้วย Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "กำหนดความกว้างและความยาวขององค์ประกอบรูปภาพอย่างชัดเจนเพื่อลดการขยับของเลย์เอาต์และปรับปรุง CLS [ดูวิธีตั้งค่าขนาดรูปภาพ](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "องค์ประกอบรูปภาพไม่มี `width` และ `height` ที่ชัดเจน"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "องค์ประกอบรูปภาพมี `width` และ `height` ที่ชัดเจน"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "ประเภท"
@@ -2808,43 +2886,43 @@
     "message": "ทรัพยากรแบบข้อความควรแสดงผลโดยมีการบีบอัด (Gzip, Deflate หรือ Brotli) เพื่อลดจำนวนไบต์เครือข่ายทั้งหมด ลองใช้ CDN ที่รองรับการดำเนินการนี้ตามปกติ หรือกำหนดค่าเว็บเซิร์ฟเวอร์ให้ดำเนินการนี้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Optimize Fonts` เพื่อใช้ประโยชน์จากฟีเจอร์ CSS สำหรับ `font-display` โดยอัตโนมัติ ซึ่งจะทำให้ผู้ใช้มองเห็นข้อความในขณะที่กำลังโหลดเว็บฟอนต์"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Optimize Fonts` เพื่อใช้ประโยชน์จากฟีเจอร์ CSS สำหรับ `font-display` โดยอัตโนมัติ ซึ่งจะทำให้ผู้ใช้มองเห็นข้อความในขณะที่กำลังโหลดเว็บฟอนต์"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้ `Next-Gen Formats` เพื่อแปลงรูปภาพเป็นรูปแบบ WebP"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้ `Next-Gen Formats` เพื่อแปลงรูปภาพเป็นรูปแบบ WebP"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) แล้วเปิดใช้ `Lazy Load Images` เพื่อเลื่อนเวลาโหลดรูปภาพนอกจอภาพ"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) แล้วเปิดใช้ `Lazy Load Images` เพื่อเลื่อนเวลาโหลดรูปภาพนอกจอภาพ"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) แล้วเปิดใช้ `Critical CSS` กับ `Script Delay` เพื่อเลื่อน JS/CSS ที่ไม่สำคัญ"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) แล้วเปิดใช้ `Script Delay` เพื่อเลื่อน JS ที่ไม่สำคัญ"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "ใช้ [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) เพื่อแคชเนื้อหาของคุณในเครือข่ายทั่วโลก ซึ่งจะช่วยปรับปรุง Time To First Byte"
+    "message": "ใช้ [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) เพื่อแคชเนื้อหาของคุณในเครือข่ายทั่วโลก ซึ่งจะช่วยปรับปรุง Time To First Byte"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Minify CSS` เพื่อลดขนาด CSS โดยอัตโนมัติ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Minify CSS` เพื่อลดขนาด CSS โดยอัตโนมัติ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Minify Javascript` เพื่อลดขนาด JS โดยอัตโนมัติ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Minify Javascript` เพื่อลดขนาด JS โดยอัตโนมัติ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Remove Unused CSS` เพื่อช่วยในการแก้ไขปัญหานี้ โดยการตั้งค่านี้จะระบุคลาสของ CSS ที่มีการใช้งานจริงในแต่ละหน้าของเว็บไซต์ และจะนำคลาสอื่นๆ ออกเพื่อควบคุมให้ไฟล์มีขนาดเล็ก"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Remove Unused CSS` เพื่อช่วยในการแก้ไขปัญหานี้ โดยการตั้งค่านี้จะระบุคลาสของ CSS ที่มีการใช้งานจริงในแต่ละหน้าของเว็บไซต์ และจะนำคลาสอื่นๆ ออกเพื่อควบคุมให้ไฟล์มีขนาดเล็ก"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Efficient Static Cache Policy` เพื่อตั้งค่าที่แนะนำในส่วนหัวของการแคชสำหรับเนื้อหาแบบคงที่"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Efficient Static Cache Policy` เพื่อตั้งค่าที่แนะนำในส่วนหัวของการแคชสำหรับเนื้อหาแบบคงที่"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้ `Next-Gen Formats` เพื่อแปลงรูปภาพเป็นรูปแบบ WebP"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้ `Next-Gen Formats` เพื่อแปลงรูปภาพเป็นรูปแบบ WebP"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Pre-Connect Origins` เพื่อเพิ่มคำแนะนำด้านทรัพยากรสำหรับ `preconnect` โดยอัตโนมัติ ซึ่งจะสร้างการเชื่อมต่อกับต้นทางที่สำคัญของบุคคลที่สามไว้ก่อน"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Pre-Connect Origins` เพื่อเพิ่มคำแนะนำด้านทรัพยากรสำหรับ `preconnect` โดยอัตโนมัติ ซึ่งจะสร้างการเชื่อมต่อกับต้นทางที่สำคัญของบุคคลที่สามไว้ก่อน"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Preload Fonts` กับ `Preload Background Images` เพื่อเพิ่มลิงก์ `preload` ซึ่งจะช่วยจัดลำดับความสำคัญของการดึงทรัพยากรที่มีการขอภายหลังในการโหลดหน้าเว็บ"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Preload Fonts` กับ `Preload Background Images` เพื่อเพิ่มลิงก์ `preload` ซึ่งจะช่วยจัดลำดับความสำคัญของการดึงทรัพยากรที่มีการขอภายหลังในการโหลดหน้าเว็บ"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/speed) และเปิดใช้งาน `Resize Images` เพื่อปรับขนาดรูปภาพให้เหมาะสมกับอุปกรณ์ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
+    "message": "ใช้ [Ezoic Leap](https://pubdash.ezoic.com/leap) และเปิดใช้งาน `Resize Images` เพื่อปรับขนาดรูปภาพให้เหมาะสมกับอุปกรณ์ ซึ่งจะทำให้ขนาดเพย์โหลดของเครือข่ายเล็กลง"
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "ใช้คอมโพเนนต์ `gatsby-plugin-image` แทน `<img>` เพื่อเพิ่มประสิทธิภาพรูปแบบรูปภาพโดยอัตโนมัติ [ดูข้อมูลเพิ่มเติม](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2952,16 +3030,16 @@
     "message": "เพิ่มแท็ก `<link rel=preload>` ได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อเพิ่มประสิทธิภาพรูปแบบรูปภาพโดยอัตโนมัติ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อเพิ่มประสิทธิภาพรูปแบบรูปภาพโดยอัตโนมัติ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อโหลดรูปภาพแบบ Lazy Loading โดยอัตโนมัติ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อโหลดรูปภาพแบบ Lazy Loading โดยอัตโนมัติ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "ใช้คอมโพเนนต์ `next/image` และตั้ง \"ลำดับความสำคัญ\" เป็น \"จริง\" เพื่อโหลดรูปภาพ LCP ไว้ล่วงหน้า [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "ใช้คอมโพเนนต์ `next/script` เพื่อเลื่อนการโหลดสคริปต์บุคคลที่สามที่ไม่สำคัญ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/script)"
+    "message": "ใช้คอมโพเนนต์ `next/script` เพื่อเลื่อนการโหลดสคริปต์บุคคลที่สามที่ไม่สำคัญ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/app/guides/scripts)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "ใช้คอมโพเนนต์ `next/image` เพื่อตรวจสอบว่ารูปภาพมีขนาดที่เหมาะสมเสมอ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#width)"
@@ -2973,13 +3051,13 @@
     "message": "ใช้ `Webpack Bundle Analyzer` เพื่อตรวจหาโค้ด JavaScript ที่ไม่ได้ใช้ [ดูข้อมูลเพิ่มเติม](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "พิจารณาใช้ `Next.js Analytics` เพื่อวัดประสิทธิภาพแอปในการใช้งานจริง [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/advanced-features/measuring-performance)"
+    "message": "พิจารณาใช้ `Next.js Analytics` เพื่อวัดประสิทธิภาพแอปในการใช้งานจริง [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/pages/guides/analytics)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "กำหนดค่าการแคชสำหรับเนื้อหาและหน้า `Server-side Rendered` (SSR) ที่เปลี่ยนแปลงไม่ได้ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/going-to-production#caching)"
+    "message": "กำหนดค่าการแคชสำหรับเนื้อหาและหน้า `Server-side Rendered` (SSR) ที่เปลี่ยนแปลงไม่ได้ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อปรับคุณภาพของรูป [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อปรับคุณภาพของรูป [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "ใช้คอมโพเนนต์ `next/image` เพื่อกำหนด `sizes` ที่เหมาะสม [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#sizes)"
@@ -3099,7 +3177,7 @@
     "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ JS โดยอัตโนมัติ โปรดตรวจสอบว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ โดยใช้ส่วนขยาย React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "หากคุณไม่ได้กำลังแสดงผลฝั่งเซิร์ฟเวอร์ ให้[แยกกลุ่ม JavaScript](https://web.dev/code-splitting-suspense/) ด้วย `React.lazy()` หรือแยกโค้ดโดยใช้ไลบรารีของบุคคลที่สาม เช่น [คอมโพเนนต์ที่โหลดได้](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)"
+    "message": "หากคุณไม่ได้กำลังแสดงผลฝั่งเซิร์ฟเวอร์ ให้[แยกกลุ่ม JavaScript](https://web.dev/code-splitting-suspense/) ด้วย `React.lazy()` หรือแยกโค้ดโดยใช้ไลบรารีของบุคคลที่สาม เช่น [คอมโพเนนต์ที่โหลดได้](https://loadable-components.com/)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "ใช้ React DevTools Profiler ซึ่งใช้ประโยชน์จาก Profiler API ในการวัดประสิทธิภาพในการแสดงผลของคอมโพเนนต์ [ดูข้อมูลเพิ่มเติม](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "ระบุแหล่งที่มาไม่ได้"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "ไม่มีคะแนน"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "การตรวจสอบนี้ไม่มีส่วนช่วยในการให้คะแนนหมวดหมู่โดยรวม"
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "ค่ามาจากการประมาณและอาจแตกต่างกันไป [คะแนนประสิทธิภาพคำนวณ](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)จากเมตริกเหล่านี้โดยตรง"

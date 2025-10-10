@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Diizinkan dengan peringatan"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Skor pergeseran tata letak"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Berikut adalah pergeseran tata letak terbesar yang diamati di halaman. Setiap item tabel mewakili satu pergeseran tata letak, dan menampilkan elemen yang paling banyak bergeser. Di bawah setiap item adalah kemungkinan penyebab utama dari pergeseran tata letak. Beberapa pergeseran tata letak ini mungkin tidak disertakan dalam nilai metrik CLS karena [normalisasi](https://web.dev/articles/cls#what_is_cls). [Pelajari cara meningkatkan CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 pergeseran tata letak ditemukan}other{# pergeseran tata letak ditemukan}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Font web dimuat"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Memasukkan iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Elemen media tidak memiliki ukuran yang jelas"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Hindari peralihan tata letak berukuran besar"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Mencantumkan tugas yang berjalan paling lama di thread utama, berguna untuk mengidentifikasi kontributor utama penundaan input. [Pelajari cara menghindari tugas thread utama yang berjalan lama](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latensi Backend Server"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animasi yang tidak digabungkan dapat tersendat dan menambah CLS. [Pelajari cara menghindari animasi non-gabungan](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# elemen animasi ditemukan}other{# elemen animasi ditemukan}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Properti terkait filter dapat memindahkan piksel"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Target memiliki animasi lain yang tidak kompatibel"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efek memiliki mode gabungan selain \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Menghindari animasi yang tidak digabungkan"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Properti terkait transformasi bergantung pada ukuran kotak"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Properti CSS Tidak Didukung: {properties}}other{Properti CSS Tidak Didukung: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Properti CSS kustom tidak dapat dianimasikan di kompositor: {properties}}other{Properti CSS kustom tidak dapat dianimasikan di kompositor: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efek memiliki parameter waktu yang tidak didukung"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Perintah"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Mengalihkan traffic HTTP ke HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Pengalihan mencakup penundaan tambahan sebelum halaman dapat dimuat. [Pelajari cara menghindari pengalihan halaman](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Hindari pengalihan lebih dari satu halaman"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Link kanonis menyarankan URL yang akan ditampilkan dalam hasil penelusuran. [Pelajari lebih lanjut link kanonis](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Link memiliki teks deskriptif"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Jalankan [Alat Pengujian Data Terstruktur](https://search.google.com/structured-data/testing-tool/) dan [Linter Data Terstruktur](http://linter.structured-data.org/) untuk memvalidasi data terstruktur. [Pelajari lebih lanjut Data Terstruktur](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Jalankan [Alat Pengujian Data Terstruktur](https://developers.google.com/search/docs/appearance/structured-data/) untuk memvalidasi data terstruktur. [Pelajari lebih lanjut Data Terstruktur](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Data terstruktur valid"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt valid"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Pertahankan waktu respons server untuk dokumen utama tetap singkat karena semua permintaan lain bergantung padanya. [Pelajari lebih lanjut metrik Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Dokumen root memerlukan waktu {timeInMs, number, milliseconds} md"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Kurangi waktu respons server awal"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Respons server awal memakan waktu singkat"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Cookie pihak ketiga mungkin diblokir dalam beberapa konteks. [Pelajari lebih lanjut cara mempersiapkan pembatasan cookie pihak ketiga](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Memitigasi XSS berbasis DOM dengan Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Setel lebar dan tinggi yang jelas pada elemen gambar untuk mengurangi pergeseran tata letak dan memperbaiki CLS. [Pelajari cara menyetel dimensi gambar](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Elemen gambar tidak memiliki `width` dan `height` yang jelas"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Elemen gambar memiliki `width` dan `height` yang jelas"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Jenis"
@@ -2808,43 +2886,43 @@
     "message": "Resource berbasis teks harus ditayangkan dengan kompresi (gzip, deflate, atau brotli) untuk meminimalkan total byte jaringan. Sebaiknya gunakan CDN yang secara native mendukung hal ini, atau konfigurasi server web untuk melakukan operasi ini. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Optimize Fonts` untuk otomatis memanfaatkan fitur CSS `font-display` guna memastikan teks dapat dilihat oleh pengguna saat font web dimuat."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Optimize Fonts` untuk otomatis memanfaatkan fitur CSS `font-display` guna memastikan teks dapat dilihat oleh pengguna saat font web dimuat."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Next-Gen Formats` untuk mengonversi gambar ke WebP."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Next-Gen Formats` untuk mengonversi gambar ke WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Lazy Load Images` untuk menunda pemuatan gambar di luar layar sampai gambar diperlukan."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Lazy Load Images` untuk menunda pemuatan gambar di luar layar sampai gambar diperlukan."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Critical CSS` serta `Script Delay` untuk menunda JS/CSS yang tidak kritis."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Script Delay` untuk menunda JS yang tidak penting."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Gunakan [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) untuk menyimpan cache konten di berbagai jaringan di seluruh dunia, yang mempersingkat waktu untuk menerima byte data pertama."
+    "message": "Gunakan [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) untuk menyimpan cache konten di berbagai jaringan di seluruh dunia, yang mempersingkat waktu untuk menerima byte data pertama."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Minify CSS` untuk otomatis meminifikasi CSS guna mengurangi ukuran payload jaringan."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Minify CSS` untuk otomatis meminifikasi CSS guna mengurangi ukuran payload jaringan."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Minify Javascript` untuk otomatis meminifikasi JS guna mengurangi ukuran payload jaringan."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Minify Javascript` untuk otomatis meminifikasi JS guna mengurangi ukuran payload jaringan."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Remove Unused CSS` untuk membantu menyelesaikan masalah ini. Tindakan ini akan mengidentifikasi class CSS yang sebenarnya digunakan di setiap halaman situs Anda, dan menghapus class CSS lainnya untuk membuat ukuran file tetap kecil."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Remove Unused CSS` untuk membantu menyelesaikan masalah ini. Tindakan ini akan mengidentifikasi class CSS yang sebenarnya digunakan di setiap halaman situs Anda, dan menghapus class CSS lainnya untuk membuat ukuran file tetap kecil."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Efficient Static Cache Policy` untuk menyetel nilai yang direkomendasikan dalam header cache bagi aset statis."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Efficient Static Cache Policy` untuk menyetel nilai yang direkomendasikan dalam header cache bagi aset statis."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Next-Gen Formats` untuk mengonversi gambar ke WebP."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Next-Gen Formats` untuk mengonversi gambar ke WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Pre-Connect Origins` untuk otomatis menambahkan petunjuk resource `preconnect` guna melakukan koneksi awal ke asal pihak ketiga yang penting."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Pre-Connect Origins` untuk otomatis menambahkan petunjuk resource `preconnect` guna melakukan koneksi awal ke asal pihak ketiga yang penting."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Preload Fonts` serta `Preload Background Images` guna menambahkan link `preload` untuk memprioritaskan pengambilan resource yang saat ini diminta pada pemuatan halaman."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Preload Fonts` serta `Preload Background Images` guna menambahkan link `preload` untuk memprioritaskan pengambilan resource yang saat ini diminta pada pemuatan halaman."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/speed) dan aktifkan `Resize Images` untuk mengubah ukuran gambar menjadi ukuran yang sesuai dengan perangkat, sehingga mengurangi ukuran payload jaringan."
+    "message": "Gunakan [Ezoic Leap](https://pubdash.ezoic.com/leap) dan aktifkan `Resize Images` untuk mengubah ukuran gambar menjadi ukuran yang sesuai dengan perangkat, sehingga mengurangi ukuran payload jaringan."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Gunakan komponen `gatsby-plugin-image`, bukan `<img>`, untuk mengoptimalkan format gambar secara otomatis. [Pelajari lebih lanjut](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Tag `<link rel=preload>` dapat ditambahkan dengan [mengubah tata letak tema](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk mengoptimalkan format gambar secara otomatis. [Pelajari lebih lanjut](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk mengoptimalkan format gambar secara otomatis. [Pelajari lebih lanjut](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk otomatis memuat gambar secara lambat. [Pelajari lebih lanjut](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk otomatis memuat gambar secara lambat. [Pelajari lebih lanjut](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Gunakan komponen `next/image` dan setel \"priority\" ke benar (true) untuk melakukan pramuat gambar LCP. [Pelajari lebih lanjut](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Gunakan komponen `next/script` untuk menunda pemuatan skrip pihak ketiga yang tidak kritis. [Pelajari lebih lanjut](https://nextjs.org/docs/basic-features/script)."
+    "message": "Gunakan komponen `next/script` untuk menunda pemuatan skrip pihak ketiga yang tidak kritis. [Pelajari lebih lanjut](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Gunakan komponen `next/image` untuk memastikan gambar selalu memiliki ukuran yang sesuai. [Pelajari lebih lanjut](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Gunakan `Webpack Bundle Analyzer` untuk mendeteksi kode JavaScript yang tidak digunakan. [Pelajari lebih lanjut](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Sebaiknya gunakan `Next.js Analytics` untuk mengukur performa aplikasi Anda yang sebenarnya. [Pelajari lebih lanjut](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Sebaiknya gunakan `Next.js Analytics` untuk mengukur performa aplikasi Anda yang sebenarnya. [Pelajari lebih lanjut](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurasi cache untuk aset dan halaman `Server-side Rendered` (SSR) yang tidak dapat diubah. [Pelajari lebih lanjut](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurasi cache untuk aset dan halaman `Server-side Rendered` (SSR) yang tidak dapat diubah. [Pelajari lebih lanjut](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk menyesuaikan kualitas gambar. [Pelajari lebih lanjut](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Gunakan komponen `next/image`, bukan `<img>`, untuk menyesuaikan kualitas gambar. [Pelajari lebih lanjut](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Gunakan komponen `next/image` untuk menyetel `sizes` yang benar. [Pelajari lebih lanjut](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Jika sistem build otomatis meminifikasi file JS, pastikan Anda men-deploy build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Jika Anda tidak melakukan rendering sistem server, [pisahkan paket JavaScript Anda](https://web.dev/code-splitting-suspense/) dengan `React.lazy()`. Atau, pisahkan kode menggunakan library pihak ketiga seperti [komponen yang dapat dimuat](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Jika Anda tidak melakukan rendering sistem server, [pisahkan paket JavaScript Anda](https://web.dev/code-splitting-suspense/) dengan `React.lazy()`. Atau, pisahkan kode menggunakan library pihak ketiga seperti [komponen yang dapat dimuat](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Gunakan React DevTools Profiler, yang memanfaatkan Profiler API untuk mengukur performa rendering komponen Anda. [Pelajari lebih lanjut.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Tidak dapat diatribusikan"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Tidak dinilai"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Audit ini tidak berkontribusi pada skor kategori keseluruhan."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Nilai adalah hasil perkiraan dan dapat bervariasi. [Skor performa dihitung](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) secara langsung dari metrik ini."

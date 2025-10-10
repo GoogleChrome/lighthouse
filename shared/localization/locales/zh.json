@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "允许（附带警告）"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "布局偏移分数"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "这些是在网页上观察到的最大幅的布局偏移。表格中的每个项均表示一次布局偏移，并显示了发生最大幅偏移的元素。每个项的下方列出了哪些可能的根本原因导致了相应的布局偏移。由于[窗口化](https://web.dev/articles/cls#what_is_cls)的原因，所显示的某些布局偏移可能未包含在 CLS 指标值中。[了解如何改善 CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{发现了 1 次布局偏移}other{发现了 # 次布局偏移}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "加载了网络字体"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "注入的 iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "媒体元素缺少明确的大小"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "请避免出现大幅度的布局偏移"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "列出了主线程中运行时间最长的任务，有助于识别出导致输入延迟的最主要原因。[了解如何避免出现长时间运行的主线程任务](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "服务器后端延迟"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "未合成的动画可能会卡顿并增加 CLS。[了解如何避免使用未合成的动画](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{发现了 # 个动画元素}other{发现了 # 个动画元素}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "某个过滤相关属性可能会移动像素"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "目标中另有一个不兼容的动画"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "效果中含有除了“replace”以外的合成模式"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "避免使用未合成的动画"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "某个转换相关属性取决于元素边界框的大小"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{不受支持的 CSS 属性：{properties}}other{不受支持的 CSS 属性：{properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{无法在合成器上为自定义 CSS 属性添加动画效果：{properties}}other{无法在合成器上为自定义 CSS 属性添加动画效果：{properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "效果含有不受支持的时间参数"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "指令"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "将 HTTP 流量重定向到 HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "重定向会在网页可加载前引入更多延迟。[了解如何避免网页重定向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "避免多次网页重定向"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "规范链接用于建议应在搜索结果中显示哪个网址。[详细了解规范链接](https://developer.chrome.com/docs/lighthouse/seo/canonical/)。"
@@ -1095,7 +1152,7 @@
     "message": "链接有描述性文字"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "运行[结构化数据测试工具](https://search.google.com/structured-data/testing-tool/)和 [Structured Data Linter](http://linter.structured-data.org/) 可验证结构化数据。[详细了解结构化数据](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)。"
+    "message": "运行[结构化数据测试工具](https://developers.google.com/search/docs/appearance/structured-data/)可验证结构化数据。[详细了解结构化数据](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)。"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "结构化数据有效"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt 有效"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "请确保服务器响应主文档的用时较短，因为这会影响到所有其他请求的响应时长。[详细了解 Time to First Byte 指标](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)。"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "根文档花费了 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "请缩短初始服务器响应用时"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "初始服务器响应用时较短"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "在某些情况下，第三方 Cookie 可能会被屏蔽。[详细了解如何为第三方 Cookie 限制做好准备](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "使用 Trusted Types 缓解基于 DOM 的 XSS 攻击"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "请为图片元素设置明确的宽度值和高度值，以减少布局偏移并改善 CLS。[了解如何设置图片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "图片元素没有明确的`width`和`height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "图片元素都有明确的`width`和`height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "类型"
@@ -2808,43 +2886,43 @@
     "message": "文本资源应以压缩形式（gzip、deflate 或 brotli）提供，以最大限度地减少网络活动消耗的字节总数。建议使用原生支持此功能的 CDN，或配置网络服务器来执行此操作。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/text-compression)。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Optimize Fonts`”设置，即可自动利用 `font-display` CSS 功能来确保用户在网页字体加载期间能看到文字。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Optimize Fonts`”设置，即可自动利用 `font-display` CSS 功能来确保用户在网页字体加载期间能看到文字。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Next-Gen Formats`”设置，即可将图片转换成 WebP 格式。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Next-Gen Formats`”设置，即可将图片转换成 WebP 格式。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Lazy Load Images`”设置，即可将屏幕外图片的加载时间延迟到需要它们时。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Lazy Load Images`”设置，即可将屏幕外图片的加载时间延迟到需要它们时。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Critical CSS`”和“`Script Delay`”设置，即可延迟加载非关键 JS/CSS。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Script Delay`”设置，即可延迟加载非关键 JS。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "您只需使用 [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching)，即可将内容缓存到我们的全球网络，从而缩短第一个字节呈现前的加载用时。"
+    "message": "您只需使用 [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching)，即可将内容缓存到我们的全球网络，从而缩短第一个字节呈现前的加载用时。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Minify CSS`”设置，即可自动压缩 CSS 以减少网络载荷量。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Minify CSS`”设置，即可自动压缩 CSS 以减少网络载荷量。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Minify Javascript`”设置，即可自动压缩 JS 以减少网络载荷量。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Minify Javascript`”设置，即可自动压缩 JS 以减少网络载荷量。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Remove Unused CSS`”设置，即可助力解决此问题。此设置会识别您网站的每个网页上实际使用的 CSS 类并移除其他所有类，以确保文件始终不大。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Remove Unused CSS`”设置，即可助力解决此问题。此设置会识别您网站的每个网页上实际使用的 CSS 类并移除其他所有类，以确保文件始终不大。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Efficient Static Cache Policy`”设置，即可在缓存标头中为静态资源设定建议值。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Efficient Static Cache Policy`”设置，即可在缓存标头中为静态资源设定建议值。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Next-Gen Formats`”设置，即可将图片转换成 WebP 格式。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Next-Gen Formats`”设置，即可将图片转换成 WebP 格式。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Pre-Connect Origins`”设置，即可自动添加 `preconnect` 资源提示以尽早连接到重要的第三方源。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Pre-Connect Origins`”设置，即可自动添加 `preconnect` 资源提示以尽早连接到重要的第三方源。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Preload Fonts`”和“`Preload Background Images`”设置，即可添加 `preload` 链接来优先提取目前在网页加载过程中较晚请求加载的资源。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Preload Fonts`”和“`Preload Background Images`”设置，即可添加 `preload` 链接来优先提取目前在网页加载过程中较晚请求加载的资源。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 并启用“`Resize Images`”设置，即可调整图片大小以适合设备的大小，从而减少网络载荷量。"
+    "message": "您只需使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 并启用“`Resize Images`”设置，即可调整图片大小以适合设备的大小，从而减少网络载荷量。"
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "请使用 `gatsby-plugin-image` 组件（而非 `<img>`）自动优化图片格式。[了解详情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
@@ -2952,16 +3030,16 @@
     "message": "您可以通过[修改主题背景的布局](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)来添加 `<link rel=preload>` 标记。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "请使用 `next/image` 组件（而非 `<img>`）自动优化图片格式。[了解详情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "请使用 `next/image` 组件（而非 `<img>`）自动优化图片格式。[了解详情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "请使用 `next/image` 组件（而非 `<img>`）自动延迟加载图片。[了解详情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "请使用 `next/image` 组件（而非 `<img>`）自动延迟加载图片。[了解详情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "您只需使用 `next/image` 组件并将“priority”设为 true，即可预加载 LCP 图片。[了解详情](https://nextjs.org/docs/api-reference/next/image#priority)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "请使用 `next/script` 组件推迟加载非关键第三方脚本。[了解详情](https://nextjs.org/docs/basic-features/script)。"
+    "message": "请使用 `next/script` 组件推迟加载非关键第三方脚本。[了解详情](https://nextjs.org/docs/app/guides/scripts)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "请使用 `next/image` 组件，以确保始终指定恰当的图片尺寸。[了解详情](https://nextjs.org/docs/api-reference/next/image#width)。"
@@ -2973,13 +3051,13 @@
     "message": "请使用 `Webpack Bundle Analyzer` 检测未使用的 JavaScript 代码。[了解详情](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "建议您使用 `Next.js Analytics` 衡量应用的实际性能。[了解详情](https://nextjs.org/docs/advanced-features/measuring-performance)。"
+    "message": "建议您使用 `Next.js Analytics` 衡量应用的实际性能。[了解详情](https://nextjs.org/docs/pages/guides/analytics)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "请为不可变资源和`Server-side Rendered` (SSR) 网页配置缓存。[了解详情](https://nextjs.org/docs/going-to-production#caching)。"
+    "message": "请为不可变资源和`Server-side Rendered` (SSR) 网页配置缓存。[了解详情](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "请使用 `next/image` 组件（而非 `<img>`）调整图片质量。[了解详情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "请使用 `next/image` 组件（而非 `<img>`）调整图片质量。[了解详情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "请使用 `next/image` 组件设置适当的 `sizes`。[了解详情](https://nextjs.org/docs/api-reference/next/image#sizes)。"
@@ -3099,7 +3177,7 @@
     "message": "如果您的构建系统可自动压缩 JS 文件大小，请确保您部署的是正式版应用。您可以通过 React Developer Tools 扩展程序执行此项检查。[了解详情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "如果您不使用服务器端呈现，请使用 `React.lazy()` [拆分 JavaScript 软件包](https://web.dev/code-splitting-suspense/)。否则，请使用第三方库（如 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)）拆分代码。"
+    "message": "如果您不使用服务器端呈现，请使用 `React.lazy()` [拆分 JavaScript 软件包](https://web.dev/code-splitting-suspense/)。否则，请使用第三方库（如 [loadable-components](https://loadable-components.com/)）拆分代码。"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现性能。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "无法归因"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "不计分"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "此审核不会影响总体类别得分。"
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "这些都是估算值，且可能会因时而异。系统会直接基于这些指标来[计算性能得分](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)。"

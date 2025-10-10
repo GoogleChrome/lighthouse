@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Permès amb un advertiment"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Puntuació del canvi de disseny"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Aquests són els canvis de disseny més importants que s'han observat a la pàgina. Cada element de la taula representa un sol canvi de disseny i mostra l'element que ha canviat més. A sota de cada element hi ha les causes arrel que poden haver provocat el canvi. És possible que alguns d'aquests canvis de disseny no s'incloguin al valor de la mètrica CLS a causa d'un [enfinestrament](https://web.dev/articles/cls#what_is_cls). [Informació sobre com pots millorar el CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{S'ha trobat 1 canvi de disseny}other{S'han trobat # canvis de disseny}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "S'ha carregat una font web"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "S'ha injectat un iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "L'element multimèdia no té una mida explícita"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Evita els canvis de disseny importants"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Enumera les tasques més llargues del fil principal, cosa que resulta útil per identificar què contribueix més al retard de les interaccions. [Informació sobre com pots evitar les tasques llargues al fil principal](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latències dorsals del servidor"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Les animacions que no són compostes poden ser lentes i augmentar el canvi de disseny acumulatiu. [Informació sobre com pots evitar les animacions no compostes](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{S'ha trobat # element animat}other{S'han trobat # elements animats}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "És possible que la propietat relacionada amb \"filter\" mogui píxels"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "L'objectiu té una altra animació que no s'admet"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "L'efecte té un mode compost que no és \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Evita les animacions que no siguin compostes"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "La propietat relacionada amb \"transform\" depèn de la mida del quadre"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{La propietat CSS no s'admet: {properties}}other{Les propietats CSS no s'admeten: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{La propietat CSS personalitzada no es pot animar al compositor: {properties}}other{Les propietats CSS personalitzades no es poden animar al compositor: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "L'efecte té paràmetres de temps no admesos"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Directiva"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Redirigeix el trànsit HTTP cap a HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "La mètrica Redireccions introdueix retards addicionals abans de poder carregar la pàgina. [Obtén informació sobre com pots evitar les redireccions de pàgina](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Evita les redireccions múltiples a pàgines"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Els enllaços canònics suggereixen quins URL s'han de mostrar als resultats de la cerca. [Obtén més informació sobre els enllaços canònics](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Els enllaços tenen text descriptiu"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Executa l'[eina de proves de dades estructurades](https://search.google.com/structured-data/testing-tool/) i l'[eina Structured Data Linter](http://linter.structured-data.org/) per validar aquest tipus de dades. [Obtén més informació sobre les dades estructurades](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Executa lʼ[eina de proves de dades estructurades](https://developers.google.com/search/docs/appearance/structured-data/) per validar aquest tipus de dades. [Obtén més informació sobre les dades estructurades](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Les dades estructurades són vàlides"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "El fitxer robots.txt és vàlid"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Fes que el temps de resposta del servidor per al document principal sigui breu, ja que la resta de sol·licituds en depenen. [Obtén més informació sobre la mètrica Temps fins al primer byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "El document arrel ha tardat {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Redueix el temps inicial de resposta del servidor"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "El temps inicial de resposta del servidor ha estat breu"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "És possible que les galetes de tercers estiguin bloquejades en alguns contextos. [Obtén més informació sobre com pots preparar-te per a les restriccions de galetes de tercers](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Mitiga la XSS basada en el DOM amb Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Als elements d'imatge, defineix una amplada i una alçada explícites per reduir els canvis de disseny i millorar el CLS. [Informació sobre com pots definir les dimensions d'imatge](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Els elements d'imatge no tenen una `width` ni una `height` explícites."
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Els elements d'imatge tenen una `width` i una `height` explícites"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Tipus"
@@ -2808,43 +2886,43 @@
     "message": "Els recursos basats en text s'han de publicar comprimits (gzip, deflate o brotli) per minimitzar el total de bytes a la xarxa. Pots utilitzar una CDN que admeti aquesta funció de manera nativa o configurar el servidor web perquè dugui a terme aquesta operació. [Obtén més informació](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Optimize Fonts` per aprofitar automàticament la funció CSS `font-display` per assegurar-te que els usuaris poden veure el text mentre els tipus de lletra per a llocs web es carreguen."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Optimize Fonts` per aprofitar automàticament la funció CSS `font-display` per assegurar-te que els usuaris poden veure el text mentre els tipus de lletra per a llocs web es carreguen."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Next-Gen Formats` per convertir imatges a WebP."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Next-Gen Formats` per convertir imatges a WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Lazy Load Images` per ajornar la càrrega d'imatges fora de pantalla fins que es necessitin."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Lazy Load Images` per ajornar la càrrega d'imatges fora de pantalla fins que es necessitin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Critical CSS` i `Script Delay` per ajornar la càrrega de JS i CSS que no siguin essencials."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Script Delay` per ajornar el JS que no sigui essencial."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Utilitza [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) per desar el teu contingut a la memòria cau mitjançant la nostra xarxa internacional a fi de millorar la mètrica Temps fins al primer byte."
+    "message": "Utilitza [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) per desar el teu contingut a la memòria cau mitjançant la nostra xarxa internacional a fi de millorar la mètrica Temps fins al primer byte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Minify CSS` per reduir automàticament el teu CSS i, al seu torn, la mida de càrrega útil de la xarxa."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Minify CSS` per reduir automàticament el teu CSS i, al seu torn, la mida de càrrega útil de la xarxa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Minify Javascript` per reduir automàticament el teu JS i, al seu torn, la mida de càrrega útil de la xarxa."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Minify Javascript` per reduir automàticament el teu JS i, al seu torn, la mida de càrrega útil de la xarxa."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Remove Unused CSS` perquè t'ajudi amb aquest problema. Identificarà les classes CSS que s'utilitzen realment en cada pàgina del teu lloc web i suprimirà les que no s'utilitzin per mantenir la mida reduïda del fitxer."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Remove Unused CSS` perquè t'ajudi amb aquest problema. Identificarà les classes CSS que s'utilitzen realment en cada pàgina del teu lloc web i suprimirà les que no s'utilitzin per mantenir la mida reduïda del fitxer."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Efficient Static Cache Policy` per establir els valors recomanats al títol de la memòria cau per als recursos estàtics."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Efficient Static Cache Policy` per establir els valors recomanats al títol de la memòria cau per als recursos estàtics."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Next-Gen Formats` per convertir imatges a WebP."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Next-Gen Formats` per convertir imatges a WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Pre-Connect Origins` per afegir automàticament suggeriments de recursos `preconnect` per establir connexions anticipades en orígens importants de tercers."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Pre-Connect Origins` per afegir automàticament suggeriments de recursos `preconnect` per establir connexions anticipades en orígens importants de tercers."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Preload Fonts` i `Preload Background Images` per afegir enllaços de `preload` per prioritzar l'obtenció de recursos que se sol·liciten més tard a la càrrega de la pàgina."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Preload Fonts` i `Preload Background Images` per afegir enllaços de `preload` per prioritzar l'obtenció de recursos que se sol·liciten més tard a la càrrega de la pàgina."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/speed) i activa `Resize Images` per canviar la mida de les imatges perquè s'adapti a cada dispositiu a fi de reduir les mides de càrrega útil de la xarxa."
+    "message": "Utilitza [Ezoic Leap](https://pubdash.ezoic.com/leap) i activa `Resize Images` per canviar la mida de les imatges perquè s'adapti a cada dispositiu a fi de reduir les mides de càrrega útil de la xarxa."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Utilitza el component `gatsby-plugin-image` (i no `<img>`) perquè el format d'imatge s'optimitzi automàticament. [Obtén més informació](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Es poden afegir etiquetes `<link rel=preload>` [modificant el disseny dels temes](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Utilitza el component `next/image` (i no `<img>`) perquè el format d'imatge s'optimitzi automàticament. [Obtén més informació](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Utilitza el component `next/image` (i no `<img>`) perquè el format d'imatge s'optimitzi automàticament. [Obtén més informació](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Utilitza el component `next/image` (i no `<img>`) perquè les imatges es carreguin lentament de manera automàtica. [Obtén més informació](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Utilitza el component `next/image` (i no `<img>`) perquè les imatges es carreguin lentament de manera automàtica. [Obtén més informació](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Utilitza el component `next/image` i estableix \"priority\" en \"True\" per precarregar la imatge LCP. [Obtén més informació](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Utilitza el component `next/script` per ajornar la càrrega de scripts de tercers que no siguin essencials. [Obtén més informació](https://nextjs.org/docs/basic-features/script)."
+    "message": "Utilitza el component `next/script` per ajornar la càrrega de scripts de tercers que no siguin essencials. [Obtén més informació](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Utilitza el component `next/image` per assegurar-te que les imatges tinguin sempre la mida adequada. [Obtén més informació](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Utilitza `Webpack Bundle Analyzer` per detectar codi JavaScript sense utilitzar. [Més informació](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Pots utilitzar `Next.js Analytics` per mesurar el rendiment de la teva aplicació al món real. [Obtén més informació](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Pots utilitzar `Next.js Analytics` per mesurar el rendiment de la teva aplicació al món real. [Obtén més informació](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Configura l'emmagatzematge a la memòria cau per a recursos invariables i pàgines `Server-side Rendered` (SSR). [Obtén més informació](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Configura l'emmagatzematge a la memòria cau per a recursos invariables i pàgines `Server-side Rendered` (SSR). [Obtén més informació](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Utilitza el component `next/image` (i no `<img>`) per ajustar la qualitat d'imatge. [Obtén més informació](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Utilitza el component `next/image` (i no `<img>`) per ajustar la qualitat d'imatge. [Obtén més informació](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Utilitza el component `next/image` per establir les `sizes` adequades. [Obtén més informació](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Si el sistema de compilació redueix automàticament els fitxers JavaScript, comprova que estiguis implementant la compilació de producció de l'aplicació. Pots comprovar-ho amb l'extensió React Developer Tools. [Obtén més informació](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Si no estàs renderitzant des del servidor, [divideix els paquets de JavaScript](https://web.dev/code-splitting-suspense/) amb `React.lazy()`. En cas contrari, divideix el codi fent servir una biblioteca de tercers, com ara [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Si no estàs renderitzant des del servidor, [divideix els paquets de JavaScript](https://web.dev/code-splitting-suspense/) amb `React.lazy()`. En cas contrari, divideix el codi fent servir una biblioteca de tercers, com ara [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Fes servir l'analitzador de rendiment de DevTools per a React, que utilitza l'API de l'analitzador de rendiment per mesurar el resultat de la renderització dels components. [Obtén més informació](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "No atribuïble"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Sense puntuar"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Aquesta auditoria no contribueix a la puntuació general de la categoria."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Els valors són estimacions i poden variar. El [resultat del rendiment es calcula](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directament a partir d'aquestes mètriques."

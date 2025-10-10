@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Autorisée avec un avertissement"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Score de décalage de mise en page"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Voici les décalages de mise en page les plus importants observés sur la page. Chaque élément du tableau représente un unique décalage de mise en page et montre l'élément qui a été le plus décalé. Des causes possibles du décalage de mise en page se trouvent sous chaque élément. Il est possible que certains de ces décalages de mise en page ne soient pas inclus dans la valeur de la métrique CLS en raison du [fenêtrage](https://web.dev/articles/cls#what_is_cls). [Découvrez comment améliorer le CLS.](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 décalage de mise en page trouvé}one{# décalage de mise en page trouvé}other{# décalages de mise en page trouvés}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Police Web chargée"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "iFrame injecté"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Élément multimédia sans taille explicite"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Éviter les changements de mise en page importants"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Indique les tâches les plus longues du thread principal, ce qui est utile pour identifier celles qui entraînent le plus de retard. [Découvrez comment éviter les longues tâches du thread principal.](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latences du backend serveur"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Les animations non composées peuvent être lentes et augmenter le CLS. [Découvrez comment éviter les animations non composées.](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# élément animé trouvé}one{# élément animé trouvé}other{# éléments animés trouvés}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "La propriété liée à filter peut déplacer des pixels"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "La cible contient une autre animation incompatible"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Le mode de composite de l'effet n'est pas \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Éviter les animations non composées"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "La propriété liée à transform dépend de la taille de la zone"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Propriété CSS incompatible : {properties}}one{Propriété CSS incompatible : {properties}}other{Propriétés CSS incompatibles : {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Les propriétés CSS personnalisées ne peuvent pas être animées sur le compositeur : {properties}}one{Les propriétés CSS personnalisées ne peuvent pas être animées sur le compositeur : {properties}}other{Les propriétés CSS personnalisées ne peuvent pas être animées sur le compositeur : {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "L'effet comporte des paramètres de minutage non compatibles"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Directive"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Trafic HTTP redirigé vers HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Les redirections entraînent des retards supplémentaires avant que la page ne puisse être chargée. [Découvrez comment éviter les redirections de page.](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Évitez les redirections de page multiples"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Les liens canoniques suggèrent l'URL à afficher dans les résultats de recherche. [En savoir plus sur les liens canoniques](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "Les liens contiennent un texte descriptif"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Exécutez l'[outil de test des données structurées](https://search.google.com/structured-data/testing-tool/) et le [validateur Lint de données structurées](http://linter.structured-data.org/) pour valider les données structurées. [En savoir plus sur les données structurées](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "Exécutez l‘[outil de test des données structurées](https://developers.google.com/search/docs/appearance/structured-data/) pour valider les données structurées. [En savoir plus sur les données structurées](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Les données structurées sont valides"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "Le fichier robots.txt est valide"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Le temps de réponse du serveur pour le document principal doit rester court, car toutes les autres requêtes en dépendent. [En savoir plus sur la métrique \"Time to First Byte\"](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Le document racine a pris {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Réduire le temps de réponse initial du serveur"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Le temps de réponse initial du serveur était court"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Les cookies tiers peuvent être bloqués dans certains contextes. [Découvrez comment vous préparer aux restrictions concernant les cookies tiers.](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Atténuer les attaques XSS basées sur le DOM avec les Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Indiquez une largeur et une hauteur explicites sur les éléments d'image afin de réduire les décalages de mise en page et d'améliorer le CLS. [Découvrez comment définir les dimensions de l'image.](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Les éléments d'image ne possèdent pas de `width` ni de `height` explicites"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Les éléments d'image possèdent une `width` et une `height` explicites"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Type"
@@ -2808,43 +2886,43 @@
     "message": "Les ressources textuelles doivent être diffusées compressées (Gzip, Deflate ou Brotli) pour réduire le nombre total d'octets du réseau. Envisagez d'utiliser un CDN qui prend en charge cette fonctionnalité de manière native ou de configurer le serveur Web pour effectuer cette opération. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Optimize Fonts` pour utiliser automatiquement la fonction CSS `font-display` afin que le texte soit visible par les utilisateurs pendant le chargement des polices Web."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Optimize Fonts` pour utiliser automatiquement la fonction CSS `font-display` afin que le texte soit visible par les utilisateurs pendant le chargement des polices Web."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Next-Gen Formats` pour convertir les images au format WebP."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Next-Gen Formats` pour convertir les images au format WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Lazy Load Images` pour différer le chargement des images en dehors de l'écran tant qu'elles ne sont pas nécessaires."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Lazy Load Images` pour différer le chargement des images en dehors de l'écran tant qu'elles ne sont pas nécessaires."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Critical CSS` et `Script Delay` pour différer les contenus JS/CSS non essentiels."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Script Delay` pour différer les contenus JS non essentiels."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Utilisez [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) pour mettre en cache votre contenu sur notre réseau mondial, améliorant ainsi le temps de latence du premier octet."
+    "message": "Utilisez [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) pour mettre en cache votre contenu sur notre réseau mondial, améliorant ainsi le temps de latence du premier octet."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Minify CSS` pour minimiser automatiquement la taille des ressources CSS afin de réduire la taille des charges utiles de réseau."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Minify CSS` pour minimiser automatiquement la taille des ressources CSS afin de réduire la taille des charges utiles de réseau."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Minify Javascript` pour minimiser automatiquement la taille de vos ressources JS afin de réduire la taille des charges utiles de réseau."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Minify Javascript` pour minimiser automatiquement la taille de vos ressources JS afin de réduire la taille des charges utiles de réseau."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Remove Unused CSS` pour vous aider à résoudre ce problème. Il permettra d'identifier les classes CSS réellement utilisées sur chaque page de votre site et de supprimer les autres afin de réduire la taille du fichier."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Remove Unused CSS` pour vous aider à résoudre ce problème. Il permettra d'identifier les classes CSS réellement utilisées sur chaque page de votre site et de supprimer les autres afin de réduire la taille du fichier."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Efficient Static Cache Policy` pour définir les valeurs recommandées dans l'en-tête de mise en cache des éléments statiques."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Efficient Static Cache Policy` pour définir les valeurs recommandées dans l'en-tête de mise en cache des éléments statiques."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Next-Gen Formats` pour convertir les images au format WebP."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Next-Gen Formats` pour convertir les images au format WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Pre-Connect Origins` pour ajouter automatiquement des indices de ressources `preconnect` afin d'établir les premières connexions avec des origines tierces importantes."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Pre-Connect Origins` pour ajouter automatiquement des indices de ressources `preconnect` afin d'établir les premières connexions avec des origines tierces importantes."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Preload Fonts` et `Preload Background Images` pour ajouter des liens `preload` afin de hiérarchiser la récupération des ressources actuellement requises pour le chargement ultérieur de la page."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Preload Fonts` et `Preload Background Images` pour ajouter des liens `preload` afin de hiérarchiser la récupération des ressources actuellement requises pour le chargement ultérieur de la page."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/speed) et activez `Resize Images` pour redimensionner des images à une taille adaptée à l'appareil, réduisant ainsi la taille des charges utiles de réseau."
+    "message": "Utilisez [Ezoic Leap](https://pubdash.ezoic.com/leap) et activez `Resize Images` pour redimensionner des images à une taille adaptée à l'appareil, réduisant ainsi la taille des charges utiles de réseau."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Utilisez le composant `gatsby-plugin-image` au lieu de `<img>` pour optimiser automatiquement le format d'image. [En savoir plus](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2952,16 +3030,16 @@
     "message": "Vous pouvez ajouter des balises `<link rel=preload>` [en modifiant la mise en page d'un thème](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour optimiser automatiquement le format d'image. [En savoir plus](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour optimiser automatiquement le format d'image. [En savoir plus](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour charger les images automatiquement en différé. [En savoir plus](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour charger les images automatiquement en différé. [En savoir plus](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Utilisez le composant `next/image` et définissez \"priority\" sur \"true\" pour précharger l'image LCP. [En savoir plus](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Utilisez le composant `next/script` pour différer le chargement des scripts tiers non critiques. [En savoir plus.](https://nextjs.org/docs/basic-features/script)"
+    "message": "Utilisez le composant `next/script` pour différer le chargement des scripts tiers non critiques. [En savoir plus.](https://nextjs.org/docs/app/guides/scripts)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Utilisez le composant `next/image` pour vous assurer que la taille des images est toujours appropriée. [En savoir plus](https://nextjs.org/docs/api-reference/next/image#width)"
@@ -2973,13 +3051,13 @@
     "message": "Utilisez `Webpack Bundle Analyzer` pour détecter le code JavaScript inutilisé. [En savoir plus](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Envisagez d'utiliser `Next.js Analytics` pour mesurer les performances réelles de votre appli. [En savoir plus.](https://nextjs.org/docs/advanced-features/measuring-performance)"
+    "message": "Envisagez d'utiliser `Next.js Analytics` pour mesurer les performances réelles de votre appli. [En savoir plus.](https://nextjs.org/docs/pages/guides/analytics)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Configurez la mise en cache pour les composants et les pages `Server-side Rendered` (SSR) immuables. [En savoir plus.](https://nextjs.org/docs/going-to-production#caching)"
+    "message": "Configurez la mise en cache pour les composants et les pages `Server-side Rendered` (SSR) immuables. [En savoir plus.](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour ajuster la qualité d'image. [En savoir plus](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Utilisez le composant `next/image` au lieu de `<img>` pour ajuster la qualité d'image. [En savoir plus](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Utilisez le composant `next/image` pour définir les `sizes` appropriées. [En savoir plus.](https://nextjs.org/docs/api-reference/next/image#sizes)"
@@ -3099,7 +3177,7 @@
     "message": "Si votre système de compilation réduit automatiquement la taille des fichiers JS, assurez-vous de déployer le build de production de votre application. Vous pouvez le vérifier avec l'extension React Developer Tools. [En savoir plus](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Si vous n'effectuez pas de rendu côté serveur, [divisez vos groupes JavaScript](https://web.dev/code-splitting-suspense/) avec `React.lazy()`. Sinon, divisez le code en utilisant une bibliothèque tierce, telle que [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Si vous n'effectuez pas de rendu côté serveur, [divisez vos groupes JavaScript](https://web.dev/code-splitting-suspense/) avec `React.lazy()`. Sinon, divisez le code en utilisant une bibliothèque tierce, telle que [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Utilisez React DevTools Profiler, qui utilise l'API Profiler, pour mesurer les performances de rendu de vos composants. [En savoir plus](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Non attribuable"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Non noté"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Cet audit ne contribue pas au score global de la catégorie."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Les valeurs sont estimées et peuvent varier. Le [calcul du score lié aux performances](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) repose directement sur ces statistiques."

@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Permisă cu avertisment"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Scorul pentru schimbarea aspectului"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Acestea sunt cele mai mari schimbări ale aspectului observate în pagină. Fiecare element din tabel reprezintă o singură schimbare a aspectului și prezintă elementul care s-a schimbat cel mai mult. Sub fiecare element sunt afișate cauzele principale posibile care au dus la schimbarea aspectului. Este posibil ca unele dintre aceste schimbări ale aspectului să nu fie incluse în valoarea CLS din cauza practicii de [windowing](https://web.dev/articles/cls#what_is_cls). [Află cum să îmbunătățești CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{S-a detectat o schimbare a aspectului}few{S-au detectat # schimbări ale aspectului}other{S-au detectat # de schimbări ale aspectului}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "S-a încărcat un font web"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "S-a injectat un iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Elementul media nu are o dimensiune clară"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Evită schimbările majore ale aspectului"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Afișează cele mai îndelungate activități din firul principal, ceea ce este util pentru identificarea elementelor care contribuie cel mai mult la întârziere. [Află cum să eviți activitățile îndelungate din firul principal](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Latențe ale backendului serverului"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animațiile care nu sunt compuse pot fi dificile și pot spori CLS. [Află cum să eviți animațiile care nu sunt compuse](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{A fost găsit # element animat}few{Au fost găsite # elemente animate}other{Au fost găsite # de elemente animate}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Proprietatea legată de filtre poate muta pixelii"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Ținta are altă animație, care este incompatibilă"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efectul are alt mod compus decât „înlocuiește”"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Evită animațiile necompuse"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Proprietatea legată de transformare depinde de dimensiunea pachetului"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Proprietate CSS neacceptată: {properties}}few{Proprietăți CSS neacceptate: {properties}}other{Proprietăți CSS neacceptate: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Proprietățile CSS personalizate nu pot fi animate în instrumentul de compunere: {properties}}few{Proprietățile CSS personalizate nu pot fi animate în instrumentul de compunere: {properties}}other{Proprietățile CSS personalizate nu pot fi animate în instrumentul de compunere: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efectul are parametri de temporizare neacceptați"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Directivă"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Redirecționează traficul HTTP spre HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Redirecționările introduc întârzieri suplimentare înainte ca pagina să se poată încărca. [Află cum să eviți redirecționările paginii](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Evită mai multe redirecționări ale paginii"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Linkurile canonice sugerează care adresă URL să se afișeze în rezultatele căutării. [Află mai multe despre linkurile canonice](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Linkurile au text descriptiv"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Rulează [Instrumentul de testare pentru date structurate](https://search.google.com/structured-data/testing-tool/) și [Structured Data Linter](http://linter.structured-data.org/) pentru a valida datele structurate. [Află mai multe despre datele structurate](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Rulează [Instrumentul de testare pentru date structurate](https://developers.google.com/search/docs/appearance/structured-data/) pentru a valida datele structurate. [Află mai multe despre datele structurate](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Datele structurate sunt valide"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "Fișierul robots.txt este valid"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Menține o durată scurtă de răspuns de la server pentru documentul principal, deoarece toate celelalte solicitări depind de acest lucru. [Află mai multe despre valoarea Timpul până la primul byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Documentul rădăcină a avut nevoie de {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Redu durata inițială de răspuns de la server"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Durata inițială de răspuns de la server a fost scurtă"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Cookie-urile terță parte pot fi blocate în anumite contexte. [Află mai multe despre pregătirea pentru restricțiile privind cookie-urile terță parte](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Redu riscul de XSS bazat pe DOM cu Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Setează lățimea și înălțimea explicite pentru elementele imagine, ca să reduci modificările de aspect și să îmbunătățești CLS. [Află cum să setezi dimensiunile imaginii](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Elementele imagine nu au `width` și `height` explicite"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Elementele imagine au `width` și `height` explicite"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Tip"
@@ -2808,43 +2886,43 @@
     "message": "Resursele bazate pe text trebuie comprimate (gzip, deflate sau brotli) pentru a minimiza numărul total de byți în rețea. Îți recomandăm să folosești un CDN care acceptă în mod nativ această opțiune sau să configurezi serverul web pentru a realiza operațiunea. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Optimize Fonts` ca să folosești automat funcția CSS `font-display` ca să te asiguri că textul este vizibil pentru utilizatori în timp ce fonturile web se încarcă."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Optimize Fonts` ca să folosești automat funcția CSS `font-display` ca să te asiguri că textul este vizibil pentru utilizatori în timp ce fonturile web se încarcă."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Next-Gen Formats` ca să transformi imaginile în WebP."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Next-Gen Formats` ca să transformi imaginile în WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Lazy Load Images` ca să amâni încărcarea imaginilor din afara ecranului până când este nevoie de ele."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Lazy Load Images` ca să amâni încărcarea imaginilor din afara ecranului până când este nevoie de ele."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Critical CSS` și `Script Delay` ca să amâni codul JS/CSS neesențial."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Script Delay` ca să amâni codul JS neesențial."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Folosește [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) ca să memorezi în cache conținutul din rețeaua din întreaga lume, îmbunătățind timpul până la primul byte."
+    "message": "Folosește [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) ca să memorezi în cache conținutul din rețeaua din întreaga lume, îmbunătățind timpul până la primul byte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Minify CSS` ca să minimizezi automat codul CSS și să reduci dimensiunea sarcinilor de rețea."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Minify CSS` ca să minimizezi automat codul CSS și să reduci dimensiunea sarcinilor de rețea."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Minify Javascript` ca să minimizezi automat codul JS și să reduci dimensiunea sarcinilor de rețea."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Minify Javascript` ca să minimizezi automat codul JS și să reduci dimensiunea sarcinilor de rețea."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Remove Unused CSS` pentru ajutor cu această problemă. Astfel, vor fi identificate clasele CSS folosite în fiecare pagină din site, iar celelalte vor fi eliminate, pentru a păstra dimensiunea fișierului mică."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Remove Unused CSS` pentru ajutor cu această problemă. Astfel, vor fi identificate clasele CSS folosite în fiecare pagină din site, iar celelalte vor fi eliminate, pentru a păstra dimensiunea fișierului mică."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Efficient Static Cache Policy` ca să setezi valorile recomandate în antetul de memorare în cache pentru elementele statice."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Efficient Static Cache Policy` ca să setezi valorile recomandate în antetul de memorare în cache pentru elementele statice."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Next-Gen Formats` ca să transformi imaginile în WebP."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Next-Gen Formats` ca să transformi imaginile în WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Pre-Connect Origins` ca să adaugi automat indicii pentru resurse `preconnect` și să stabilești conexiuni anticipate către originile terțe importante."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Pre-Connect Origins` ca să adaugi automat indicii pentru resurse `preconnect` și să stabilești conexiuni anticipate către originile terțe importante."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Preload Fonts` și `Preload Background Images` ca să adaugi linkuri `preload` care să acorde prioritate preluării resurselor solicitate momentan în cursul încărcării paginii."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Preload Fonts` și `Preload Background Images` ca să adaugi linkuri `preload` care să acorde prioritate preluării resurselor solicitate momentan în cursul încărcării paginii."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/speed) și activează `Resize Images` ca să redimensionezi imaginile la o dimensiune adecvată pentru dispozitiv, reducând dimensiunile sarcinilor de rețea."
+    "message": "Folosește [Ezoic Leap](https://pubdash.ezoic.com/leap) și activează `Resize Images` ca să redimensionezi imaginile la o dimensiune adecvată pentru dispozitiv, reducând dimensiunile sarcinilor de rețea."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Folosește componenta `gatsby-plugin-image` în loc de `<img>` ca să optimizezi automat formatul de imagine. [Află mai multe](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "Etichetele `<link rel=preload>` se pot adăuga prin [modificarea aspectului unei teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Folosește componenta `next/image` în loc de `<img>` ca să optimizezi automat formatul de imagine. [Află mai multe](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Folosește componenta `next/image` în loc de `<img>` ca să optimizezi automat formatul de imagine. [Află mai multe](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Folosește componenta `next/image` în loc de `<img>` pentru a încărca asincron imagini în mod automat. [Află mai multe](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Folosește componenta `next/image` în loc de `<img>` pentru a încărca asincron imagini în mod automat. [Află mai multe](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Folosește componenta `next/image` și setează prioritatea la true ca să preîncarci imaginea LCP. [Află mai multe](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Folosește componenta `next/script` pentru a amâna încărcarea scripturilor terță parte neesențiale. [Află mai multe](https://nextjs.org/docs/basic-features/script)."
+    "message": "Folosește componenta `next/script` pentru a amâna încărcarea scripturilor terță parte neesențiale. [Află mai multe](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Folosește componenta `next/image` ca să te asiguri că imaginile au întotdeauna dimensiunea corectă. [Află mai multe](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Folosește `Webpack Bundle Analyzer` pentru a detecta cod JavaScript nefolosit. [Află mai multe](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Este recomandat să folosești `Next.js Analytics` pentru a măsura performanța reală a aplicației. [Află mai multe](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Este recomandat să folosești `Next.js Analytics` pentru a măsura performanța reală a aplicației. [Află mai multe](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Configurează stocarea în memoria cache a elementelor și a paginilor `Server-side Rendered` (SSR) invariabile. [Află mai multe](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Configurează stocarea în memoria cache a elementelor și a paginilor `Server-side Rendered` (SSR) invariabile. [Află mai multe](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Folosește componenta `next/image` în loc de `<img>` ca să ajustezi calitatea imaginii. [Află mai multe](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Folosește componenta `next/image` în loc de `<img>` ca să ajustezi calitatea imaginii. [Află mai multe](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Folosește componenta `next/image` pentru a seta `sizes` potrivite. [Află mai multe](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Dacă sistemul de versiuni minimalizează automat fișierele JS, verifică dacă implementezi versiunea de producție a aplicației. Poți face verificarea cu extensia React Developer Tools. [Află mai multe](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Dacă nu redai pe server, [împarte grupurile JavaScript](https://web.dev/code-splitting-suspense/) cu `React.lazy()`. Altfel, scindează prin cod folosind o bibliotecă terță parte, precum [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Dacă nu redai pe server, [împarte grupurile JavaScript](https://web.dev/code-splitting-suspense/) cu `React.lazy()`. Altfel, scindează prin cod folosind o bibliotecă terță parte, precum [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Folosește React DevTools Profiler, care beneficiază de API-ul Profiler pentru a măsura performanța de redare a componentelor. [Află mai multe.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nu se poate atribui"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Nu se adaugă la scor"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Acest audit nu contribuie la scorul general al categoriei."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Valorile sunt estimate și pot varia. [Scorul de performanță este calculat](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) direct folosind aceste valori."

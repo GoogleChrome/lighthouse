@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "הכתובת אושרה עם אזהרה"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "הציון של שינוי הפריסה"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "אלה שינויי הפריסה הגדולים ביותר שזוהו בדף. כל פריט בטבלה מייצג שינוי פריסה אחד, ומוצג בו הרכיב שהשתנה במידה הרבה ביותר. מתחת לכל פריט מופיעות הסיבות האפשריות לשינוי הפריסה. יכול להיות שחלק משינויי הפריסה האלה לא ייכללו בערך של מדד CLS בגלל [עיבוד החלק הנצפה בלבד](https://web.dev/articles/cls#what_is_cls). [איך לשפר את ה-CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{נמצא שינוי פריסה אחד}one{נמצאו # שינויי פריסה}two{נמצאו # שינויי פריסה}other{נמצאו # שינויי פריסה}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "טעינת גופן אינטרנט"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "החדרת iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "רכיב מדיה שהגודל שלו לא מוגדר"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "יש להימנע משינויים משמעותיים בפריסה"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "הבדיקה מציינת את המשימות הארוכות ביותר ב-thread הראשי. היא עוזרת לזהות את המשימות שמאטות את הקלט במידה הרבה ביותר. [איך להימנע ממשימות שנדרש להן משך זמן ארוך ב-thread הראשי](https://web.dev/articles/optimize-long-tasks)?"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "זמני אחזור בקצה עורפי של שרת"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "אנימציות שאינן מורכבות עלולות להיות איטיות ולהגדיל את ה-CLS. [איך להימנע מאנימציות לא מורכבות](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)?"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{נמצא אלמנט אנימציה אחד}one{נמצאו # אלמנטים של אנימציה}two{נמצאו # אלמנטים של אנימציה}other{נמצאו # אלמנטים של אנימציה}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "נכס הקשור למסנן יכול להניע פיקסלים"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "קיימת אנימציה נוספת ביעד, שאינה תואמת"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "באפקט יש מצב הרכבה, השונה ממצב \"החלפה\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "אין להשתמש באנימציות ללא הרכבת שכבות"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "מאפיין הקשור לטרנספורמציה תלוי בגודל התיבה"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{מאפיין CSS שלא נתמך: {properties}}one{מאפייני CSS שלא נתמכים: {properties}}two{מאפייני CSS שלא נתמכים: {properties}}other{מאפייני CSS שלא נתמכים: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{אי אפשר להנפיש מאפייני CSS בהתאמה אישית ב-compositor: {properties}}one{Custom CSS properties cannot be animated on the compositor: {properties}}two{אי אפשר להנפיש מאפייני CSS בהתאמה אישית ב-compositor: {properties}}other{אי אפשר להנפיש מאפייני CSS בהתאמה אישית ב-compositor: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "האפקט כולל פרמטרים של תזמון שאינם נתמכים"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "הוראה"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "הפניות אוטומטיות מעכבות את טעינת הדף. [איך להימנע מהפניות אוטומטיות לדפים](https://developer.chrome.com/docs/lighthouse/performance/redirects/)?"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "יש להימנע מהפניות אוטומטיות מרובות"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "קישורים קנוניים מציעים את כתובת ה-URL שיש להציג בתוצאות החיפוש. [מידע נוסף על קישורים קנוניים](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "לקישורים יש טקסט תיאורי"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "כדי לאמת את תקינות הנתונים המובְנים צריך להפעיל את [הכלי לבדיקת הנתונים המובְנים](https://search.google.com/structured-data/testing-tool/) ואת [הלינטר (Linter) לנתונים מובנְים](http://linter.structured-data.org/). [מידע נוסף על נתונים מובְנים](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "כדי לאמת את תקינות הנתונים המובְנים צריך להפעיל את [הכלי לבדיקת הנתונים המובְנים](https://developers.google.com/search/docs/appearance/structured-data/). [מידע נוסף על נתונים מובְנים](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "הנתונים המובְנים חוקיים"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "הקובץ robots.txt חוקי"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "כדאי לוודא שזמן התגובה של השרת בנוגע למסמך הראשי הוא קצר, כי כל שאר הבקשות תלויות בו. [מידע נוסף על המדד Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "טעינת מסמך השורש ארכה {timeInMs, number, milliseconds} אלפיות שנייה"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "יש לקצר את זמן התגובה הראשונית של השרת"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "זמן התגובה הראשונית של השרת היה קצר"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "יכול להיות שקובצי Cookie של צד שלישי יהיו חסומים בהקשרים מסוימים. [איך להתכונן להגבלות על קובצי Cookie של צד שלישי](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "צמצום של פרצות אבטחה מסוג XSS מבוסס-DOM באמצעות Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "כדי להפחית שינויים בפריסה וכדי לשפר את ה-CLS, יש להגדיר רוחב וגובה מפורשים ברכיבי תמונות. [כך מגדירים מידות תמונה](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "יש רכיבי תמונה ללא מאפייני `width` ו-`height` מפורשים"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "לרכיבי תמונה יש מאפייני `width` ו-`height` מפורשים"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "סוג"
@@ -2805,43 +2883,43 @@
     "message": "הצגת משאבים שמבוססים על טקסט צריכה להתבצע בעזרת דחיסת נתונים (gzip‏, deflate או brotli) כדי לצמצם את כמות הבייטים שמועברים ברשת. כדאי להשתמש ב-CDN שתומך בכך במקור, או להגדיר את שרת האינטרנט לבצע את הפעולה הזו. [למידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Optimize Fonts` כדי להשתמש באופן אוטומטי בתכונת ה-CSS של `font-display` ולוודא שהטקסט גלוי למשתמש במהלך הטעינה של פונטים מסוג webfont."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Optimize Fonts` כדי להשתמש באופן אוטומטי בתכונת ה-CSS של `font-display` ולוודא שהטקסט גלוי למשתמש במהלך הטעינה של פונטים מסוג webfont."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/speed) והפעלת `Next-Gen Formats` כדי להמיר תמונות ל-WebP."
+    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/leap) והפעלת `Next-Gen Formats` כדי להמיר תמונות ל-WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Lazy Load Images` לדחיית הטעינה של תמונות מחוץ למסך עד שהן נחוצות."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Lazy Load Images` לדחיית הטעינה של תמונות מחוץ למסך עד שהן נחוצות."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Critical CSS` וגם `Script Delay` לדחיית תוכן JS/CSS שאינו קריטי."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Script Delay` כדי לדחות תוכן JS שאינו קריטי."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "שימוש ב-[Ezoic Cloud Caching‏](https://pubdash.ezoic.com/speed/caching) כדי לשמור את התוכן שלך ברחבי רשת האינטרנט במטמון, לשיפור ה'זמן עד בייט ראשון'."
+    "message": "שימוש ב-[Ezoic Cloud Caching‏](https://pubdash.ezoic.com/leap/caching) כדי לשמור את התוכן שלך ברחבי רשת האינטרנט במטמון, לשיפור ה'זמן עד בייט ראשון'."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Minify CSS` כדי למזער באופן אוטומטי את ה-CSS ולהפחית את הגדלים של המטען הייעודי (payload) של הרשת."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Minify CSS` כדי למזער באופן אוטומטי את ה-CSS ולהפחית את הגדלים של המטען הייעודי (payload) של הרשת."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Minify Javascript` כדי למזער באופן אוטומטי את ה-JS ולהפחית את גודלי המטען הייעודי (payload) של הרשת."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Minify Javascript` כדי למזער באופן אוטומטי את ה-JS ולהפחית את גודלי המטען הייעודי (payload) של הרשת."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/speed) והפעלת `Remove Unused CSS` לעזרה בנושא הזה. יתבצע זיהוי של מחלקות CSS שנמצאות בשימוש בפועל בכל דף באתר ושאר המחלקות יוסרו כדי שהקובץ יהיה בגודל קטן."
+    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/leap) והפעלת `Remove Unused CSS` לעזרה בנושא הזה. יתבצע זיהוי של מחלקות CSS שנמצאות בשימוש בפועל בכל דף באתר ושאר המחלקות יוסרו כדי שהקובץ יהיה בגודל קטן."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Efficient Static Cache Policy` כדי להגדיר ערכים מומלצים בכותרת השמירה במטמון לנכסים סטטיים."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Efficient Static Cache Policy` כדי להגדיר ערכים מומלצים בכותרת השמירה במטמון לנכסים סטטיים."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/speed) והפעלת `Next-Gen Formats` כדי להמיר תמונות ל-WebP."
+    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/leap) והפעלת `Next-Gen Formats` כדי להמיר תמונות ל-WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/speed) והפעלת `Pre-Connect Origins` כדי להוסיף אוטומטית רמזים למשאב `preconnect` לצורך ביסוס חיבורים מוקדמים למקורות חשובים של צד שלישי."
+    "message": "שימוש ב-[Ezoic Leap](https://pubdash.ezoic.com/leap) והפעלת `Pre-Connect Origins` כדי להוסיף אוטומטית רמזים למשאב `preconnect` לצורך ביסוס חיבורים מוקדמים למקורות חשובים של צד שלישי."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Preload Fonts` וגם `Preload Background Images` כדי להוסיף קישורים של `preload` לצורך תעדוף של אחזור משאבים שנדרשים בשלב מאוחר יותר של טעינת הדף."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Preload Fonts` וגם `Preload Background Images` כדי להוסיף קישורים של `preload` לצורך תעדוף של אחזור משאבים שנדרשים בשלב מאוחר יותר של טעינת הדף."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/speed) והפעלת `Resize Images` כדי לשנות את הגודל של התמונות כך שיתאים למכשיר, תוך הפחתת גודלי המטען הייעודי (payload) של הרשת."
+    "message": "שימוש ב-[Ezoic Leap‏](https://pubdash.ezoic.com/leap) והפעלת `Resize Images` כדי לשנות את הגודל של התמונות כך שיתאים למכשיר, תוך הפחתת גודלי המטען הייעודי (payload) של הרשת."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "כדי לבצע אופטימיזציה אוטומטית של פורמט התמונות, עליך להשתמש ברכיב `gatsby-plugin-image` במקום ברכיב `<img>`. [מידע נוסף](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2949,16 +3027,16 @@
     "message": "אפשר להוסיף תגי `<link rel=preload>` על-ידי [שינוי פריסה של עיצוב](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "כדי לבצע אופטימיזציה אוטומטית של פורמט התמונות, עליך להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "כדי לבצע אופטימיזציה אוטומטית של פורמט התמונות, עליך להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "כדי לבצע טעינה מדורגת של תמונות באופן אוטומטי, עליך להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "כדי לבצע טעינה מדורגת של תמונות באופן אוטומטי, עליך להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "שימוש ברכיב `next/image` והגדרת ה'עדיפות' כ-true כדי לטעון מראש תמונה מסוג LCP. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "עליך להשתמש ברכיב `next/script` כדי לדחות טעינה של סקריפטים שאינם קריטיים של צדדים שלישיים. [מידע נוסף](https://nextjs.org/docs/basic-features/script)."
+    "message": "עליך להשתמש ברכיב `next/script` כדי לדחות טעינה של סקריפטים שאינם קריטיים של צדדים שלישיים. [מידע נוסף](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "עליך להשתמש ברכיב `next/image` כדי לוודא שהתמונות תמיד יופיעו בגודל הנכון. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2970,13 +3048,13 @@
     "message": "יש להשתמש בכלי `Webpack Bundle Analyzer` כדי לזהות קוד JavaScript שלא נמצא בשימוש. [מידע נוסף](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "כדאי להשתמש ב-`Next.js Analytics` כדי למדוד את ביצועי האפליקציה שלך בפועל. [מידע נוסף](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "כדאי להשתמש ב-`Next.js Analytics` כדי למדוד את ביצועי האפליקציה שלך בפועל. [מידע נוסף](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "צריך להגדיר שמירה במטמון לנכסים ולדפי `Server-side Rendered`‏ (SSR) שאינם משתנים. [מידע נוסף](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "צריך להגדיר שמירה במטמון לנכסים ולדפי `Server-side Rendered`‏ (SSR) שאינם משתנים. [מידע נוסף](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "כדי לשנות את איכות התמונה, יש להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "כדי לשנות את איכות התמונה, יש להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "עליך להשתמש ברכיב `next/image` כדי לבצע הגדרה מתאימה של `sizes`. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3096,7 +3174,7 @@
     "message": "אם מערכת ה-build שלך מקטינה באופן אוטומטי את קובצי ה-JS, יש להקפיד לפרוס את גרסת ה-build של סביבת הייצור של האפליקציה. אפשר לבדוק זאת עם תוסף הכלים למפתחים של React. [מידע נוסף](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "אם לא מתבצע רינדור בצד השרת, [יש לפצל חבילות JavaScript](https://web.dev/code-splitting-suspense/) עם `React.lazy()`. אפשרות אחרת היא לפצל את הקוד בעזרת ספרייה של צד שלישי, כמו [רכיבים שניתן לטעון](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "אם לא מתבצע רינדור בצד השרת, [יש לפצל חבילות JavaScript](https://web.dev/code-splitting-suspense/) עם `React.lazy()`. אפשרות אחרת היא לפצל את הקוד בעזרת ספרייה של צד שלישי, כמו [רכיבים שניתן לטעון](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "כדי למדוד את ביצועי הרינדור של הרכיבים, אפשר להיעזר ב-React DevTools Profiler, שמשתמש ב-Profiler API. [מידע נוסף.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3346,6 +3424,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "לא ניתנת לשיוך"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "ללא דירוג"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "הבדיקה הזו לא תורמת לציון הכולל של הקטגוריה."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "הערכים משוערים והם עשויים להשתנות. [ציון הביצועים מחושב](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) ישירות לפי הערכים האלה."

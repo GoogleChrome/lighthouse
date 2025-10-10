@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "İzin verildi ancak uyarı içeriyor"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Düzen kayması puanı"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Bunlar, sayfada gözlemlenen en büyük düzen kaymalarıdır. Her tablo öğesi, tek bir düzen kaymasını temsil eder ve en çok kayan öğeyi gösterir. Her öğenin altında, düzen kaymasına yol açan olası temel nedenler yer alır. [Pencereleme](https://web.dev/articles/cls#what_is_cls) nedeniyle CLS metriği değerine bu düzen kaymalarından bazıları dahil edilmeyebilir. [CLS'yi nasıl iyileştireceğinizi öğrenin](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 düzen kayması bulundu}other{# düzen kayması bulundu}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Web yazı tipi yüklendi"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Yerleştirilen iFrame"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Açık bir boyutu olmayan medya öğesi"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Büyük düzen kaymalarından kaçının"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Ana ileti dizisindeki en uzun görevleri listeler; giriş gecikmesine en çok katkıda bulunanları belirlemekte faydalıdır. [Uzun ana iş parçacığı görevlerinden nasıl kaçınacağınızı öğrenin](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Sunucunun Arka Uç Gecikmeleri"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Birleştirilmemiş animasyonlar kalitesiz olabilir ve CLS'yi artırır. [Bileşik olmayan animasyonları nasıl önleyeceğinizi öğrenin](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Animasyonlu # öğe bulundu}other{Animasyonlu # öğe bulundu}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Filtre ile ilgili özellik, pikselleri hareket ettirebilir"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Hedefte uyumlu olmayan başka bir animasyon var"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Efektte \"değiştir\" dışında bileşik mod var"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Birleştirilmemiş animasyonlardan kaçının"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Dönüşümle ilgili özellik kutu boyutuna bağlıdır"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Desteklenmeyen CSS Özelliği: {properties}}other{Desteklenmeyen CSS Özellikleri: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Özel CSS özellikleri birleştiricide animasyon haline getirilemez: {properties}}other{Özel CSS özellikleri birleştiricide animasyon haline getirilemez: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Efektin desteklenmeyen zamanlama parametreleri var"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Yönerge"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "HTTP trafiğini HTTPS'ye yönlendiriyor"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Yönlendirmeler, sayfanın yüklenmesinden önce ek gecikmelere neden olur. [Sayfa yönlendirmelerden nasıl kaçınacağınızı öğrenin](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Birden çok sayfa yönlendirmesini önleyin"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Standart bağlantılar, arama sonuçlarında hangi URL'nin gösterileceğini belirtir. [Standart bağlantılar hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Bağlantılar açıklayıcı metin içeriyor"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Yapılandırılmış verileri doğrulamak için [Yapılandırılmış Veri Test Aracı](https://search.google.com/structured-data/testing-tool/)'nı ve [Structured Data Linter](http://linter.structured-data.org/)'ı çalıştırın. [Yapılandırılmış veriler hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Yapılandırılmış verileri doğrulamak için [Yapılandırılmış Veri Test Aracı](https://developers.google.com/search/docs/appearance/structured-data/)'nı çalıştırın. [Yapılandırılmış veriler hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Yapılandırılmış veriler geçerli"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt dosyası geçerli"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Diğer tüm istekler sunucu yanıt süresine bağlı olduğundan ana doküman için sunucu yanıt süresini kısa tutun. [Time to First Byte metriği hakkında daha fazla bilgi edinin](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Root doküman {timeInMs, number, milliseconds} ms. sürdü"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "İlk sunucu yanıt süresini azaltın"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "İlk sunucu yanıt süresi kısaydı"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Üçüncü taraf çerezleri bazı bağlamlarda engellenebilir. [Üçüncü taraf çerezi kısıtlamalarına hazırlanma hakkında daha fazla bilgi edinin](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Trusted Types ile DOM tabanlı XSS'yi azaltın"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Düzen kaymalarını azaltıp CLS'yi iyileştirmek için görsel öğelerde genişliği ve yüksekliği açıkça belirtilmiş şekilde ayarlayın. [Resim boyutlarını nasıl belirleyeceğinizi öğrenin](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Resim öğelerinin açıkça belirtilmiş `width` ve `height` değerleri yok"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Resim öğelerinin açıkça belirtilmiş `width` ve `height` değerleri var"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Tür"
@@ -2808,43 +2886,43 @@
     "message": "Metne dayalı kaynaklar, toplam ağ baytı sayısını en aza indirmek için sıkıştırılarak (gizp, deflate veya brotli) yayınlanmalıdır. Bunu yerel olarak destekleyen bir CDN kullanabilir veya web sunucusunu bu işlemi gerçekleştirecek şekilde yapılandırabilirsiniz. [Daha fazla bilgi edinin](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Web yazı tipleri yüklenirken metnin kullanıcılar tarafından görülebilmesi için `font-display` CSS özelliğini otomatik olarak devreye sokmak üzere [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Optimize Fonts` ayarını etkinleştirin."
+    "message": "Web yazı tipleri yüklenirken metnin kullanıcılar tarafından görülebilmesi için `font-display` CSS özelliğini otomatik olarak devreye sokmak üzere [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Optimize Fonts` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Görselleri WebP biçimine dönüştürmek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Next-Gen Formats` ayarını etkinleştirin."
+    "message": "Görselleri WebP biçimine dönüştürmek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Next-Gen Formats` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Ekran dışındaki görsellerin gerekene kadar yüklenmesini ertelemek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Lazy Load Images` ayarını etkinleştirin."
+    "message": "Ekran dışındaki görsellerin gerekene kadar yüklenmesini ertelemek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Lazy Load Images` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Kritik olmayan JS/CSS'yi ertelemek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Critical CSS` ve `Script Delay` ayarlarını etkinleştirin."
+    "message": "Kritik olmayan JS'yi ertelemek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanın ve `Script Delay` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Dünya genelindeki ağımızda içeriğinizi önbelleğe alarak ilk bayt zamanını iyileştirmek için [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching)'i kullanın."
+    "message": "Dünya genelindeki ağımızda içeriğinizi önbelleğe alarak ilk bayt zamanını iyileştirmek için [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching)'i kullanın."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "CSS'nizi otomatik olarak küçülterek ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Minify CSS` ayarını etkinleştirin."
+    "message": "CSS'nizi otomatik olarak küçülterek ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Minify CSS` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "JS'nizi otomatik olarak küçülterek ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Minify Javascript` ayarını etkinleştirin."
+    "message": "JS'nizi otomatik olarak küçülterek ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Minify Javascript` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Bu sorunla ilgili yardım almak için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Remove Unused CSS` ayarını etkinleştirin. Sitenizin her bir sayfasında kullanılmakta olan CSS sınıfları tanımlanır ve dosya boyutunu küçük tutmak için diğerleri kaldırılır."
+    "message": "Bu sorunla ilgili yardım almak için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Remove Unused CSS` ayarını etkinleştirin. Sitenizin her bir sayfasında kullanılmakta olan CSS sınıfları tanımlanır ve dosya boyutunu küçük tutmak için diğerleri kaldırılır."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Statik öğeler için önbelleğe alma başlığında önerilen değerleri ayarlamak üzere [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Efficient Static Cache Policy` ayarını etkinleştirin."
+    "message": "Statik öğeler için önbelleğe alma başlığında önerilen değerleri ayarlamak üzere [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Efficient Static Cache Policy` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Görselleri WebP biçimine dönüştürmek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Next-Gen Formats` ayarını etkinleştirin."
+    "message": "Görselleri WebP biçimine dönüştürmek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Next-Gen Formats` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Önemli üçüncü taraf kaynaklara erkenden bağlantı oluşturmak amacıyla `preconnect` kaynak ipuçlarını otomatik olarak eklemek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Pre-Connect Origins` ayarını etkinleştirin."
+    "message": "Önemli üçüncü taraf kaynaklara erkenden bağlantı oluşturmak amacıyla `preconnect` kaynak ipuçlarını otomatik olarak eklemek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Pre-Connect Origins` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Şu anda istenen kaynakların daha sonra sayfa yüklenirken getirilmesine öncelik vermek amacıyla `preload` bağlantılarını eklemek için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Preload Fonts` ve `Preload Background Images` ayarlarını etkinleştirin."
+    "message": "Şu anda istenen kaynakların daha sonra sayfa yüklenirken getirilmesine öncelik vermek amacıyla `preload` bağlantılarını eklemek için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Preload Fonts` ve `Preload Background Images` ayarlarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Görselleri cihazlara uygun şekilde yeniden boyutlandırıp ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/speed)'i kullanarak `Resize Images` ayarını etkinleştirin."
+    "message": "Görselleri cihazlara uygun şekilde yeniden boyutlandırıp ağ yükü boyutlarını azaltmak için [Ezoic Leap](https://pubdash.ezoic.com/leap)'i kullanarak `Resize Images` ayarını etkinleştirin."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Resim biçimini otomatik olarak optimize etmek için `<img>` yerine `gatsby-plugin-image` bileşenini kullanın. [Daha fazla bilgi](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>` etiketleri, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Resim biçimini otomatik olarak optimize etmek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Resim biçimini otomatik olarak optimize etmek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Resimleri otomatik olarak geç yüklemek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Resimleri otomatik olarak geç yüklemek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "LCP görselini önceden yüklemek için `next/image` bileşenini kullanın ve \"önceliği\" doğru olarak ayarlayın. [Daha fazla bilgi](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Kritik olmayan üçüncü taraf komut dosyalarının yüklenmesini ertelemek için `next/script` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/basic-features/script)."
+    "message": "Kritik olmayan üçüncü taraf komut dosyalarının yüklenmesini ertelemek için `next/script` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Resimlerin her zaman uygun şekilde boyutlandırılmasını sağlamak için `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Kullanılmayan JavaScript kodunu belirlemek için `Webpack Bundle Analyzer` kullanın. [Daha fazla bilgi](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Uygulamanızın gerçek dünya performansını ölçmek için `Next.js Analytics` kullanma seçeneğini değerlendirin. [Daha fazla bilgi](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Uygulamanızın gerçek dünya performansını ölçmek için `Next.js Analytics` kullanma seçeneğini değerlendirin. [Daha fazla bilgi](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Sabit öğeler ve `Server-side Rendered` (SSR) sayfaları için önbelleğe almayı yapılandırın. [Daha fazla bilgi](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Sabit öğeler ve `Server-side Rendered` (SSR) sayfaları için önbelleğe almayı yapılandırın. [Daha fazla bilgi](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Resim kalitesini düzenlemek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Resim kalitesini düzenlemek için `<img>` yerine `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Uygun `sizes` kurulumu için `next/image` bileşenini kullanın. [Daha fazla bilgi](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Derleme sisteminiz JS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi edinin](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Sunucu tarafında oluşturmuyorsanız `React.lazy()` ile [JavaScript paketlerinizi bölün](https://web.dev/code-splitting-suspense/). Aksi halde, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) gibi bir üçüncü taraf kitaplığı kullanarak kodu bölün."
+    "message": "Sunucu tarafında oluşturmuyorsanız `React.lazy()` ile [JavaScript paketlerinizi bölün](https://web.dev/code-splitting-suspense/). Aksi halde, [loadable-components](https://loadable-components.com/) gibi bir üçüncü taraf kitaplığı kullanarak kodu bölün."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Bileşenlerinizin oluşturma performansını ölçmek için Profil Oluşturucu API'sinden yararlanan React Geliştirme Araçları Profil Oluşturucu'yu kullanın. [Daha fazla bilgi](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "İlişkilendirilemez"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Puanlanmamış"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Bu denetim, genel kategori puanını etkilemez."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Değerler tahminidir ve değişiklik gösterebilir. [Performance skorunun hesaplanması ](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/), doğrudan bu metriklerle yapılır."

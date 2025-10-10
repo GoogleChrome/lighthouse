@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Дозволено із застереженням"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Показник зміщення макета"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Це найбільші зміщення макета, що спостерігаються на сторінці. Кожний елемент таблиці представляє одне зміщення макета й указує на об’єкт із найбільшим зміщенням. Під кожним об’єктом наведено можливі причини, які призвели до зміщення макета. Деякі із цих зміщень можуть не включатися в значення показника CLS через [віконізацію](https://web.dev/articles/cls#what_is_cls). [Дізнайтесь, як покращити показник CLS.](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{Виявлено 1 зміщення макета}one{Виявлено # зміщення макета}few{Виявлено # зміщення макета}many{Виявлено # зміщень макета}other{Виявлено # зміщення макета}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Веб-шрифт завантажено"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Вставлено iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Для медіаоб’єкта не вказано явний розмір"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Уникайте великих зсувів макета"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Указано найтриваліші завдання в головному потоці. Ці дані корисні, щоб визначати, що найбільше впливає на затримку вхідного сигналу. [Дізнайтесь, як уникнути тривалих завдань в основному потоці.](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Затримка сервера"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Анімації без композитингу можуть бути неякісними та підвищувати показник CLS. [Дізнайтесь, як уникати анімацій без композитингу.](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Знайдено # анімований елемент}one{Знайдено # анімований елемент}few{Знайдено # анімовані елементи}many{Знайдено # анімованих елементів}other{Знайдено # анімованого елемента}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Ресурс, пов'язаний із фільтром, може переміщати пікселі"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Цільовий об'єкт містить несумісну анімацію"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Ефект не використовує композитний режим \"replace\""
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Уникайте анімацій без композитингу"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Ресурс, пов'язаний із трансформацією, залежить від розміру вікна"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Непідтримувана властивість CSS: {properties}}one{Непідтримувані властивості CSS: {properties}}few{Непідтримувані властивості CSS: {properties}}many{Непідтримувані властивості CSS: {properties}}other{Непідтримувані властивості CSS: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Спеціальні властивості CSS не можна анімувати в композиторі: {properties}}one{Спеціальні властивості CSS не можна анімувати в композиторі: {properties}}few{Спеціальні властивості CSS не можна анімувати в композиторі: {properties}}many{Спеціальні властивості CSS не можна анімувати в композиторі: {properties}}other{Спеціальні властивості CSS не можна анімувати в композиторі: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Ефект містить непідтримувані параметри хронометражу"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Директива"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Трафік HTTP переспрямовується на HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Переспрямування викликають додаткові затримки під час завантаження сторінки. [Дізнайтесь, як уникнути переспрямування сторінок.](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Уникайте переспрямувань кількох сторінок"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Канонічні посилання вказують, які URL-адреси відображати в результатах пошуку. [Докладніше про канонічні посилання.](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "Посилання містять опис"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Щоб перевірити структуровані дані, скористайтесь [інструментом тестування](https://search.google.com/structured-data/testing-tool/) й [інструментом статичного аналізу структурованих даних](http://linter.structured-data.org/). [Докладніше про структуровані дані.](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "Щоб перевірити структуровані дані, скористайтесь [інструментом тестування](https://developers.google.com/search/docs/appearance/structured-data/). [Докладніше про структуровані дані.](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Структуровані дані дійсні"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "Файл robots.txt дійсний"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Сервер основного документа має відповідати швидко, оскільки всі інші запити залежать від нього. [Докладніше про показник \"Час до першого байта\".](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Кореневий документ відповів через {timeInMs, number, milliseconds} мс"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Зменште час відповіді сервера"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Сервер відповідає швидко"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Сторонні файли cookie можуть блокуватися в деяких контекстах. [Докладніше про підготовку до обмежень щодо сторонніх файлів cookie.](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Зменште ризик міжсайтного скриптингу (XSS) на основі DOM за допомогою Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Явно вказуючи ширину й висоту для зображень, ви зможете зменшити зміщення макета й покращити показник CLS. [Дізнайтесь, як налаштувати розміри зображень.](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Для зображень не задано явним чином атрибути `width` та `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Для зображень явним чином задано атрибути `width` та `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Тип"
@@ -2808,43 +2886,43 @@
     "message": "Щоб скоротити загальний трафік даних у мережі, текстові ресурси потрібно відображати зі стисненням (Gzip, Deflate чи Brotli). Використовуйте мережу CDN, яка підтримує цю функцію, або налаштуйте вебсервер для виконання цієї операції. [Докладніше.](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Optimize Fonts`, щоб автоматично застосувати функцію CSS `font-display`. Так користувачі бачитимуть текст, поки будуть завантажуватися веб-шрифти."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Optimize Fonts`, щоб автоматично застосувати функцію CSS `font-display`. Так користувачі бачитимуть текст, поки будуть завантажуватися веб-шрифти."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Next-Gen Formats`, щоб конвертувати зображення у формат WebP."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Next-Gen Formats`, щоб конвертувати зображення у формат WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Lazy Load Images`, щоб відкласти завантаження прихованих зображень, доки вони не знадобляться."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Lazy Load Images`, щоб відкласти завантаження прихованих зображень, доки вони не знадобляться."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Critical CSS` та `Script Delay`, щоб відкласти завантаження некритичних фрагментів JS і таблиць CSS."
+    "message": "Скористайтеся фреймворком [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Script Delay`, щоб відкласти завантаження некритичних фрагментів JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Скористайтесь [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching), щоб додати свій контент у кеш у нашій глобальній мережі та покращити час до першого байта."
+    "message": "Скористайтесь [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching), щоб додати свій контент у кеш у нашій глобальній мережі та покращити час до першого байта."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Minify CSS`, щоб автоматично зменшити таблиці CSS і, відповідно, обсяг даних у мережі."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Minify CSS`, щоб автоматично зменшити таблиці CSS і, відповідно, обсяг даних у мережі."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Minify Javascript`, щоб автоматично зменшити фрагменти JS і, відповідно, обсяг даних у мережі."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Minify Javascript`, щоб автоматично зменшити фрагменти JS і, відповідно, обсяг даних у мережі."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Remove Unused CSS`, щоб отримати допомогу з цією проблемою. Буде виявлено класи CSS, які наразі використовуються на кожній сторінці вашого сайту, і видалено всі інші, щоб забезпечити менший розмір файлу."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Remove Unused CSS`, щоб отримати допомогу з цією проблемою. Буде виявлено класи CSS, які наразі використовуються на кожній сторінці вашого сайту, і видалено всі інші, щоб забезпечити менший розмір файлу."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Efficient Static Cache Policy`, щоб задати рекомендовані значення в заголовку кешування для статичних об’єктів."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Efficient Static Cache Policy`, щоб задати рекомендовані значення в заголовку кешування для статичних об’єктів."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Next-Gen Formats`, щоб конвертувати зображення у формат WebP."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Next-Gen Formats`, щоб конвертувати зображення у формат WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Pre-Connect Origins`, щоб автоматично додати корективи ресурсів `preconnect`. Таким чином можна заздалегідь встановлювати з’єднання з важливими сторонніми джерелами."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Pre-Connect Origins`, щоб автоматично додати корективи ресурсів `preconnect`. Таким чином можна заздалегідь встановлювати з’єднання з важливими сторонніми джерелами."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Preload Fonts` та `Preload Background Images`, щоб додати посилання `preload`. Таким чином під час завантаження сторінки пріоритет надаватиметься ресурсам, на які надіслано запит."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Preload Fonts` та `Preload Background Images`, щоб додати посилання `preload`. Таким чином під час завантаження сторінки пріоритет надаватиметься ресурсам, на які надіслано запит."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/speed) і ввімкніть налаштування `Resize Images`, щоб змінити розміри зображень відповідно до пристрою та, відповідно, зменшити обсяг даних у мережі."
+    "message": "Скористайтесь [Ezoic Leap](https://pubdash.ezoic.com/leap) і ввімкніть налаштування `Resize Images`, щоб змінити розміри зображень відповідно до пристрою та, відповідно, зменшити обсяг даних у мережі."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Щоб автоматично оптимізувати формат зображень, замість `<img>` використовуйте компонент `gatsby-plugin-image`. [Докладніше.](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2952,16 +3030,16 @@
     "message": "Теги `<link rel=preload>` можна додати, лише [змінивши макет теми](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Щоб автоматично оптимізувати формат зображень, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Щоб автоматично оптимізувати формат зображень, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Щоб зображення автоматично відкладено завантажувалися, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Щоб зображення автоматично відкладено завантажувалися, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Скористайтеся компонентом `next/image` і задайте параметру priority значення true, щоб попередньо завантажити зображення LCP. [Докладніше.](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Щоб відкласти завантаження некритичних сторонніх скриптів, використайте компонент `next/script`. [Докладніше.](https://nextjs.org/docs/basic-features/script)"
+    "message": "Щоб відкласти завантаження некритичних сторонніх скриптів, використайте компонент `next/script`. [Докладніше.](https://nextjs.org/docs/app/guides/scripts)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Скористайтеся компонентом `next/image`, щоб зображення підбиралися правильного розміру. [Докладніше](https://nextjs.org/docs/api-reference/next/image#width)"
@@ -2973,13 +3051,13 @@
     "message": "Щоб виявити код JavaScript, який не застосовується, скористайтесь інструментом `Webpack Bundle Analyzer`. [Докладніше.](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Щоб отримувати показники ефективності додатка під час взаємодії з користувачами, використовуйте `Next.js Analytics`. [Докладніше.](https://nextjs.org/docs/advanced-features/measuring-performance)"
+    "message": "Щоб отримувати показники ефективності додатка під час взаємодії з користувачами, використовуйте `Next.js Analytics`. [Докладніше.](https://nextjs.org/docs/pages/guides/analytics)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Налашуйте кешування для незмінюваних об’єктів і сторінок`Server-side Rendered` (SSR). [Докладніше.](https://nextjs.org/docs/going-to-production#caching)"
+    "message": "Налашуйте кешування для незмінюваних об’єктів і сторінок`Server-side Rendered` (SSR). [Докладніше.](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Щоб покращити якість зображення, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "Щоб покращити якість зображення, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Щоб налаштувати потрібні `sizes`, використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/api-reference/next/image#sizes)"
@@ -3099,7 +3177,7 @@
     "message": "Якщо ваша система складання автоматично зменшує файли JS, переконайтеся, що ви вводите в дію робочу версію додатка. Це можна перевірити за допомогою розширення Інструменти розробника React. [Докладніше](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Якщо у вас не відбувається обробка на сервері, [розділіть пакети JavaScript](https://web.dev/code-splitting-suspense/) за допомогою `React.lazy()`. Або розділіть код за допомогою сторонньої бібліотеки, як-от [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Якщо у вас не відбувається обробка на сервері, [розділіть пакети JavaScript](https://web.dev/code-splitting-suspense/) за допомогою `React.lazy()`. Або розділіть код за допомогою сторонньої бібліотеки, як-от [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Скористайтеся профілювальником React DevTools, який застосовує Profiler API, щоб визначити ефективність обробки ваших компонентів. [Докладніше.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Атрибуція неможлива"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Не впливає на оцінку"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Результати цієї перевірки не впливають на загальну оцінку в категорії."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Значення приблизні й можуть відрізнятися. [Значення ефективності визначено](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) на основі цих показників."

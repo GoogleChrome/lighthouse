@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Tillåts med varning"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Resultat för layoutförskjutning"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Det här är de största layoutförskjutningarna som observerats på sidan. Varje tabellobjekt representerar en enskild layoutförskjutning och visar elementet som försköts mest. Under varje objekt visas möjliga grundorsaker till layoutförskjutningen. Vissa av dessa layoutförskjutningar kanske inte tas med i CLS-mätvärdet på grund av [windowing](https://web.dev/articles/cls#what_is_cls). [Läs mer om hur du kan förbättra CLS](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 layoutförskjutning hittades}other{# layoutförskjutningar hittades}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Webbteckensnittet har lästs in"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Injicerad iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Medieelementet har ingen angiven storlek"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Undvik större layoutförskjutningar"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Visar de uppgifter i huvudtråden som har körts under längst tid, vilket kan identifiera de viktigaste flaskhalsarna som fördröjer inmatningen. [Läs om hur du undviker uppgifter i huvudtrådar som har körts under lång tid](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Serverlatens"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animationer som inte är sammansatta kan vara hackiga och orsaka ökad CLS. [Läs om hur du undviker animationer som inte är sammansatta](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# animerat element hittades}other{# animerade element hittades}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "Den filterrelaterade egenskapen kan flytta pixlar"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Målet har en annan animation som är inkompatibel"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Effekten har ett annat sammansatt läge än ”replace”"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Undvik icke sammansatta animationer"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "En ”transform”-relaterad egenskap beror på rutans storlek"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{CSS-egenskap som inte stöds: {properties}}other{CSS-egenskaper som inte stöds: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Anpassade CSS-egenskaper kan inte animeras med sammansättningsfunktionen: {properties}}other{Anpassade CSS-egenskaper kan inte animeras med sammansättningsfunktionen: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Effekten har tidsparametrar som inte stöds"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktiv"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Omdirigerar HTTP-trafik till HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Omdirigeringar medför en ytterligare fördröjning innan sidan kan läsas in. [Läs mer om hur du undviker omdirigeringar av sidor](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Undvik upprepade omdirigeringar"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanoniska länkar föreslår vilka webbadresser som ska visas i sökresultat. [Läs mer om kanoniska länkar](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Länkar har beskrivande text"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Kör [testverktyget för strukturerad data](https://search.google.com/structured-data/testing-tool/) och [Structured Data Linter](http://linter.structured-data.org/) för att validera strukturerad data. [Läs mer om strukturerad data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Kör [testverktyget för strukturerad data](https://developers.google.com/search/docs/appearance/structured-data/) för att validera strukturerad data. [Läs mer om strukturerad data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Strukturerad data är giltig"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt är giltig"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Se till att serverns svarstid för huvuddokumentet är kort, eftersom alla andra förfrågningar är beroende av det. [Läs mer om mätvärdet Time to First Byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Rotdokumentet tog {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Minska serverns första svarstid"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Serverns första svarstid var kort"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Tredjepartscookies kan blockeras i vissa sammanhang. [Läs mer om hur du förbereder dig för begränsningar av tredjepartscookies](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Minska risken med DOM-baserad XSS med hjälp av Trusted Types"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Reducera layoutförskjutningarna och förbättra CLS genom att ange explicit bredd och höjd för bildelement. [Läs mer om hur du ställer in bildmått](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Alla bildelement har inte `width` och `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Alla bildelement har explicit `width` och `height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Typ"
@@ -2808,43 +2886,43 @@
     "message": "Textresurser bör visas komprimerade (gzip, deflate eller brotli) så att färre byte skickas via nätverket. Överväg att använda ett CDN som har inbyggt stöd för detta eller konfigurera webbservern för att utföra åtgärden. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Optimize Fonts` så att du automatiskt kan dra nytta av CSS-funktionen `font-display`, som gör text synlig för användaren medan webbteckensnitten läses in."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Optimize Fonts` så att du automatiskt kan dra nytta av CSS-funktionen `font-display`, som gör text synlig för användaren medan webbteckensnitten läses in."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Next-Gen Formats` så att bilder konverteras till WebP."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Next-Gen Formats` så att bilder konverteras till WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Lazy Load Images` så att bilder utanför skärmen inte läses in förrän de behövs."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Lazy Load Images` så att bilder utanför skärmen inte läses in förrän de behövs."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Critical CSS` och `Script Delay`, så att mindre viktig JS/CSS skjuts upp."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Script Delay` för att skjuta upp mindre viktig JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Använd [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) så att innehållet cachelagras i vårt världsomspännande nätverk, vilket förbättrar tiden till första byte."
+    "message": "Använd [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) så att innehållet cachelagras i vårt världsomspännande nätverk, vilket förbättrar tiden till första byte."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Minify CSS` så att CSS-koden minifieras automatiskt, vilket minskar mängden data som överförs i nätverket."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Minify CSS` så att CSS-koden minifieras automatiskt, vilket minskar mängden data som överförs i nätverket."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Minify Javascript` så att JS-koden minifieras automatiskt, vilket minskar mängden data som överförs i nätverket."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Minify Javascript` så att JS-koden minifieras automatiskt, vilket minskar mängden data som överförs i nätverket."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Remove Unused CSS` mot detta problem. Då identifieras de CSS-klasser som faktiskt används på var och en av webbplatsens sidor medan andra CSS-klasser tas bort så att filstorleken hålls nere."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Remove Unused CSS` mot detta problem. Då identifieras de CSS-klasser som faktiskt används på var och en av webbplatsens sidor medan andra CSS-klasser tas bort så att filstorleken hålls nere."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Efficient Static Cache Policy`, som ställer in rekommenderade värden för statiska tillgångar i huvudets cachelagringsfält."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Efficient Static Cache Policy`, som ställer in rekommenderade värden för statiska tillgångar i huvudets cachelagringsfält."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Next-Gen Formats` så att bilder konverteras till WebP."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Next-Gen Formats` så att bilder konverteras till WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Pre-Connect Origins`. Då läggs hintar om `preconnect`-resurser till automatiskt så att anslutningar till viktiga tredjepartsursprung upprättas tidigt."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Pre-Connect Origins`. Då läggs hintar om `preconnect`-resurser till automatiskt så att anslutningar till viktiga tredjepartsursprung upprättas tidigt."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Preload Fonts` och `Preload Background Images`. Detta lägger till `preload`-länkar, vilket prioriterar hämtningen av resurser som för närvarande begärs senare under sidhämtningen."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Preload Fonts` och `Preload Background Images`. Detta lägger till `preload`-länkar, vilket prioriterar hämtningen av resurser som för närvarande begärs senare under sidhämtningen."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/speed) och aktivera `Resize Images` så att bildernas storlek anpassas efter enheten, vilket minskar mängden data som överförs i nätverket."
+    "message": "Använd [Ezoic Leap](https://pubdash.ezoic.com/leap) och aktivera `Resize Images` så att bildernas storlek anpassas efter enheten, vilket minskar mängden data som överförs i nätverket."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Optimera bildformat automatiskt med komponenten `gatsby-plugin-image` i stället för `<img>`. [Läs mer](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>`-taggar kan läggas till genom att [ändra ett temas layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Optimera bildformat automatiskt med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Optimera bildformat automatiskt med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Skjut upp inläsningen av bilder automatiskt med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Skjut upp inläsningen av bilder automatiskt med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Använd komponenten `next/image` och ge priority värdet true så att LCP-bilder (största uppritningen av innehåll) läses in i förväg. [Läs mer](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Skjut upp inläsningen av mindre viktiga skript från tredje part med komponenten `next/script`. [Läs mer](https://nextjs.org/docs/basic-features/script)."
+    "message": "Skjut upp inläsningen av mindre viktiga skript från tredje part med komponenten `next/script`. [Läs mer](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Använd komponenten `next/image` för att säkerställa att bilder alltid får lämplig storlek. [Läs mer](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Identifiera JavaScript-kod som inte används med `Webpack Bundle Analyzer`. [Läs mer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Du kan mäta appens faktiska prestanda med `Next.js Analytics`. [Läs mer](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Du kan mäta appens faktiska prestanda med `Next.js Analytics`. [Läs mer](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurera cachning av tillgångar och SSR-sidor (`Server-side Rendered`) som inte förändras. [Läs mer](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurera cachning av tillgångar och SSR-sidor (`Server-side Rendered`) som inte förändras. [Läs mer](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Justera bildkvalitet med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Justera bildkvalitet med komponenten `next/image` i stället för `<img>`. [Läs mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Ställ in `sizes` med komponenten `next/image`. [Läs mer](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Om versionssystemet minifierar JS-filerna automatiskt kontrollerar du att du implementerar appens produktionsversion. Du kan kontrollera detta med tillägget React Developer Tools. [Läs mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Om du inte renderar på serversidan [delar du upp JavaScript-paketen](https://web.dev/code-splitting-suspense/) med `React.lazy()`. I annat fall kan du dela upp koden med tredjepartsbibliotek som [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Om du inte renderar på serversidan [delar du upp JavaScript-paketen](https://web.dev/code-splitting-suspense/) med `React.lazy()`. I annat fall kan du dela upp koden med tredjepartsbibliotek som [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Mät renderingens resultat för dina komponenter med hjälp av React DevTools Profiler, som drar nytta av Profiler API. [Läs mer.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Kan inte tillskrivas"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Utelämnad"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Den här kontrollen bidrar inte till det övergripande kategoripoängen."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Värdena är uppskattningar och kan variera. [Prestandapoängen beräknas](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) direkt utifrån dessa mätvärden."

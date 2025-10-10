@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Figyelmeztetéssel engedélyezve"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Elrendezésmozgás pontszáma"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Ezek az oldalon észlelt legnagyobb elrendezésmozgások. A táblázat egyes elemei egy-egy elrendezésmozgásnak felelnek meg, és a legnagyobb mértékben elmozdult elemet mutatják. Az egyes elemek alatt az elrendezésmozgást kiváltó lehetséges okok láthatók. Előfordulhat, hogy a [csak a felhasználó által látható tartalom megjelenítése](https://web.dev/articles/cls#what_is_cls) miatt ezen elrendezésmozgások közül néhány nem szerepel a CLS-mutató értékében. [További információ a CLS javításáról](https://web.dev/articles/optimize-cls)."
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 elrendezésmozgás észlelve}other{# elrendezésmozgás észlelve}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Webes betűtípus került betöltésre"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Iframe került beszúrásra"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Hiányzik egy médiaelem pontos mérete"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Az elrendezés nagy mértékű mozgásának elkerülése"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "A fő szál leghosszabb feladatait listázza. Hasznos az interakciótól számított késéshez legnagyobb mértékben hozzájáruló elemek azonosításához. [További információ arról, hogy miként kerülhetők el a hosszú feladatok a fő szálban](https://web.dev/articles/optimize-long-tasks)."
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Várakozási idő a háttérszervereknél"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "A nem kompozit animációk minősége elégtelen lehet, és az ilyen animációk növelhetik a CLS-t. [További információ a nem kompozit animációk elkerüléséről](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)."
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# animált elem található}other{# animált elem található}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "A szűrővel kapcsolatos tulajdonság elmozdíthatja a képpontokat"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "A cél másik, nem kompatibilis animációval rendelkezik"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Az effekt nem a „replace” kompozitmóddal rendelkezik"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Kerülje a nem kompozit animációk használatát"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "Az átalakítással kapcsolatos tulajdonság a mező méretétől függ"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Nem támogatott CSS-tulajdonság: {properties}}other{Nem támogatott CSS-tulajdonságok: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Az egyéni CSS-tulajdonságok nem animálhatók az összeállítón: {properties}}other{Az egyéni CSS-tulajdonságok nem animálhatók az összeállítón: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Az effekt nem támogatott időzítési paraméterekkel rendelkezik"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Utasítás"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Átirányítja a HTTP-forgalmat HTTPS-re"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Az átirányítások további késlekedéssel hosszabbítják meg az oldalbetöltéshez szükséges időt. [További információ az oldalátirányítások elkerüléséről](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Kerülje a többszörös oldalátirányítást"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "A szabványos linkek a keresési eredményként megjelenítendő URL-re tesznek javaslatot. [További információ a szabványos linkekről](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "A linkek leíró jellegű szöveggel rendelkeznek"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Ellenőrizze a strukturált adatok érvényességét a [Strukturált adatok tesztelőeszköz](https://search.google.com/structured-data/testing-tool/) és a [Structured Data Linter](http://linter.structured-data.org/) segítségével. [További információ a strukturált adatokról](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Ellenőrizze a strukturált adatok érvényességét a [Strukturált adatok tesztelőeszköze](https://developers.google.com/search/docs/appearance/structured-data/) segítségével. [További információ a strukturált adatokról](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "A strukturált adatok érvényesek"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "A robots.txt fájl érvényes"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Érdemes a szerver válaszidejét lerövidíteni a fő dokumentum esetében, mert az összes további kérés függ tőle. [További információ az Első bájt betöltéséhez szükséges idő mutatóról](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms a gyökérdokumentumhoz"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "A szerver kezdeti válaszidejének csökkentése"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "A kezdeti szerverválaszidő rövid volt"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Előfordulhat, hogy a harmadik felektől származó cookie-k le vannak tiltva bizonyos környezetekben. [További információ a harmadik féltől származó cookie-kra vonatkozó korlátozásokra való felkészülésről](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "A DOM-alapú XSS csökkentése Trusted Types-utasítással"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Adja meg a képelemek pontos szélességét és magasságát, hogy kevésbé csússzon el az elrendezés, és javuljon a CLS. [További információ a képméretek beállításáról](https://web.dev/articles/optimize-cls#images_without_dimensions)."
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "A képelemekhez nem tartozik meghatározott `width` és `height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "A képelemekhez meghatározott `width` és `height` tartozik"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Típus"
@@ -2808,43 +2886,43 @@
     "message": "A szövegalapú forrásokat tömörítéssel (gzip, Deflate vagy Brotli) célszerű továbbítani a hálózati adatforgalom minimalizálása érdekében. Fontolja meg egy olyan CDN használatát, amely natívan támogatja ezt, vagy konfigurálja a webszervert a művelet végrehajtására. [További információ](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Optimize Fonts` beállítást, amely segítségével automatikusan bekapcsolhatja a(z) `font-display` CSS-függvényt, hogy a szöveg olvasható legyen a felhasználók számára, mialatt a webes betűtípusokat betölti a rendszer."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Optimize Fonts` beállítást, amely segítségével automatikusan bekapcsolhatja a(z) `font-display` CSS-függvényt, hogy a szöveg olvasható legyen a felhasználók számára, mialatt a webes betűtípusokat betölti a rendszer."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Next-Gen Formats` beállítást, amely segítségével képeket WebP-formátumba konvertálhat."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Next-Gen Formats` beállítást, amely segítségével képeket WebP-formátumba konvertálhat."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Lazy Load Images` beállítást, amely segítségével késleltetheti a képernyőn kívüli képek betöltését, amíg nincs rájuk szükség."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Lazy Load Images` beállítást, amely segítségével késleltetheti a képernyőn kívüli képek betöltését, amíg nincs rájuk szükség."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Critical CSS` és a(z) `Script Delay` beállítást, amelyek segítségével késleltetheti a nem kritikus JS/CSS betöltését."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Script Delay` beállítást, amelynek segítségével késleltetheti a nem kritikus JS-t."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Az [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) használatával gyorsítótárazhatja tartalmait globális hálózatunkon, így csökkentheti az első bájt betöltéséhez szükséges időt."
+    "message": "Az [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) használatával gyorsítótárazhatja tartalmait globális hálózatunkon, így csökkentheti az első bájt betöltéséhez szükséges időt."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Minify CSS` beállítást, amely segítségével automatikusan kicsinyítheti a CSS-t a hálózaton továbbított adatok méretének csökkentése érdekében."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Minify CSS` beállítást, amely segítségével automatikusan kicsinyítheti a CSS-t a hálózaton továbbított adatok méretének csökkentése érdekében."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Minify Javascript` beállítást, amely segítségével automatikusan kicsinyítheti a JS-t a hálózaton továbbított adatok méretének csökkentése érdekében."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Minify Javascript` beállítást, amely segítségével automatikusan kicsinyítheti a JS-t a hálózaton továbbított adatok méretének csökkentése érdekében."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Remove Unused CSS` funkciót, amely segíthet a probléma megoldásában. A funkció azonosítja azokat a CSS-osztályokat, amelyeket jelenleg a webhely egyes oldalai használnak, és eltávolít minden más osztályt a fájl kis méretének fenntartása érdekében."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Remove Unused CSS` funkciót, amely segíthet a probléma megoldásában. A funkció azonosítja azokat a CSS-osztályokat, amelyeket jelenleg a webhely egyes oldalai használnak, és eltávolít minden más osztályt a fájl kis méretének fenntartása érdekében."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Efficient Static Cache Policy` beállítást, amely segítségével beállíthatja az ajánlott értékeket a gyorsítótárazási fejlécben a statikus elemeknél."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Efficient Static Cache Policy` beállítást, amely segítségével beállíthatja az ajánlott értékeket a gyorsítótárazási fejlécben a statikus elemeknél."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Next-Gen Formats` beállítást, amely segítségével képeket WebP-formátumba konvertálhat."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Next-Gen Formats` beállítást, amely segítségével képeket WebP-formátumba konvertálhat."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Pre-Connect Origins` beállítást, amely segítségével automatikusan hozzáadhat `preconnect` erőforrástippeket, hogy korai kapcsolatokat hozhasson létre harmadik felekhez tartozó fontos forrásokkal."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Pre-Connect Origins` beállítást, amely segítségével automatikusan hozzáadhat `preconnect` erőforrástippeket, hogy korai kapcsolatokat hozhasson létre harmadik felekhez tartozó fontos forrásokkal."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) szolgáltatás használatával bekapcsolhatja a(z) `Preload Fonts` és a(z) `Preload Background Images` funkciót, amelyek segítségével hozzáadhat `preload` linkeket olyan források prioritásos betöltése érdekében, melyeket az aktuális oldalbetöltés egyébként későbbre sorolt."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) szolgáltatás használatával bekapcsolhatja a(z) `Preload Fonts` és a(z) `Preload Background Images` funkciót, amelyek segítségével hozzáadhat `preload` linkeket olyan források prioritásos betöltése érdekében, melyeket az aktuális oldalbetöltés egyébként későbbre sorolt."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/speed) használatával bekapcsolhatja a(z) `Resize Images` beállítást, amely segítségével átméretezhet képeket az adott eszköznek megfelelő méretűre, csökkentve ezzel a hálózaton továbbított adatok méretét."
+    "message": "Az [Ezoic Leap](https://pubdash.ezoic.com/leap) használatával bekapcsolhatja a(z) `Resize Images` beállítást, amely segítségével átméretezhet képeket az adott eszköznek megfelelő méretűre, csökkentve ezzel a hálózaton továbbított adatok méretét."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Használja a `gatsby-plugin-image` összetevőt az `<img>` helyett a képformátum automatikus optimalizálásához. [További információ](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>` címkéket [valamelyik téma elrendezésének módosításával](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) adhat hozzá."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Használja a `next/image` összetevőt az `<img>` helyett a képformátum automatikus optimalizálásához. [További információ](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Használja a `next/image` összetevőt az `<img>` helyett a képformátum automatikus optimalizálásához. [További információ](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Használja a `next/image` összetevőt az `<img>` helyett a képek automatikus késleltetett betöltéséhez. [További információ](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Használja a `next/image` összetevőt az `<img>` helyett a képek automatikus késleltetett betöltéséhez. [További információ](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "A(z) `next/image` összetevő használatával a „prioritást” igaz értékre állíthatja az LCP-kép előtöltése érdekében. [További információ](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Használja a(z) `next/script` összetevőt a nem kritikus fontosságú, harmadik félhez tartozó szkriptek késleltetéséhez. [További információ](https://nextjs.org/docs/basic-features/script)."
+    "message": "Használja a(z) `next/script` összetevőt a nem kritikus fontosságú, harmadik félhez tartozó szkriptek késleltetéséhez. [További információ](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Használja a(z) `next/image` összetevőt, hogy mindig biztosítsa a képek megfelelő méretezését. [További információ](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Használja a `Webpack Bundle Analyzer` eszközt a nem használt JavaScript-kód észleléséhez. [További információ](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Fontolja meg a(z) `Next.js Analytics` használatát az alkalmazás valós teljesítményének méréséhez. [További információ](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Fontolja meg a(z) `Next.js Analytics` használatát az alkalmazás valós teljesítményének méréséhez. [További információ](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurálja a gyorsítótárazást állandó tartalmakhoz és `Server-side Rendered` (SSR) oldalakhoz. [További információ](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurálja a gyorsítótárazást állandó tartalmakhoz és `Server-side Rendered` (SSR) oldalakhoz. [További információ](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "A képminőség beállításához használja a `next/image` összetevőt az `<img>` helyett. [További információ](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "A képminőség beállításához használja a `next/image` összetevőt az `<img>` helyett. [További információ](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Használja a(z) `next/image` összetevőt a megfelelő `sizes` beállításához. [További információ](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Ha a buildrendszere automatikusan kicsinyíti a JS-fájlokat, akkor ügyeljen arra, hogy az alkalmazás éles buildjét telepítse. Ezt a React Developer Tools bővítménnyel ellenőrizheti. [További információ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Ha nem szerveroldali renderelést alkalmaz, [ossza fel a JavaScript-csomagokat](https://web.dev/code-splitting-suspense/) a `React.lazy()` függvény használatával. Máskülönben harmadik fél könyvtárának (pl. [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)) használatával bontsa fel a kódot."
+    "message": "Ha nem szerveroldali renderelést alkalmaz, [ossza fel a JavaScript-csomagokat](https://web.dev/code-splitting-suspense/) a `React.lazy()` függvény használatával. Máskülönben harmadik fél könyvtárának (pl. [loadable-components](https://loadable-components.com/)) használatával bontsa fel a kódot."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Használja a React DevTools Profilert, amely a Profiler API segítségével méri az összetevők megjelenítési teljesítményét. [További információ](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Nem hozzárendelhető"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Nincs pontozva"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Ez az audit nem járul hozzá a kategória általános pontszámához."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Az értékek becsültek és változhatnak. A [teljesítménypontszám kiszámítása](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) közvetlenül e mutatók alapján történik."

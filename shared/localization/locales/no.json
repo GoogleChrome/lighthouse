@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "Tillatt med advarsel"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "Poengsum for utseendeforskyvning"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "Dette er de største utseendeforskyvningene som er observert på siden. Hvert tabellelement representerer én enkelt utseendeforskyvning og viser elementet som ble forskjøvet mest. Under hvert element ser du mulige rotårsaker til utseendeforskyvningen. Det kan hende at noen av disse utseendeforskyvningene ikke er tatt med i CLS-beregningsverdien, på grunn av [vindusvisning](https://web.dev/articles/cls#what_is_cls). [Finn ut hvordan du kan gjøre CLS (akkumulert utseendeforskyvning) bedre](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 utseendeforskyvning ble funnet}other{# utseendeforskyvninger ble funnet}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "Skrifttype for nettet er lastet inn"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "Injisert iframe-element"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "Medieelement uten eksplisitt størrelse"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "Unngå store utseendeforskyvninger"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "Viser de lengste oppgavene på hovedtråden. Dette er nyttig for å finne ut hvilke oppgaver som bidrar mest til inndataforsinkelser. [Finn ut hvordan du unngår langvarige oppgaver på hovedtråden](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "Forsinkelser i tjenerdelen"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "Animasjoner som ikke er sammensatte, kan være hakkete og bidra til økt CLS. [Finn ut hvordan du unngår ikke-sammensatte animasjoner](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# animert element funnet}other{# animerte elementer funnet}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "En filter-relatert egenskap kan flytte piksler"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "Målet har en annen animasjon som ikke er kompatibel"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "Effekten har en annen sammensetningsmodus enn «replace»"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "Unngå ikke-sammensatte animasjoner"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "En transform-relatert egenskap er avhengig av størrelsen på boksen"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{Denne CSS-egenskapen støttes ikke: {properties}}other{Disse CSS-egenskapene støttes ikke: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{Egendefinerte CSS-egenskaper kan ikke animeres i sammensetteren: {properties}}other{Egendefinerte CSS-egenskaper kan ikke animeres i sammensetteren: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "Effekten har tidsparametere som ikke støttes"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "Direktiv"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "Viderekobler HTTP-trafikk til HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "Viderekoblinger fører til flere forsinkelser før siden kan lastes inn. [Finn ut hvordan du kan unngå viderekoblinger fra sider](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+  },
+  "core/audits/redirects.js | title": {
+    "message": "Unngå flere viderekoblinger av siden"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "Kanoniske linker foreslår hvilken nettadresse som skal vises i søkeresultater. [Finn ut mer om kanoniske linker](https://developer.chrome.com/docs/lighthouse/seo/canonical/)."
@@ -1095,7 +1152,7 @@
     "message": "Linkene har beskrivende tekst"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "Kjør [Testverktøy for strukturerte data](https://search.google.com/structured-data/testing-tool/) og [Structured Data Linter](http://linter.structured-data.org/) for å validere strukturerte data. [Finn ut mer om strukturerte data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
+    "message": "Kjør [Testverktøy for strukturerte data](https://developers.google.com/search/docs/appearance/structured-data/) for å validere strukturerte data. [Finn ut mer om strukturerte data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)."
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "Strukturerte data er gyldige"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt er gyldig"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "Hold tjenerresponstiden for hoveddokumentet lav, siden alle andre forespørsler avhenger av den. [Finn ut mer om beregningen Tid til første byte](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "Root-dokumentet brukte {timeInMs, number, milliseconds} ms"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "Reduser den innledende tjenerresponstiden"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "Den innledende tjenerresponstiden var kort"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "Informasjonskapsler fra tredjeparter kan være blokkert i enkelte sammenhenger. [Finn ut mer om hvordan du kan forberede deg på begrensninger for informasjonskapsler fra tredjeparter](https://privacysandbox.google.com/cookies/prepare/overview)."
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Reduser DOM-basert XSS med betrodde typer"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "Angi bredden og høyden på bildeelementer eksplisitt for å redusere utseendeforskyvninger og oppnå bedre CLS. [Finn ut hvordan du angir bildedimensjoner](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "Bildeelementer har ikke eksplisitte `width`- og `height`-attributter"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "Bildeelementer har eksplisitte `width`- og `height`-attributter"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "Type"
@@ -2808,43 +2886,43 @@
     "message": "Tekstbaserte ressurser bør leveres komprimert (med gzip, deflate eller brotli) for å minimere antall byte som sendes over nettverket. Vurder å bruke et ILN som støtter dette som standard, eller konfigurer netttjeneren til å utføre denne operasjonen. [Finn ut mer.](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Optimize Fonts` for å bruke CSS-funksjonen `font-display` automatisk. Dette sikrer at tekst er synlig for brukere mens skrifttyper for nettet lastes inn."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Optimize Fonts` for å bruke CSS-funksjonen `font-display` automatisk. Dette sikrer at tekst er synlig for brukere mens skrifttyper for nettet lastes inn."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Next-Gen Formats` for å konvertere bilder til WebP."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Next-Gen Formats` for å konvertere bilder til WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Lazy Load Images` for å utsette innlasting av bilder som ikke er på skjermen, frem til de trengs."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Lazy Load Images` for å utsette innlasting av bilder som ikke er på skjermen, frem til de trengs."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Critical CSS` og `Script Delay` for å utsette ikke-kritisk JS/CSS."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Script Delay` for å utsette ikke-kritisk JS."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "Bruk [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) for å bufre innholdet ditt på det verdensomspennende nettverket vårt, slik at ventetiden frem til første byte blir kortere."
+    "message": "Bruk [Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) for å bufre innholdet ditt på det verdensomspennende nettverket vårt, slik at ventetiden frem til første byte blir kortere."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Minify CSS` for å minifisere CSS-koden din automatisk, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Minify CSS` for å minifisere CSS-koden din automatisk, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Minify Javascript` for å minifisere JS-koden din automatisk, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Minify Javascript` for å minifisere JS-koden din automatisk, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Remove Unused CSS` for å avbøte dette problemet. Dette identifiserer CSS-klassene som faktisk brukes på de ulike sidene på nettstedet ditt, og fjerner eventuelle andre, slik at filstørrelsen holdes lav."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Remove Unused CSS` for å avbøte dette problemet. Dette identifiserer CSS-klassene som faktisk brukes på de ulike sidene på nettstedet ditt, og fjerner eventuelle andre, slik at filstørrelsen holdes lav."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Efficient Static Cache Policy` for å angi anbefalte verdier i bufringshodet for statiske ressurser."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Efficient Static Cache Policy` for å angi anbefalte verdier i bufringshodet for statiske ressurser."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Next-Gen Formats` for å konvertere bilder til WebP."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Next-Gen Formats` for å konvertere bilder til WebP."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Pre-Connect Origins` for å legge til `preconnect`-ressurshint automatisk, slik at du tidlig kan opprette tilkoblinger til viktige tredjepartsopphav."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Pre-Connect Origins` for å legge til `preconnect`-ressurshint automatisk, slik at du tidlig kan opprette tilkoblinger til viktige tredjepartsopphav."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Preload Fonts` og `Preload Background Images` for å legge til `preload`-linker, slik at du kan prioritere henting av ressurser som ellers hadde blitt forespurt senere i sideinnlastingen."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Preload Fonts` og `Preload Background Images` for å legge til `preload`-linker, slik at du kan prioritere henting av ressurser som ellers hadde blitt forespurt senere i sideinnlastingen."
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/speed) og slå på `Resize Images` for å endre bilder til en passelig størrelse for mottakerenheten, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
+    "message": "Bruk [Ezoic Leap](https://pubdash.ezoic.com/leap) og slå på `Resize Images` for å endre bilder til en passelig størrelse for mottakerenheten, slik at størrelsen på nyttelastene som sendes over nettverket, reduseres."
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "Bruk `gatsby-plugin-image`-komponenten i stedet for `<img>` for å optimalisere bildeformatet automatisk. [Finn ut mer](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)."
@@ -2952,16 +3030,16 @@
     "message": "`<link rel=preload>`-tagger kan legges til ved å [endre temalayouten](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å optimalisere bildeformatet automatisk. [Finn ut mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å optimalisere bildeformatet automatisk. [Finn ut mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å bruke utsatt innlasting av bilder automatisk. [Finn ut mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å bruke utsatt innlasting av bilder automatisk. [Finn ut mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "Bruk `next/image`-komponenten og sett «priority» til «true» (sann) for å forhåndslaste LCP-bilder. [Finn ut mer](https://nextjs.org/docs/api-reference/next/image#priority)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "Bruk `next/script`-komponenten til å utsette innlasting av ikke-kritiske tredjepartsskript. [Finn ut mer](https://nextjs.org/docs/basic-features/script)."
+    "message": "Bruk `next/script`-komponenten til å utsette innlasting av ikke-kritiske tredjepartsskript. [Finn ut mer](https://nextjs.org/docs/app/guides/scripts)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "Bruk `next/image`-komponenten for å sørge for at bilder alltid har rett størrelse. [Finn ut mer](https://nextjs.org/docs/api-reference/next/image#width)."
@@ -2973,13 +3051,13 @@
     "message": "Bruk `Webpack Bundle Analyzer` for å oppdage ubrukt JavaScript-kode. [Finn ut mer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "Vurder å bruke `Next.js Analytics` for å måle appens ytelse i reelle situasjoner. [Finn ut mer](https://nextjs.org/docs/advanced-features/measuring-performance)."
+    "message": "Vurder å bruke `Next.js Analytics` for å måle appens ytelse i reelle situasjoner. [Finn ut mer](https://nextjs.org/docs/pages/guides/analytics)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "Konfigurer bufring for uforanderlige ressurser og `Server-side Rendered` (SSR)-sider. [Finn ut mer](https://nextjs.org/docs/going-to-production#caching)."
+    "message": "Konfigurer bufring for uforanderlige ressurser og `Server-side Rendered` (SSR)-sider. [Finn ut mer](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å justere bildekvaliteten. [Finn ut mer](https://nextjs.org/docs/basic-features/image-optimization)."
+    "message": "Bruk `next/image`-komponenten i stedet for `<img>` for å justere bildekvaliteten. [Finn ut mer](https://nextjs.org/docs/app/getting-started/images)."
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "Bruk `next/image`-komponenten for å angi riktig verdi for `sizes`. [Finn ut mer](https://nextjs.org/docs/api-reference/next/image#sizes)."
@@ -3099,7 +3177,7 @@
     "message": "Hvis kodebyggingssystemet minifiserer JS-filer automatisk, må du passe på at du implementerer produksjonsdelversjonen av appen. Dette kan du sjekke med React Developer Tools-utvidelsen. [Finn ut mer](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "Hvis du ikke gjengir på tjenersiden, kan du [dele opp JavaScript-pakkene](https://web.dev/code-splitting-suspense/) med `React.lazy()`. Ellers kan du dele opp koden med et tredjepartsbibliotek som [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+    "message": "Hvis du ikke gjengir på tjenersiden, kan du [dele opp JavaScript-pakkene](https://web.dev/code-splitting-suspense/) med `React.lazy()`. Ellers kan du dele opp koden med et tredjepartsbibliotek som [loadable-components](https://loadable-components.com/)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Bruk React DevTools Profiler, som benytter Profiler-API-et, til å måle gjengivelsesytelsen for komponentene. [Finn ut mer.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "Kan ikke tilskrives"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "Ikke vurdert"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "Denne revisjonen bidrar ikke til den samlede kategoripoengsummen."
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Verdiene er anslått og kan variere. [Beregningen av ytelsespoengsummen](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) er basert direkte på disse verdiene."

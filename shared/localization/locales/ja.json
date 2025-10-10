@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "許可（警告あり）"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "レイアウト シフトのスコア"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "これらは、ページで確認された最大のレイアウト シフトです。表の各項目は 1 つのレイアウト シフトを表し、最もシフトの大きかった要素が表示されます。各項目の下には、レイアウト シフトにつながったと考えられる根本原因が表示されます。[ウィンドウ処理](https://web.dev/articles/cls#what_is_cls)が原因で、これらのレイアウト シフトの一部が CLS 指標値に含まれていない場合があります。[CLS を改善する方法について](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{1 件のレイアウト シフトが見つかりました}other{# 件のレイアウト シフトが見つかりました}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "ウェブフォントを読み込みました"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "挿入された iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "メディア要素に明示的なサイズが含まれていません"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "レイアウトが大きく変わらないようにする"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[長いメインスレッド タスクの回避方法の詳細](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "サーバーのバックエンド待ち時間"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "合成されていないアニメーションは動きが不自然になり、CLS が大きくなることがあります。[合成されていないアニメーションを避ける方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{# 件のアニメーション要素が見つかりました}other{# 件のアニメーション要素が見つかりました}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "filter 関連のプロパティはピクセルの移動につながる可能性があります"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "ターゲットに互換性のない別のアニメーションが含まれています"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "エフェクトに「replace」以外の合成モードが含まれています"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "合成されていないアニメーションは使用しないでください"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "transform 関連のプロパティがボックスのサイズに依存しています"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{サポートされていない CSS プロパティ: {properties}}other{サポートされていない CSS プロパティ: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{コンポジターでカスタム CSS プロパティをアニメーション化できません: {properties}}other{コンポジターでカスタム CSS プロパティをアニメーション化できません: {properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "サポートされていないタイミング パラメータがエフェクトで使用されています"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "ディレクティブ"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "HTTP トラフィックは HTTPS にリダイレクトされます"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[ページ リダイレクトの回避方法の詳細](https://developer.chrome.com/docs/lighthouse/performance/redirects/)"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "複数のページ リダイレクトの回避"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "正規リンクで、検索結果に表示する URL を指定します。[正規リンクの詳細](https://developer.chrome.com/docs/lighthouse/seo/canonical/)"
@@ -1095,7 +1152,7 @@
     "message": "リンクにわかりやすいテキストが設定されています"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "[構造化データ テストツール](https://search.google.com/structured-data/testing-tool/)と[構造化データ用 Linter](http://linter.structured-data.org/) を実行して構造化データを検証してください。[構造化データの詳細](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
+    "message": "[構造化データ テストツール](https://developers.google.com/search/docs/appearance/structured-data/)を実行して、構造化データを検証してください。[構造化データの詳細](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "構造化データが有効です"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt は有効です"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "メイン ドキュメントのサーバー応答時間は、他のすべてのリクエストに影響するため、速くする必要があります。[Time to First Byte 指標の詳細](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "ルート ドキュメントの読み込みに {timeInMs, number, milliseconds} ミリ秒かかりました"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "最初のサーバー応答時間を速くしてください"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "最初のサーバー応答時間は問題ない速さです"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "サードパーティ Cookie は、状況によってはブロックされることがあります。[サードパーティ Cookie の制限に備える方法について](https://privacysandbox.google.com/cookies/prepare/overview)"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "Trusted Types を使用して DOM ベースの XSS に対処する"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "画像要素で幅と高さを明示的に設定すると、レイアウト シフトを減らして、CLS を改善できます。[画像サイズの設定方法の詳細](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "画像要素で `width` と `height` が明示的に指定されていない"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "画像要素で `width` と `height` が明示的に指定されている"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "タイプ"
@@ -2808,43 +2886,43 @@
     "message": "テキストベースのリソースは圧縮（gzip、deflate、または brotli）して配信し、ネットワークの全体的な通信量を最小限に抑えてください。これをネイティブでサポートしている CDN の使用を検討するか、この処理を行うようウェブサーバーを設定してください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Optimize Fonts` を有効にし、`font-display` CSS 機能を自動的に利用することで、Web フォントの読み込み中にテキストが確実にユーザーに表示されるようにします。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Optimize Fonts` を有効にし、`font-display` CSS 機能を自動的に利用することで、Web フォントの読み込み中にテキストが確実にユーザーに表示されるようにします。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Lazy Load Images` を有効にし、画面外の画像の読み込みを必要になるまで遅らせます。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Lazy Load Images` を有効にし、画面外の画像の読み込みを必要になるまで遅らせます。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Critical CSS` と `Script Delay` を有効にし、クリティカルでない JS/CSS を遅らせます。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Script Delay` を有効にし、重要でない JS を遅らせます。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "[Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) を使用して、世界各国のネットワークに広がるコンテンツをキャッシュし、最初の 1 バイトまでの時間を改善します。"
+    "message": "[Ezoic Cloud Caching](https://pubdash.ezoic.com/leap/caching) を使用して、世界各国のネットワークに広がるコンテンツをキャッシュし、最初の 1 バイトまでの時間を改善します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Minify CSS` を有効にし、CSS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Minify CSS` を有効にし、CSS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Minify Javascript` を有効にし、JS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Minify Javascript` を有効にし、JS を自動的に縮小することでネットワーク ペイロード サイズを削減します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Remove Unused CSS` を有効にすると、問題の解決に役立ちます。サイトの各ページで実際に使用されている CSS クラスが特定され、それ以外が削除されることで、ファイルサイズが小さく保たれます。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Remove Unused CSS` を有効にすると、問題の解決に役立ちます。サイトの各ページで実際に使用されている CSS クラスが特定され、それ以外が削除されることで、ファイルサイズが小さく保たれます。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Efficient Static Cache Policy` を有効にし、静的アセット用のキャッシュ ヘッダーに推奨値を設定します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Efficient Static Cache Policy` を有効にし、静的アセット用のキャッシュ ヘッダーに推奨値を設定します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Next-Gen Formats` を有効にし、画像を WebP に変換します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Pre-Connect Origins` を有効にし、自動的に `preconnect` リソースヒントを追加することで、重要なサードパーティ オリジンへの早期接続を確立します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Pre-Connect Origins` を有効にし、自動的に `preconnect` リソースヒントを追加することで、重要なサードパーティ オリジンへの早期接続を確立します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Preload Fonts` と `Preload Background Images` を有効にし、`preload` リンクを追加することで、現在リクエストされているリソースの取得をページ読み込みの後半で優先します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Preload Fonts` と `Preload Background Images` を有効にし、`preload` リンクを追加することで、現在リクエストされているリソースの取得をページ読み込みの後半で優先します。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "[Ezoic Leap](https://pubdash.ezoic.com/speed) を使用して、`Resize Images` を有効にし、画像のサイズをデバイスに適したサイズに変更することで、ネットワーク ペイロード サイズを削減します。"
+    "message": "[Ezoic Leap](https://pubdash.ezoic.com/leap) を使用して、`Resize Images` を有効にし、画像のサイズをデバイスに適したサイズに変更することで、ネットワーク ペイロード サイズを削減します。"
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "画像形式が自動的に最適化されるように、`<img>` ではなく `gatsby-plugin-image` コンポーネントを使用します。[詳細](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)"
@@ -2952,16 +3030,16 @@
     "message": "[テーマのレイアウトを編集](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)して、`<link rel=preload>` タグを追加できます。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "画像形式が自動的に最適化されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "画像形式が自動的に最適化されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "画像が自動的に遅延読み込みされるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "画像が自動的に遅延読み込みされるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "`next/image` コンポーネントを使用して、「priority」を true に設定し、LCP 画像をプリロードします。[詳細](https://nextjs.org/docs/api-reference/next/image#priority)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "重要でない第三者スクリプトの読み込みを遅らせるには、`next/script` コンポーネントを使用してください。[詳細](https://nextjs.org/docs/basic-features/script)"
+    "message": "重要でない第三者スクリプトの読み込みを遅らせるには、`next/script` コンポーネントを使用してください。[詳細](https://nextjs.org/docs/app/guides/scripts)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "画像が常に適切なサイズで表示されるように、`next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/api-reference/next/image#width)"
@@ -2973,13 +3051,13 @@
     "message": "使用されていない JavaScript コードを検出できるように、`Webpack Bundle Analyzer` を使用します。[詳細](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "アプリの実際のパフォーマンスを測定するには、`Next.js Analytics` の使用をご検討ください。[詳細](https://nextjs.org/docs/advanced-features/measuring-performance)"
+    "message": "アプリの実際のパフォーマンスを測定するには、`Next.js Analytics` の使用をご検討ください。[詳細](https://nextjs.org/docs/pages/guides/analytics)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "不変アセットと `Server-side Rendered`（SSR）ページのキャッシュを設定してください。[詳細](https://nextjs.org/docs/going-to-production#caching)"
+    "message": "不変アセットと `Server-side Rendered`（SSR）ページのキャッシュを設定してください。[詳細](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "画質が調整されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/basic-features/image-optimization)"
+    "message": "画質が調整されるように、`<img>` ではなく `next/image` コンポーネントを使用します。[詳細](https://nextjs.org/docs/app/getting-started/images)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "適切な `sizes` を設定するには、`next/image` コンポーネントを使用してください。[詳細](https://nextjs.org/docs/api-reference/next/image#sizes)"
@@ -3099,7 +3177,7 @@
     "message": "ご使用のビルドシステムで JS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "サーバーサイドのレンダリングを行わない場合は、`React.lazy()` で [JavaScript バンドルを分割](https://web.dev/code-splitting-suspense/)します。それ以外は、[loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) などの第三者ライブラリを使用してコードを分割します。"
+    "message": "サーバーサイドのレンダリングを行わない場合は、`React.lazy()` で [JavaScript バンドルを分割](https://web.dev/code-splitting-suspense/)します。それ以外は、[loadable-components](https://loadable-components.com/) などの第三者ライブラリを使用してコードを分割します。"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "Profiler API を採用している React DevTools Profiler を使用して、コンポーネントのレンダリング性能を測定します。[詳細](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "アトリビューション不可"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "スコアなし"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "この監査は、カテゴリの総合スコアに影響しません。"
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "推定値のため変動する可能性があります。[パフォーマンス スコアの計算](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)は、これらの指標を基に行っています。"

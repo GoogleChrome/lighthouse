@@ -929,6 +929,27 @@
   "core/audits/is-on-https.js | warning": {
     "message": "允許 (附警告)"
   },
+  "core/audits/layout-shifts.js | columnScore": {
+    "message": "版面配置轉移分數"
+  },
+  "core/audits/layout-shifts.js | description": {
+    "message": "這些是網頁上發現的最大版面配置轉移。每個表格項目都代表一個版面配置轉移，並會顯示轉移最多的元素。每個項目下方是導致版面配置轉移的潛在根本原因。由於[視窗化](https://web.dev/articles/cls#what_is_cls)，部分版面配置轉移可能不會包含在 CLS 數據值中。[瞭解如何改善累計版面配置轉移 (CLS)](https://web.dev/articles/optimize-cls)"
+  },
+  "core/audits/layout-shifts.js | displayValueShiftsFound": {
+    "message": "{shiftCount,plural, =1{找到 1 項版面配置轉移}other{找到 # 項版面配置轉移}}"
+  },
+  "core/audits/layout-shifts.js | rootCauseFontChanges": {
+    "message": "已載入網頁字型"
+  },
+  "core/audits/layout-shifts.js | rootCauseInjectedIframe": {
+    "message": "已插入 iframe"
+  },
+  "core/audits/layout-shifts.js | rootCauseUnsizedMedia": {
+    "message": "媒體元素沒有明確尺寸"
+  },
+  "core/audits/layout-shifts.js | title": {
+    "message": "避免大幅度的版面配置轉移"
+  },
   "core/audits/long-tasks.js | description": {
     "message": "列出主要執行緒上執行時間最長的工作，有助辨識導致輸入延遲的主因。[瞭解如何避免長時間的主要執行緒工作](https://web.dev/articles/optimize-long-tasks)"
   },
@@ -986,6 +1007,36 @@
   "core/audits/network-server-latency.js | title": {
     "message": "伺服器後端延遲時間"
   },
+  "core/audits/non-composited-animations.js | description": {
+    "message": "未合成的動畫可能無法順暢播放，而且會增加累計版面配置轉移 (CLS)。[瞭解如何避免使用非合成動畫](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)"
+  },
+  "core/audits/non-composited-animations.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 # 個動畫元素}other{找到 # 個動畫元素}}"
+  },
+  "core/audits/non-composited-animations.js | filterMayMovePixels": {
+    "message": "篩選器相關的屬性可能會移動像素"
+  },
+  "core/audits/non-composited-animations.js | incompatibleAnimations": {
+    "message": "目標包含其他不兼容的動畫"
+  },
+  "core/audits/non-composited-animations.js | nonReplaceCompositeMode": {
+    "message": "效果包含「replace」以外的合成模式"
+  },
+  "core/audits/non-composited-animations.js | title": {
+    "message": "避免使用非合成的動畫"
+  },
+  "core/audits/non-composited-animations.js | transformDependsBoxSize": {
+    "message": "轉換相關屬性取決於方塊大小"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "{propertyCount,plural, =1{不支援的 CSS 屬性：{properties}}other{不支援的 CSS 屬性：{properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedCustomCSSProperty": {
+    "message": "{propertyCount,plural, =1{自訂 CSS 屬性無法在合成器中動畫化：{properties}}other{自訂 CSS 屬性無法在合成器中動畫化：{properties}}}"
+  },
+  "core/audits/non-composited-animations.js | unsupportedTimingParameters": {
+    "message": "效果包含不支援的時間參數"
+  },
   "core/audits/origin-isolation.js | columnDirective": {
     "message": "指令"
   },
@@ -1012,6 +1063,12 @@
   },
   "core/audits/redirects-http.js | title": {
     "message": "將 HTTP 流量重新導向至 HTTPS"
+  },
+  "core/audits/redirects.js | description": {
+    "message": "重新導向會導致頁面延遲載入。[瞭解如何避免網頁重新導向](https://developer.chrome.com/docs/lighthouse/performance/redirects/)。"
+  },
+  "core/audits/redirects.js | title": {
+    "message": "避免多次頁面重新導向"
   },
   "core/audits/seo/canonical.js | description": {
     "message": "標準連結會建議要在搜尋結果中顯示哪個網址。[進一步瞭解標準連結](https://developer.chrome.com/docs/lighthouse/seo/canonical/)。"
@@ -1095,7 +1152,7 @@
     "message": "連結具有說明文字"
   },
   "core/audits/seo/manual/structured-data.js | description": {
-    "message": "執行[結構化資料測試工具](https://search.google.com/structured-data/testing-tool/)和[結構化資料 Linter](http://linter.structured-data.org/) 來驗證結構化資料。[進一步瞭解結構化資料](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)。"
+    "message": "執行[結構化資料測試工具](https://developers.google.com/search/docs/appearance/structured-data/)來驗證結構化資料。[進一步瞭解結構化資料](https://developer.chrome.com/docs/lighthouse/seo/structured-data/)。"
   },
   "core/audits/seo/manual/structured-data.js | title": {
     "message": "結構化資料有效"
@@ -1130,6 +1187,18 @@
   "core/audits/seo/robots-txt.js | title": {
     "message": "robots.txt 有效"
   },
+  "core/audits/server-response-time.js | description": {
+    "message": "請確保主要文件的伺服器回應時間不會太長，因為這會影響所有其他要求。[進一步瞭解「首個字節時間」數據](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)。"
+  },
+  "core/audits/server-response-time.js | displayValue": {
+    "message": "根文件回應時間為 {timeInMs, number, milliseconds} 毫秒"
+  },
+  "core/audits/server-response-time.js | failureTitle": {
+    "message": "縮短初始伺服器回應時間"
+  },
+  "core/audits/server-response-time.js | title": {
+    "message": "初始伺服器回應時間短暫"
+  },
   "core/audits/third-party-cookies.js | description": {
     "message": "第三方 Cookie 在某些情況下可能會被封鎖。[進一步瞭解如何應對第三方 Cookie 限制](https://privacysandbox.google.com/cookies/prepare/overview)。"
   },
@@ -1153,6 +1222,15 @@
   },
   "core/audits/trusted-types-xss.js | title": {
     "message": "緩解設有「受信任類型」的 DOM XSS"
+  },
+  "core/audits/unsized-images.js | description": {
+    "message": "請明確設定圖片元素的寬度和高度，以減少版面配置轉移及改善累計版面配置轉移 (CLS)。[瞭解如何設定圖片尺寸](https://web.dev/articles/optimize-cls#images_without_dimensions)"
+  },
+  "core/audits/unsized-images.js | failureTitle": {
+    "message": "圖片元素並無顯性`width`和`height`"
+  },
+  "core/audits/unsized-images.js | title": {
+    "message": "圖片元素具有顯性`width`和`height`"
   },
   "core/audits/user-timings.js | columnType": {
     "message": "類別"
@@ -2808,43 +2886,43 @@
     "message": "文字資源應經過 (gzip、deflate 或 brotli) 壓縮，以將網絡字節總數減至最少。建議使用原生支援此功能的 CDN，或設定網絡伺服器執行此操作。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/text-compression)。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Optimize Fonts` 以自動利用 `font-display` CSS 功能，確保系統在載入網站頁字型時使用者可以看到文字。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Optimize Fonts` 以自動利用 `font-display` CSS 功能，確保系統在載入網站頁字型時使用者可以看到文字。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Lazy Load Images` 以延遲載入螢幕關閉圖片，直到需要時才載入。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Lazy Load Images` 以延遲載入螢幕關閉圖片，直到需要時才載入。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Critical CSS` 和 `Script Delay` 以延遲不重要的 JS/CSS。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Script Delay` 以延遲不重要的 JS。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
-    "message": "使用 [Ezoic Cloud 快取](https://pubdash.ezoic.com/speed/caching)，以便在我們的全球網絡上快取您的內容，改善載入首個字節的時間。"
+    "message": "使用 [Ezoic Cloud 快取](https://pubdash.ezoic.com/leap/caching)，以便在我們的全球網絡上快取您的內容，改善載入首個字節的時間。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Minify CSS` 以自動壓縮 CSS 來減少網絡負載大小。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Minify CSS` 以自動壓縮 CSS 來減少網絡負載大小。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Minify Javascript` 以自動壓縮 JS 來減少網絡負載大小。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Minify Javascript` 以自動壓縮 JS 來減少網絡負載大小。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Remove Unused CSS` 以協助解決此問題。此功能會識別在您網站的每個頁面上實際使用的 CSS 類別，並移除任何其他類別，以維持小的檔案大小。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Remove Unused CSS` 以協助解決此問題。此功能會識別在您網站的每個頁面上實際使用的 CSS 類別，並移除任何其他類別，以維持小的檔案大小。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Efficient Static Cache Policy` 以便在快取標題中為靜態資產設定建議的值。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Efficient Static Cache Policy` 以便在快取標題中為靜態資產設定建議的值。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Next-Gen Formats` 以將圖片轉換為 WebP。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Pre-Connect Origins` 以自動新增 `preconnect` 資源提示，及早連線至重要的第三方來源。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Pre-Connect Origins` 以自動新增 `preconnect` 資源提示，及早連線至重要的第三方來源。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Preload Fonts` 和 `Preload Background Images` 來加入 `preload` 連結，以便優先擷取目前在網頁載入時較後要求的資源。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Preload Fonts` 和 `Preload Background Images` 來加入 `preload` 連結，以便優先擷取目前在網頁載入時較後要求的資源。"
   },
   "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
-    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/speed) 並啟用 `Resize Images` 以將圖片大小調整至適合裝置的尺寸，減少網絡負載大小。"
+    "message": "使用 [Ezoic Leap](https://pubdash.ezoic.com/leap) 並啟用 `Resize Images` 以將圖片大小調整至適合裝置的尺寸，減少網絡負載大小。"
   },
   "node_modules/lighthouse-stack-packs/packs/gatsby.js | modern-image-formats": {
     "message": "請使用 `gatsby-plugin-image` 組件讓系統自動優化圖像格式，而非 `<img>`。[瞭解詳情](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image)。"
@@ -2952,16 +3030,16 @@
     "message": "您可透過[修改主題版面配置](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)來新增 `<link rel=preload>` 標籤。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
-    "message": "請使用 `next/image` 組件讓系統自動優化圖像格式，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "請使用 `next/image` 組件讓系統自動優化圖像格式，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
-    "message": "如要自動延遲載入圖像，請使用 `next/image` 組件，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "如要自動延遲載入圖像，請使用 `next/image` 組件，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | prioritize-lcp-image": {
     "message": "使用 `next/image` 組件並將「priority」設定為 True 以預先載入 LCP 圖片。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#priority)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
-    "message": "請使用 `next/script` 組件延遲載入非關鍵的第三方指令碼。[瞭解詳情](https://nextjs.org/docs/basic-features/script)。"
+    "message": "請使用 `next/script` 組件延遲載入非關鍵的第三方指令碼。[瞭解詳情](https://nextjs.org/docs/app/guides/scripts)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
     "message": "請使用 `next/image` 組件確保圖片一律會調整成適當大小。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#width)。"
@@ -2973,13 +3051,13 @@
     "message": "使用 `Webpack Bundle Analyzer` 偵測未使用的 JavaScript 程式碼。[瞭解詳情](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
-    "message": "建議您使用 `Next.js Analytics` 評估應用程式的實際效能。[瞭解詳情](https://nextjs.org/docs/advanced-features/measuring-performance)。"
+    "message": "建議您使用 `Next.js Analytics` 評估應用程式的實際效能。[瞭解詳情](https://nextjs.org/docs/pages/guides/analytics)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
-    "message": "請設定不可變動資產和 `Server-side Rendered` (SSR) 頁面的快取。[瞭解詳情](https://nextjs.org/docs/going-to-production#caching)。"
+    "message": "請設定不可變動資產和 `Server-side Rendered` (SSR) 頁面的快取。[瞭解詳情](https://nextjs.org/docs/13/pages/building-your-application/deploying/production-checklist#caching)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
-    "message": "請使用 `next/image` 組件調整圖像品質，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/basic-features/image-optimization)。"
+    "message": "請使用 `next/image` 組件調整圖像品質，而非 `<img>`。[瞭解詳情](https://nextjs.org/docs/app/getting-started/images)。"
   },
   "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
     "message": "請使用 `next/image` 組件設定適當的 `sizes`。[瞭解詳情](https://nextjs.org/docs/api-reference/next/image#sizes)。"
@@ -3099,7 +3177,7 @@
     "message": "如果您建立自動壓縮 JS 檔案的系統，請確定部署的應用程式為正式版本。您可以使用 React Developer Tools 擴充程式執行這項檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
-    "message": "如果沒有使用伺服器端輸出，請以 `React.lazy()` [分割您的 JavaScript 套件](https://web.dev/code-splitting-suspense/)。否則請使用[可載入的組件](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) 等第三方程式庫分割程式碼。"
+    "message": "如果沒有使用伺服器端輸出，請以 `React.lazy()` [分割您的 JavaScript 套件](https://web.dev/code-splitting-suspense/)。否則請使用[可載入的組件](https://loadable-components.com/) 等第三方程式庫分割程式碼。"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | user-timings": {
     "message": "使用 React DevTools Profiler，採用效能分析 API 來測量組件的輸出效能。[瞭解詳情。](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
@@ -3349,6 +3427,12 @@
   },
   "report/renderer/report-utils.js | unattributable": {
     "message": "無法歸因"
+  },
+  "report/renderer/report-utils.js | unscoredLabel": {
+    "message": "不計分"
+  },
+  "report/renderer/report-utils.js | unscoredTitle": {
+    "message": "此審核不會影響整體類別分數。"
   },
   "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "此為預計值，可能與實際值有所不同。[效能分數將利用這些數據直接計算](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)。"
