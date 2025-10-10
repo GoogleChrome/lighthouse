@@ -13,7 +13,7 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 
 ## Notable Changes
 
-Replaced many performance audits with new [performance insights](https://developer.chrome.com/blog/moving-lighthouse-to-insights).
+* performance: remove audits replaced by [performance insights](https://developer.chrome.com/blog/moving-lighthouse-to-insights) ([#16729](https://github.com/GoogleChrome/lighthouse/pull/16729))
 
 ## Core
 
@@ -41,7 +41,6 @@ Replaced many performance audits with new [performance insights](https://develop
 * inspector-issues: remove empty arrays ([#16736](https://github.com/GoogleChrome/lighthouse/pull/16736))
 * legacy-javascript: update caniuse data ([#16699](https://github.com/GoogleChrome/lighthouse/pull/16699))
 * network-request: remove receiveHeadersStart M115 compat ([#16738](https://github.com/GoogleChrome/lighthouse/pull/16738))
-* performance: remove audits replaced by insights ([#16729](https://github.com/GoogleChrome/lighthouse/pull/16729))
 * scoring: adjust a11y weights and document approach ([#16624](https://github.com/GoogleChrome/lighthouse/pull/16624))
 * server-response-time: defer to Document Latency insight ([#16715](https://github.com/GoogleChrome/lighthouse/pull/16715))
 * trace-elements: remove unused event types ([#16734](https://github.com/GoogleChrome/lighthouse/pull/16734))
