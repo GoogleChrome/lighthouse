@@ -1,17 +1,19 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-Benjamin R Gibson @brgibson
-Gareth Jones @G-Rath
-Leonardo Poletto @leopoletto
- <a name="13.0.0"></a>
+<a name="13.0.0"></a>
 # 13.0.0 (2025-10-10)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.2...v13.0.0)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+We expect this release to ship in the DevTools of [Chrome 143](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
+
+## New contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- Benjamin R Gibson @brgibson
+- Leonardo Poletto @leopoletto
 
 ## Notable Changes
-~~ TODO: Move notable changes here ~~
 
+Replaced many performance audits with new [performance insights](https://developer.chrome.com/blog/moving-lighthouse-to-insights).
 
 ## Core
 
