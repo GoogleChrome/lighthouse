@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Audit } from '../audit.js';
-import UrlUtils from '../../lib/url-utils.js';
-import { MainResource } from '../../computed/main-resource.js';
+import {Audit} from '../audit.js';
+import {MainResource} from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -89,8 +88,10 @@ class Canonical extends Audit {
       if (link.rel === 'canonical') {
         // Links that don't have an href aren't canonical references for SEO, skip them
         if (!link.hrefRaw) continue;
+
         // Links that had an hrefRaw but didn't have a valid href were invalid, flag them
         if (!link.href) invalidCanonicalLink = link;
+
         else if (link.hrefRaw) {
           try {
             // First test: Is Link syntactically valid or invalid?
@@ -109,12 +110,13 @@ class Canonical extends Audit {
             invalidCanonicalLink = link;
           }
         }
+
       } else if (link.rel === 'alternate') {
         if (link.href && link.hreflang) hreflangURLs.add(link.href);
       }
     }
 
-    return { uniqueCanonicalURLs, hreflangURLs, invalidCanonicalLink, relativeCanonicallink };
+    return {uniqueCanonicalURLs, hreflangURLs, invalidCanonicalLink, relativeCanonicallink};
   }
 
   /**
@@ -122,13 +124,13 @@ class Canonical extends Audit {
    * @return {LH.Audit.Product|undefined}
    */
   static findInvalidCanonicalURLReason(canonicalURLData) {
-    const { uniqueCanonicalURLs, invalidCanonicalLink, relativeCanonicallink } = canonicalURLData;
+    const {uniqueCanonicalURLs, invalidCanonicalLink, relativeCanonicallink} = canonicalURLData;
 
     // the canonical link is totally invalid
     if (invalidCanonicalLink) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationInvalid, { url: invalidCanonicalLink.hrefRaw }),
+        explanation: str_(UIStrings.explanationInvalid, {url: invalidCanonicalLink.hrefRaw}),
       };
     }
 
@@ -136,7 +138,7 @@ class Canonical extends Audit {
     if (relativeCanonicallink) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationRelative, { url: relativeCanonicallink.hrefRaw }),
+        explanation: str_(UIStrings.explanationRelative, {url: relativeCanonicallink.hrefRaw}),
       };
     }
 
@@ -155,7 +157,7 @@ class Canonical extends Audit {
     if (canonicalURLs.length > 1) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationConflict, { urlList: canonicalURLs.join(', ') }),
+        explanation: str_(UIStrings.explanationConflict, {urlList: canonicalURLs.join(', ')}),
       };
     }
   }
@@ -177,7 +179,7 @@ class Canonical extends Audit {
     ) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationPointsElsewhere, { url: baseURL.href }),
+        explanation: str_(UIStrings.explanationPointsElsewhere, {url: baseURL.href}),
       };
     }
 
@@ -227,4 +229,4 @@ class Canonical extends Audit {
 }
 
 export default Canonical;
-export { UIStrings };
+export {UIStrings};
