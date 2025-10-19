@@ -27,7 +27,7 @@ const DIRECTIVE_SAFELIST = new Set([
   DIRECTIVE_ALLOW, DIRECTIVE_SITEMAP, // universally supported
   'crawl-delay', // yahoo, bing, yandex
   'clean-param', 'host', // yandex
-  'request-rate', 'visit-time', 'noindex', // not officially supported, but used in the wild
+  'request-rate', 'visit-time', 'noindex', 'content-signal', // not officially supported, but used in the wild
 ]);
 const SITEMAP_VALID_PROTOCOLS = new Set(['https:', 'http:', 'ftp:']);
 
