@@ -89,25 +89,23 @@ class Canonical extends Audit {
         // Links that don't have an href aren't canonical references for SEO, skip them
         if (!link.hrefRaw) continue;
 
-        // Links that had an hrefRaw but didn't have a valid href were invalid, flag them
-        if (!link.href) invalidCanonicalLink = link;
+        // Links that don't have an href are invalid, flag them
+        if (!link.href) {
+          invalidCanonicalLink = link;
+          continue;
+        }
 
-        else if (link.hrefRaw) {
-          try {
-            // First test: Is Link syntactically valid or invalid?
-            new URL(link.hrefRaw, 'https://example.com');
-            try {
-              // Second test: Is Link valid absolute or valid relative?
-              new URL(link.hrefRaw);
-              // Link is a valid and absolute URL.
-              uniqueCanonicalURLs.add(link.href);
-            } catch (e) {
-              // The Second test FAILED. Link must be valid relative.
-              relativeCanonicallink = link;
-            }
-          } catch (e) {
-            // The First test FAILED. Link is invalid.
-            invalidCanonicalLink = link;
+        if (URL.parse(link.hrefRaw, 'https://example.com') === null) {
+          // Links that are syntactically INVALID with a base, flag them
+          invalidCanonicalLink = link;
+        } else {
+          // Links that are syntactically VALID with a base:
+          if (URL.parse(link.hrefRaw) === null) {
+            // Links that are INVALID without a base must be relative, flag them
+            relativeCanonicallink = link;
+          } else {
+            // Links that are valid without a base are absolute
+            uniqueCanonicalURLs.add(link.href);
           }
         }
 
