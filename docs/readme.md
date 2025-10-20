@@ -2,6 +2,16 @@ This directory contains useful documentation, examples (keep reading),
 and [recipes](./recipes/) to get you started. For an overview of Lighthouse's
 internals, see [Lighthouse Architecture](architecture.md).
 
+## Important docs
+
+- Accessibility scoring — for the canonical, up-to-date explanation of how Lighthouse computes the Accessibility category score see `docs/scoring.md` (and the live guide on developer.chrome.com):
+
+  https://developer.chrome.com/docs/lighthouse/accessibility/scoring
+
+- Insight audits — guidance for authors and examples for `*-insight` audits is in:
+
+  `core/audits/insights/README.md`
+
 ## Using programmatically
 
 The example below shows how to run Lighthouse programmatically as a Node module. It
