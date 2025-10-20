@@ -17,55 +17,14 @@ All audits in the SEO category are [equally weighted](https://github.com/GoogleC
 
 <!-- To regnerate score weights, run `node core/scripts/print-a11y-scoring.js`-->
 
-The accessibility score is a weighted average. The specific weights for v7 are as follows:
+The accessibility score is a weighted average. Lighthouse's accessibility scoring and weights can change between major versions as audits are added, removed, or re-weighted. For the most up-to-date explanation of how accessibility scoring works, and the canonical list of audit weights, see the Lighthouse Accessibility Scoring guide on developer.chrome.com:
 
-(See the [v6 scoring explanation](https://github.com/GoogleChrome/lighthouse/blob/v6.5.0/docs/scoring.md#how-is-the-accessibility-score-calculated))
+https://developer.chrome.com/docs/lighthouse/accessibility/scoring
 
-| audit id | weight |
-|-|-|
- | aria-allowed-attr | 4.1% |
- | aria-hidden-body | 4.1% |
- | aria-required-attr | 4.1% |
- | aria-required-children | 4.1% |
- | aria-required-parent | 4.1% |
- | aria-roles | 4.1% |
- | aria-valid-attr-value | 4.1% |
- | aria-valid-attr | 4.1% |
- | button-name | 4.1% |
- | duplicate-id-aria | 4.1% |
- | image-alt | 4.1% |
- | input-image-alt | 4.1% |
- | label | 4.1% |
- | meta-refresh | 4.1% |
- | meta-viewport | 4.1% |
- | video-caption | 4.1% |
- | accesskeys | 1.2% |
- | aria-command-name | 1.2% |
- | aria-hidden-focus | 1.2% |
- | aria-input-field-name | 1.2% |
- | aria-meter-name | 1.2% |
- | aria-progressbar-name | 1.2% |
- | aria-toggle-field-name | 1.2% |
- | aria-tooltip-name | 1.2% |
- | aria-treeitem-name | 1.2% |
- | bypass | 1.2% |
- | color-contrast | 1.2% |
- | definition-list | 1.2% |
- | dlitem | 1.2% |
- | document-title | 1.2% |
- | duplicate-id-active | 1.2% |
- | frame-title | 1.2% |
- | html-has-lang | 1.2% |
- | html-lang-valid | 1.2% |
- | link-name | 1.2% |
- | list | 1.2% |
- | listitem | 1.2% |
- | object-alt | 1.2% |
- | tabindex | 1.2% |
- | td-headers-attr | 1.2% |
- | th-has-data-cells | 1.2% |
- | valid-lang | 1.2% |
- | form-field-multiple-labels | 0.8% |
- | heading-order | 0.8% |
+If you need the weights for a specific release of Lighthouse you can also generate them locally from the configuration with:
 
-Each audit is a pass/fail, meaning there is no room for partial points for getting an audit half-right. For example, that means if half your buttons have screenreader friendly names, and half do not, you don't get "half" of the weighted average - you get a 0 because it needs to be implemented correctly *throughout* the page.
+```bash
+node core/scripts/print-a11y-scoring.js
+```
+
+Each audit is a pass/fail check for the page under test. That means a single audit contributes its full weight if it passes on the current page, or zero if it fails. For example, if an audit's weight is 4% and the audit fails for the inspected page, the page loses that 4 points from the accessibility category score.
