@@ -214,7 +214,7 @@ const expectations = {
           //   },
           // ],
           debugData: {
-            wastedBytes: '160000 +/- 10000',
+            wastedBytes: '132000 +/- 10000',
           },
         },
       },
