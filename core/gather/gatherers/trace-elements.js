@@ -332,8 +332,9 @@ class TraceElements extends BaseGatherer {
     const trace = context.dependencies.Trace;
     const SourceMaps = context.dependencies.SourceMaps;
     const settings = context.settings;
+    const HostDPR = context.baseArtifacts.HostDPR;
     const traceEngineResult =
-      await TraceEngineResult.request({trace, settings, SourceMaps}, context);
+      await TraceEngineResult.request({trace, settings, SourceMaps, HostDPR}, context);
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const {mainThreadEvents} = processedTrace;

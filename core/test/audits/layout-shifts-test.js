@@ -56,6 +56,7 @@ describe('Performance: layout-shifts audit', () => {
         },
       }],
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {
@@ -113,6 +114,7 @@ describe('Performance: layout-shifts audit', () => {
       Trace: trace,
       TraceElements: traceElements,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const auditResult = await LayoutShiftsAudit.audit(artifacts, {

@@ -38,7 +38,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.METRIC_SAVINGS,
       guidanceLevel: 3,
       requiredArtifacts: ['Stylesheets', 'DevtoolsLog', 'Trace', 'URL', 'GatherContext',
-        'SourceMaps'],
+        'SourceMaps', 'HostDPR'],
     };
   }
 

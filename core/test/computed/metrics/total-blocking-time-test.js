@@ -21,7 +21,8 @@ describe('Metrics: TotalBlockingTime', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
-      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context
     );
 
@@ -43,7 +44,7 @@ describe('Metrics: TotalBlockingTime', () => {
     const context = {settings, computedCache: new Map()};
     const result = await TotalBlockingTime.request(
       // eslint-disable-next-line max-len
-      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      {trace: cnnTrace, devtoolsLog: cnnDevtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context
     );
     expect(result.timing).toBeCloseTo(400, 1);

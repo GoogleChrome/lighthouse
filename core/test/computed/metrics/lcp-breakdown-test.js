@@ -38,6 +38,7 @@ function mockData(networkRecords) {
     gatherContext: {gatherMode: 'navigation'},
     simulator: null,
     SourceMaps: [],
+    HostDPR: 1,
   };
 }
 
@@ -101,6 +102,7 @@ describe('LCPBreakdown', () => {
       devtoolsLog: imageLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(imageLcpDevtoolsLog),
       SourceMaps: [],
+      HostDPR: 1,
       gatherContext: {gatherMode: 'navigation'},
       simulator: null,
     };
@@ -125,6 +127,7 @@ describe('LCPBreakdown', () => {
       devtoolsLog: textLcpDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(textLcpDevtoolsLog),
       SourceMaps: [],
+      HostDPR: 1,
       gatherContext: {gatherMode: 'navigation'},
       simulator: null,
     };

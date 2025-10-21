@@ -31,7 +31,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
   },
 });
 
-
 describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {
     const artifacts = {
@@ -40,6 +39,7 @@ describe('Performance: speed-index audit', () => {
       DevtoolsLog: pwaDevtoolsLog,
       URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});

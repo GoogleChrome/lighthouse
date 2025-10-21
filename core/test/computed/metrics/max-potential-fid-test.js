@@ -18,8 +18,9 @@ describe('Metrics: Max Potential FID', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({
-      trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null}, context);
+    const result =
+      // eslint-disable-next-line max-len
+      await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -31,8 +32,9 @@ describe('Metrics: Max Potential FID', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({
-      trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null}, context);
+    const result =
+      // eslint-disable-next-line max-len
+      await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null}, context);
 
     await expect(result).toMatchInlineSnapshot(`
 Object {

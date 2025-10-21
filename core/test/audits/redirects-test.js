@@ -161,6 +161,7 @@ describe('Performance: Redirects audit', () => {
         finalDisplayedUrl,
       },
       SourceMaps: [],
+      HostDPR: 1,
     };
   };
 

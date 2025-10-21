@@ -35,6 +35,7 @@ describe('Performance: metrics', () => {
       Trace: pwaTrace,
       DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -53,6 +54,7 @@ describe('Performance: metrics', () => {
       Trace: pwaTrace,
       DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -76,6 +78,7 @@ describe('Performance: metrics', () => {
       Trace: lcpTrace,
       DevtoolsLog: lcpDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -94,6 +97,7 @@ describe('Performance: metrics', () => {
       Trace: lcpAllFramesTrace,
       DevtoolsLog: lcpAllFramesDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -117,6 +121,7 @@ describe('Performance: metrics', () => {
       Trace: lcpImageTrace,
       DevtoolsLog: lcpImageDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -135,6 +140,7 @@ describe('Performance: metrics', () => {
       Trace: lcpAllFramesTrace,
       DevtoolsLog: lcpAllFramesDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -156,6 +162,7 @@ describe('Performance: metrics', () => {
       Trace: clsAllFramesTrace,
       DevtoolsLog: clsAllFramesDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {
@@ -178,6 +185,7 @@ describe('Performance: metrics', () => {
       Trace: pwaTrace,
       DevtoolsLog: pwaDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const mockTTIFn = jestMock.spyOn(Interactive, 'request');
@@ -198,6 +206,7 @@ describe('Performance: metrics', () => {
       Trace: jumpyClsTrace,
       DevtoolsLog: jumpyClsDevtoolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {

@@ -35,6 +35,6 @@ class LanternTotalBlockingTime extends Lantern.Metrics.TotalBlockingTime {
 
 const LanternTotalBlockingTimeComputed = makeComputedArtifact(
   LanternTotalBlockingTime,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {LanternTotalBlockingTimeComputed as LanternTotalBlockingTime};

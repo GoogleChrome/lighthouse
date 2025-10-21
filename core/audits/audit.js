@@ -496,9 +496,9 @@ class Audit {
     const trace = artifacts.Trace;
     const devtoolsLog = artifacts.DevtoolsLog;
     const gatherContext = artifacts.GatherContext;
-    const {URL, SourceMaps} = artifacts;
+    const {URL, HostDPR, SourceMaps} = artifacts;
     // eslint-disable-next-line max-len
-    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL, SourceMaps, simulator: null};
+    return {trace, devtoolsLog, gatherContext, settings: context.settings, URL, SourceMaps, HostDPR, simulator: null};
   }
 }
 

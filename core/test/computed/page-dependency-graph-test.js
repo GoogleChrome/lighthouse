@@ -22,6 +22,7 @@ describe('PageDependencyGraph computed artifact', () => {
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
         SourceMaps: [],
+        HostDPR: 1,
         settings: {},
         fromTrace: false,
       }, context);

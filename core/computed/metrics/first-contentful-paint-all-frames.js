@@ -32,6 +32,6 @@ class FirstContentfulPaintAllFrames extends NavigationMetric {
 
 const FirstContentfulPaintAllFramesComputed = makeComputedArtifact(
   FirstContentfulPaintAllFrames,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {FirstContentfulPaintAllFramesComputed as FirstContentfulPaintAllFrames};

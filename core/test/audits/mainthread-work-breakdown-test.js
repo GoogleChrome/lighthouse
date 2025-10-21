@@ -61,6 +61,7 @@ describe('Performance: page execution timings audit', () => {
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const output = await MainThreadWorkBreakdown.audit(artifacts, context);
@@ -78,6 +79,7 @@ describe('Performance: page execution timings audit', () => {
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     context.settings.throttlingMethod = 'simulate';
@@ -109,6 +111,7 @@ describe('Performance: page execution timings audit', () => {
       URL: getURLArtifactFromDevtoolsLog(siteWithRedirectDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     context.settings.throttlingMethod = 'provided';
