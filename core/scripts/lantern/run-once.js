@@ -31,6 +31,7 @@ async function run() {
     GatherContext: {gatherMode: 'navigation'},
     URL,
     SourceMaps: [],
+    HostDPR: 1,
   };
 
   // @ts-expect-error - We don't need the full artifacts or context.
