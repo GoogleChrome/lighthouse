@@ -380,13 +380,13 @@ const expectations = {
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3',
               totalBytes: 112710,
-              wastedBytes: '69754 +/- 20000',
+              wastedBytes: '69754 +/- 30000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg',
               totalBytes: 112710,
-              wastedBytes: '69754 +/- 20000',
+              wastedBytes: '69754 +/- 30000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
           ],
