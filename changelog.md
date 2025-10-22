@@ -1,15 +1,8 @@
-Thanks to our new contributors 👽🐷🐰🐯🐻! 
-
- <a name="13.0.1"></a>
+<a name="13.0.1"></a>
 # 13.0.1 (2025-10-22)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.0...v13.0.1)
 
-~~ TODO: https://chromiumdash.appspot.com/schedule ~~
-We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
-
-## Notable Changes
-~~ TODO: Move notable changes here ~~
-
+We expect this release to ship in the DevTools of [Chrome 143](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
 
 ## Core
 
@@ -18,6 +11,8 @@ We expect this release to ship in the DevTools of [Chrome XX](https://chromiumda
 <a name="13.0.0"></a>
 # 13.0.0 (2025-10-10)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.2...v13.0.0)
+
+[Release article](https://developer.chrome.com/blog/lighthouse-13-0)
 
 We expect this release to ship in the DevTools of [Chrome 143](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within a week.
 
@@ -37,6 +32,7 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 * remove no-document-write audit ([#16750](https://github.com/GoogleChrome/lighthouse/pull/16750))
 * remove uses-passive-event-listeners audit ([#16751](https://github.com/GoogleChrome/lighthouse/pull/16751))
 * remove third-party-facades audit ([#16710](https://github.com/GoogleChrome/lighthouse/pull/16710))
+* scoring: adjust a11y weights and document approach ([#16624](https://github.com/GoogleChrome/lighthouse/pull/16624))
 
 ## Core
 
@@ -58,7 +54,6 @@ Thanks to our new contributors 👽🐷🐰🐯🐻!
 * inspector-issues: remove empty arrays ([#16736](https://github.com/GoogleChrome/lighthouse/pull/16736))
 * legacy-javascript: update caniuse data ([#16699](https://github.com/GoogleChrome/lighthouse/pull/16699))
 * network-request: remove receiveHeadersStart M115 compat ([#16738](https://github.com/GoogleChrome/lighthouse/pull/16738))
-* scoring: adjust a11y weights and document approach ([#16624](https://github.com/GoogleChrome/lighthouse/pull/16624))
 * server-response-time: defer to Document Latency insight ([#16715](https://github.com/GoogleChrome/lighthouse/pull/16715))
 * trace-elements: remove unused event types ([#16734](https://github.com/GoogleChrome/lighthouse/pull/16734))
 * trace-elements: handle shadow roots ([#16718](https://github.com/GoogleChrome/lighthouse/pull/16718))
