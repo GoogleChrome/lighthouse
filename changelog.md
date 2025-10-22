@@ -1,3 +1,20 @@
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+ <a name="13.0.1"></a>
+# 13.0.1 (2025-10-22)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v13.0.0...v13.0.1)
+
+~~ TODO: https://chromiumdash.appspot.com/schedule ~~
+We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+~~ TODO: Move notable changes here ~~
+
+
+## Core
+
+* fix incorrect dpr used for responsive images advice ([#16771](https://github.com/GoogleChrome/lighthouse/pull/16771))
+
 <a name="13.0.0"></a>
 # 13.0.0 (2025-10-10)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v12.8.2...v13.0.0)
