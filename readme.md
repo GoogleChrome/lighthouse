@@ -367,6 +367,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Sonā](https://getsona.io)** - Powered by Lighthouse amongst others, Sonā delivers in-depth insights into your website’s health. Track changes over time, share reports, and receive actionable recommendations to improve performance, accessibility, SEO, best practices, and security. Sonā is free during its beta period.
 
+* **[FERU](https://feru.app)** - Run Google **Lighthouse speed tests from multiple regions worldwide**. This free website performance testing tool provides Lighthouse scores, **Core Web Vitals**, and mobile performance metrics to easily test your site's **speed, accessibility, and SEO**. FERU offers an **always-free plan** alongside premium features for advanced analysis and monitoring.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
