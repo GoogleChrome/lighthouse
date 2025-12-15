@@ -25,11 +25,17 @@ if [[ -f lantern-data/site-index-plus-golden-expectations.json ]] && ! [[ "$FORC
   exit 0
 fi
 
+
 rm -rf lantern-data/
 mkdir -p lantern-data/ && cd lantern-data
 
-curl -o golden-lantern-traces.zip -L https://storage.googleapis.com/lh-lantern-data/golden-lantern-traces-$VERSION.zip
-
-unzip -q golden-lantern-traces.zip
-rm golden-lantern-traces.zip
 echo $VERSION > version
+
+echo "Manual steps due to data download restrictions:"
+echo "open http://go/lhsth "
+echo "cd $LH_ROOT_PATH"
+echo "download golden-lantern-traces-$VERSION.zip to $LH_ROOT_PATH"
+echo "rename to golden-lantern-traces.zip"
+echo "unzip it."
+echo "then delete the zip".
+
