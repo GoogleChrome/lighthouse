@@ -12,7 +12,7 @@ import {
   selectCategories,
   selectMode,
   waitForStorageUsage,
-} from '../../e2e/helpers/lighthouse-helpers.js';
+} from '../helpers/lighthouse-helpers.js';
 
 describe('The Lighthouse start view', () => {
   // TODO (liviurau): Update clearSiteData helper to work in docked mode
