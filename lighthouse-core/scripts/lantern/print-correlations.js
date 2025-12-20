@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,64 +8,15 @@
 
 /* eslint-disable no-console */
 
-/**
- * @typedef LanternSiteDefinition
- * @property {string} url
- * @property {TargetMetrics} wpt3g
- * @property {LanternMetrics} lantern
- * @property {LanternMetrics} baseline
- */
-
-/**
- * @typedef LanternEvaluation
- * @property {string} url
- * @property {string} metric
- * @property {string} lanternMetric
- * @property {number} expected
- * @property {number} actual
- * @property {number} diff
- * @property {number} diffAsPercent
- */
-
-/**
- * @typedef EstimateEvaluationSummary
- * @property {LanternEvaluation[]} evaluations
- * @property {number} p50
- * @property {number} p90
- * @property {number} p95
- */
-
-/**
- * @typedef TargetMetrics
- * @property {number} [firstContentfulPaint]
- * @property {number} [firstMeaningfulPaint]
- * @property {number} [timeToFirstInteractive]
- * @property {number} [timeToConsistentlyInteractive]
- * @property {number} [speedIndex]
- */
-
-/**
- * @typedef LanternMetrics
- * @property {number} optimisticFCP
- * @property {number} optimisticFMP
- * @property {number} optimisticSI
- * @property {number} optimisticTTFCPUI
- * @property {number} optimisticTTI
- * @property {number} pessimisticFCP
- * @property {number} pessimisticFMP
- * @property {number} pessimisticSI
- * @property {number} pessimisticTTFCPUI
- * @property {number} pessimisticTTI
- * @property {number} roughEstimateOfFCP
- * @property {number} roughEstimateOfFMP
- * @property {number} roughEstimateOfSI
- * @property {number} roughEstimateOfTTFCPUI
- * @property {number} roughEstimateOfTTI
- */
+/** @typedef {import('./constants').LanternSiteDefinition} LanternSiteDefinition */
+/** @typedef {import('./constants').LanternEvaluation} LanternEvaluation */
+/** @typedef {import('./constants').EstimateEvaluationSummary} EstimateEvaluationSummary */
+/** @typedef {import('./constants').TargetMetrics} TargetMetrics */
+/** @typedef {import('./constants').LanternMetrics} LanternMetrics */
 
 const fs = require('fs');
 const path = require('path');
-const constants = require('./constants');
+const constants = require('./constants.js');
 const chalk = require('chalk').default;
 
 const GOOD_DIFF_AS_PERCENT_THRESHOLD = 0.2;
@@ -75,42 +26,15 @@ const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMP
 const COMPUTATIONS_PATH = path.resolve(process.cwd(), INPUT_PATH);
 const BASELINE_PATH = constants.MASTER_COMPUTED_PATH;
 
+
 if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summary file>');
 
 /** @type {{sites: LanternSiteDefinition[]}} */
 const siteIndexWithComputed = require(COMPUTATIONS_PATH);
 const baselineLanternData = require(BASELINE_PATH);
 
-for (const site of baselineLanternData.sites) {
-  const computedSite = siteIndexWithComputed.sites.find(entry => entry.url === site.url);
-  if (!computedSite) continue;
-  computedSite.baseline = site;
-}
-
-const entries = siteIndexWithComputed.sites.filter(site => site.lantern && site.baseline);
-
-if (!entries.length) {
-  throw new Error('No lantern metrics available, did you run run-on-all-assets.js?');
-}
-
-/**
- * @param {LanternSiteDefinition} site
- * @param {TargetMetrics} expectedMetrics
- * @param {LanternMetrics} actualMetrics
- * @param {keyof TargetMetrics} metric
- * @param {keyof LanternMetrics} lanternMetric
- * @return {(LanternEvaluation & LanternSiteDefinition)|null}
- */
-function evaluateSite(site, expectedMetrics, actualMetrics, metric, lanternMetric) {
-  const expected = Math.round(expectedMetrics[metric]);
-  if (expected === 0) return null;
-
-  const actual = Math.round(actualMetrics[lanternMetric]);
-  const diff = Math.abs(actual - expected);
-  const diffAsPercent = diff / expected;
-
-  return {...site, expected, actual, diff, diffAsPercent, metric, lanternMetric};
-}
+const entries = constants.combineBaselineAndComputedDatasets(siteIndexWithComputed,
+  baselineLanternData);
 
 /** @param {LanternEvaluation} evaluation */
 function isEvaluationGood(evaluation) {
@@ -126,39 +50,6 @@ function isEvaluationOK(evaluation) {
 /** @param {LanternEvaluation} evaluation */
 function isEvaluationBad(evaluation) {
   return evaluation.diffAsPercent > OK_DIFF_AS_PERCENT_THRESHOLD;
-}
-
-/**
- * @param {LanternSiteDefinition[]} entries
- * @param {keyof TargetMetrics} metric
- * @param {keyof LanternMetrics} lanternMetric
- * @param {'lantern'|'baseline'} [lanternOrBaseline]
- * @return {EstimateEvaluationSummary}
- */
-function evaluateAccuracy(entries, metric, lanternMetric, lanternOrBaseline = 'lantern') {
-  const evaluations = [];
-
-  const percentErrors = [];
-  for (const entry of entries) {
-    const evaluation = evaluateSite(
-      entry,
-      entry.wpt3g,
-      entry[lanternOrBaseline],
-      metric,
-      lanternMetric
-    );
-    if (!evaluation) continue;
-
-    evaluations.push(evaluation);
-    percentErrors.push(evaluation.diffAsPercent);
-  }
-
-  percentErrors.sort((a, b) => a - b);
-
-  const p50 = percentErrors[Math.floor((percentErrors.length / 100) * 50)];
-  const p90 = percentErrors[Math.floor((percentErrors.length / 100) * 90)];
-  const p95 = percentErrors[Math.floor((percentErrors.length / 100) * 95)];
-  return {evaluations, p50, p90, p95};
 }
 
 /** @type {LanternEvaluation[]} */
@@ -203,8 +94,8 @@ function toPercentString(percentAsDecimal) {
  * @param {keyof LanternMetrics} lanternMetric
  */
 function evaluateAndPrintAccuracy(metric, lanternMetric) {
-  const actualAccuracy = evaluateAccuracy(entries, metric, lanternMetric);
-  const baselineAccuracy = evaluateAccuracy(entries, metric, lanternMetric, 'baseline');
+  const actualAccuracy = constants.evaluateAccuracy(entries, metric, lanternMetric);
+  const baselineAccuracy = constants.evaluateAccuracy(entries, metric, lanternMetric, 'baseline');
   const baselineOptions = {alwaysGray: !lanternMetric.includes('roughEstimate')};
 
   const strings = [
@@ -351,6 +242,10 @@ evaluateAndPrintAccuracy('speedIndex', 'optimisticSI');
 evaluateAndPrintAccuracy('speedIndex', 'pessimisticSI');
 evaluateAndPrintAccuracy('speedIndex', 'roughEstimateOfSI');
 
+evaluateAndPrintAccuracy('largestContentfulPaint', 'optimisticLCP');
+evaluateAndPrintAccuracy('largestContentfulPaint', 'pessimisticLCP');
+evaluateAndPrintAccuracy('largestContentfulPaint', 'roughEstimateOfLCP');
+
 const estimates = allEvaluations.filter(entry => entry.lanternMetric.includes('roughEstimate'));
 const baselineEstimates = baselineEvaluations.filter(entry =>
   entry.lanternMetric.includes('roughEstimate')
@@ -377,6 +272,11 @@ findAndPrintWorst10Sites('timeToConsistentlyInteractive', [
   'roughEstimateOfTTI',
 ]);
 findAndPrintWorst10Sites('speedIndex', ['optimisticSI', 'pessimisticSI', 'roughEstimateOfSI']);
+findAndPrintWorst10Sites('largestContentfulPaint', [
+  'optimisticLCP',
+  'pessimisticLCP',
+  'roughEstimateOfLCP',
+]);
 
 findAndPrintFixesRegressions();
 
@@ -423,3 +323,10 @@ console.log(chalk.bold('\n ------- % Error Summary -------'));
 printPercentile(50);
 printPercentile(90);
 printPercentile(95);
+
+if (constants.WARNINGS.length) {
+  console.log('\n');
+  for (const message of new Set(constants.WARNINGS)) {
+    console.warn(chalk.yellowBright(message));
+  }
+}

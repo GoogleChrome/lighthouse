@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const URL = require('./url-shim');
+const URL = require('./url-shim.js');
 const cssParsers = require('cssstyle/lib/parsers');
 
 const ALLOWED_DISPLAY_VALUES = [
@@ -16,7 +16,7 @@ const ALLOWED_DISPLAY_VALUES = [
 ];
 /**
  * All display-mode fallbacks, including when unset, lead to default display mode 'browser'.
- * @see https://w3c.github.io/manifest/#dfn-default-display-mode
+ * @see https://www.w3.org/TR/2016/WD-appmanifest-20160825/#dfn-default-display-mode
  */
 const DEFAULT_DISPLAY_MODE = 'browser';
 
@@ -111,7 +111,7 @@ function checkSameOrigin(url1, url2) {
 }
 
 /**
- * https://w3c.github.io/manifest/#start_url-member
+ * https://www.w3.org/TR/2016/WD-appmanifest-20160825/#start_url-member
  * @param {*} jsonInput
  * @param {string} manifestUrl
  * @param {string} documentUrl
@@ -151,7 +151,7 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
     return {
       raw,
       value: documentUrl,
-      warning: 'ERROR: invalid start_url relative to ${manifestUrl}',
+      warning: `ERROR: invalid start_url relative to ${manifestUrl}`,
     };
   }
 
@@ -218,6 +218,7 @@ function parseOrientation(jsonInput) {
 }
 
 /**
+ * @see https://www.w3.org/TR/2016/WD-appmanifest-20160825/#src-member
  * @param {*} raw
  * @param {string} manifestUrl
  */
@@ -229,11 +230,28 @@ function parseIcon(raw, manifestUrl) {
     src.value = undefined;
   }
   if (src.value) {
-    // 9.4(4) - construct URL with manifest URL as the base
-    src.value = new URL(src.value, manifestUrl).href;
+    try {
+      // 9.4(4) - construct URL with manifest URL as the base
+      src.value = new URL(src.value, manifestUrl).href;
+    } catch (_) {
+      // 9.4 "This algorithm will return a URL or undefined."
+      src.warning = `ERROR: invalid icon url will be ignored: '${raw.src}'`;
+      src.value = undefined;
+    }
   }
 
   const type = parseString(raw.type, true);
+
+  const parsedPurpose = parseString(raw.purpose);
+  const purpose = {
+    raw: raw.purpose,
+    value: ['any'],
+    /** @type {string|undefined} */
+    warning: undefined,
+  };
+  if (parsedPurpose.value !== undefined) {
+    purpose.value = parsedPurpose.value.split(/\s+/).map(value => value.toLowerCase());
+  }
 
   const density = {
     raw: raw.density,
@@ -271,6 +289,7 @@ function parseIcon(raw, manifestUrl) {
       type,
       density,
       sizes,
+      purpose,
     },
     warning: undefined,
   };
@@ -301,20 +320,31 @@ function parseIcons(jsonInput, manifestUrl) {
     };
   }
 
-  // TODO(bckenny): spec says to skip icons missing `src`, so debug messages on
-  // individual icons are lost. Warn instead?
-  const value = raw
+  const parsedIcons = raw
     // 9.6(3)(1)
     .filter(icon => icon.src !== undefined)
     // 9.6(3)(2)(1)
-    .map(icon => parseIcon(icon, manifestUrl))
+    .map(icon => parseIcon(icon, manifestUrl));
+
+  // NOTE: we still lose the specific message on these icons, but it's not possible to surface them
+  // without a massive change to the structure and paradigms of `manifest-parser`.
+  const ignoredIconsWithWarnings = parsedIcons
+    .filter(icon => {
+      const possibleWarnings = [icon.warning, icon.value.type.warning, icon.value.src.warning,
+        icon.value.sizes.warning, icon.value.density.warning].filter(Boolean);
+      const hasSrc = !!icon.value.src.value;
+      return !!possibleWarnings.length && !hasSrc;
+    });
+
+  const value = parsedIcons
     // 9.6(3)(2)(2)
     .filter(parsedIcon => parsedIcon.value.src.value !== undefined);
 
   return {
     raw,
     value,
-    warning: undefined,
+    warning: ignoredIconsWithWarnings.length ?
+      'WARNING: Some icons were ignored due to warnings.' : undefined,
   };
 }
 
@@ -333,7 +363,7 @@ function parseApplication(raw) {
       appUrl.value = new URL(appUrl.value).href;
     } catch (e) {
       appUrl.value = undefined;
-      appUrl.warning = 'ERROR: invalid application URL ${raw.url}';
+      appUrl.warning = `ERROR: invalid application URL ${raw.url}`;
     }
   }
 
@@ -460,10 +490,21 @@ function parse(string, manifestUrl, documentUrl) {
   };
   /* eslint-enable camelcase */
 
+  /** @type {string|undefined} */
+  let manifestUrlWarning;
+  try {
+    const manifestUrlParsed = new URL(manifestUrl);
+    if (!manifestUrlParsed.protocol.startsWith('http')) {
+      manifestUrlWarning = `WARNING: manifest URL not available over a valid network protocol`;
+    }
+  } catch (_) {
+    manifestUrlWarning = `ERROR: invalid manifest URL: '${manifestUrl}'`;
+  }
+
   return {
     raw: string,
     value: manifest,
-    warning: undefined,
+    warning: manifestUrlWarning,
   };
 }
 

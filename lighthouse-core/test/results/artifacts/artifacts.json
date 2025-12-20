@@ -1,6 +1,7 @@
 {
   "LighthouseRunWarnings": [],
   "BenchmarkIndex": 1000,
+  "HostFormFactor": "desktop",
   "TestedAsMobileDevice": true,
   "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
   "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
@@ -13,7 +14,7 @@
     "output": [
       "html"
     ],
-    "maxWaitForFcp": 15000,
+    "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
     "throttlingMethod": "devtools",
     "throttling": {
@@ -28,30 +29,107 @@
     "gatherMode": "lighthouse-core/test/results/artifacts",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
+    "internalDisableDeviceScreenEmulation": false,
     "channel": "cli",
     "budgets": [
       {
+        "path": "/",
         "resourceSizes": [
           {
-            "resourceType": "script",
-            "budget": 125
+            "resourceType": "total",
+            "budget": 100
           },
           {
+            "resourceType": "stylesheet",
+            "budget": 5
+          },
+          {
+            "resourceType": "image",
+            "budget": 30
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 20
+          },
+          {
+            "resourceType": "script",
+            "budget": 30
+          },
+          {
+            "resourceType": "document",
+            "budget": 15
+          },
+          {
+            "resourceType": "other",
+            "budget": 5
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 25
+          }
+        ],
+        "resourceCounts": [
+          {
             "resourceType": "total",
-            "budget": 500
+            "budget": 10
+          },
+          {
+            "resourceType": "stylesheet",
+            "budget": 2
+          },
+          {
+            "resourceType": "image",
+            "budget": 2
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 1
+          },
+          {
+            "resourceType": "script",
+            "budget": 2
+          },
+          {
+            "resourceType": "document",
+            "budget": 1
+          },
+          {
+            "resourceType": "other",
+            "budget": 2
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 1
           }
         ],
         "timings": [
           {
-            "metric": "interactive",
-            "budget": 5000,
-            "tolerance": 1000
-          }
-        ],
-         "resourceCounts": [
+            "metric": "first-contentful-paint",
+            "budget": 3000
+          },
           {
-           "resourceType": "third-party",
-           "budget": 0
+            "metric": "first-cpu-idle",
+            "budget": 2900
+          },
+          {
+            "metric": "interactive",
+            "budget": 2900
+          },
+          {
+            "metric": "first-meaningful-paint",
+            "budget": 2000
+          },
+          {
+            "metric": "max-potential-fid",
+            "budget": 100
           }
         ]
       }
@@ -162,6 +240,7 @@
     {
       "type": "text/javascript",
       "src": null,
+      "id": "amp-style-styling-script",
       "async": false,
       "defer": false,
       "source": "head",
@@ -172,6 +251,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/dobetterweb/dbw_tester.js",
+      "id": "dbw-tester-script",
       "async": false,
       "defer": false,
       "source": "head",
@@ -182,6 +262,7 @@
     {
       "type": "module",
       "src": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "head",
@@ -192,6 +273,7 @@
     {
       "type": "text/javascript",
       "src": null,
+      "id": "error-time",
       "async": false,
       "defer": false,
       "source": "head",
@@ -202,6 +284,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "head",
@@ -212,6 +295,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -222,6 +306,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -232,6 +317,7 @@
     {
       "type": null,
       "src": null,
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -242,6 +328,7 @@
     {
       "type": null,
       "src": "http://localhost:10200/zone.js",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -252,6 +339,7 @@
     {
       "type": null,
       "src": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+      "id": null,
       "async": false,
       "defer": false,
       "source": "body",
@@ -260,6 +348,7 @@
       "requestId": "75994.22"
     }
   ],
+  "JsUsage": [],
   "CSSUsage": {
     "rules": [
       {
@@ -374,6 +463,9 @@
     "devicePixelRatio": 2.625
   },
   "WebAppManifest": null,
+  "InstallabilityErrors": {
+    "errors": []
+  },
   "MetaElements": [
     {
       "name": "",
@@ -382,6 +474,11 @@
     {
       "name": "viewport",
       "content": "width=device-width, initial-scale=1, minimum-scale=1"
+    },
+    {
+      "name": "",
+      "content": "Open Graph smoke test description",
+      "property": "og:description"
     }
   ],
   "RuntimeExceptions": [
@@ -1096,7 +1193,7 @@
         ],
         "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
         "help": "Elements must have sufficient color contrast",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/color-contrast?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
@@ -1106,7 +1203,8 @@
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
             "path": "3,HTML,1,BODY,5,DIV,0,H2",
-            "snippet": "<h2>"
+            "snippet": "<h2>",
+            "nodeLabel": "Do better web tester page"
           },
           {
             "impact": "serious",
@@ -1116,7 +1214,8 @@
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
             "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
-            "snippet": "<span>"
+            "snippet": "<span>",
+            "nodeLabel": "Hi there!"
           }
         ]
       },
@@ -1130,7 +1229,7 @@
         ],
         "description": "Ensures every HTML document has a lang attribute",
         "help": "<html> element must have a lang attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/html-has-lang?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
@@ -1140,7 +1239,8 @@
             ],
             "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute",
             "path": "3,HTML",
-            "snippet": "<html manifest=\"clock.appcache\">"
+            "snippet": "<html manifest=\"clock.appcache\">",
+            "nodeLabel": "html"
           }
         ]
       },
@@ -1156,7 +1256,7 @@
         ],
         "description": "Ensures <img> elements have alternate text or a role of none or presentation",
         "help": "Images must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/image-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/image-alt?application=axeAPI",
         "nodes": [
           {
             "impact": "critical",
@@ -1166,7 +1266,8 @@
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
             "path": "3,HTML,1,BODY,10,IMG",
-            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">"
+            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
+            "nodeLabel": "img"
           },
           {
             "impact": "critical",
@@ -1176,27 +1277,30 @@
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
             "path": "3,HTML,1,BODY,12,IMG",
-            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">"
+            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
+            "nodeLabel": "img"
           },
           {
             "impact": "critical",
             "html": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
             "target": [
-              "img[src$=\"lighthouse-rotating.gif\"]"
+              "img[src$=\"lighthouse-rotating\\.gif\"]"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
             "path": "3,HTML,1,BODY,14,IMG",
-            "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">"
+            "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
+            "nodeLabel": "img"
           },
           {
             "impact": "critical",
             "html": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
             "target": [
-              "img:nth-child(27)"
+              "img:nth-child(30)"
             ],
             "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,49,IMG",
-            "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">"
+            "path": "3,HTML,1,BODY,53,IMG",
+            "snippet": "<img src=\"blob:http://localhost:52281/459dbcc0-ca5f-47ef-b78f-e04d79c9e3fa\">",
+            "nodeLabel": "img"
           }
         ]
       },
@@ -1213,7 +1317,7 @@
         ],
         "description": "Ensures every form element has a label",
         "help": "Form elements must have labels",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/label?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/label?application=axeAPI",
         "nodes": [
           {
             "impact": "critical",
@@ -1222,18 +1326,20 @@
               "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,44,INPUT",
-            "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+            "path": "3,HTML,1,BODY,48,INPUT",
+            "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
+            "nodeLabel": "input"
           },
           {
             "impact": "critical",
             "html": "<input type=\"password\">",
             "target": [
-              "input:nth-child(25)"
+              "input:nth-child(28)"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,46,INPUT",
-            "snippet": "<input type=\"password\">"
+            "path": "3,HTML,1,BODY,50,INPUT",
+            "snippet": "<input type=\"password\">",
+            "nodeLabel": "input"
           },
           {
             "impact": "critical",
@@ -1242,8 +1348,9 @@
               "input[onpaste=\"return\\ false\\;\"]"
             ],
             "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,48,INPUT",
-            "snippet": "<input type=\"password\" onpaste=\"return false;\">"
+            "path": "3,HTML,1,BODY,52,INPUT",
+            "snippet": "<input type=\"password\" onpaste=\"return false;\">",
+            "nodeLabel": "input"
           }
         ]
       },
@@ -1260,27 +1367,29 @@
         ],
         "description": "Ensures links have discernible text",
         "help": "Links must have discernible text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/link-name?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/link-name?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
             "html": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
             "target": [
-              "a[href=\"javascript:void(0)\"]"
+              "a[href=\"javascript\\:void\\(0\\)\"]"
             ],
             "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,40,A",
-            "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
+            "path": "3,HTML,1,BODY,44,A",
+            "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+            "nodeLabel": "a"
           },
           {
             "impact": "serious",
             "html": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
             "target": [
-              "a[href$=\"mailto:inbox@email.com\"]"
+              "a[href$=\"mailto\\:inbox\\@email\\.com\"]"
             ],
             "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,42,A",
-            "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">"
+            "path": "3,HTML,1,BODY,46,A",
+            "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+            "nodeLabel": "a"
           }
         ]
       },
@@ -1296,7 +1405,7 @@
         ],
         "description": "Ensures <object> elements have alternate text",
         "help": "<object> elements must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/object-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/object-alt?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
@@ -1304,9 +1413,10 @@
             "target": [
               "#\\35 934a"
             ],
-            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
             "path": "3,HTML,1,BODY,2,OBJECT",
-            "snippet": "<object id=\"5934a\">"
+            "snippet": "<object id=\"5934a\">",
+            "nodeLabel": "object"
           },
           {
             "impact": "serious",
@@ -1314,14 +1424,27 @@
             "target": [
               "#\\35 934b"
             ],
-            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
             "path": "3,HTML,1,BODY,3,OBJECT",
-            "snippet": "<object id=\"5934b\">"
+            "snippet": "<object id=\"5934b\">",
+            "nodeLabel": "object"
           }
         ]
       }
     ],
     "notApplicable": [
+      {
+        "id": "accesskeys",
+        "impact": null,
+        "tags": [
+          "best-practice",
+          "cat.keyboard"
+        ],
+        "description": "Ensures every accesskey attribute value is unique",
+        "help": "accesskey attribute value must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/accesskeys?application=axeAPI",
+        "nodes": []
+      },
       {
         "id": "aria-allowed-attr",
         "impact": null,
@@ -1332,20 +1455,7 @@
         ],
         "description": "Ensures ARIA attributes are allowed for an element's role",
         "help": "Elements must only use allowed ARIA attributes",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "aria-dpub-role-fallback",
-        "impact": null,
-        "tags": [
-          "cat.aria",
-          "wcag2a",
-          "wcag131"
-        ],
-        "description": "Ensures unsupported DPUB roles are only used on elements with implicit fallback roles",
-        "help": "Unsupported DPUB ARIA roles should be used on elements with implicit fallback roles",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-dpub-role-fallback?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-allowed-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1358,7 +1468,7 @@
         ],
         "description": "Ensures elements with ARIA roles have all required ARIA attributes",
         "help": "Required ARIA attributes must be provided",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-required-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1371,7 +1481,7 @@
         ],
         "description": "Ensures elements with an ARIA role that require child roles contain them",
         "help": "Certain ARIA roles must contain particular children",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-required-children?application=axeAPI",
         "nodes": []
       },
       {
@@ -1384,7 +1494,7 @@
         ],
         "description": "Ensures elements with an ARIA role that require parent roles are contained by them",
         "help": "Certain ARIA roles must be contained by particular parents",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-required-parent?application=axeAPI",
         "nodes": []
       },
       {
@@ -1397,7 +1507,7 @@
         ],
         "description": "Ensures all elements with a role attribute use a valid value",
         "help": "ARIA roles used must conform to valid values",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-roles?application=axeAPI",
         "nodes": []
       },
       {
@@ -1410,7 +1520,7 @@
         ],
         "description": "Ensures all ARIA attributes have valid values",
         "help": "ARIA attributes must conform to valid values",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-valid-attr-value?application=axeAPI",
         "nodes": []
       },
       {
@@ -1423,37 +1533,7 @@
         ],
         "description": "Ensures attributes that begin with aria- are valid ARIA attributes",
         "help": "ARIA attributes must conform to valid names",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "audio-caption",
-        "impact": null,
-        "tags": [
-          "cat.time-and-media",
-          "wcag2a",
-          "wcag121",
-          "section508",
-          "section508.22.a"
-        ],
-        "description": "Ensures <audio> elements have captions",
-        "help": "<audio> elements must have a captions track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "button-name",
-        "impact": null,
-        "tags": [
-          "cat.name-role-value",
-          "wcag2a",
-          "wcag412",
-          "section508",
-          "section508.22.a"
-        ],
-        "description": "Ensures buttons have discernible text",
-        "help": "Buttons must have discernible text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-valid-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1466,7 +1546,7 @@
         ],
         "description": "Ensures <dl> elements are structured correctly",
         "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/definition-list?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/definition-list?application=axeAPI",
         "nodes": []
       },
       {
@@ -1479,33 +1559,7 @@
         ],
         "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
         "help": "<dt> and <dd> elements must be contained by a <dl>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/dlitem?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "duplicate-id-active",
-        "impact": null,
-        "tags": [
-          "cat.parsing",
-          "wcag2a",
-          "wcag411"
-        ],
-        "description": "Ensures every id attribute value of active elements is unique",
-        "help": "IDs of active elements must be unique",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-active?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "duplicate-id-aria",
-        "impact": null,
-        "tags": [
-          "cat.parsing",
-          "wcag2a",
-          "wcag411"
-        ],
-        "description": "Ensures every id attribute value used in ARIA and in labels is unique",
-        "help": "IDs used in ARIA and labels must be unique",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-aria?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/dlitem?application=axeAPI",
         "nodes": []
       },
       {
@@ -1521,7 +1575,7 @@
         ],
         "description": "Ensures <iframe> and <frame> elements contain a non-empty title attribute",
         "help": "Frames must have title attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/frame-title?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/frame-title?application=axeAPI",
         "nodes": []
       },
       {
@@ -1534,20 +1588,7 @@
         ],
         "description": "Ensures the lang attribute of the <html> element has a valid value",
         "help": "<html> element must have a valid value for the lang attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-lang-valid?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "html-xml-lang-mismatch",
-        "impact": null,
-        "tags": [
-          "cat.language",
-          "wcag2a",
-          "wcag311"
-        ],
-        "description": "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
-        "help": "HTML elements with lang and xml:lang must have the same base language",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-xml-lang-mismatch?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/html-lang-valid?application=axeAPI",
         "nodes": []
       },
       {
@@ -1562,7 +1603,7 @@
         ],
         "description": "Ensures <input type=\"image\"> elements have alternate text",
         "help": "Image buttons must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/input-image-alt?application=axeAPI",
         "nodes": []
       },
       {
@@ -1575,7 +1616,7 @@
         ],
         "description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",
         "help": "Layout tables must not use data table elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/layout-table?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/layout-table?application=axeAPI",
         "nodes": []
       },
       {
@@ -1588,7 +1629,7 @@
         ],
         "description": "Ensures that lists are structured correctly",
         "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/list?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/list?application=axeAPI",
         "nodes": []
       },
       {
@@ -1601,7 +1642,7 @@
         ],
         "description": "Ensures <li> elements are used semantically",
         "help": "<li> elements must be contained in a <ul> or <ol>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/listitem?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/listitem?application=axeAPI",
         "nodes": []
       },
       {
@@ -1617,7 +1658,7 @@
         ],
         "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
         "help": "Timed refresh must not exist",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/meta-refresh?application=axeAPI",
         "nodes": []
       },
       {
@@ -1629,7 +1670,7 @@
         ],
         "description": "Ensures tabindex attribute values are not greater than 0",
         "help": "Elements should not have tabindex greater than zero",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/tabindex?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/tabindex?application=axeAPI",
         "nodes": []
       },
       {
@@ -1644,7 +1685,7 @@
         ],
         "description": "Ensure that each cell in a table using the headers refers to another cell in that table",
         "help": "All cells in a table element that use the headers attribute must only refer to other cells of that same table",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/td-headers-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1659,7 +1700,7 @@
         ],
         "description": "Ensure that each table header in a data table refers to data cells",
         "help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/th-has-data-cells?application=axeAPI",
         "nodes": []
       },
       {
@@ -1672,7 +1713,7 @@
         ],
         "description": "Ensures lang attributes have valid values",
         "help": "lang attribute must have a valid value",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/valid-lang?application=axeAPI",
         "nodes": []
       },
       {
@@ -1687,7 +1728,7 @@
         ],
         "description": "Ensures <video> elements have captions",
         "help": "<video> elements must have captions",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/video-caption?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/video-caption?application=axeAPI",
         "nodes": []
       },
       {
@@ -1702,7 +1743,7 @@
         ],
         "description": "Ensures <video> elements have audio descriptions",
         "help": "<video> elements must have an audio description track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/video-description?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/video-description?application=axeAPI",
         "nodes": []
       }
     ]
@@ -1710,49 +1751,168 @@
   "AnchorElements": [
     {
       "href": "https://www.google.com/",
-      "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link",
       "rel": "",
       "target": "_blank",
-      "text": "external link"
+      "devtoolsNodePath": "3,HTML,1,BODY,36,A",
+      "selector": "body > a",
+      "nodeLabel": "external link",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">",
+      "listeners": []
     },
     {
       "href": "",
-      "outerHTML": "<a target=\"blank\">Hello</a>",
+      "rawHref": "",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link",
       "rel": "",
       "target": "_blank",
-      "text": "Hello"
+      "devtoolsNodePath": "3,HTML,1,BODY,38,A",
+      "selector": "body > a",
+      "nodeLabel": "external link",
+      "outerHTML": "<a target=\"_blank\">",
+      "listeners": []
     },
     {
       "href": "https://www.google.com/",
-      "outerHTML": "<a rel=\"noopener\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
-      "rel": "noopener",
-      "target": "_blank",
-      "text": "external link that uses noopener"
-    },
-    {
-      "href": "https://www.google.com/",
-      "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link",
       "rel": "nofollow",
       "target": "_blank",
-      "text": "external link that uses nofollow"
+      "devtoolsNodePath": "3,HTML,1,BODY,40,A",
+      "selector": "body > a",
+      "nodeLabel": "external link",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
+      "listeners": []
     },
     {
-      "href": "http://localhost:10200/dobetterweb/doesnotexist",
+      "href": "https://www.google.com/",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link that uses rel noopener and another unrelated rel attribute",
+      "rel": "noopener nofollow",
+      "target": "_blank",
+      "devtoolsNodePath": "3,HTML,1,BODY,42,A",
+      "selector": "body > a",
+      "nodeLabel": "external link that uses rel noopener and another unrelated rel attribute",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener nofollow\">",
+      "listeners": []
+    },
+    {
+      "href": "https://www.google.com/",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link that uses rel noreferrer and another unrelated rel attribute",
+      "rel": "noreferrer nofollow",
+      "target": "_blank",
+      "devtoolsNodePath": "3,HTML,1,BODY,44,A",
+      "selector": "body > a",
+      "nodeLabel": "external link that uses rel noreferrer and another unrelated rel attribute",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer nofollow\">",
+      "listeners": []
+    },
+    {
+      "href": "https://www.google.com/",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link that uses rel noopener",
+      "rel": "noopener",
+      "target": "_blank",
+      "devtoolsNodePath": "3,HTML,1,BODY,46,A",
+      "selector": "body > a",
+      "nodeLabel": "external link that uses rel noopener",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
+      "listeners": []
+    },
+    {
+      "href": "https://www.google.com/",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link that uses rel noreferrer",
+      "rel": "noreferrer",
+      "target": "_blank",
+      "devtoolsNodePath": "3,HTML,1,BODY,48,A",
+      "selector": "body > a",
+      "nodeLabel": "external link that uses rel noreferrer",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer\">",
+      "listeners": []
+    },
+    {
+      "href": "https://www.google.com/",
+      "rawHref": "https://www.google.com/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "external link that uses rel noopener and noreferrer",
+      "rel": "noopener noreferrer",
+      "target": "_blank",
+      "devtoolsNodePath": "3,HTML,1,BODY,50,A",
+      "selector": "body > a",
+      "nodeLabel": "external link that uses rel noopener and noreferrer",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener noreferrer\">",
+      "listeners": []
+    },
+    {
+      "href": "http://localhost:53133/dobetterweb/doesnotexist",
+      "rawHref": "./doesnotexist",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "internal link is ok",
       "rel": "",
       "target": "_blank",
-      "text": "internal link is ok"
+      "devtoolsNodePath": "3,HTML,1,BODY,52,A",
+      "selector": "body > a",
+      "nodeLabel": "internal link is ok",
+      "outerHTML": "<a href=\"./doesnotexist\" target=\"_blank\">",
+      "listeners": []
     },
     {
       "href": "javascript:void(0)",
+      "rawHref": "javascript:void(0)",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "",
       "rel": "",
       "target": "_blank",
-      "text": ""
+      "devtoolsNodePath": "3,HTML,1,BODY,54,A",
+      "selector": "body > a",
+      "nodeLabel": "a",
+      "outerHTML": "<a href=\"javascript:void(0)\" target=\"_blank\">",
+      "listeners": []
     },
     {
       "href": "mailto:inbox@email.com",
+      "rawHref": "mailto:inbox@email.com",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "",
       "rel": "",
       "target": "_blank",
-      "text": ""
+      "devtoolsNodePath": "3,HTML,1,BODY,56,A",
+      "selector": "body > a",
+      "nodeLabel": "a",
+      "outerHTML": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">",
+      "listeners": []
     }
   ],
   "AppCacheManifest": "clock.appcache",
@@ -1783,6 +1943,12 @@
       "id": "jquery",
       "name": "jQuery",
       "version": "2.1.1",
+      "npm": "jquery"
+    },
+    {
+      "detector": "js",
+      "id": "jquery-fast",
+      "name": "jQuery (Fast path)",
       "npm": "jquery"
     },
     {
@@ -2002,7 +2168,79 @@
     "status": 404,
     "content": null
   },
-  "TapTargets": [],
+  "TapTargets": [
+    {
+      "clientRects": [
+        {
+          "width": 200,
+          "height": 18,
+          "left": 8,
+          "top": 1268.8125,
+          "right": 208,
+          "bottom": 1286.8125
+        }
+      ],
+      "snippet": "<button class=\"small-button\">Do something</button>",
+      "path": "3,HTML,1,BODY,17,BUTTON",
+      "selector": "body > button.small-button",
+      "nodeLabel": "Do something",
+      "href": ""
+    },
+    {
+      "clientRects": [
+        {
+          "width": 200,
+          "height": 18,
+          "left": 8,
+          "top": 1286.8125,
+          "right": 208,
+          "bottom": 1304.8125
+        }
+      ],
+      "snippet": "<button class=\"small-button\">Do something else</button>",
+      "path": "3,HTML,1,BODY,18,BUTTON",
+      "selector": "body > button.small-button",
+      "nodeLabel": "Do something else",
+      "href": ""
+    }
+  ],
+  "TraceElements": [
+    {
+      "metricName": "largest-contentful-paint",
+      "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,1,P",
+      "selector": "body > div > p",
+      "nodeLabel": "This domain is for use in illustrative examples in documents. You may use this …",
+      "snippet": "<p class=\"paragraph\">"
+    },
+    {
+      "metricName": "cumulative-layout-shift",
+      "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,3,H5",
+      "selector": "div.blog-index > article > div.entry-content > h5",
+      "nodeLabel": "Debugging Node.js with Chrome DevTools",
+      "snippet": "<h5>"
+    },
+    {
+      "metricName": "cumulative-layout-shift",
+      "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,4,P",
+      "selector": "div.blog-index > article > div.entry-content > p",
+      "nodeLabel": "The canonical guide to using the Chrome DevTools UI for debugging Node.js. It d…",
+      "snippet": "<p>"
+    },
+    {
+      "metricName": "cumulative-layout-shift",
+      "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,5,HR",
+      "selector": "div.blog-index > article > div.entry-content > hr",
+      "nodeLabel": "hr",
+      "snippet": "<hr>"
+    },
+    {
+      "metricName": "cumulative-layout-shift",
+      "devtoolsNodePath": "1,HTML,1,BODY,2,DIV,0,DIV,0,DIV,0,ARTICLE,1,DIV,6,P",
+      "selector": "div.blog-index > article > div.entry-content > p",
+      "nodeLabel": "Aside from that, I’ve been busy working on Lighthouse, performance metrics, too…",
+      "snippet": "<p>"
+    }
+  ],
   "ServiceWorker": {
     "versions": [],
     "registrations": []
@@ -2022,5 +2260,7 @@
     "name": "html",
     "systemId": "",
     "publicId": ""
-  }
+  },
+  "MainDocumentContent": "<!doctype html>\n<!--\n * Copyright 2016 Google Inc. All Rights Reserved.\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0\n * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n-->\n\n<!-- FAIL - appcache manifest. Note: Appcache cannot be toggled at runtime. -->\n<html manifest=\"clock.appcache\">\n<head>\n<title>DoBetterWeb Mega Tester... Of Death</title>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n\n<template id=\"links-blocking-first-paint-tmpl\">\n  <link rel=\"stylesheet\" href=\"./dbw_tester.css?scriptActivated&delay=200\"> <!-- PASS: initiator is script -->\n</template>\n\n<!-- AMP-style stylesheet script -->\n<!-- based on https://github.com/ampproject/amphtml/blob/38f1bdf4cc385f9a25cf2979abf215952880b876/src/font-stylesheet-timeout.js#L87-L103 -->\n<script type=\"text/javascript\" id=\"amp-style-styling-script\">\n  setTimeout(() => {\n    const stylesheet = document.getElementById('amp-style-link');\n    stylesheet.media = 'not-matching';\n    stylesheet.onload = () => stylesheet.media = 'screen';\n    stylesheet.parentNode.insertBefore(stylesheet, stylesheet.nextSibling);\n  }, 1500);\n</script>\n\n<!-- Note: these will only fail when using the static-server.js, which supports the ?delay=true param.\n     If you're using your own server, the resource will load instantly and the\n     stylesheets will be ignored for being below the threshold. -->\n<link rel=\"stylesheet\" href=\"./dbw_tester.css?delay=100\">\n<link rel=\"stylesheet\" href=\"./unknown404.css?delay=200\"> <!-- FAIL -->\n<link rel=\"stylesheet\" href=\"./dbw_tester.css?delay=2200\"> <!-- FAIL -->\n<link rel=\"stylesheet\" href=\"./dbw_disabled.css?delay=200&isdisabled\" disabled> <!-- PASS -->\n<link rel=\"import\" href=\"./dbw_partial_a.html?delay=200\"> <!-- FAIL -->\n<link rel=\"import\" href=\"./dbw_partial_b.html?delay=200&isasync\" async> <!-- PASS -->\n\n<!-- FAIL: render blocking but capped at 500ms -->\n<link id=\"amp-style-link\" rel=\"stylesheet\" href=\"./dbw_tester.css?delay=3000&capped\">\n<!-- PASS: preload that's activated later does not block rendering. -->\n<link rel=\"preload\" href=\"./dbw_tester.css?delay=2000&async=true\" as=\"style\" onload=\"this.rel = 'stylesheet'\">\n<!-- PASS: async stylesheet -->\n<link rel=\"stylesheet\" href=\"./dbw_tester.css?delay=3000&async=true\" disabled onload=\"this.disabled = false\">\n\n<!-- Alternate stylesheets should not show in TagsBlockingFirstPaint artifact -->\n<link rel=\"alternate stylesheet\" href=\"./empty.css\">\n\n<!-- FAIL: block rendering -->\n<script src=\"./dbw_tester.js\" id=\"dbw-tester-script\"></script>\n\n<!-- PASS: 'modules' are deferred by default and don't block rendering -->\n<script type=\"module\" src=\"./empty_module.js?delay=500\"></script>\n\n<!-- FAIL(errors-in-console): exception thrown -->\n<script type=\"text/javascript\" id=\"error-time\">throw new Error('A distinctive error');</script>\n\n<!-- Add non-functional script to appear to be a Wordpress page for Stack Packs. -->\n<script type=\"example\" src=\"fake-script-wp-includes\"></script>\n\n<style>\n  body {\n    color: #000;\n  }\n  .failedselector {\n    -webkit-box-flex: 1; /* FAIL */\n    box-flex: 1; /* FAIL */\n  }\n</style>\n\n<template id=\"old-flexbox-tmpl\">\n<style>\n  p, div {\n    background: red, green;\n    border-radius: 3px;\n    transform: translateZ(0);\n    display: box; /* FAIL */\n    transition: opacity 300ms ease-in-out;\n  }\n  .span {\n    transform: translate3d(0,0,0);\n    display: box; /* FAIL: old flexbox usage */\n  }\n  .span2,\n  .span3 {\n          display: box;  /* FAIL: old flexbox usage */\n    color:     red;\n  }\n  .span4,\n  .span5 { display:     box; /* FAIL - old flexbox, weird formatting */\n    box-shadow: 3px 3px 3px purple,\n                3px 3px 3px blue;\n  }\n  .span6 {\n    box-shadow: 3px 3px 3px purple,\n                3px 3px\n                3px green;\n  }\n</style>\n</template>\n\n<template id=\"deprecations-tmpl\">\n  <style>\n    body /deep/ div {\n      color: pink; /* FAIL - deprecation warning */\n    }\n  </style>\n</template>\n\n<!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->\n<!-- even when other forces were responsible for delaying the render. -->\n<script src=\"./fcp-delayer.js?delay=5000\"></script>\n</head>\n<body>\n\n<!-- Various sites like to assign HTMLElements a custom `matches` property. See issue #5934 -->\n\n<!-- EmbeddedContent will process these elements -->\n<object id=\"5934a\"></object>\n<object id=\"5934b\"></object>\n\n<div id=\"shadow-root-container\"></div>\n<script>\n  // DOM Size has had trouble with very specific shadow root traversal issues.\n  // Make sure it can handle reporting of the widest element being a shadow root.\n  const shadowRootContainer = document.getElementById('shadow-root-container');\n  const shadowRoot = shadowRootContainer.attachShadow({mode: 'open'});\n  for (let i = 0; i < 100; i++) {\n    const span = document.createElement('span');\n    shadowRoot.appendChild(span);\n  }\n</script>\n\n<script>\n  // Ensure gatherers still work when individual elements override '.matches'\n  document.getElementById(\"5934a\").matches = \"blahblah\";\n  Object.defineProperty(document.getElementById(\"5934b\"), 'matches', {\n    value: \"blahblah\"\n  });\n  // Ensure gatherers still work when the prototype is messed with\n  HTMLElement.prototype.matches = { value: \"blahblah\" };\n\n\n  // Ensure long-task collection still works when performance.now is redefined\n  window.performance.now = 'right now';\n</script>\n\n<div>\n  <h2>Do better web tester page</h2>\n  <span>Hi there!</span>\n\n  <!-- Invalid SVG with a link just to ensure the `LinkElements` gatherer can handle it. -->\n  <svg role=\"img\" class=\"social-facebook\" aria-labelledby=\"social-facebook-5\">\n    <title id=\"social-facebook-5\">Facebook</title>\n    <link rel=\"preload\" href=\"https://fonts.googleapis.com/made-up-url\"></link>\n    <use xlink:href=\"\"></use>\n  </svg>\n</div>\n\n<section id=\"touchmove-section\">touchmove section</section>\n\n<template id=\"noopener-links-tmpl\">\n  <!-- FAIL - does not use rel=\"noopener\" to open external link -->\n  <a href=\"https://www.google.com/\" target=\"_blank\">external link</a>\n  <!-- FAIL - does not use rel=\"noopener\" and has no href attribute, giving an\n    href value of '' when read, which will throw in a `new URL('')` constructor -->\n  <a target=\"_blank\">external link</a>\n  <!-- FAIL - external link that does have a rel attribute but it is not \"noopener\" -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">external link</a>\n  <!-- PASS - external link correctly uses rel=\"noopener\" and an additional rel value -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener nofollow\">external link that uses rel noopener and another unrelated rel attribute</a>\n  <!-- PASS - external link correctly uses rel=\"noreferrer\" and an additional rel value -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer nofollow\">external link that uses rel noreferrer and another unrelated rel attribute</a>\n  <!-- PASS - external link correctly uses rel=\"noopener\" -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">external link that uses rel noopener</a>\n  <!-- PASS - external link correctly uses rel=\"noreferrer\" -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noreferrer\">external link that uses rel noreferrer</a>\n  <!-- PASS - external link correctly uses rel=\"noopener\" and rel=\"noreferrer\" -->\n  <a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener noreferrer\">external link that uses rel noopener and noreferrer</a>\n  <!-- PASS - internal link without rel=\"noopener\" -->\n  <a href=\"./doesnotexist\" target=\"_blank\">internal link is ok</a>\n  <!-- PASS - href uses javascript: -->\n  <a href=\"javascript:void(0)\" target=\"_blank\"></a>\n  <!-- PASS - href uses mailto: -->\n  <a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>\n</template>\n\n<template id=\"password-inputs-can-be-pasted-into\">\n  <!-- FAIL - calls preventDefault on event -->\n  <input type=\"password\" onpaste=\"event.preventDefault();\" />\n  <!-- PASS -->\n  <input type=\"password\" />\n  <!-- FAIL - returns false in event handler -->\n  <input type=\"password\" onpaste=\"return false;\" />\n\n</template>\n\n<!-- FAIL(image-aspect-ratio): image is naturally 480x318 -->\n<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">\n<!-- PASS(image-aspect-ratio) -->\n<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">\n\n<!-- FAIL(efficient-animated-content): animated gif found -->\n<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">\n\n<!-- FAIL(tap-targets): buttons too close together -->\n<style>\n.small-button {\n  display: block;\n  width: 200px;\n}\n</style>\n<button class=\"small-button\">Do something</button>\n<button class=\"small-button\">Do something else</button>\n\n<!-- Some websites overwrite the original Error object. The captureJSCallUsage function\n  relies on the native Error object and prepareStackTrace from V8. When overwriting the stack\n  property the e.stack inside the gatherer won't be in the correct format\n  https://github.com/GoogleChrome/lighthouse/issues/1194 -->\n<script>window.Error = function(error) { this.stack = 'stacktrace'; };</script>\n\n<!-- Does the automatic dialog suppression `driver.dismissJavaScriptDialogs()` work? -->\n<script>window.confirm('Is DBW Mega Tester the best site?')</script>\n\n<script>\nfunction stampTemplate(id, location) {\n  const template = document.querySelector('#' + id);\n  location.appendChild(template.content.cloneNode(true));\n}\n\nfunction dateNowTest() {\n  function helloDate() {\n    // FAIL - Date.now() usage in a function.\n    return Date.now();\n  }\n  helloDate();\n  const d = Date.now(); // FAIL\n  eval('Date.now()'); // FAIL\n  new Function('Date.now()')() // FAIL\n}\n\nfunction consoleTimeTest() {\n  // FAIL\n  console.time('arg1');\n  for (let i = 0; i < 2; i++) {\n    // FAIL\n    console.time('arg2');\n  }\n  console.timeEnd('arg1');\n  console.timeEnd('arg2');\n\n  eval(\"console.time('arg3')\"); // FAIL\n}\n\nfunction documentWriteTest() {\n  document.write('Hi'); // FAIL\n  document.write('There'); // FAIL\n  document.write('2.0!'); // FAIL\n}\n\nfunction passiveEventsListenerTest() {\n  // FAIL or PASS - field trial for document level defaulting to passive M71+\n  window.addEventListener('wheel', function(e) {\n    console.log('wheel');\n  });\n\n  // PASS - document level defaults to passive M56+\n  window.addEventListener('touchstart', function(e) {\n    console.log('touchstart');\n  });\n\n  // PASS - passive:false doesn't get a warning now. crbug.com/770208\n  window.addEventListener('mousewheel', function(e) {\n    console.log('mousewheel');\n  }, {passive: false});\n\n  // PASS - document level defaults to passive M56+\n  document.addEventListener('touchstart', function(e) {\n    console.log('touchstart document');\n  });\n\n  // PASS - document level defaults to passive M56+\n  document.body.addEventListener('touchmove', function(e) {\n    console.log('touchmove');\n  });\n\n  // FAIL\n  const el = document.querySelector('#touchmove-section');\n  el.addEventListener('touchmove', function(e) {\n    console.log('touchmove');\n  });\n\n  // PASS - calls preventDefault() but isnt passive;\n  document.addEventListener('touchstart', function(e) {\n\n    e.preventDefault(); // intentionally surrounded by whitespace.\n\n    console.log('touchstart - preventDefault called');\n  });\n\n  // PASS\n  document.body.addEventListener('touchstart', function(e) {\n    console.log('touchstart');\n  }, {passive: true});\n\n  // PASS\n  window.addEventListener('touchstart', function(e) {\n    console.log('touchstart passive');\n  }, {passive: true});\n\n  // PASS - another event on window that isn't wheel/touch\n  window.addEventListener('scroll', function(e) {\n    console.log('scroll');\n  });\n}\n\nfunction geolocationOnStartTest() {\n  navigator.geolocation.getCurrentPosition(function(position) {\n    // noop\n  });\n\n  const watchID = navigator.geolocation.watchPosition(function(position) {\n    navigator.geolocation.clearWatch(watchID);\n  });\n}\n\nfunction notificationOnStartTest() {\n  Notification.requestPermission().then(function () {\n    // noop\n  });\n}\n\nfunction oldCSSFlexboxTest() {\n  stampTemplate('old-flexbox-tmpl', document.body);\n}\n\nfunction linksBlockingFirstPaintTest() {\n  stampTemplate('links-blocking-first-paint-tmpl', document.head);\n}\n\nfunction noRelOpenLinksTest() {\n  stampTemplate('noopener-links-tmpl', document.body);\n}\n\nfunction passwordInputsCanBePastedIntoTest() {\n  stampTemplate('password-inputs-can-be-pasted-into', document.body);\n}\n\n\nfunction deprecationsTest() {\n  stampTemplate('deprecations-tmpl', document.head);\n\n  // TODO: some deprecated API messages are not currently being logged correctly.\n  // See: https://crbug.com/680832\n\n  // FAIL\n  const xhr = new XMLHttpRequest();\n  xhr.open('GET', 'dbw_tester.html', false);\n  xhr.send();\n\n  // One more failure in dbw_tester.js\n}\n\nfunction isOnHttps() {\n  // Check blob URL.\n  const blob = new Blob(['fake'])\n  const img = document.createElement('img');\n  img.src = URL.createObjectURL(blob);\n  document.body.appendChild(img); // PASS\n}\n\n// Figure out which tests to fun.\nconst params = new URLSearchParams(location.search);\nif (location.search === '') {\n  documentWriteTest();\n  dateNowTest();\n  consoleTimeTest();\n  passiveEventsListenerTest();\n  geolocationOnStartTest();\n  notificationOnStartTest();\n  linksBlockingFirstPaintTest();\n  noRelOpenLinksTest();\n  // oldCSSFlexboxTest();\n  deprecationsTest();\n  passwordInputsCanBePastedIntoTest();\n  isOnHttps();\n} else {\n  if (params.has('documentWrite')) {\n    documentWriteTest();\n  }\n  if (params.has('dateNow')) {\n    dateNowTest();\n  }\n  if (params.has('consoleTime')) {\n    consoleTimeTest();\n  }\n  if (params.has('passiveEvents')) {\n    passiveEventsListenerTest();\n  }\n  if (params.has('geolocation')) {\n    geolocationOnStartTest();\n  }\n  if (params.has('notifications')) {\n    notificationOnStartTest();\n  }\n  if (params.has('linksblockfp')) {\n    linksBlockingFirstPaintTest();\n  }\n  if (params.has('relnoopener')) {\n    noRelOpenLinksTest();\n  }\n  // if (params.has('oldcssflexbox')) {\n  //   oldCSSFlexboxTest();\n  // }\n  if (params.has('deprecations')) {\n    deprecationsTest();\n  }\n  if (params.has('passwordinputs')) {\n    passwordInputsCanBePastedIntoTest();\n  }\n  if (params.has('isonhttps')) {\n    isOnHttps();\n  }\n}\n</script>\n\n<!-- Including this script validates that driver.evaluateAsync() still works even with\n  window.Promise being mucked with. See file source for details.\n  Also, script is located down here to avoid being flagged in render-blocking-resources. -->\n<script src=\"./third_party/aggressive-promise-polyfill.js\"></script>\n\n<!-- FAIL(is-on-https): requires a non-localhost http file\n     FAIL(no-vulnerable-libraries): Loads a vulnerable JS library -->\n<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js\"></script>\n\n</body>\n</html>\n",
+  "SourceMaps": []
 }

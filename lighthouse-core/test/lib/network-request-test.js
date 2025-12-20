@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -90,7 +90,7 @@ describe('NetworkRequest', () => {
       };
     }
 
-    it('updates timings if in Lightrider', () => {
+    it('updates lrStatistics if in Lightrider', () => {
       const req = getRequest();
 
       const devtoolsLog = networkRecordsToDevtoolsLog([req]);
@@ -98,17 +98,8 @@ describe('NetworkRequest', () => {
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
       expect(record.startTime).toStrictEqual(0);
-      expect(record.endTime).toStrictEqual(10);
-      expect(record.responseReceivedTime).toStrictEqual(7.5);
-      expect(record.timing).toMatchObject({
-        connectStart: 0,
-        connectEnd: 5000,
-        sslStart: 4000,
-        sslEnd: 5000,
-        sendStart: 5000,
-        sendEnd: 5000,
-        receiveHeadersEnd: 7500,
-      });
+      expect(record.endTime).toStrictEqual(2);
+      expect(record.responseReceivedTime).toStrictEqual(1);
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,
         TCPMs: 5000,
@@ -198,18 +189,6 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(record.startTime).toStrictEqual(0);
-      expect(record.endTime).toStrictEqual(10);
-      expect(record.responseReceivedTime).toStrictEqual(0);
-      expect(record.timing).toMatchObject({
-        connectStart: 0,
-        connectEnd: 0,
-        sslStart: 0,
-        sslEnd: 0,
-        sendStart: 0,
-        sendEnd: 0,
-        receiveHeadersEnd: 0,
-      });
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,
         TCPMs: 0,
@@ -228,18 +207,6 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(record.startTime).toStrictEqual(0);
-      expect(record.endTime).toStrictEqual(10);
-      expect(record.responseReceivedTime).toStrictEqual(1);
-      expect(record.timing).toMatchObject({
-        connectStart: 0,
-        connectEnd: 1000,
-        sslStart: 1000,
-        sslEnd: 1000,
-        sendStart: 1000,
-        sendEnd: 1000,
-        receiveHeadersEnd: 1000,
-      });
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,
         TCPMs: 1000,
@@ -248,40 +215,7 @@ describe('NetworkRequest', () => {
       });
     });
 
-    it('created a new timing property if one did not exist', function() {
-      const req = getRequest();
-
-      const devtoolsLog = networkRecordsToDevtoolsLog([req]);
-
-      const noLRRecord = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
-      expect(noLRRecord.timing).toStrictEqual(undefined);
-
-      global.isLightrider = true;
-      const lrRecord = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
-      expect(lrRecord.timing.proxyStart).toStrictEqual(-1);
-
-      expect(lrRecord.startTime).toStrictEqual(0);
-      expect(lrRecord.endTime).toStrictEqual(10);
-      expect(lrRecord.responseReceivedTime).toStrictEqual(7.5);
-      expect(lrRecord.timing).toMatchObject({
-        proxyStart: -1,
-        connectStart: 0,
-        connectEnd: 5000,
-        sslStart: 4000,
-        sslEnd: 5000,
-        sendStart: 5000,
-        sendEnd: 5000,
-        receiveHeadersEnd: 7500,
-      });
-      expect(lrRecord.lrStatistics).toStrictEqual({
-        endTimeDeltaMs: -8000,
-        TCPMs: 5000,
-        requestMs: 2500,
-        responseMs: 2500,
-      });
-    });
-
-    it('overrides existing timing properties', function() {
+    it('does not override existing timing properties', function() {
       const req = getRequest();
       req.timing = {proxyStart: 17, sslStart: 35};
       const devtoolsLog = networkRecordsToDevtoolsLog([req]);
@@ -293,18 +227,9 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const lrRecord = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(lrRecord.startTime).toStrictEqual(0);
-      expect(lrRecord.endTime).toStrictEqual(10);
-      expect(lrRecord.responseReceivedTime).toStrictEqual(7.5);
       expect(lrRecord.timing).toMatchObject({
-        proxyStart: -1,
-        connectStart: 0,
-        connectEnd: 5000,
-        sslStart: 4000,
-        sslEnd: 5000,
-        sendStart: 5000,
-        sendEnd: 5000,
-        receiveHeadersEnd: 7500,
+        proxyStart: 17,
+        sslStart: 35,
       });
       expect(lrRecord.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,

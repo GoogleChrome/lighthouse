@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -15,7 +15,7 @@ const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 const SUGGESTED_SHORTNAME_LENGTH = 12;
 
 class ManifestValues {
-  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>) => boolean} Validator */
+  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>, errors: LH.Artifacts.InstallabilityErrors['errors']) => boolean} Validator */
 
   /**
    * @return {Array<{id: LH.Artifacts.ManifestValueCheckID, failureText: string, validate: Validator}>}
@@ -28,16 +28,28 @@ class ManifestValues {
         validate: manifestValue => !!manifestValue.start_url.value,
       },
       {
-        id: 'hasIconsAtLeast192px',
-        failureText: 'Manifest does not have a PNG icon of at least 192px',
+        id: 'hasIconsAtLeast144px',
+        failureText: 'Manifest does not have a PNG icon of at least 144px',
         validate: manifestValue => icons.doExist(manifestValue) &&
-            icons.pngSizedAtLeast(192, manifestValue).length > 0,
+            icons.pngSizedAtLeast(144, manifestValue).length > 0,
       },
       {
         id: 'hasIconsAtLeast512px',
         failureText: 'Manifest does not have a PNG icon of at least 512px',
         validate: manifestValue => icons.doExist(manifestValue) &&
             icons.pngSizedAtLeast(512, manifestValue).length > 0,
+      },
+      {
+        id: 'fetchesIcon',
+        failureText: 'Manifest icon failed to be fetched',
+        validate: (manifestValue, errors) => {
+          const failedToFetchIconErrorIds = [
+            'cannot-download-icon',
+            'no-icon-available',
+          ];
+          return icons.doExist(manifestValue) &&
+            !errors.some(error => failedToFetchIconErrorIds.includes(error.errorId));
+        },
       },
       {
         id: 'hasPWADisplayValue',
@@ -72,24 +84,30 @@ class ManifestValues {
         failureText: 'Manifest does not have `name`',
         validate: manifestValue => !!manifestValue.name.value,
       },
+      {
+        id: 'hasMaskableIcon',
+        failureText: 'Manifest does not have at least one icon that is maskable',
+        validate: ManifestValue => icons.doExist(ManifestValue) &&
+            icons.containsMaskableIcon(ManifestValue),
+      },
     ];
   }
 
   /**
    * Returns results of all manifest checks
-   * @param {LH.Artifacts['WebAppManifest']} manifest
+   * @param {Pick<LH.Artifacts, 'WebAppManifest'|'InstallabilityErrors'>} Manifest
    * @return {Promise<LH.Artifacts.ManifestValues>}
    */
-  static async compute_(manifest) {
+  static async compute_({WebAppManifest, InstallabilityErrors}) {
     // if the manifest isn't there or is invalid json, we report that and bail
-    if (manifest === null) {
+    if (WebAppManifest === null) {
       return {
         isParseFailure: true,
         parseFailureReason: 'No manifest was fetched',
         allChecks: [],
       };
     }
-    const manifestValue = manifest.value;
+    const manifestValue = WebAppManifest.value;
     if (manifestValue === undefined) {
       return {
         isParseFailure: true,
@@ -103,7 +121,7 @@ class ManifestValues {
       return {
         id: item.id,
         failureText: item.failureText,
-        passing: item.validate(manifestValue),
+        passing: item.validate(manifestValue, InstallabilityErrors.errors),
       };
     });
 

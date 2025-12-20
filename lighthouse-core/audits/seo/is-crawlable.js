@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const robotsParser = require('robots-parser');
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const MainResource = require('../../computed/main-resource.js');
 const BLOCKLIST = new Set([
   'noindex',
@@ -24,8 +24,7 @@ const UIStrings = {
   failureTitle: 'Page is blocked from indexing',
   /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Search engines are unable to include your pages in search results ' +
-      'if they don\'t have permission to crawl them. [Learn ' +
-      'more](https://developers.google.com/web/tools/lighthouse/audits/indexing).',
+      'if they don\'t have permission to crawl them. [Learn more](https://web.dev/is-crawable).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -81,7 +80,7 @@ class IsCrawlable extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['MetaElements', 'RobotsTxt', 'URL'],
+      requiredArtifacts: ['MetaElements', 'RobotsTxt', 'URL', 'devtoolsLogs'],
     };
   }
 
@@ -123,10 +122,14 @@ class IsCrawlable extends Audit {
           const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
 
           if (!robotsTxt.isAllowed(mainResource.url)) {
+            const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
             blockingDirectives.push({
               source: {
-                type: /** @type {'url'} */ ('url'),
-                value: robotsFileUrl.href,
+                type: /** @type {'source-location'} */ ('source-location'),
+                url: robotsFileUrl.href,
+                urlProvider: /** @type {'network'} */ ('network'),
+                line: line - 1,
+                column: 0,
               },
             });
           }

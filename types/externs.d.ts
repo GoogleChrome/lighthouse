@@ -1,11 +1,35 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
+
+// Convert unions (T1 | T2 | T3) into tuples ([T1, T2, T3]).
+// https://stackoverflow.com/a/52933137/2788187 https://stackoverflow.com/a/50375286
+type UnionToIntersection<U> =
+(U extends any ? (k: U)=>void : never) extends ((k: infer I)=>void) ? I : never
+
+type UnionToFunctions<U> =
+  U extends unknown ? (k: U) => void : never;
+
+type IntersectionOfFunctionsToType<F> =
+  F extends { (a: infer A): void; (b: infer B): void; (c: infer C): void; (d: infer D): void; } ? [A, B, C, D] :
+  F extends { (a: infer A): void; (b: infer B): void; (c: infer C): void; } ? [A, B, C] :
+  F extends { (a: infer A): void; (b: infer B): void; } ? [A, B] :
+  F extends { (a: infer A): void } ? [A] :
+  never;
+
+type SplitType<T> =
+  IntersectionOfFunctionsToType<UnionToIntersection<UnionToFunctions<T>>>;
+
+// (T1 | T2 | T3) -> [RecursivePartial(T1), RecursivePartial(T2), RecursivePartial(T3)]
+type RecursivePartialUnion<T, S=SplitType<T>> = {[P in keyof S]: RecursivePartial<S[P]>};
+
+// Return length of a tuple.
+type GetLength<T extends any[]> = T extends { length: infer L } ? L : never;
 
 declare global {
   // Augment Intl to include
@@ -28,9 +52,45 @@ declare global {
 
   /** Make optional all properties on T and any properties on object properties of T. */
   type RecursivePartial<T> = {
-    [P in keyof T]+?: T[P] extends object ?
-      RecursivePartial<T[P]> :
+    [P in keyof T]+?:
+      // RE: First two conditions.
+      // If type is a union, map each individual component and transform the resultant tuple back into a union.
+      // Only up to 4 components of a union is supported (all but the last few are dropped). For more, modify the second condition
+      // and `IntersectionOfFunctionsToType`.
+      // Ex: `{passes: PassJson[] | null}` - T[P] doesn't exactly match the array-recursing condition, so without these first couple
+      // conditions, it would fall through to the last condition (would just return T[P]).
+
+      // RE: First condition.
+      // Guard against large string unions, which would be unreasonable to support (much more than 4 components is common).
+
+      SplitType<T[P]> extends string[] ? T[P] :
+      GetLength<SplitType<T[P]>> extends 2|3|4 ? RecursivePartialUnion<T[P]>[number] :
+
+      // Recurse into arrays.
+      T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+
+      // Recurse into objects.
+      T[P] extends (object|undefined) ? RecursivePartial<T[P]> :
+
+      // Strings, numbers, etc. (terminal types) end here.
       T[P];
+  };
+
+  /** Recursively makes all properties of T read-only. */
+  export type Immutable<T> =
+    T extends Function ? T :
+    T extends Array<infer R> ? ImmutableArray<R> :
+    T extends Map<infer K, infer V> ? ImmutableMap<K, V> :
+    T extends Set<infer M> ? ImmutableSet<M> :
+    T extends object ? ImmutableObject<T> :
+    T
+
+  // Intermediate immutable types. Prefer e.g. Immutable<Set<T>> over direct use.
+  type ImmutableArray<T> = ReadonlyArray<Immutable<T>>;
+  type ImmutableMap<K, V> = ReadonlyMap<Immutable<K>, Immutable<V>>;
+  type ImmutableSet<T> = ReadonlySet<Immutable<T>>;
+  type ImmutableObject<T> = {
+    readonly [K in keyof T]: Immutable<T[K]>;
   };
 
   /**
@@ -39,7 +99,7 @@ declare global {
   type NonVoid<T> = T extends void ? never : T;
 
   /** Remove properties K from T. */
-  type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+  type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
   /** Obtain the type of the first parameter of a function. */
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
@@ -74,7 +134,7 @@ declare global {
       serverResponseTimeByOrigin: {[origin: string]: number};
     }
 
-    export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'bs'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'es'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'ln'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
+    export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'bs'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'en-XL'|'es'|'es-419'|'es-AR'|'es-BO'|'es-BR'|'es-BZ'|'es-CL'|'es-CO'|'es-CR'|'es-CU'|'es-DO'|'es-EC'|'es-GT'|'es-HN'|'es-MX'|'es-NI'|'es-PA'|'es-PE'|'es-PR'|'es-PY'|'es-SV'|'es-US'|'es-UY'|'es-VE'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'ln'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
 
     export type OutputMode = 'json' | 'html' | 'csv';
 
@@ -101,8 +161,10 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** The form factor the emulation should use. */
+      /** How emulation (useragent, device screen metrics, touch) should be applied. `none` indicates Lighthouse should leave the host browser as-is. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
+      /** Dangerous setting only to be used by Lighthouse team. Disables the device metrics and touch emulation that emulatedFormFactor defines. Details in emulation.js */
+      internalDisableDeviceScreenEmulation?: boolean
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
@@ -146,7 +208,8 @@ declare global {
      */
     export interface CliFlags extends Flags {
       _: string[];
-      chromeFlags: string;
+      chromeIgnoreDefaultFlags: boolean;
+      chromeFlags: string | string[];
       /** Output path for the generated results. */
       outputPath: string;
       /** Flag to save the trace contents and screenshots to disk. */
@@ -160,7 +223,7 @@ declare global {
       /** Flag to print a list of all required trace categories. */
       listTraceCategories: boolean;
       /** A preset audit of selected audit categories to run. */
-      preset?: 'full'|'mixed-content'|'perf';
+      preset?: 'experimental'|'perf';
       /** A flag to enable logLevel 'verbose'. */
       verbose: boolean;
       /** A flag to enable logLevel 'silent'. */
@@ -220,7 +283,13 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        beginData?: {
+          frame?: string;
+          startLine?: number;
+          url?: string;
+        };
         data?: {
+          frame?: string;
           isLoadingMainFrame?: boolean;
           documentLoaderURL?: string;
           frames?: {
@@ -237,6 +306,14 @@ declare global {
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
+          is_main_frame?: boolean;
+          cumulative_score?: number;
+          nodeId?: number;
+          impacted_nodes?: Array<{
+            node_id: number,
+            old_rect?: Array<number>,
+            new_rect?: Array<number>,
+          }>;
         };
         frame?: string;
         name?: string;

@@ -1,21 +1,21 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
+const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit.js');
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
+const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
 const LoadSimulator = require('../../../computed/load-simulator.js');
 
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 /* eslint-env jest */
 
@@ -75,6 +75,12 @@ describe('Byte efficiency base audit', () => {
     it('should not error when missing resource size', () => {
       const resourceType = 'Other';
       const result = estimate({transferSize: 1000, resourceType}, 100);
+      assert.equal(result, 100);
+    });
+
+    it('should not error when resource size is 0', () => {
+      const resourceType = 'Other';
+      const result = estimate({transferSize: 1000, resourceSize: 0, resourceType}, 100);
       assert.equal(result, 100);
     });
   });

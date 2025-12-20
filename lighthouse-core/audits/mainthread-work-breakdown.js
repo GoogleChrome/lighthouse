@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -10,8 +10,8 @@
 
 'use strict';
 
-const Audit = require('./audit');
-const {taskGroups} = require('../lib/task-groups');
+const Audit = require('./audit.js');
+const {taskGroups} = require('../lib/tracehouse/task-groups.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 
@@ -22,14 +22,15 @@ const UIStrings = {
   failureTitle: 'Minimize main-thread work',
   /** Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
-    'You may find delivering smaller JS payloads helps with this.',
+    'You may find delivering smaller JS payloads helps with this. ' +
+    '[Learn more](https://web.dev/mainthread-work-breakdown)',
   /** Label for the Main Thread Category column in data tables, rows will have a main thread Category and main thread Task Name. */
   columnCategory: 'Category',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/** @typedef {import('../lib/task-groups.js').TaskGroupIds} TaskGroupIds */
+/** @typedef {import('../lib/tracehouse/task-groups.js').TaskGroupIds} TaskGroupIds */
 
 class MainThreadWorkBreakdown extends Audit {
   /**
@@ -51,9 +52,9 @@ class MainThreadWorkBreakdown extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/s2eqcifkum
-      scorePODR: 1500,
-      scoreMedian: 4000,
+      // see https://www.desmos.com/calculator/vhglu1x8zv
+      p10: 2017,
+      median: 4000,
     };
   }
 
@@ -115,14 +116,14 @@ class MainThreadWorkBreakdown extends Audit {
     const tableDetails = MainThreadWorkBreakdown.makeTableDetails(headings, results);
 
     const score = Audit.computeLogNormalScore(
-      totalExecutionTime,
-      context.options.scorePODR,
-      context.options.scoreMedian
+      {p10: context.options.p10, median: context.options.median},
+      totalExecutionTime
     );
 
     return {
       score,
       numericValue: totalExecutionTime,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: totalExecutionTime}),
       details: tableDetails,
     };

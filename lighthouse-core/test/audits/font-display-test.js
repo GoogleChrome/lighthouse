@@ -1,12 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const FontDisplayAudit = require('../../audits/font-display.js');
-const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -73,8 +72,9 @@ describe('Performance: Font Display audit', () => {
       {url: networkRecords[1].url, wastedMs: 3000},
       {url: networkRecords[2].url, wastedMs: 1000},
     ];
-    assert.strictEqual(result.score, 0);
+    expect(result.score).toEqual(0);
     expect(result.details.items).toEqual(items);
+    expect(result.warnings).toEqual([]);
   });
 
   it('resolves URLs relative to stylesheet URL when available', async () => {
@@ -129,8 +129,9 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.score, 1);
+    expect(result.score).toEqual(1);
     expect(result.details.items).toEqual([]);
+    expect(result.warnings).toEqual([]);
   });
 
   it('passes when all fonts have a correct font-display rule', async () => {
@@ -180,8 +181,9 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.score, 1);
+    expect(result.score).toEqual(1);
     expect(result.details.items).toEqual([]);
+    expect(result.warnings).toEqual([]);
   });
 
   it('should handle real-world font-face declarations', async () => {
@@ -220,7 +222,7 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.score, 0);
+    expect(result.score).toEqual(0);
     expect(result.details.items.map(item => item.url)).toEqual([
       'https://edition.i.cdn.cnn.com/.a/fonts/cnn/3.7.2/cnnclock-black.woff2',
       'https://registry.api.cnn.io/assets/fave/fonts/2.0.15/cnnsans-bold.woff',
@@ -228,6 +230,7 @@ describe('Performance: Font Display audit', () => {
       // 'https://example.com/foo/fonts/fontawesome-webfont.woff2?v=4.6.1',
       'https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2',
     ]);
+    expect(result.warnings).toEqual([]);
   });
 
   it('handles varied font-display declarations', async () => {
@@ -259,7 +262,8 @@ describe('Performance: Font Display audit', () => {
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
     expect(result.details.items).toEqual([]);
-    assert.strictEqual(result.score, 1);
+    expect(result.score).toEqual(1);
+    expect(result.warnings).toEqual([]);
   });
 
   it('handles custom source URLs from sourcemaps', async () => {
@@ -280,6 +284,57 @@ describe('Performance: Font Display audit', () => {
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
     expect(result.details.items).toEqual([]);
-    assert.strictEqual(result.score, 1);
+    expect(result.score).toEqual(1);
+  });
+
+  it('should not flag a URL for which there is not @font-face at all', async () => {
+    // Sometimes the content does not come through, see https://github.com/GoogleChrome/lighthouse/issues/8493
+    stylesheet.content = ``;
+
+    networkRecords = [{
+      url: `https://example.com/foo/bar/font-0.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }];
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    expect(result.details.items).toEqual([]);
+    expect(result.score).toEqual(1);
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings[0]).toBeDisplayString(/font-0.woff/);
+  });
+
+  it('should handle mixed content', async () => {
+    networkRecords = [{
+      url: `https://example.com/foo/bar/font-0.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }, {
+      url: `https://example.com/foo/bar/font-1.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }];
+
+    const artifacts = getArtifacts();
+    artifacts.CSSUsage.stylesheets = [
+      {content: '', header: {}},
+      {
+        content: `
+          @font-face {
+            /* try with " */
+            src: url("./font-0.woff");
+          }
+        `,
+        header: {},
+      },
+    ];
+    const result = await FontDisplayAudit.audit(artifacts, context);
+    expect(result.details.items).toEqual([{
+      url: `https://example.com/foo/bar/font-0.woff`,
+      wastedMs: 1000,
+    }]);
+    expect(result.score).toEqual(0);
+    expect(result.warnings).toHaveLength(1);
+    expect(result.warnings[0]).toBeDisplayString(/font-1.woff/);
   });
 });

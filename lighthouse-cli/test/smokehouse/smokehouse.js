@@ -1,163 +1,249 @@
-#!/usr/bin/env node
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+/**
+ * @fileoverview An end-to-end test runner for Lighthouse. Takes a set of smoke
+ * test definitions and a method of running Lighthouse, returns whether all the
+ * smoke tests passed.
+ */
+
+const log = require('lighthouse-logger');
+const cliLighthouseRunner = require('./lighthouse-runners/cli.js').runLighthouse;
+const getAssertionReport = require('./report-assert.js');
+const LocalConsole = require('./lib/local-console.js');
+const ConcurrentMapper = require('./lib/concurrent-mapper.js');
+
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const spawnSync = require('child_process').spawnSync;
-const yargs = require('yargs');
-const log = require('lighthouse-logger');
-const {collateResults, report} = require('./smokehouse-report');
+/** @typedef {import('./lib/child-process-error.js')} ChildProcessError */
 
-const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
-const PAGE_HUNG_EXIT_CODE = 68;
-const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
-const RETRIES = 3;
+// The number of concurrent (`!runSerially`) tests to run if `jobs` isn't set.
+const DEFAULT_CONCURRENT_RUNS = 5;
+const DEFAULT_RETRIES = 0;
 
 /**
- * Attempt to resolve a path locally. If this fails, attempts to locate the path
- * relative to the current working directory.
- * @param {string} payloadPath
- * @return {string}
+ * @typedef SmokehouseResult
+ * @property {string} id
+ * @property {boolean} success
+ * @property {Array<{passed: number, failed: number, log: string}>} expectationResults
  */
-function resolveLocalOrCwd(payloadPath) {
-  let resolved;
-  try {
-    resolved = require.resolve('./' + payloadPath);
-  } catch (e) {
-    const cwdPath = path.resolve(process.cwd(), payloadPath);
-    resolved = require.resolve(cwdPath);
+
+/**
+ * Runs the selected smoke tests. Returns whether all assertions pass.
+ * @param {Array<Smokehouse.TestDfn>} smokeTestDefns
+ * @param {Smokehouse.SmokehouseOptions=} smokehouseOptions
+ * @return {Promise<{success: boolean, testResults: SmokehouseResult[]}>}
+ */
+async function runSmokehouse(smokeTestDefns, smokehouseOptions = {}) {
+  const {
+    isDebug,
+    jobs = DEFAULT_CONCURRENT_RUNS,
+    retries = DEFAULT_RETRIES,
+    lighthouseRunner = cliLighthouseRunner,
+  } = smokehouseOptions;
+  assertPositiveInteger('jobs', jobs);
+  assertNonNegativeInteger('retries', retries);
+
+  // Run each testDefn's tests in parallel based on the concurrencyLimit.
+  const concurrentMapper = new ConcurrentMapper();
+  const smokePromises = [];
+  for (const testDefn of smokeTestDefns) {
+    // If defn is set to `runSerially`, we'll run its tests in succession, not parallel.
+    const concurrency = testDefn.runSerially ? 1 : jobs;
+    const options = {concurrency, lighthouseRunner, retries, isDebug};
+    const result = runSmokeTestDefn(concurrentMapper, testDefn, options);
+    smokePromises.push(result);
+  }
+  const testResults = await Promise.all(smokePromises);
+
+  let passingCount = 0;
+  let failingCount = 0;
+  for (const testResult of testResults) {
+    for (const expectationResult of testResult.expectationResults) {
+      passingCount += expectationResult.passed;
+      failingCount += expectationResult.failed;
+    }
+  }
+  if (passingCount) {
+    console.log(log.greenify(`${passingCount} expectations passing`));
+  }
+  if (failingCount) {
+    console.log(log.redify(`${failingCount} expectations failing`));
   }
 
-  return resolved;
+  // Print and fail if there were failing tests.
+  const failingDefns = testResults.filter(result => !result.success);
+  if (failingDefns.length) {
+    const testNames = failingDefns.map(d => d.id).join(', ');
+    console.error(log.redify(`We have ${failingDefns.length} failing smoketests: ${testNames}`));
+    return {success: false, testResults};
+  }
+
+  return {success: true, testResults};
 }
 
 /**
- * Launch Chrome and do a full Lighthouse run.
- * @param {string} url
- * @param {string} configPath
- * @param {boolean=} isDebug
- * @return {Smokehouse.ExpectedRunnerResult}
+ * @param {string} loggableName
+ * @param {number} value
  */
-function runLighthouse(url, configPath, isDebug) {
-  isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
-
-  const command = 'node';
-  const outputPath = `smokehouse-${Math.round(Math.random() * 100000)}.report.json`;
-  const artifactsDirectory = './.tmp/smokehouse-artifacts';
-  const args = [
-    'lighthouse-cli/index.js',
-    url,
-    `--config-path=${configPath}`,
-    `--output-path=${outputPath}`,
-    '--output=json',
-    `-GA=${artifactsDirectory}`,
-    '--quiet',
-    '--port=0',
-  ];
-
-  if (process.env.APPVEYOR) {
-    // Appveyor is hella slow already, disable CPU throttling so we're not 16x slowdown
-    // see https://github.com/GoogleChrome/lighthouse/issues/4891
-    args.push('--throttling.cpuSlowdownMultiplier=1');
+function assertPositiveInteger(loggableName, value) {
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new Error(`${loggableName} must be a positive integer`);
   }
+}
+/**
+ * @param {string} loggableName
+ * @param {number} value
+ */
+function assertNonNegativeInteger(loggableName, value) {
+  if (!Number.isInteger(value) || value < 0) {
+    throw new Error(`${loggableName} must be a non-negative integer`);
+  }
+}
 
-  // Lighthouse sometimes times out waiting to for a connection to Chrome in CI.
-  // Watch for this error and retry relaunching Chrome and running Lighthouse up
-  // to RETRIES times. See https://github.com/GoogleChrome/lighthouse/issues/833
-  let runResults;
-  let runCount = 0;
-  do {
-    if (runCount > 0) {
-      console.log('  Lighthouse error: timed out waiting for debugger connection. Retrying...');
+/**
+ * Run all the smoke tests specified, displaying output from each, in order,
+ * once all are finished.
+ * @param {ConcurrentMapper} concurrentMapper
+ * @param {Smokehouse.TestDfn} smokeTestDefn
+ * @param {{concurrency: number, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, isDebug?: boolean}} defnOptions
+ * @return {Promise<SmokehouseResult>}
+ */
+async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
+  const {id, config: configJson, expectations} = smokeTestDefn;
+  const {concurrency, lighthouseRunner, retries, isDebug} = defnOptions;
+
+  const individualTests = expectations.map(expectation => ({
+    requestedUrl: expectation.lhr.requestedUrl,
+    configJson,
+    expectation,
+    lighthouseRunner,
+    retries,
+    isDebug,
+  }));
+
+  // Loop sequentially over expectations, comparing against Lighthouse run, and
+  // reporting result.
+  const results = await concurrentMapper.pooledMap(individualTests, (test, index) => {
+    if (index === 0) console.log(`${purpleify(id)} smoketest starting…`);
+    return runSmokeTest(test);
+  }, {concurrency});
+
+  console.log(`\n${purpleify(id)} smoketest results:`);
+
+  let passingTestCount = 0;
+  let failingTestCount = 0;
+  for (const result of results) {
+    if (result.failed) {
+      failingTestCount++;
+    } else {
+      passingTestCount++;
     }
 
-    runCount++;
-    console.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
-    runResults = spawnSync(command, args, {encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit']});
-  } while (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE && runCount <= RETRIES);
-
-  if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
-    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
-    process.exit(1);
-  } else if (runResults.status !== 0
-     && runResults.status !== PAGE_HUNG_EXIT_CODE
-     && runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
-    console.error(runResults.stderr);
-    process.exit(runResults.status);
+    console.log(result.log);
   }
 
-  if (isDebug) {
-    console.log(`STDOUT: ${runResults.stdout}`);
-    console.error(`STDERR: ${runResults.stderr}`);
+  console.log(`${purpleify(id)} smoketest complete.`);
+  if (passingTestCount) {
+    console.log(log.greenify(`  ${passingTestCount} test(s) passing`));
   }
-
-  let errorCode;
-  let lhr = {requestedUrl: url, finalUrl: url, audits: {}};
-  if (runResults.status === PAGE_HUNG_EXIT_CODE) {
-    errorCode = 'PAGE_HUNG';
-  } else if (runResults.status === INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    errorCode = 'INSECURE_DOCUMENT_REQUEST';
-  } else {
-    lhr = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-    if (isDebug) {
-      console.log('LHR output available at: ', outputPath);
-    } else if (fs.existsSync(outputPath)) {
-      fs.unlinkSync(outputPath);
-    }
+  if (failingTestCount) {
+    console.log(log.redify(`  ${failingTestCount} test(s) failing`));
   }
-
-  const artifacts = JSON.parse(
-    fs.readFileSync(`${artifactsDirectory}/artifacts.json`, 'utf8'));
+  console.log(''); // extra line break
 
   return {
-    errorCode,
-    lhr,
-    artifacts,
+    id,
+    success: failingTestCount === 0,
+    expectationResults: results,
   };
 }
 
-const cli = yargs
-  .help('help')
-  .describe({
-    'config-path': 'The path to the config JSON file',
-    'expectations-path': 'The path to the expected audit results file',
-    'debug': 'Save the artifacts along with the output',
-  })
-  .require('config-path', true)
-  .require('expectations-path', true)
-  .argv;
-
-const configPath = resolveLocalOrCwd(cli['config-path']);
-/** @type {Smokehouse.ExpectedRunnerResult[]} */
-const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
-
-// Loop sequentially over expectations, comparing against Lighthouse run, and
-// reporting result.
-let passingCount = 0;
-let failingCount = 0;
-expectations.forEach(expected => {
-  console.log(`Doing a run of '${expected.lhr.requestedUrl}'...`);
-  const results = runLighthouse(expected.lhr.requestedUrl, configPath, cli.debug);
-
-  console.log(`Asserting expected results match those found. (${expected.lhr.requestedUrl})`);
-  const collated = collateResults(results, expected);
-  const counts = report(collated);
-  passingCount += counts.passed;
-  failingCount += counts.failed;
-});
-
-if (passingCount) {
-  console.log(log.greenify(`${passingCount} passing`));
+/** @param {string} str */
+function purpleify(str) {
+  return `${log.purple}${str}${log.reset}`;
 }
-if (failingCount) {
-  console.log(log.redify(`${failingCount} failing`));
-  process.exit(1);
+
+/**
+ * Run Lighthouse in the selected runner. Returns `log`` for logging once
+ * all tests in a defn are complete.
+ * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: Smokehouse.LighthouseRunner, retries: number, isDebug?: boolean}} testOptions
+ * @return {Promise<{passed: number, failed: number, log: string}>}
+ */
+async function runSmokeTest(testOptions) {
+  // Use a buffered LocalConsole to keep logged output so it's not interleaved
+  // with other currently running tests.
+  const localConsole = new LocalConsole();
+  const {requestedUrl, configJson, expectation, lighthouseRunner, retries, isDebug} = testOptions;
+
+  // Rerun test until there's a passing result or retries are exhausted to prevent flakes.
+  let result;
+  let report;
+  for (let i = 0; i <= retries; i++) {
+    if (i === 0) {
+      localConsole.log(`Doing a run of '${requestedUrl}'...`);
+    } else {
+      localConsole.log(`Retrying run (${i} out of ${retries} retries)...`);
+    }
+
+    // Run Lighthouse.
+    try {
+      result = await lighthouseRunner(requestedUrl, configJson, {isDebug});
+    } catch (e) {
+      logChildProcessError(localConsole, e);
+      continue; // Retry, if possible.
+    }
+
+    // Assert result.
+    report = getAssertionReport(result, expectation, {isDebug});
+    if (report.failed) {
+      localConsole.log(`${report.failed} assertion(s) failed.`);
+      continue; // Retry, if possible.
+    }
+
+    break; // Passing result, no need to retry.
+  }
+
+  // Write result log if we have one.
+  if (result) {
+    localConsole.write(result.log);
+  }
+
+  // Without an assertion report, not much detail to share but a failure.
+  if (!report) {
+    return {
+      passed: 0,
+      failed: 1,
+      log: localConsole.getLog(),
+    };
+  }
+
+  localConsole.write(report.log);
+  return {
+    passed: report.passed,
+    failed: report.failed,
+    log: localConsole.getLog(),
+  };
 }
+
+/**
+ * Logs an error to the console, including stdout and stderr if `err` is a
+ * `ChildProcessError`.
+ * @param {LocalConsole} localConsole
+ * @param {ChildProcessError|Error} err
+ */
+function logChildProcessError(localConsole, err) {
+  if ('stdout' in err && 'stderr' in err) {
+    localConsole.adoptStdStrings(err);
+  }
+
+  localConsole.log(log.redify('Error: ') + err.message);
+}
+
+module.exports = {
+  runSmokehouse,
+};

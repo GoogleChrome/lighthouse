@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -14,6 +14,15 @@ const LoadSimulator = require('../load-simulator.js');
 /** @typedef {BaseNode.Node} Node */
 /** @typedef {import('../../lib/dependency-graph/network-node')} NetworkNode */
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+
+/**
+ * @typedef Extras
+ * @property {boolean} optimistic
+ * @property {LH.Artifacts.LanternMetric=} fcpResult
+ * @property {LH.Artifacts.LanternMetric=} fmpResult
+ * @property {LH.Artifacts.LanternMetric=} interactiveResult
+ * @property {{speedIndex: number}=} speedline
+ */
 
 class LanternMetricArtifact {
   /**
@@ -75,7 +84,7 @@ class LanternMetricArtifact {
 
   /**
    * @param {LH.Gatherer.Simulation.Result} simulationResult
-   * @param {any=} extras
+   * @param {Extras} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) { // eslint-disable-line no-unused-vars
@@ -85,7 +94,7 @@ class LanternMetricArtifact {
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.Audit.Context} context
-   * @param {any=} extras
+   * @param {Omit<Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
@@ -111,13 +120,12 @@ class LanternMetricArtifact {
 
     const optimisticEstimate = this.getEstimateFromSimulation(
       optimisticSimulation.timeInMs < optimisticFlexSimulation.timeInMs ?
-        optimisticSimulation : optimisticFlexSimulation,
-      Object.assign({}, extras, {optimistic: true})
+        optimisticSimulation : optimisticFlexSimulation, {...extras, optimistic: true}
     );
 
     const pessimisticEstimate = this.getEstimateFromSimulation(
       pessimisticSimulation,
-      Object.assign({}, extras, {optimistic: false})
+      {...extras, optimistic: false}
     );
 
     const coefficients = this.getScaledCoefficients(simulator.rtt);

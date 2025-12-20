@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 'use strict';
 
-const Audit = require('./audit');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const Audit = require('./audit.js');
+const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
@@ -27,11 +27,17 @@ const UIStrings = {
   title: 'Preconnect to required origins',
   /** Description of a Lighthouse audit that tells the user how to connect early to third-party domains that will be used to load page resources. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
-    'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
-    `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
-  /** A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links. */
+    'Consider adding `preconnect` or `dns-prefetch` resource hints to establish early ' +
+    `connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect).`,
+  /**
+   * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links.
+   * @example {https://example.com} securityOrigin
+   * */
   crossoriginWarning: 'A preconnect <link> was found for "{securityOrigin}" but was not used ' +
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
+  /** A warning message that is shown when found more than 2 preconnected links */
+  tooManyPreconnectLinksWarning: 'More than 2 preconnect links were found. ' +
+   'Preconnect links should be used sparingly and only to the most important origins.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -178,6 +184,16 @@ class UsesRelPreconnectAudit extends Audit {
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
 
+    // Shortcut early with a pass when the user has already configured preconnect.
+    // https://twitter.com/_tbansal/status/1197771385172480001
+    if (preconnectLinks.length >= 2) {
+      return {
+        score: 1,
+        warnings: preconnectLinks.length >= 3 ?
+          [...warnings, str_(UIStrings.tooManyPreconnectLinksWarning)] : warnings,
+      };
+    }
+
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
@@ -189,6 +205,7 @@ class UsesRelPreconnectAudit extends Audit {
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
       numericValue: maxWasted,
+      numericUnit: 'millisecond',
       displayValue: maxWasted ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
         '',

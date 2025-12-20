@@ -1,13 +1,13 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const icons = require('../../lib/icons');
-const assert = require('assert');
-const manifestParser = require('../../lib/manifest-parser');
+const icons = require('../../lib/icons.js');
+const assert = require('assert').strict;
+const manifestParser = require('../../lib/manifest-parser.js');
 
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
@@ -64,7 +64,8 @@ describe('Icons helper', () => {
       //       value: {
       //         src: { raw: 'icon.png', value: 'icon.png' },
       //         density: { raw: undefined, value: 1 },
-      //         sizes: { raw: '192x192', value: ['192x192'] }
+      //         sizes: { raw: '192x192', value: ['192x192'] },
+      //         purpose: { raw: 'any', value: ['any'] }
       //       }
       //     }]
       //   }
@@ -326,6 +327,75 @@ describe('Icons helper', () => {
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
+    });
+  });
+
+  describe('icons at least one maskable check', () => {
+    it('succeeds when at least one icon has a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'maskable',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('succeeds when multiple icons have a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'maskable',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'maskable',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('succeeds when an icon has multiple purpose values, including maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any Maskable',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+          purpose: 'any',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), true);
+    });
+
+    it('fails when no icons have a purpose value of maskable', () => {
+      const manifestSrc = JSON.stringify({
+        icons: [{
+          src: 'icon.png',
+          sizes: '200x200',
+          type: 'image/png',
+          purpose: 'any',
+        }, {
+          src: 'icon-vector.svg',
+          sizes: '100x100',
+        }],
+      });
+      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      assert.equal(icons.containsMaskableIcon(manifest.value), false);
     });
   });
 });

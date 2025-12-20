@@ -1,12 +1,25 @@
 ## How to compile protos + use locally
 
-1. Install the proto compiler
-    1. Manual install
-        1. Get the latest proto [release](https://github.com/protocolbuffers/protobuf/releases) (select one with python included if you want to run this validator)
-        1. Install the [C++ Protocol Buffer Runtime](https://github.com/protocolbuffers/protobuf/blob/master/src/README.md)
-    1. Brew install
-        1. `brew install protobuf`
-1. Run `yarn compile-proto` then `yarn build-proto-roundtrip`
+You'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (v3.7.1 is known to be compatible, and 3.11.x is known to be **not** compatible.).
+
+1. Install the proto compiler by either
+    1. Brew installing - `brew install protobuf@3.7`
+    1. Manually installing from an [official release](https://github.com/protocolbuffers/protobuf/releases/tag/v3.7.1). There are [installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation), but these steps have worked well for us:
+        ```sh
+        mkdir protobuf-install && cd protobuf-install
+        curl -L -o protobuf-python-3.7.1.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-python-3.7.1.zip
+        unzip protobuf-python-3.7.1.zip
+        cd protobuf-3.7.1
+
+        cd python
+        python setup.py build
+        python setup.py test
+        (cd .. && autogen.sh && configure && make)
+        (cd .. && sudo make install)
+        python setup.py build --cpp_implementation
+        sudo python setup.py install --cpp_implementation
+        ```
+1. Run `yarn test-proto`
 
 ## Proto Resources
 - [Protobuf Github Repo](https://github.com/protocolbuffers/protobuf) 

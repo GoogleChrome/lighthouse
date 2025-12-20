@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const lhBackground = require('../lightrider/lightrider-entry.js');
 const Runner = require('../../lighthouse-core/runner.js');
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
@@ -117,6 +117,33 @@ describe('lightrider-entry', () => {
       assert.equal(config.settings.onlyAudits[0], 'network-requests');
 
       runStub.mockRestore();
+    });
+
+    it('exposes artifacts when logAssets is true', async () => {
+      const originalRun = Runner.run;
+      Runner.run = jest.fn().mockReturnValue(Promise.resolve({
+        lhr: {},
+        artifacts: {
+          Artifact: new Error('some error'),
+        },
+      }));
+      afterEach(() => {
+        Runner.run = originalRun;
+      });
+
+      const mockConnection = {};
+      const url = 'https://example.com';
+      const lrFlags = {
+        logAssets: true,
+      };
+      const resultJson = await lhBackground.runLighthouseInLR(mockConnection, url, {}, lrFlags);
+      const result = JSON.parse(resultJson);
+      expect(result.artifacts).toMatchObject({
+        Artifact: {
+          sentinel: '__ErrorSentinel',
+          message: 'some error',
+        },
+      });
     });
   });
 });

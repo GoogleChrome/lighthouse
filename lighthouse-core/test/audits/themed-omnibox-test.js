@@ -1,39 +1,35 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const ThemedOmniboxAudit = require('../../audits/themed-omnibox');
-const assert = require('assert');
-const manifestParser = require('../../lib/manifest-parser');
+const ThemedOmniboxAudit = require('../../audits/themed-omnibox.js');
+const assert = require('assert').strict;
+const manifestParser = require('../../lib/manifest-parser.js');
 
 const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
-const exampleManifest = noUrlManifestParser(manifestSrc);
 
-function generateMockArtifacts() {
+/**
+ * @param {string} src
+ */
+function generateMockArtifacts(src = manifestSrc) {
+  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+
   return {
     WebAppManifest: exampleManifest,
+    InstallabilityErrors: {errors: []},
     MetaElements: [{name: 'theme-color', content: '#bada55'}],
   };
 }
+
 function generateMockAuditContext() {
   return {
     computedCache: new Map(),
   };
-}
-
-/**
- * Simple manifest parsing helper when the manifest URLs aren't material to the
- * test. Uses example.com URLs for testing.
- * @param {string} manifestSrc
- * @return {!ManifestNode<(!WebAppManifest|undefined)>}
- */
-function noUrlManifestParser(manifestSrc) {
-  return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
 /* eslint-env jest */
@@ -52,8 +48,7 @@ describe('PWA: themed omnibox audit', () => {
   // Need to disable camelcase check for dealing with theme_color.
   /* eslint-disable camelcase */
   it('fails when a minimal manifest contains no theme_color', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.WebAppManifest = noUrlManifestParser(JSON.stringify({
+    const artifacts = generateMockArtifacts(JSON.stringify({
       start_url: '/',
     }));
     const context = generateMockAuditContext();
@@ -65,8 +60,7 @@ describe('PWA: themed omnibox audit', () => {
   });
 
   it('succeeds when a minimal manifest contains a theme_color', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.WebAppManifest = noUrlManifestParser(JSON.stringify({
+    const artifacts = generateMockArtifacts(JSON.stringify({
       theme_color: '#bada55',
     }));
     const context = generateMockAuditContext();
@@ -137,8 +131,7 @@ describe('PWA: themed omnibox audit', () => {
   });
 
   it('fails if HTML theme color is good, but manifest themecolor is bad', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.WebAppManifest = noUrlManifestParser(JSON.stringify({
+    const artifacts = generateMockArtifacts(JSON.stringify({
       start_url: '/',
     }));
     const context = generateMockAuditContext();

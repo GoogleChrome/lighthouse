@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const Audit = require('../../audits/audit.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 /* eslint-env jest */
 
@@ -80,6 +80,15 @@ describe('Audit', () => {
       it('switches to an ERROR and is not scored if an errorMessage is passed in', () => {
         const errorMessage = 'ERRRRR';
         const auditResult = Audit.generateAuditResult(NumericAudit, {score: 1, errorMessage});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
+        assert.strictEqual(auditResult.errorMessage, errorMessage);
+        assert.strictEqual(auditResult.score, null);
+      });
+
+      it('switches to an ERROR and is not scored if an errorMessage is passed in with null', () => {
+        const errorMessage = 'ERRRRR';
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: null, errorMessage});
 
         assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
         assert.strictEqual(auditResult.errorMessage, errorMessage);
@@ -259,6 +268,22 @@ describe('Audit', () => {
         type: 'list',
         items: [1, 2, 3],
       });
+    });
+  });
+
+  describe('#computeLogNormalScore', () => {
+    it('clamps the score to two decimal places', () => {
+      const params = {
+        median: 1000,
+        p10: 500,
+      };
+
+      assert.strictEqual(Audit.computeLogNormalScore(params, 0), 1);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 250), 0.99);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 1500), 0.23);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 2500), 0.05);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 4000), 0.01);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 4100), 0);
     });
   });
 });

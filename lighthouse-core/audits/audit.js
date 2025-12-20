@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const statistics = require('../lib/statistics');
-const Util = require('../report/html/renderer/util');
+const statistics = require('../lib/statistics.js');
+const Util = require('../report/html/renderer/util.js');
 
 const DEFAULT_PASS = 'defaultPass';
 
@@ -68,25 +68,17 @@ class Audit {
   /* eslint-enable no-unused-vars */
 
   /**
-   * Computes a clamped score between 0 and 1 based on the measured value. Score is determined by
-   * considering a log-normal distribution governed by the two control points, point of diminishing
-   * returns and the median value, and returning the percentage of sites that have higher value.
-   *
-   * @param {number} measuredValue
-   * @param {number} diminishingReturnsValue
-   * @param {number} medianValue
+   * Computes a score between 0 and 1 based on the measured `value`. Score is determined by
+   * considering a log-normal distribution governed by two control points (the 10th
+   * percentile value and the median value) and represents the percentage of sites that are
+   * greater than `value`.
+   * @param {{median: number, p10: number}} controlPoints
+   * @param {number} value
    * @return {number}
    */
-  static computeLogNormalScore(measuredValue, diminishingReturnsValue, medianValue) {
-    const distribution = statistics.getLogNormalDistribution(
-      medianValue,
-      diminishingReturnsValue
-    );
-
-    let score = distribution.computeComplementaryPercentile(measuredValue);
-    score = Math.min(1, score);
-    score = Math.max(0, score);
-    return clampTo2Decimals(score);
+  static computeLogNormalScore(controlPoints, value) {
+    const percentile = statistics.getLogNormalScore(controlPoints, value);
+    return clampTo2Decimals(percentile);
   }
 
   /**
@@ -263,6 +255,12 @@ class Audit {
       }
     }
 
+    // The Audit.Product type is bifurcated to enforce numericUnit accompanying numericValue;
+    // the existence of `numericUnit` is our discriminant.
+    // Make ts happy and enforce this contract programmatically by only pulling numericValue off of
+    // a `NumericProduct` type.
+    const numericProduct = 'numericUnit' in product ? product : undefined;
+
     return {
       id: audit.meta.id,
       title: auditTitle,
@@ -270,7 +268,8 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      numericValue: product.numericValue,
+      numericValue: numericProduct && numericProduct.numericValue,
+      numericUnit: numericProduct && numericProduct.numericUnit,
 
       displayValue: product.displayValue,
       explanation: product.explanation,

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,23 +8,21 @@ import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality
 
 declare global {
   module LH.Audit {
-    export interface Context {
+    export type Context = Immutable<{
       /** audit options */
       options: Record<string, any>;
       settings: Config.Settings;
-      /** Push to this array to add top-level warnings to the LHR. */
-      LighthouseRunWarnings: Array<string>;
       /**
        * Nested cache for already-computed computed artifacts. Keyed first on
        * the computed artifact's `name` property, then on input artifact(s).
        * Values are Promises resolving to the computedArtifact result.
        */
       computedCache: Map<string, ArbitraryEqualityMap>;
-    }
+    }>;
 
     export interface ScoreOptions {
-      scorePODR: number;
-      scoreMedian: number;
+      p10: number;
+      median: number;
     }
 
     export interface ScoreDisplayModes {
@@ -55,6 +53,8 @@ declare global {
       description: string;
       /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
       requiredArtifacts: Array<keyof Artifacts>;
+      /** A list of the members of LH.Artifacts that augment the audit, but aren't necessary. For internal use only with experimental-config. */
+      __internalOptionalArtifacts?: Array<keyof Artifacts>;
       /** A string identifying how the score should be interpreted for display. */
       scoreDisplayMode?: Audit.ScoreDisplayMode;
     }
@@ -66,10 +66,11 @@ declare global {
       wastedPercent?: number;
     }
 
-    /** Type returned by Audit.audit(). Only score is required.  */
-    export interface Product {
+    /** The shared properties of an Audit.Product whether it has a numericValue or not. We want to enforce `numericUnit` accompanying `numericValue` whenever it is set, so the final Audit.Product type is a discriminated union on `'numericValue' in audit`*/
+    interface ProductBase {
       /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
       score: number | null;
+      /** The i18n'd string value that the audit wishes to display for its results. This value is not necessarily the string version of the `numericValue`. */
       displayValue?: string;
       /** An explanation of why the audit failed on the test page. */
       explanation?: string;
@@ -80,11 +81,27 @@ declare global {
       extendedInfo?: {[p: string]: any};
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
-      /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
-      numericValue?: number;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
+      /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
+      runWarnings?: Array<string>;
     }
+
+    /** The Audit.Product type for audits that do not return a `numericValue`. */
+    interface NonNumericProduct extends ProductBase {
+      numericValue?: never;
+    }
+
+    /** The Audit.Product type for audits that do return a `numericValue`. */
+    interface NumericProduct extends ProductBase {
+      /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
+      numericValue: number;
+      /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. A superset of https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier */
+      numericUnit: 'byte'|'millisecond'|'element'|'unitless';
+    }
+
+    /** Type returned by Audit.audit(). Only score is required.  */
+    export type Product = NonNumericProduct | NumericProduct;
 
     /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1. */
     export interface Result {
@@ -114,6 +131,8 @@ declare global {
       description: string;
       /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
       numericValue?: number;
+      /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. */
+      numericUnit?: string;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
     }

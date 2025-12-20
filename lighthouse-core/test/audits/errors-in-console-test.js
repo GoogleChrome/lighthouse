@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -8,15 +8,14 @@
 /* eslint-env jest */
 
 const ErrorLogsAudit = require('../../audits/errors-in-console.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 describe('Console error logs audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = ErrorLogsAudit.audit({
       ConsoleMessages: [],
       RuntimeExceptions: [],
-    });
-    assert.equal(auditResult.numericValue, 0);
+    }, {options: {}});
     assert.equal(auditResult.score, 1);
     assert.ok(!auditResult.displayValue, 0);
     assert.equal(auditResult.details.items.length, 0);
@@ -34,8 +33,7 @@ describe('Console error logs audit', () => {
         },
       ],
       RuntimeExceptions: [],
-    });
-    assert.equal(auditResult.numericValue, 0);
+    }, {options: {}});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
@@ -79,21 +77,20 @@ describe('Console error logs audit', () => {
           'executionContextId': 3,
         },
       }],
-    });
+    }, {options: {}});
 
-    assert.equal(auditResult.numericValue, 3);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[0].url, 'http://www.example.com/favicon.ico');
     assert.equal(auditResult.details.items[0].description,
       'The server responded with a status of 404 (Not Found)');
-    assert.equal(auditResult.details.items[1].url, 'http://www.example.com/wsconnect.ws');
-    assert.equal(auditResult.details.items[1].description,
-      'WebSocket connection failed: Unexpected response code: 500');
-    assert.equal(auditResult.details.items[2].url,
+    assert.equal(auditResult.details.items[1].url,
       'http://example.com/fancybox.js');
-    assert.equal(auditResult.details.items[2].description,
+    assert.equal(auditResult.details.items[1].description,
       'TypeError: Cannot read property \'msie\' of undefined');
+    assert.equal(auditResult.details.items[2].url, 'http://www.example.com/wsconnect.ws');
+    assert.equal(auditResult.details.items[2].description,
+      'WebSocket connection failed: Unexpected response code: 500');
   });
 
   it('handle the case when some logs fields are undefined', () => {
@@ -106,8 +103,7 @@ describe('Console error logs audit', () => {
         },
       ],
       RuntimeExceptions: [],
-    });
-    assert.equal(auditResult.numericValue, 1);
+    }, {options: {}});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     // url is undefined
@@ -137,12 +133,128 @@ describe('Console error logs audit', () => {
           'executionContextId': 3,
         },
       }],
-    });
-    assert.equal(auditResult.numericValue, 1);
+    }, {options: {}});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.strictEqual(auditResult.details.items[0].url, 'http://example.com/fancybox.js');
     assert.strictEqual(auditResult.details.items[0].description,
       'TypeError: Cannot read property \'msie\' of undefined');
+  });
+
+  describe('options', () => {
+    it('does nothing with an empty pattern', () => {
+      const options = {ignoredPatterns: ''};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [
+          {
+            entry: {
+              level: 'error',
+              source: 'network',
+              text: 'This is a simple error msg',
+            },
+          },
+        ],
+        RuntimeExceptions: [],
+      }, {options});
+
+      expect(result.score).toBe(0);
+      expect(result.details.items).toHaveLength(1);
+    });
+
+    it('does nothing with an empty description', () => {
+      const options = {ignoredPatterns: 'pattern'};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [
+          {
+            entry: {
+              level: 'error',
+            },
+          },
+        ],
+        RuntimeExceptions: [],
+      }, {options});
+
+      expect(result.score).toBe(0);
+      expect(result.details.items).toHaveLength(1);
+    });
+
+    it('does nothing with an empty description', () => {
+      const options = {ignoredPatterns: 'pattern'};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [
+          {
+            entry: {
+              level: 'error',
+            },
+          },
+        ],
+        RuntimeExceptions: [],
+      }, {options});
+
+      expect(result.score).toBe(0);
+      expect(result.details.items).toHaveLength(1);
+    });
+
+    it('filters console messages as a string', () => {
+      const options = {ignoredPatterns: ['simple']};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [
+          {
+            entry: {
+              level: 'error',
+              source: 'network',
+              text: 'This is a simple error msg',
+            },
+          },
+        ],
+        RuntimeExceptions: [],
+      }, {options});
+
+      expect(result.score).toBe(1);
+      expect(result.details.items).toHaveLength(0);
+    });
+
+    it('filters console messages as a regex', () => {
+      const options = {ignoredPatterns: [/simple.*msg/]};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [
+          {
+            entry: {
+              level: 'error',
+              source: 'network',
+              text: 'This is a simple error msg',
+            },
+          },
+        ],
+        RuntimeExceptions: [],
+      }, {options});
+
+      expect(result.score).toBe(1);
+      expect(result.details.items).toHaveLength(0);
+    });
+
+    it('filters exceptions with both regex and strings', () => {
+      const options = {ignoredPatterns: [/s.mple/i, 'really']};
+      const result = ErrorLogsAudit.audit({
+        ConsoleMessages: [],
+        RuntimeExceptions: [
+          {
+            exceptionDetails: {
+              url: 'http://example.com/url.js',
+              text: 'Simple Error: You messed up',
+            },
+          },
+          {
+            exceptionDetails: {
+              url: 'http://example.com/url.js',
+              text: 'Bad Error: You really messed up',
+            },
+          },
+        ],
+      }, {options});
+
+      expect(result.score).toBe(1);
+      expect(result.details.items).toHaveLength(0);
+    });
   });
 });

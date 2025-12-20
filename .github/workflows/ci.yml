@@ -1,0 +1,85 @@
+# The Travis CI is our full-fledged CI, but this Github workflow
+# runs the same tests. The GH workflow UI makes it simpler to hone
+# in on the step that failed.
+
+name: 💡🏠
+
+on: [push]
+
+jobs:
+  ci:
+
+    runs-on: ubuntu-latest
+    strategy:
+      # e.g. if lint fails, continue to the unit tests anyway
+      fail-fast: false
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: Setup protoc
+      uses: arduino/setup-protoc@7ad700d
+      with:
+        version: '3.7.1'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 2.7
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install protobuf==3.7.1
+
+    # Cache yarn deps. thx https://github.com/actions/cache/blob/master/examples.md#node---yarn
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: Set up node_modules cache
+      uses: actions/cache@v1
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - run: yarn --frozen-lockfile
+    - run: yarn build-all
+    - run: yarn diff:sample-json
+    # - run: yarn type-check
+    # - run: yarn lint
+    - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
+
+    # Run tests that require headfull Chrome.
+    - run: sudo apt-get install xvfb
+    - run: xvfb-run --auto-servernum yarn jest report/proto-test.js
+    # - run: xvfb-run --auto-servernum yarn test-clients
+    # - run: xvfb-run --auto-servernum yarn smoke -j=1 --retries=2
+    # - run: xvfb-run --auto-servernum yarn test-bundle
+    # - run: xvfb-run --auto-servernum yarn test-docs
+
+    # - run: yarn test-lantern
+    # - run: yarn test-legacy-javascript
+    # - run: yarn i18n:checks
+    # - run: yarn dogfood-lhci
+
+    # buildtracker runs `git merge-base HEAD origin/master` which needs more history than depth=1. https://github.com/paularmstrong/build-tracker/issues/106
+    # - name: Deepen git fetch (for buildtracker)
+      # run: git fetch --deepen=100
+    # - name: Store in buildtracker
+      # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
+      # run: yarn bt-cli upload-build || true
+      # env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        # BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
+
+    # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+    # - run: git diff --exit-code

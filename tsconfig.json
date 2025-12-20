@@ -18,10 +18,19 @@
     "clients/**/*.js",
     "build/**/*.js",
     "./types/**/*.d.ts",
+    "eslint-local-rules.js",
   ],
   "exclude": [
+    "lighthouse-core/lib/cdt",
     "lighthouse-core/test/**/*.js",
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
-  ]
+    "lighthouse-core/scripts/legacy-javascript/variants",
+  ],
+  "files": [
+    // Opt-in to typechecking for some core tests.
+    "lighthouse-core/test/scripts/lantern/constants-test.js",
+    "lighthouse-core/test/gather/driver-test.js",
+    "lighthouse-core/test/gather/gather-runner-test.js",
+  ],
 }

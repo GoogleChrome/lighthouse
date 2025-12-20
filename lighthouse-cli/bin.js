@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -69,11 +69,6 @@ async function begin() {
     cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
     configJson = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
   } else if (cliFlags.preset) {
-    if (cliFlags.preset === 'mixed-content') {
-      // The mixed-content audits require headless Chrome (https://crbug.com/764505).
-      cliFlags.chromeFlags = `${cliFlags.chromeFlags} --headless`;
-    }
-
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
   }
 
@@ -107,8 +102,8 @@ async function begin() {
         ' Please use "--emulated-form-factor=none" instead.');
   }
 
-  if (cliFlags.extraHeaders) {
-    // TODO: LH.Flags.extraHeaders is actually a string at this point, but needs to be
+  if (typeof cliFlags.extraHeaders === 'string') {
+    // TODO: LH.Flags.extraHeaders is sometimes actually a string at this point, but needs to be
     // copied over to LH.Settings.extraHeaders, which is LH.Crdp.Network.Headers. Force
     // the conversion here, but long term either the CLI flag or the setting should have
     // a different name.

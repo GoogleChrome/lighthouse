@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -64,10 +64,12 @@ class LanternInteractive extends LanternMetric {
 
   /**
    * @param {LH.Gatherer.Simulation.Result} simulationResult
-   * @param {Object} extras
+   * @param {import('./lantern-metric.js').Extras} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
   static getEstimateFromSimulation(simulationResult, extras) {
+    if (!extras.fmpResult) throw new Error('missing fmpResult');
+
     const lastTaskAt = LanternInteractive.getLastLongTaskEndTime(simulationResult.nodeTimings);
     const minimumTime = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs

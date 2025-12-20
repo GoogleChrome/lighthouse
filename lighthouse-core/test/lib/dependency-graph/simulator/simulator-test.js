@@ -1,17 +1,17 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const NetworkNode = require('../../../../lib/dependency-graph/network-node');
-const CpuNode = require('../../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../../lib/dependency-graph/simulator/simulator');
-const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache');
+const NetworkNode = require('../../../../lib/dependency-graph/network-node.js');
+const CpuNode = require('../../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../../lib/dependency-graph/simulator/simulator.js');
+const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.js');
 const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
 
-const assert = require('assert');
+const assert = require('assert').strict;
 let nextRequestId = 1;
 let nextTid = 1;
 
@@ -118,6 +118,24 @@ describe('DependencyGraph/Simulator', () => {
       assertNodeTiming(result, nodeB, {startTime: 8, endTime: 16});
     });
 
+    it('should simulate data URL network graphs', () => {
+      const url = 'data:image/jpeg;base64,foobar';
+      const protocol = 'data';
+      const parsedURL = {scheme: 'data', host: '', securityOrigin: 'null'};
+      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1, url, parsedURL, protocol}));
+      const nodeB = new NetworkNode(request({startTime: 0, endTime: 3, url, parsedURL, protocol,
+        resourceSize: 1024 * 1024}));
+      nodeA.addDependent(nodeB);
+
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
+
+      // should be ~2ms for A (resourceSize 0), ~12ms for B (resourceSize 1MB)
+      assert.equal(result.timeInMs, 14);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 2});
+      assertNodeTiming(result, nodeB, {startTime: 2, endTime: 14});
+    });
+
     it('should simulate basic CPU queue graphs', () => {
       const nodeA = new NetworkNode(request({}));
       const nodeB = new CpuNode(cpuTask({duration: 100}));
@@ -219,6 +237,64 @@ describe('DependencyGraph/Simulator', () => {
       assert.equal(result.timeInMs, 950 + (150 + 750 + 500));
     });
 
+    it('should start network requests in startTime order', () => {
+      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const imageNodes = [
+        new NetworkNode(request({startTime: 5})),
+        new NetworkNode(request({startTime: 4})),
+        new NetworkNode(request({startTime: 3})),
+        new NetworkNode(request({startTime: 2})),
+        new NetworkNode(request({startTime: 1})),
+      ];
+
+      for (const imageNode of imageNodes) {
+        imageNode.record.connectionReused = true;
+        imageNode.record.connectionId = '1';
+        rootNode.addDependent(imageNode);
+      }
+
+      const simulator = new Simulator({serverResponseTimeByOrigin, maximumConcurrentRequests: 1});
+      const result = simulator.simulate(rootNode);
+
+      // should be 3 RTs + SRT for rootNode (950ms)
+      // should be 2 RTs + SRT for image nodes in observed order (800ms)
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
+      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
+      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
+    });
+
+    it('should start network requests in priority order to break startTime ties', () => {
+      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const imageNodes = [
+        new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
+        new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
+        new NetworkNode(request({startTime: 0.3, priority: 'Medium'})),
+        new NetworkNode(request({startTime: 0.4, priority: 'High'})),
+        new NetworkNode(request({startTime: 0.5, priority: 'VeryHigh'})),
+      ];
+
+      for (const imageNode of imageNodes) {
+        imageNode.record.connectionReused = true;
+        imageNode.record.connectionId = '1';
+        rootNode.addDependent(imageNode);
+      }
+
+      const simulator = new Simulator({serverResponseTimeByOrigin, maximumConcurrentRequests: 1});
+      const result = simulator.simulate(rootNode);
+
+      // should be 3 RTs + SRT for rootNode (950ms)
+      // should be 2 RTs + SRT for image nodes in priority order (800ms)
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, imageNodes[4], {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, imageNodes[3], {startTime: 1750, endTime: 2550});
+      assertNodeTiming(result, imageNodes[2], {startTime: 2550, endTime: 3350});
+      assertNodeTiming(result, imageNodes[1], {startTime: 3350, endTime: 4150});
+      assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
+    });
+
     it('should simulate two graphs in a row', () => {
       const simulator = new Simulator({serverResponseTimeByOrigin});
 
@@ -260,20 +336,20 @@ describe('DependencyGraph/Simulator', () => {
     describe('on a real trace', () => {
       const trace = require('../../../fixtures/traces/progressive-app-m60.json');
       const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
-      let result;
 
-      beforeAll(async () => {
+      it('should compute a timeInMs', async () => {
         const computedCache = new Map();
         const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
         const simulator = new Simulator({serverResponseTimeByOrigin});
-        result = simulator.simulate(graph);
-      });
-
-      it('should compute a timeInMs', () => {
+        const result = simulator.simulate(graph);
         expect(result.timeInMs).toBeGreaterThan(100);
       });
 
-      it('should sort the task event times', () => {
+      it('should sort the task event times', async () => {
+        const computedCache = new Map();
+        const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
+        const simulator = new Simulator({serverResponseTimeByOrigin});
+        const result = simulator.simulate(graph);
         const nodeTimings = Array.from(result.nodeTimings.entries());
 
         for (let i = 1; i < nodeTimings.length; i++) {

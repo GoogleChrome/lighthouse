@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -11,7 +11,7 @@
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
  */
 
-const URL = require('./url-shim');
+const URL = require('./url-shim.js');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
 
@@ -49,7 +49,7 @@ const HEADER_FETCHED_SIZE = 'X-TotalFetchedSize';
  * @property {number} responseMs
  */
 
-/** @type {SelfMap<LH.Crdp.Page.ResourceType>} */
+/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',
@@ -112,7 +112,7 @@ class NetworkRequest {
     this.initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this.timing = undefined;
-    /** @type {LH.Crdp.Page.ResourceType|undefined} */
+    /** @type {LH.Crdp.Network.ResourceType|undefined} */
     this.resourceType = undefined;
     this.mimeType = '';
     /** @type {LH.Crdp.Network.ResourcePriority} */
@@ -129,14 +129,8 @@ class NetworkRequest {
     this.frameId = '';
     /**
      * @type {string|undefined}
-     * Only set for OOPIFs. This is the targetId of the protocol target from which this
-     * request came. Undefined means it came from the root.
-     */
-    this.targetId = undefined;
-    /**
-     * @type {string|undefined}
-     * Only set for OOPIFs. This is the sessionId of the protocol connection on which this
-     * request was discovered. Undefined means it came from the root.
+     * Only set for child targets (OOPIFs). This is the sessionId of the protocol connection on
+     * which this request was discovered. `undefined` means it came from the root.
      */
     this.sessionId = undefined;
     this.isLinkPreload = false;
@@ -272,16 +266,10 @@ class NetworkRequest {
   }
 
   /**
-   * @param {LH.Protocol.RawSource|undefined} source
+   * @param {string=} sessionId
    */
-  setSource(source) {
-    if (source) {
-      this.targetId = source.targetId;
-      this.sessionId = source.sessionId;
-    } else {
-      this.targetId = undefined;
-      this.sessionId = undefined;
-    }
+  setSession(sessionId) {
+    this.sessionId = sessionId;
   }
 
   /**
@@ -428,41 +416,8 @@ class NetworkRequest {
       return;
     }
 
-    // Init timing.
-    this.timing = {
-      requestTime: this.startTime,
-      proxyStart: -1,
-      proxyEnd: -1,
-      dnsStart: -1,
-      dnsEnd: -1,
-      connectStart: -1,
-      connectEnd: -1,
-      sslStart: -1,
-      sslEnd: -1,
-      workerStart: -1,
-      workerReady: -1,
-      sendStart: -1,
-      sendEnd: -1,
-      pushStart: -1,
-      pushEnd: -1,
-      receiveHeadersEnd: -1,
-    };
-
-    const origEnd = this.endTime;
-    // `this.endTime` and `this.responseReceivedTime` are in seconds, so convert from milliseconds.
-    this.endTime = this.startTime + (totalMs / 1000);
-    this.responseReceivedTime = this.startTime + ((TCPMs + requestMs) / 1000);
-
-    this.timing.connectStart = 0;
-    this.timing.connectEnd = TCPMs;
-    this.timing.sslStart = TCPMs - SSLMs;
-    this.timing.sslEnd = TCPMs;
-    this.timing.sendStart = TCPMs;
-    this.timing.sendEnd = TCPMs;
-    this.timing.receiveHeadersEnd = TCPMs + requestMs;
-
     this.lrStatistics = {
-      endTimeDeltaMs: (origEnd - this.endTime) * 1000,
+      endTimeDeltaMs: (this.endTime - (this.startTime + (totalMs / 1000))) * 1000,
       TCPMs: TCPMs,
       requestMs: requestMs,
       responseMs: responseMs,

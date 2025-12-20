@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <script>
+      function stall(ms) {
+        const start = Date.now();
+        while (Date.now() - start < ms) ;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const delay = params.get('jsDelay') || 3000;
+      const redirect = params.get('jsRedirect') || '/redirects-final.html';
+
+      if (params.get('noFcp')) {
+        // If we don't want an FCP then stall and redirect synchronously
+        stall(delay);
+        window.location = redirect;
+      }
+    </script>
+  </head>
+
+  <body>
+    Redirecting in
+    <script>
+      document.write(` ${delay}ms...`);
+      // Redirect to the location in jsDelay milliseconds.
+      setTimeout(() => window.location = redirect, delay);
+      // Create a long task every 400ms to prevent Lighthouse from moving on
+      setInterval(() => stall(55), 400);
+    </script>
+  </body>
+</html>

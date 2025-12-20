@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
-const LHError = require('../../lib/lh-error');
+const LHError = require('../../lib/lh-error.js');
 
 // TODO(bckenny): CommandCallback properties should be tied by command type after
 // https://github.com/Microsoft/TypeScript/pull/22348. See driver.js TODO.
@@ -52,16 +52,17 @@ class Connection {
    * Call protocol methods
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
+   * @param {string|undefined} sessionId
    * @param {LH.CrdpCommands[C]['paramsType']} paramArgs,
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  sendCommand(method, ...paramArgs) {
+  sendCommand(method, sessionId, ...paramArgs) {
     // Reify params since we need it as a property so can't just spread again.
     const params = paramArgs.length ? paramArgs[0] : undefined;
 
     log.formatProtocol('method => browser', {method, params}, 'verbose');
     const id = ++this._lastCommandId;
-    const message = JSON.stringify({id, method, params});
+    const message = JSON.stringify({id, sessionId, method, params});
     this.sendRawMessage(message);
 
     return new Promise(resolve => {
@@ -117,7 +118,7 @@ class Connection {
     if (callback) {
       this._callbacks.delete(object.id);
 
-      return callback.resolve(Promise.resolve().then(_ => {
+      callback.resolve(Promise.resolve().then(_ => {
         if (object.error) {
           log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
           throw LHError.fromProtocolMessage(callback.method, object.error);

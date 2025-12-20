@@ -16,13 +16,17 @@ fi
 
 printf "Determined the following files have been touched:\n\n$CHANGED_FILES\n\n"
 
-if ! echo $CHANGED_FILES | grep -E 'dependency-graph|metrics|lantern' > /dev/null; then
+if ! echo $CHANGED_FILES | grep -E 'dependency-graph|metrics|lantern|predictive-perf' > /dev/null; then
   echo "No lantern files affected, skipping lantern checks."
   exit 0
 fi
 
-printf "Lantern files affected!\n\nDownloading test set...\n"
-"$LH_ROOT/lighthouse-core/scripts/lantern/download-traces.sh"
+# Google Drive will sometimes respond with a bad result, so we repeat until it works.
+for i in {1..5}; do
+  printf "Lantern files affected!\n\nDownloading test set...\n"
+  "$LH_ROOT/lighthouse-core/scripts/lantern/download-traces.sh" && break || sleep 15;
+  echo "failed to download"
+done
 
 printf "\n\nRunning lantern on all sites...\n"
 "$LH_ROOT/lighthouse-core/scripts/lantern/run-on-all-assets.js"

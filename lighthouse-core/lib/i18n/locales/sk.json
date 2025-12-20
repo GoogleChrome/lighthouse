@@ -1,90 +1,117 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Prístupové klávesy umožňujú používateľom rýchlejšie vybrať časť stránky. Každý prístupový kláves musí byť jedinečný, aby navigácia fungovala správne. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)"
+    "message": "Prístupové klávesy umožňujú používateľom rýchlejšie vybrať časť stránky. Každý prístupový kláves musí byť jedinečný, aby navigácia správne fungovala. [Ďalšie informácie](https://web.dev/accesskeys/)"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
-    "message": "Hodnoty atribútu [accesskey] nie sú jedinečné"
+    "message": "Hodnoty `[accesskey]` nie sú jedinečné"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | title": {
-    "message": "Hodnoty atribútu [accesskey] sú jedinečné"
+    "message": "Počet jedinečných hodnôt: `[accesskey]`"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Každá rola ARIA podporuje konkrétnu podmnožinu atribútov aria-*. Atribúty aria-* použité pre nesprávnu rolu sú neplatné. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)"
+    "message": "Každá značka ARIA `role` podporuje konkrétnu podmnožinu atribútov `aria-*`. Ak ich pomiešate, znehodnotia sa atribúty `aria-*`. [Ďalšie informácie](https://web.dev/aria-allowed-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
-    "message": "Atribúty [aria-*] sa nezhodujú so svojimi rolami"
+    "message": "Atribúty `[aria-*]` nezodpovedajú svojim rolám"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
-    "message": "Atribúty [aria-*] sa zhodujú so svojimi rolami"
+    "message": "Atribúty `[aria-*]` zodpovedajú svojim rolám"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nepracujú konzistentne, keď je v dokumente `<body>` nastavený atribút `aria-hidden=\"true\"`. [Ďalšie informácie](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` sa v dokumente `<body>` nachádza"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` sa v dokumente `<body>` nenachádza"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Označiteľné odvodené položky v rámci prvku `[aria-hidden=\"true\"]` zneprístupňujú tieto interaktívne prvky používateľom asistenčných technológií, napríklad čítačiek obrazovky. [Ďalšie informácie](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Prvky `[aria-hidden=\"true\"]` obsahujú označiteľné odvodené prvky"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Prvky `[aria-hidden=\"true\"]` neobsahujú označiteľné odvodené položky"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Keď vstupné pole nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Vstupné polia ARIA nemajú dostupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Vstupné polia ARIA majú dostupné názvy"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Niektoré roly ARIA majú povinné atribúty, ktoré čítačkám obrazovky opisujú stav prvku. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)"
+    "message": "Niektoré roly ARIA majú povinné atribúty, ktoré čítačkám obrazovky opisujú stav prvku. [Ďalšie informácie](https://web.dev/aria-required-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
-    "message": "Prvky s atribútom [role] nemajú všetky povinné atribúty [aria-*]"
+    "message": "Roly `[role]` nemajú všetky požadované atribúty `[aria-*]`"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | title": {
-    "message": "Prvky s atribútom [role] obsahujú všetky povinné atribúty [aria-*]"
+    "message": "Roly `[role]` majú všetky požadované atribúty `[aria-*]`"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Niektoré nadradené roly ARIA musia obsahovať určité podradené roly, aby poskytovali správne funkcie dostupnosti. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)"
+    "message": "Ak majú poskytovať správne funkcie dostupnosti, musia niektoré nadradené roly ARIA obsahovať určité podradené roly. [Ďalšie informácie](https://web.dev/aria-required-children/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "V prvkoch s atribútom [role], ktoré by mali obsahovať podradené prvky s určitými atribútmi [role], tieto podradené prvky chýbajú."
+    "message": "Prvkom so štítkom ARIA `[role]`, ktoré vyžadujú, aby podradené prvky obsahovali konkrétnu rolu `[role]`, chýbajú niektoré alebo všetky požadované podradené prvky."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "V prvkoch s atribútom [role], ktoré by mali obsahovať podradené prvky s určitými atribútmi [role], sú tieto podradené prvky prítomné"
+    "message": "Prvky so štítkom ARIA `[role]`, ktoré vyžadujú, aby podradené prvky obsahovali konkrétnu rolu `[role]`, majú všetky požadované podradené prvky."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Niektoré podriadené roly ARIA musia byť obsiahnuté v konkrétnych nadradených rolách, aby poskytovali správne funkcie dostupnosti. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)"
+    "message": "Ak majú niektoré podradené roly ARIA poskytovať správne funkcie dostupnosti, musia byť obsiahnuté v konkrétnych nadradených rolách. [Ďalšie informácie](https://web.dev/aria-required-parent/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
-    "message": "Prvky s atribútom [role] nie sú umiestnené v požadovanom nadradenom prvku"
+    "message": "Roly `[role]` sa nenachádzajú v požadovanom nadradenom prvku"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | title": {
-    "message": "Prvky s atribútmi [role] sú umiestnené v požadovanom nadradenom prvku"
+    "message": "Roly `[role]` sa nachádzajú v požadovanom nadradenom prvku"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "Ak majú roly ARIA vykonávať zamýšľané funkcie dostupnosti, musia mať platné hodnoty. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)"
+    "message": "Ak majú roly ARIA vykonávať zamýšľané funkcie dostupnosti, musia mať platné hodnoty. [Ďalšie informácie](https://web.dev/aria-roles/)"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
-    "message": "Hodnoty atribútov [role] nie sú platné"
+    "message": "Hodnoty `[role]` nie sú platné"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
-    "message": "Hodnoty atribútu [role] sú platné"
+    "message": "Hodnoty `[role]` sú platné"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Keď pole prepínača nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Polia prepínačov ARIA nemajú dostupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Polia prepínačov ARIA majú dostupné názvy"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nedokážu interpretovať atribúty ARIA s neplatnými hodnotami. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)"
+    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nedokážu interpretovať atribúty ARIA s neplatnými hodnotami. [Ďalšie informácie](https://web.dev/aria-valid-attr-value/)"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
-    "message": "Atribúty [aria-*] neobsahujú platné hodnoty"
+    "message": "Atribúty `[aria-*]` nemajú platné hodnoty"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": {
-    "message": "Atribúty [aria-*] obsahujú platné hodnoty"
+    "message": "Atribúty `[aria-*]` majú platné hodnoty"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nedokážu interpretovať atribúty ARIA s neplatnými názvami. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)"
+    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nedokážu interpretovať atribúty ARIA s neplatnými názvami. [Ďalšie informácie](https://web.dev/aria-valid-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
-    "message": "Atribúty [aria-*] nie sú platné alebo obsahujú preklepy"
+    "message": "Atribúty `[aria-*]` nie sú platné ani neobsahujú preklepy"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
-    "message": "Atribúty [aria-*] sú platné a neobsahujú preklepy"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Titulky sprístupňujú nepočujúcim a sluchovo postihnutým používateľom zvukové prvky pomocou dôležitých informácií, napríklad údajov o tom, kto hovorí, čo hovorí a ďalších informácií nesúvisiacich s rečou. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "Prvky <audio> neobsahujú prvok <track> s atribútom [kind=\"captions\"]."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "Prvky <audio> obsahujú prvok <track> s atribútom [kind=\"captions\"]"
+    "message": "Atribúty `[aria-*]` sú platné a neobsahujú preklepy"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
-    "message": "Prvky, ktoré zlyhali"
+    "message": "Prvky s chybami"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "Keď tlačidlo nemá dostupný názov, čítačky obrazovky ho oznamujú ako „tlačidlo“, takže je pre používateľov v podstate nanič. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)"
+    "message": "Keď tlačidlo nemá dostupný názov, čítačky obrazovky ho oznamujú ako „tlačidlo“, takže je pre používateľov v podstate nanič. [Ďalšie informácie](https://web.dev/button-name/)"
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "Tlačidlá nemajú dostupný názov"
@@ -93,7 +120,7 @@
     "message": "Tlačidlá majú dostupný názov"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Keď pridáte možnosti, ako obísť opakujúci sa obsah, umožníte tým efektívnejšiu navigáciu na stránke pomocou klávesnice. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)"
+    "message": "Keď pridáte možnosti, ako obísť opakujúci sa obsah, umožníte tým efektívnejšiu navigáciu na stránke pomocou klávesnice. [Ďalšie informácie](https://web.dev/bypass/)"
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "Stránka neobsahuje hlavičku, odkaz na preskočenie či orientačný bod regióna."
@@ -102,7 +129,7 @@
     "message": "Stránka obsahuje hlavičku, odkaz na preskočenie alebo orientačný bod regiónu"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Mnohí používatelia majú problémy s čítaním textu s nízkym kontrastom, prípadne to vôbec nedokážu. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)"
+    "message": "Mnohí používatelia majú problémy s čítaním textu s nízkym kontrastom, prípadne to vôbec nedokážu. [Ďalšie informácie](https://web.dev/color-contrast/)"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Farby pozadia a popredia nemajú dostatočný kontrastný pomer."
@@ -111,88 +138,115 @@
     "message": "Farby pozadia a popredia majú dostatočný kontrastný pomer"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "Keď zoznamy definícií nie sú správne označené, čítačky obrazovky môžu generovať mätúci alebo nepresný výstup. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)"
+    "message": "Keď zoznamy definícií nie sú správne označené, čítačky obrazovky môžu generovať mätúci alebo nepresný výstup. [Ďalšie informácie](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "Prvky <dl> neobsahujú iba správne zoradené skupiny prvkov <dt> a <dd> či prvky <script> alebo <template>."
+    "message": "`<dl>` neobsahuje iba správne usporiadané skupiny `<dt>` a `<dd>`, prvky `<script>`, `<template>` alebo `<div>`."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "Prvky <dl> obsahujú iba správne zoradené skupiny <dt> a <dd> či prvky <script> alebo <template>."
+    "message": "`<dl>` obsahuje iba správne usporiadané skupiny `<dt>` a `<dd>`, prvky `<script>`, `<template>` alebo `<div>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Položky zoznamu definícií (<dt> a <dd>) musia byť zabalené v nadradenom prvku <dl>, aby ich čítačky obrazovky dokázali správne oznamovať. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)"
+    "message": "Položky zoznamu definícií (`<dt>` a `<dd>`) musia byť zabalené v nadradenom prvku `<dl>`, aby ich čítačky obrazovky dokázali správne oznamovať. [Ďalšie informácie](https://web.dev/dlitem/)"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
-    "message": "Položky zoznamu definícií nie sú zabalené v prvkoch <dl>"
+    "message": "Položky zoznamu definícií nie sú zabalené v prvkoch `<dl>`"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | title": {
-    "message": "Položky zoznamu definícií sú zabalené v prvkoch <dl>"
+    "message": "Položky zoznamu definícií sú zabalené v prvkoch `<dl>`"
   },
   "lighthouse-core/audits/accessibility/document-title.js | description": {
-    "message": "Názov poskytuje používateľom čítačiek obrazovky prehľadné informácie o stránke a používatelia vyhľadávačov sa podľa neho rozhodujú, či je stránka pre ich vyhľadávanie relevantná. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/title)."
+    "message": "Názov poskytuje používateľom čítačiek obrazovky prehľadné informácie o stránke a používatelia vyhľadávačov sa podľa neho rozhodujú, či je stránka pre ich vyhľadávanie relevantná. [Ďalšie informácie](https://web.dev/document-title/)"
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
-    "message": "Dokument neobsahuje prvok <title>"
+    "message": "Dokument nemá prvok `<title>`"
   },
   "lighthouse-core/audits/accessibility/document-title.js | title": {
-    "message": "Dokument obsahuje prvok <title>"
+    "message": "Dokument má prvok `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Hodnota atribútu ID musí byť jedinečná, aby asistenčné technológie neprehliadli ďalšie výskyty. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Všetky označiteľné prvky musia mať jedinečný atribút`id`, aby ich dokázali rozpoznať asistenčné technológie. [Ďalšie informácie](https://web.dev/duplicate-id-active/)"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Atribúty [id] použité na stránke nie sú jedinečné"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atribúty `[id]` aktívnych označiteľných prvkov nie sú jedinečné"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Atribúty [id] použité na stránke sú jedinečné"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atribúty `[id]` aktívnych označiteľných prvkov sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Hodnota identifikátora ARIA musí byť jedinečná, aby asistenčné technológie neprehliadli ďalšie výskyty. [Ďalšie informácie](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Identifikátory ARIA nie sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Identifikátory ARIA nie sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Asistenčné technológie, ako napríklad čítačky obrazovky, ktoré používajú buď prvý, posledný, alebo všetky štítky, môžu polia formulárov s viacerými štítkami ohlásiť nepresne. [Ďalšie informácie](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Polia formulára majú viacero štítkov"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Žiadne polia formulára nemajú viacero štítkov"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Používatelia čítačiek obrazovky zistia obsah rámcov pomocou ich názvov. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)"
+    "message": "Používatelia čítačiek obrazovky zistia obsah rámcov pomocou ich názvov. [Ďalšie informácie](https://web.dev/frame-title/)"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
-    "message": "Prvky <frame> a <iframe> nemajú atribút title"
+    "message": "Prvky `<frame>` alebo `<iframe>` nemajú názov"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
-    "message": "Prvok <frame> alebo <iframe> obsahuje názov"
+    "message": "Prvok `<frame>` alebo `<iframe>` má názov"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Správne usporiadané nadpisy, ktoré nepreskakujú úrovne, udržiavajú sémantickú štruktúru stránky, vďaka čomu zjednodušujú navigáciu a porozumenie pri používaní asistenčných technológií. [Ďalšie informácie](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Prvky nadpisu sa nezobrazujú postupne v zostupnom poradí"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Prvky nadpisu sa zobrazujú postupne v zostupnom poradí"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "Ak stránka neuvádza atribút lang, čítačka obrazovky predpokladá, že je v predvolenom jazyku, ktorý používateľ zvolil pri nastavovaní čítačky obrazovky. Ak stránka v skutočnosti nie je v predvolenom jazyku, čítačka obrazovky nemusí jej text prečítať správne. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)"
+    "message": "Ak stránka neuvádza atribút lang, čítačka obrazovky predpokladá, že je v predvolenom jazyku vybranom používateľom pri nastavovaní čítačky obrazovky. Ak stránka v skutočnosti nie je v predvolenom jazyku, čítačka obrazovky nemusí jej text prečítať správne. [Ďalšie informácie](https://web.dev/html-has-lang/)"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
-    "message": "Prvok <html> nemá atribút [lang]"
+    "message": "Prvok `<html>` nemá atribút `[lang]`"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | title": {
-    "message": "Prvok <html> má atribút [lang]"
+    "message": "Prvok `<html>` má atribút `[lang]`"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Ak je uvedený platný [jazyk BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question), čítačkám obrazovky to pomôže správne oznamovať text. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
+    "message": "Ak je uvedený platný [jazyk BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question), čítačkám obrazovky to pomôže správne oznamovať text. [Ďalšie informácie](https://web.dev/html-lang-valid/)"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
-    "message": "Prvok <html> nemá platnú hodnotu atribútu [lang]."
+    "message": "Prvok `<html>` nemá platnú hodnotu pre atribút `[lang]`."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | title": {
-    "message": "Prvok <html> obsahuje platnú hodnotu atribútu [lang]"
+    "message": "Prvok `<html>` má platnú hodnotu pre svoj atribút `[lang]`"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Informatívne prvky by mali mať krátky popisný alternatívny text. Dekoratívne prvky je možné ignorovať pomocou prázdneho atribútu alt. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)"
+    "message": "Informatívne prvky by mali mať krátky popisný alternatívny text. Dekoratívne prvky je možné ignorovať pomocou prázdneho atribútu alt. [Ďalšie informácie](https://web.dev/image-alt/)"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
-    "message": "Prvky obrázkov nemajú atribúty [alt]"
+    "message": "Prvky obrázkov nemajú atribúty `[alt]`"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | title": {
-    "message": "Prvky obrázkov majú atribúty [alt]"
+    "message": "Prvky obrázka majú atribúty `[alt]`"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "Keď je ako tlačidlo <input> použitý obrázok, uvedenie alternatívneho textu môže pomôcť používateľom čítačky obrazovky pochopiť účel tlačidla. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)"
+    "message": "Keď je ako tlačidlo `<input>` použitý obrázok, uvedenie alternatívneho textu môže pomôcť používateľom čítačky obrazovky pochopiť účel tlačidla. [Ďalšie informácie](https://web.dev/input-image-alt/)"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
-    "message": "Prvky <input type=\"image\"> nemajú text [alt]"
+    "message": "Prvky `<input type=\"image\">` nemajú text `[alt]`"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | title": {
-    "message": "Prvky <input type=\"image\"> majú text [alt]"
+    "message": "Prvky `<input type=\"image\">` majú text `[alt]`"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Štítky zaisťujú, aby asistenčné technológie (napríklad čítačky obrazovky) správne oznamovali ovládacie prvky formulárov. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)"
+    "message": "Štítky zaisťujú, aby asistenčné technológie (napríklad čítačky obrazovky) správne oznamovali ovládacie prvky formulárov. [Ďalšie informácie](https://web.dev/label/)"
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Prvky formulárov nemajú priradené štítky"
@@ -201,16 +255,16 @@
     "message": "K prvkom formulára sú priradené štítky"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabuľka používaná na vytvorenie rozloženia by nemala obsahovať údajové prvky, ako sú prvky th a caption, prípadne atribút summary, pretože by ste tým mohli zmiasť používateľov čítačiek obrazovky. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)"
+    "message": "Tabuľka používaná na vytvorenie rozloženia by nemala obsahovať údajové prvky, ako sú prvky th a caption, prípadne atribút summary, pretože by ste tým mohli zmiasť používateľov čítačiek obrazovky. [Ďalšie informácie](https://web.dev/layout-table/)"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Prezentačné tabuľky (<table>) používajú prvky <th> a <caption> alebo atribút [summary]."
+    "message": "Prezentačné prvky `<table>` nepoužívajú atribút `<th>`, `<caption>` alebo `[summary]`."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Prezentačné tabuľky (<table>) nepoužívajú prvky <th> a <caption> ani atribút [summary]."
+    "message": "Prezentačné prvky `<table>` nepoužívajú atribút `<th>`, `<caption>` ani `[summary]`."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Rozpoznateľný, jedinečný a zamerateľný text odkazu (a alternatívny text pre obrázky, ktoré sa používajú ako odkazy) zlepšuje navigáciu pomocou čítačky obrazovky. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)"
+    "message": "Rozpoznateľný, jedinečný a zamerateľný text odkazu (a alternatívny text pre obrázky, ktoré sa používajú ako odkazy) zlepšuje navigáciu pomocou čítačky obrazovky. [Ďalšie informácie](https://web.dev/link-name/)"
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Odkazy nemajú rozpoznateľné názvy"
@@ -219,103 +273,115 @@
     "message": "Odkazy majú rozpoznateľné názvy"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Čítačky obrazovky oznamujú zoznamy špeciálnym spôsobom. Použitím správnej štruktúry zoznamu pomôžete čítačkám obrazovky s výstupom. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)"
+    "message": "Čítačky obrazovky oznamujú zoznamy špeciálnym spôsobom. Použitím správnej štruktúry zoznamu pomôžete čítačkám obrazovky s výstupom. [Ďalšie informácie](https://web.dev/list/)"
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
-    "message": "Zoznamy majú aj iný obsah ako prvky <li> a prvky s podporou skriptu (<script> a <template>)."
+    "message": "Zoznamy neobsahujú iba prvky `<li>` a prvky podporujúce skript (`<script>` a `<template>`)."
   },
   "lighthouse-core/audits/accessibility/list.js | title": {
-    "message": "Zoznamy obsahujú iba prvky <li> a prvky s podporou skriptu (<script> a <template>)."
+    "message": "Zoznamy obsahujú iba prvky `<li>` a prvky podporujúce skript (`<script>` a `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Položky zoznamu (`<li>`) sa musia nachádzať v nadradenom prvku <ul> alebo <ol>, aby ich mohli čítačky obrazovky správne oznámiť. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)"
+    "message": "Položky zoznamu (`<li>`) sa musia nachádzať v nadradenom prvku `<ul>` alebo `<ol>`, aby ich dokázali čítačky obrazovky správne oznámiť. [Ďalšie informácie](https://web.dev/listitem/)"
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "Položky zoznamov (<li>) nie sú vložené v nadradených prvkoch <ul> a <ol>."
+    "message": "Položky zoznamu (`<li>`) sa nenachádzajú v nadradených prvkoch `<ul>` ani `<ol>`"
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "Položky zoznamu (<li>) sú umiestnené v nadradených prvkoch <ul> alebo <ol>"
+    "message": "Položky zoznamu (`<li>`) sa nachádzajú v nadradených prvkoch `<ul>` alebo `<ol>`"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "Používatelia neočakávajú, že sa stránka bude automaticky obnovovať. Pri automatickom obnovení sa zameranie vráti späť na začiatok stránky. Na používateľov to môže pôsobiť nepríjemne alebo mätúco. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)"
+    "message": "Používatelia neočakávajú, že sa stránka bude automaticky obnovovať. Pri automatickom obnovení sa zameranie vráti späť na začiatok stránky. Na používateľov to môže pôsobiť nepríjemne alebo mätúco. [Ďalšie informácie](https://web.dev/meta-refresh/)"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
-    "message": "V dokumente je použitá značka <meta http-equiv=\"refresh\">"
+    "message": "Dokument používa metaznačku `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | title": {
-    "message": "V dokumente nie je použitá značka <meta http-equiv=\"refresh\">"
+    "message": "Dokument nepoužíva `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Deaktivácia približovania spôsobuje problémy slabozrakým používateľom, ktorí pri čítaní obsahu webovej stránky využívajú priblíženie obrazovky. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)"
+    "message": "Deaktivácia približovania spôsobuje problémy slabozrakým používateľom, ktorí pri čítaní obsahu webovej stránky využívajú priblíženie obrazovky. [Ďalšie informácie](https://web.dev/meta-viewport/)"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "V prvku <meta name=\"viewport\"> je použitý atribút [user-scalable=\"no\"], prípadne je hodnota atribútu [maximum-scale] menšia ako 5."
+    "message": "`[user-scalable=\"no\"]` sa nepoužíva v prvku `<meta name=\"viewport\">` alebo hodnota atribútu `[maximum-scale]` je nižšia ako 5."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
-    "message": "V prvku <meta name=\"viewport\"> nie je použitý atribút [user-scalable=\"no\"] a hodnota atribútu [maximum-scale] nie je menšia než 5."
+    "message": "`[user-scalable=\"no\"]` sa nepoužíva v prvku `<meta name=\"viewport\">` a atribút `[maximum-scale]` nie je menší ako 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Čítačky obrazovky nedokážu preložiť iný obsah ako text. Keď k prvkom <object> pridáte alternatívny text, pomôžete tým čítačkám obrazovky sprostredkovať používateľom význam. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)"
+    "message": "Čítačky obrazovky nedokážu preložiť netextový obsah. Pridaním alternatívneho textu k prvkom `<object>` pomôžete čítačkám obrazovky sprostredkovať používateľom význam. [Ďalšie informácie](https://web.dev/object-alt/)"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "Prvky <object> nemajú text [alt]"
+    "message": "Prvky `<object>` nemajú text `[alt]`"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "Prvky <object> majú text [alt]"
+    "message": "Prvky `<object>` majú text `[alt]`"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "Hodnota väčšia ako 0 označuje explicitné usporiadanie navigácie. Hoci je to technicky platné riešenie, často vedie k nepríjemným skúsenostiam používateľov, ktorí sa spoliehajú na asistenčné technológie. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)"
+    "message": "Hodnota väčšia ako 0 označuje explicitné usporiadanie navigácie. Hoci je to technicky platné riešenie, často vedie k nepríjemným skúsenostiam používateľov, ktorí potrebujú asistenčné technológie. [Ďalšie informácie](https://web.dev/tabindex/)"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
-    "message": "Niektoré prvky majú hodnotu [tabindex] vyššiu ako 0"
+    "message": "Niektoré prvky majú hodnotu `[tabindex]` vyššiu ako 0"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | title": {
-    "message": "Žiadny prvok nemá hodnotu [tabindex] väčšiu ako 0"
+    "message": "Žiadny prvok nemá hodnotu `[tabindex]` vyššiu ako 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Čítačky obrazovky majú funkcie, ktoré zjednodušujú prehliadanie tabuliek. Keď zaistíte, aby bunky <td> s atribútom [headers] odkazovali iba na bunky v rovnakej tabuľke, môžete tým používateľom čítačiek obrazovky zjednodušiť prehliadanie. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)"
+    "message": "Čítačky obrazovky majú funkcie, ktoré zjednodušujú prehliadanie tabuliek. Keď zaistíte, aby bunky `<td>` s atribútom `[headers]` odkazovali iba na bunky v rovnakej tabuľke, môžete tým používateľom čítačiek obrazovky zjednodušiť prehliadanie. [Ďalšie informácie](https://web.dev/td-headers-attr/)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Bunky v prvku <table> s atribútom [headers] odkazujú na iné bunky v rovnakej tabuľke."
+    "message": "Bunky v prvku `<table>`, ktoré používajú atribút `[headers]`, odkazujú na prvok `id`, ktorý nie je v rovnakej tabuľke."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Bunky v prvku <table>, ktoré používajú atribút [headers], odkazujú iba na bunky v rovnakej tabuľke."
+    "message": "Bunky v prvku `<table>`, ktoré používajú atribút `[headers]`, odkazujú na bunky v tej istej tabuľke."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Čítačky obrazovky majú funkcie, ktoré zjednodušujú prehliadanie tabuliek. Dojem používateľov čítačiek obrazovky môžete vylepšiť tým, že hlavičky tabuliek budú odkazovať na určitú skupinu buniek. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)"
+    "message": "Čítačky obrazovky majú funkcie, ktoré zjednodušujú prehliadanie tabuliek. Dojem používateľov čítačiek obrazovky môžete vylepšiť tým, že hlavičky tabuliek budú odkazovať na určitú skupinu buniek. [Ďalšie informácie](https://web.dev/th-has-data-cells/)"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
-    "message": "Prvky <th> a prvky s atribútom [role=\"columnheader\"/\"rowheader\"] nemajú údajové bunky, ktoré opisujú."
+    "message": "Prvky `<th>` a prvky s rolou `[role=\"columnheader\"/\"rowheader\"]` nemajú bunky s údajmi, ktoré opisujú."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | title": {
-    "message": "Prvky <th> a prvky s atribútom [role=\"columnheader\"/\"rowheader\"] majú údajové bunky, ktoré opisujú."
+    "message": "Prvky `<th>` a prvky s rolou `[role=\"columnheader\"/\"rowheader\"]` majú bunky s údajmi, ktoré opisujú."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Ak je uvedený platný [jazyk BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question), pomôže to zaistiť, aby čítačky obrazovky text čítali správne. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
+    "message": "Ak je v prvkoch uvedený platný [jazyk BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question), pomôže to zaistiť, aby čítačky obrazovky čítali text správne. [Ďalšie informácie](https://web.dev/valid-lang/)"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
-    "message": "Atribúty [lang] nemajú platnú hodnotu"
+    "message": "Atribúty `[lang]` nemajú platnú hodnotu"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | title": {
-    "message": "Atribúty [lang] obsahujú platnú hodnotu"
+    "message": "Atribúty `[lang]` majú platnú hodnotu"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "Keď má video k dispozícii titulky, nepočujúci a sluchovo postihnutí používatelia jednoduchšie získajú informácie vo videu. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)"
+    "message": "Keď má video k dispozícii titulky, nepočujúci a sluchovo postihnutí používatelia jednoduchšie získajú informácie vo videu. [Ďalšie informácie](https://web.dev/video-caption/)"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
-    "message": "Prvky <video> neobsahujú prvok <track> s atribútom [kind=\"captions\"]."
+    "message": "Prvky `<video>` neobsahujú prvok `<track>` s titulkami `[kind=\"captions\"]`."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
-    "message": "Prvky <video> obsahujú prvok <track> s atribútom [kind=\"captions\"]"
+    "message": "Prvky `<video>` obsahujú prvok `<track>` s titulkami `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Zvukové popisy pridávajú k videám relevantné informácie, napríklad o výrazoch tváre a scénach, ktoré nedokážu poskytnúť dialógy. [Ďalšie informácie](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)"
+    "message": "Zvukové popisy pridávajú k videám relevantné informácie, napríklad o výrazoch tváre a scénach, ktoré dialógy neposkytujú. [Ďalšie informácie](https://web.dev/video-description/)"
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Prvky <video> neobsahujú prvok <track> s atribútom [kind=\"description\"]."
+    "message": "Prvky `<video>` neobsahujú prvok `<track>` s titulkami `[kind=\"description\"]`."
   },
   "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Prvky <video> obsahujú prvok <track> s atribútom [kind=\"description\"]"
+    "message": "Prvky `<video>` obsahujú prvok `<track>` s titulkami `[kind=\"description\"]`"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | description": {
+    "message": "Ak chcete zaistiť ideálny vzhľad progresívnej webovej aplikácie v systéme iOS, keď si ju používateľ pridá na plochu, definujte vlastnosť `apple-touch-icon`. Musí odkazovať na nepriehľadný obrázok PNG s veľkosťou 192 × 192 px (alebo 180 × 180 px). [Ďalšie informácie](https://web.dev/apple-touch-icon/)"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
+    "message": "Neposkytuje platnú ikonu `apple-touch-icon`"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
+    "message": "Prvok `apple-touch-icon-precomposed` je zastaraný, preferuje sa `apple-touch-icon`."
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | title": {
+    "message": "Poskytuje platnú ikonu `apple-touch-icon`"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Rozšírenia pre Chrome negatívne ovplyvnili výkonnosť načítania tejto stránky. Skúste stránku skontrolovať v režime inkognito alebo profile Chrome bez rozšírení."
@@ -330,7 +396,7 @@
     "message": "Celkový čas využitia procesora"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
-    "message": "Zvážte skrátenie času stráveného analýzou, zostavovaním a spustením JavaScriptu. Možno vám s tým pomôže zobrazovanie menších prenášaných dát JavaScriptu. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
+    "message": "Zvážte skrátenie času stráveného analýzou, zostavovaním a spustením JavaScriptu. Možno vám s tým pomôže zobrazovanie menších prenášaných dát JavaScriptu. [Ďalšie informácie](https://web.dev/bootup-time)"
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
     "message": "Skráťte čas spustenia JavaScriptu"
@@ -338,26 +404,32 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "Čas spustenia JavaScriptu"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Odstráňte veľké a duplicitné moduly JavaScriptu, aby ste zredukovali nepotrebné bajty spotrebované aktivitou siete. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "Odstráňte duplicitné moduly v balíkoch JavaScriptu"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "Veľké GIFy nie sú vhodné na zobrazovanie animovaného obsahu. Namiesto nich odporúčame použiť videá MPEG4/WebM pre animácie a PNG/WebP pre statické obrázky, aby ste ušetrili spotrebu bajtov v sieti. [Ďalšie informácie](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
+    "message": "Veľké gify nie sú vhodné na zobrazovanie animovaného obsahu. Namiesto nich odporúčame použiť videá MPEG4/WebM pre animácie a PNG/WebP pre statické obrázky, aby ste ušetrili spotrebu bajtov v sieti. [Ďalšie informácie](https://web.dev/efficient-animated-content)"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Pre animovaný obsah použite formáty videa"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
-    "message": "Zvážte oneskorené načítanie obrázkov, ktoré sú mimo obrazovky alebo skryté, a to až po dokončení načítania všetkých podstatných zdrojov, čím skrátite čas do interaktívneho vykreslenia. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)."
+    "message": "Zvážte oneskorené načítanie obrázkov, ktoré sú mimo obrazovky alebo skryté, a to až po dokončení načítania všetkých podstatných zdrojov, čím skrátite čas do interaktívneho vykreslenia. [Ďalšie informácie](https://web.dev/offscreen-images)"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Oddiaľte načítanie obrázkov mimo obrazovky"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Zdroje blokujú prvé vyfarbenie stránky. Zvážte zobrazovanie podstatných JavaScriptov alebo šablón CSS v texte a oddialenie všetkých nepodstatných JavaScriptov alebo štýlov. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
+    "message": "Zdroje blokujú prvé vykreslenie stránky. Zvážte zobrazovanie podstatných JavaScriptov alebo šablón CSS v texte a oddialenie všetkých nepodstatných JavaScriptov alebo štýlov. [Ďalšie informácie](https://web.dev/render-blocking-resources)"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "Odstráňte zdroje blokujúce vykreslenie"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
-    "message": "Veľké sieťové prenosy dát stoja používateľov mnoho peňazí a často sú spájané s dlhými časmi načítania. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)."
+    "message": "Veľké sieťové prenosy dát stoja používateľov mnoho peňazí a často sú spájané s dlhými časmi načítania. [Ďalšie informácie](https://web.dev/total-byte-weight)"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
     "message": "Celková veľkosť bola {totalBytes, number, bytes} KB"
@@ -369,31 +441,31 @@
     "message": "Zabráni nadmerným sieťovým prenosom dát"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | description": {
-    "message": "Minifikáciou súborov šablón CSS môžete znížiť veľkosti sieťových prenosov dát. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/minify-css)."
+    "message": "Minifikáciou súborov šablón CSS môžete znížiť veľkosti sieťových prenosov dát. [Ďalšie informácie](https://web.dev/unminified-css)"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": {
     "message": "Minifikujte súbory CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "Minifikáciou súborov JavaScriptu môžete znížiť veľkosti prenášaných dát a čas analýzy skriptu. [Ďalšie informácie](https://developers.google.com/speed/docs/insights/MinifyResources)."
+    "message": "Minifikáciou súborov JavaScriptu môžete znížiť veľkosti prenášaných dát a čas analýzy skriptu. [Ďalšie informácie](https://web.dev/unminified-javascript)"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "Minifikujte JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Odstráňte nepoužívané pravidlá zo šablón štýlov a odložte načítavanie šablón CSS, ktoré sa nepoužívajú pre obsah nad záhybom stránky, čím znížite zbytočnú spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/unused-css)"
+    "message": "Odstráňte nepoužívané pravidlá zo šablón štýlov a odložte načítavanie šablón CSS, ktoré sa nepoužívajú pre obsah nad záhybom stránky, čím znížite zbytočnú spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://web.dev/unused-css-rules)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "Odstráňte nepoužívané šablóny CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstráňte nepoužívaný JavaScript a znížte tak spotrebu bajtov sieťovou aktivitou."
+    "message": "Odstráňte nepoužívaný JavaScript a znížte tak spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://web.dev/remove-unused-code/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Odstráňte nepoužívaný JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Dlhá životnosť vyrovnávacej pamäte môže urýchliť opakované návštevy stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)."
+    "message": "Dlhá životnosť vyrovnávacej pamäte môže zrýchliť opakované návštevy stránky. [Ďalšie informácie](https://web.dev/uses-long-cache-ttl)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{Našiel sa 1 zdroj}few{Našli sa # zdroje}many{# resources found}other{Našlo sa # zdrojov}}"
@@ -405,40 +477,109 @@
     "message": "Používa účinné pravidlá ukladania do vyrovnávacej pamäte pre statické podklady"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "Optimalizované obrázky sa načítavajú rýchlejšie a spotrebúvajú menej mobilných dát. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)."
+    "message": "Optimalizované obrázky sa načítavajú rýchlejšie a spotrebúvajú menej mobilných dát. [Ďalšie informácie](https://web.dev/uses-optimized-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Účinne zakódujte obrázky"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "Zobrazujte obrázky s primeranou veľkosťou, čím ušetríte mobilné dáta a skrátite čas načítania. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/oversized-images)."
+    "message": "Zobrazujte obrázky s primeranou veľkosťou, čím ušetríte mobilné dáta a skrátite čas načítania. [Ďalšie informácie](https://web.dev/uses-responsive-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | title": {
     "message": "Nastavte primeranú veľkosť obrázkov"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Textové zdroje by sa mali zobrazovať komprimované (gzip, deflate alebo brotli), aby sa minimalizovala celková spotreba bajtov v sieti. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "Textové zdroje by sa mali zobrazovať komprimované (gzip, deflate alebo brotli), aby sa minimalizovala celková spotreba bajtov v sieti. [Ďalšie informácie](https://web.dev/uses-text-compression)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Povoľte kompresiu textu"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Formáty obrázka, napríklad JPEG 2000, JPEG XR a WebP, zvyčajne poskytujú lepšiu kompresiu než PNG alebo JPEG, čo znamená rýchlejšie sťahovanie a nižšiu spotrebu dát. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/webp)."
+    "message": "Formáty obrázka, napríklad JPEG 2000, JPEG XR a WebP, zvyčajne poskytujú lepšiu kompresiu než PNG alebo JPEG, čo znamená rýchlejšie sťahovanie a nižšiu spotrebu dát. [Ďalšie informácie](https://web.dev/uses-webp-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
     "message": "Zobrazujte obrázky vo formátoch ďalšej generácie"
   },
+  "lighthouse-core/audits/content-width.js | description": {
+    "message": "Ak šírka obsahu vašej aplikácie nezodpovedá šírke oblasti zobrazenia, aplikácia nemusí byť optimalizovaná pre obrazovky mobilných zariadení. [Ďalšie informácie](https://web.dev/content-width)"
+  },
+  "lighthouse-core/audits/content-width.js | explanation": {
+    "message": "Veľkosť oblasti zobrazenia {innerWidth} px nezodpovedá veľkosti okna {outerWidth} px."
+  },
+  "lighthouse-core/audits/content-width.js | failureTitle": {
+    "message": "Obsah nemá správnu veľkosť pre oblasť zobrazenia"
+  },
+  "lighthouse-core/audits/content-width.js | title": {
+    "message": "Obsah má správnu veľkosť pre oblasť zobrazenia"
+  },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Reťazce podstatných žiadostí uvedené nižšie znázorňujú, ktoré zdroje sú načítané s vysokou prioritou. Zvážte skrátenie dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Reťazce podstatných žiadostí uvedené nižšie znázorňujú, ktoré zdroje sú načítané s vysokou prioritou. Zvážte skrátenie dĺžky reťazcov, aby ste znížili veľkosť sťahovaných zdrojov, alebo odložte sťahovanie nepotrebných zdrojov, čím zlepšíte načítanie stránky. [Ďalšie informácie](https://web.dev/critical-request-chains)"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Našiel sa 1 reťazec}few{Našli sa # reťazce}many{# chains found}other{Našlo sa # reťazcov}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimalizujte hĺbku podstatných žiadostí"
+    "message": "Vyhýbajte sa reťazeniu podstatných žiadostí"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Prvok"
+  "lighthouse-core/audits/deprecations.js | columnDeprecate": {
+    "message": "Ukončenie podpory / upozornenie"
+  },
+  "lighthouse-core/audits/deprecations.js | columnLine": {
+    "message": "Riadok"
+  },
+  "lighthouse-core/audits/deprecations.js | description": {
+    "message": "Rozhrania API s ukončenou podporou budú nakoniec z prehliadača odstránené. [Ďalšie informácie](https://web.dev/deprecations)"
+  },
+  "lighthouse-core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{Zistilo sa 1 upozornenie}few{Zistili sa # upozornenia}many{# warnings found}other{Zistilo sa # upozornení}}"
+  },
+  "lighthouse-core/audits/deprecations.js | failureTitle": {
+    "message": "Používa rozhrania API s ukončenou podporou"
+  },
+  "lighthouse-core/audits/deprecations.js | title": {
+    "message": "Nepoužíva rozhrania API s ukončenou podporou"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
+    "message": "Podpora vyrovnávacej pamäte aplikácie je ukončená. [Ďalšie informácie](https://web.dev/appcache-manifest)"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
+    "message": "Našiel sa prvok {AppCacheManifest}"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
+    "message": "Používa vyrovnávaciu pamäť aplikácie"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
+    "message": "Nepoužíva vyrovnávaciu pamäť aplikácie"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "Vyžaduje sa deklarácia kódovania znakov. Môžete to vykonať pomocou značky <meta> v prvých 1 024 bajtoch kódu HTML alebo v hlavičke odpovede HTTP Content-Type. [Ďalšie informácie](https://www.w3.org/International/questions/qa-html-encoding-declarations)"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Deklarácia charset chýba alebo je v kóde HTML uvedená príliš ďaleko"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Správne definuje charset"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | description": {
+    "message": "Špecifikáciou typu dokumentu zabránite prechodu prehliadača do režimu kompatibility. [Ďalšie informácie](https://web.dev/doctype)"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "Názov prvku doctype musí byť reťazec `html` s malými písmenami"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "Dokument musí obsahovať prvok doctype"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "Očakávalo sa, že publicId bude prázdny reťazec"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "Očakávalo sa, že systemId bude prázdny reťazec"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "Stránke chýba prvok HTML doctype, preto spúšťa režim kompatibility"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | title": {
+    "message": "Stránka obsahuje prvok HTML doctype"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "Štatistika"
@@ -447,7 +588,7 @@
     "message": "Hodnota"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Programátori prehliadača odporúčajú, aby stránky obsahovali menej ako ~1 500 prvkov DOM. Optimálna hodnota je hĺbka stromovej štruktúry menšia ako 32 prvkov a menej ako 60 podradených či nadradených prvkov. Veľký prvok DOM môže zvýšiť spotrebu pamäte, predĺžiť [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobiť nákladné [preformátovania rozložení](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "Rozsiahly model DOM zvýši spotrebu pamäte, predĺži [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobí nákladné [preformátovania rozloženia](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 prvok}few{# prvky}many{# elements}other{# prvkov}}"
@@ -467,8 +608,137 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Zabráni použitiu nadmerne veľkého prvku DOM"
   },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Zlyhávajúce kotvy"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
+    "message": "Ak chcete zlepšiť výkonnosť a zabrániť chybám zabezpečenia, pridajte k ľubovoľným externým odkazom prvok `rel=\"noopener\"` alebo `rel=\"noreferrer\"`. [Ďalšie informácie](https://web.dev/external-anchors-use-rel-noopener)"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
+    "message": "Odkazy na destinácie typu cross origin nie sú bezpečné"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
+    "message": "Odkazy na destinácie typu cross origin sú bezpečné"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
+    "message": "Nepodarilo sa zistiť cieľ ukotvenia ({anchorHTML}). Ak sa nepoužíva ako hypertextový odkaz, zvážte odstránenie prvku target=_blank."
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "Používatelia nedôverujú webom, ktoré požadujú ich polohu bez kontextu, alebo ich považujú za mätúce. Zvážte namiesto toho spojenie žiadosti s akciou používateľa. [Ďalšie informácie](https://web.dev/geolocation-on-start)"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "Požaduje povolenie na geolokáciu pri načítaní stránky"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "Nepožaduje povolenie na geolokáciu pri načítaní stránky"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "Verzia"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "Na stránke boli zistené všetky JavaScriptové knižnice klientskeho rozhrania. [Ďalšie informácie](https://web.dev/js-libraries)"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "Zistené knižnice JavaScriptu"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "V prípade používateľov s pomalým pripojením môžu externé skripty, ktoré sú dynamicky vložené prostredníctvom funkcie `document.write()`, oneskoriť načítavanie stránky o desiatky sekúnd. [Ďalšie informácie](https://web.dev/no-document-write)"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "Nepoužívajte `document.write()`"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "Nepoužíva `document.write()`"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
+    "message": "Najzávažnejšie"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
+    "message": "Verzia knižnice"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
+    "message": "Počet chýb zabezpečenia"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
+    "message": "Niektoré skripty tretích strán môžu obsahovať chyby zabezpečenia, ktoré dokážu útočníci ľahko rozpoznať a zneužiť. [Ďalšie informácie](https://web.dev/no-vulnerable-libraries)"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
+    "message": "{itemCount,plural, =1{Bola zistená 1 chyba zabezpečenia}few{Boli zistené # chyby zabezpečenia}many{# vulnerabilities detected}other{Bolo zistených # chýb zabezpečenia}}"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
+    "message": "Zahrnuje JavaScriptové knižnice v klientskom rozhraní so známymi chybami zabezpečenia"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
+    "message": "Vysoká"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
+    "message": "Nízka"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
+    "message": "Stredné"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
+    "message": "Nepoužíva v klientskom rozhraní knižnice JavaScriptov so známymi chybami zabezpečenia"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "Používatelia nedôverujú webom, ktoré požadujú odosielanie upozornení bez kontextu, alebo ich považujú za mätúce. Zvážte namiesto toho spojenie žiadosti s gestami používateľa. [Ďalšie informácie](https://web.dev/notification-on-start)"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "Požaduje povolenie na upozornenie pri načítaní stránky"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "Nepožaduje povolenie na upozornenie pri načítaní stránky"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
+    "message": "Prvky s chybami"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
+    "message": "Ak zakážete prilepovanie hesiel, zhoršíte kvalitu zabezpečenia. [Ďalšie informácie](https://web.dev/password-inputs-can-be-pasted-into)"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
+    "message": "Zabráňte používateľom prilepovať do polí pre heslá"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
+    "message": "Umožnite používateľom prilepovať do polí pre heslá"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "Protokol"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2 ponúka oproti HTTP/1.1 mnoho výhod vrátane binárnych hlavičiek, multiplexovania a technológie push na strane servera. [Ďalšie informácie](https://web.dev/uses-http2)"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 žiadosť nebola odoslaná cez HTTP/2}few{# žiadosti neboli odoslané cez HTTP/2}many{# requests not served via HTTP/2}other{# žiadostí nebolo odoslaných cez HTTP/2}}"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
+    "message": "Nepoužíva HTTP/2 pre všetky svoje zdroje"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "Používa HTTP/2 pre svoje vlastné zdroje"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "Odporúčame zmeniť prijímače udalostí aktivovaných dotykom alebo kolieskom myši na `passive`, čím zlepšíte výkonnosť posúvania stránky. [Ďalšie informácie](https://web.dev/uses-passive-event-listeners)"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "Nepoužíva pasívne prijímače na zlepšenie posúvania"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "Používa pasívne prijímače na zlepšenie posúvania"
+  },
+  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
+    "message": "Popis"
+  },
+  "lighthouse-core/audits/errors-in-console.js | description": {
+    "message": "Chyby zapísané do denníka konzoly označujú nevyriešené problémy. Môžu pochádzať zo zlyhaní žiadostí siete a ďalších problémov prehliadača. [Ďalšie informácie](https://web.dev/errors-in-console)"
+  },
+  "lighthouse-core/audits/errors-in-console.js | failureTitle": {
+    "message": "Chyby prehliadača boli zaznamenané do konzoly"
+  },
+  "lighthouse-core/audits/errors-in-console.js | title": {
+    "message": "Do konzoly neboli zaznamenané žiadne chyby prehliadača"
+  },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "Využite funkciu CSS zobrazenia písma, ktorá pomôže zaistiť, aby bol text viditeľný používateľom počas načítavania webfontov. [Ďalšie informácie](https://developers.google.com/web/updates/2016/02/font-display)."
+    "message": "Využite funkciu CSS zobrazenia písma, ktorá pomôže zaistiť, aby používatelia videli text počas načítavania webfontov. [Ďalšie informácie](https://web.dev/font-display)"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "Zaistite, aby text zostal počas načítania webfontov viditeľný"
@@ -476,14 +746,86 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Všetok text zostane počas načítania webfontov viditeľný"
   },
+  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
+    "message": "Nástroj Lighthouse nedokázal automaticky skontrolovať hodnotu zobrazenia písma na nasledujúcej webovej adrese: {fontURL}."
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "Pomer strán (skutočný)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "Pomer strán (zobrazený)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | description": {
+    "message": "Rozmery zobrazenia obrázka by mali zodpovedať prirodzenému pomeru strán. [Ďalšie informácie](https://web.dev/image-aspect-ratio)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "Zobrazuje obrázky s nesprávnym pomerom strán"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | title": {
+    "message": "Zobrazuje obrázky so správnym pomerom strán"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
+    "message": "Neplatné informácie o veľkosti obrázka {url}"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Skutočná veľkosť"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Zobrazená veľkosť"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Očakávaná veľkosť"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Prirodzené rozmery obrázka by mali byť priamo úmerné veľkosti obrazovky a pomeru pixelov, aby sa dosiahla maximálna jasnosť. [Ďalšie informácie](https://web.dev/image-size-responsive)"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Zobrazuje obrázky s nevhodnou veľkosťou"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Zobrazuje obrázky s vhodnou veľkosťou"
+  },
+  "lighthouse-core/audits/installable-manifest.js | description": {
+    "message": "Prehliadače môžu proaktívne vyzývať používateľov, aby si pridali vašu aplikáciu na plochu, čo môže viesť k ich lepšiemu zapojeniu. [Ďalšie informácie](https://web.dev/installable-manifest)"
+  },
+  "lighthouse-core/audits/installable-manifest.js | failureTitle": {
+    "message": "Manifest webovej aplikácie nespĺňa požiadavky na inštaláciu"
+  },
+  "lighthouse-core/audits/installable-manifest.js | title": {
+    "message": "Manifest webovej aplikácie spĺňa požiadavky na inštaláciu"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "Nezabezpečená webová adresa"
+  },
+  "lighthouse-core/audits/is-on-https.js | description": {
+    "message": "Všetky weby by mali byť zabezpečené protokolom HTTPS, dokonca aj tie, ktoré nespracúvajú citlivé údaje. HTTPS bráni útočníkom narušovať komunikáciu medzi vašou aplikáciou a používateľmi alebo ju pasívne odpočúvať, a je podmienkou pre HTTP/2 a mnoho nových rozhraní API webových platforiem. [Ďalšie informácie](https://web.dev/is-on-https)"
+  },
+  "lighthouse-core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{Bola zistená 1 nezabezpečená žiadosť}few{Boli zistené # nezabezpečené žiadosti}many{# insecure requests found}other{Bolo zistených # nezabezpečených žiadostí}}"
+  },
+  "lighthouse-core/audits/is-on-https.js | failureTitle": {
+    "message": "Nepoužíva HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | title": {
+    "message": "Používa HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Viacnásobné vyplnenia a transformácie umožňujú starým prehliadačom používať nové funkcie JavaScriptu. Mnohé z nich však nie sú pre moderné prehliadače potrebné. Zaveďte pre svoj zabalený JavaScript modernejšiu stratégiu nasadzovania skriptov využívajúcu detekciu modulových a nemodulových funkcií a zredukujte tak množstvo kódu dodávaného do moderných prehliadačov, pričom zachováte podporu starých prehliadačov. [Ďalšie informácie](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "Starý JavaScript"
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Rýchle načítanie stránky cez mobilnú sieť zaisťuje dobrý dojem používateľov mobilných zariadení. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)"
+    "message": "Rýchle načítanie stránky cez mobilnú sieť zaisťuje dobrý dojem používateľov mobilných zariadení. [Ďalšie informácie](https://web.dev/load-fast-enough-for-pwa)"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktívna v čase {timeInMs, number, seconds} s"
+    "message": "Interaktívna po {timeInMs, number, seconds} s"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
     "message": "Interaktívna v simulovanej mobilnej sieti v čase {timeInMs, number, seconds} s"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
+    "message": "Vaša stránka sa načítava príliš pomaly a nie je interaktívna do desiatich sekúnd. Prezrite si príležitosti a diagnostiku v sekcii Výkonnosť a zistite, ako ju zlepšiť."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Načítanie stránky nie je dostatočne rýchle v mobilných sieťach"
@@ -495,7 +837,7 @@
     "message": "Kategória"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "Zvážte skrátenie času stráveného analýzou, zostavovaním a spustením JavaScriptu. Možno vám s tým pomôže zobrazovanie menších prenášaných dát JavaScriptu."
+    "message": "Zvážte skrátenie času stráveného analýzou, zostavovaním a spustením JavaScriptu. Možno vám s tým pomôže zobrazovanie menších prenášaných dát JavaScriptu. [Ďalšie informácie](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "Minimalizujte prácu hlavného vlákna"
@@ -503,47 +845,62 @@
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Minimalizuje prácu hlavného vlákna"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Odhadovaná latencia vstupu je odhadovaný čas odozvy na vstup používateľa v milisekundách počas najrušnejších 5 sekúnd načítania stránky. Ak latencia prevyšuje 50 ms, používateľom sa môžu zdať odozvy aplikácie oneskorené. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
+    "message": "Ak chcete osloviť maximálny počet používateľov, weby by mali fungovať vo všetkých hlavných prehliadačoch. [Ďalšie informácie](https://web.dev/pwa-cross-browser)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
-    "message": "Odhadovaná latencia vstupu"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
+    "message": "Web funguje v rôznych prehliadačoch"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
+    "message": "Zaistite, aby jednotlivé stránky podporovali priame odkazovanie prostredníctvom webovej adresy a aby dané webové adresy boli jedinečné na účely zdieľania v sociálnych médiách. [Ďalšie informácie](https://web.dev/pwa-each-page-has-url)"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
+    "message": "Každá stránka má webovú adresu"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
+    "message": "Prechody by pri klepaní mali pôsobiť plynulo, dokonca aj v pomalej sieti. Ide o kľúčový faktor ovplyvňujúci vnímanú výkonnosť. [Ďalšie informácie](https://web.dev/pwa-page-transitions)"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
+    "message": "Prechody stránok zrejme nie sú blokované sieťou"
+  },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "Maskovateľná ikona zaisťuje, že obrázok pri inštalácii aplikácie v zariadení zaplní celý tvar bez čiernych okrajov hore a dole. [Ďalšie informácie](https://web.dev/maskable-icon/)"
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Manifest nemá maskovateľnú ikonu"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Manifest má maskovateľnú ikonu"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Kumulatívna zmena rozloženia meria pohyb viditeľných prvkov v rámci oblasti zobrazenia. [Ďalšie informácie](https://web.dev/cls)"
+  },
+  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
+    "message": "Odhadovaná latencia vstupu je odhadovaný čas odozvy na vstup používateľa v milisekundách počas najrušnejších 5 sekúnd načítania stránky. Ak latencia prevyšuje 50 ms, používateľom sa môžu zdať odozvy aplikácie oneskorené. [Ďalšie informácie](https://web.dev/estimated-input-latency)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Prvé obsahové vyfarbenie označuje čas, za ktorý je vyfarbený prvý text alebo obrázok. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "Prvé obsahové vyfarbenie"
+    "message": "Prvé vykreslenie obsahu označuje čas, za ktorý je vykreslený prvý text alebo obrázok. [Ďalšie informácie](https://web.dev/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Prvá nečinnosť procesora označuje, kedy je hlavné vlákno stránky prvýkrát dostatočne nečinné na spracovanie vstupu. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "Prvá nečinnosť procesora"
+    "message": "Prvá nečinnosť procesora označuje, kedy je hlavné vlákno stránky prvýkrát dostatočne nečinné na spracovanie vstupu.  [Ďalšie informácie](https://web.dev/first-cpu-idle)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "Prvé účelné vyfarbenie meria, kedy je hlavný obsah stránky viditeľný. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "Prvé účelné vyfarbenie"
+    "message": "Prvé zmysluplné vykreslenie meria, kedy je hlavný obsah stránky viditeľný. [Ďalšie informácie](https://web.dev/first-meaningful-paint)"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "Čas do interaktivity je údaj o tom, koľko času prejde, kým bude stránka plne interaktívna. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)"
+    "message": "Čas do interaktivity je údaj o tom, koľko času prejde, kým bude stránka plne interaktívna. [Ďalšie informácie](https://web.dev/interactive)"
   },
-  "lighthouse-core/audits/metrics/interactive.js | title": {
-    "message": "Čas do interaktívneho vykreslenia"
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Najväčšie vykreslenie obsahu označuje čas, za ktorý sa vykreslí najväčší text alebo obrázok. [Ďalšie informácie](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy (v milisekundách)."
-  },
-  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "Max. potenc. oneskorenie prvého vstupu"
+    "message": "Maximálne potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy. [Ďalšie informácie](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
-    "message": "Index rýchlosti znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
+    "message": "Index rýchlosti znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Index rýchlosti"
+  "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
+    "message": "Súčet všetkých časových období medzi prvým vykreslením obsahu a časom do interaktivity, kedy dĺžka úlohy presiahla 50 ms (vyjadrený v milisekundách). [Ďalšie informácie](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Časy vrátenia žiadostí v rámci siete majú veľký vplyv na výkonnosť. Ak je čas vrátenia žiadostí v rámci siete k pôvodnému zdroju vysoký, znamená to, že servery umiestnené bližšie k používateľovi by mohli zlepšiť výkonnosť. [Ďalšie informácie](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -552,22 +909,64 @@
     "message": "Časy vrátania žiadostí v rámci siete"
   },
   "lighthouse-core/audits/network-server-latency.js | description": {
-    "message": "Výkonnosť webu môžu ovplyvniť latencie serverov. Ak je latencia zdrojového servera vysoká, znamená to, že je preťažený alebo má slabú výkonnosť. [Ďalšie informácie](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
+    "message": "Výkonnosť webu môžu ovplyvniť latencie servera. Ak je latencia zdrojového servera vysoká, znamená to, že je preťažený alebo má slabú výkonnosť. [Ďalšie informácie](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
   },
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Latencie na strane servera"
   },
+  "lighthouse-core/audits/offline-start-url.js | description": {
+    "message": "Obsluha umožňuje vašej webovej aplikácii spoľahlivo fungovať za nepredvídateľných podmienok siete. [Ďalšie informácie](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Pri načítaní {url} v obsluhe sa vyskytla chyba. Kód stavu: {statusCode}"
+  },
+  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
+    "message": "`start_url` nereaguje kódom 200, keď je offline"
+  },
+  "lighthouse-core/audits/offline-start-url.js | title": {
+    "message": "`start_url` reaguje kódom 200, keď je offline"
+  },
+  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
+    "message": "Nástroju Lighthouse sa nepodarilo prečítať vlastnosť `start_url` z manifestu. Na základe toho sa za webovú adresu dokumentu považuje `start_url`. Chybové hlásenie: {manifestWarning}."
+  },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "Udržujte množstvo a veľkosť žiadostí siete pod cieľovými hodnotami stanovenými poskytnutým rozpočtom výkonnosti. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
+    "message": "{count,plural, =1{1 žiadosť}few{# žiadosti}many{# requests}other{# žiadostí}}"
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "Rozpočet výkonnosti"
+  },
+  "lighthouse-core/audits/redirects-http.js | description": {
+    "message": "Ak ste už nastavili HTTPS, zaistite presmerovanie všetkej návštevnosti cez HTTP na HTTPS a poskytnite tak funkcie zabezpečeného webu všetkým používateľom. [Ďalšie informácie](https://web.dev/redirects-http)"
+  },
+  "lighthouse-core/audits/redirects-http.js | failureTitle": {
+    "message": "Nepresmerúva návštevnosť cez HTTP na HTTPS"
+  },
+  "lighthouse-core/audits/redirects-http.js | title": {
+    "message": "Presmerúva návštevnosť cez HTTP na HTTPS"
+  },
   "lighthouse-core/audits/redirects.js | description": {
-    "message": "Presmerovania spôsobujú ďalšie oneskorenia pri načítavaní stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
+    "message": "Presmerovania spôsobujú ďalšie oneskorenia pri načítavaní stránky. [Ďalšie informácie](https://web.dev/redirects)"
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Vyhnite sa viacnásobným presmerovaniam stránky"
   },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "Ak chcete nastaviť rozpočty pre množstvo a veľkosť zdrojov stránky, pridajte súbor budget.json. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount,plural, =1{1 žiadosť • {byteCount, number, bytes} kB}few{# žiadosti • {byteCount, number, bytes} kB}many{# requests • {byteCount, number, bytes} KB}other{# žiadostí • {byteCount, number, bytes} kB}}"
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "Udržiavajte nízke počty žiadostí a malé veľkosti prenosov"
+  },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "Kanonické odkazy navrhujú, ktorá webová adresa by sa mala zobraziť vo výsledkoch vyhľadávania. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/canonical)"
+    "message": "Kanonické odkazy navrhujú, ktorá webová adresa by sa mala zobraziť vo výsledkoch vyhľadávania. [Ďalšie informácie](https://web.dev/canonical)"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
-    "message": "Viacero konfliktných webových adries ({urlList})"
+    "message": "Viacero kolidujúcich webových adries ({urlList})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
     "message": "Odkazuje na inú doménu ({url})"
@@ -576,7 +975,7 @@
     "message": "Neplatná webová adresa ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
-    "message": "Odkazuje na iné miesto hreflang ({url})"
+    "message": "Odkazuje na iné umiestnenie `hreflang` ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
     "message": "Relatívna webová adresa ({url})"
@@ -585,25 +984,19 @@
     "message": "Odkazuje na koreňovú webovú adresu domény (domovskú stránku), a nie na ekvivalentnú stránku s obsahom"
   },
   "lighthouse-core/audits/seo/canonical.js | failureTitle": {
-    "message": "Dokument nemá platný odkaz rel=canonical"
+    "message": "Dokument nemá platný odkaz `rel=canonical`"
   },
   "lighthouse-core/audits/seo/canonical.js | title": {
-    "message": "Dokument má platný odkaz rel=canonical"
+    "message": "Dokument má platný odkaz `rel=canonical`"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "Veľkosti písma menšie ako 12 px sú príliš malé na to, aby boli čitateľné, a nútia používateľov mobilných zariadení, aby si ich priblížili stiahnutím prstov. Zaistite, aby viac ako 60 % textu na stránke malo veľkosť ≥ 12 px. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)"
+    "message": "Veľkosti písma menšie ako 12 px sú príliš malé na to, aby boli čitateľné, a nútia používateľov mobilných zariadení, aby si ich priblížili stiahnutím prstov. Zaistite, aby viac ako 60 % textu na stránke malo veľkosť ≥ 12 px. [Ďalšie informácie](https://web.dev/font-size)"
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} čitateľného textu"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanation": {
-    "message": "{decimalProportion, number, extendedPercent} príliš malého textu."
-  },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text nie je čitateľný, pretože neexistuje žiadna metaznačka oblasti zobrazenia optimalizovaná pre mobilné obrazovky."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} príliš malého textu (na základe {decimalProportionVisited, number, extendedPercent} vzorky)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument nepoužíva čitateľné veľkosti písma"
@@ -612,16 +1005,16 @@
     "message": "Dokument používa čitateľné veľkosti písma"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "Odkazy hreflang informujú vyhľadávače, akú verziu stránky by mali uviesť vo výsledkoch vyhľadávania pre daný jazyk alebo oblasť. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/hreflang)"
+    "message": "Odkazy hreflang informujú vyhľadávače, akú verziu stránky by mali uviesť vo výsledkoch vyhľadávania pre daný jazyk alebo oblasť. [Ďalšie informácie](https://web.dev/hreflang)"
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
-    "message": "Dokument nemá platný atribút hreflang"
+    "message": "Dokument nemá platný atribút `hreflang`"
   },
   "lighthouse-core/audits/seo/hreflang.js | title": {
-    "message": "Dokument má platný atribút hreflang"
+    "message": "Dokument má platný odkaz `hreflang`"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "Stránky s neúspešným stavovým kódom HTTP sa nemusia správne indexovať. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)"
+    "message": "Stránky s neúspešnými stavovými kódmi HTTP sa nemusia správne indexovať. [Ďalšie informácie](https://web.dev/http-status-code)"
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "Stránka má neúspešný stavový kód HTTP"
@@ -630,7 +1023,7 @@
     "message": "Stránka má úspešný stavový kód HTTP"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "Ak nemajú vyhľadávače povolenie prehľadávať vaše stránky, nemôžu ich zahrnúť do výsledkov vyhľadávania. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/indexing)"
+    "message": "Ak nemajú vyhľadávače povolenie prehľadávať vaše stránky, nemôžu ich zahrnúť do výsledkov vyhľadávania. [Ďalšie informácie](https://web.dev/is-crawable)"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "Stránka má blokované indexovanie"
@@ -639,7 +1032,7 @@
     "message": "Stránka nemá blokované indexovanie"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "Popisný text odkazu pomáha vyhľadávačom pochopiť váš obsah. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)"
+    "message": "Popisný text odkazu pomáha vyhľadávačom pochopiť váš obsah. [Ďalšie informácie](https://web.dev/link-text)"
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount,plural, =1{Našiel sa 1 odkaz}few{Našli sa # odkazy}many{# links found}other{Našlo sa # odkazov}}"
@@ -651,13 +1044,13 @@
     "message": "Odkazy majú popisný text"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "Spustite [tester štruktúrovaných dát](https://search.google.com/structured-data/testing-tool/) a nástroj [Structured Data Linter](http://linter.structured-data.org/) na overenie štruktúrovaných dát. [Ďalšie informácie](https://developers.google.com/search/docs/guides/mark-up-content)"
+    "message": "Spustite [tester štruktúrovaných dát](https://search.google.com/structured-data/testing-tool/) a nástroj [Structured Data Linter](http://linter.structured-data.org/) na overenie štruktúrovaných dát. [Ďalšie informácie](https://web.dev/structured-data)"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "Štruktúrované dáta sú platné"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "Vo výsledkoch vyhľadávania môžu byť zahrnuté metapopisy, ktoré stručne zhrnú obsah stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/description)"
+    "message": "Vo výsledkoch vyhľadávania môžu byť zahrnuté metapopisy, ktoré stručne zhrnú obsah stránky. [Ďalšie informácie](https://web.dev/meta-description)"
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "Text popisu chýba."
@@ -669,7 +1062,7 @@
     "message": "Dokument má metapopis"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "Vyhľadávače nemôžu indexovať obsah doplnkov a mnoho zariadení obmedzuje doplnky alebo ich nepodporuje. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/plugins)"
+    "message": "Vyhľadávače nemôžu indexovať obsah doplnkov a mnoho zariadení obmedzuje doplnky alebo ich nepodporuje. [Ďalšie informácie](https://web.dev/plugins)"
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "Dokument používa doplnky"
@@ -678,10 +1071,10 @@
     "message": "Dokument nepoužíva doplnky"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "Ak máte chybný súbor robots.txt, prehľadávače nemusia pochopiť, akým spôsobom majú váš web prehľadávať alebo indexovať."
+    "message": "Ak máte chybný súbor robots.txt, prehľadávače nemusia pochopiť, akým spôsobom majú váš web prehľadávať alebo indexovať. [Ďalšie informácie](https://web.dev/robots-txt)"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "Žiadosti o súbor robots.txt vrátili stav HTTP: {statusCode}"
+    "message": "Žiadosť o súbor robots.txt vrátila stav HTTP: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount,plural, =1{Našla sa 1 chyba}few{Našli sa # chyby}many{# errors found}other{Našlo sa # chýb}}"
@@ -696,7 +1089,7 @@
     "message": "Súbor robots.txt je platný"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Interaktívne prvky, ako sú tlačidlá a odkazy, by mali byť dostatočne veľké (48 × 48 px) s dostatkom voľného miesta okolo, aby sa na ne dalo ľahko klepnúť a neprekrývali ďalšie prvky. [Ďalšie informácie](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)"
+    "message": "Interaktívne prvky, ako sú tlačidlá a odkazy, by mali byť dostatočne veľké (48 × 48 px) a mať okolo seba dostatočné voľné miesto, aby sa na ne dalo ľahko klepnúť a neprekrývali ďalšie prvky. [Ďalšie informácie](https://web.dev/tap-targets)"
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "{decimalProportion, number, percent} cieľových oblastí s vhodnou veľkosťou"
@@ -710,41 +1103,86 @@
   "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
     "message": "Prekrývajúce sa cieľové oblasti"
   },
-  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
-    "message": "Veľkosť"
-  },
   "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
     "message": "Cieľová oblasť klepnutia"
   },
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Cieľové oblasti klepnutia majú vhodnú veľkosť"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "Čas do prvého bajtu určuje čas, za ktorý váš server odošle odpoveď. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
+  "lighthouse-core/audits/service-worker.js | description": {
+    "message": "Obsluha je technológia, ktorá umožňuje vašej aplikácii používať mnoho funkcií progresívnej webovej aplikácie, napríklad offline režim, pridanie na plochu a upozornenia aplikácie. [Ďalšie informácie](https://web.dev/service-worker)"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Hlavný dokument trval {timeInMs, number, milliseconds} ms"
+  "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
+    "message": "Túto stránku ovláda obsluha, ale nenašla sa vlastnosť `start_url`, pretože sa nepodarilo analyzovať manifest ako platný súbor JSON"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Znížte časy odpovede servera (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
+    "message": "Túto stránku ovláda obsluha, ale hodnota `start_url` ({startUrl}) sa nenachádza v rozsahu obsluhy ({scopeUrl})"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Časy odozvy servera sú krátke (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
+    "message": "Túto stránku ovláda obsluha, ale nenašla sa vlastnosť `start_url`, pretože sa nepodarilo načítať manifest."
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "Trvanie"
+  "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
+    "message": "Zdroj obsahuje jednu alebo viac obslúh, avšak stránka ({pageUrl}) nie je v rozsahu."
   },
-  "lighthouse-core/audits/user-timings.js | columnName": {
-    "message": "Názov"
+  "lighthouse-core/audits/service-worker.js | failureTitle": {
+    "message": "Nemá zaregistrovanú obsluhu, ktorá ovláda stránku a vlastnosť `start_url`"
   },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "Čas začatia"
+  "lighthouse-core/audits/service-worker.js | title": {
+    "message": "Má zaregistrovanú obsluhu, ktorá ovláda stránku a vlastnosť `start_url`"
+  },
+  "lighthouse-core/audits/splash-screen.js | description": {
+    "message": "Úvodná obrazovka s motívom zaistí skvelý dojem používateľa, keď si spustí vašu aplikáciu z plochy. [Ďalšie informácie](https://web.dev/splash-screen)"
+  },
+  "lighthouse-core/audits/splash-screen.js | failureTitle": {
+    "message": "Nie je nakonfigurovaný pre vlastnú úvodnú obrazovku"
+  },
+  "lighthouse-core/audits/splash-screen.js | title": {
+    "message": "Nakonfigurované pre vlastnú úvodnú obrazovku"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | description": {
+    "message": "Panel s adresou prehliadača je možné upraviť motívom, aby zodpovedal vášmu webu. [Ďalšie informácie](https://web.dev/themed-omnibox)"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
+    "message": "Nenastavuje farbu motívu pre panel s adresou."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | title": {
+    "message": "Nastavuje farbu motívu pre panel s adresou."
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "Čas blokovania hlavného vlákna"
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "Tretia strana"
+  },
+  "lighthouse-core/audits/third-party-summary.js | description": {
+    "message": "Kód tretích strán môže výrazne ovplyvniť výkonnosť načítavania. Obmedzte počet nadbytočných poskytovateľov tretích strán a skúste načítavať kód tretích strán po dokončení načítavania stránky. [Ďalšie informácie](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
+  },
+  "lighthouse-core/audits/third-party-summary.js | displayValue": {
+    "message": "Hlavné vlákno bolo {timeInMs, number, milliseconds} ms zablokované kódom tretej strany"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "Zníženie vplyvu kódu tretích strán"
+  },
+  "lighthouse-core/audits/third-party-summary.js | title": {
+    "message": "Minimalizujte použitie riešení tretích strán"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Meranie"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrika"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Nastavte časový rozpočet, ktorý vám pomôže dohliadať na výkonnosť svojho webu. Výkonné stránky sa načítajú rýchlo a okamžite reagujú na udalosti vstupu používateľov. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Časový rozpočet"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Typ"
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Zvážte vybavenie aplikácie rozhraním User Timing API a odmerajte tak skutočnú výkonnosť svojej aplikácie počas kľúčových dojmov používateľov. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Odporúčame do aplikácie implementovať rozhranie User Timing API, ktoré umožňuje odmerať jej skutočnú výkonnosť počas udalostí kľúčových pre dojem používateľov. [Ďalšie informácie](https://web.dev/user-timings)"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 trvanie aktivít používateľov}few{# trvania aktivít používateľov}many{# user timings}other{# trvaní aktivít používateľov}}"
@@ -753,22 +1191,61 @@
     "message": "Značky a merania trvania aktivít používateľov"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Našiel sa prvok <link> predbežného pripojenia zdroja {securityOrigin}, prehliadač ho však nepoužil. Skontrolujte, či atribút crossorigin používate správne."
+    "message": "Pre atribút {securityOrigin} sa našiel odkaz predpripojenia <link>, prehliadač ho však nepoužil. Skontrolujte, či atribút `crossorigin` používate správne."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Zvážte pridanie indikátorov zdrojov predbežného pripojenia alebo predbežného načítania DNS, ktoré vám pomôžu zriadiť predbežné pripojenia k dôležitým zdrojom tretích strán. [Ďalšie informácie](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Zvážte pridanie indikátorov zdrojov `preconnect` a `dns-prefetch`, ktoré vám pomôžu zriadiť predbežné pripojenia k dôležitým zdrojom tretích strán. [Ďalšie informácie](https://web.dev/uses-rel-preconnect)"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Nastavte predbežné pripojenie k požadovaným zdrojom"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "Našli sa viac ako dva odkazy predbežného pripojenia. Odkazy predbežného pripojenia by mali byť používané úsporne a iba pre najdôležitejšie zdroje."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Pre atribút {preloadURL} sa našiel odkaz <link> predbežného načítania, prehliadač ho však nepoužil. Skontrolujte, či atribút crossorigin používate správne."
+    "message": "Pre atribút {preloadURL} sa našiel odkaz <link> prednačítania, prehliadač ho však nepoužil. Skontrolujte, či atribút `crossorigin` používate správne."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
-    "message": "Zvážte použitie funkcie <link rel=preload>, čím uprednostníte načítanie zdrojov, o ktoré sa momentálne žiada v neskoršej fáze načítania stránky. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/preload)."
+    "message": "Zvážte použitie funkcie `<link rel=preload>`, čím uprednostníte načítanie zdrojov momentálne požadovaných v neskoršej fáze načítania stránky. [Ďalšie informácie](https://web.dev/uses-rel-preload)"
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Predbežne načítavajte kľúčové žiadosti"
+  },
+  "lighthouse-core/audits/viewport.js | description": {
+    "message": "Ak chcete optimalizovať svoju aplikáciu pre obrazovky mobilných zariadení, pridajte značku `<meta name=\"viewport\">`. [Ďalšie informácie](https://web.dev/viewport)"
+  },
+  "lighthouse-core/audits/viewport.js | explanationNoTag": {
+    "message": "Nenašla sa žiadna značka `<meta name=\"viewport\">`"
+  },
+  "lighthouse-core/audits/viewport.js | failureTitle": {
+    "message": "Nemá značku `<meta name=\"viewport\">` s vlastnosťou `width` alebo `initial-scale`"
+  },
+  "lighthouse-core/audits/viewport.js | title": {
+    "message": "Obsahuje značku `<meta name=\"viewport\">` s vlastnosťou `width` alebo `initial-scale`"
+  },
+  "lighthouse-core/audits/without-javascript.js | description": {
+    "message": "Vaša aplikácia by mala zobrazovať nejaký obsah, keď je zakázaný JavaScript, aj keby malo ísť iba o upozornenie používateľa, že na používanie aplikácie sa vyžaduje JavaScript. [Ďalšie informácie](https://web.dev/without-javascript)"
+  },
+  "lighthouse-core/audits/without-javascript.js | explanation": {
+    "message": "Telo stránky by malo vykresliť nejaký obsah, ak jej skripty nie sú k dispozícii."
+  },
+  "lighthouse-core/audits/without-javascript.js | failureTitle": {
+    "message": "Neposkytuje záložný obsah, keď nie je k dispozícii JavaScript"
+  },
+  "lighthouse-core/audits/without-javascript.js | title": {
+    "message": "Obsahuje určitý obsah, keď nie je k dispozícii JavaScript"
+  },
+  "lighthouse-core/audits/works-offline.js | description": {
+    "message": "Ak vytvárate progresívnu webovú aplikáciu, zvážte použitie obsluhy, aby aplikácia mohla fungovať offline. [Ďalšie informácie](https://web.dev/works-offline)"
+  },
+  "lighthouse-core/audits/works-offline.js | failureTitle": {
+    "message": "Aktuálna stránka nereaguje kódom 200, keď je offline"
+  },
+  "lighthouse-core/audits/works-offline.js | title": {
+    "message": "Aktuálna stránka reaguje kódom 200, keď je offline"
+  },
+  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
+    "message": "Táto stránka sa nemusí načítavať offline, pretože testovacia webová adresa ({requested}) bola presmerovaná na {final}. Skúste priamo otestovať druhú webovú adresu."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Toto sú možnosti zlepšenia technológie ARIA vo vašej aplikácii, čo môže pomôcť používateľom asistenčných technológií (napr. čítačiek obrazovky)."
@@ -789,7 +1266,7 @@
     "message": "Osvedčené postupy"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
-    "message": "Tieto kontroly zvýrazňujú možnosti, ako [zlepšiť dostupnosť vašej webovej aplikácie](https://developers.google.com/web/fundamentals/accessibility). Automaticky je možné zistiť iba podmnožinu problémov s dostupnosťou, preto sa odporúča ručné testovanie."
+    "message": "Tieto kontroly zvýrazňujú možnosti [zlepšenia dostupnosti vašej webovej aplikácie](https://developers.google.com/web/fundamentals/accessibility). Automaticky je možné zistiť iba podmnožinu problémov s dostupnosťou, preto sa odporúča ručné testovanie."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "Tieto položky sa zaoberajú oblasťami, ktoré automatické testovanie nemôže obsiahnuť. Ďalšie informácie získate v [sprievodcovi vykonávaním kontroly dostupnosti](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
@@ -827,8 +1304,17 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tabuľky a zoznamy"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "Osvedčené postupy"
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
+    "message": "Rozpočty výkonnosti sú štandardy výkonnosti vášho webu."
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupTitle": {
+    "message": "Rozpočty"
+  },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Ďalšie informácie o výkonnosti vašej aplikácie"
+    "message": "Ďalšie informácie o výkonnosti vašej aplikácie. Tieto hodnoty [priamo ovplyvňujú](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) skóre výkonnosti."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Diagnostika"
@@ -840,7 +1326,7 @@
     "message": "Vylepšenia prvého vyfarbenia"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Týmito optimalizáciami môžete zrýchliť načítanie stránky."
+    "message": "Tieto návrhy môžu pomôcť s rýchlejším načítavaním vašej stránky. [Neovplyvňujú priamo](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) skóre výkonnosti."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Príležitosti"
@@ -856,6 +1342,15 @@
   },
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Výkonnosť"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
+    "message": "Tieto kontroly overujú aspekty progresívnej webovej aplikácie. [Ďalšie informácie](https://developers.google.com/web/progressive-web-apps/checklist)"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
+    "message": "Tieto kontroly vyžaduje základný [kontrolný zoznam PWA](https://developers.google.com/web/progressive-web-apps/checklist), ale Lighthouse ich automaticky nevykonáva. Nemajú vplyv na vaše skóre, ale je dôležité, aby ste ich overili ručne."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
+    "message": "Progresívna webová aplikácia"
   },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "Rýchle a spoľahlivé"
@@ -888,55 +1383,148 @@
     "message": "Prehľadávanie a indexovanie"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Upravte svoje stránky pre mobilné zariadenia, aby používatelia pri čítaní ich obsahu nemuseli sťahovať prsty alebo približovať. [Ďalšie informácie](https://developers.google.com/search/mobile-sites/)."
+    "message": "Upravte svoje stránky pre mobilné zariadenia, aby používatelia pri čítaní ich obsahu nemuseli sťahovať prsty ani približovať. [Ďalšie informácie](https://developers.google.com/search/mobile-sites/)"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Vhodné pre mobilné zariadenia"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "Táto stránka sa nemusí načítavať podľa očakávaní, pretože testovacia webová adresa ({requested}) bola presmerovaná na {final}. Skúste priamo otestovať druhú webovú adresu."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "Načítanie stránky bolo príliš pomalé, aby sa dokončilo v časovom limite. Výsledky nemusia byť úplné."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL vyrovnávacej pamäte"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
+    "message": "Umiestnenie"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnName": {
+    "message": "Názov"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Cez rozpočet"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
+    "message": "Žiadosti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Veľkosť zdroja"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "Typ zdroja"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "Veľkosť (KB)"
+    "message": "Veľkosť"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Zdroj"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Strávený čas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "Veľkosť prenosu"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "Webová adresa"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potenciálna úspora (KB)"
+    "message": "Potenciálna úspora"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potenciálna úspora (ms)"
+    "message": "Potenciálna úspora"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Celkový posun rozloženia"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "Potenciálna úspora: {wastedBytes, number, bytes} KB"
+    "message": "Potenciálna úspora: {wastedBytes, number, bytes} kB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potenciálna úspora: {wastedMs, number, milliseconds} ms"
   },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "Dokument"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Odhadovaná latencia vstupu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Prvá nečinnosť procesora"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Prvé obsahové vyfarbenie"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Prvé účelné vyfarbenie"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "Písmo"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "Obrázok"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Čas do interaktívneho vykreslenia"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Najväčšie vykreslenie obsahu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Max. potenc. oneskorenie prvého vstupu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "Médiá"
+  },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "Iné"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "Skript"
   },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Index rýchlosti"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "Šablóna štýlu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "Tretia strana"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Celkový čas blokovania"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "Celkovo"
+  },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
-    "message": "Pri zaznamenávaní stopy načítania stránky sa vyskytla chyba. Spustite nástroj Lighthouse znova. ({errorCode})"
+    "message": "Pri zaznamenávaní stopy načítania stránky sa vyskytol problém. Znova spustite Lighthouse. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | criTimeout": {
     "message": "Časový limit čaká na počiatočné pripojenie protokolu ladiaceho nástroja."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
-    "message": "Chrome pri načítaní stránky nezískal žiadne snímky obrazovky. Skontrolujte, či je na stránke viditeľný nejaký obsah, a potom nástroj Lighthouse skúste spustiť znova. ({errorCode})"
+    "message": "Chrome počas načítavania stránky nevytvoril žiadne snímky obrazovky. Skontrolujte, či je na stránke viditeľný obsah, a potom skúste znova spustiť Lighthouse. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "Servery DNS nedokázali rozpoznať poskytnutú doménu."
   },
+  "lighthouse-core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "V súvislosti s požadovaným zberačom {artifactName} sa vyskytla chyba: {errorMessage}"
+  },
   "lighthouse-core/lib/lh-error.js | internalChromeError": {
     "message": "Vyskytla sa interná chyba Chromu. Reštartujte Chrome a skúste nástroj Lighthouse spustiť znova."
+  },
+  "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "Požadovaný zberač {artifactName} nebol spustený."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať požadovanú stránku. Skontrolujte, či testujete správnu webovú adresu a či server správne odpovedá na všetky žiadosti."
@@ -945,19 +1533,22 @@
     "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať webovú adresu, pretože stránka prestala reagovať."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "Poskytnutá webová adresa nemá platné bezpečnostné poverenia. {securityMessages}"
+    "message": "Poskytnutá webová adresa nemá platný bezpečnostný certifikát. {securityMessages}"
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome zabránil načítaniu stránky s intersticiálnou reklamou. Skontrolujte, či testujete správnu webovú adresu a server správne reaguje na všetky žiadosti."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
-    "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať požadovanú stránku. Skontrolujte, či testujete správnu webovú adresu a či server správne odpovedá na všetky žiadosti. (Podrobnosti: {errorDetails})"
+    "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať požadovanú stránku. Skontrolujte, či testujete správnu webovú adresu a server správne reaguje na všetky žiadosti. (Podrobnosti: {errorDetails})"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
-    "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať požadovanú stránku. Skontrolujte, či testujete správnu webovú adresu a či server správne odpovedá na všetky žiadosti. (Kód stavu: {statusCode})"
+    "message": "Nástroj Lighthouse nedokázal spoľahlivo načítať požadovanú stránku. Skontrolujte, či testujete správnu webovú adresu a server správne reaguje na všetky žiadosti. (Kód stavu: {statusCode})"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadTookTooLong": {
-    "message": "Načítanie stránky trvalo príliš dlho. Podľa návrhov v prehľade skráťte trvanie načítania stránky a potom nástroj Lighthouse skúste spustiť znova. ({errorCode})"
+    "message": "Načítanie stránky trvalo príliš dlho. Riaďte sa príležitosťami v prehľade a skráťte tak načítavanie stránky. Potom skúste Lighthouse znova spustiť. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | protocolTimeout": {
-    "message": "Pri čakaní na odpoveď protokolu DevTools bol prekročený pridelený čas. (Metóda: {protocolMethod})"
+    "message": "Čakanie na odpoveď protokolu DevTools presiahlo pridelený čas. (Metóda: {protocolMethod})"
   },
   "lighthouse-core/lib/lh-error.js | requestContentTimeout": {
     "message": "Pri načítaní obsahu zdroja bol prekročený pridelený čas"
@@ -974,17 +1565,44 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "Maximálna latencia cesty dôležitých žiadostí:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "Kopírovať JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "Prepnúť tmavý motív"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Vytlačiť rozbalené"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "Súhrn tlače"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Uložiť ako Gist"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "Uložiť ako HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "Uložiť ako JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Otvoriť v zobrazovači"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Chyba!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Nahlásenie chyby: žiadne informácie o kontrole"
   },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "Nahlásiť problém"
+  },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "Údaje laboratória"
   },
   "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "Analýza aktuálnej stránky pomocou nástroja [Lighthouse](https://developers.google.com/web/tools/lighthouse/) v emulovanej mobilnej sieti. Hodnoty sú odhadované a môžu sa líšiť."
+    "message": "Analýza aktuálnej stránky v emulovanej mobilnej sieti nástrojom [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Hodnoty sú odhady, ktoré sa môžu líšiť."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Ďalšie položky na manuálnu kontrolu"
@@ -1001,23 +1619,158 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Absolvované kontroly"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emulovaná pracovná plocha"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emulované zariadenie Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "Bez emulácie"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Výkon procesora alebo pamäte"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Obmedzenie rýchlosti procesora"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanál"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Zariadenie"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Čas načítania"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Obmedzovanie rýchlosti"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Nastavenia spustenia"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "Používateľský agent (hostiteľ)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Používateľský agent (sieť)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "Webová adresa"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Neznáme"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Zbaliť útržok"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "Rozbaliť útržok"
   },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Zobrazovať zdroje tretích strán"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "Poskytnuté prostredím"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Vyskytli sa problémy ovplyvňujúce funkčnosť nástroja Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Hodnoty sú odhady, ktoré sa môžu líšiť."
+    "message": "Hodnoty sú odhady, ktoré sa môžu líšiť. Skóre výkonnosti je [založené iba na týchto metrikách](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Úspešne absolvované kontroly, ale s upozorneniami"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozornenia: "
+  },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [amp-anim](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Zaistite používanie platných značiek `amp-img` pre obrázky, ktoré automaticky oneskorene načítavajú mimo prvej oblasti zobrazenia. [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Na [serverové vykresľovanie rozložení AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) používajte nástroje, ako je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Ak chcete zaistiť, aby všetky použité štýly boli podporované, prečítajte si [dokumentáciu pre stránky AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Prvok `amp-img` podporuje atribút `srcset` na určenie toho, ktoré obrázky použiť na základe veľkosti obrazovky.  [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Skúste zobraziť všetky komponenty `amp-img` vo formátoch WebP a zároveň nastaviť vhodné záložné riešenie pre ďalšie prehliadače. [Ďalšie informácie](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ak vykresľujete veľmi dlhé zoznamy, môžete použiť virtuálne posúvanie pomocou súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Veľkosť balíkov súborov JavaScript minimalizujte [rozdelením kódu na úrovni smerovania](https://web.dev/route-level-code-splitting-in-angular/). Môžete tiež predbežne načítať prvky do vyrovnávacej pamäte pomocou [obsluhy Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ak používate príkazový riadok Angular, zostavy by ste mali generovať v produkčnom režime. [Ďalšie informácie](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ak používate príkazový riadok Angular, zahrňte zdrojové mapy do produkčnej zostavy na účely kontroly balíkov. [Ďalšie informácie](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Prednačítajte smerovanie vopred, aby ste urýchlili navigáciu. [Ďalšie informácie](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Na správu zlomových bodov obrázkov môžete použiť nástroj `BreakpointObserver` zo súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ak prvky JavaScriptu nezoskupujete, zvážte použitie [funkcie baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Vypnite v platforme Magento vstavané funkcie [zoskupovania a minifikácie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) a zvážte namiesto toho použitie funkcie [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Pri [definovaní vlastných písmen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nastavte parameter `@font-display`."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ak chcete využiť funkciu [oneskoreného načítania](https://web.dev/native-lazy-loading) danej webovej platformy, upravte šablóny svojho produktu a katalógu."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Povoľte možnosť Minifikovať súbory CSS v nastaveniach vášho obchodu pre vývojárov. [Ďalšie informácie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Použite nástroj [Terser](https://www.npmjs.com/package/terser) na minifikáciu všetkých prvkov JavaScriptu zo statického obsahu a vypnite vstavanú funkciu minifikácie."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Vypnite vstavané [zoskupovanie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) v platforme Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) nájdete veľké množstvo rozšírení tretích strán určených na optimalizáciu obrázkov."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Indikátory zdrojov predbežného pripojenia alebo predbežného načítania DNS môžete pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Značky `<link rel=preload>` je možné pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) nájdete veľké množstvo rozšírení tretích strán, ktoré podporujú nové formáty obrázkov."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ak na stránke opakovane vykresľujete určité prvky, zvážte použitie „okennej“ knižnice, ako je `react-window`, ktorá vám pomôže minimalizovať počet vytvorených uzlov DOM. [Ďalšie informácie](https://web.dev/virtualize-long-lists-react-window/) Minimalizujte aj zbytočné opakované vykresľovanie. Môžete na to použiť funkciu [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) alebo [React.memo](https://reactjs.org/docs/react-api.html#reactmemo). [Efekty preskakujte](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) iba v prípade, ak sa zmenili určité závislosti a zlepšujete výkonnosť počas spustenia pomocou nástroja Effect Hook."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ak používate React Router, minimalizujte používanie komponentu `<Redirect>` na [určenie smerovania](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ak vaša zostava automaticky minifikuje súbory CSS, mali by ste nasádzať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ak váš systém zostavy automaticky minifikuje súbory JS, mali by ste nasadzovať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ak nevykresľujete na strane servera, [rozdeľte balíky súborov JavaScript](https://web.dev/code-splitting-suspense/) pomocou funkcie `React.lazy()`. V opačnom prípade rozdeľte kód pomocou knižnice tretej strany, napríklad [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Na meranie výkonnosti vykresľovania svojich komponentov použite profilovač React DevTools Profiler, ktorý využíva rozhranie Profiler API. [Ďalšie informácie](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Zvážte nahranie gifu do služby, ktorá umožní jeho vloženie v podobe videa HTML5."
@@ -1028,9 +1781,6 @@
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "Existuje niekoľko doplnkov WordPress, ktoré vám pomôžu [vložiť do textu kľúčové podklady](https://wordpress.org/plugins/search/critical+css/) alebo [odložiť menej dôležité zdroje](https://wordpress.org/plugins/search/defer+css+javascript/). Dajte pozor, pretože optimalizácie poskytované týmito doplnkami môžu porušiť funkcie motívu či doplnkov, takže budete musieť zrejme zmeniť kód."
   },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Čas odpovede servera ovplyvňujú motívy, doplnky a špecifikácie servera. Odporúčame nájsť optimalizovanejší motív, opatrne vybrať doplnok na optimalizáciu a/alebo aktualizovať server."
-  },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Zvážte zobrazovanie úryvkov v zoznamoch príspevkov (napr. prostredníctvom značky Viac), znížte počet príspevkov zobrazovaných na danej stránke alebo rozdeľte dlhé príspevky na niekoľko stránok. Prípadne použite doplnok na predbežné načítavanie komentárov."
   },
@@ -1038,22 +1788,22 @@
     "message": "Niekoľko [doplnkov WordPress](https://wordpress.org/plugins/search/minify+css/) môže váš web zrýchliť konkatenáciou, minifikáciou a komprimáciou štýlov. Ak je to možné, tiež odporúčame túto minifikáciu vykonať vopred pomocou procesu zostavy."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "Niekoľko [doplnkov WordPress](https://wordpress.org/plugins/search/minify+javascript/) môže váš web zrýchliť konkatenáciou, minifikáciou a komprimáciou skriptov. Ak je to možné, tiež odporúčame túto minifikáciu vykonať vopred pomocou procesu zostavy."
+    "message": "Niekoľko [doplnkov WordPress](https://wordpress.org/plugins/search/minify+javascript/) môže váš web zrýchliť konkatenáciou, minifikáciou a komprimáciou skriptov. Ak je to možné, odporúčame túto minifikáciu vykonať vopred pomocou procesu zostavy."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "Zvážte zníženie alebo prepnutie počtu [doplnkov WordPress](https://wordpress.org/plugins/) načítavajúcich nepoužívané šablóny CSS na stránke. Na identifikáciu doplnkov pridávajúcich externé šablóny CSS skúste spustiť funkciu [zahrnutia v kóde](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástroji Chrome DevTools. Príslušný motív alebo doplnok môžete identifikovať pomocou webovej adresy danej šablóny štýlov. Nájdite doplnky, ktoré majú v zozname mnoho šablón štýlov s veľkým počtom červených hodnôt vo funkcii zahrnutia v kóde. Doplnok by nemal šablónu štýlov zaradiť do poradia, keď sa používa na stránke."
+    "message": "Zvážte zníženie alebo prepnutie počtu [doplnkov WordPress](https://wordpress.org/plugins/) načítavajúcich nepoužívané šablóny CSS na stránke. Na identifikáciu doplnkov pridávajúcich externé šablóny CSS skúste spustiť funkciu [zahrnutia v kóde](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástroji Chrome DevTools. Príslušný motív alebo doplnok môžete identifikovať pomocou webovej adresy danej šablóny štýlov. Nájdite doplnky, ktoré majú v zozname mnoho šablón štýlov s veľkým počtom červených hodnôt vo funkcii zahrnutia v kóde. Doplnok by mal šablónu štýlov zaradiť do poradia iba vtedy, keď sa používa na stránke."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "Zvážte zníženie alebo prepnutie počtu [doplnkov WordPress](https://wordpress.org/plugins/) načítavajúcich nepoužívaný JavaScript na stránke. Na identifikáciu doplnkov pridávajúcich externý JavaScript skúste použiť funkciu [zahrnutia v kóde](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástroji Chrome DevTools. Príslušný motív alebo doplnok môžete identifikovať pomocou webovej adresy daného skriptu. Nájdite doplnky, ktoré majú v zozname mnoho skriptov s veľkým počtom červených hodnôt vo funkcii zahrnutia v kóde. Doplnok by nemal skript zaradiť do poradia, keď sa používa na stránke."
+    "message": "Zvážte zníženie alebo prepnutie počtu [doplnkov WordPress](https://wordpress.org/plugins/) načítavajúcich nepoužívaný JavaScript na stránke. Doplnky pridávajúce externý JavaScript skúste identifikovať pomocou funkcie [zahrnutia v kóde](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástroji Chrome DevTools. Príslušný motív alebo doplnok môžete identifikovať pomocou webovej adresy daného skriptu. Nájdite doplnky, ktoré majú v zozname mnoho skriptov s veľkým počtom červených hodnôt vo funkcii zahrnutia v kóde. Doplnok by nemal skript zaradiť do poradia, keď sa používa na stránke."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Prečítajte si o [ukladaní obsahu do vyrovnávacej pamäte prehliadača na webe WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Prečítajte si o [ukladaní obsahu do vyrovnávacej pamäte prehliadača na webe WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Zvážte použitie [doplnku WordPress na optimalizáciu obrázkov](https://wordpress.org/plugins/search/optimize+images/), ktorý skomprimuje obrázky, ale zachová ich kvalitu."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Nahrajte obrázky priamo prostredníctvom [knižnice médií](https://codex.wordpress.org/Media_Library_Screen), čím zaistíte dostupnosť ich požadovaných veľkostí. Potom ich vložte z knižnice médií alebo zaistite použitie optimálnych veľkostí obrázkov pomocou ich miniaplikácií (vrátane tých, ktoré sú určené pre responzívne zlomové body). Obrázky v plnej veľkosti použite iba vtedy, keď sú dané rozmery vhodné na použitie. [Ďalšie informácie](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Nahrajte obrázky priamo prostredníctvom [knižnice médií](https://wordpress.org/support/article/media-library-screen/), čím zaistíte dostupnosť ich požadovaných veľkostí. Potom ich vložte z knižnice médií alebo zaistite použitie optimálnych veľkostí obrázkov pomocou ich miniaplikácií (vrátane tých, ktoré sú určené pre responzívne zlomové body). Obrázky s veľkosťou `Full Size` použite iba vtedy, keď sú dané rozmery vhodné na použitie. [Ďalšie informácie](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "V konfigurácii webového servera môžete povoliť kompresiu textu."

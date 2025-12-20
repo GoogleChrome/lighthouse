@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -10,17 +10,17 @@
   */
 'use strict';
 
-const Gatherer = require('../gatherer');
-const URL = require('../../../lib/url-shim');
-const Sentry = require('../../../lib/sentry');
-const NetworkRequest = require('../../../lib/network-request');
+const Gatherer = require('../gatherer.js');
+const URL = require('../../../lib/url-shim.js');
+const Sentry = require('../../../lib/sentry.js');
+const NetworkRequest = require('../../../lib/network-request.js');
 const gzip = require('zlib').gzip;
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 const compressionHeaders = ['content-encoding', 'x-original-content-encoding'];
 const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
-/** @type {Array<LH.Crdp.Page.ResourceType>} */
+/** @type {Array<LH.Crdp.Network.ResourceType>} */
 const textResourceTypes = [
   NetworkRequest.TYPES.Document,
   NetworkRequest.TYPES.Script,
@@ -40,7 +40,7 @@ class ResponseCompression extends Gatherer {
     const unoptimizedResponses = [];
 
     networkRecords.forEach(record => {
-      // Ignore records from OOPIFs
+      // Ignore records from child targets (OOPIFS).
       if (record.sessionId) return;
 
       const mimeType = record.mimeType;

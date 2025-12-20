@@ -1,10 +1,24 @@
 #!/bin/bash
 
+# Downloads the latest golden lantern data from gcloud.
+
 set -e
+
+VERSION="2019-12-17"
 
 DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT_PATH="$DIRNAME/../../.."
 cd $LH_ROOT_PATH
+
+if [[ -f lantern-data/version ]] && [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
+  if ! [[ "$CI" ]]; then
+    echo "Version out of date. About to delete ./lantern-data..."
+    echo "Press any key to continue, Ctrl+C to exit"
+    read -n 1 -r unused_variable
+  fi
+  echo "Deleting old lantern data."
+  rm -rf lantern-data/
+fi
 
 if [[ -f lantern-data/site-index-plus-golden-expectations.json ]] && ! [[ "$FORCE" ]]; then
   echo "Lantern data already detected, done."
@@ -12,11 +26,10 @@ if [[ -f lantern-data/site-index-plus-golden-expectations.json ]] && ! [[ "$FORC
 fi
 
 rm -rf lantern-data/
-mkdir lantern-data/ && cd lantern-data/
+mkdir -p lantern-data/ && cd lantern-data
+echo $VERSION > version
 
-# snapshot of ~100 traces with no throttling recorded 2017-12-06 on a HP z840 workstation
-TAR_URL="https://drive.google.com/a/chromium.org/uc?id=1_w2g6fQVLgHI62FApsyUDejZyHNXMLm0&amp;export=download"
-curl -o lantern-traces.tar.gz -L $TAR_URL
+curl -o golden-lantern-traces.zip -L https://storage.googleapis.com/lh-lantern-data/golden-lantern-traces-$VERSION.zip
 
-tar -xzf lantern-traces.tar.gz
-rm lantern-traces.tar.gz
+unzip -q golden-lantern-traces.zip
+rm golden-lantern-traces.zip

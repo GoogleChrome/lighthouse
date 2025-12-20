@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,6 +7,39 @@
 
 const URL = require('../lib/url-shim.js');
 const Audit = require('./audit.js');
+const i18n = require('../lib/i18n/i18n.js');
+
+const UIStrings = {
+  /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is registered and valid. */
+  title: 'Registers a service worker that controls page and `start_url`',
+  /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is not present or invalid. */
+  failureTitle: 'Does not register a service worker that controls page and `start_url`',
+  /** Description of a Lighthouse audit that tells the user why they should use a service worker. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  description: 'The service worker is the technology that enables your app to use many ' +
+    'Progressive Web App features, such as offline, add to homescreen, and push ' +
+    'notifications. [Learn more](https://web.dev/service-worker).',
+  /**
+   * @description Message explaining that the website may have service workers, but none are in scope to control the tested web page.
+   * @example {https://example.com/} pageUrl
+   * */
+  explanationOutOfScope: 'This origin has one or more service workers, however the page ' +
+    '({pageUrl}) is not in scope.',
+  /** Message explaining that the page has no manifest file so can't specify a starting url. */
+  explanationNoManifest: 'This page is controlled by a service worker, however ' +
+    'no `start_url` was found because no manifest was fetched.',
+  /** Message explaining that the page had an invalid manifest file so can't specify a starting url. */
+  explanationBadManifest: 'This page is controlled by a service worker, however ' +
+    'no `start_url` was found because manifest failed to parse as valid JSON',
+  /**
+   * @description Message explaining that the website has a service worker, but none are in scope to control the tested starting url.
+   * @example {https://example.com/} startUrl
+   * @example {https://othersite.com/} scopeUrl
+   * */
+  explanationBadStartUrl: 'This page is controlled by a service worker, however ' +
+    'the `start_url` ({startUrl}) is not in the service worker\'s scope ({scopeUrl})',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class ServiceWorker extends Audit {
   /**
@@ -15,11 +48,9 @@ class ServiceWorker extends Audit {
   static get meta() {
     return {
       id: 'service-worker',
-      title: 'Registers a service worker that controls page and start_url',
-      failureTitle: 'Does not register a service worker that controls page and start_url',
-      description: 'The service worker is the technology that enables your app to use many ' +
-         'Progressive Web App features, such as offline, add to homescreen, and push ' +
-         'notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['URL', 'ServiceWorker', 'WebAppManifest'],
     };
   }
@@ -64,21 +95,21 @@ class ServiceWorker extends Audit {
   /**
    * Returns a failure message if there is no start_url or if the start_url isn't
    * contolled by the scopeUrl.
-   * @param {LH.Artifacts['WebAppManifest']} manifest
+   * @param {LH.Artifacts['WebAppManifest']} WebAppManifest
    * @param {string} scopeUrl
    * @return {string|undefined}
    */
-  static checkStartUrl(manifest, scopeUrl) {
-    if (!manifest) {
-      return 'no start_url was found because no manifest was fetched';
+  static checkStartUrl(WebAppManifest, scopeUrl) {
+    if (!WebAppManifest) {
+      return str_(UIStrings.explanationNoManifest);
     }
-    if (!manifest.value) {
-      return 'no start_url was found because manifest failed to parse as valid JSON';
+    if (!WebAppManifest.value) {
+      return str_(UIStrings.explanationBadManifest);
     }
 
-    const startUrl = manifest.value.start_url.value;
+    const startUrl = WebAppManifest.value.start_url.value;
     if (!startUrl.startsWith(scopeUrl)) {
-      return `the start_url ("${startUrl}") is not in the service worker's scope ("${scopeUrl}")`;
+      return str_(UIStrings.explanationBadStartUrl, {startUrl, scopeUrl});
     }
   }
 
@@ -103,7 +134,7 @@ class ServiceWorker extends Audit {
     if (!controllingScopeUrl) {
       return {
         score: 0,
-        explanation: `This origin has one or more service workers, however the page ("${pageUrl.href}") is not in scope.`, // eslint-disable-line max-len
+        explanation: str_(UIStrings.explanationOutOfScope, {pageUrl: pageUrl.href}),
       };
     }
 
@@ -112,7 +143,7 @@ class ServiceWorker extends Audit {
     if (startUrlFailure) {
       return {
         score: 0,
-        explanation: `This page is controlled by a service worker, however ${startUrlFailure}.`,
+        explanation: startUrlFailure,
       };
     }
 
@@ -124,3 +155,4 @@ class ServiceWorker extends Audit {
 }
 
 module.exports = ServiceWorker;
+module.exports.UIStrings = UIStrings;

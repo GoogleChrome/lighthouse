@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,7 +9,7 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
@@ -18,8 +18,8 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
+} = require('../../lib/rect-helpers.js');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -28,11 +28,9 @@ const UIStrings = {
   /** Descriptive title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are not easy to tap on. */
   failureTitle: 'Tap targets are not sized appropriately',
   /** Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).',
+  description: 'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://web.dev/tap-targets).',
   /** Label of a table column that identifies tap targets (like buttons and links) that have failed the audit and aren't easy to tap on. */
   tapTargetHeader: 'Tap Target',
-  /** Label of a table column that specifies the size of tap targets like buttons and links. */
-  sizeHeader: 'Size',
   /** Label of a table column that identifies a tap target (like a link or button) that overlaps with another tap target. */
   overlappingTargetHeader: 'Overlapping Target',
   /** Explanatory message stating that there was a failure in an audit caused by the viewport meta tag not being optimized for mobile screens, which caused tap targets like buttons and links to be too small to tap on. */
@@ -251,6 +249,7 @@ function targetToTableNode(target) {
     snippet: target.snippet,
     path: target.path,
     selector: target.selector,
+    nodeLabel: target.nodeLabel,
   };
 }
 
@@ -283,7 +282,7 @@ class TapTargets extends Audit {
       };
     }
 
-    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
     if (!viewportMeta.isMobileOptimized) {
       return {
         score: 0,
@@ -302,7 +301,7 @@ class TapTargets extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: str_(UIStrings.tapTargetHeader)},
-      {key: 'size', itemType: 'text', text: str_(UIStrings.sizeHeader)},
+      {key: 'size', itemType: 'text', text: str_(i18n.UIStrings.columnSize)},
       {key: 'overlappingTarget', itemType: 'node', text: str_(UIStrings.overlappingTargetHeader)},
     ];
 

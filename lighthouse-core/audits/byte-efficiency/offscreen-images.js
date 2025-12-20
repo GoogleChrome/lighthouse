@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const Sentry = require('../../lib/sentry');
-const URL = require('../../lib/url-shim');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const Sentry = require('../../lib/sentry.js');
+const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const Interactive = require('../../computed/metrics/interactive.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
@@ -23,13 +23,14 @@ const UIStrings = {
   description:
     'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
     'finished loading to lower time to interactive. ' +
-    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
+    '[Learn more](https://web.dev/offscreen-images).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const ALLOWABLE_OFFSCREEN_X = 100;
-const ALLOWABLE_OFFSCREEN_Y = 200;
+// See https://github.com/GoogleChrome/lighthouse/issues/10471 for discussion about the thresholds here.
+const ALLOWABLE_OFFSCREEN_IN_PX = 100;
+const ALLOWABLE_OFFSCREEN_BOTTOM_IN_VIEWPORTS = 3;
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const IGNORE_THRESHOLD_IN_PERCENT = 75;
@@ -59,11 +60,13 @@ class OffscreenImages extends ByteEfficiencyAudit {
   static computeVisiblePixels(imageRect, viewportDimensions) {
     const innerWidth = viewportDimensions.innerWidth;
     const innerHeight = viewportDimensions.innerHeight;
+    const allowableOffscreenBottomInPx = ALLOWABLE_OFFSCREEN_BOTTOM_IN_VIEWPORTS *
+      viewportDimensions.innerHeight;
 
-    const top = Math.max(imageRect.top, -1 * ALLOWABLE_OFFSCREEN_Y);
-    const right = Math.min(imageRect.right, innerWidth + ALLOWABLE_OFFSCREEN_X);
-    const bottom = Math.min(imageRect.bottom, innerHeight + ALLOWABLE_OFFSCREEN_Y);
-    const left = Math.max(imageRect.left, -1 * ALLOWABLE_OFFSCREEN_X);
+    const top = Math.max(imageRect.top, -1 * ALLOWABLE_OFFSCREEN_IN_PX);
+    const right = Math.min(imageRect.right, innerWidth + ALLOWABLE_OFFSCREEN_IN_PX);
+    const bottom = Math.min(imageRect.bottom, innerHeight + allowableOffscreenBottomInPx);
+    const left = Math.max(imageRect.left, -1 * ALLOWABLE_OFFSCREEN_IN_PX);
 
     return Math.max(right - left, 0) * Math.max(bottom - top, 0);
   }
@@ -76,9 +79,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
    */
   static computeWaste(image, viewportDimensions, networkRecords) {
     const networkRecord = networkRecords.find(record => record.url === image.src);
-    if (!image.resourceSize || !networkRecord) {
-      return null;
-    }
+    // If we don't know how big it was, we can't really report savings, treat it as passed.
+    if (!image.resourceSize || !networkRecord) return null;
+    // If the image had its loading behavior explicitly controlled already, treat it as passed.
+    if (image.loading === 'lazy' || image.loading === 'eager') return null;
 
     const url = URL.elideDataURI(image.src);
     const totalPixels = image.displayedWidth * image.displayedHeight;
@@ -227,7 +231,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const headings = [
       {key: 'url', valueType: 'thumbnail', label: ''},
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnResourceSize)},
       {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 

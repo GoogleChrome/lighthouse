@@ -1,85 +1,25 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const sampleResult = require('../../../results/sample_v2.json');
 
-const NBSP = '\xa0';
-
 /* eslint-env jest */
-/* eslint-disable no-console */
 /* global URL */
 
 describe('util helpers', () => {
-  let origConsoleWarn;
-  let consoleWarnCalls;
-
   beforeEach(() => {
-    origConsoleWarn = console.warn;
-    consoleWarnCalls = [];
-    console.warn = msg => consoleWarnCalls.push(msg);
+    Util.i18n = new I18n('en', {...Util.UIStrings});
   });
 
   afterEach(() => {
-    console.warn = origConsoleWarn;
-  });
-
-  it('formats a number', () => {
-    assert.strictEqual(Util.formatNumber(10), '10');
-    assert.strictEqual(Util.formatNumber(100.01), '100');
-    assert.strictEqual(Util.formatNumber(13000.456), '13,000.5');
-  });
-
-  it('formats a date', () => {
-    const timestamp = Util.formatDateTime('2017-04-28T23:07:51.189Z');
-    assert.ok(
-      timestamp.includes('Apr 27, 2017') ||
-      timestamp.includes('Apr 28, 2017') ||
-      timestamp.includes('Apr 29, 2017')
-    );
-  });
-
-  it('formats bytes', () => {
-    assert.equal(Util.formatBytesToKB(100), `0.1${NBSP}KB`);
-    assert.equal(Util.formatBytesToKB(2000), `2${NBSP}KB`);
-    assert.equal(Util.formatBytesToKB(1014 * 1024), `1,014${NBSP}KB`);
-  });
-
-  it('formats ms', () => {
-    assert.equal(Util.formatMilliseconds(123), `120${NBSP}ms`);
-    assert.equal(Util.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
-  });
-
-  it('formats a duration', () => {
-    assert.equal(Util.formatDuration(60 * 1000), `1${NBSP}m`);
-    assert.equal(Util.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}h 5${NBSP}s`);
-    assert.equal(Util.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
-  });
-
-  // TODO: need ICU support in node on Travis/Appveyor
-  it.skip('formats based on locale', () => {
-    const number = 12346.858558;
-
-    const originalLocale = Util.numberDateLocale;
-    Util.setNumberDateLocale('de');
-    assert.strictEqual(Util.formatNumber(number), '12.346,9');
-    Util.setNumberDateLocale(originalLocale); // reset
-    assert.strictEqual(Util.formatNumber(number), '12,346.9');
-  });
-
-  it.skip('uses decimal comma with en-XA test locale', () => {
-    const number = 12346.858558;
-
-    const originalLocale = Util.numberDateLocale;
-    Util.setNumberDateLocale('en-XA');
-    assert.strictEqual(Util.formatNumber(number), '12.346,9');
-    Util.setNumberDateLocale(originalLocale); // reset
-    assert.strictEqual(Util.formatNumber(number), '12,346.9');
+    Util.i18n = undefined;
   });
 
   it('calculates a score ratings', () => {
@@ -96,7 +36,7 @@ describe('util helpers', () => {
   it('builds device emulation string', () => {
     const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
     assert.equal(get({emulatedFormFactor: 'none'}), 'No emulation');
-    assert.equal(get({emulatedFormFactor: 'mobile'}), 'Emulated Nexus 5X');
+    assert.equal(get({emulatedFormFactor: 'mobile'}), 'Emulated Moto G4');
     assert.equal(get({emulatedFormFactor: 'desktop'}), 'Emulated Desktop');
   });
 
@@ -138,23 +78,84 @@ describe('util helpers', () => {
   });
 
   describe('#prepareReportResult', () => {
-    it('corrects underscored `notApplicable` scoreDisplayMode', () => {
-      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+    describe('backward compatibility', () => {
+      it('corrects underscored `notApplicable` scoreDisplayMode', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      let notApplicableCount = 0;
-      Object.values(clonedSampleResult.audits).forEach(audit => {
-        if (audit.scoreDisplayMode === 'notApplicable') {
-          notApplicableCount++;
-          audit.scoreDisplayMode = 'not_applicable';
-        }
+        let notApplicableCount = 0;
+        Object.values(clonedSampleResult.audits).forEach(audit => {
+          if (audit.scoreDisplayMode === 'notApplicable') {
+            notApplicableCount++;
+            audit.scoreDisplayMode = 'not_applicable';
+          }
+        });
+
+        assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
       });
 
-      assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+      it('corrects undefined auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      // Original audit results should be restored.
-      const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        // Delete debugdata details types.
+        let undefinedCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            undefinedCount++;
+            delete audit.details.type;
+          }
+        }
+        assert.ok(undefinedCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
-      assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects `diagnostic` auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Change debugdata details types.
+        let diagnosticCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            diagnosticCount++;
+            audit.details.type = 'diagnostic';
+          }
+        }
+        assert.ok(diagnosticCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects screenshots in the `filmstrip` auditDetails.type', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Strip filmstrip screenshots of data URL prefix.
+        let filmstripCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'filmstrip') {
+            filmstripCount++;
+            for (const screenshot of audit.details.items) {
+              screenshot.data = screenshot.data.slice('data:image/jpeg;base64,'.length);
+            }
+          }
+        }
+        assert.ok(filmstripCount > 0); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
     });
 
     it('appends stack pack descriptions to auditRefs', () => {
@@ -216,6 +217,174 @@ describe('util helpers', () => {
       assert.equal(Util.getRootDomain(new URL('https://sub.example.tokyo.jp')), 'tokyo.jp');
       assert.equal(Util.getRootDomain(new URL('http://localhost')), 'localhost');
       assert.equal(Util.getRootDomain(new URL('http://localhost:8080')), 'localhost');
+    });
+  });
+
+  describe('#splitMarkdownCodeSpans', () => {
+    it('handles strings with no backticks in them', () => {
+      expect(Util.splitMarkdownCodeSpans('regular text')).toEqual([
+        {isCode: false, text: 'regular text'},
+      ]);
+    });
+
+    it('does not split on a single backtick', () => {
+      expect(Util.splitMarkdownCodeSpans('regular `text')).toEqual([
+        {isCode: false, text: 'regular `text'},
+      ]);
+    });
+
+    it('splits on backticked code', () => {
+      expect(Util.splitMarkdownCodeSpans('regular `code` text')).toEqual([
+        {isCode: false, text: 'regular '},
+        {isCode: true, text: 'code'},
+        {isCode: false, text: ' text'},
+      ]);
+    });
+
+    it('splits on backticked code at the beginning of the string', () => {
+      expect(Util.splitMarkdownCodeSpans('`start code` regular text')).toEqual([
+        {isCode: true, text: 'start code'},
+        {isCode: false, text: ' regular text'},
+      ]);
+    });
+
+    it('splits on backticked code at the end of the string', () => {
+      expect(Util.splitMarkdownCodeSpans('regular text `end code`')).toEqual([
+        {isCode: false, text: 'regular text '},
+        {isCode: true, text: 'end code'},
+      ]);
+    });
+
+    it('does not split on a single backtick after split out backticked code', () => {
+      expect(Util.splitMarkdownCodeSpans('regular text `code` and more `text')).toEqual([
+        {isCode: false, text: 'regular text '},
+        {isCode: true, text: 'code'},
+        {isCode: false, text: ' and more `text'},
+      ]);
+    });
+
+    it('splits on two instances of backticked code', () => {
+      expect(Util.splitMarkdownCodeSpans('regular text `code` more text `and more code`')).toEqual([
+        {isCode: false, text: 'regular text '},
+        {isCode: true, text: 'code'},
+        {isCode: false, text: ' more text '},
+        {isCode: true, text: 'and more code'},
+      ]);
+    });
+
+    it('splits on two directly adjacent instances of backticked code', () => {
+      // eslint-disable-next-line max-len
+      expect(Util.splitMarkdownCodeSpans('regular text `first code``second code` end text')).toEqual([
+        {isCode: false, text: 'regular text '},
+        {isCode: true, text: 'first code'},
+        {isCode: true, text: 'second code'},
+        {isCode: false, text: ' end text'},
+      ]);
+    });
+
+    it('handles text only within backticks', () => {
+      expect(Util.splitMarkdownCodeSpans('`first code``second code`')).toEqual([
+        {isCode: true, text: 'first code'},
+        {isCode: true, text: 'second code'},
+      ]);
+    });
+
+    it('splits on two instances of backticked code separated by only a space', () => {
+      // eslint-disable-next-line max-len
+      expect(Util.splitMarkdownCodeSpans('`first code` `second code`')).toEqual([
+        {isCode: true, text: 'first code'},
+        {isCode: false, text: ' '},
+        {isCode: true, text: 'second code'},
+      ]);
+    });
+  });
+
+  describe('#splitMarkdownLink', () => {
+    it('handles strings with no links in them', () => {
+      expect(Util.splitMarkdownLink('some text')).toEqual([
+        {isLink: false, text: 'some text'},
+      ]);
+    });
+
+    it('does not split on an incomplete markdown link', () => {
+      expect(Util.splitMarkdownLink('some [not link text](text')).toEqual([
+        {isLink: false, text: 'some [not link text](text'},
+      ]);
+    });
+
+    it('splits on a markdown link', () => {
+      expect(Util.splitMarkdownLink('some [link text](https://example.com) text')).toEqual([
+        {isLink: false, text: 'some '},
+        {isLink: true, text: 'link text', linkHref: 'https://example.com'},
+        {isLink: false, text: ' text'},
+      ]);
+    });
+
+    it('splits on an http markdown link', () => {
+      expect(Util.splitMarkdownLink('you should [totally click here](http://never-mitm.com) now')).toEqual([
+        {isLink: false, text: 'you should '},
+        {isLink: true, text: 'totally click here', linkHref: 'http://never-mitm.com'},
+        {isLink: false, text: ' now'},
+      ]);
+    });
+
+    it('does not split on a non-http/https link', () => {
+      expect(Util.splitMarkdownLink('some [link text](ftp://example.com) text')).toEqual([
+        {isLink: false, text: 'some [link text](ftp://example.com) text'},
+      ]);
+    });
+
+    it('does not split on a malformed markdown link', () => {
+      expect(Util.splitMarkdownLink('some [link ]text](https://example.com')).toEqual([
+        {isLink: false, text: 'some [link ]text](https://example.com'},
+      ]);
+
+      expect(Util.splitMarkdownLink('some [link text] (https://example.com')).toEqual([
+        {isLink: false, text: 'some [link text] (https://example.com'},
+      ]);
+    });
+
+    it('does not split on empty link text', () => {
+      expect(Util.splitMarkdownLink('some [](https://example.com) empty link')).toEqual([
+        {isLink: false, text: 'some [](https://example.com) empty link'},
+      ]);
+    });
+
+    it('splits on a markdown link at the beginning of a string', () => {
+      expect(Util.splitMarkdownLink('[link text](https://example.com) end text')).toEqual([
+        {isLink: true, text: 'link text', linkHref: 'https://example.com'},
+        {isLink: false, text: ' end text'},
+      ]);
+    });
+
+    it('splits on a markdown link at the end of a string', () => {
+      expect(Util.splitMarkdownLink('start text [link text](https://example.com)')).toEqual([
+        {isLink: false, text: 'start text '},
+        {isLink: true, text: 'link text', linkHref: 'https://example.com'},
+      ]);
+    });
+
+    it('handles a string consisting only of a markdown link', () => {
+      expect(Util.splitMarkdownLink(`[I'm only a link](https://example.com)`)).toEqual([
+        {isLink: true, text: `I'm only a link`, linkHref: 'https://example.com'},
+      ]);
+    });
+
+    it('handles a string starting and ending with a markdown link', () => {
+      expect(Util.splitMarkdownLink('[first link](https://first.com) other text [second link](https://second.com)')).toEqual([
+        {isLink: true, text: 'first link', linkHref: 'https://first.com'},
+        {isLink: false, text: ' other text '},
+        {isLink: true, text: 'second link', linkHref: 'https://second.com'},
+      ]);
+    });
+
+    it('handles a string with adjacent markdown links', () => {
+      expect(Util.splitMarkdownLink('start text [first link](https://first.com)[second link](https://second.com) and scene')).toEqual([
+        {isLink: false, text: 'start text '},
+        {isLink: true, text: 'first link', linkHref: 'https://first.com'},
+        {isLink: true, text: 'second link', linkHref: 'https://second.com'},
+        {isLink: false, text: ' and scene'},
+      ]);
     });
   });
 });

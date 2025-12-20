@@ -1,0 +1,22 @@
+repo: GoogleChrome/lighthouse
+filters:
+  - type: issue
+    criteria:
+      text:
+        $or:
+          - $match: 'PAGE_HUNG'
+      state: open
+  - type: comments
+    length:
+      $lt: 2
+actions:
+  - type: add_comment
+    body: 'Howdy! Appreciate you filing this bug. :clap:
+
+  This error means that the page stopped responding. The solution here is to re-run. If the error repeats, the page or your machine creates infinite loops and needs to be fixed.
+
+  :robot: Beep beep boop.
+  '
+  - type: add_label
+    label: duplicate
+  - type: close

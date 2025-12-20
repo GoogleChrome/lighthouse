@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const ReportGenerator = require('../../report/report-generator.js');
@@ -99,6 +99,14 @@ describe('ReportGenerator', () => {
 
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
       fs.writeFileSync(path, csvOutput);
+
+      const lines = csvOutput.split('\n');
+      expect(lines.length).toBeGreaterThan(100);
+      expect(lines.slice(0, 2).join('\n')).toMatchInlineSnapshot(`
+        "requestedUrl,finalUrl,category,name,title,type,score
+        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.51\\"
+        "
+      `);
 
       try {
         await csvValidator(path, headers);

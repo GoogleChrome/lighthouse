@@ -1,0 +1,32 @@
+repo: GoogleChrome/lighthouse
+filters:
+  - type: issue
+    criteria:
+      text:
+        $or:
+          - $match: 'Unable to load page:'
+          - $match: 'Unable to load the page:'
+          - $match: "FAILED_DOCUMENT_REQUEST"
+          - $match: "ERRORED_DOCUMENT_REQUEST"
+      state: open
+  - type: comments
+    length:
+      $lt: 2
+actions:
+  - type: add_comment
+    body: 'Thanks! Appreciate you filing this bug. :clap:
+
+
+  This is a known issue, most well described in #2784. So, **we''ll automatically
+  close this as a duplicate**.
+
+
+  _However_, if you believe your bug is different than the cases described there,
+  please comment here with "necessarily-wide-alpaca" and I''ll reopen this bug. :robot:
+  Beep beep boop.
+
+  '
+  - type: add_label
+    label: duplicate
+  - type: close
+

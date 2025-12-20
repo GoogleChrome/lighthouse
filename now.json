@@ -2,11 +2,13 @@
   "version": 2,
   "builds": [
     {
-      "src": ".build-for-now.sh",
-      "use": "@now/static-build"
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": {"distDir": "dist/now"}
     }
   ],
   "github": {
     "silent": true
-  }
+  },
+  "trailingSlash": true
 }

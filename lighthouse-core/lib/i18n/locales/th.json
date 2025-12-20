@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "คีย์การเข้าถึงให้ผู้ใช้โฟกัสที่ส่วนหนึ่งของหน้าได้อย่างรวดเร็ว คีย์การเข้าถึงแต่ละรายการต้องไม่ซ้ำกันเพื่อให้ไปยังส่วนต่างๆ ได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)"
+    "message": "คีย์การเข้าถึงให้ผู้ใช้โฟกัสที่ส่วนหนึ่งของหน้าได้อย่างรวดเร็ว คีย์การเข้าถึงแต่ละรายการต้องไม่ซ้ำกันเพื่อให้ไปยังส่วนต่างๆ ได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/accesskeys/)"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "ค่า `[accesskey]` ซ้ำกัน"
@@ -9,7 +9,7 @@
     "message": "ค่า `[accesskey]` ไม่ซ้ำกัน"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "`role` ของ ARIA แต่ละรายการรองรับชุดย่อยของแอตทริบิวต์ `aria-*` ที่เจาะจง หากรายการเหล่านี้ไม่ตรงกันจะทำให้แอตทริบิวต์ `aria-*` ไม่ถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)"
+    "message": "`role` ของ ARIA แต่ละรายการรองรับชุดย่อยของแอตทริบิวต์ `aria-*` ที่เจาะจง หากรายการเหล่านี้ไม่ตรงกันจะทำให้แอตทริบิวต์ `aria-*` ไม่ถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-allowed-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "แอตทริบิวต์ `[aria-*]` ไม่ตรงกับบทบาทของตน"
@@ -17,8 +17,35 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "แอตทริบิวต์ `[aria-*]` ตรงกับบทบาทของตน"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "เทคโนโลยีความช่วยเหลือพิเศษ (เช่น โปรแกรมอ่านหน้าจอ) ทำงานไม่สอดคล้องกันเมื่อตั้งค่า `aria-hidden=\"true\"` ในเอกสาร `<body>` [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "มี `[aria-hidden=\"true\"]` ปรากฏในเอกสาร `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "ไม่มี `[aria-hidden=\"true\"]` ปรากฏในเอกสาร `<body>`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "เอลิเมนต์ที่โฟกัสได้ลำดับต่อลงมาในเอลิเมนต์ `[aria-hidden=\"true\"]` ป้องกันไม่ให้ผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ (เช่น โปรแกรมอ่านหน้าจอ) ใช้เอลิเมนต์การโต้ตอบเหล่านั้นได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "เอลิเมนต์ `[aria-hidden=\"true\"]` มีเอลิเมนต์ที่โฟกัสได้ลำดับต่อลงมา"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "เอลิเมนต์ `[aria-hidden=\"true\"]` ไม่มีเอลิเมนต์ที่โฟกัสได้ลำดับต่อลงมา"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "เมื่อช่องป้อนข้อมูลไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นโดยใช้ชื่อทั่วไป ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ช่องป้อนข้อมูลดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ช่องป้อนข้อมูล ARIA ไม่มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ช่องป้อนข้อมูล ARIA มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "บทบาท ARIA บางบทบาทกำหนดให้มีแอตทริบิวต์ที่อธิบายสถานะขององค์ประกอบให้โปรแกรมอ่านหน้าจอทราบ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)"
+    "message": "บทบาท ARIA บางบทบาทกำหนดให้มีแอตทริบิวต์ที่อธิบายสถานะขององค์ประกอบให้โปรแกรมอ่านหน้าจอทราบ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-required-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "`[role]` ไม่มีแอตทริบิวต์ `[aria-*]` ทั้งหมดที่จำเป็น"
@@ -27,16 +54,16 @@
     "message": "`[role]` มีแอตทริบิวต์ `[aria-*]` ที่จำเป็นทั้งหมด"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "บทบาท ARIA ระดับบนสุดบางบทบาทต้องมีบทบาทย่อยที่เจาะจงเพื่อใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)"
+    "message": "บทบาท ARIA ระดับบนสุดบางบทบาทต้องมีบทบาทย่อยที่เจาะจงเพื่อใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-required-children/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "ไม่มีองค์ประกอบที่มี `[role]` ซึ่งกำหนดให้มี `[role]` ย่อยที่เจาะจง"
+    "message": "องค์ประกอบที่มี ARIA `[role]` ที่กำหนดให้องค์ประกอบย่อยต้องมี `[role]` ที่เฉพาะเจาะจงขาดองค์ประกอบย่อยที่จำเป็นดังกล่าวบางส่วนหรือทั้งหมด"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "มีองค์ประกอบที่มี `[role]` ซึ่งกำหนดให้มี `[role]` ย่อยที่เจาะจง"
+    "message": "องค์ประกอบที่มี ARIA `[role]` ที่กำหนดให้องค์ประกอบย่อยต้องมี `[role]` ที่เฉพาะเจาะจงนั้นมีองค์ประกอบย่อยที่จำเป็นทั้งหมด"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "บทบาท ARIA ย่อยบางบทบาทต้องอยู่ในบทบาทระดับบนสุดที่เจาะจงเพื่อให้ใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)"
+    "message": "บทบาท ARIA ย่อยบางบทบาทต้องอยู่ในบทบาทระดับบนสุดที่เจาะจงเพื่อให้ใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-required-parent/)"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "`[role]` ไม่ได้อยู่ในองค์ประกอบระดับบนสุดที่กำหนด"
@@ -45,7 +72,7 @@
     "message": "`[role]` อยู่ในองค์ประกอบระดับบนสุดที่กำหนด"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "บทบาท ARIA ต้องมีค่าที่ถูกต้องเพื่อใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)"
+    "message": "บทบาท ARIA ต้องมีค่าที่ถูกต้องเพื่อใช้ฟังก์ชันการช่วยเหลือพิเศษตามวัตถุประสงค์ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-roles/)"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "ค่า `[role]` ไม่ถูกต้อง"
@@ -53,8 +80,17 @@
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "ค่า `[role]` ถูกต้อง"
   },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "เมื่อช่องสลับไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นโดยใช้ชื่อทั่วไป ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ช่องสลับดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ช่องสลับ ARIA ไม่มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ช่องสลับ ARIA มีชื่อสำหรับการช่วยเหลือพิเศษ"
+  },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "เทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ จะตีความแอตทริบิวต์ ARIA ที่มีค่าไม่ถูกต้องไม่ได้ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)"
+    "message": "เทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ จะตีความแอตทริบิวต์ ARIA ที่มีค่าไม่ถูกต้องไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-valid-attr-value/)"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "แอตทริบิวต์ `[aria-*]` ไม่มีค่าที่ถูกต้อง"
@@ -63,7 +99,7 @@
     "message": "แอตทริบิวต์ `[aria-*]` มีค่าที่ถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "เทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ จะตีความแอตทริบิวต์ ARIA ที่มีชื่อไม่ถูกต้องไม่ได้ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)"
+    "message": "เทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ จะตีความแอตทริบิวต์ ARIA ที่มีชื่อไม่ถูกต้องไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/aria-valid-attr/)"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "แอตทริบิวต์ `[aria-*]` ไม่ถูกต้องหรือสะกดผิด"
@@ -71,20 +107,11 @@
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
     "message": "แอตทริบิวต์ `[aria-*]` ถูกต้องและสะกดถูกต้อง"
   },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "คำบรรยายวิดีโอช่วยให้คนหูหนวกหรือผู้ใช้ที่มีความบกพร่องทางการได้ยินเข้าใจองค์ประกอบเสียง โดยให้ข้อมูลสำคัญ เช่น ผู้ที่กำลังพูด สิ่งที่กำลังพูด และข้อมูลอื่นๆ ที่ไม่ใช่เสียงพูด [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "องค์ประกอบ `<audio>` ไม่มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "องค์ประกอบ `<audio>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
-  },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "เมื่อปุ่มไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นว่า \"ปุ่ม\" ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ปุ่มดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)"
+    "message": "เมื่อปุ่มไม่มีชื่อสำหรับการช่วยเหลือพิเศษ โปรแกรมอ่านหน้าจอจะอ่านปุ่มนั้นว่า \"ปุ่ม\" ซึ่งทำให้ผู้ที่ต้องใช้โปรแกรมอ่านหน้าจอใช้ปุ่มดังกล่าวไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/button-name/)"
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "ปุ่มต่างๆ ไม่มีชื่อสำหรับการช่วยเหลือพิเศษ"
@@ -93,7 +120,7 @@
     "message": "ปุ่มต่างๆ มีชื่อสำหรับการช่วยเหลือพิเศษ"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "การเพิ่มวิธีข้ามผ่านเนื้อหาที่ซ้ำกันช่วยให้ผู้ใช้แป้นพิมพ์ไปยังส่วนต่างๆ ของหน้าได้อย่างมีประสิทธิภาพมากขึ้น [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)"
+    "message": "การเพิ่มวิธีข้ามผ่านเนื้อหาที่ซ้ำกันช่วยให้ผู้ใช้แป้นพิมพ์ไปยังส่วนต่างๆ ของหน้าได้อย่างมีประสิทธิภาพมากขึ้น [ดูข้อมูลเพิ่มเติม](https://web.dev/bypass/)"
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "หน้าเว็บไม่มีส่วนหัว ลิงก์การข้าม หรือภูมิภาคของจุดสังเกต"
@@ -102,7 +129,7 @@
     "message": "หน้าเว็บมีส่วนหัว ลิงก์การข้าม หรือภูมิภาคของจุดสังเกต"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "ข้อความคอนทราสต์ต่ำมักทำให้ผู้ใช้จำนวนมากอ่านได้ยากหรืออ่านไม่ได้เลย [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)"
+    "message": "ข้อความคอนทราสต์ต่ำมักทำให้ผู้ใช้จำนวนมากอ่านได้ยากหรืออ่านไม่ได้เลย [ดูข้อมูลเพิ่มเติม](https://web.dev/color-contrast/)"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "สีพื้นหลังและสีพื้นหน้ามีอัตราส่วนคอนทราสต์ไม่เพียงพอ"
@@ -111,25 +138,25 @@
     "message": "สีพื้นหลังและสีพื้นหน้ามีอัตราส่วนคอนทราสต์ที่เพียงพอ"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "เมื่อมีการทำเครื่องหมายรายการคำจำกัดความอย่างไม่ถูกต้อง โปรแกรมอ่านหน้าจออาจสร้างเอาต์พุตที่ทำให้สับสนหรือไม่แม่นยำ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)"
+    "message": "เมื่อมีการทำเครื่องหมายรายการคำจำกัดความอย่างไม่ถูกต้อง โปรแกรมอ่านหน้าจออาจสร้างเอาต์พุตที่ทำให้สับสนหรือไม่แม่นยำ [ดูข้อมูลเพิ่มเติม](https://web.dev/definition-list/)"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>` ไม่ได้มีเพียงกลุ่ม `<dt>` และ `<dd>`, `<script>` หรือองค์ประกอบ `<template>` ที่เรียงลำดับอย่างถูกต้อง"
+    "message": "`<dl>` ไม่ได้มีเพียงกลุ่ม `<dt>` และ `<dd>` หรือองค์ประกอบ `<script>` `<template>` หรือ `<div>` ที่เรียงลำดับอย่างถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>` มีเพียงกลุ่ม `<dt>` และ `<dd>`, `<script>` หรือองค์ประกอบ `<template>` ที่เรียงลำดับอย่างถูกต้อง"
+    "message": "`<dl>` มีเพียงกลุ่ม `<dt>` และ `<dd>` หรือองค์ประกอบ `<script>` `<template>` หรือ `<div>` ที่เรียงลำดับอย่างถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "รายการย่อยของคำจำกัดความ (`<dt>` และ `<dd>`) ต้องรวมอยู่ในองค์ประกอบ `<dl>` ระดับบนสุดเพื่อดูแลให้โปรแกรมอ่านหน้าจออ่านได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)"
+    "message": "รายการย่อยของคำจำกัดความ (`<dt>` และ `<dd>`) ต้องรวมอยู่ในองค์ประกอบ `<dl>` ระดับบนสุดเพื่อดูแลให้โปรแกรมอ่านหน้าจออ่านได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/dlitem/)"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "รายการย่อยของคำจำกัดความไม่ได้รวมอยู่ในองค์ประกอบ `<dl>`"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | title": {
-    "message": "รายการย่อยของคำจำกัดความจะรวมอยู่ในองค์ประกอบ `<dl>`"
+    "message": "รายการย่อยของคำจำกัดความรวมอยู่ในองค์ประกอบ `<dl>`"
   },
   "lighthouse-core/audits/accessibility/document-title.js | description": {
-    "message": "ชื่อช่วยให้ผู้ใช้โปรแกรมอ่านหน้าจอทราบถึงภาพรวมของหน้า และผู้ใช้เครื่องมือค้นหาจะดูความเกี่ยวข้องของหน้ากับการค้นหาของตนจากชื่อเป็นหลัก [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/title)"
+    "message": "ชื่อช่วยให้ผู้ใช้โปรแกรมอ่านหน้าจอทราบถึงภาพรวมของหน้า และผู้ใช้เครื่องมือค้นหาจะดูความเกี่ยวข้องของหน้ากับการค้นหาของตนจากชื่อเป็นหลัก [ดูข้อมูลเพิ่มเติม](https://web.dev/document-title/)"
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
     "message": "เอกสารไม่มีองค์ประกอบ `<title>`"
@@ -137,17 +164,35 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "เอกสารมีองค์ประกอบ `<title>`"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "ค่าของแอตทริบิวต์รหัสต้องไม่ซ้ำกันเพื่อป้องกันไม่ให้เทคโนโลยีอำนวยความสะดวกมองข้ามอินสแตนซ์อื่นๆ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "เอลิเมนต์ที่โฟกัสได้ทั้งหมดต้องมี `id` ที่ไม่ซ้ำกันเพื่อให้เทคโนโลยีความช่วยเหลือพิเศษมองเห็นได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/duplicate-id-active/)"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "แอตทริบิวต์ `[id]` ในหน้าเว็บซ้ำกัน"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "แอตทริบิวต์ `[id]` ของเอลิเมนต์ที่โฟกัสได้และทำงานอยู่มีรหัสที่ซ้ำกัน"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "แอตทริบิวต์ `[id]` ในหน้าเว็บไม่ซ้ำกัน"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "แอตทริบิวต์ `[id]` ของเอลิเมนต์ที่โฟกัสได้และทำงานอยู่ไม่มีรหัสที่ซ้ำกัน"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ค่าของรหัส ARIA ต้องไม่ซ้ำกันเพื่อป้องกันไม่ให้เทคโนโลยีความช่วยเหลือพิเศษมองข้ามอินสแตนซ์อื่นๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "มีรหัส ARIA ซ้ำกัน"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ไม่มีรหัส ARIA ที่ซ้ำกัน"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "ช่องในฟอร์มที่มีป้ายกำกับหลายรายการอาจทำให้เทคโนโลยีความช่วยเหลือพิเศษ (เช่น โปรแกรมอ่านหน้าจอ) สร้างความสับสนให้กับผู้ใช้ได้ โดยอาจอ่านป้ายกำกับแรก ป้ายกำกับสุดท้าย หรืออ่านทุกป้ายกำกับ [ดูข้อมูลเพิ่มเติม](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "ช่องในฟอร์มมีป้ายกำกับหลายรายการ"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "ไม่มีช่องในฟอร์มช่องใดมีป้ายกำกับหลายรายการ"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "ผู้ใช้โปรแกรมอ่านหน้าจอต้องใช้ชื่อเฟรมเพื่ออธิบายเนื้อหาของเฟรม [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)"
+    "message": "ผู้ใช้โปรแกรมอ่านหน้าจอต้องใช้ชื่อเฟรมเพื่ออธิบายเนื้อหาของเฟรม [ดูข้อมูลเพิ่มเติม](https://web.dev/frame-title/)"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "องค์ประกอบ `<frame>` หรือ `<iframe>` ไม่มีชื่อ"
@@ -155,8 +200,17 @@
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "องค์ประกอบ `<frame>` หรือ `<iframe>` มีชื่อ"
   },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "ส่วนหัวที่เรียงลำดับอย่างถูกต้องโดยไม่มีการข้ามระดับจะถ่ายทอดโครงสร้างทางอรรถศาสตร์ของหน้าที่ทำให้การไปยังส่วนต่างๆ และการทำความเข้าใจง่ายมากขึ้นเมื่อใช้เทคโนโลยีความช่วยเหลือพิเศษ [ดูข้อมูลเพิ่มเติม](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "เอลิเมนต์ส่วนหัวไม่ปรากฏตามลำดับในเอลิเมนต์ลำดับต่อๆ ลงมา"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "เอลิเมนต์ส่วนหัวปรากฏตามลำดับในเอลิเมนต์ลำดับต่อๆ ลงมา"
+  },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "หากหน้าเว็บไม่ได้ระบุแอตทริบิวต์ lang โปรแกรมอ่านหน้าจอจะถือว่าหน้าดังกล่าวใช้ภาษาเริ่มต้นที่ผู้ใช้เลือกเมื่อตั้งค่าโปรแกรมอ่านหน้าจอ หากที่จริงแล้วหน้าดังกล่าวไม่ได้ใช้ภาษาเริ่มต้น โปรแกรมอ่านหน้าจออาจอ่านข้อความในหน้าได้ไม่ถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)"
+    "message": "หากหน้าเว็บไม่ได้ระบุแอตทริบิวต์ lang โปรแกรมอ่านหน้าจอจะถือว่าหน้าดังกล่าวใช้ภาษาเริ่มต้นที่ผู้ใช้เลือกเมื่อตั้งค่าโปรแกรมอ่านหน้าจอ หากที่จริงแล้วหน้าดังกล่าวไม่ได้ใช้ภาษาเริ่มต้น โปรแกรมอ่านหน้าจออาจอ่านข้อความในหน้าได้ไม่ถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/html-has-lang/)"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "องค์ประกอบ `<html>` ไม่มีแอตทริบิวต์ `[lang]`"
@@ -165,7 +219,7 @@
     "message": "องค์ประกอบ `<html>` มีแอตทริบิวต์ `[lang]`"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "การระบุ[ภาษา BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ที่ถูกต้องช่วยให้โปรแกรมอ่านหน้าจออ่านข้อความได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
+    "message": "การระบุ[ภาษา BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ที่ถูกต้องช่วยให้โปรแกรมอ่านหน้าจออ่านข้อความได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/html-lang-valid/)"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "องค์ประกอบ `<html>` ไม่มีค่าที่ถูกต้องสำหรับแอตทริบิวต์ `[lang]`"
@@ -174,7 +228,7 @@
     "message": "องค์ประกอบ `<html>` มีค่าที่ถูกต้องสำหรับแอตทริบิวต์ `[lang]`"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "องค์ประกอบเพื่อการให้ข้อมูลควรมีข้อความสำรองที่สั้นกระชับและสื่อความหมาย การใช้แอตทริบิวต์ Alt ที่ว่างเปล่าจะเป็นการเพิกเฉยต่อองค์ประกอบเพื่อการตกแต่ง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)"
+    "message": "องค์ประกอบเพื่อการให้ข้อมูลควรมีข้อความสำรองที่สั้นกระชับและสื่อความหมาย การใช้แอตทริบิวต์ Alt ที่ว่างเปล่าจะเป็นการเพิกเฉยต่อองค์ประกอบเพื่อการตกแต่ง [ดูข้อมูลเพิ่มเติม](https://web.dev/image-alt/)"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "องค์ประกอบรูปภาพไม่มีแอตทริบิวต์ `[alt]`"
@@ -183,7 +237,7 @@
     "message": "องค์ประกอบรูปภาพมีแอตทริบิวต์ `[alt]`"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "เมื่อมีการใช้รูปภาพเป็นปุ่ม `<input>` การระบุข้อความสำรองจะช่วยให้ผู้ใช้โปรแกรมอ่านหน้าจอเข้าใจวัตถุประสงค์ของปุ่มได้ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)"
+    "message": "เมื่อมีการใช้รูปภาพเป็นปุ่ม `<input>` การระบุข้อความสำรองจะช่วยให้ผู้ใช้โปรแกรมอ่านหน้าจอเข้าใจวัตถุประสงค์ของปุ่มได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/input-image-alt/)"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "องค์ประกอบ `<input type=\"image\">` ไม่มีข้อความ `[alt]`"
@@ -192,7 +246,7 @@
     "message": "องค์ประกอบ `<input type=\"image\">` มีข้อความ `[alt]`"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "ป้ายกำกับช่วยดูแลให้เทคโนโลยีอำนวยความสะดวกอย่างเช่น โปรแกรมอ่านหน้าจอ อ่านส่วนควบคุมฟอร์มได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)"
+    "message": "ป้ายกำกับช่วยดูแลให้เทคโนโลยีอำนวยความสะดวกอย่างเช่น โปรแกรมอ่านหน้าจอ อ่านส่วนควบคุมฟอร์มได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/label/)"
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "องค์ประกอบฟอร์มไม่มีป้ายกำกับที่เชื่อมโยง"
@@ -201,7 +255,7 @@
     "message": "องค์ประกอบฟอร์มมีป้ายกำกับที่เชื่อมโยงอยู่"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "ตารางที่ใช้สำหรับการออกแบบต้องไม่มีองค์ประกอบข้อมูล เช่น องค์ประกอบ th หรือคำอธิบายภาพ หรือแอตทริบิวต์สรุป เพราะอาจสร้างความสับสนระหว่างการใช้งานของผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)"
+    "message": "ตารางที่ใช้สำหรับการออกแบบต้องไม่มีองค์ประกอบข้อมูล เช่น องค์ประกอบ th หรือคำอธิบายภาพ หรือแอตทริบิวต์สรุป เพราะอาจสร้างความสับสนระหว่างการใช้งานของผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/layout-table/)"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "องค์ประกอบ `<table>` สำหรับการนำเสนอไม่หลีกเลี่ยงการใช้ `<th>`, `<caption>` หรือแอตทริบิวต์ `[summary]`"
@@ -210,7 +264,7 @@
     "message": "องค์ประกอบ `<table>` สำหรับการนำเสนอหลีกเลี่ยงการใช้ `<th>`, `<caption>` หรือแอตทริบิวต์ `[summary]`"
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "ข้อความลิงก์ (และข้อความสำรองสำหรับรูปภาพเมื่อใช้เป็นลิงก์) ที่แยกแยะได้ ไม่ซ้ำกัน และโฟกัสได้ ช่วยปรับปรุงประสบการณ์การไปยังส่วนต่างๆ สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)"
+    "message": "ข้อความลิงก์ (และข้อความสำรองสำหรับรูปภาพเมื่อใช้เป็นลิงก์) ที่แยกแยะได้ ไม่ซ้ำกัน และโฟกัสได้ ช่วยปรับปรุงประสบการณ์การไปยังส่วนต่างๆ สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/link-name/)"
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "ลิงก์ไม่มีชื่อที่แยกแยะได้"
@@ -219,43 +273,43 @@
     "message": "ลิงก์มีชื่อที่แยกแยะได้"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "โปรแกรมอ่านหน้าจอมีวิธีเฉพาะในการอ่านรายการ การดูแลให้รายการมีโครงสร้างที่ถูกต้องช่วยโปรแกรมอ่านหน้าจอในการอ่านเนื้อหา [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)"
+    "message": "โปรแกรมอ่านหน้าจอมีวิธีเฉพาะในการอ่านรายการ การดูแลให้รายการมีโครงสร้างที่ถูกต้องช่วยโปรแกรมอ่านหน้าจอในการอ่านเนื้อหา [ดูข้อมูลเพิ่มเติม](https://web.dev/list/)"
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
-    "message": "รายการไม่ได้มีเพียงองค์ประกอบ `<li>` และองค์ประกอบที่รองรับสคริปต์ (`<script>` และ `<template>`)"
+    "message": "รายการไม่ได้มีแต่องค์ประกอบ `<li>` และองค์ประกอบที่รองรับสคริปต์ (`<script>` และ`<template>`)"
   },
   "lighthouse-core/audits/accessibility/list.js | title": {
     "message": "รายการมีเพียงองค์ประกอบ `<li>` และองค์ประกอบที่รองรับสคริปต์ (`<script>` และ `<template>`)"
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "โปรแกรมอ่านหน้าจอกำหนดให้รายการย่อย (`<li>`) อยู่ใน `<ul>` หรือ `<ol>` ระดับบนสุดเพื่อให้อ่านได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)"
+    "message": "โปรแกรมอ่านหน้าจอกำหนดให้รายการย่อย (`<li>`) อยู่ใน `<ul>` หรือ `<ol>` ระดับบนสุดเพื่อให้อ่านได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/listitem/)"
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "รายการย่อย (`<li>`) ไม่ได้อยู่ภายในองค์ประกอบระดับบนสุด `<ul>` หรือ `<ol>`"
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "รายการย่อย (`<li>`) อยู่ภายในองค์ประกอบระดับบนสุด `<ul>` หรือ `<ol>`"
+    "message": "รายการย่อย (`<li>`) อยู่ในองค์ประกอบระดับบนสุด `<ul>` หรือ `<ol>`"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "ผู้ใช้ไม่ได้คาดหวังให้หน้าเว็บรีเฟรชโดยอัตโนมัติ และการรีเฟรชหน้าเว็บจะย้ายโฟกัสกลับไปที่ด้านบนของหน้า ซึ่งอาจทำให้ผู้ใช้ได้รับประสบการณ์การใช้งานที่สับสนหรือน่าหงุดหงิด [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)"
+    "message": "ผู้ใช้ไม่ได้คาดหวังให้หน้าเว็บรีเฟรชโดยอัตโนมัติ และการรีเฟรชหน้าเว็บจะย้ายโฟกัสกลับไปที่ด้านบนของหน้า ซึ่งอาจทำให้ผู้ใช้ได้รับประสบการณ์การใช้งานที่สับสนหรือน่าหงุดหงิด [ดูข้อมูลเพิ่มเติม](https://web.dev/meta-refresh/)"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "เอกสารใช้ `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | title": {
-    "message": "เอกสารไม่ได้ใช้ `<meta http-equiv=\"refresh\">`"
+    "message": "เอกสารนี้ไม่ได้ใช้ `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "การปิดใช้การซูมจะเป็นปัญหาสำหรับผู้ใช้ที่มีสายตาเลือนรางซึ่งต้องใช้การขยายหน้าจอเพื่อให้ดูเนื้อหาของหน้าเว็บได้อย่างชัดเจน [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)"
+    "message": "การปิดใช้การซูมจะเป็นปัญหาสำหรับผู้ใช้ที่มีสายตาเลือนรางซึ่งต้องใช้การขยายหน้าจอเพื่อให้ดูเนื้อหาของหน้าเว็บได้อย่างชัดเจน [ดูข้อมูลเพิ่มเติม](https://web.dev/meta-viewport/)"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "มีการใช้ `[user-scalable=\"no\"]` ในองค์ประกอบ `<meta name=\"viewport\">` หรือแอตทริบิวต์ `[maximum-scale]` น้อยกว่า 5"
+    "message": "มีการใช้ `[user-scalable=\"no\"]` ในองค์ประกอบ `<meta name=\"viewport\">`หรือแอตทริบิวต์ `[maximum-scale]` น้อยกว่า 5"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
     "message": "ไม่มีการใช้ `[user-scalable=\"no\"]` ในองค์ประกอบ `<meta name=\"viewport\">` และแอตทริบิวต์ `[maximum-scale]` ไม่น้อยกว่า 5"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "โปรแกรมอ่านหน้าจอแปลเนื้อหาที่ไม่ใช่ข้อความไม่ได้ การเพิ่มข้อความแสดงแทนลงในองค์ประกอบ `<object>` ช่วยโปรแกรมอ่านหน้าจอถ่ายทอดความหมายให้แก่ผู้ใช้ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)"
+    "message": "โปรแกรมอ่านหน้าจอแปลเนื้อหาที่ไม่ใช่ข้อความไม่ได้ การเพิ่มข้อความแสดงแทนลงในองค์ประกอบ `<object>` ช่วยโปรแกรมอ่านหน้าจอถ่ายทอดความหมายให้แก่ผู้ใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/object-alt/)"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "องค์ประกอบ `<object>` ไม่มีข้อความ `[alt]`"
@@ -264,7 +318,7 @@
     "message": "องค์ประกอบ `<object>` มีข้อความ `[alt]`"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "ค่าที่มากกว่า 0 หมายความว่ามีการจัดเรียงการนำทางที่ชัดเจน แม้ว่าการทำงานนี้จะไม่มีปัญหาในทางเทคนิค แต่มักก่อให้เกิดประสบการณ์การใช้งานที่น่าหงุดหงิดสำหรับผู้ใช้เทคโนโลยีอำนวยความสะดวก [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)"
+    "message": "ค่าที่มากกว่า 0 หมายความว่ามีการจัดเรียงการนำทางที่ชัดเจน แม้ว่าการทำงานนี้จะไม่มีปัญหาในทางเทคนิค แต่มักก่อให้เกิดประสบการณ์การใช้งานที่น่าหงุดหงิดสำหรับผู้ใช้เทคโนโลยีอำนวยความสะดวก [ดูข้อมูลเพิ่มเติม](https://web.dev/tabindex/)"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "องค์ประกอบบางอย่างมีค่า `[tabindex]` มากกว่า 0"
@@ -273,16 +327,16 @@
     "message": "ไม่มีองค์ประกอบที่มีค่า `[tabindex]` มากกว่า 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "โปรแกรมอ่านหน้าจอมีฟีเจอร์ที่ช่วยให้ไปยังส่วนต่างๆ ของตารางได้ง่ายขึ้น การดูแลให้เซลล์ `<td>` ที่ใช้แอตทริบิวต์ `[headers]` อ้างอิงถึงเซลล์อื่นๆ ในตารางเดียวกันเท่านั้นอาจช่วยปรับปรุงประสบการณ์สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)"
+    "message": "โปรแกรมอ่านหน้าจอมีฟีเจอร์ที่ช่วยให้ไปยังส่วนต่างๆ ของตารางได้ง่ายขึ้น การดูแลให้เซลล์ `<td>` ที่ใช้แอตทริบิวต์ `[headers]` อ้างอิงถึงเซลล์อื่นๆ ในตารางเดียวกันเท่านั้นอาจช่วยปรับปรุงประสบการณ์สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/td-headers-attr/)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "เซลล์ในองค์ประกอบ `<table>` ที่ใช้แอตทริบิวต์ `[headers]` จะอ้างอิงถึงเซลล์อื่นๆ ของตารางเดียวกันนั้น"
+    "message": "เซลล์ในองค์ประกอบ `<table>` ที่ใช้แอตทริบิวต์ `[headers]` อ้างอิงถึง `id` ขององค์ประกอบที่ไม่พบในตารางเดียวกันนี้"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "เซลล์ในองค์ประกอบ `<table>` ที่ใช้แอตทริบิวต์ `[headers]` อ้างอิงถึงเซลล์อื่นๆ ของตารางเดียวกันเท่านั้น"
+    "message": "เซลล์ในองค์ประกอบ `<table>` ที่ใช้แอตทริบิวต์ `[headers]` อ้างอิงถึงเซลล์ของตารางภายในตารางเดียวกัน"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "โปรแกรมอ่านหน้าจอมีฟีเจอร์ที่ช่วยให้ไปยังส่วนต่างๆ ของตารางได้ง่ายขึ้น การดูแลให้ส่วนหัวของตารางอ้างอิงถึงชุดเซลล์บางชุดอยู่เสมออาจช่วยปรับปรุงประสบการณ์สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)"
+    "message": "โปรแกรมอ่านหน้าจอมีฟีเจอร์ที่ช่วยให้ไปยังส่วนต่างๆ ของตารางได้ง่ายขึ้น การดูแลให้ส่วนหัวของตารางอ้างอิงถึงชุดเซลล์บางชุดอยู่เสมออาจช่วยปรับปรุงประสบการณ์สำหรับผู้ใช้โปรแกรมอ่านหน้าจอ [ดูข้อมูลเพิ่มเติม](https://web.dev/th-has-data-cells/)"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "องค์ประกอบ `<th>` และองค์ประกอบที่มี `[role=\"columnheader\"/\"rowheader\"]` ไม่มีเซลล์ข้อมูลที่องค์ประกอบอธิบาย"
@@ -291,7 +345,7 @@
     "message": "องค์ประกอบ `<th>` และองค์ประกอบที่มี `[role=\"columnheader\"/\"rowheader\"]` มีเซลล์ข้อมูลที่องค์ประกอบอธิบาย"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "การระบุ[ภาษา BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ที่ถูกต้องในองค์ประกอบต่างๆ ช่วยดูแลให้โปรแกรมอ่านหน้าจอออกเสียงข้อความได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
+    "message": "การระบุ[ภาษา BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ที่ถูกต้องในองค์ประกอบต่างๆ ช่วยดูแลให้โปรแกรมอ่านหน้าจอออกเสียงข้อความได้อย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/valid-lang/)"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "แอตทริบิวต์ `[lang]` ไม่มีค่าที่ถูกต้อง"
@@ -300,7 +354,7 @@
     "message": "แอตทริบิวต์ `[lang]` มีค่าที่ถูกต้อง"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "เมื่อวิดีโอมีคำอธิบายภาพ คนหูหนวกและผู้ใช้ที่มีความบกพร่องทางการได้ยินจะเข้าถึงข้อมูลของวิดีโอได้ง่ายขึ้น [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)"
+    "message": "เมื่อวิดีโอมีคำอธิบายภาพ คนหูหนวกและผู้ใช้ที่มีความบกพร่องทางการได้ยินจะเข้าถึงข้อมูลของวิดีโอได้ง่ายขึ้น [ดูข้อมูลเพิ่มเติม](https://web.dev/video-caption/)"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "องค์ประกอบ `<video>` ไม่มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
@@ -309,13 +363,25 @@
     "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "คำอธิบายเสียงให้ข้อมูลเกี่ยวข้องสำหรับวิดีโอที่สื่อสารผ่านบทพูดไม่ได้ เช่น สีหน้าและฉากต่างๆ [ดูข้อมูลเพิ่มเติม](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)"
+    "message": "คำอธิบายเสียงให้ข้อมูลเกี่ยวข้องสำหรับวิดีโอที่สื่อสารผ่านบทพูดไม่ได้ เช่น สีหน้าและฉากต่างๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/video-description/)"
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "องค์ประกอบ `<video>` ไม่มีองค์ประกอบ `<track>` ที่มี `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/accessibility/video-description.js | title": {
     "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"description\"]`"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | description": {
+    "message": "ให้ระบุ `apple-touch-icon` เพื่อให้ปรากฏใน iOS ได้อย่างดีที่สุดเมื่อผู้ใช้เพิ่ม Progressive Web App ลงในหน้าจอหลัก โดยต้องชี้ไปที่สี่เหลี่ยมจตุรัสแบบไม่โปร่งใสขนาด 192 พิกเซล (หรือ 180 พิกเซล) รูปแบบ PNG [ดูข้อมูลเพิ่มเติม](https://web.dev/apple-touch-icon/)"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
+    "message": "ไม่ได้ให้ `apple-touch-icon` ที่ถูกต้อง"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
+    "message": "`apple-touch-icon-precomposed` ไม่อัปเดต แนะนำให้ใช้ `apple-touch-icon` จะดีกว่า"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | title": {
+    "message": "มี `apple-touch-icon` ที่ถูกต้อง"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "ส่วนขยาย Chrome ส่งผลเสียต่อประสิทธิภาพในการโหลดของหน้านี้ ลองตรวจสอบหน้าในโหมดไม่ระบุตัวตนหรือจากโปรไฟล์ Chrome ที่ไม่มีส่วนขยาย"
@@ -330,7 +396,7 @@
     "message": "เวลา CPU รวม"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
-    "message": "พิจารณาลดเวลาที่ใช้ในการแยกวิเคราะห์ แปลโปรแกรม และดำเนินการกับ JS การส่งเปย์โหลด JS ปริมาณน้อยอาจช่วยในเรื่องนี้ได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/bootup)"
+    "message": "พิจารณาลดเวลาที่ใช้ในการแยกวิเคราะห์ แปลโปรแกรม และดำเนินการกับ JS การส่งเปย์โหลด JS ปริมาณน้อยอาจช่วยในเรื่องนี้ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/bootup-time)"
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
     "message": "ลดเวลาในการดำเนินการกับ JavaScript"
@@ -338,26 +404,32 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "เวลาในการดำเนินการกับ JavaScript"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "นำโมดูล JavaScript ขนาดใหญ่ที่ซ้ำกันออกจากแพ็กเกจเพื่อลดจำนวนไบต์ที่ไม่จำเป็นที่กิจกรรมเครือข่ายใช้ "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "นำโมดูลที่ซ้ำกันในแพ็กเกจ JavaScript ออก"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "GIF ขนาดใหญ่ไม่มีประสิทธิภาพในการแสดงเนื้อหาภาพเคลื่อนไหว พิจารณาใช้วิดีโอ MPEG4/WebM สำหรับภาพเคลื่อนไหวและใช้ PNG/WebP สำหรับภาพนิ่งแทน GIF เพื่อประหยัดไบต์ของเครือข่าย [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
+    "message": "GIF ขนาดใหญ่ไม่มีประสิทธิภาพในการแสดงเนื้อหาภาพเคลื่อนไหว พิจารณาใช้วิดีโอ MPEG4/WebM สำหรับภาพเคลื่อนไหวและใช้ PNG/WebP สำหรับภาพนิ่งแทน GIF เพื่อประหยัดไบต์ของเครือข่าย [ดูข้อมูลเพิ่มเติม](https://web.dev/efficient-animated-content)"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "ใช้รูปแบบวิดีโอสำหรับเนื้อหาภาพเคลื่อนไหว"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
-    "message": "พิจารณาโหลดรูปภาพนอกหน้าจอและรูปภาพที่ซ่อนไว้เท่าที่จำเป็นหลังจากที่ทรัพยากรที่สำคัญทั้งหมดโหลดเสร็จแล้วเพื่อลดเวลาในการโต้ตอบ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)"
+    "message": "พิจารณาโหลดรูปภาพนอกหน้าจอและรูปภาพที่ซ่อนไว้แบบ Lazy Loading หลังจากที่ทรัพยากรที่สำคัญทั้งหมดโหลดเสร็จแล้วเพื่อลดเวลาในการโต้ตอบ [ดูข้อมูลเพิ่มเติม](https://web.dev/offscreen-images)"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "เลื่อนเวลาโหลดรูปภาพนอกจอภาพ"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "ทรัพยากรบล็อกการแสดงผลครั้งแรกของหน้าเว็บอยู่ พิจารณาแสดง JS/CSS ที่สำคัญในหน้าและเลื่อนเวลาแสดง JS/สไตล์ที่ไม่สำคัญทั้งหมดออกไป [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)"
+    "message": "ทรัพยากรบล็อก First Paint ของหน้าเว็บอยู่ พิจารณาแสดง JS/CSS ที่สำคัญในหน้าและเลื่อนเวลาแสดง JS/สไตล์ที่ไม่สำคัญทั้งหมดออกไป [ดูข้อมูลเพิ่มเติม](https://web.dev/render-blocking-resources)"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "กำจัดทรัพยากรที่บล็อกการแสดงผล"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
-    "message": "เปย์โหลดปริมาณมากของเครือข่ายทำให้ผู้ใช้เสียค่าใช้จ่ายสูงและสัมพันธ์กับเวลาการโหลดนานเป็นอย่างมาก [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)"
+    "message": "เปย์โหลดปริมาณมากของเครือข่ายทำให้ผู้ใช้เสียค่าใช้จ่ายสูงและสัมพันธ์กับเวลาการโหลดนานเป็นอย่างมาก [ดูข้อมูลเพิ่มเติม](https://web.dev/total-byte-weight)"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
     "message": "ขนาดรวมเดิมคือ {totalBytes, number, bytes} KB"
@@ -369,31 +441,31 @@
     "message": "หลีกเลี่ยงเปย์โหลดเครือข่ายปริมาณมาก"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | description": {
-    "message": "การลดขนาดไฟล์ CSS ช่วยลดขนาดเปย์โหลดของเครือข่ายได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/minify-css)"
+    "message": "การลดขนาดไฟล์ CSS ช่วยลดขนาดเปย์โหลดของเครือข่ายได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unminified-css)"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": {
     "message": "ลดขนาด CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "การลดขนาดไฟล์ JavaScript ช่วยลดขนาดเปย์โหลดและเวลาในการแยกวิเคราะห์สคริปต์ได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/speed/docs/insights/MinifyResources)"
+    "message": "การลดขนาดไฟล์ JavaScript ช่วยลดขนาดเปย์โหลดและเวลาในการแยกวิเคราะห์สคริปต์ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unminified-javascript)"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "ลดขนาด JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "นำกฎที่ไม่มีผลแล้วออกจากสไตล์ชีตและเลื่อนเวลาการโหลด CSS ที่ไม่ได้ใช้สำหรับเนื้อหาครึ่งหน้าบนเพื่อลดจำนวนไบต์ที่ไม่จำเป็นที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/unused-css)"
+    "message": "นำกฎที่ไม่มีผลแล้วออกจากสไตล์ชีตและเลื่อนเวลาการโหลด CSS ที่ไม่ได้ใช้สำหรับเนื้อหาครึ่งหน้าบนเพื่อลดจำนวนไบต์ที่ไม่จำเป็นที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-css-rules)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "นำ CSS ที่ไม่ได้ใช้ออก"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "นำ JavaScript ที่ไม่ได้ใช้ออกเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้"
+    "message": "นำ JavaScript ที่ไม่ได้ใช้ออกเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/remove-unused-code/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "นำ JavaScript ที่ไม่ได้ใช้ออก"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "อายุการใช้งานแคชที่ยาวนานช่วยเพิ่มการเข้าชมหน้าเว็บซ้ำได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)"
+    "message": "อายุการใช้งานแคชที่ยาวนานช่วยเพิ่มการเข้าชมหน้าเว็บซ้ำได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-long-cache-ttl)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{พบทรัพยากร 1 รายการ}other{พบทรัพยากร # รายการ}}"
@@ -405,40 +477,109 @@
     "message": "ใช้นโยบายแคชที่มีประสิทธิภาพกับเนื้อหาคงที่"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "รูปภาพที่ได้รับการเพิ่มประสิทธิภาพจะโหลดได้เร็วขึ้นและใช้อินเทอร์เน็ตมือถือน้อยลง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)"
+    "message": "รูปภาพที่ได้รับการเพิ่มประสิทธิภาพจะโหลดได้เร็วขึ้นและใช้อินเทอร์เน็ตมือถือน้อยลง [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-optimized-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "เข้ารหัสรูปภาพอย่างมีประสิทธิภาพ"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "แสดงรูปภาพที่มีขนาดเหมาะสมเพื่อประหยัดอินเทอร์เน็ตมือถือและปรับปรุงเวลาในการโหลด [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/oversized-images)"
+    "message": "แสดงรูปภาพที่มีขนาดที่เหมาะสมเพื่อประหยัดอินเทอร์เน็ตมือถือและปรับปรุงเวลาในการโหลด [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-responsive-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | title": {
     "message": "ปรับขนาดรูปภาพให้เหมาะสม"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "ทรัพยากรแบบข้อความควรแสดงผลโดยมีการบีบอัด (Gzip, Deflate หรือ Brotli) เพื่อลดจำนวนไบต์เครือข่ายทั้งหมด [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/text-compression)"
+    "message": "ทรัพยากรแบบข้อความควรแสดงผลโดยมีการบีบอัด (Gzip, Deflate หรือ Brotli) เพื่อลดจำนวนไบต์เครือข่ายทั้งหมด [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-text-compression)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "เปิดใช้การบีบอัดข้อความ"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "รูปแบบรูปภาพอย่างเช่น JPEG 2000, JPEG XR และ WebP มักบีบอัดได้ดีกว่า PNG หรือ JPEG ซึ่งหมายความว่าจะดาวน์โหลดได้เร็วขึ้นและใช้อินเทอร์เน็ตน้อยลง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/webp)"
+    "message": "รูปแบบรูปภาพอย่างเช่น JPEG 2000, JPEG XR และ WebP มักบีบอัดได้ดีกว่า PNG หรือ JPEG ซึ่งหมายความว่าจะดาวน์โหลดได้เร็วขึ้นและใช้อินเทอร์เน็ตน้อยลง [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-webp-images)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
     "message": "แสดงรูปภาพในรูปแบบสมัยใหม่"
   },
+  "lighthouse-core/audits/content-width.js | description": {
+    "message": "หากความกว้างของเนื้อหาในแอปไม่ตรงกับความกว้างของวิวพอร์ต แอปอาจไม่ได้รับการเพิ่มประสิทธิภาพสำหรับหน้าจออุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://web.dev/content-width)"
+  },
+  "lighthouse-core/audits/content-width.js | explanation": {
+    "message": "ขนาดวิวพอร์ต {innerWidth} พิกเซลไม่ตรงกับขนาดหน้าต่าง {outerWidth} พิกเซล"
+  },
+  "lighthouse-core/audits/content-width.js | failureTitle": {
+    "message": "ไม่ได้ปรับขนาดเนื้อหาอย่างถูกต้องสำหรับวิวพอร์ต"
+  },
+  "lighthouse-core/audits/content-width.js | title": {
+    "message": "มีการปรับขนาดเนื้อหาอย่างถูกต้องสำหรับวิวพอร์ต"
+  },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "ห่วงโซ่คำขอที่สำคัญด้านล่างแสดงให้เห็นทรัพยากรที่โหลดโดยมีลำดับความสำคัญสูง พิจารณาลดความยาวของห่วงโซ่ ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
+    "message": "ห่วงโซ่คำขอที่สำคัญด้านล่างแสดงให้เห็นทรัพยากรที่โหลดโดยมีลำดับความสำคัญสูง พิจารณาลดความยาวของห่วงโซ่ ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://web.dev/critical-request-chains)"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{พบห่วงโซ่ 1 รายการ}other{พบห่วงโซ่ # รายการ}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "ลดความลึกของคำขอที่สำคัญ"
+    "message": "หลีกเลี่ยงคำขอสำคัญแบบลูกโซ่"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "องค์ประกอบ"
+  "lighthouse-core/audits/deprecations.js | columnDeprecate": {
+    "message": "การเลิกใช้งาน / คำเตือน"
+  },
+  "lighthouse-core/audits/deprecations.js | columnLine": {
+    "message": "บรรทัด"
+  },
+  "lighthouse-core/audits/deprecations.js | description": {
+    "message": "API ที่เลิกใช้งานแล้วจะถูกนำออกจากเบราว์เซอร์ในท้ายที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/deprecations)"
+  },
+  "lighthouse-core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{พบคำเตือน 1 รายการ}other{พบคำเตือน # รายการ}}"
+  },
+  "lighthouse-core/audits/deprecations.js | failureTitle": {
+    "message": "ใช้ API ที่เลิกใช้งานแล้ว"
+  },
+  "lighthouse-core/audits/deprecations.js | title": {
+    "message": "หลีกเลี่ยงการใช้ API ที่เลิกใช้งานแล้ว"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
+    "message": "แคชของแอปพลิเคชันเลิกใช้งานแล้ว [ดูข้อมูลเพิ่มเติม](https://web.dev/appcache-manifest)"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
+    "message": "พบ \"{AppCacheManifest}\""
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
+    "message": "ใช้แคชของแอปพลิเคชัน"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
+    "message": "หลีกเลี่ยงการใช้แคชของแอปพลิเคชัน"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "จำเป็นต้องประกาศการเข้ารหัสอักขระ ซึ่งทำได้โดยใช้แท็ก <meta> ใน 1024 ไบต์แรกของ HTML หรือในส่วนหัวการตอบกลับ HTTP ประเภทเนื้อหา [ดูข้อมูลเพิ่มเติม](https://www.w3.org/International/questions/qa-html-encoding-declarations)"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "ไม่มีการประกาศชุดอักขระหรือประกาศช้าเกินไปใน HTML"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "กำหนดชุดอักขระได้อย่างถูกต้อง"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | description": {
+    "message": "การระบุ DOCTYPE ช่วยป้องกันไม่ให้เบราว์เซอร์เปลี่ยนไปใช้โหมดที่ไม่มาตรฐาน [ดูข้อมูลเพิ่มเติม](https://web.dev/doctype)"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "ชื่อ DOCTYPE ต้องเป็นสตริงตัวพิมพ์เล็ก `html`"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "เอกสารต้องมี DOCTYPE"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "สตริง publicId ควรจะว่าง"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "สตริง systemId ควรจะว่าง"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "หน้าไม่มี DOCTYPE HTML ดังนั้นจึงทริกเกอร์โหมดที่ไม่มาตรฐาน"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | title": {
+    "message": "หน้ามี DOCTYPE HTML"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "สถิติ"
@@ -447,7 +588,7 @@
     "message": "ค่า"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "วิศวกรเบราว์เซอร์แนะนำให้ใช้หน้าเว็บที่มีองค์ประกอบ DOM น้อยกว่า 1,500 รายการโดยประมาณ ความลึกที่เหมาะที่สุดคือแบบต้นไม้ซึ่งมีองค์ประกอบน้อยกว่า 32 รายการและมีองค์ประกอบย่อย/หลักน้อยกว่า 60 รายการ DOM ขนาดใหญ่อาจใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow) ซึ่งมีค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
+    "message": "รายการ DOM ขนาดใหญ่จะใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow)ซึ่งมีค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 องค์ประกอบ}other{# องค์ประกอบ}}"
@@ -467,8 +608,137 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "หลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป"
   },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "แท็ก Anchor ที่ไม่ผ่านการตรวจสอบ"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
+    "message": "เพิ่ม `rel=\"noopener\"` หรือ `rel=\"noreferrer\"` ไปยังลิงก์ภายนอกใดๆ เพื่อปรับปรุงประสิทธิภาพและป้องกันช่องโหว่ด้านความปลอดภัย [ดูข้อมูลเพิ่มเติม](https://web.dev/external-anchors-use-rel-noopener)"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
+    "message": "ลิงก์ไปปลายทางแบบ Cross-Origin ไม่ปลอดภัย"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
+    "message": "ลิงก์ไปปลายทางแบบ Cross-Origin ปลอดภัย"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
+    "message": "ระบุปลายทางสำหรับโฆษณาด้านล่างสุด ({anchorHTML}) ไม่ได้ หากไม่ได้ใช้เป็นไฮเปอร์ลิงก์ ลองเอา target=_blank ออก"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "ผู้ใช้ไม่เชื่อถือหรือเกิดความสับสนในเว็บไซต์ที่ขอข้อมูลตำแหน่งโดยไม่มีบริบทให้ พิจารณาผูกคำขอกับการกระทำของผู้ใช้แทน [ดูข้อมูลเพิ่มเติม](https://web.dev/geolocation-on-start)"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "ขอสิทธิ์เข้าถึงตำแหน่งทางภูมิศาสตร์ในการโหลดหน้าเว็บ"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "หลีกเลี่ยงการขอสิทธิ์เข้าถึงตำแหน่งทางภูมิศาสตร์ในการโหลดหน้าเว็บ"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "เวอร์ชัน"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "ตรวจพบไลบรารี JavaScript ส่วนหน้าทั้งหมดในหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://web.dev/js-libraries)"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "ตรวจพบไลบรารี JavaScript"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "สำหรับผู้ใช้ที่การเชื่อมต่อช้า สคริปต์ภายนอกที่แทรกเข้ามาแบบไดนามิกผ่านทาง `document.write()` จะช่วยหน่วงการโหลดหน้าเว็บได้หลายสิบวินาที [ดูข้อมูลเพิ่มเติม](https://web.dev/no-document-write)"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "หลีกเลี่ยง `document.write()`"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "หลีกเลี่ยงการใช้ `document.write()`"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
+    "message": "ความรุนแรงสูงสุด"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
+    "message": "เวอร์ชันของไลบรารี"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
+    "message": "จำนวนช่องโหว่"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
+    "message": "สคริปต์ของบุคคลที่สามบางรายการอาจมีช่องโหว่ด้านความปลอดภัยที่เป็นที่รู้จักซึ่งผู้โจมตีจะหาพบได้ง่ายและใช้ประโยชน์จากช่องโหว่นั้น [ดูข้อมูลเพิ่มเติม](https://web.dev/no-vulnerable-libraries)"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
+    "message": "{itemCount,plural, =1{ตรวจพบช่องโหว่ 1 รายการ}other{ตรวจพบช่องโหว่ # รายการ}}"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
+    "message": "มีไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
+    "message": "สูง"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
+    "message": "ต่ำ"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
+    "message": "ปานกลาง"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
+    "message": "หลีกเลี่ยงการใช้ไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "ผู้ใช้ไม่เชื่อถือหรือเกิดความสับสนในเว็บไซต์ที่ขอส่งการแจ้งเตือนโดยไม่มีบริบทให้ พิจารณาผูกคำขอกับท่าทางสัมผัสของผู้ใช้แทน [ดูข้อมูลเพิ่มเติม](https://web.dev/notification-on-start)"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "ขอสิทธิ์การแจ้งเตือนในการโหลดหน้าเว็บ"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "หลีกเลี่ยงการขอสิทธิ์การแจ้งเตือนในการโหลดหน้าเว็บ"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
+    "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
+    "message": "การป้องกันการวางรหัสผ่านทำให้นโยบายความปลอดภัยที่ดีอ่อนแอลง [ดูข้อมูลเพิ่มเติม](https://web.dev/password-inputs-can-be-pasted-into)"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
+    "message": "ป้องกันผู้ใช้ไม่ให้วางรหัสผ่านในช่อง"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
+    "message": "อนุญาตผู้ใช้ให้วางรหัสผ่านในช่องได้"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "โปรโตคอล"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2 มีข้อดีที่มากกว่า HTTP/1.1 คือ ส่วนหัวแบบไบนารี การทำมัลติเพล็กซิง และการ Push ไปที่เซิร์ฟเวอร์ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-http2)"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{คำขอ 1 รายการไม่ได้แสดงผ่าน HTTP/2}other{คำขอ # รายการไม่ได้แสดงผ่าน HTTP/2}}"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
+    "message": "ไม่ได้ใช้ HTTP/2 สำหรับทรัพยากรทั้งหมด"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "ใช้ HTTP/2 กับทรัพยากรของตนเอง"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "ลองระบุ Listener เหตุการณ์แบบแตะและลูกกลิ้งเป็น `passive` เพื่อปรับปรุงประสิทธิภาพการเลื่อนของหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-passive-event-listeners)"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "ไม่ได้ใช้ Listener แบบแพสซีฟเพื่อปรับปรุงประสิทธิภาพการเลื่อน"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "ใช้ Listener แบบแพสซีฟเพื่อปรับปรุงประสิทธิภาพการเลื่อน"
+  },
+  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
+    "message": "รายละเอียด"
+  },
+  "lighthouse-core/audits/errors-in-console.js | description": {
+    "message": "ข้อผิดพลาดที่บันทึกลงในคอนโซลแสดงให้เห็นถึงปัญหาที่ไม่ได้รับการแก้ไข ข้อผิดพลาดอาจมาจากคำขอเครือข่ายที่ไม่สำเร็จ และปัญหาอื่นๆ เกี่ยวกับเบราว์เซอร์ [ดูข้อมูลเพิ่มเติม](https://web.dev/errors-in-console)"
+  },
+  "lighthouse-core/audits/errors-in-console.js | failureTitle": {
+    "message": "บันทึกข้อผิดพลาดเบราว์เซอร์ลงในคอนโซลแล้ว"
+  },
+  "lighthouse-core/audits/errors-in-console.js | title": {
+    "message": "ไม่มีข้อผิดพลาดเบราว์เซอร์บันทึกลงในคอนโซล"
+  },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "ใช้ประโยชน์จากฟีเจอร์ CSS สำหรับแสดงแบบอักษรเพื่อให้ผู้ใช้มองเห็นข้อความได้ในขณะที่กำลังโหลดเว็บฟอนต์ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/updates/2016/02/font-display)"
+    "message": "ใช้ประโยชน์จากฟีเจอร์ CSS สำหรับแสดงแบบอักษรเพื่อให้ผู้ใช้มองเห็นข้อความได้ในขณะที่กำลังโหลดเว็บฟอนต์ [ดูข้อมูลเพิ่มเติม](https://web.dev/font-display)"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "ตรวจสอบว่าข้อความจะยังมองเห็นได้ในระหว่างการโหลดเว็บฟอนต์"
@@ -476,14 +746,86 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "ข้อความทั้งหมดจะยังมองเห็นได้ในระหว่างการโหลดเว็บฟอนต์"
   },
+  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
+    "message": "Lighthouse ตรวจสอบค่าการแสดงแบบอักษรสำหรับ URL ต่อไปนี้โดยอัตโนมัติไม่ได้: {fontURL}"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "สัดส่วนภาพ (ขนาดจริง)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "สัดส่วนภาพ (ที่แสดง)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | description": {
+    "message": "ขนาดแสดงรูปภาพควรจะมีสัดส่วนที่เป็นธรรมชาติ [ดูข้อมูลเพิ่มเติม](https://web.dev/image-aspect-ratio)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "แสดงรูปภาพที่มีสัดส่วนไม่ถูกต้อง"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | title": {
+    "message": "แสดงรูปภาพที่มีสัดส่วนถูกต้อง"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
+    "message": "ข้อมูลขนาดรูปภาพไมู่กต้อง {url}"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "ขนาดจริง"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "ขนาดที่แสดง"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "ขนาดที่คาดไว้"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "ขนาดตามธรรมชาติของรูปภาพควรได้สัดส่วนกับขนาดการแสดงผลและอัตราส่วนพิกเซลเพื่อเพิ่มความชัดเจนของรูปภาพให้ได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/image-size-responsive)"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "แสดงรูปภาพที่มีขนาดไม่เหมาะสม"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "แสดงรูปภาพที่มีขนาดเหมาะสม"
+  },
+  "lighthouse-core/audits/installable-manifest.js | description": {
+    "message": "เบราว์เซอร์แจ้งผู้ใช้อย่างชัดแจ้งให้เพิ่มแอปของคุณในหน้าจอหลัก ซึ่งจะทำให้ผู้ใช้มีส่วนร่วมเพิ่มขึ้นได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/installable-manifest)"
+  },
+  "lighthouse-core/audits/installable-manifest.js | failureTitle": {
+    "message": "ไฟล์ Manifest ของเว็บแอปไม่ตรงตามข้อกำหนดด้านความสามารถในการติดตั้ง"
+  },
+  "lighthouse-core/audits/installable-manifest.js | title": {
+    "message": "ไฟล์ Manifest ของเว็บแอปตรงตามข้อกำหนดด้านความสามารถในการติดตั้ง"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "URL ไม่ปลอดภัย"
+  },
+  "lighthouse-core/audits/is-on-https.js | description": {
+    "message": "ทุกเว็บไซต์ควรป้องกันด้วยการใช้ HTTPS แม้ว่าจะเป็นเว็บไซต์ที่ไม่มีข้อมูลที่ละเอียดอ่อนก็ตาม HTTPS ป้องกันผู้บุกรุกไม่ให้แทรกแซงหรือแอบฟังการสื่อสารระหว่างแอปกับผู้ใช้ของคุณ และเป็นข้อกำหนดที่ต้องทำก่อนสำหรับ HTTP/2 รวมถึง API ของแพลตฟอร์มเว็บใหม่ๆ อีกมาก [ดูข้อมูลเพิ่มเติม](https://web.dev/is-on-https)"
+  },
+  "lighthouse-core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{พบคำขอที่ไม่ปลอดภัย 1 รายการ}other{พบคำขอที่ไม่ปลอดภัย # รายการ}}"
+  },
+  "lighthouse-core/audits/is-on-https.js | failureTitle": {
+    "message": "ไม่ได้ใช้ HTTPS"
+  },
+  "lighthouse-core/audits/is-on-https.js | title": {
+    "message": "ใช้ HTTPS"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "โพลีฟิลล์และการเปลี่ยนรูปแบบช่วยให้เบราว์เซอร์เดิมใช้ฟีเจอร์ JavaScript ใหม่ได้ แต่ส่วนมากจะไม่จำเป็นสำหรับเบราว์เซอร์สมัยใหม่ สำหรับ JavaScript แบบแพ็กเกจ ให้ใช้กลยุทธ์การทำให้สคริปต์สมัยใหม่ใช้งานได้โดยใช้การตรวจหาฟีเจอร์โมดูล/ไม่มีโมดูลเพื่อลดจำนวนโค้ดที่ส่งไปยังเบราว์เซอร์สมัยใหม่ ขณะที่ยังรองรับเบราว์เซอร์เดิมอยู่ [ดูข้อมูลเพิ่มเติม](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "JavaScript เดิม"
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "การโหลดหน้าเว็บที่รวดเร็วผ่านเครือข่ายมือถือช่วยให้มั่นใจว่าผู้ใช้ได้รับประสบการณ์การใช้งานที่ดีในอุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)"
+    "message": "การโหลดหน้าเว็บที่รวดเร็วผ่านเครือข่ายมือถือช่วยให้มั่นใจว่าผู้ใช้ได้รับประสบการณ์การใช้งานที่ดีในอุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://web.dev/load-fast-enough-for-pwa)"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "มีการโต้ตอบที่ {timeInMs, number, seconds} วินาที"
+    "message": "โต้ตอบที่ {timeInMs, number, seconds} วินาที"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
     "message": "มีการโต้ตอบในเครือข่ายมือถือจำลองที่ {timeInMs, number, seconds} วินาที"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
+    "message": "หน้าเว็บโหลดช้าเกินไปและไม่มีการโต้ตอบภายใน 10 วินาที ไปที่โอกาสและการวินิจฉัยในส่วน \"ประสิทธิภาพ\" เพื่อดูวิธีปรับปรุง"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "การโหลดหน้าเว็บไม่เร็วพอเมื่อใช้เครือข่ายมือถือ"
@@ -495,7 +837,7 @@
     "message": "หมวดหมู่"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "พิจารณาลดเวลาที่ใช้ในการแยกวิเคราะห์ แปลโปรแกรม และดำเนินการกับ JS การส่งเปย์โหลด JS ปริมาณน้อยอาจช่วยในเรื่องนี้ได้"
+    "message": "พิจารณาลดเวลาที่ใช้ในการแยกวิเคราะห์ แปลโปรแกรม และดำเนินการกับ JS การส่งเพย์โหลด JS ปริมาณน้อยลงอาจช่วยในเรื่องนี้ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "ลดการทำงานของเธรดหลัก"
@@ -503,47 +845,62 @@
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "ลดการทำงานของเธรดหลัก"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "เวลาตอบสนองต่ออินพุตโดยประมาณเป็นระยะเวลาโดยประมาณที่แอปใช้เพื่อตอบสนองอินพุตของผู้ใช้ระหว่างการโหลดหน้าเว็บในกรอบเวลา 5 วินาทีที่ทำงานหนักที่สุด มีหน่วยเป็นมิลลิวินาที หากเวลาในการตอบสนองนานกว่า 50 มิลลิวินาที ผู้ใช้อาจรู้สึกว่าแอปช้า [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
+    "message": "เว็บไซต์ควรทำงานในเบราว์เซอร์หลักๆ ทั้งหมดได้เพื่อให้เข้าถึงผู้ใช้จำนวนมากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/pwa-cross-browser)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
-    "message": "เวลาในการตอบสนองต่ออินพุตโดยประมาณ"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
+    "message": "เว็บไซต์ทำงานในเบราว์เซอร์ต่างๆ ได้"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
+    "message": "ตรวจดูว่าแต่ละหน้าทำ Deep Link ผ่าน URL ได้และ URL ต่างๆ ไม่ซ้ำกันเพื่อให้แชร์ได้ในโซเชียลมีเดีย [ดูข้อมูลเพิ่มเติม](https://web.dev/pwa-each-page-has-url)"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
+    "message": "แต่ละหน้ามี URL ที่ไม่ซ้ำกัน"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
+    "message": "การเปลี่ยนควรจะดำเนินไปอย่างรวดเร็วขณะที่คุณแตะไปรอบๆ แม้ในเครือข่ายที่ช้า ซึ่งเป็นสิ่งสำคัญที่ทำให้ผู้ใช้รับรู้ได้ถึงประสิทธิภาพ [ดูข้อมูลเพิ่มเติม](https://web.dev/pwa-page-transitions)"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
+    "message": "เปลี่ยนหน้าได้รวดเร็วแม้ว่าเครือข่ายจะช้า"
+  },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "ไอคอนที่มาสก์ได้ช่วยให้รูปภาพแสดงขึ้นเต็มกรอบโดยไม่มีแถบปรากฏอยู่ตามขอบเมื่อติดตั้งแอปในอุปกรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/maskable-icon/)"
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "ไฟล์ Manifest ไม่มีไอคอนที่มาสก์ได้"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "ไฟล์ Manifest มีไอคอนที่มาสก์ได้"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "การเปลี่ยนเลย์เอาต์สะสมจะวัดการเคลื่อนไหวขององค์ประกอบที่มองเห็นได้ภายในวิวพอร์ต [ดูข้อมูลเพิ่มเติม](https://web.dev/cls)"
+  },
+  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
+    "message": "เวลาตอบสนองต่ออินพุตโดยประมาณเป็นระยะเวลาโดยประมาณที่แอปใช้เพื่อตอบสนองอินพุตของผู้ใช้ระหว่างการโหลดหน้าเว็บในกรอบเวลา 5 วินาทีที่ทำงานหนักที่สุด มีหน่วยเป็นมิลลิวินาที หากเวลาในการตอบสนองนานกว่า 50 มิลลิวินาที ผู้ใช้อาจรู้สึกว่าแอปช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/estimated-input-latency)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "First Contentful Paint ระบุเวลาที่มีการแสดงผลข้อความหรือรูปภาพครั้งแรก [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
-  },
-  "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "การแสดงผลที่มีเนื้อหาเต็มครั้งแรก"
+    "message": "First Contentful Paint ระบุเวลาที่มีการแสดงผลข้อความหรือรูปภาพครั้งแรก [ดูข้อมูลเพิ่มเติม](https://web.dev/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "CPU ไม่ได้ใช้งานครั้งแรกระบุครั้งแรกที่เธรดหลักของหน้าเว็บว่างพอที่จะจัดการกับอินพุต [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "CPU ไม่ได้ใช้งานครั้งแรก"
+    "message": "First CPU Idle ระบุครั้งแรกที่เทรดหลักของหน้าเว็บว่างพอที่จะจัดการกับอินพุต  [ดูข้อมูลเพิ่มเติม](https://web.dev/first-cpu-idle)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "การแสดงผลที่มีความหมายครั้งแรกวัดเมื่อเนื้อหาหลักของหน้าเว็บปรากฏ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)"
-  },
-  "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "การแสดงผลที่มีความหมายครั้งแรก"
+    "message": "การแสดงผลที่มีความหมายครั้งแรกวัดเมื่อเนื้อหาหลักของหน้าเว็บปรากฏ [ดูข้อมูลเพิ่มเติม](https://web.dev/first-meaningful-paint)"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "เวลาในการตอบสนองคือระยะเวลาที่หน้าเว็บใช้ในการตอบสนองอย่างสมบูรณ์ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)"
+    "message": "เวลาในการตอบสนองคือระยะเวลาที่หน้าเว็บใช้ในการตอบสนองอย่างสมบูรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/interactive)"
   },
-  "lighthouse-core/audits/metrics/interactive.js | title": {
-    "message": "เวลาในการโต้ตอบ"
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Largest Contentful Paint ระบุเวลาที่แสดงผลข้อความหรือรูปภาพได้มากที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "หน่วงเวลาอินพุตแรกที่อาจเกิดขึ้นซึ่งผู้ใช้อาจเจอคือระยะเวลาของงานที่ยาวที่สุดเป็นมิลลิวินาที"
-  },
-  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "FID สูงสุดที่อาจเกิดขึ้น"
+    "message": "First Input Delay สูงสุดที่อาจเกิดขึ้นซึ่งผู้ใช้อาจเจอคือระยะเวลาของงานที่ยาวที่สุด [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
-    "message": "ดัชนีความเร็วแสดงให้เห็นความเร็วที่เนื้อหาของหน้าปรากฏจนดูสมบูรณ์ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/speed-index)"
+    "message": "ดัชนีความเร็วแสดงให้เห็นความเร็วที่เนื้อหาของหน้าปรากฏจนดูสมบูรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "ดัชนีความเร็ว"
+  "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
+    "message": "ผลรวมช่วงเวลาทั้งหมดระหว่าง FCP และเวลาในการตอบสนอง เมื่อความยาวของงานเกิน 50ms หน่วยเป็นมิลลิวินาที [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "ระยะเวลารับส่งข้อมูล (RTT) ของเครือข่ายมีผลกระทบอย่างมากต่อประสิทธิภาพ หากต้นทางมี RTT สูง แสดงว่าเซิร์ฟเวอร์ที่อยู่ใกล้กับผู้ใช้มากกว่าอาจช่วยปรับปรุงประสิทธิภาพได้ [ดูข้อมูลเพิ่มเติม](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -552,19 +909,61 @@
     "message": "ระยะเวลารับส่งข้อมูลของเครือข่าย"
   },
   "lighthouse-core/audits/network-server-latency.js | description": {
-    "message": "เวลาในการตอบสนองต่อเซิร์ฟเวอร์อาจส่งผลกระทบต่อประสิทธิภาพของเว็บ หากต้นทางใช้เวลาในการตอบสนองต่อเซิร์ฟเวอร์สูง แสดงว่ามีการใช้งานเซิร์ฟเวอร์มากเกินไปหรือประสิทธิภาพแบ็กเอนด์ของเซิร์ฟเวอร์ไม่ดี [ดูข้อมูลเพิ่มเติม](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
+    "message": "เวลาในการตอบสนองต่อเซิร์ฟเวอร์อาจส่งผลกระทบต่อประสิทธิภาพของเว็บ หากต้นทางใช้เวลาในการตอบสนองต่อเซิร์ฟเวอร์นาน แสดงว่ามีการใช้งานเซิร์ฟเวอร์มากเกินไปหรือประสิทธิภาพแบ็กเอนด์ของเซิร์ฟเวอร์ไม่ดี [ดูข้อมูลเพิ่มเติม](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)"
   },
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "เวลาในการตอบสนองจากแบ็กเอนด์ของเซิร์ฟเวอร์"
   },
+  "lighthouse-core/audits/offline-start-url.js | description": {
+    "message": "Service Worker ช่วยให้เว็บแอปของคุณเชื่อถือได้ในสภาวะของเครือข่ายที่คาดการณ์ไม่ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "การโหลดที่ผิดพลาดของ {url} ใน Service Worker ได้รหัสสถานะ {statusCode}"
+  },
+  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
+    "message": "`start_url` ไม่ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
+  },
+  "lighthouse-core/audits/offline-start-url.js | title": {
+    "message": "`start_url` ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
+  },
+  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
+    "message": "Lighthouse อ่าน `start_url` จากไฟล์ Manifest ไม่ได้ ด้วยเหตุนี้ ระบบจึงสันนิษฐานว่า `start_url` เป็น URL ของเอกสาร ข้อความแสดงข้อผิดพลาด: \"{manifestWarning}\""
+  },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "ควบคุมให้จำนวนและขนาดของคำขอเครือข่ายอยู่ภายในเป้าหมายที่กำหนดตามงบประมาณประสิทธิภาพที่ให้มา [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
+    "message": "{count,plural, =1{1 คำขอ}other{# คำขอ}}"
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "งบประมาณประสิทธิภาพ"
+  },
+  "lighthouse-core/audits/redirects-http.js | description": {
+    "message": "หากคุณตั้งค่า HTTPS ไว้แล้ว ให้ตรวจสอบว่าได้เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ทั้งหมดไปยัง HTTPS เพื่อให้ผู้ใช้ทุกคนใช้ฟีเจอร์เว็บที่ปลอดภัยได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/redirects-http)"
+  },
+  "lighthouse-core/audits/redirects-http.js | failureTitle": {
+    "message": "ไม่ได้เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
+  },
+  "lighthouse-core/audits/redirects-http.js | title": {
+    "message": "เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
+  },
   "lighthouse-core/audits/redirects.js | description": {
-    "message": "การเปลี่ยนเส้นทางทำให้เกิดความล่าช้ามากขึ้นก่อนที่หน้าเว็บจะโหลดได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/redirects)"
+    "message": "การเปลี่ยนเส้นทางทำให้เกิดความล่าช้ามากขึ้นก่อนที่หน้าเว็บจะโหลดได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/redirects)"
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "หลีกเลี่ยงการเปลี่ยนเส้นทางหลายหน้า"
   },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "หากต้องการตั้งงบประมาณสำหรับจำนวนและขนาดของทรัพยากรหน้า ให้เพิ่มไฟล์ budget.json [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount,plural, =1{คำขอ 1 รายการ • {byteCount, number, bytes} KB}other{คำขอ # รายการ • {byteCount, number, bytes} KB}}"
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "ควบคุมให้จำนวนคำขอมีไม่มากและการโอนมีขนาดเล็ก"
+  },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "ลิงก์ Canonical จะบอกถึง URL ที่จะแสดงในผลการค้นหา [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/canonical)"
+    "message": "ลิงก์ Canonical จะบอกถึง URL ที่จะแสดงในผลการค้นหา [ดูข้อมูลเพิ่มเติม](https://web.dev/canonical)"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "URL หลายรายการขัดแย้งกัน ({urlList})"
@@ -576,7 +975,7 @@
     "message": "URL ไม่ถูกต้อง ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
-    "message": "ชี้ไปที่ตำแหน่ง `hreflang` อื่น ({url})"
+    "message": "ชี้ไปที่ `hreflang` ตำแหน่งอื่น ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
     "message": "URL แบบสัมพัทธ์ ({url})"
@@ -591,19 +990,13 @@
     "message": "เอกสารมี `rel=canonical` ที่ถูกต้อง"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "ขนาดตัวอักษรที่เล็กกว่า 12 พิกเซลจะเล็กเกินไปจนอ่านไม่ออกและทำให้ผู้เข้าชมในอุปกรณ์เคลื่อนที่ต้อง “บีบเพื่อซูมเข้า” เพื่ออ่าน พยายามให้ข้อความในหน้าเว็บมากกว่า 60% มีขนาดอย่างน้อย 12 พิกเซล [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)"
+    "message": "ขนาดตัวอักษรที่เล็กกว่า 12 พิกเซลจะเล็กเกินไปจนอ่านไม่ออกและทำให้ผู้เข้าชมในอุปกรณ์เคลื่อนที่ต้อง “บีบเพื่อซูมเข้า” เพื่ออ่าน พยายามให้ข้อความในหน้าเว็บมากกว่า 60% มีขนาดอย่างน้อย 12 พิกเซล [ดูข้อมูลเพิ่มเติม](https://web.dev/font-size)"
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "ข้อความที่อ่านได้ชัดเจน {decimalProportion, number, extendedPercent}"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanation": {
-    "message": "{decimalProportion, number, extendedPercent} ของข้อความมีขนาดเล็กเกินไป"
-  },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "ข้อความอ่านได้ไม่ชัดเจนเพราะไม่มีเมตาแท็กวิวพอร์ตที่เพิ่มประสิทธิภาพให้เหมาะกับหน้าจออุปกรณ์เคลื่อนที่"
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} ของข้อความมีขนาดเล็กเกินไป (อิงจากตัวอย่าง {decimalProportionVisited, number, extendedPercent})"
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "เอกสารไม่ได้ใช้ขนาดตัวอักษรที่อ่านได้ชัดเจน"
@@ -612,7 +1005,7 @@
     "message": "เอกสารใช้ขนาดตัวอักษรที่อ่านได้ชัดเจน"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "ลิงก์ hreflang จะบอกให้เครื่องมือค้นหาทราบถึงเวอร์ชันของหน้าเว็บที่ควรแสดงในผลการค้นหาสำหรับแต่ละภาษาหรือภูมิภาค [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/hreflang)"
+    "message": "ลิงก์ hreflang จะบอกให้เครื่องมือค้นหาทราบถึงเวอร์ชันของหน้าเว็บที่ควรแสดงในผลการค้นหาสำหรับแต่ละภาษาหรือภูมิภาค [ดูข้อมูลเพิ่มเติม](https://web.dev/hreflang)"
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "เอกสารไม่มี `hreflang` ที่ถูกต้อง"
@@ -621,7 +1014,7 @@
     "message": "เอกสารมี `hreflang` ที่ถูกต้อง"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "หน้าเว็บที่มีรหัสสถานะ HTTP ไม่สำเร็จอาจไม่ได้รับการจัดทำดัชนีอย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)"
+    "message": "หน้าเว็บที่มีรหัสสถานะ HTTP ไม่สำเร็จอาจไม่ได้รับการจัดทำดัชนีอย่างถูกต้อง [ดูข้อมูลเพิ่มเติม](https://web.dev/http-status-code)"
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "หน้าเว็บมีรหัสสถานะ HTTP ไม่สำเร็จ"
@@ -630,7 +1023,7 @@
     "message": "หน้าเว็บมีรหัสสถานะ HTTP สำเร็จ"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "เครื่องมือค้นหาจะรวมหน้าเว็บของคุณไว้ในผลการค้นหาไม่ได้หากไม่มีสิทธิ์รวบรวมข้อมูลหน้าดังกล่าว [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/indexing)"
+    "message": "เครื่องมือค้นหาจะรวมหน้าเว็บของคุณไว้ในผลการค้นหาไม่ได้หากไม่มีสิทธิ์รวบรวมข้อมูลหน้าดังกล่าว [ดูข้อมูลเพิ่มเติม](https://web.dev/is-crawable)"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "หน้าเว็บถูกบล็อกไม่ให้มีการจัดทำดัชนี"
@@ -639,7 +1032,7 @@
     "message": "หน้าไม่ได้ถูกบล็อกจากการจัดทำดัชนี"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "ข้อความอธิบายลิงก์ช่วยให้เครื่องมือค้นหาเข้าใจเนื้อหาของคุณ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)"
+    "message": "ข้อความอธิบายลิงก์ช่วยให้เครื่องมือค้นหาเข้าใจเนื้อหาของคุณ [ดูข้อมูลเพิ่มเติม](https://web.dev/link-text)"
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount,plural, =1{พบ 1 ลิงก์}other{พบ # ลิงก์}}"
@@ -651,13 +1044,13 @@
     "message": "ลิงก์มีข้อความอธิบาย"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "เรียกใช้[เครื่องมือทดสอบข้อมูลที่มีโครงสร้าง](https://search.google.com/structured-data/testing-tool/) และ [Linter ข้อมูลที่มีโครงสร้าง](http://linter.structured-data.org/) เพื่อตรวจสอบความถูกต้องของข้อมูลที่มีโครงสร้าง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/search/docs/guides/mark-up-content)"
+    "message": "เรียกใช้[เครื่องมือทดสอบข้อมูลที่มีโครงสร้าง](https://search.google.com/structured-data/testing-tool/)และ [Linter ข้อมูลที่มีโครงสร้าง](http://linter.structured-data.org/)เพื่อตรวจสอบความถูกต้องของข้อมูลที่มีโครงสร้าง [ดูข้อมูลเพิ่มเติม](https://web.dev/structured-data)"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "ข้อมูลที่มีโครงสร้างถูกต้อง"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "อาจมีการรวมคำอธิบายเมตาในผลการค้นหาเพื่อสรุปเนื้อหาของหน้าเว็บให้สั้นกระชับ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/description)"
+    "message": "อาจมีการรวมคำอธิบายเมตาในผลการค้นหาเพื่อสรุปเนื้อหาของหน้าเว็บให้สั้นกระชับ [ดูข้อมูลเพิ่มเติม](https://web.dev/meta-description)"
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "ข้อความอธิบายว่างเปล่า"
@@ -669,7 +1062,7 @@
     "message": "เอกสารมีคำอธิบายเมตา"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "เครื่องมือค้นหาจัดทำดัชนีเนื้อหาปลั๊กอินไม่ได้ และอุปกรณ์จำนวนมากจำกัดการใช้หรือไม่รองรับปลั๊กอิน [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/plugins)"
+    "message": "เครื่องมือค้นหาจัดทำดัชนีเนื้อหาปลั๊กอินไม่ได้ และอุปกรณ์จำนวนมากจำกัดการใช้หรือไม่รองรับปลั๊กอิน [ดูข้อมูลเพิ่มเติม](https://web.dev/plugins)"
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "เอกสารใช้ปลั๊กอิน"
@@ -678,7 +1071,7 @@
     "message": "เอกสารหลีกเลี่ยงการใช้ปลั๊กอิน"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "หากไฟล์ robots.txt มีรูปแบบไม่ถูกต้อง โปรแกรมรวบรวมข้อมูลอาจไม่เข้าใจวิธีที่คุณต้องการให้รวบรวมข้อมูลหรือจัดทำดัชนีเว็บไซต์"
+    "message": "หากไฟล์ robots.txt มีรูปแบบไม่ถูกต้อง โปรแกรมรวบรวมข้อมูลอาจไม่เข้าใจวิธีที่คุณต้องการให้รวบรวมข้อมูลหรือจัดทำดัชนีเว็บไซต์ [ดูข้อมูลเพิ่มเติม](https://web.dev/robots-txt)"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "คำขอ robots.txt แสดงสถานะ HTTP ต่อไปนี้ {statusCode}"
@@ -696,7 +1089,7 @@
     "message": "robots.txt ถูกต้อง"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "องค์ประกอบสำหรับการโต้ตอบ เช่น ปุ่มและลิงก์ ต้องมีขนาดใหญ่พอ (48x48 พิกเซล) และมีพื้นที่ว่างโดยรอบมากพอเพื่อให้แตะได้ง่ายๆ โดยไม่ซ้อนทับกับองค์ประกอบอื่นๆ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)"
+    "message": "องค์ประกอบสำหรับการโต้ตอบ เช่น ปุ่มและลิงก์ ต้องมีขนาดใหญ่พอ (48x48 พิกเซล) และมีพื้นที่ว่างโดยรอบมากพอเพื่อให้แตะได้ง่ายๆ โดยไม่ซ้อนทับกับองค์ประกอบอื่นๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/tap-targets)"
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "เป้าหมายการแตะที่มีขนาดเหมาะสม {decimalProportion, number, percent}"
@@ -710,41 +1103,86 @@
   "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
     "message": "เป้าหมายซ้อนทับกัน"
   },
-  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
-    "message": "ขนาด"
-  },
   "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
     "message": "เป้าหมายการแตะ"
   },
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "เป้าหมายการแตะมีขนาดที่เหมาะสม"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "เวลาที่ใช้ไบต์แรกระบุเวลาที่เซิร์ฟเวอร์ส่งการตอบกลับ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/ttfb)"
+  "lighthouse-core/audits/service-worker.js | description": {
+    "message": "Service Worker เป็นเทคโนโลยีที่ช่วยให้แอปของคุณใช้ฟีเจอร์ของ Progressive Web App ได้หลายฟีเจอร์ เช่น ออฟไลน์ เพิ่มไปยังหน้าจอหลัก และข้อความ Push [ดูข้อมูลเพิ่มเติม](https://web.dev/service-worker)"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "เอกสารรากใช้เวลา {timeInMs, number, milliseconds} มิลลิวินาที"
+  "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
+    "message": "หน้านี้ควบคุมโดย Service Worker แต่ไม่พบ `start_url` เนื่องจากไฟล์ Manifest แยกวิเคราะห์เป็น JSON ที่ถูกต้องไม่ได้"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "ลดเวลาในการตอบกลับของเซิร์ฟเวอร์ (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
+    "message": "หน้านี้ควบคุมโดย Service Worker แต่ `start_url` ({startUrl}) ไม่ได้อยู่ในขอบเขตของ Service Worker นั้น ({scopeUrl})"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "เวลาตอบสนองของเซิร์ฟเวอร์ต่ำ (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
+    "message": "หน้านี้ควบคุมโดย Service Worker แต่ไม่พบ `start_url` เพราะไม่มีการดึงไฟล์ Manifest"
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "ระยะเวลา"
+  "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
+    "message": "ต้นทางนี้มี Service Worker อย่างน้อย 1 ไฟล์ แต่หน้าเว็บ ({pageUrl}) ไม่อยู่ในขอบเขต"
   },
-  "lighthouse-core/audits/user-timings.js | columnName": {
-    "message": "ชื่อ"
+  "lighthouse-core/audits/service-worker.js | failureTitle": {
+    "message": "ไม่ได้ลงทะเบียน Service Worker ที่ควบคุมหน้าเว็บและ `start_url`"
   },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "เวลาเริ่มต้น"
+  "lighthouse-core/audits/service-worker.js | title": {
+    "message": "ลงทะเบียน Service Worker ที่ควบคุมหน้าเว็บและ `start_url`"
+  },
+  "lighthouse-core/audits/splash-screen.js | description": {
+    "message": "หน้าจอแนะนำที่มีธีมช่วยให้ผู้ใช้ได้รับประสบการณ์ที่มีคุณภาพสูงเมื่อเปิดแอปของคุณจากหน้าจอหลัก [ดูข้อมูลเพิ่มเติม](https://web.dev/splash-screen)"
+  },
+  "lighthouse-core/audits/splash-screen.js | failureTitle": {
+    "message": "ไม่ได้กำหนดค่าให้ใช้หน้าจอแนะนำที่กำหนดเอง"
+  },
+  "lighthouse-core/audits/splash-screen.js | title": {
+    "message": "มีการกำหนดค่าให้ใช้หน้าจอแนะนำที่กำหนดเอง"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | description": {
+    "message": "คุณกำหนดธีมของแถบที่อยู่เบราว์เซอร์ให้เข้ากับเว็บไซต์ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/themed-omnibox)"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
+    "message": "ไม่ได้กำหนดสีธีมสำหรับแถบที่อยู่"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | title": {
+    "message": "กำหนดสีธีมของแถบที่อยู่"
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "เวลาในการบล็อกเทรดหลัก"
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "บุคคลที่สาม"
+  },
+  "lighthouse-core/audits/third-party-summary.js | description": {
+    "message": "โค้ดของบุคคลที่สามอาจส่งผลกระทบที่สำคัญต่อประสิทธิภาพการโหลด จำกัดจำนวนผู้ให้บริการบุคคลที่สามที่มากเกินไปและพยายามโหลดโค้ดของบุคคลที่สามหลังจากที่หน้าเว็บโหลดเบื้องต้นเสร็จเรียบร้อยแล้ว [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
+  },
+  "lighthouse-core/audits/third-party-summary.js | displayValue": {
+    "message": "โค้ดของบุคคลที่สามบล็อกเทรดหลักเป็นเวลา {timeInMs, number, milliseconds} วินาที"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "ลดผลกระทบจากโค้ดของบุคคลที่สาม"
+  },
+  "lighthouse-core/audits/third-party-summary.js | title": {
+    "message": "ลดการใช้ของบุคคลที่สาม"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "การวัด"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "เมตริก"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "ตั้งงบประมาณด้านเวลาเพื่อช่วยดูประสิทธิภาพของเว็บไซต์ เว็บไซต์ที่มีประสิทธิภาพจะโหลดได้เร็วและตอบสนองต่อเหตุการณ์ที่เป็นอินพุตจากผู้ใช้ได้อย่างรวดเร็ว [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "งบประมาณด้านเวลา"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "ประเภท"
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "พิจารณาติดตั้ง User Timing API ในแอปเพื่อวัดประสิทธิภาพในระหว่างประสบการณ์สำคัญของผู้ใช้ในชีวิตจริงได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
+    "message": "พิจารณาติดตั้ง User Timing API ในแอปเพื่อวัดประสิทธิภาพในระหว่างประสบการณ์สำคัญของผู้ใช้ในชีวิตจริงได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/user-timings)"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{ระยะเวลาของผู้ใช้ 1 รายการ}other{ระยะเวลาของผู้ใช้ # รายการ}}"
@@ -756,19 +1194,58 @@
     "message": "พบ <link> ที่เชื่อมต่อล่วงหน้าสำหรับ \"{securityOrigin}\" แต่เบราว์เซอร์ไม่ได้นำไปใช้งาน โปรดตรวจสอบว่าคุณใช้แอตทริบิวต์ `crossorigin` อย่างถูกต้องแล้ว"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "พิจารณาเพิ่มการเชื่อมต่อล่วงหน้าหรือดึงข้อมูล DNS ล่วงหน้าสำหรับการเปลี่ยนแปลงทรัพยากรเพื่อสร้างการเชื่อมต่อกับต้นทางที่สำคัญของบุคคลที่สามตั้งแต่เนิ่นๆ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)"
+    "message": "พิจารณาเพิ่ม `preconnect` หรือ `dns-prefetch` ซึ่งบอกถึงทรัพยากรเพื่อสร้างการเชื่อมต่อกับต้นทางที่สำคัญของบุคคลที่สามตั้งแต่เนิ่นๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-rel-preconnect)"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "เชื่อมต่อกับต้นทางที่จำเป็นล่วงหน้า"
+  },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "พบลิงก์ที่เชื่อมต่อล่วงหน้ามากกว่า 2 รายการ ควรใช้ลิงก์ที่เชื่อมต่อล่วงหน้าเท่าที่จำเป็นและใช้กับต้นทางที่สำคัญที่สุดเท่านั้น"
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
     "message": "พบ <link> ที่โหลดล่วงหน้าสำหรับ \"{preloadURL}\" แต่เบราว์เซอร์ไม่ได้นำไปใช้งาน โปรดตรวจสอบว่าคุณใช้แอตทริบิวต์ `crossorigin` อย่างถูกต้องแล้ว"
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
-    "message": "พิจารณาใช้ <link rel=preload> เพื่อจัดลำดับความสำคัญในการเรียกทรัพยากรที่มีการขอให้โหลดหน้าเว็บภายหลัง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/preload)"
+    "message": "พิจารณาใช้ `<link rel=preload>` เพื่อจัดลำดับความสำคัญในการเรียกทรัพยากรที่มีการขอให้โหลดหน้าเว็บภายหลัง [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-rel-preload)"
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "โหลดคำขอสำคัญล่วงหน้า"
+  },
+  "lighthouse-core/audits/viewport.js | description": {
+    "message": "เพิ่มแท็ก `<meta name=\"viewport\">` เพื่อเพิ่มประสิทธิภาพแอปสำหรับหน้าจออุปกรณ์เคลื่อนที่ [ดูข้อมูลเพิ่มเติม](https://web.dev/viewport)"
+  },
+  "lighthouse-core/audits/viewport.js | explanationNoTag": {
+    "message": "ไม่พบแท็ก `<meta name=\"viewport\">`"
+  },
+  "lighthouse-core/audits/viewport.js | failureTitle": {
+    "message": "ไม่มีแท็ก `<meta name=\"viewport\">` ที่มี `width` หรือ `initial-scale`"
+  },
+  "lighthouse-core/audits/viewport.js | title": {
+    "message": "มีแท็ก `<meta name=\"viewport\">` ที่มี `width` หรือ `initial-scale`"
+  },
+  "lighthouse-core/audits/without-javascript.js | description": {
+    "message": "แอปควรแสดงเนื้อหาบางอย่างเมื่อมีการปิดใช้ JavaScript แม้จะเป็นเพียงการเตือนผู้ใช้ว่าการใช้แอปจำเป็นต้องใช้ JavaScript [ดูข้อมูลเพิ่มเติม](https://web.dev/without-javascript)"
+  },
+  "lighthouse-core/audits/without-javascript.js | explanation": {
+    "message": "ส่วนเนื้อหาในหน้าควรแสดงเนื้อหาบางอย่างถ้าสคริปต์ในหน้าไม่พร้อมใช้งาน"
+  },
+  "lighthouse-core/audits/without-javascript.js | failureTitle": {
+    "message": "ไม่แสดงเนื้อหาทางเลือกเมื่อ JavaScript ไม่พร้อมใช้งาน"
+  },
+  "lighthouse-core/audits/without-javascript.js | title": {
+    "message": "มีเนื้อหาบางอย่างแสดงขึ้นเมื่อ JavaScript ไม่พร้อมใช้งาน"
+  },
+  "lighthouse-core/audits/works-offline.js | description": {
+    "message": "หากคุณกำลังสร้าง Progressive Web App ให้พิจารณาใช้ Service Worker เพื่อให้แอปทำงานแบบออฟไลน์ได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/works-offline)"
+  },
+  "lighthouse-core/audits/works-offline.js | failureTitle": {
+    "message": "หน้าปัจจุบันไม่ตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
+  },
+  "lighthouse-core/audits/works-offline.js | title": {
+    "message": "หน้าปัจจุบันตอบสนองด้วยรหัส 200 เมื่อออฟไลน์"
+  },
+  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
+    "message": "หน้านี้อาจไม่โหลดขึ้นขณะออฟไลน์เนื่องจาก URL ทดสอบของคุณ ({requested}) มีการเปลี่ยนเส้นทางไปยัง \"{final}\" ลองทดสอบ URL ที่ 2 โดยตรง"
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "นี่เป็นโอกาสปรับปรุงการใช้งาน ARIA ในแอปพลิเคชันของคุณ ซึ่งอาจช่วยให้ผู้ใช้ได้รับประสบการณ์การใช้งานเทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ ที่ดียิ่งขึ้น"
@@ -792,7 +1269,7 @@
     "message": "การตรวจสอบเหล่านี้ไฮไลต์โอกาสในการ[ปรับปรุงการช่วยเหลือพิเศษของเว็บแอป](https://developers.google.com/web/fundamentals/accessibility) โดยจะตรวจพบอัตโนมัติได้เฉพาะปัญหากลุ่มย่อยด้านการช่วยเหลือพิเศษ เราจึงขอแนะนำให้ตรวจสอบด้วยตนเองด้วย"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
-    "message": "รายการเหล่านี้จัดการพื้นที่ที่เครื่องมือทดสอบอัตโนมัติไม่ครอบคลุม ดูข้อมูลเพิ่มเติมในคำแนะนำของเราเกี่ยวกับ[การดำเนินการตรวจสอบการช่วยเหลือพิเศษ](https://developers.google.com/web/fundamentals/accessibility/how-to-review)"
+    "message": "รายการเหล่านี้จัดการพื้นที่ที่เครื่องมือทดสอบอัตโนมัติไม่ครอบคลุม ดูข้อมูลเพิ่มเติมในคำแนะนำเกี่ยวกับ[การดำเนินการตรวจสอบการช่วยเหลือพิเศษ](https://developers.google.com/web/fundamentals/accessibility/how-to-review)"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "การช่วยเหลือพิเศษ"
@@ -827,8 +1304,17 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "ตารางและรายการ"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "แนวทางปฏิบัติที่ดีที่สุด"
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
+    "message": "งบประมาณประสิทธิภาพจะใช้เป็นมาตรฐานสำหรับประสิทธิภาพของเว็บไซต์คุณ"
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupTitle": {
+    "message": "งบประมาณ"
+  },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "ข้อมูลเพิ่มเติมเกี่ยวกับประสิทธิภาพของแอปพลิเคชัน"
+    "message": "ข้อมูลเพิ่มเติมเกี่ยวกับประสิทธิภาพของแอปพลิเคชัน ตัวเลขเหล่านี้ไม่[ส่งผลกระทบโดยตรง](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)ต่อคะแนนประสิทธิภาพ"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "การวินิจฉัย"
@@ -840,7 +1326,7 @@
     "message": "การปรับปรุงการแสดงผลครั้งแรก"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "การเพิ่มประสิทธิภาพเหล่านี้เพิ่มความเร็วในการโหลดหน้าเว็บได้"
+    "message": "คำแนะนำเหล่านี้จะช่วยให้หน้าโหลดได้เร็วขึ้น โดยจะไม่[ส่งผลกระทบโดยตรง](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)ต่อคะแนนประสิทธิภาพ"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "โอกาส"
@@ -856,6 +1342,15 @@
   },
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "ประสิทธิภาพ"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
+    "message": "การตรวจสอบเหล่านี้ตรวจสอบความถูกต้องของลักษณะต่างๆ ของ Progressive Web App [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/progressive-web-apps/checklist)"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
+    "message": "การตรวจสอบเหล่านี้เป็นสิ่งที่ต้องทำใน[รายการตรวจสอบ PWA](https://developers.google.com/web/progressive-web-apps/checklist) ซึ่งเป็นเกณฑ์พื้นฐาน แต่ Lighthouse ไม่ได้ทำการตรวจสอบดังกล่าวโดยอัตโนมัติ การตรวจสอบจะไม่ส่งผลต่อคะแนนของคุณ แต่คุณควรตรวจสอบด้วยตนเอง"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
+    "message": "Progressive Web App"
   },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "ทำงานเร็วและวางใจได้"
@@ -893,35 +1388,122 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "เหมาะกับอุปกรณ์เคลื่อนที่"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "หน้านี้อาจไม่โหลดขึ้นตามที่คาดไว้เนื่องจาก URL ทดสอบของคุณ ({requested}) มีการเปลี่ยนเส้นทางไปยัง {final} ลองทดสอบ URL ที่ 2 โดยตรง"
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "หน้าโหลดช้าเกินกำหนดเวลา หน้าที่โหลดมาได้อาจไม่ครบถ้วน"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "แคช TTL"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
+    "message": "ตำแหน่ง"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnName": {
+    "message": "ชื่อ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "เกินงบประมาณ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
+    "message": "คำขอ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "ขนาดทรัพยากร"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "ประเภททรัพยากร"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "ขนาด (KB)"
+    "message": "ขนาด"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "แหล่งที่มา"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "เวลาที่ใช้"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "ขนาดการโอน"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "ไบต์ที่อาจประหยัดได้ (KB)"
+    "message": "เวลาที่อาจประหยัดได้"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "เวลาที่อาจประหยัดได้ (มิลลิวินาที)"
+    "message": "เวลาที่อาจประหยัดได้"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "การเปลี่ยนเลย์เอาต์สะสม"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "อาจประหยัดได้ {wastedBytes, number, bytes} KB"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "อาจประหยัดเวลาได้ {wastedMs, number, milliseconds} มิลลิวินาที"
+    "message": "อาจประหยัดได้ {wastedMs, number, milliseconds} มิลลิวินาที"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "เอกสาร"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "เวลาในการตอบสนองต่ออินพุตโดยประมาณ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "CPU ไม่ได้ใช้งานครั้งแรก"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "การแสดงผลที่มีเนื้อหาเต็มครั้งแรก"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "การแสดงผลที่มีความหมายครั้งแรก"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "แบบอักษร"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "รูปภาพ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "เวลาในการโต้ตอบ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "First Input Delay สูงสุดที่อาจเกิดขึ้น"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "สื่อ"
   },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} มิลลิวินาที"
   },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "อื่นๆ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "สคริปต์"
+  },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} วินาที"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "ดัชนีความเร็ว"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "สไตล์ชีต"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "บุคคลที่สาม"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "เวลาที่บล็อกทั้งหมด"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "รวม"
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
     "message": "เกิดข้อผิดพลาดในการบันทึกการติดตามระหว่างการโหลดหน้าเว็บ โปรดเรียกใช้ Lighthouse อีกครั้ง ({errorCode})"
@@ -935,8 +1517,14 @@
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "เซิร์ฟเวอร์ DNS แก้ปัญหาโดเมนที่ระบุไม่ได้"
   },
+  "lighthouse-core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "ตัวรวบรวม {artifactName} ที่จำเป็นพบข้อผิดพลาด: {errorMessage}"
+  },
   "lighthouse-core/lib/lh-error.js | internalChromeError": {
     "message": "เกิดข้อผิดพลาดภายในของ Chrome โปรดรีสตาร์ท Chrome และลองเรียกใช้ Lighthouse อีกครั้ง"
+  },
+  "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "ตัวรวบรวม {artifactName} ที่จำเป็นไม่ทำงาน"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse โหลดหน้าเว็บที่คุณขออย่างน่าเชื่อถือไม่ได้ ตรวจสอบว่าคุณกำลังทดสอบ URL ที่ถูกต้องและเซิร์ฟเวอร์ตอบสนองคำขอทั้งหมดอย่างถูกต้อง"
@@ -945,7 +1533,10 @@
     "message": "Lighthouse โหลด URL ที่คุณขออย่างน่าเชื่อถือไม่ได้เพราะหน้าเว็บไม่ตอบสนอง"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "URL ที่ระบุไม่มีข้อมูลเข้าสู่ระบบความปลอดภัยที่ถูกต้อง {securityMessages}"
+    "message": "URL ที่ระบุไม่มีใบรับรองความปลอดภัยที่ถูกต้อง {securityMessages}"
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome ป้องกันการโหลดหน้าเว็บด้วยโฆษณาคั่นระหว่างหน้า ตรวจสอบว่าคุณกำลังทดสอบ URL ที่ถูกต้องและเซิร์ฟเวอร์ตอบสนองคำขอทั้งหมดอย่างถูกต้อง"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse โหลดหน้าเว็บที่คุณขออย่างน่าเชื่อถือไม่ได้ ตรวจสอบว่าคุณกำลังทดสอบ URL ที่ถูกต้องและเซิร์ฟเวอร์ตอบสนองคำขอทั้งหมดอย่างถูกต้อง (รายละเอียด: {errorDetails})"
@@ -974,17 +1565,44 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "เวลาในการตอบสนองของเส้นทางสำคัญที่ยาวที่สุด"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "คัดลอก JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "เปิด/ปิดธีมมืด"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "ขยายข้อมูลการพิมพ์"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "สรุปการพิมพ์"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "บันทึกเป็น Gist"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "บันทึกเป็น HTML"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "บันทึกเป็น JSON"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "เปิดในโปรแกรมดู"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "ข้อผิดพลาด!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "ข้อผิดพลาดในรายงาน: ไม่มีข้อมูลการตรวจสอบ"
   },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "รายงานปัญหา"
+  },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "ข้อมูลในห้องทดลอง"
   },
   "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "การวิเคราะห์หน้าปัจจุบันโดย [Lighthouse](https://developers.google.com/web/tools/lighthouse/) ในเครือข่ายมือถือจำลอง ค่ามาจากการประมาณและอาจแตกต่างกันไป"
+    "message": "การวิเคราะห์หน้าปัจจุบันในเครือข่ายมือถือจำลองโดย [Lighthouse](https://developers.google.com/web/tools/lighthouse/) ค่ามาจากการประมาณและอาจแตกต่างกันไป"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "รายการเพิ่มเติมที่ควรตรวจสอบด้วยตนเอง"
@@ -1001,17 +1619,65 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "การตรวจสอบที่ผ่านแล้ว"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "เดสก์ท็อปจำลอง"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Moto G4 จำลอง"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "ไม่มีการจำลอง"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "ความแรงของ CPU/หน่วยความจำ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "การควบคุม CPU"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "ช่อง"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "อุปกรณ์"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "เวลาในการดึงข้อมูล"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "การควบคุมเครือข่าย"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "การตั้งค่ารันไทม์"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "User Agent (โฮสต์)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "User Agent (เครือข่าย)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "ไม่ทราบ"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "ยุบตัวอย่างข้อมูล"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "ขยายตัวอย่างข้อมูล"
   },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "แสดงทรัพยากรของบุคคลที่สาม"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "ให้บริการโดยสภาพแวดล้อม"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "เกิดปัญหาที่มีผลต่อการทำงานนี้ของ Lighthouse"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "ค่ามาจากการประมาณและอาจแตกต่างกันไป"
+    "message": "ค่ามาจากการประมาณและอาจแตกต่างกันไป คะแนนประสิทธิภาพ[อิงจากเมตริกเหล่านี้เท่านั้น](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)"
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "ผ่านการตรวจสอบแต่มีคำเตือน"
@@ -1019,17 +1685,101 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "คำเตือน "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "สำหรับเนื้อหาที่เป็นภาพเคลื่อนไหว ให้ใช้ [AMP-anim](https://amp.dev/documentation/components/amp-anim/) เพื่อลดการใช้ CPU ขณะที่เนื้อหายังคงอยู่นอกจอ"
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "ตรวจสอบให้แน่ใจว่าคุณกำลังใช้แท็ก `amp-img` ที่ถูกต้องสำหรับรูปภาพที่มีการโหลดแบบ Lazy Loading โดยอัตโนมัตินอกวิวพอร์ตแรก [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "ใช้เครื่องมือ เช่น [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) เพื่อ[แสดงเลย์เอาต์ AMP ฝั่งเซิร์ฟเวอร์](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)"
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "ดู[เอกสาร AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) เพื่อให้แน่ใจว่าระบบรองรับรูปแบบทั้งหมด"
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` องค์ประกอบรองรับ`srcset`แอตทริบิวต์เพื่อกำหนดว่าจะใช้เนื้อหาภาพใดตามขนาดของหน้าจอ  [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "ลองแสดงคอมโพเนนต์ `amp-img` ทั้งหมดในรูปแบบ WebP โดยกำหนดการสำรองที่เหมาะสมให้กับเบราว์เซอร์อื่นด้วย [ดูข้อมูลเพิ่มเติม](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "ลองใช้การเลื่อนเสมือนจริงด้วย Component Dev Kit (CDK) หากกำลังแสดงรายการที่ใหญ่มาก [ดูข้อมูลเพิ่มเติม](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "ใช้[การแยกโค้กระดับเส้นทาง](https://web.dev/route-level-code-splitting-in-angular/)เพื่อลดขนาดกลุ่ม JavaScript และลองแคชเนื้อหาล่วงหน้าด้วย [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/)"
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "หากคุณกำลังใช้ Angular CLI โปรดตรวจสอบให้แน่ใจว่ารุ่นดังกล่าวสร้างขึ้นในโหมดที่ใช้งานจริง [ดูข้อมูลเพิ่มเติม](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "หากคุณกำลังใช้ Angular CLI ให้รวมแมปที่มาลงในรุ่นที่ใช้งานจริงเพื่อตรวจสอบกลุ่ม [ดูข้อมูลเพิ่มเติม](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "โหลดเส้นทางล่วงหน้าก่อนเวลาเพื่อเร่งความเร็วในการไปยังส่วนต่างๆ [ดูข้อมูลเพิ่มเติม](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "ลองใช้ยูทิลิตี `BreakpointObserver` ใน Component Dev Kit (CDK) เพื่อจัดการเบรกพอยท์ของภาพ [ดูข้อมูลเพิ่มเติม](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "หากไม่ได้รวมกลุ่มเนื้อหา JavaScript ให้ลองใช้ [Baler](https://github.com/magento/baler)"
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "ปิดใช้[การรวมกลุ่มและการลดขนาดของ JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ในตัวของ Magento และลองใช้ [Baler](https://github.com/magento/baler/) แทน"
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "ระบุ `@font-display` เมื่อ [ กำหนดฟอนต์ที่กำหนดเอง ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)"
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "ลองแก้ไขเทมเพลตผลิตภัณฑ์และแคตตาล็อกเพื่อใช้ประโยชน์จากฟีเจอร์[การโหลดแบบ Lazy Loading](https://web.dev/native-lazy-loading) ของแพลตฟอร์มเว็บ"
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "เปิดใช้ตัวเลือก \"Minify CSS Files\" ในการตั้งค่านักพัฒนาซอฟต์แวร์ของร้านค้า [ดูข้อมูลเพิ่มเติม](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "ใช้ [Terser](https://www.npmjs.com/package/terser) เพื่อลด Outfrom เนื้อหาของ JavaScript จากการใช้งานเนื้อหาและปิดใช้ฟีเจอร์การลดขนาดในตัว"
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "ปิดใช้[การรวมกลุ่ม JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) ในตัวของ Magento"
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "ลองค้นหาใน[ตลาดกลางของ Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) เพื่อหาส่วนขยายต่างๆ ของบุคคลที่สามเพื่อเพิ่มประสิทธิภาพให้รูปภาพ"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "เพิ่มการเชื่อมต่อล่วงหน้าหรือคำแนะนำด้านทรัพยากรที่ DNS ดึงมาล่วงหน้าได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "เพิ่มแท็ก `<link rel=preload>` ได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "ลองค้นหาใน[ตลาดกลางของ Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) เพื่อหาส่วนขยายต่างๆ ของบุคคลที่สามเพื่อใช้ประโยชน์จากรูปแบบรูปภาพที่ใหม่กว่า"
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "ลองใช้ไลบรารี \"การสร้างกรอบเวลา\" เช่น `react-window` เพื่อลดจำนวนโหนดของ DOM ที่สร้างขึ้น หากกำลังแสดงองค์ประกอบซ้ำบนหน้านั้น [ดูข้อมูลเพิ่มเติม](https://web.dev/virtualize-long-lists-react-window/) และลดการแสดงซ้ำที่ไม่จำเป็นโดยใช้ [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) หรือ [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) และ[ข้ามเอฟเฟกต์](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)เฉพาะเมื่อการพึ่งพาบางประการเปลี่ยนแปลงไปหากคุณกำลังใช้ฮุก Effect เพื่อปรับปรุงประสิทธิภาพของรันไทม์"
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "หากคุณกำลังใช้ React Router ให้ลดการใช้ของคอมโพเนนต์ `<Redirect>` ในการ[ไปยังเส้นทางต่างๆ](https://reacttraining.com/react-router/web/api/Redirect)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ CSS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "หากระบบในรุ่นของคุณลดขนาดไฟล์ JS โดยอัตโนมัติ โปรดตรวจสอบให้แน่ใจว่าคุณทำให้รุ่นที่ใช้งานจริงของแอปพลิเคชันใช้งานได้ ตรวจสอบเรื่องนี้ได้ด้วยส่วนขยายของ React Developer Tools [ดูข้อมูลเพิ่มเติม](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "หากคุณไม่ได้กำลังแสดงผลฝั่งเซิร์ฟเวอร์ ให้[แยกกลุ่ม JavaScript](https://web.dev/code-splitting-suspense/) ด้วย `React.lazy()` หรือแยกโค้ดโดยใช้ไลบรารีของบุคคลที่สาม เช่น [คอมโพเนนต์ที่โหลดได้](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)"
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "ใช้ React DevTools Profiler ซึ่งใช้ประโยชน์จาก Profiler API ในการวัดประสิทธิภาพในการแสดงผลของคอมโพเนนต์ [ดูข้อมูลเพิ่มเติม](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "ลองอัปโหลด GIF ไปยังบริการซึ่งจะทำให้ใช้ GIF เพื่อฝังเป็นวิดีโอ HTML5 ได้"
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "ติดตั้ง[ปลั๊กอิน WordPress การโหลดแบบ Lazy Loading](https://wordpress.org/plugins/search/lazy+load/) ที่จะช่วยเลื่อนเวลาโหลดรูปภาพนอกหน้าจอ หรือเปลี่ยนไปใช้ธีมที่มีฟังก์ชันดังกล่าว นอกจากนี้แล้วให้ลองใช้[ปลั๊กอิน AMP](https://wordpress.org/plugins/amp/) ด้วย"
+    "message": "ติดตั้ง[ปลั๊กอินการโหลดแบบ Lazy Loading ของ WordPress](https://wordpress.org/plugins/search/lazy+load/) ที่จะช่วยเลื่อนเวลาโหลดรูปภาพนอกหน้าจอ หรือเปลี่ยนไปใช้ธีมที่มีฟังก์ชันดังกล่าว และอาจลองพิจารณาใช้[ปลั๊กอิน AMP](https://wordpress.org/plugins/amp/)"
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "มีปลั๊กอิน WordPress หลายรายการที่ช่วยคุณ[แทรกเนื้อหาที่สำคัญ](https://wordpress.org/plugins/search/critical+css/) หรือ[เลื่อนเวลาโหลดทรัพยากรที่สำคัญน้อยกว่า](https://wordpress.org/plugins/search/defer+css+javascript/) โปรดระวังว่าการเพิ่มประสิทธิภาพโดยปลั๊กอินเหล่านี้อาจทำให้ฟีเจอร์ของธีมหรือปลั๊กอินของคุณเสียหาย ซึ่งน่าจะทำให้คุณต้องแก้ไขโค้ด"
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "การกำหนดธีม ปลั๊กอิน และเซิร์ฟเวอร์ล้วนส่งผลต่อเวลาการตอบสนองของเซิร์ฟเวอร์ ลองหาธีมที่เพิ่มประสิทธิภาพมากขึ้น พยายามเลือกปลั๊กอินการเพิ่มประสิทธิภาพด้วยความระมัดระวัง และ/หรืออัปเกรดเซิร์ฟเวอร์"
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "ลองแสดงข้อความที่ตัดตอนมาในรายการโพสต์ (เช่น ผ่านแท็ก \"เพิ่มเติม\") ลดจำนวนโพสต์ที่แสดงในหน้าหนึ่งๆ แบ่งโพสต์ยาวๆ เป็นหลายหน้า หรือใช้ปลั๊กอินเพื่อโหลดความคิดเห็นแบบ Lazy Loading"
@@ -1038,27 +1788,27 @@
     "message": "มี[ปลั๊กอิน WordPress](https://wordpress.org/plugins/search/minify+css/) หลายอย่างที่ช่วยให้เว็บไซต์เร็วขึ้นได้ด้วยการลิงก์ ลดขนาด และบีบอัดสไตล์ นอกจากนี้คุณอาจใช้กระบวนการของเวอร์ชันเพื่อลดขนาดล่วงหน้าหากเป็นไปได้"
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "มี[ปลั๊กอิน WordPress]https://wordpress.org/plugins/search/minify+javascript/) หลายอย่างที่ช่วยให้เว็บไซต์เร็วขึ้นได้ด้วยการลิงก์ ลดขนาด และบีบอัดสคริปต์ นอกจากนี้คุณอาจใช้กระบวนการของเวอร์ชันเพื่อลดขนาดล่วงหน้าหากเป็นไปได้"
+    "message": "มี[ปลั๊กอิน WordPress](https://wordpress.org/plugins/search/minify+javascript/) หลายอย่างที่ช่วยให้เว็บไซต์เร็วขึ้นได้ด้วยการลิงก์ ลดขนาด และบีบอัดสคริปต์ นอกจากนี้คุณอาจใช้กระบวนการของเวอร์ชันเพื่อลดขนาดล่วงหน้าหากเป็นไปได้"
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "ลองลดหรือเปลี่ยนจำนวน[ปลั๊กอิน WordPress](https://wordpress.org/plugins/) ที่โหลด CSS ที่ไม่ได้ใช้ในหน้าเว็บของคุณ หากต้องการระบุปลั๊กอินที่เพิ่ม CSS โดยไม่จำเป็น ให้ลองเรียกใช้[การครอบคลุมโค้ด](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ใน DevTools ของ Chrome คุณระบุธีม/ปลั๊กอินที่รับผิดชอบได้จาก URL ของสไตล์ชีต หาปลั๊กอินที่มีสไตล์ชีตจำนวนมากอยู่ในรายการซึ่งมีสีแดงอยู่จำนวนมากในการครอบคลุมโค้ด ปลั๊กอินควรเป็นเพียงตัวกำหนดลำดับของสไตล์ชีตเท่านั้นหากใช้ปลั๊กอินในหน้าจริงๆ"
+    "message": "ลองลดหรือเปลี่ยนจำนวน[ปลั๊กอิน WordPress](https://wordpress.org/plugins/) ที่โหลด CSS ที่ไม่ได้ใช้ในหน้าเว็บของคุณ หากต้องการระบุปลั๊กอินที่เพิ่ม CSS โดยไม่จำเป็น ให้ลองเรียกใช้[การครอบคลุมโค้ด](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)ใน DevTools ของ Chrome คุณระบุธีม/ปลั๊กอินที่รับผิดชอบได้จาก URL ของสไตล์ชีต หาปลั๊กอินที่มีสไตล์ชีตจำนวนมากอยู่ในรายการซึ่งมีสีแดงอยู่จำนวนมากในการครอบคลุมโค้ด ปลั๊กอินควรเป็นเพียงตัวกำหนดลำดับของสไตล์ชีตเท่านั้นหากใช้ปลั๊กอินในหน้าจริงๆ"
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "ลองลดหรือเปลี่ยนจำนวน[ปลั๊กอิน WordPress](https://wordpress.org/plugins/) ที่โหลด JavaScript ที่ไม่ได้ใช้ในหน้าเว็บของคุณ หากต้องการระบุปลั๊กอินที่เพิ่ม JS โดยไม่จำเป็น ให้ลองเรียกใช้[การครอบคลุมโค้ด](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)ใน DevTools ของ Chrome คุณระบุธีม/ปลั๊กอินที่รับผิดชอบได้จาก URL ของสคริปต์ หาปลั๊กอินที่มีสคริปต์จำนวนมากอยู่ในรายการซึ่งมีสีแดงอยู่จำนวนมากในการครอบคลุมโค้ด ปลั๊กอินควรเป็นเพียงตัวกำหนดลำดับของสคริปต์เท่านั้นหากใช้ปลั๊กอินในหน้าจริงๆ"
+    "message": "ลองลดหรือเปลี่ยนจำนวน[ปลั๊กอิน WordPress](https://wordpress.org/plugins/) ที่โหลด JavaScript ที่ไม่ได้ใช้ในหน้าเว็บของคุณ หากต้องการระบุปลั๊กอินที่เพิ่ม JS โดยไม่จำเป็น ให้ลองเรียกใช้ [การครอบคลุมโค้ด](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)ใน DevTools ของ Chrome คุณระบุธีม/ปลั๊กอินที่รับผิดชอบได้จาก URL ของสคริปต์ หาปลั๊กอินที่มีสคริปต์จำนวนมากอยู่ในรายการซึ่งมีสีแดงอยู่จำนวนมากในการครอบคลุมโค้ด ปลั๊กอินควรเป็นเพียงตัวกำหนดลำดับของสคริปต์เท่านั้นหากใช้ปลั๊กอินในหน้าจริงๆ"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "อ่านเกี่ยวกับ[การแคชเบราว์เซอร์ใน WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)"
+    "message": "อ่านเกี่ยวกับ[การแคชของเบราว์เซอร์ใน WordPress](https://wordpress.org/support/article/optimization/#browser-caching)"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "ลองใช้[ปลั๊กอิน WordPress การเพิ่มประสิทธิภาพรูปภาพ](https://wordpress.org/plugins/search/optimize+images/) ที่บีบอัดรูปภาพแต่ยังคงคุณภาพไว้ได้"
+    "message": "พิจารณาใช้[ปลั๊กอิน WordPress การเพิ่มประสิทธิภาพรูปภาพ](https://wordpress.org/plugins/search/optimize+images/)ที่บีบอัดรูปภาพแต่ยังคงคุณภาพไว้ได้"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "อัปโหลดรูปภาพโดยตรงผ่าน[คลังสื่อ](https://codex.wordpress.org/Media_Library_Screen) เพื่อให้แน่ใจว่ามีขนาดรูปภาพที่จำเป็นพร้อมใช้งาน จากนั้นแทรกรูปภาพจากคลังสื่อหรือใช้วิดเจ็ตรูปภาพเพื่อให้มีการใช้ขนาดรูปภาพที่มีประสิทธิภาพสูงสุด (รวมถึงขนาดสำหรับเบรกพอยท์ที่ปรับเปลี่ยนตามอุปกรณ์) หลีกเลี่ยงการใช้รูปภาพ \"ขนาดเต็ม\" นอกเสียจากว่าขนาดจะเพียงพอต่อการใช้งาน [ดูข้อมูลเพิ่มเติม](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "อัปโหลดรูปภาพโดยตรงผ่าน[ไลบรารีสื่อ](https://wordpress.org/support/article/media-library-screen/)เพื่อให้แน่ใจว่ามีขนาดรูปภาพที่จำเป็นพร้อมใช้งาน จากนั้นแทรกรูปภาพจากไลบรารีสื่อหรือใช้วิดเจ็ตรูปภาพเพื่อให้มีการใช้ขนาดรูปภาพที่มีประสิทธิภาพสูงสุด (รวมถึงขนาดสำหรับเบรกพอยท์ที่ปรับเปลี่ยนตามอุปกรณ์) หลีกเลี่ยงการใช้รูปภาพ`Full Size` นอกเสียจากว่าขนาดจะเพียงพอต่อการใช้งาน [ดูข้อมูลเพิ่มเติม](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "คุณเปิดใช้การบีบอัดข้อความในการกำหนดค่าเว็บเซิร์ฟเวอร์ได้"
   },
   "stack-packs/packs/wordpress.js | uses_webp_images": {
-    "message": "ลองใช้[ปลั๊กอิน](https://wordpress.org/plugins/search/convert+webp/) หรือบริการที่จะแปลงรูปภาพที่อัปโหลดเป็นรูปแบบที่เหมาะสมที่สุดโดยอัตโนมัติ"
+    "message": "พิจารณาใช้[ปลั๊กอิน](https://wordpress.org/plugins/search/convert+webp/)หรือบริการที่จะแปลงรูปภาพที่อัปโหลดเป็นรูปแบบที่เหมาะสมที่สุดโดยอัตโนมัติ"
   }
 }

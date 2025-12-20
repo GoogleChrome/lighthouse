@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const htmlReportAssets = require('./html/html-report-assets');
+const htmlReportAssets = require('./html/html-report-assets.js');
 
 class ReportGenerator {
   /**
@@ -68,13 +68,14 @@ class ReportGenerator {
     const escape = value => `"${value.replace(/"/g, '""')}"`;
 
     // Possible TODO: tightly couple headers and row values
-    const header = ['category', 'name', 'title', 'type', 'score'];
+    const header = ['requestedUrl', 'finalUrl', 'category', 'name', 'title', 'type', 'score'];
     const table = Object.values(lhr.categories).map(category => {
       return category.auditRefs.map(auditRef => {
         const audit = lhr.audits[auditRef.id];
         // CSV validator wants all scores to be numeric, use -1 for now
         const numericScore = audit.score === null ? -1 : audit.score;
-        return [category.title, audit.id, audit.title, audit.scoreDisplayMode, numericScore]
+        return [lhr.requestedUrl, lhr.finalUrl, category.title, audit.id, audit.title,
+          audit.scoreDisplayMode, numericScore]
           .map(value => value.toString())
           .map(escape);
       });

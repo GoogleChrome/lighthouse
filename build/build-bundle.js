@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -12,11 +12,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const mkdir = fs.promises.mkdir;
 
-const LighthouseRunner = require('../lighthouse-core/runner');
+const LighthouseRunner = require('../lighthouse-core/runner.js');
 const babel = require('babel-core');
 const browserify = require('browserify');
-const makeDir = require('make-dir');
 const pkg = require('../package.json');
 
 const VERSION = pkg.version;
@@ -33,12 +33,19 @@ const gatherers = LighthouseRunner.getGathererList()
 const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
+// HACK: manually include the lighthouse-plugin-publisher-ads audits.
+/** @type {Array<string>} */
+// @ts-ignore
+const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+
 /** @param {string} file */
 const isDevtools = file => path.basename(file).includes('devtools');
 /** @param {string} file */
-const isExtension = file => path.basename(file).includes('extension');
+const isLightrider = file => path.basename(file).includes('lightrider');
 
-const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
+const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n` +
+  '// @ts-nocheck\n'; // To prevent tsc stepping into any required bundles.
+const DEBUG = false; // true for sourcemaps
 
 /**
  * Browserify starting at the file at entryPath. Contains entry-point-specific
@@ -49,11 +56,11 @@ const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
  * @return {Promise<void>}
  */
 async function browserifyFile(entryPath, distPath) {
-  let bundle = browserify(entryPath); // , {debug: true}); // for sourcemaps
+  let bundle = browserify(entryPath, {debug: DEBUG});
 
   bundle
     // Transform the fs.readFile etc into inline strings.
-    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+    .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -61,26 +68,28 @@ async function browserifyFile(entryPath, distPath) {
   bundle.ignore('source-map')
     .ignore('debug/node')
     .ignore('intl')
+    .ignore('intl-pluralrules')
     .ignore('raven')
-    .ignore('mkdirp')
     .ignore('rimraf')
     .ignore('pako/lib/zlib/inflate.js');
 
   // Don't include the desktop protocol connection.
   bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
 
-  // Dont include the stringified report in DevTools.
-  if (isDevtools(entryPath)) {
+  // Don't include the stringified report in DevTools - see devtools-report-assets.js
+  // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
     bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
   }
 
-  // Don't include locales in DevTools or the extension for now.
-  if (isDevtools(entryPath) || isExtension(entryPath)) {
+  // Don't include locales in DevTools.
+  if (isDevtools(entryPath)) {
     // @ts-ignore bundle.ignore does accept an array of strings.
     bundle.ignore(locales);
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
+  // Exposed path must be a relative path from lighthouse-core/config/config-helpers.js (where loading occurs).
   const corePath = './lighthouse-core/';
   const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
@@ -89,6 +98,15 @@ async function browserifyFile(entryPath, distPath) {
   gatherers.forEach(gatherer => {
     bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
   });
+
+  // HACK: manually include the lighthouse-plugin-publisher-ads audits.
+  // TODO: there should be a test for this.
+  if (isDevtools(entryPath)) {
+    bundle.require('lighthouse-plugin-publisher-ads');
+    pubAdsAudits.forEach(pubAdAudit => {
+      bundle = bundle.require(pubAdAudit);
+    });
+  }
 
   // browerify's url shim doesn't work with .URL in node_modules,
   // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
@@ -99,7 +117,7 @@ async function browserifyFile(entryPath, distPath) {
   const bundleStream = bundle.bundle();
 
   // Make sure path exists.
-  await makeDir(path.dirname(distPath));
+  await mkdir(path.dirname(distPath), {recursive: true});
   return new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(distPath);
     writeStream.on('finish', resolve);
@@ -138,7 +156,9 @@ function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
-  minifyScript(distPath);
+  if (!DEBUG) {
+    minifyScript(distPath);
+  }
 }
 
 /**

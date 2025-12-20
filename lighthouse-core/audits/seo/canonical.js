@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 const MainResource = require('../../computed/main-resource.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
@@ -17,16 +17,31 @@ const UIStrings = {
   failureTitle: 'Document does not have a valid `rel=canonical`',
   /** Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Canonical links suggest which URL to show in search results. ' +
-    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).',
-  /** Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other. "urlList" will be replaced by a list of URLs (e.g. https://example.com, https://example2.com, etc ). */
+    '[Learn more](https://web.dev/canonical).',
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other.
+   * @example {https://example.com, https://example2.com} urlList
+   * */
   explanationConflict: 'Multiple conflicting URLs ({urlList})',
-  /** Explanatory message stating that there was a failure in an audit caused by a URL being invalid. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by a URL being invalid.
+   * @example {https://example.com/} url
+   * */
   explanationInvalid: 'Invalid URL ({url})',
-  /** Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute.
+   * @example {https://example.com/} url
+   * */
   explanationRelative: 'Relative URL ({url})',
-  /** Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context. "url" will be replaced by the invalid URL (e.g. https://example.com). 'hreflang' is an HTML attribute and should not be translated. */
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context.'hreflang' is an HTML attribute and should not be translated.
+   * @example {https://example.com/} url
+   */
   explanationPointsElsewhere: 'Points to another `hreflang` location ({url})',
-  /** Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /**
+   * @description Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain.
+   * @example {https://example.com/} url
+   * */
   explanationDifferentDomain: 'Points to a different domain ({url})',
   /** Explanatory message stating that the page's canonical URL was pointing to the domain's root URL, which is a common mistake. "points" refers to the action of the 'rel=canonical' referencing another link. "root" refers to the starting/home page of the website. "domain" refers to the registered domain name of the website. */
   explanationRoot: 'Points to the domain\'s root URL (the homepage), ' +
@@ -53,7 +68,7 @@ class Canonical extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['LinkElements', 'URL'],
+      requiredArtifacts: ['LinkElements', 'URL', 'devtoolsLogs'],
     };
   }
 
@@ -163,7 +178,7 @@ class Canonical extends Audit {
     if (!URL.rootDomainsMatch(canonicalURL, baseURL)) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationDifferentDomain, {url: canonicalURL}),
+        explanation: str_(UIStrings.explanationDifferentDomain, {url: canonicalURL.href}),
       };
     }
 

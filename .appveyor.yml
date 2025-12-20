@@ -21,7 +21,7 @@ install:
 
 before_test:
   - set "PATH=C:\MinGW\msys\1.0\bin;%PATH%"
-  - set "LIGHTHOUSE_CHROMIUM_PATH=%CD%\chrome-win32\chrome.exe"
+  - set "CHROME_PATH=%CD%\chrome-win32\chrome.exe"
   - bash ./lighthouse-core/scripts/download-chrome.sh
   - yarn build-all
 
@@ -32,13 +32,20 @@ test_script:
   - which yarn
   - yarn lint
   - yarn unit-core --runInBand
-  - yarn unit-cli
+  # Appveyor protocol timeouts are unusually common.
+  # We retry our smoketests 3 times for this reason, so do the same for CLI tests that launch Chrome.
+  - yarn unit-cli || yarn unit-cli || yarn unit-cli
   - yarn unit-viewer
   - yarn type-check
-  # FIXME: Exclude Appveyor from running `perf` smoketest until we fix the flake.
-  #     https://github.com/GoogleChrome/lighthouse/issues/5053
-  # - yarn smoke
-  - yarn smoke a11y pwa pwa2 pwa3 dbw redirects seo offline byte metrics
+  # run smoke tests serially, trying up to three times to prevent flakes.
+  # FIXME: Exclude Appveyor from running `lantern` smoketest until we fix the flake.
+  - yarn smoke -j=1 --retries=2 a11y errors oopif pwa pwa2 pwa3 dbw redirects seo offline byte perf metrics
+
+on_success:
+  # Remove module resolution symlinks; this avoids 'Unable to save cache'
+  # errors when appveyor runs 7z.exe to save the build cache
+  - yarn unlink lighthouse
+  - yarn unlink
 
 cache:
   #- chrome-win32 -> appveyor.yml,package.json

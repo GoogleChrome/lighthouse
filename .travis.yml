@@ -6,47 +6,48 @@ branches:
 matrix:
   include:
     - node_js: "10"
-    - node_js: "11"
+    - node_js: "12"
       if: head_branch IS blank AND branch = master
-dist: trusty
 cache:
   yarn: true
   directories:
     - node_modules
     - lantern-data
+    - lighthouse-core/scripts/legacy-javascript/variants
     - /home/travis/.rvm/gems/
 install:
-  # if our e2e tests fail in the future it might be that we are not compatible
-  # with the latest puppeteer api so we probably need to run on chromimum
-  # @see https://github.com/GoogleChrome/lighthouse/pull/4640/files#r171425004
-  - export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-  - yarn
+  # Ensure we have the latest Chrome stable.
+  - google-chrome-stable --version
+  # We used to set PUPPETEER_SKIP_CHROMIUM_DOWNLOAD, but we don't want to anymore.
+  # Explicitly unset b/c environment variables seem to linger in travis.
+  # see https://github.com/GoogleChrome/lighthouse/pull/9877#discussion_r338389765
+  - unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+  - yarn --frozen-lockfile
 before_script:
-  - export DISPLAY=:99.0
   # see comment above about puppeteer
   - export CHROME_PATH="$(which google-chrome-stable)"
-  - sh -e /etc/init.d/xvfb start
+  # Print out the Chrome version so we know what we're working with
   - google-chrome-stable --version
   - yarn build-all
 script:
   - yarn bundlesize
   - yarn diff:sample-json
   - yarn lint
+  - yarn test-legacy-javascript
   - yarn unit:cicoverage
   - yarn type-check
   - yarn smoke:cicoverage
   - yarn test-clients
   - yarn test-viewer
   - yarn test-lantern
+  - yarn test-bundle
   - yarn i18n:checks
-  # _JAVA_OPTIONS is breaking parsing of `compile-devtools` output. See #3338.
-  - unset _JAVA_OPTIONS
-  # FIXME(paulirish): re-enable after a roll of LH->CDT
-  # - yarn compile-devtools
+  - yarn dogfood-lhci
+  - yarn test-docs
+
+  # Fail if any changes were written to source files (ex, from: build/build-cdt-lib.js).
+  - git diff --exit-code
 before_cache:
-  # the `yarn compile-devtools` task adds these to node_modules, which slows down caching
-  - rm -rf ./node_modules/temp-devtoolsfrontend/
-  - rm -rf ./node_modules/temp-devtoolsprotocol/
   # nyc, jest and other projects store files in here. They mess up the travis build cache.
   - rm -rf ./node_modules/.cache/
 after_success:
@@ -54,3 +55,5 @@ after_success:
   - yarn codecov
 addons:
   chrome: stable
+services:
+  - xvfb

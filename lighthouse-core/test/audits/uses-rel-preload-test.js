@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,7 +9,7 @@
 /* eslint-env jest */
 
 const UsesRelPreload = require('../../audits/uses-rel-preload.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -172,6 +172,78 @@ describe('Performance: uses-rel-preload audit', () => {
     });
   });
 
+  it(`should warn about failed preload attempts`, async () => {
+    const networkRecords = [
+      ...getMockNetworkRecords(),
+      {
+        requestId: '4',
+        startTime: 10,
+        isLinkPreload: true,
+        url: 'http://www.example.com/preload.css',
+        timing: defaultMainResource.timing,
+        priority: 'High',
+        initiator: {
+          type: 'parser',
+          url: defaultMainResourceUrl,
+        },
+      },
+      {
+        requestId: '5',
+        startTime: 15,
+        isLinkPreload: false,
+        url: 'http://www.example.com/preload.css',
+        timing: defaultMainResource.timing,
+        priority: 'High',
+        initiator: {
+          type: 'parser',
+          url: defaultMainResourceUrl,
+        },
+      },
+    ];
+
+    const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreload.audit(artifacts, context);
+    expect(result.warnings).toHaveLength(1);
+  });
+
+  it(`should not warn about failed preload attempts between frames`, async () => {
+    const networkRecords = [
+      ...getMockNetworkRecords(),
+      {
+        frameId: 'frameA',
+        requestId: '4',
+        startTime: 10,
+        isLinkPreload: true,
+        url: 'http://www.example.com/preload.css',
+        timing: defaultMainResource.timing,
+        priority: 'High',
+        initiator: {
+          type: 'parser',
+          url: defaultMainResourceUrl,
+        },
+      },
+      {
+        frameId: 'frameB',
+        requestId: '5',
+        startTime: 15,
+        isLinkPreload: false,
+        url: 'http://www.example.com/preload.css',
+        timing: defaultMainResource.timing,
+        priority: 'High',
+        initiator: {
+          type: 'parser',
+          url: defaultMainResourceUrl,
+        },
+      },
+    ];
+
+    const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreload.audit(artifacts, context);
+    expect(result.warnings).toBeUndefined();
+  });
+
   it(`shouldn't suggest preload for already preloaded records`, () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].isLinkPreload = true;
@@ -183,6 +255,16 @@ describe('Performance: uses-rel-preload audit', () => {
       assert.equal(output.details.overallSavingsMs, 0);
       assert.equal(output.details.items.length, 0);
     });
+  });
+
+  it(`shouldn't suggest preload for requests in other frames`, async () => {
+    const networkRecords = getMockNetworkRecords();
+    networkRecords[2].frameId = 'not a matching frame';
+
+    const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    const result = await UsesRelPreload.audit(artifacts, context);
+    expect(result).toMatchObject({score: 1, details: {overallSavingsMs: 0, items: []}});
   });
 
   it(`shouldn't suggest preload for protocol data`, () => {

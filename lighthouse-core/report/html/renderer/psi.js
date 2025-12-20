@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self DOM PerformanceCategoryRenderer Util DetailsRenderer */
+/* globals self DOM PerformanceCategoryRenderer Util I18n DetailsRenderer */
 
 
 /**
@@ -31,7 +31,7 @@
  *
  * @param {LH.Result | string} LHResult The stringified version of {LH.Result}
  * @param {Document} document The host page's window.document
- * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null}}
+ * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element}}
  */
 function prepareLabData(LHResult, document) {
   const lhResult = (typeof LHResult === 'string') ?
@@ -43,14 +43,21 @@ function prepareLabData(LHResult, document) {
   dom.resetTemplates();
 
   const reportLHR = Util.prepareReportResult(lhResult);
-  const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
+  const i18n = new I18n(reportLHR.configSettings.locale, {
+    // Set missing renderer strings to default (english) values.
+    ...Util.UIStrings,
+    ...reportLHR.i18n.rendererFormattedStrings,
+  });
+  Util.i18n = i18n;
+
+  const perfCategory = reportLHR.categories.performance;
   if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
   if (!reportLHR.categoryGroups) throw new Error(`No category groups found.`);
 
   // Use custom title and description.
-  reportLHR.categoryGroups.metrics.title = lhResult.i18n.rendererFormattedStrings.labDataTitle;
+  reportLHR.categoryGroups.metrics.title = Util.i18n.strings.labDataTitle;
   reportLHR.categoryGroups.metrics.description =
-      lhResult.i18n.rendererFormattedStrings.lsPerformanceCategoryDescription;
+      Util.i18n.strings.lsPerformanceCategoryDescription;
 
   const perfRenderer = new PerformanceCategoryRenderer(dom, new DetailsRenderer(dom));
   // PSI environment string will ensure the categoryHeader and permalink elements are excluded
@@ -64,7 +71,11 @@ function prepareLabData(LHResult, document) {
   scoreGaugeWrapperEl.removeAttribute('href');
 
   const finalScreenshotDataUri = _getFinalScreenshot(perfCategory);
-  return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri};
+
+  const clonedScoreTemplate = dom.cloneTemplate('#tmpl-lh-scorescale', dom.document());
+  const scoreScaleEl = dom.find('.lh-scorescale', clonedScoreTemplate);
+
+  return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri, scoreScaleEl};
 }
 
 /**

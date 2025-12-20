@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 const UnusedImages =
     require('../../../audits/byte-efficiency/offscreen-images.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const createTestTrace = require('../../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
@@ -21,7 +21,7 @@ function generateRecord({
   return {
     url,
     mimeType,
-    startTime, // DevTools timestamp which is in seconds
+    startTime, // DevTools timestamp which is in seconds.
     resourceSize: resourceSizeInKb * 1024,
   };
 }
@@ -33,11 +33,15 @@ function generateSize(width, height, prefix = 'displayed') {
   return size;
 }
 
-function generateImage(size, coords, networkRecord, src = 'https://google.com/logo.png') {
+function generateImage({
+  size,
+  x,
+  y,
+  networkRecord,
+  loading,
+  src = 'https://google.com/logo.png',
+}) {
   Object.assign(networkRecord || {}, {url: src});
-
-  const x = coords[0];
-  const y = coords[1];
 
   const clientRect = {
     top: y,
@@ -45,9 +49,14 @@ function generateImage(size, coords, networkRecord, src = 'https://google.com/lo
     left: x,
     right: x + size.displayedWidth,
   };
-  const image = {src, clientRect, ...networkRecord};
-  Object.assign(image, size);
-  return image;
+
+  return {
+    src,
+    clientRect,
+    loading,
+    ...networkRecord,
+    ...size,
+  };
 }
 
 describe('OffscreenImages audit', () => {
@@ -63,7 +72,7 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(100, 100), [0, 0]),
+        generateImage({size: generateSize(100, 100), x: 0, y: 0}),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
@@ -84,9 +93,26 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(200, 200), [0, 0], recordA),
-        generateImage(generateSize(100, 100), [0, 1080], recordB, urlB),
-        generateImage(generateSize(400, 400), [1720, 1080], recordC, urlC),
+        generateImage({
+          size: generateSize(200, 200),
+          x: 0,
+          y: 0,
+          networkRecord: recordA,
+        }),
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: 1080,
+          networkRecord: recordB,
+          src: urlB,
+        }),
+        generateImage({
+          size: generateSize(400, 400),
+          x: 1720,
+          y: 1080,
+          networkRecord: recordC,
+          src: urlC,
+        }),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
@@ -100,32 +126,162 @@ describe('OffscreenImages audit', () => {
     const url = s => `https://google.com/logo${s}.png`;
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const networkRecords = [
-      generateRecord({url: url(''), resourceSizeInKb: 100}),
+      generateRecord({url: url('A'), resourceSizeInKb: 100}),
       generateRecord({url: url('B'), resourceSizeInKb: 100}),
       generateRecord({url: url('C'), resourceSizeInKb: 100}),
       generateRecord({url: url('D'), resourceSizeInKb: 100}),
       generateRecord({url: url('E'), resourceSizeInKb: 100}),
+      generateRecord({url: url('F'), resourceSizeInKb: 100}),
+      generateRecord({url: url('G'), resourceSizeInKb: 100}),
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], networkRecords[0]),
-        // offscreen to the bottom
-        generateImage(generateSize(100, 100), [0, 2000], networkRecords[1], url('B')),
-        // offscreen to the top-left
-        generateImage(generateSize(100, 100), [-2000, -1000], networkRecords[2], url('C')),
-        // offscreen to the bottom-right
-        generateImage(generateSize(100, 100), [3000, 2000], networkRecords[3], url('D')),
-        // half offscreen to the top, should not warn
-        generateImage(generateSize(1000, 1000), [0, -500], networkRecords[4], url('E')),
+        // Offscreen to the right.
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: networkRecords[0],
+          src: url('A'),
+        }),
+        // Waaay offscreen to the bottom
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: 5000,
+          networkRecord: networkRecords[1],
+          src: url('B'),
+        }),
+        // Offscreen to the top.
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: -400,
+          networkRecord: networkRecords[2],
+          src: url('C'),
+        }),
+        // Offscreen to the top-left.
+        generateImage({
+          size: generateSize(100, 100),
+          x: -2000,
+          y: -1000,
+          networkRecord: networkRecords[3],
+          src: url('D'),
+        }),
+        // Offscreen to the bottom-right.
+        generateImage({
+          size: generateSize(100, 100),
+          x: 3000,
+          y: 2000,
+          networkRecord: networkRecords[4],
+          src: url('E'),
+        }),
+        // Half offscreen to the top, should not warn.
+        generateImage({
+          size: generateSize(1000, 1000),
+          x: 0,
+          y: -500,
+          networkRecord: networkRecords[5],
+          src: url('F'),
+        }),
+        // Offscreen to the bottom but within 3 viewports, should not warn
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: 2000,
+          networkRecord: networkRecords[6],
+          src: url('G'),
+        }),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
     const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
-    assert.equal(auditResult.items.length, 4);
+    expect(auditResult.items).toMatchObject([
+      {url: url('A')},
+      {url: url('B')},
+      {url: url('C')},
+      {url: url('D')},
+      {url: url('E')},
+    ]);
+  });
+
+  it('passes images with a specified loading attribute', async () => {
+    const url = s => `https://google.com/logo${s}.png`;
+    const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecords = [
+      generateRecord({url: url('A'), resourceSizeInKb: 100}),
+      generateRecord({url: url('B'), resourceSizeInKb: 100}),
+    ];
+    const artifacts = {
+      ViewportDimensions: DEFAULT_DIMENSIONS,
+      ImageElements: [
+        // Offscreen to the right, but lazy loaded.
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: networkRecords[0],
+          loading: 'lazy',
+          src: url('A'),
+        }),
+        // Offscreen to the bottom, but eager loaded.
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: 5000,
+          networkRecord: networkRecords[1],
+          loading: 'eager',
+          src: url('B'),
+        }),
+      ],
+      traces: {defaultPass: createTestTrace({topLevelTasks})},
+      devtoolsLogs: {},
+    };
+
+    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
+      assert.equal(auditResult.items.length, 0);
+    });
+  });
+
+  it('fails images with an unspecified or arbitrary loading attribute', async () => {
+    const url = s => `https://google.com/logo${s}.png`;
+    const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecords = [
+      generateRecord({url: url('A'), resourceSizeInKb: 100}),
+      generateRecord({url: url('B'), resourceSizeInKb: 100}),
+    ];
+    const artifacts = {
+      ViewportDimensions: DEFAULT_DIMENSIONS,
+      ImageElements: [
+        // Offscreen to the right with auto loading (same as not specifying the attribute).
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: networkRecords[0],
+          loading: 'auto',
+          src: url('A'),
+        }),
+        // Offscreen to the bottom, with an arbitrary loading attribute.
+        generateImage({
+          size: generateSize(100, 100),
+          x: 0,
+          y: 5000,
+          networkRecord: networkRecords[1],
+          loading: 'imagination',
+          src: url('B'),
+        }),
+      ],
+      traces: {defaultPass: createTestTrace({topLevelTasks})},
+      devtoolsLogs: {},
+    };
+
+    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
+      assert.equal(auditResult.items.length, 2);
+    });
   });
 
   it('finds images with 0 area', () => {
@@ -134,7 +290,7 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(0, 0), [0, 0], networkRecord),
+        generateImage({size: generateSize(0, 0), x: 0, y: 0, networkRecord}),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
@@ -158,10 +314,32 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(50, 50), [0, 0], networkRecords[0]),
-        generateImage(generateSize(1000, 1000), [1000, 1000], networkRecords[1]),
-        generateImage(generateSize(50, 50), [0, 1500], networkRecords[2], urlB),
-        generateImage(generateSize(400, 400), [0, 1500], networkRecords[3], urlB),
+        generateImage({
+          size: generateSize(50, 50),
+          x: 0,
+          y: 0,
+          networkRecord: networkRecords[0],
+        }),
+        generateImage({
+          size: generateSize(1000, 1000),
+          x: 1000,
+          y: 1000,
+          networkRecord: networkRecords[1],
+        }),
+        generateImage({
+          size: generateSize(50, 50),
+          x: 0,
+          y: 5000,
+          networkRecord: networkRecords[2],
+          src: urlB,
+        }),
+        generateImage({
+          size: generateSize(400, 400),
+          x: 0,
+          y: 5000,
+          networkRecord: networkRecords[3],
+          src: urlB,
+        }),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
@@ -178,8 +356,8 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], networkRecord),
+        // Offscreen to the right.
+        generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
@@ -195,8 +373,8 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], networkRecord),
+        // Offscreen to the right.
+        generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
@@ -212,8 +390,8 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        // offscreen to the right
-        generateImage(generateSize(100, 100), [0, 2000], networkRecord),
+        // Offscreen to the bottom.
+        generateImage({size: generateSize(100, 100), x: 0, y: 5000, networkRecord}),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
@@ -251,8 +429,20 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
-        generateImage(generateSize(200, 200), [3000, 0], recordB, recordB.url),
+        generateImage({
+          size: generateSize(0, 0),
+          x: 0,
+          y: 0,
+          networkRecord: recordA,
+          src: recordA.url,
+        }),
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: recordB,
+          src: recordB.url,
+        }),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
@@ -295,8 +485,20 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
-        generateImage(generateSize(200, 200), [3000, 0], recordB, recordB.url),
+        generateImage({
+          size: generateSize(0, 0),
+          x: 0,
+          y: 0,
+          networkRecord: recordA,
+          src: recordA.url,
+        }),
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: recordB,
+          src: recordB.url,
+        }),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
@@ -320,8 +522,20 @@ describe('OffscreenImages audit', () => {
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageElements: [
-        generateImage(generateSize(0, 0), [0, 0], networkRecords[0], 'a'),
-        generateImage(generateSize(200, 200), [3000, 0], networkRecords[1], 'b'),
+        generateImage({
+          size: generateSize(0, 0),
+          x: 0,
+          y: 0,
+          networkRecord: networkRecords[0],
+          src: 'a',
+        }),
+        generateImage({
+          size: generateSize(200, 200),
+          x: 3000,
+          y: 0,
+          networkRecord: networkRecords[1],
+          src: 'b',
+        }),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},

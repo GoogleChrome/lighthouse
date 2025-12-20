@@ -1,12 +1,22 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+/**
+ * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
+ */
 function makeFakeDriver({protocolGetVersionResponse}) {
+  let scrollPosition = {x: 0, y: 0};
+
   return {
+    get fetcher() {
+      return {
+        disableRequestInterception: () => Promise.resolve(),
+      };
+    },
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },
@@ -22,8 +32,9 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     disconnect() {
       return Promise.resolve();
     },
-    gotoURL() {
-      return Promise.resolve('https://www.reddit.com/r/nba');
+    /** @param {string} url */
+    gotoURL(url) {
+      return Promise.resolve({finalUrl: url, timedOut: false});
     },
     beginEmulation() {
       return Promise.resolve();
@@ -57,6 +68,14 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     evaluateAsync() {
       return Promise.resolve({});
     },
+    /** @param {{x: number, y: number}} position */
+    scrollTo(position) {
+      scrollPosition = position;
+      return Promise.resolve();
+    },
+    getScrollPosition() {
+      return Promise.resolve(scrollPosition);
+    },
     registerPerformanceObserver() {
       return Promise.resolve();
     },
@@ -64,13 +83,15 @@ function makeFakeDriver({protocolGetVersionResponse}) {
       return Promise.resolve();
     },
     endTrace() {
-      return Promise.resolve(
-      require('../fixtures/traces/progressive-app.json')
-      );
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/traces/progressive-app.json';
+      return Promise.resolve(require(modulePath));
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
-      return require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
+      return require(modulePath);
     },
     blockUrlPatterns() {
       return Promise.resolve();
@@ -100,6 +121,8 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-module.exports = fakeDriver;
-module.exports.fakeDriverUsingRealMobileDevice = fakeDriverUsingRealMobileDevice;
-module.exports.protocolGetVersionResponse = protocolGetVersionResponse;
+module.exports = {
+  ...fakeDriver,
+  fakeDriverUsingRealMobileDevice,
+  protocolGetVersionResponse,
+};

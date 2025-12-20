@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals URL self */
+/* globals URL self Util */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
@@ -55,7 +55,7 @@ class DOM {
   }
 
   /**
-   * @return {DocumentFragment}
+   * @return {!DocumentFragment}
    */
   createFragment() {
     return this._document.createDocumentFragment();
@@ -80,7 +80,7 @@ class DOM {
   /**
    * @param {string} selector
    * @param {ParentNode} context
-   * @return {DocumentFragment} A clone of the template content.
+   * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */
   cloneTemplate(selector, context) {
@@ -117,52 +117,47 @@ class DOM {
   convertMarkdownLinkSnippets(text) {
     const element = this.createElement('span');
 
-    // Split on markdown links (e.g. [some link](https://...)).
-    const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
-
-    while (parts.length) {
-      // Pop off the same number of elements as there are capture groups.
-      const [preambleText, linkText, linkHref] = parts.splice(0, 3);
-      element.appendChild(this._document.createTextNode(preambleText));
-
-      // Append link if there are any.
-      if (linkText && linkHref) {
-        const url = new URL(linkHref);
-
-        const DEVELOPERS_GOOGLE_ORIGIN = 'https://developers.google.com';
-        if (url.origin === DEVELOPERS_GOOGLE_ORIGIN) {
-          url.searchParams.set('utm_source', 'lighthouse');
-          url.searchParams.set('utm_medium', this._lighthouseChannel);
-        }
-
-        const a = this.createElement('a');
-        a.rel = 'noopener';
-        a.target = '_blank';
-        a.textContent = linkText;
-        a.href = url.href;
-        element.appendChild(a);
+    for (const segment of Util.splitMarkdownLink(text)) {
+      if (!segment.isLink) {
+        // Plain text segment.
+        element.appendChild(this._document.createTextNode(segment.text));
+        continue;
       }
+
+      // Otherwise, append any links found.
+      const url = new URL(segment.linkHref);
+
+      const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
+      if (DOCS_ORIGINS.includes(url.origin)) {
+        url.searchParams.set('utm_source', 'lighthouse');
+        url.searchParams.set('utm_medium', this._lighthouseChannel);
+      }
+
+      const a = this.createElement('a');
+      a.rel = 'noopener';
+      a.target = '_blank';
+      a.textContent = segment.text;
+      a.href = url.href;
+      element.appendChild(a);
     }
 
     return element;
   }
 
   /**
-   * @param {string} text
+   * @param {string} markdownText
    * @return {Element}
    */
-  convertMarkdownCodeSnippets(text) {
+  convertMarkdownCodeSnippets(markdownText) {
     const element = this.createElement('span');
 
-    const parts = text.split(/`(.*?)`/g); // Split on markdown code slashes
-    while (parts.length) {
-      // Pop off the same number of elements as there are capture groups.
-      const [preambleText, codeText] = parts.splice(0, 2);
-      element.appendChild(this._document.createTextNode(preambleText));
-      if (codeText) {
+    for (const segment of Util.splitMarkdownCodeSpans(markdownText)) {
+      if (segment.isCode) {
         const pre = this.createElement('code');
-        pre.textContent = codeText;
+        pre.textContent = segment.text;
         element.appendChild(pre);
+      } else {
+        element.appendChild(this._document.createTextNode(segment.text));
       }
     }
 
@@ -197,7 +192,7 @@ class DOM {
    * nothing matches query.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {HTMLElement}
+   * @return {!HTMLElement}
    */
   find(query, context) {
     /** @type {?HTMLElement} */
@@ -212,7 +207,7 @@ class DOM {
    * Helper for context.querySelectorAll. Returns an Array instead of a NodeList.
    * @param {string} query
    * @param {ParentNode} context
-   * @return {Array<HTMLElement>}
+   * @return {!Array<HTMLElement>}
    */
   findAll(query, context) {
     return Array.from(context.querySelectorAll(query));

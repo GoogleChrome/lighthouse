@@ -40,4 +40,4 @@ round_trip_lhr = json.loads(MessageToJson(proto_lhr, including_default_value_fie
 
 # write the json to disk
 with open(path_round_trip, 'w') as f:
-    json.dump(round_trip_lhr, f, indent=4, sort_keys=True)
+    json.dump(round_trip_lhr, f, indent=4, sort_keys=True, separators=(',', ': '))

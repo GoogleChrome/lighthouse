@@ -1,0 +1,18 @@
+repo: GoogleChrome/lighthouse
+pullRequests: false
+filters:
+  - type: issue
+    criteria:
+      state: open
+      labels:
+        $and:
+          - $includes: needs-priority
+          - $or:
+            - $includes: P0
+            - $includes: P1
+            - $includes: P1.5
+            - $includes: P2
+            - $includes: P3
+actions:
+  - type: remove_label
+    label: needs-priority

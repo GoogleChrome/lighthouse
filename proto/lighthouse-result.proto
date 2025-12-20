@@ -1,10 +1,12 @@
 syntax = "proto3";
 
+// This comment required for Lightrider import compatibility # header
+
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-// This comment required for LightRider import compatibility
+// This comment required for LightRider import compatibility # suffix
 
 // Canonical list of errors created by Lighthouse.
 enum LighthouseError {
@@ -142,7 +144,8 @@ message LighthouseResult {
     // nullable list of strings
     google.protobuf.Value only_categories = 3;
 
-    // How Lighthouse was run, e.g. from the Chrome extension or from the npm module
+    // How Lighthouse was run, e.g. from the Chrome extension or from the npm
+    // module
     string channel = 4;
   }
 
@@ -154,8 +157,8 @@ message LighthouseResult {
 
   // Message containing the performance timing data for the Lighthouse run
   message Timing {
-
-    // Corresponds to: https://www.w3.org/TR/performance-timeline-2/#dom-performanceentry
+    // Corresponds to:
+    // https://www.w3.org/TR/performance-timeline-2/#dom-performanceentry
     message PerformanceEntry {
       string name = 1;
       string entry_type = 2;
@@ -169,7 +172,8 @@ message LighthouseResult {
     // The total duration of Lighthouse's run
     google.protobuf.DoubleValue total = 1;
 
-    // Corresponds to: https://www.w3.org/TR/performance-timeline-2/#idl-def-performanceentrylist
+    // Corresponds to:
+    // https://www.w3.org/TR/performance-timeline-2/#idl-def-performanceentrylist
     repeated PerformanceEntry entries = 2;
   }
 
@@ -291,6 +295,9 @@ message AuditResult {
   // of nodes in the DOM or the timestamp of a specific load event. More
   // information can be found in the audit details, if present.
   google.protobuf.DoubleValue numeric_value = 11;
+
+  // The unit of the numeric_value field. Used to format the numeric value for display.
+  string numeric_unit = 12;
 }
 
 // Message containing the i18n data for the LHR - Version 1
@@ -359,6 +366,81 @@ message I18n {
 
     // This label is for a filter checkbox above a table of items
     string third_party_resources_label = 20;
+
+    // Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor.
+    string runtime_desktop_emulation = 21;
+    
+    // Descriptive explanation for emulation setting when emulating a Nexus 5X mobile device.
+    string runtime_mobile_emulation = 22;
+    
+    // Descriptive explanation for emulation setting when no device emulation is set.
+    string runtime_no_emulation = 23;
+    
+    // Label for a row in a table that shows the estimated CPU power of the machine running Lighthouse. Example row values: 532, 1492, 783.
+    string runtime_settings_benchmark = 24;
+    
+    // Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.
+    string runtime_settings_CPU_throttling = 25;
+    
+    // Label for a row in a table that describes the kind of device that was emulated for the Lighthouse run.  Example values for row elements: 'No Emulation', 'Emulated Desktop', etc.
+    string runtime_settings_device = 26;
+    
+    // Label for a row in a table that shows the time at which a Lighthouse run was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC.
+    string runtime_settings_fetch_time = 27;
+    
+    // Label for a row in a table that describes the network throttling conditions that were used during a Lighthouse run, if any.
+    string runtime_settings_network_throttling = 28;
+    
+    // Title of the Runtime settings table in a Lighthouse report.  Runtime settings are the environment configurations that a specific report used at auditing time.
+    string runtime_settings_title = 29;
+    
+    // Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse.
+    string runtime_settings_UA = 30;
+    
+    // Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run.
+    string runtime_settings_UA_network = 31;
+    
+    // Label for a row in a table that shows the URL that was audited during a Lighthouse run.
+    string runtime_settings_Url = 32;
+    
+    // Descriptive explanation for a runtime setting that is set to an unknown value.
+    string runtime_unknown = 33;
+    
+    // Option in a dropdown menu that copies the Lighthouse JSON object to the system clipboard.
+    string dropdown_copy_JSON = 34;
+    
+    // Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes.
+    string dropdown_dark_theme = 35;
+    
+    // Option in a dropdown menu that opens a full Lighthouse report in a print dialog. 
+    string dropdown_print_expanded = 36;
+    
+    // Option in a dropdown menu that opens a small, summary report in a print dialog. 
+    string dropdown_print_summary = 37;
+    
+    // Option in a dropdown menu that saves the current report as a new Github Gist.
+    string dropdown_save_gist = 38;
+    
+    // Option in a dropdown menu that saves the Lighthouse report HTML locally to the system as a '.html' file.
+    string dropdown_save_HTML = 39;
+    
+    // Option in a dropdown menu that saves the Lighthouse JSON object to the local system as a '.json' file.
+    string dropdown_save_JSON = 40;
+    
+    // Option in a dropdown menu that opens the current report in the Lighthouse Viewer Application.
+    string dropdown_viewer = 41;
+    
+    // Label for button to create an issue against the Lighthouse Github project.
+    string footer_issue = 42;
+    
+    // Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling.
+    string throttling_provided = 43;
+
+    // Label for a row in a table that shows in what tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest, etc).
+    string runtime_settings_channel = 44;
+
+    // Text link pointing to the Lighthouse scoring calculator. This link immediately follows a sentence stating the performance score is calculated from the perf metrics.
+    string calculator_link = 45;
   }
 
   // The message holding all formatted strings

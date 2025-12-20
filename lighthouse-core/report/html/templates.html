@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2018 Google Inc. All Rights Reserved.
+Copyright 2018 The Lighthouse Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License.
 <!-- Lighthouse run warnings -->
 <template id="tmpl-lh-warnings--toplevel">
   <div class="lh-warnings lh-warnings--toplevel">
-    <strong class="lh-warnings__msg"></strong>
+    <p class="lh-warnings__msg"></p>
     <ul></ul>
   </div>
 </template>
@@ -34,10 +34,10 @@ limitations under the License.
 
 <!-- Toggle arrow chevron -->
 <template id="tmpl-lh-chevron">
-  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">
+  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100">
     <g class="lh-chevron__lines">
-      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"></path>
-      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"></path>
+      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40"></path>
+      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50"></path>
     </g>
   </svg>
 </template>
@@ -45,7 +45,7 @@ limitations under the License.
 <!-- Lighthouse category header -->
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
-    <div class="lh-score__gauge"></div>
+    <div class="lh-score__gauge" role="heading" aria-level="2"></div>
     <div class="lh-category-header__description"></div>
   </div>
 </template>
@@ -60,11 +60,31 @@ limitations under the License.
           <span class="lh-audit-group__title"></span>
           <span class="lh-audit-group__itemcount"></span>
           <!-- .lh-audit-group__description will be added here -->
+          <!-- .lh-metrics-toggle will be added here -->
         </div>
         <div class=""></div>
       </div>
     </summary>
   </details>
+</template>
+
+<!-- Lighthouse metrics toggle -->
+<template id="tmpl-lh-metrics-toggle">
+  <div class="lh-metrics-toggle">
+    <input class="lh-metrics-toggle__input" type="checkbox" id="toggle-metric-descriptions" aria-label="Toggle the display of metric descriptions">
+    <label class="lh-metrics-toggle__label" for="toggle-metric-descriptions">
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--less" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M4 9h16v2H4zm0 4h10v2H4z" />
+        </svg>
+      </div>
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--more" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z" />
+        </svg>
+      </div>
+    </label>
+  </div>
 </template>
 
 <!-- Lighthouse audit -->
@@ -74,8 +94,10 @@ limitations under the License.
       <summary>
         <div class="lh-audit__header lh-expandable-details__summary">
           <span class="lh-audit__score-icon"></span>
-          <span class="lh-audit__title"></span>
-          <span class="lh-audit__display-text"></span>
+          <span class="lh-audit__title-and-text">
+            <span class="lh-audit__title"></span>
+            <span class="lh-audit__display-text"></span>
+          </span>
           <div class="lh-chevron-container"></div>
         </div>
       </summary>
@@ -88,10 +110,10 @@ limitations under the License.
 <!-- Lighthouse perf metric -->
 <template id="tmpl-lh-metric">
   <div class="lh-metric">
-    <div class="lh-metric__innerwrap tooltip-boundary">
+    <div class="lh-metric__innerwrap">
       <span class="lh-metric__title"></span>
       <div class="lh-metric__value"></div>
-      <div class="lh-metric__description tooltip"></div>
+      <div class="lh-metric__description"></div>
     </div>
   </div>
 </template>
@@ -123,7 +145,6 @@ limitations under the License.
   </div>
 </template>
 
-
 <!-- Lighthouse perf opportunity header -->
 <template id="tmpl-lh-opportunity-header">
   <div class="lh-load-opportunity__header lh-load-opportunity__cols">
@@ -132,15 +153,13 @@ limitations under the License.
   </div>
 </template>
 
-
 <!-- Lighthouse score container -->
 <template id="tmpl-lh-scores-wrapper">
   <style>
     .lh-scores-container {
       display: flex;
       flex-direction: column;
-      margin-top: var(--topbar-height);
-      padding: var(--header-padding);
+      padding: var(--scores-container-padding);
       position: relative;
       width: 100%;
     }
@@ -149,27 +168,38 @@ limitations under the License.
       --gauge-circle-size: 36px;
       --plugin-badge-size: 18px;
       --plugin-icon-size: 75%;
-      --score-container-width: 60px;
-      --score-number-font-size: 13px;
+      --gauge-wrapper-width: 60px;
+      --gauge-percentage-font-size: 13px;
       position: fixed;
       left: 0;
       right: 0;
       top: var(--topbar-height);
       font-weight: 700;
-      display: flex;
+      display: none;
       justify-content: center;
-      background-color: var(--color-sticky-header-bg);
-      border-bottom: 1px solid var(--color-black-200);
+      background-color: var(--sticky-header-background-color);
+      border-bottom: 1px solid var(--color-gray-200);
       padding-top: var(--score-container-padding);
       padding-bottom: 4px;
-      z-index: 1000;
+      z-index: 1;
       pointer-events: none;
-      opacity: 0;
+    }
+
+    .lh-devtools .lh-sticky-header {
+      /* The report within DevTools is placed in a container with overflow, which changes the placement of this header unless we change `position` to `sticky.` */
+      position: sticky;
     }
 
     .lh-sticky-header--visible {
+      display: grid;
+      grid-auto-flow: column;
       pointer-events: auto;
-      opacity: 1;
+    }
+
+    /* Disable the gauge arc animation for the sticky header, so toggling display: none
+       does not play the animation. */
+    .lh-sticky-header .lh-gauge-arc {
+      animation: none;
     }
 
     .lh-sticky-header .lh-gauge__label {
@@ -177,16 +207,26 @@ limitations under the License.
     }
 
     .lh-highlighter {
-      width: var(--score-container-width);
+      width: var(--gauge-wrapper-width);
       height: 1px;
-      background: var(--color-highlighter-bg);
+      background-color: var(--highlighter-background-color);
+      /* Position at bottom of first gauge in sticky header. */
       position: absolute;
+      grid-column: 1;
       bottom: -1px;
-      left: 0;
+    }
+
+    .lh-gauge__wrapper:first-of-type {
+      contain: none;
     }
   </style>
   <div class="lh-scores-wrapper">
-    <div class="lh-scores-container"></div>
+    <div class="lh-scores-container">
+      <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -194,7 +234,7 @@ limitations under the License.
 <template id="tmpl-lh-topbar">
   <style>
     .lh-topbar {
-      position: fixed;
+      position: sticky;
       top: 0;
       left: 0;
       right: 0;
@@ -202,51 +242,62 @@ limitations under the License.
       display: flex;
       align-items: center;
       height: var(--topbar-height);
-      background-color: var(--topbar-bg);
+      background-color: var(--topbar-background-color);
       padding: var(--topbar-padding);
     }
 
     .lh-topbar__logo {
-      width: var(--topbar-icon-size);
-      height: var(--topbar-icon-size);
+      width: var(--topbar-logo-size);
+      height: var(--topbar-logo-size);
+      user-select: none;
+      flex: none;
     }
     .lh-topbar__logo .shape {
-      fill: var(--body-text-color);
+      fill: var(--report-text-color);
     }
 
     .lh-topbar__url {
       margin: var(--topbar-padding);
       text-decoration: none;
-      color: var(--body-text-color);
+      color: var(--report-text-color);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    .lh-export {
+    .lh-tools {
       margin-left: auto;
       will-change: transform;
+      min-width: var(--tools-icon-size);
     }
-    .lh-export__button {
-      border: 1px solid #dadada;
-      border-radius: 2px;
+    .lh-tools__button {
+      width: var(--tools-icon-size);
+      height: var(--tools-icon-size);
       cursor: pointer;
-      outline: none;
-      height: 23px;
-      width: 30px;
-      background-repeat: no-repeat;
-      background-size: 18px;
-      background-position: 50% 50%;
-      will-change: transform;
+      margin-right: 5px;
+      /* This is actually a button element, but we want to style it like a transparent div. */
+      display: flex;
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      outline: inherit;
     }
-    .lh-export__button:focus,
-    .lh-export__button.active {
-      box-shadow: 1px 1px 3px #ccc;
+    .lh-tools__button svg {
+      fill: var(--tools-icon-color);
     }
-    .lh-export__button.active + .lh-export__dropdown {
+    .dark .lh-tools__button svg {
+      filter: invert(1);
+    }
+    .lh-tools__button.active + .lh-tools__dropdown {
       opacity: 1;
-      clip: rect(0, 164px, 210px, 0);
+      clip: rect(-1px, 187px, 242px, -3px);
+      visibility: visible;
     }
-    .lh-export__dropdown {
+    .lh-tools__dropdown {
       position: absolute;
-      background-color: var(--body-background-color);
+      background-color: var(--report-background-color);
       border: 1px solid var(--report-border-color);
       border-radius: 3px;
       padding: calc(var(--default-padding) / 2) 0;
@@ -256,10 +307,11 @@ limitations under the License.
       box-shadow: 1px 1px 3px #ccc;
       min-width: 125px;
       clip: rect(0, 164px, 0, 0);
+      visibility: hidden;
       opacity: 0;
       transition: all 200ms cubic-bezier(0,0,0.2,1);
     }
-    .lh-export__dropdown a {
+    .lh-tools__dropdown a {
       display: block;
       color: currentColor;
       text-decoration: none;
@@ -267,12 +319,12 @@ limitations under the License.
       padding: 0 12px;
       line-height: 2;
     }
-    .lh-export__dropdown a:hover,
-    .lh-export__dropdown a:focus {
-      background-color: var(--color-black-200);
+    .lh-tools__dropdown a:hover,
+    .lh-tools__dropdown a:focus {
+      background-color: var(--color-gray-200);
       outline: none;
     }
-    .lh-export__dropdown .report-icon {
+    .lh-tools__dropdown .report-icon {
       cursor: pointer;
       background-repeat: no-repeat;
       background-position: 8px 50%;
@@ -280,18 +332,26 @@ limitations under the License.
       background-color: transparent;
       text-indent: 18px;
     }
+    .dark .report-icon {
+      color: var(--color-gray-900);
+      filter: invert(1);
+    }
+    .dark .lh-tools__dropdown a:hover,
+    .dark .lh-tools__dropdown a:focus {
+      background-color: #BDBDBD;
+    }
     /* copy icon needs slight adjustments to look great */
-    .lh-export__dropdown .report-icon--copy {
+    .lh-tools__dropdown .report-icon--copy {
       background-size: 16px;
       background-position: 9px 50%;
     }
     /* save-as-gist option hidden in report */
-    .lh-export__dropdown .lh-export--gist {
+    .lh-tools__dropdown .lh-tools--gist {
       display: none;
     }
 
     @media screen and (max-width: 964px) {
-      .lh-export__dropdown {
+      .lh-tools__dropdown {
         right: 0;
         left: initial;
       }
@@ -301,31 +361,64 @@ limitations under the License.
         position: static;
         margin-left: 0;
       }
+
+      .lh-tools__dropdown {
+        display: none;
+      }
     }
   </style>
 
   <div class="lh-topbar">
-    <!-- Flat Lighthouse logo.  -->
-    <svg class="lh-topbar__logo" viewBox="0 0 192 192">
+    <!-- Lighthouse logo.  -->
+    <svg class="lh-topbar__logo" viewBox="0 0 24 24">
+      <defs>
+        <linearGradient x1="57.456%" y1="13.086%" x2="18.259%" y2="72.322%" id="lh-topbar__logo--a">
+          <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+          <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="lh-topbar__logo--b">
+          <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+          <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="58.764%" y1="65.756%" x2="36.939%" y2="50.14%" id="lh-topbar__logo--c">
+          <stop stop-color="#262626" stop-opacity=".1" offset="0%"/>
+          <stop stop-color="#262626" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="41.635%" y1="20.358%" x2="72.863%" y2="85.424%" id="lh-topbar__logo--d">
+          <stop stop-color="#FFF" stop-opacity=".1" offset="0%"/>
+          <stop stop-color="#FFF" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+      </defs>
       <g fill="none" fill-rule="evenodd">
-        <path d="M0 0h192v192H0z"/>
-        <path class="shape" d="M67.705 179.352l2.603-20.82 49.335-16.39 4.652 37.21A87.893 87.893 0 0 1 96 184a87.893 87.893 0 0 1-28.295-4.648zM52.44 172.48C25.894 157.328 8 128.754 8 96 8 47.399 47.399 8 96 8s88 39.399 88 88c0 32.754-17.894 61.328-44.44 76.48L130 96h6V80h-8V48L96 28 64 48v32h-8v16h6l-9.56 76.48zM113.875 96l2.882 23.05-43.318 14.433L78.125 96h35.75zM80 80V56.868l16-10 16 10V80H80z"/>
+        <path d="M12 3l4.125 2.625v3.75H18v2.25h-1.688l1.5 9.375H6.188l1.5-9.375H6v-2.25h1.875V5.648L12 3zm2.201 9.938L9.54 14.633 9 18.028l5.625-2.062-.424-3.028zM12.005 5.67l-1.88 1.207v2.498h3.75V6.86l-1.87-1.19z" fill="#F44B21"/>
+        <path fill="#FFF" d="M14.201 12.938L9.54 14.633 9 18.028l5.625-2.062z"/>
+        <path d="M6 18c-2.042 0-3.95-.01-5.813 0l1.5-9.375h4.326L6 18z" fill="url(#lh-topbar__logo--a)" fill-rule="nonzero" transform="translate(6 3)"/>
+        <path fill="#FFF176" fill-rule="nonzero" d="M13.875 9.375v-2.56l-1.87-1.19-1.88 1.207v2.543z"/>
+        <path fill="url(#lh-topbar__logo--b)" fill-rule="nonzero" d="M0 6.375h6v2.25H0z" transform="translate(6 3)"/>
+        <path fill="url(#lh-topbar__logo--c)" fill-rule="nonzero" d="M6 6.375H1.875v-3.75L6 0z" transform="translate(6 3)"/>
+        <path fill="url(#lh-topbar__logo--d)" fill-rule="nonzero" d="M6 0l4.125 2.625v3.75H12v2.25h-1.688l1.5 9.375H.188l1.5-9.375H0v-2.25h1.875V2.648z" transform="translate(6 3)"/>
       </g>
     </svg>
 
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
-    
-    <div class="lh-export">
-      <button class="report-icon report-icon--share lh-export__button" title="Export report"></button>
-      <div class="lh-export__dropdown">
-        <!-- TODO(i18n): localize export dropdown -->
-        <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
-        <a href="#" class="report-icon report-icon--print" data-action="print-expanded">Print Expanded</a>
-        <a href="#" class="report-icon report-icon--copy" data-action="copy">Copy JSON</a>
-        <a href="#" class="report-icon report-icon--download" data-action="save-html">Save as HTML</a>
-        <a href="#" class="report-icon report-icon--download" data-action="save-json">Save as JSON</a>
-        <a href="#" class="report-icon report-icon--open lh-export--viewer" data-action="open-viewer">Open in Viewer</a>
-        <a href="#" class="report-icon report-icon--open lh-export--gist" data-action="save-gist">Save as Gist</a>
+
+    <div class="lh-tools">
+      <button id="lh-tools-button" class="report-icon report-icon--share lh-tools__button" title="Tools menu" aria-label="Toggle report tools menu" aria-haspopup="menu" aria-expanded="false" aria-controls="lh-tools-dropdown">
+        <svg width="100%" height="100%" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      </button>
+      <div id="lh-tools-dropdown" role="menu" class="lh-tools__dropdown" aria-labelledby="lh-tools-button">
+         <!-- TODO(i18n): localize tools dropdown -->
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--print" data-i18n="dropdownPrintSummary" data-action="print-summary"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--print" data-i18n="dropdownPrintExpanded" data-action="print-expanded"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--copy" data-i18n="dropdownCopyJSON" data-action="copy"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--download" data-i18n="dropdownSaveHTML" data-action="save-html"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--download" data-i18n="dropdownSaveJSON" data-action="save-json"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--open lh-tools--viewer" data-i18n="dropdownViewer" data-action="open-viewer"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--open lh-tools--gist" data-i18n="dropdownSaveGist" data-action="save-gist"></a>
+        <a role="menuitem" tabindex="-1" href="#" class="report-icon report-icon--dark" data-i18n="dropdownDarkTheme" data-action="toggle-dark"></a>
       </div>
     </div>
   </div>
@@ -334,34 +427,13 @@ limitations under the License.
 <!-- Lighthouse header -->
 <template id="tmpl-lh-heading">
   <style>
-/*
-    TODO: Enable animating the clouds
-    .lh-lighthouse__clouds {
-      animation: panacross 30s linear infinite;
-      animation-play-state: paused;
-    }
-    @keyframes panacross {
-      0% { transform: translateX(0px); }
-      77% { transform: translateX(-680px); }
-      77.0001% { transform: translateX(195px); }
-      100% { transform: translateX(0px); }
-    } */
-
-    .score100 .lh-header-bg {
-      background-color: hsl(234, 64%, 19%);
-    }
-    .score100 .lh-metadata, .score100 .lh-toolbar__metadata, .score100 .lh-product-info {
-      color: #fff;
-    }
-    .score100 .lh-config {
-      color: #eee;
-    }
-
     /* CSS Fireworks. Originally by Eddie Lin
        https://codepen.io/paulirish/pen/yEVMbP
     */
     .pyro {
       display: none;
+      z-index: 1;
+      pointer-events: none;
     }
     .score100 .pyro {
       display: block;
@@ -436,7 +508,7 @@ limitations under the License.
 <template id="tmpl-lh-footer">
   <style>
     .lh-footer {
-      padding: var(--section-indent) calc(var(--default-padding) * 2);
+      padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);
       max-width: var(--report-width);
       margin: 0 auto;
     }
@@ -444,8 +516,8 @@ limitations under the License.
       text-align: center;
     }
     .lh-env__title {
-      font-size: var(--score-title-font-size-big);
-      line-height: var(--score-title-line-height-big);
+      font-size: var(--env-item-font-size-big);
+      line-height: var(--env-item-line-height-big);
       text-align: center;
       padding: var(--score-container-padding);
     }
@@ -458,11 +530,11 @@ limitations under the License.
       padding: 0;
     }
     .lh-env__items .lh-env__item:nth-child(2n) {
-      background: var(--env-item-bg);
+      background-color: var(--env-item-background-color);
     }
     .lh-env__item {
       display: flex;
-      padding: var(--env-tem-padding);
+      padding: var(--env-item-padding);
       position: relative;
     }
     span.lh-env__name {
@@ -491,146 +563,21 @@ limitations under the License.
     </div>
 
     <div class="lh-generated">
+      <!-- TODO(i18n): use ICU replacement to replace version w/o concatenation. -->
       Generated by <b>Lighthouse</b> <span class="lh-footer__version"></span> |
-      <a href="https://github.com/GoogleChrome/Lighthouse/issues" target="_blank" rel="noopener">File an issue</a>
+      <a href="https://github.com/GoogleChrome/Lighthouse/issues" target="_blank" rel="noopener" class="lh-footer__version_issue">File an issue</a>
     </div>
   </footer>
 </template>
 
 <!-- Lighthouse score gauge -->
 <template id="tmpl-lh-gauge">
-  <style>
-    .lh-gauge__wrapper--pass {
-      color: var(--color-pass);
-      fill: var(--color-pass);
-      stroke: var(--color-pass);
-    }
-
-    .lh-gauge__wrapper--average {
-      color: var(--color-average);
-      fill: var(--color-average);
-      stroke: var(--color-average);
-    }
-
-    .lh-gauge__wrapper--fail {
-      color: var(--color-fail);
-      fill: var(--color-fail);
-      stroke: var(--color-fail);
-    }
-
-    .lh-gauge {
-      stroke-linecap: round;
-      width: var(--gauge-circle-size);
-      height: var(--gauge-circle-size);
-    }
-
-    .lh-category .lh-gauge {
-      --gauge-circle-size: var(--gauge-circle-size-big);
-    }
-
-    .lh-gauge-base {
-        opacity: 0.1;
-        stroke: var(--circle-background);
-        stroke-width: var(--circle-border-width);
-    }
-
-    .lh-gauge-arc {
-        fill: none;
-        stroke: var(--circle-color);
-        stroke-width: var(--circle-border-width);
-        animation: load-gauge var(--transition-length) ease forwards;
-        animation-delay: 250ms;
-    }
-
-    .lh-gauge__svg-wrapper {
-      position: relative;
-      height: var(--gauge-circle-size);
-    }
-    .lh-category .lh-gauge__svg-wrapper {
-      --gauge-circle-size: var(--gauge-circle-size-big);
-    }
-
-    /* The plugin badge overlay */
-    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
-      width: var(--plugin-badge-size);
-      height: var(--plugin-badge-size);
-      background-color: var(--plugin-badge-bg);
-      background-image: var(--plugin-icon-url);
-      background-repeat: no-repeat;
-      background-size: var(--plugin-icon-size);
-      background-position: 58% 50%;
-      content: "";
-      position: absolute;
-      right: -6px;
-      bottom: 0px;
-      display: block;
-      z-index: 100;
-      box-shadow: 0 0 4px rgba(0,0,0,.2);
-      border-radius: 25%;
-    }
-    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
-      width: var(--plugin-badge-size-big);
-      height: var(--plugin-badge-size-big);
-    }
-
-    @keyframes load-gauge {
-      from { stroke-dasharray: 0 352; }
-    }
-
-    .lh-gauge__percentage {
-      width: 100%;
-      height: var(--inset-size);
-      position: absolute;
-      border-radius: inherit;
-      font-family: var(--monospace-font-family);
-      font-size: var(--score-number-font-size);
-      line-height: var(--score-number-font-size);
-      text-align: center;
-      top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 3);
-    }
-
-    .lh-category .lh-gauge__percentage {
-      --gauge-circle-size: var(--gauge-circle-size-big);
-      --score-number-font-size: var(--score-number-font-size-big);
-    }
-
-    .lh-gauge__wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      text-decoration: none;
-
-      --circle-border-width: 8;
-      --transition-length: 1s;
-
-      /* Contain the layout style paint & layers during animation*/
-      contain: content;
-      will-change: opacity; /* Only using for layer promotion */
-    }
-
-    .lh-gauge__label {
-      font-size: var(--score-title-font-size);
-      line-height: var(--score-title-line-height);
-      margin-top: 10px;
-      text-align: center;
-      color: var(--body-text-color);
-    }
-
-    /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
-    .lh-category .lh-gauge__label {
-      --score-title-font-size: var(--score-title-font-size-big);
-      --score-title-line-height: var(--score-title-line-height-big);
-      margin-top: 14px;
-    }
-
-  </style>
   <a href="#" class="lh-gauge__wrapper">
     <!-- Wrapper exists for the ::before plugin icon. Cannot create pseudo-elements on svgs. -->
     <div class="lh-gauge__svg-wrapper">
       <svg viewBox="0 0 120 120" class="lh-gauge">
-        <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
-        <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
+        <circle class="lh-gauge-base" r="56" cx="60" cy="60" stroke-width="8"></circle>
+        <circle class="lh-gauge-arc"  r="56" cx="60" cy="60" stroke-width="8"></circle>
       </svg>
     </div>
     <div class="lh-gauge__percentage"></div>
@@ -652,7 +599,7 @@ limitations under the License.
     }
 
     .lh-gauge--pwa__disc {
-      fill: var(--color-black-200);
+      fill: var(--color-gray-200);
     }
 
     .lh-gauge--pwa__logo--primary-color {
@@ -671,7 +618,7 @@ limitations under the License.
       display: inline;
     }
     /* Just optimized. Same n/a line as no passing groups. */
-    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized .lh-gauge--pwa__na-line {
+    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized:not(.lh-badged--pwa-installable):not(.lh-badged--pwa-fast-reliable) .lh-gauge--pwa__na-line {
       display: inline;
     }
 
@@ -737,24 +684,24 @@ limitations under the License.
         <!-- Just fast and reliable. -->
         <g class="lh-gauge--pwa__component lh-gauge--pwa__fast-reliable-badge" transform="translate(20, 29)">
           <path fill="url(#lh-gauge--pwa__fast-reliable__shadow-gradient)" d="M33.63 19.49A30 30 0 0 1 16.2 30.36L3 17.14 17.14 3l16.49 16.49z"/>
-          <use xlink:href="#lh-gauge--pwa__fast-reliable-badge" />
+          <use href="#lh-gauge--pwa__fast-reliable-badge" />
         </g>
 
         <!-- Just installable. -->
         <g class="lh-gauge--pwa__component lh-gauge--pwa__installable-badge" transform="translate(20, 29)">
           <path fill="url(#lh-gauge--pwa__installable__shadow-gradient)" d="M33.629 19.487c-4.272 5.453-10.391 9.39-17.415 10.869L3 17.142 17.142 3 33.63 19.487z"/>
-          <use xlink:href="#lh-gauge--pwa__installable-badge" />
+          <use href="#lh-gauge--pwa__installable-badge" />
         </g>
 
         <!-- Fast and reliable and installable. -->
         <g class="lh-gauge--pwa__component lh-gauge--pwa__fast-reliable-installable-badges">
           <g transform="translate(8, 29)"> <!-- fast and reliable -->
             <path fill="url(#lh-gauge--pwa__fast-reliable__shadow-gradient)" d="M16.321 30.463L3 17.143 17.142 3l22.365 22.365A29.864 29.864 0 0 1 22 31c-1.942 0-3.84-.184-5.679-.537z"/>
-            <use xlink:href="#lh-gauge--pwa__fast-reliable-badge" />
+            <use href="#lh-gauge--pwa__fast-reliable-badge" />
           </g>
           <g transform="translate(32, 29)"> <!-- installable -->
             <path fill="url(#lh-gauge--pwa__installable__shadow-gradient)" d="M25.982 11.84a30.107 30.107 0 0 1-13.08 15.203L3 17.143 17.142 3l8.84 8.84z"/>
-            <use xlink:href="#lh-gauge--pwa__installable-badge" />
+            <use href="#lh-gauge--pwa__installable-badge" />
           </g>
         </g>
 
@@ -809,11 +756,11 @@ limitations under the License.
       .lh-crc .crc-node__tree-value {
         margin-left: 10px;
       }
+      .lh-crc .crc-node__tree-value div {
+        display: inline;
+      }
       .lh-crc .crc-node__chain-duration {
         font-weight: 700;
-      }
-      .lh-crc .crc-node__tree-hostname {
-        color: #595959;
       }
       .lh-crc .crc-initial-nav {
         color: #595959;
@@ -837,8 +784,6 @@ limitations under the License.
 
           </span>
           <span class="crc-node__tree-value">
-            <span class="crc-node__tree-file"><!-- fill me: node.request.url.file --></span>
-            <span class="crc-node__tree-hostname">(<!-- fill me: node.request.url.host -->)</span>
 
           </span>
         </div>
@@ -850,15 +795,17 @@ limitations under the License.
 <template id="tmpl-lh-3p-filter">
   <style>
     .lh-3p-filter {
-      background: var(--lh-table-higlight-bg);
-      color: var(--medium-75-gray);
+      background-color: var(--table-higlight-background-color);
+      color: var(--color-gray-600);
       float: right;
       padding: 6px;
     }
     .lh-3p-filter-label, .lh-3p-filter-input {
-      cursor: pointer;
       vertical-align: middle;
       user-select: none;
+    }
+    .lh-3p-filter-input:disabled + .lh-3p-ui-string {
+      text-decoration: line-through;
     }
   </style>
   <div class="lh-3p-filter">
@@ -883,9 +830,9 @@ limitations under the License.
           overflow: hidden;
           padding: 10px;
           border-bottom: none;
-          color: var(--subheader-color);
-          background: var(--medium-50-gray);
-          border: 1px solid var(--report-secondary-border-color);
+          color: var(--snippet-color);
+          background-color: var(--snippet-background-color);
+          border: 1px solid var(--report-border-color-secondary);
         }
         .lh-snippet__title {
           font-weight: bold;
@@ -909,7 +856,7 @@ limitations under the License.
 
         .lh-snippet__snippet {
           overflow: auto;
-          border: 1px solid var(--report-secondary-border-color);
+          border: 1px solid var(--report-border-color-secondary);
         }
         /* Container needed so that all children grow to the width of the scroll container */
         .lh-snippet__snippet-inner {
@@ -949,7 +896,7 @@ limitations under the License.
           padding: 10px;
           padding-left: 5px;
           color: var(--color-fail);
-          font-family: var(--text-font-family);
+          font-family: var(--report-font-family);
         }
         .lh-snippet__line--message code {
           white-space: normal;
@@ -966,8 +913,8 @@ limitations under the License.
           display: inline-block;
           vertical-align: middle;
           margin-right: 4px;
-          width: var(--score-shape-size);
-          height: var(--score-shape-size);
+          width: var(--score-icon-size);
+          height: var(--score-icon-size);
           background-image: var(--fail-icon-url);
         }
         .lh-snippet__line-number {
@@ -977,7 +924,7 @@ limitations under the License.
           font-family: monospace;
           padding-right: 5px;
           margin-right: 5px;
-          color: var(--medium-75-gray);
+          color: var(--color-gray-600);
           user-select: none;
         }
       </style>

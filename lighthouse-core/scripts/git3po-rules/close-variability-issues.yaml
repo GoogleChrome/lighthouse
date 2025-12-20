@@ -1,0 +1,26 @@
+repo: GoogleChrome/lighthouse
+pullRequests: false
+filters:
+  - type: issue
+    criteria:
+      state: open
+      labels:
+        $and:
+          - $includes: pending-close
+          - $includes: variability
+actions:
+  - type: add_comment
+    body: 'Thanks! Appreciate you filing this bug. :clap:
+
+
+  This is a known issue, most well described in #10657. So, **we''ll automatically
+  close this as a duplicate**.
+
+
+  :robot: Beep beep boop.
+  '
+  - type: add_label
+    label: duplicate
+  - type: close
+  - type: remove_label
+    label: pending-close

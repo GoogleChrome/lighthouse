@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('../audit');
-const linearInterpolation = require('../../lib/statistics').linearInterpolation;
+const Audit = require('../audit.js');
+const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRecords = require('../../computed/network-records.js');
@@ -27,6 +27,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 /**
  * @typedef {object} ByteEfficiencyProduct
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
+ * @property {Map<string, number>=} wastedBytesByUrl
  * @property {LH.Audit.Details.Opportunity['headings']} headings
  * @property {string} [displayValue]
  * @property {string} [explanation]
@@ -65,7 +66,7 @@ class UnusedBytes extends Audit {
    *
    * @param {LH.Artifacts.NetworkRequest=} networkRecord
    * @param {number} totalBytes Uncompressed size of the resource
-   * @param {LH.Crdp.Page.ResourceType=} resourceType
+   * @param {LH.Crdp.Network.ResourceType=} resourceType
    * @return {number}
    */
   static estimateTransferSize(networkRecord, totalBytes, resourceType) {
@@ -93,8 +94,10 @@ class UnusedBytes extends Audit {
       // This was an asset that was inlined in a different resource type (e.g. HTML document).
       // Use the compression ratio of the resource to estimate the total transferred bytes.
       const transferSize = networkRecord.transferSize || 0;
-      const resourceSize = networkRecord.resourceSize;
-      const compressionRatio = resourceSize !== undefined ? (transferSize / resourceSize) : 1;
+      const resourceSize = networkRecord.resourceSize || 0;
+      // Get the compression ratio, if it's an invalid number, assume no compression.
+      const compressionRatio = Number.isFinite(resourceSize) && resourceSize > 0 ?
+        (transferSize / resourceSize) : 1;
       return Math.round(totalBytes * compressionRatio);
     }
   }
@@ -133,7 +136,7 @@ class UnusedBytes extends Audit {
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
-   * @param {{includeLoad?: boolean, label?: string}=} options
+   * @param {{includeLoad?: boolean, label?: string, providedWastedBytesByUrl?: Map<string, number>}=} options
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator, options) {
@@ -142,10 +145,12 @@ class UnusedBytes extends Audit {
     const afterLabel = `${options.label}-after`;
 
     const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
-    /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
-    const resultsByUrl = new Map();
-    for (const result of results) {
-      resultsByUrl.set(result.url, result);
+
+    const wastedBytesByUrl = options.providedWastedBytesByUrl || new Map();
+    if (!options.providedWastedBytesByUrl) {
+      for (const {url, wastedBytes} of results) {
+        wastedBytesByUrl.set(url, (wastedBytesByUrl.get(url) || 0) + wastedBytes);
+      }
     }
 
     // Update all the transfer sizes to reflect implementing our recommendations
@@ -153,13 +158,12 @@ class UnusedBytes extends Audit {
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const result = resultsByUrl.get(node.record.url);
-      if (!result) return;
+      const wastedBytes = wastedBytesByUrl.get(node.record.url);
+      if (!wastedBytes) return;
 
       const original = node.record.transferSize;
       originalTransferSizes.set(node.record.requestId, original);
 
-      const wastedBytes = result.wastedBytes;
       node.record.transferSize = Math.max(original - wastedBytes, 0);
     });
 
@@ -195,7 +199,9 @@ class UnusedBytes extends Audit {
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
-    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
+    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
+      providedWastedBytesByUrl: result.wastedBytesByUrl,
+    });
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
@@ -209,6 +215,7 @@ class UnusedBytes extends Audit {
       warnings: result.warnings,
       displayValue,
       numericValue: wastedMs,
+      numericUnit: 'millisecond',
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       extendedInfo: {
         value: {

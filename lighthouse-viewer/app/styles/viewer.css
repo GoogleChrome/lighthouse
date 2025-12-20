@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -60,12 +60,20 @@
   cursor: pointer;
   background-color: #fff;
 }
+.viewer-placeholder-inner.lh-loading {
+  filter: blur(2px) grayscale(1);
+  cursor: wait
+}
+.viewer-placeholder-inner.lh-loading>div {
+  pointer-events: none;
+}
 .viewer-placeholder-inner.dropping {
   border-color: currentColor;
 }
 .viewer-placeholder__heading {
   font-weight: 300;
   margin: 0;
+  line-height: 32px;
 }
 .viewer-placeholder__help {
   margin-top: 12px;
@@ -116,11 +124,11 @@
 }
 
 /* open-in-viewer option hidden in Viewer */
-.lh-export__dropdown .lh-export--viewer {
+.lh-tools__dropdown .lh-tools--viewer {
   display: none;
 }
 
 /* open-in-gist option visible in Viewer */
-.lh-export__dropdown .lh-export--gist {
+.lh-tools__dropdown .lh-tools--gist {
   display: block !important;
 }

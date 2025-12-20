@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,12 @@
 
 /* globals self, URL */
 
+/** @typedef {import('./i18n')} I18n */
+
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
 const PASS_THRESHOLD = 0.9;
+const SCREENSHOT_PREFIX = 'data:image/jpeg;base64,';
 
 const RATINGS = {
   PASS: {label: 'pass', minScore: PASS_THRESHOLD},
@@ -48,7 +51,8 @@ class Util {
 
   /**
    * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
-   * Also, sets up the localized UI strings used within renderer and number/date formatting
+   * Also, sets up the localized UI strings used within renderer and makes changes to old LHRs to be
+   * compatible with current renderer.
    * The LHR passed in is not mutated.
    * TODO(team): we all agree the LHR shape change is technical debt we should fix
    * @param {LH.Result} result
@@ -62,26 +66,38 @@ class Util {
     if (!clone.configSettings.locale) {
       clone.configSettings.locale = 'en';
     }
-    Util.setNumberDateLocale(clone.configSettings.locale);
-    if (clone.i18n && clone.i18n.rendererFormattedStrings) {
-      Util.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
-    }
 
-    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
-    clone.reportCategories = Object.values(clone.categories);
-
-    // Turn 'not-applicable' and 'not_applicable' into 'notApplicable' to support old reports.
-    // TODO: remove when underscore/hyphen proto issue is resolved. See #6371, #6201, #6783.
     for (const audit of Object.values(clone.audits)) {
-      // @ts-ignore tsc rightly flags that this value shouldn't occur.
+      // Turn 'not-applicable' (LHR <4.0) and 'not_applicable' (older proto versions)
+      // into 'notApplicable' (LHR ≥4.0).
+      // @ts-ignore tsc rightly flags that these values shouldn't occur.
       // eslint-disable-next-line max-len
       if (audit.scoreDisplayMode === 'not_applicable' || audit.scoreDisplayMode === 'not-applicable') {
         audit.scoreDisplayMode = 'notApplicable';
       }
+
+      if (audit.details) {
+        // Turn `auditDetails.type` of undefined (LHR <4.2) and 'diagnostic' (LHR <5.0)
+        // into 'debugdata' (LHR ≥5.0).
+        // @ts-ignore tsc rightly flags that these values shouldn't occur.
+        if (audit.details.type === undefined || audit.details.type === 'diagnostic') {
+          audit.details.type = 'debugdata';
+        }
+
+        // Add the jpg data URL prefix to filmstrip screenshots without them (LHR <5.0).
+        if (audit.details.type === 'filmstrip') {
+          for (const screenshot of audit.details.items) {
+            if (!screenshot.data.startsWith(SCREENSHOT_PREFIX)) {
+              screenshot.data = SCREENSHOT_PREFIX + screenshot.data;
+            }
+          }
+        }
+      }
     }
 
     // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
-    for (const category of clone.reportCategories) {
+    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
+    for (const category of Object.values(clone.categories)) {
       category.auditRefs.forEach(auditRef => {
         const result = clone.audits[auditRef.id];
         auditRef.result = result;
@@ -103,17 +119,6 @@ class Util {
     }
 
     return clone;
-  }
-
-
-  /**
-   * @param {LH.I18NRendererStrings} rendererFormattedStrings
-   */
-  static updateAllUIStrings(rendererFormattedStrings) {
-    // TODO(i18n): don't mutate these here but on the LHR and pass that around everywhere
-    for (const [key, value] of Object.entries(rendererFormattedStrings)) {
-      Util.UIStrings[key] = value;
-    }
   }
 
   /**
@@ -165,99 +170,70 @@ class Util {
   }
 
   /**
-   * Format number.
-   * @param {number} number
-   * @param {number=} granularity Number of decimal places to include. Defaults to 0.1.
-   * @return {string}
+   * Split a string by markdown code spans (enclosed in `backticks`), splitting
+   * into segments that were enclosed in backticks (marked as `isCode === true`)
+   * and those that outside the backticks (`isCode === false`).
+   * @param {string} text
+   * @return {Array<{isCode: true, text: string}|{isCode: false, text: string}>}
    */
-  static formatNumber(number, granularity = 0.1) {
-    const coarseValue = Math.round(number / granularity) * granularity;
-    return coarseValue.toLocaleString(Util.numberDateLocale);
-  }
+  static splitMarkdownCodeSpans(text) {
+    /** @type {Array<{isCode: true, text: string}|{isCode: false, text: string}>} */
+    const segments = [];
 
-  /**
-   * @param {number} size
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to .01
-   * @return {string}
-   */
-  static formatBytesToKB(size, granularity = 0.1) {
-    const kbs = (Math.round(size / 1024 / granularity) * granularity)
-      .toLocaleString(Util.numberDateLocale);
-    return `${kbs}${NBSP}KB`;
-  }
+    // Split on backticked code spans.
+    const parts = text.split(/`(.*?)`/g);
+    for (let i = 0; i < parts.length; i ++) {
+      const text = parts[i];
 
-  /**
-   * @param {number} ms
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 10
-   * @return {string}
-   */
-  static formatMilliseconds(ms, granularity = 10) {
-    const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}ms`;
-  }
+      // Empty strings are an artifact of splitting, not meaningful.
+      if (!text) continue;
 
-  /**
-   * @param {number} ms
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 0.1
-   * @return {string}
-   */
-  static formatSeconds(ms, granularity = 0.1) {
-    const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
-    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}s`;
-  }
-
-  /**
-   * Format time.
-   * @param {string} date
-   * @return {string}
-   */
-  static formatDateTime(date) {
-    /** @type {Intl.DateTimeFormatOptions} */
-    const options = {
-      month: 'short', day: 'numeric', year: 'numeric',
-      hour: 'numeric', minute: 'numeric', timeZoneName: 'short',
-    };
-    let formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
-
-    // Force UTC if runtime timezone could not be detected.
-    // See https://github.com/GoogleChrome/lighthouse/issues/1056
-    const tz = formatter.resolvedOptions().timeZone;
-    if (!tz || tz.toLowerCase() === 'etc/unknown') {
-      options.timeZone = 'UTC';
-      formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
-    }
-    return formatter.format(new Date(date));
-  }
-  /**
-   * Converts a time in milliseconds into a duration string, i.e. `1d 2h 13m 52s`
-   * @param {number} timeInMilliseconds
-   * @return {string}
-   */
-  static formatDuration(timeInMilliseconds) {
-    let timeInSeconds = timeInMilliseconds / 1000;
-    if (Math.round(timeInSeconds) === 0) {
-      return 'None';
+      // Alternates between plain text and code segments.
+      const isCode = i % 2 !== 0;
+      segments.push({
+        isCode,
+        text,
+      });
     }
 
-    /** @type {Array<string>} */
-    const parts = [];
-    const unitLabels = /** @type {Object<string, number>} */ ({
-      d: 60 * 60 * 24,
-      h: 60 * 60,
-      m: 60,
-      s: 1,
-    });
+    return segments;
+  }
 
-    Object.keys(unitLabels).forEach(label => {
-      const unit = unitLabels[label];
-      const numberOfUnits = Math.floor(timeInSeconds / unit);
-      if (numberOfUnits > 0) {
-        timeInSeconds -= numberOfUnits * unit;
-        parts.push(`${numberOfUnits}\xa0${label}`);
+  /**
+   * Split a string on markdown links (e.g. [some link](https://...)) into
+   * segments of plain text that weren't part of a link (marked as
+   * `isLink === false`), and segments with text content and a URL that did make
+   * up a link (marked as `isLink === true`).
+   * @param {string} text
+   * @return {Array<{isLink: true, text: string, linkHref: string}|{isLink: false, text: string}>}
+   */
+  static splitMarkdownLink(text) {
+    /** @type {Array<{isLink: true, text: string, linkHref: string}|{isLink: false, text: string}>} */
+    const segments = [];
+
+    const parts = text.split(/\[([^\]]+?)\]\((https?:\/\/.*?)\)/g);
+    while (parts.length) {
+      // Shift off the same number of elements as the pre-split and capture groups.
+      const [preambleText, linkText, linkHref] = parts.splice(0, 3);
+
+      if (preambleText) { // Skip empty text as it's an artifact of splitting, not meaningful.
+        segments.push({
+          isLink: false,
+          text: preambleText,
+        });
       }
-    });
 
-    return parts.join(' ');
+      // Append link if there are any.
+      if (linkText && linkHref) {
+        segments.push({
+          isLink: true,
+          text: linkText,
+          linkHref,
+        });
+      }
+    }
+
+    return segments;
   }
 
   /**
@@ -346,7 +322,7 @@ class Util {
 
   /**
    * @param {string|URL} value
-   * @return {URL}
+   * @return {!URL}
    */
   static createOrReturnURL(value) {
     if (value instanceof URL) {
@@ -391,22 +367,22 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {Array<{name: string, description: string}>}
+   * @return {!Array<{name: string, description: string}>}
    */
   static getEnvironmentDisplayValues(settings) {
     const emulationDesc = Util.getEmulationDescriptions(settings);
 
     return [
       {
-        name: 'Device',
+        name: Util.i18n.strings.runtimeSettingsDevice,
         description: emulationDesc.deviceEmulation,
       },
       {
-        name: 'Network throttling',
+        name: Util.i18n.strings.runtimeSettingsNetworkThrottling,
         description: emulationDesc.networkThrottling,
       },
       {
-        name: 'CPU throttling',
+        name: Util.i18n.strings.runtimeSettingsCPUThrottling,
         description: emulationDesc.cpuThrottling,
       },
     ];
@@ -414,65 +390,51 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}
+   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
     let networkThrottling;
-    let summary;
 
     const throttling = settings.throttling;
 
     switch (settings.throttlingMethod) {
       case 'provided':
-        cpuThrottling = 'Provided by environment';
-        networkThrottling = 'Provided by environment';
-        summary = 'No throttling applied';
+        cpuThrottling = Util.i18n.strings.throttlingProvided;
+        networkThrottling = Util.i18n.strings.throttlingProvided;
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
-          `${Util.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
-          `${Util.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
-        summary = 'Throttled Slow 4G network';
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
+        networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
+          `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
+          `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
         break;
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
-          `${Util.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
-        summary = 'Simulated Slow 4G network';
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
+        networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
+          `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
         break;
       }
       default:
-        cpuThrottling = 'Unknown';
-        networkThrottling = 'Unknown';
-        summary = 'Unknown';
+        cpuThrottling = Util.i18n.strings.runtimeUnknown;
+        networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    let deviceEmulation = 'No emulation';
-    if (settings.emulatedFormFactor === 'mobile') deviceEmulation = 'Emulated Nexus 5X';
-    if (settings.emulatedFormFactor === 'desktop') deviceEmulation = 'Emulated Desktop';
+    let deviceEmulation = Util.i18n.strings.runtimeNoEmulation;
+    if (settings.emulatedFormFactor === 'mobile') {
+      deviceEmulation = Util.i18n.strings.runtimeMobileEmulation;
+    } else if (settings.emulatedFormFactor === 'desktop') {
+      deviceEmulation = Util.i18n.strings.runtimeDesktopEmulation;
+    }
 
     return {
       deviceEmulation,
       cpuThrottling,
       networkThrottling,
-      summary: `${deviceEmulation}, ${summary}`,
     };
-  }
-
-  /**
-   * Set the locale to be used for Util's number and date formatting functions.
-   * @param {LH.Locale} locale
-   */
-  static setNumberDateLocale(locale) {
-    Util.numberDateLocale = locale;
-
-    // When testing, use a locale with more exciting numeric formatting
-    if (Util.numberDateLocale === 'en-XA') Util.numberDateLocale = 'de';
   }
 
   /**
@@ -526,18 +488,24 @@ class Util {
 }
 
 /**
- * This value is updated on each run to the locale of the report
- * @type {LH.Locale}
+ * Some parts of the report renderer require data found on the LHR. Instead of wiring it
+ * through, we have this global.
+ * @type {LH.ReportResult | null}
  */
-Util.numberDateLocale = 'en';
+Util.reportJson = null;
+
+/** @type {I18n} */
+// @ts-ignore: Is set in report renderer.
+Util.i18n = null;
 
 /**
  * Report-renderer-specific strings.
- * @type {LH.I18NRendererStrings}
  */
 Util.UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */
-  varianceDisclaimer: 'Values are estimated and may vary.',
+  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.',
+  /** Text link pointing to an interactive calculator that explains Lighthouse scoring. The link text should be fairly short. */
+  calculatorLink: 'See calculator.',
   /** Column heading label for the listing of opportunity audits. Each audit title represents an opportunity. There are only 2 columns, so no strict character limit.  */
   opportunityResourceColumnLabel: 'Opportunity',
   /** Column heading label for the estimated page load savings of opportunity audits. Estimated Savings is the total amount of time (in seconds) that Lighthouse computed could be reduced from the total page load time, if the suggested action is taken. There are only 2 columns, so no strict character limit. */
@@ -580,6 +548,59 @@ Util.UIStrings = {
 
   /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
   thirdPartyResourcesLabel: 'Show 3rd-party resources',
+
+  /** Option in a dropdown menu that opens a small, summary report in a print dialog.  */
+  dropdownPrintSummary: 'Print Summary',
+  /** Option in a dropdown menu that opens a full Lighthouse report in a print dialog.  */
+  dropdownPrintExpanded: 'Print Expanded',
+  /** Option in a dropdown menu that copies the Lighthouse JSON object to the system clipboard. */
+  dropdownCopyJSON: 'Copy JSON',
+  /** Option in a dropdown menu that saves the Lighthouse report HTML locally to the system as a '.html' file. */
+  dropdownSaveHTML: 'Save as HTML',
+  /** Option in a dropdown menu that saves the Lighthouse JSON object to the local system as a '.json' file. */
+  dropdownSaveJSON: 'Save as JSON',
+  /** Option in a dropdown menu that opens the current report in the Lighthouse Viewer Application. */
+  dropdownViewer: 'Open in Viewer',
+  /** Option in a dropdown menu that saves the current report as a new Github Gist. */
+  dropdownSaveGist: 'Save as Gist',
+  /** Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes. */
+  dropdownDarkTheme: 'Toggle Dark Theme',
+
+  /** Title of the Runtime settings table in a Lighthouse report.  Runtime settings are the environment configurations that a specific report used at auditing time. */
+  runtimeSettingsTitle: 'Runtime Settings',
+  /** Label for a row in a table that shows the URL that was audited during a Lighthouse run. */
+  runtimeSettingsUrl: 'URL',
+  /** Label for a row in a table that shows the time at which a Lighthouse run was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC. */
+  runtimeSettingsFetchTime: 'Fetch Time',
+  /** Label for a row in a table that describes the kind of device that was emulated for the Lighthouse run.  Example values for row elements: 'No Emulation', 'Emulated Desktop', etc. */
+  runtimeSettingsDevice: 'Device',
+  /** Label for a row in a table that describes the network throttling conditions that were used during a Lighthouse run, if any. */
+  runtimeSettingsNetworkThrottling: 'Network throttling',
+  /** Label for a row in a table that describes the CPU throttling conditions that were used during a Lighthouse run, if any.*/
+  runtimeSettingsCPUThrottling: 'CPU throttling',
+  /** Label for a row in a table that shows in what tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest, etc). */
+  runtimeSettingsChannel: 'Channel',
+  /** Label for a row in a table that shows the User Agent that was detected on the Host machine that ran Lighthouse. */
+  runtimeSettingsUA: 'User agent (host)',
+  /** Label for a row in a table that shows the User Agent that was used to send out all network requests during the Lighthouse run. */
+  runtimeSettingsUANetwork: 'User agent (network)',
+  /** Label for a row in a table that shows the estimated CPU power of the machine running Lighthouse. Example row values: 532, 1492, 783. */
+  runtimeSettingsBenchmark: 'CPU/Memory Power',
+
+  /** Label for button to create an issue against the Lighthouse Github project. */
+  footerIssue: 'File an issue',
+
+  /** Descriptive explanation for emulation setting when no device emulation is set. */
+  runtimeNoEmulation: 'No emulation',
+  /** Descriptive explanation for emulation setting when emulating a Moto G4 mobile device. */
+  runtimeMobileEmulation: 'Emulated Moto G4',
+  /** Descriptive explanation for emulation setting when emulating a generic desktop form factor, as opposed to a mobile-device like form factor. */
+  runtimeDesktopEmulation: 'Emulated Desktop',
+  /** Descriptive explanation for a runtime setting that is set to an unknown value. */
+  runtimeUnknown: 'Unknown',
+
+  /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
+  throttlingProvided: 'Provided by environment',
 };
 
 if (typeof module !== 'undefined' && module.exports) {

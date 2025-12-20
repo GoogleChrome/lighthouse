@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -13,9 +13,9 @@ const Simulator = require('./dependency-graph/simulator/simulator.js');
 const lanternTraceSaver = require('./lantern-trace-saver.js');
 const Metrics = require('./traces/pwmetrics-events.js');
 const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
+const LHError = require('../lib/lh-error.js');
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -33,18 +33,19 @@ const devtoolsLogSuffix = '.devtoolslog.json';
  * Load artifacts object from files located within basePath
  * Also save the traces to their own files
  * @param {string} basePath
- * @return {Promise<LH.Artifacts>}
+ * @return {LH.Artifacts}
  */
-async function loadArtifacts(basePath) {
+function loadArtifacts(basePath) {
   log.log('Reading artifacts from disk:', basePath);
 
   if (!fs.existsSync(basePath)) {
     throw new Error('No saved artifacts found at ' + basePath);
   }
 
-  // load artifacts.json
+  // load artifacts.json using a reviver to deserialize any LHErrors in artifacts.
+  const artifactsStr = fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8');
   /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
+  const artifacts = JSON.parse(artifactsStr, LHError.parseReviver);
 
   const filenames = fs.readdirSync(basePath);
 
@@ -74,7 +75,22 @@ async function loadArtifacts(basePath) {
 }
 
 /**
- * Save artifacts object mostly to single file located at basePath/artifacts.log.
+ * A replacer function for JSON.stingify of the artifacts. Used to serialize objects that
+ * JSON won't normally handle.
+ * @param {string} key
+ * @param {any} value
+ */
+function stringifyReplacer(key, value) {
+  // Currently only handle LHError and other Error types.
+  if (value instanceof Error) {
+    return LHError.stringifyReplacer(value);
+  }
+
+  return value;
+}
+
+/**
+ * Save artifacts object mostly to single file located at basePath/artifacts.json.
  * Also save the traces & devtoolsLogs to their own files
  * @param {LH.Artifacts} artifacts
  * @param {string} basePath
@@ -83,7 +99,7 @@ async function loadArtifacts(basePath) {
 async function saveArtifacts(artifacts, basePath) {
   const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
   log.time(status);
-  mkdirp.sync(basePath);
+  fs.mkdirSync(basePath, {recursive: true});
   rimraf.sync(`${basePath}/*${traceSuffix}`);
   rimraf.sync(`${basePath}/${artifactsFilename}`);
 
@@ -100,8 +116,8 @@ async function saveArtifacts(artifacts, basePath) {
     fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
   }
 
-  // save everything else
-  const restArtifactsString = JSON.stringify(restArtifacts, null, 2);
+  // save everything else, using a replacer to serialize LHErrors in the artifacts.
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
   fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);
@@ -252,34 +268,14 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
 }
 
 /**
- * Log trace(s) and associated devtoolsLog(s) to console.
- * @param {LH.Artifacts} artifacts
- * @param {LH.Audit.Results} audits
- * @return {Promise<void>}
- */
-async function logAssets(artifacts, audits) {
-  const allAssets = await prepareAssets(artifacts, audits);
-  allAssets.map(passAssets => {
-    const dtlogdata = JSON.stringify(passAssets.devtoolsLog);
-    // eslint-disable-next-line no-console
-    console.log(`loggedAsset %%% devtoolslog-${passAssets.passName}.json %%% ${dtlogdata}`);
-    const traceIter = traceJsonGenerator(passAssets.traceData);
-    let traceJson = '';
-    for (const trace of traceIter) {
-      traceJson += trace;
-    }
-    // eslint-disable-next-line no-console
-    console.log(`loggedAsset %%% trace-${passAssets.passName}.json %%% ${traceJson}`);
-  });
-}
-
-/**
  * @param {LH.DevtoolsLog} devtoolsLog
  * @param {string} outputPath
  * @return {Promise<void>}
  */
 async function saveLanternNetworkData(devtoolsLog, outputPath) {
-  const context = /** @type {LH.Audit.Context} */ ({computedCache: new Map()});
+  /** @type {LH.Audit.Context} */
+  // @ts-ignore - the full audit context isn't needed for analysis.
+  const context = {computedCache: new Map()};
   const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
   const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
 
@@ -292,6 +288,6 @@ module.exports = {
   saveAssets,
   prepareAssets,
   saveTrace,
-  logAssets,
   saveLanternNetworkData,
+  stringifyReplacer,
 };

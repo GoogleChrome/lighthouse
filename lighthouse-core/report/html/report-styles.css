@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,135 +15,140 @@
  * limitations under the License.
  */
 
-.lh-vars {
-  --text-font-family: Roboto, Helvetica, Arial, sans-serif;
-  --monospace-font-family: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --body-background-color: #fff;
-  --body-text-color: var(--color-black-900);
-  --body-font-size: 16px;
-  --body-line-height: 24px;
-  --subheader-font-size: 14px;
-  --subheader-line-height: 20px;
-  --subheader-color: hsl(206, 6%, 25%);
-  --header-bg-color: #f1f3f4;
-  --header-font-size: 20px;
-  --header-line-height: 24px;
-  --title-font-size: 24px;
-  --title-line-height: 28px;
-  --caption-font-size: 12px;
-  --caption-line-height: 16px;
-  --default-padding: 12px;
-  --section-padding: 16px;
-  --section-indent: 16px;
-  --audit-group-indent: 16px;
-  --audit-item-gap: 5px;
-  --audit-indent: 16px;
-  --text-indent: 8px;
-  --expandable-indent: 20px;
-  --secondary-text-color: var(--color-black-800);
-  /*--accent-color: #3879d9;*/
-  --informative-color: var(--color-blue-900);
-  --medium-75-gray: #757575;
-  --medium-50-gray: hsl(210, 17%, 98%);
-  --medium-100-gray: hsl(200, 12%, 95%);
-  --warning-color: #ffab00; /* md amber a700 */
-  --report-secondary-border-color: #ebebeb;
-  --metric-timeline-rule-color: #b3b3b3;
-  --display-value-gray: hsl(216, 5%, 39%);
-  --report-width: calc(60 * var(--body-font-size));
-  --report-min-width: 400px;
-  /* Edge doesn't support calc(var(calc())) */
-  --report-width-half: calc(30 * var(--body-font-size));
-  --report-header-height: 161px;
-  --report-header-color: #202124;
-  --navitem-font-size: var(--body-font-size);
-  --navitem-line-height: var(--body-line-height);
-  --navitem-hpadding: var(--body-font-size);
-  --navitem-vpadding: calc(var(--navitem-line-height) / 2);
-  --lh-score-highlight-bg: hsla(0, 0%, 90%, 0.2);
-  --lh-score-icon-background-size: 24px;
-  --lh-group-icon-background-size: var(--lh-score-icon-background-size);
-  --lh-score-margin: 12px;
-  --lh-table-header-bg: #f8f9fa;
-  --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
-  --lh-sparkline-height: 5px;
-  --lh-sparkline-thin-height: 3px;
-  --lh-filmstrip-thumbnail-width: 60px;
-  --lh-category-score-width: calc(5 * var(--body-font-size));
-  --lh-audit-vpadding: 8px;
-  --lh-audit-index-width: 18px;
-  --lh-audit-hgap: 12px;
-  --lh-audit-group-vpadding: 8px;
-  --lh-section-vpadding: 12px;
-  --chevron-size: 12px;
+/*
+  Naming convention:
 
-  /* Palette. */
-  --color-black-100: #F5F5F5;
-  --color-black-200: #E0E0E0;
-  --color-black-400: #BDBDBD;
-  --color-black-500: #9E9E9E;
-  --color-black-600: #757575;
-  --color-black-800: #424242;
-  --color-black-900: #212121;
-  --color-black: #000000;
+  If a variable is used for a specific component: --{component}-{property name}-{modifier}
+
+  Both {component} and {property name} should be kebab-case. If the target is the entire page,
+  use 'report' for the component. The property name should not be abbreviated. Use the
+  property name the variable is intended for - if it's used for multiple, a common descriptor
+  is fine (ex: 'size' for a variable applied to 'width' and 'height'). If a variable is shared
+  across multiple components, either create more variables or just drop the "{component}-"
+  part of the name. Append any modifiers at the end (ex: 'big', 'dark').
+
+  For colors: --color-{hue}-{intensity}
+
+  {intensity} is the Material Design tag - 700, A700, etc.
+*/
+.lh-vars {
+  /* Palette using Material Design Colors
+   * https://www.materialui.co/colors */
+  --color-amber-50: #FFF8E1;
+  --color-blue-200: #90CAF9;
+  --color-blue-900: #0D47A1;
+  --color-blue-A700: #2962FF;
+  --color-cyan-500: #00BCD4;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E0E0E0;
+  --color-gray-400: #BDBDBD;
+  --color-gray-50: #FAFAFA;
+  --color-gray-500: #9E9E9E;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+  --color-gray: #000000;
   --color-green-700: #018642;
   --color-green: #0CCE6B;
+  --color-orange-50: #FFF3E0;
   --color-orange-700: #D04900;
   --color-orange: #FFA400;
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
+  --color-teal-600: #00897B;
   --color-white: #FFFFFF;
-  --color-blue-200: #90CAF9;
-  --color-blue-900: #0D47A1;
 
-
-  /* TODO(cjamcl) clean up unused variables. */
-  --audits-margin-bottom: 40px;
-  --env-item-bg: var(--color-black-100);
-  --env-name-min-width: 220px;
-  --env-tem-padding: 10px 0px;
-  --gauge-circle-size-big: 120px;
-  --gauge-circle-size: 96px;
-  --header-padding: 20px 0 20px 0;
-  --highlighter-bg: var(--color-black-400);
-  --icon-square-size: calc(var(--score-shape-size) * 0.88);
-  --plugin-badge-bg: var(--color-white);
-  --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
-  --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
-  --plugin-icon-size: 65%;
-  --pwa-icon-margin: 0 6px 0 -2px;
-  --pwa-icon-size: var(--topbar-icon-size);
-  --score-container-padding: 12px;
-  --score-container-width: 160px;
-  --score-number-font-size-big: 42px;
-  --score-number-font-size: 34px;
-  --score-shape-margin: 7px 12px 0 4px;
-  --score-shape-size: 12px;
-  --score-title-font-size-big: 28px;
-  --score-title-font-size: 20px;
-  --score-title-line-height-big: 36px;
-  --score-title-line-height: 26px;
-  --scorescale-height: 6px;
-  --scorescale-width: 18px;
-  --section-padding: 40px;
-  --topbar-bg: var(--color-black-100);
-  --topbar-height: 36px;
-  --topbar-icon-size: 24px;
-  --topbar-padding: 0 8px;
-
+  /* Context-specific colors */
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
   --color-fail-secondary: var(--color-red-700);
   --color-fail: var(--color-red);
+  --color-hover: var(--color-gray-50);
+  --color-informative: var(--color-blue-900);
   --color-pass-secondary: var(--color-green-700);
   --color-pass: var(--color-green);
-  --color-sticky-header-bg: var(--body-background-color);
-  --color-highlighter-bg: var(--body-text-color);
 
-  --color-hover: #FAFAFA;
+  /* Component variables */
+  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
+  --audit-explanation-line-height: 16px;
+  --audit-group-margin-bottom: 40px;
+  --audit-group-padding-vertical: 8px;
+  --audit-margin-horizontal: 5px;
+  --audit-padding-vertical: 8px;
+  --category-header-font-size: 20px;
+  --category-padding: 40px;
+  --chevron-line-stroke: var(--color-gray-600);
+  --chevron-size: 12px;
+  --default-padding: 12px;
+  --env-item-background-color: var(--color-gray-100);
+  --env-item-font-size: 28px;
+  --env-item-line-height: 36px;
+  --env-item-padding: 10px 0px;
+  --env-name-min-width: 220px;
+  --footer-padding-vertical: 16px;
+  --gauge-circle-size-big: 112px;
+  --gauge-circle-size: 80px;
+  --gauge-label-font-size-big: 28px;
+  --gauge-label-font-size: 20px;
+  --gauge-label-line-height-big: 36px;
+  --gauge-label-line-height: 26px;
+  --gauge-percentage-font-size-big: 38px;
+  --gauge-percentage-font-size: 28px;
+  --gauge-wrapper-width: 148px;
+  --header-line-height: 24px;
+  --highlighter-background-color: var(--report-text-color);
+  --icon-square-size: calc(var(--score-icon-size) * 0.88);
+  --image-preview-size: 48px;
+  --metric-toggle-lines-fill: #7F7F7F;
+  --metrics-toggle-background-color: var(--color-gray-200);
+  --plugin-badge-background-color: var(--color-white);
+  --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
+  --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
+  --plugin-icon-size: 65%;
+  --pwa-icon-margin: 0 6px 0 -2px;
+  --pwa-icon-size: var(--topbar-logo-size);
+  --report-background-color: #fff;
+  --report-border-color-secondary: #ebebeb;
+  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --report-font-size: 16px;
+  --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
+  --report-line-height: 24px;
+  --report-min-width: 400px;
+  --report-text-color-secondary: var(--color-gray-800);
+  --report-text-color: var(--color-gray-900);
+  --report-width: calc(60 * var(--report-font-size));
+  --score-container-padding: 8px;
+  --score-icon-background-size: 24px;
+  --score-icon-margin-left: 4px;
+  --score-icon-margin-right: 12px;
+  --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
+  --score-icon-size: 12px;
+  --scores-container-padding: 20px 0 20px 0;
+  --scorescale-height: 6px;
+  --scorescale-width: 18px;
+  --section-padding-vertical: 12px;
+  --snippet-background-color: var(--color-gray-50);
+  --snippet-color: #0938C2;
+  --sparkline-height: 5px;
+  --stackpack-padding-horizontal: 10px;
+  --sticky-header-background-color: var(--report-background-color);
+  --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --tools-icon-color: var(--color-gray-600);
+  --tools-icon-size: var(--score-icon-background-size);
+  --topbar-background-color: var(--color-gray-100);
+  --topbar-height: 32px;
+  --topbar-logo-size: 24px;
+  --topbar-padding: 0 8px;
+  --toplevel-warning-background-color: var(--color-orange-50);
+  --toplevel-warning-message-text-color: #BD4200;
+  --toplevel-warning-padding: 18px;
+  --toplevel-warning-text-color: var(--report-text-color);
 
-  --plugin-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23757575"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
+  /* SVGs */
   --plugin-icon-url-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
+  --plugin-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23757575"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
 
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
@@ -162,63 +167,68 @@
   --pwa-optimized-color-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="%230CCE6B" width="24" height="24" rx="12"/><path d="M5 5h14v14H5z"/><path fill="%23FFF" d="M12 15.07l3.6 2.18-.95-4.1 3.18-2.76-4.2-.36L12 6.17l-1.64 3.86-4.2.36 3.2 2.76-.96 4.1z"/></g></svg>');
 }
 
-.lh-vars.dark {
-  --color-red-700: var(--color-red);
-  --color-green-700: var(--color-green);
-  --color-orange-700: var(--color-orange);
+@media not print {
+  .lh-vars.dark {
+    /* Pallete */
+    --color-gray-200: var(--color-gray-800);
+    --color-gray-400: var(--color-gray-600);
+    --color-gray-700: var(--color-gray-400);
+    --color-gray-50: #757575;
+    --color-gray-600: var(--color-gray-500);
+    --color-green-700: var(--color-green);
+    --color-orange-700: var(--color-orange);
+    --color-red-700: var(--color-red);
+    --color-teal-600: var(--color-cyan-500);
 
-  --color-black-200: var(--color-black-800);
-  --color-black-400: var(--color-black-600);
-  --color-black-600: var(--color-black-500);
+    /* Context-specific colors */
+    --color-hover: rgba(0, 0, 0, 0.2);
+    --color-informative: var(--color-blue-200);
 
-  --topbar-bg: var(--color-black);
-  --plugin-badge-bg: var(--color-black-800);
-  --header-bg-color: var(--color-black-900);
-  --env-item-bg: rgba(0, 0, 0, 0.5);
+    /* Component variables */
+    --env-item-background-color: var(--color-gray);
+    --plugin-badge-background-color: var(--color-gray-800);
+    --report-background-color: var(--color-gray-900);
+    --report-border-color-secondary: var(--color-gray-200);
+    --report-text-color-secondary: var(--color-gray-400);
+    --report-text-color: var(--color-gray-100);
+    --snippet-color: var(--color-cyan-500);
+    --topbar-background-color: var(--color-gray);
+  	--toplevel-warning-background-color: #544B40;
+  	--toplevel-warning-message-text-color: var(--color-orange-700);
+	--toplevel-warning-text-color: var(--color-gray-100);
 
-  --body-background-color: var(--color-black-900);
-  --body-text-color: var(--color-black-100);
-  --secondary-text-color: var(--color-black-400);
-
-  --highlighter-bg: var(--color-black-200);
-  --plugin-icon-url: var(--plugin-icon-url-dark);
-
-  --informative-color: var(--color-blue-200);
-
-  --medium-50-gray: #757575;
-  --medium-75-gray: var(--color-white);
-
-  --color-hover: rgba(0, 0, 0, 0.2);
-
-  --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
-  --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
-  --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
+    /* SVGs */
+    --plugin-icon-url: var(--plugin-icon-url-dark);
+    --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
+    --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
+    --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
+  }
 }
 
 @media only screen and (max-width: 480px) {
   .lh-vars {
-    --audits-margin-bottom: 20px;
-    --body-font-size: 14px;
-    --body-line-height: 20px;
+    --audit-group-margin-bottom: 20px;
+    --category-padding: 24px;
     --env-name-min-width: 120px;
     --gauge-circle-size-big: 96px;
     --gauge-circle-size: 72px;
+    --gauge-label-font-size-big: 22px;
+    --gauge-label-font-size: 14px;
+    --gauge-label-line-height-big: 26px;
+    --gauge-label-line-height: 20px;
+    --gauge-percentage-font-size-big: 34px;
+    --gauge-percentage-font-size: 26px;
+    --gauge-wrapper-width: 112px;
     --header-padding: 16px 0 16px 0;
+    --image-preview-size: 24px;
     --plugin-icon-size: 75%;
     --pwa-icon-margin: 0 7px 0 -3px;
-    --score-container-padding: 8px;
-    --score-container-width: 112px;
-    --score-number-font-size-big: 34px;
-    --score-number-font-size: 26px;
-    --score-shape-margin: 5px 12px 0 2px;
-    --score-shape-size: 10px;
-    --score-title-font-size-big: 22px;
-    --score-title-font-size: 14px;
-    --score-title-line-height-big: 26px;
-    --score-title-line-height: 20px;
-    --section-padding: 24px;
-    --topbar-height: 32px;
-    --topbar-icon-size: 20px;
+    --report-font-size: 14px;
+    --report-line-height: 20px;
+    --score-icon-margin-left: 2px;
+    --score-icon-size: 10px;
+    --topbar-height: 28px;
+    --topbar-logo-size: 20px;
   }
 
   /* Not enough space to adequately show the relative savings bars. */
@@ -228,29 +238,56 @@
 }
 
 .lh-vars.lh-devtools {
-  --text-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
-  --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --body-font-size: 12px;
-  --body-line-height: 20px;
-  --subheader-font-size: 14px;
-  --subheader-line-height: 18px;
-  --header-font-size: 16px;
-  --header-line-height: 20px;
-  --title-font-size: 20px;
-  --title-line-height: 24px;
-  --caption-font-size: 11px;
-  --caption-line-height: 14px;
+  --audit-explanation-line-height: 14px;
+  --audit-group-margin-bottom: 20px;
+  --audit-group-padding-vertical: 12px;
+  --audit-padding-vertical: 4px;
+  --category-header-font-size: 16px;
+  --category-padding: 12px;
   --default-padding: 12px;
-  --section-padding: 12px;
-  --section-indent: 8px;
-  --audit-group-indent: 16px;
-  --audit-indent: 16px;
-  --expandable-indent: 16px;
+  --env-name-min-width: 120px;
+  --footer-padding-vertical: 8px;
+  --gauge-circle-size-big: 72px;
+  --gauge-circle-size: 64px;
+  --gauge-label-font-size-big: 22px;
+  --gauge-label-font-size: 14px;
+  --gauge-label-line-height-big: 26px;
+  --gauge-label-line-height: 20px;
+  --gauge-percentage-font-size-big: 34px;
+  --gauge-percentage-font-size: 26px;
+  --gauge-wrapper-width: 97px;
+  --header-line-height: 20px;
+  --header-padding: 16px 0 16px 0;
+  --plugin-icon-size: 75%;
+  --pwa-icon-margin: 0 7px 0 -3px;
+  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  --report-font-size: 12px;
+  --report-line-height: 20px;
+  --score-icon-margin-left: 2px;
+  --score-icon-size: 10px;
+  --section-padding-vertical: 8px;
+}
 
-  --lh-audit-vpadding: 4px;
-  --lh-audit-hgap: 12px;
-  --lh-audit-group-vpadding: 12px;
-  --lh-section-vpadding: 8px;
+.lh-devtools.lh-root {
+  height: 100%;
+}
+.lh-devtools.lh-root img {
+  /* Override devtools default 'min-width: 0' so svg without size in a flexbox isn't collapsed. */
+  min-width: auto;
+}
+.lh-devtools .lh-container {
+  overflow-y: scroll;
+  height: calc(100% - var(--topbar-height));
+}
+@media print {
+  .lh-devtools .lh-container {
+    overflow: unset;
+  }
+}
+.lh-devtools .lh-sticky-header {
+  /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-container` */
+  top: 0;
 }
 
 @keyframes fadeIn {
@@ -264,13 +301,13 @@
 }
 
 .lh-root {
-  font-family: var(--text-font-family);
-  font-size: var(--body-font-size);
+  font-family: var(--report-font-family);
+  font-size: var(--report-font-size);
   margin: 0;
-  line-height: var(--body-line-height);
-  background: var(--body-background-color);
+  line-height: var(--report-line-height);
+  background: var(--report-background-color);
   scroll-behavior: smooth;
-  color: var(--body-text-color);
+  color: var(--report-text-color);
 }
 
 .lh-root :focus {
@@ -285,34 +322,56 @@
   display: none !important;
 }
 
+.lh-root pre {
+  margin: 0;
+}
+
 .lh-root details > summary {
   cursor: pointer;
 }
 
 .lh-container {
+  /*
+  Text wrapping in the report is so much FUN!
+  We have a `word-break: break-word;` globally here to prevent a few common scenarios, namely
+  long non-breakable text (usually URLs) found in:
+    1. The footer
+    2. .lh-node (outerHTML)
+    3. .lh-code
+
+  With that sorted, the next challenge is appropriate column sizing and text wrapping inside our
+  .lh-details tables. Even more fun.
+    * We don't want table headers ("Potential Savings (ms)") to wrap or their column values, but
+    we'd be happy for the URL column to wrap if the URLs are particularly long.
+    * We want the narrow columns to remain narrow, providing the most column width for URL
+    * We don't want the table to extend past 100% width.
+    * Long URLs in the URL column can wrap. Util.getURLDisplayName maxes them out at 64 characters,
+      but they do not get any overflow:ellipsis treatment.
+  */
   word-break: break-word;
 }
 
 .lh-audit-group a,
 .lh-category-header__description a,
 .lh-audit__description a,
-.lh-footer a {
-  color: var(--informative-color);
+.lh-footer a,
+.lh-table-column--link a {
+  color: var(--color-informative);
 }
 
 .lh-audit__description, .lh-audit__stackpack {
-  --inner-audit-left-padding: calc(var(--text-indent) + var(--lh-audit-index-width) + 2 * var(--audit-item-gap));
-  --inner-audit-right-padding: calc(var(--text-indent) + 2px);
-  padding-left: var(--inner-audit-left-padding);
-  padding-right: var(--inner-audit-right-padding);
+  --inner-audit-padding-right: var(--stackpack-padding-horizontal);
+  padding-left: var(--audit-description-padding-left);
+  padding-right: var(--inner-audit-padding-right);
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 .lh-details {
-  font-size: var(--body-font-size);
+  font-size: var(--report-font-size);
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
+  margin-left: var(--audit-description-padding-left);
   /* whatever the .lh-details side margins are */
   width: 100%;
 }
@@ -344,9 +403,6 @@
   pointer-events: none;
 }
 
-.report-icon--share {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>');
-}
 .report-icon--print {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/><path fill="none" d="M0 0h24v24H0z"/></svg>');
 }
@@ -359,37 +415,24 @@
 .report-icon--download {
   background-image: url('data:image/svg+xml;utf8,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 }
-
-.dark .report-icon--share {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M0 0h24v24H0z"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>');
-}
-.dark .report-icon--print {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/><path fill="none" d="M0 0h24v24H0z"/></svg>');
-}
-.dark .report-icon--copy {
-  background-image: url('data:image/svg+xml;utf8,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z" /><path fill="white" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>');
-}
-.dark .report-icon--open {
-  background-image: url('data:image/svg+xml;utf8,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z" /><path fill="white" d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h4v-2H5V8h14v10h-4v2h4c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm-7 6l-4 4h3v6h2v-6h3l-4-4z"/></svg>');
-}
-.dark .report-icon--download {
-  background-image: url('data:image/svg+xml;utf8,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+.report-icon--dark {
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 100 125"><path d="M50 23.587c-16.27 0-22.799 12.574-22.799 21.417 0 12.917 10.117 22.451 12.436 32.471h20.726c2.32-10.02 12.436-19.554 12.436-32.471 0-8.843-6.528-21.417-22.799-21.417zM39.637 87.161c0 3.001 1.18 4.181 4.181 4.181h.426l.41 1.231C45.278 94.449 46.042 95 48.019 95h3.963c1.978 0 2.74-.551 3.365-2.427l.409-1.231h.427c3.002 0 4.18-1.18 4.18-4.181V80.91H39.637v6.251zM50 18.265c1.26 0 2.072-.814 2.072-2.073v-9.12C52.072 5.813 51.26 5 50 5c-1.259 0-2.072.813-2.072 2.073v9.12c0 1.259.813 2.072 2.072 2.072zM68.313 23.727c.994.774 2.135.634 2.91-.357l5.614-7.187c.776-.992.636-2.135-.356-2.909-.992-.776-2.135-.636-2.91.357l-5.613 7.186c-.778.993-.636 2.135.355 2.91zM91.157 36.373c-.306-1.222-1.291-1.815-2.513-1.51l-8.85 2.207c-1.222.305-1.814 1.29-1.51 2.512.305 1.223 1.291 1.814 2.513 1.51l8.849-2.206c1.223-.305 1.816-1.291 1.511-2.513zM86.757 60.48l-8.331-3.709c-1.15-.512-2.225-.099-2.736 1.052-.512 1.151-.1 2.224 1.051 2.737l8.33 3.707c1.15.514 2.225.101 2.736-1.05.513-1.149.1-2.223-1.05-2.737zM28.779 23.37c.775.992 1.917 1.131 2.909.357.992-.776 1.132-1.917.357-2.91l-5.615-7.186c-.775-.992-1.917-1.132-2.909-.357s-1.131 1.917-.356 2.909l5.614 7.187zM21.715 39.583c.305-1.223-.288-2.208-1.51-2.513l-8.849-2.207c-1.222-.303-2.208.289-2.513 1.511-.303 1.222.288 2.207 1.511 2.512l8.848 2.206c1.222.304 2.208-.287 2.513-1.509zM21.575 56.771l-8.331 3.711c-1.151.511-1.563 1.586-1.05 2.735.511 1.151 1.586 1.563 2.736 1.052l8.331-3.711c1.151-.511 1.563-1.586 1.05-2.735-.512-1.15-1.585-1.562-2.736-1.052z"/></svg>');
 }
 
 /* Node */
-.lh-node {
-  display: block;
-  font-family: var(--monospace-font-family);
-  word-break: break-word;
-  color: hsl(174, 100%, 27%);
+.lh-node__snippet {
+  font-family: var(--report-font-family-monospace);
+  color: var(--snippet-color);
+  font-size: var(--report-monospace-font-size);
+  line-height: 20px;
 }
 
 /* Score */
 
 .lh-audit__score-icon {
-  width: var(--score-shape-size);
-  height: var(--score-shape-size);
-  margin: var(--score-shape-margin);
+  width: var(--score-icon-size);
+  height: var(--score-icon-size);
+  margin: var(--score-icon-margin);
 }
 
 .lh-audit--pass .lh-audit__display-text {
@@ -412,55 +455,78 @@
 .lh-audit--fail .lh-audit__display-text {
   color: var(--color-fail-secondary);
 }
-.lh-audit--fail .lh-audit__score-icon {
-  border-left: calc(var(--score-shape-size) / 2) solid transparent;
-  border-right: calc(var(--score-shape-size) / 2) solid transparent;
-  border-bottom: var(--score-shape-size) solid var(--color-fail);
+.lh-audit--fail .lh-audit__score-icon,
+.lh-audit--error .lh-audit__score-icon {
+  border-left: calc(var(--score-icon-size) / 2) solid transparent;
+  border-right: calc(var(--score-icon-size) / 2) solid transparent;
+  border-bottom: var(--score-icon-size) solid var(--color-fail);
 }
 
 .lh-audit--manual .lh-audit__display-text,
 .lh-audit--notapplicable .lh-audit__display-text {
-  color: var(--color-black-600);
+  color: var(--color-gray-600);
 }
 .lh-audit--manual .lh-audit__score-icon,
 .lh-audit--notapplicable .lh-audit__score-icon {
   border-radius: 100%;
-  background: var(--color-black-400);
+  background: var(--color-gray-400);
 }
 
-.lh-audit--error .lh-audit__score-icon {
-  display: none;
+.lh-audit--informative .lh-audit__display-text {
+  color: var(--color-gray-600);
+}
+
+.lh-audit--informative .lh-audit__score-icon {
+  border: none;
+  border-radius: 100%;
+  background: var(--color-gray-400);
 }
 
 .lh-audit__description,
 .lh-audit__stackpack {
-  color: var(--secondary-text-color);
+  color: var(--report-text-color-secondary);
 }
 .lh-category-header__description  {
-  font-size: var(--body-font-size);
+  font-size: var(--report-font-size);
+  text-align: center;
   margin: 0px auto;
   max-width: 400px;
 }
 
 
-.lh-audit__title,
 .lh-audit__display-text,
 .lh-load-opportunity__sparkline,
 .lh-chevron-container {
-  margin: 0 var(--audit-item-gap);
+  margin: 0 var(--audit-margin-horizontal);
 }
 .lh-chevron-container {
   margin-right: 0;
 }
 
-.lh-audit__title {
+.lh-audit__title-and-text {
   flex: 1;
+}
+
+.lh-audit__title-and-text code {
+  color: var(--snippet-color);
+  font-size: var(--report-monospace-font-size);
+}
+
+/* Prepend display text with em dash separator. But not in Opportunities. */
+.lh-audit__display-text:not(:empty):before {
+  content: '—';
+  margin-right: var(--audit-margin-horizontal);
+}
+.lh-audit-group.lh-audit-group--load-opportunities .lh-audit__display-text:not(:empty):before {
+  display: none;
 }
 
 /* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
   display: flex;
-  padding: var(--lh-audit-vpadding) 0;
+  align-items: center;
+  font-weight: 500;
+  padding: var(--audit-padding-vertical) 0;
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -486,51 +552,40 @@
   display: none;
 }
 
-
 /* Perf Metric */
 
-.lh-columns {
-  display: flex;
-  width: 100%;
+.lh-metrics-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-flow: column;
+  grid-column-gap: 24px;
 }
-@media screen and (max-width: 640px) {
-  .lh-columns {
-    flex-wrap: wrap;
-
-  }
-}
-
-.lh-column {
-  flex: 1;
-}
-.lh-column:first-of-type {
-  margin-right: 24px;
-}
-
-@media screen and (max-width: 800px) {
-  .lh-column:first-of-type {
-    margin-right: 8px;
-  }
-}
-@media screen and (max-width: 640px) {
-  .lh-column {
-    flex-basis: 100%;
-  }
-  .lh-column:first-of-type {
-    margin-right: 0px;
-  }
-}
-
 
 .lh-metric {
-  border-bottom: 1px solid var(--report-secondary-border-color);
+  border-top: 1px solid var(--report-border-color-secondary);
+}
+
+@media screen and (min-width: 640px) {
+  .lh-metric:nth-child(3n+3) {
+    border-bottom: 1px solid var(--report-border-color-secondary);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .lh-metrics-container {
+    display: block;
+  }
+
+  .lh-metric:nth-last-child(-n+1) {
+    border-bottom: 1px solid var(--report-border-color-secondary);
+  }
 }
 
 .lh-metric__innerwrap {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 500;
-  padding: 8px var(--text-indent);
+  display: grid;
+  grid-template-columns: var(--audit-description-padding-left) 10fr 3fr;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .lh-metric__details {
@@ -539,34 +594,104 @@
 
 .lh-metric__title {
   flex: 1;
-}
-
-.lh-metric__name {
-  flex: 1;
+  font-weight: 500;
 }
 
 .lh-metrics__disclaimer {
-  color: var(--medium-75-gray);
-  text-align: right;
-  margin: var(--lh-section-vpadding) 0;
-  padding: 0 var(--text-indent);
+  color: var(--color-gray-600);
+  margin: var(--section-padding-vertical) 0;
+}
+.lh-metrics__disclaimer a {
+  color: var(--color-gray-700);
+}
+
+.lh-calclink {
+  padding-left: calc(1ex / 3);
 }
 
 .lh-metric__description {
-  color: var(--secondary-text-color);
+  display: none;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  color: var(--report-text-color-secondary);
 }
 
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
+  font-weight: 500;
+  justify-self: end;
 }
 
+/* No-JS toggle switch */
+/* Keep this selector sync'd w/ `magicSelector` in report-ui-features-test.js */
+ .lh-metrics-toggle__input:checked ~ .lh-metrics-container .lh-metric__description {
+  display: block;
+}
+
+.lh-metrics-toggle__input {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  width: 74px;
+  height: 28px;
+  top: -3px;
+}
+.lh-metrics-toggle__label {
+  display: flex;
+  background-color: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: -3px;
+  pointer-events: none;
+}
+.lh-metrics-toggle__input:focus + label {
+  outline: -webkit-focus-ring-color auto 3px;
+}
+.lh-metrics-toggle__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+  width: 50%;
+  height: 28px;
+}
+.lh-metrics-toggle__input:not(:checked) + label .lh-metrics-toggle__icon--less,
+.lh-metrics-toggle__input:checked + label .lh-metrics-toggle__icon--more {
+  background-color: var(--color-blue-A700);
+  --metric-toggle-lines-fill: var(--color-white);
+}
+.lh-metrics-toggle__lines {
+  fill: var(--metric-toggle-lines-fill);
+}
+
+.lh-metrics-toggle__label  {
+  background-color: var(--metrics-toggle-background-color);
+}
+
+.lh-metrics-toggle__label .lh-metrics-toggle__icon--less {
+  padding-left: 8px;
+}
+.lh-metrics-toggle__label .lh-metrics-toggle__icon--more {
+  padding-right: 8px;
+}
+
+/* Pushes the metric description toggle button to the right. */
+.lh-audit-group--metrics .lh-audit-group__header {
+  display: flex;
+}
+.lh-audit-group--metrics .lh-audit-group__header span.lh-audit-group__title {
+  flex: 1;
+}
 
 .lh-metric .lh-metric__innerwrap::before {
   content: '';
-  width: var(--score-shape-size);
-  height: var(--score-shape-size);
+  width: var(--score-icon-size);
+  height: var(--score-icon-size);
   display: inline-block;
-  margin: var(--score-shape-margin);
+  margin: var(--score-icon-margin);
 }
 
 .lh-metric--pass .lh-metric__value {
@@ -589,20 +714,16 @@
 .lh-metric--fail .lh-metric__value {
   color: var(--color-fail-secondary);
 }
-.lh-metric--fail .lh-metric__innerwrap::before {
-  border-left: calc(var(--score-shape-size) / 2) solid transparent;
-  border-right: calc(var(--score-shape-size) / 2) solid transparent;
-  border-bottom: var(--score-shape-size) solid var(--color-fail);
+.lh-metric--fail .lh-metric__innerwrap::before,
+.lh-metric--error .lh-metric__innerwrap::before {
+  border-left: calc(var(--score-icon-size) / 2) solid transparent;
+  border-right: calc(var(--score-icon-size) / 2) solid transparent;
+  border-bottom: var(--score-icon-size) solid var(--color-fail);
 }
 
 .lh-metric--error .lh-metric__value,
 .lh-metric--error .lh-metric__description {
   color: var(--color-fail-secondary);
-}
-
-/* Hide icon if there was an error */
-.lh-metric--error .lh-metric__innerwrap::before {
-  display: none;
 }
 
 /* Perf load opportunity */
@@ -613,29 +734,28 @@
 }
 
 .lh-load-opportunity__header .lh-load-opportunity__col {
-  background-color: var(--medium-50-gray);
-  color: var(--medium-75-gray);
-  text-align: center;
+  color: var(--color-gray-600);
   display: unset;
-  line-height: calc(2.3 * var(--body-font-size));
+  line-height: calc(2.3 * var(--report-font-size));
 }
 
 .lh-load-opportunity__col {
   display: flex;
-  justify-content: space-between;
 }
 
 .lh-load-opportunity__col--one {
   flex: 5;
+  align-items: center;
   margin-right: 2px;
 }
 .lh-load-opportunity__col--two {
   flex: 4;
+  text-align: right;
 }
 
 .lh-audit--load-opportunity .lh-audit__display-text {
   text-align: right;
-  flex: 0 0 calc(3 * var(--body-font-size));
+  flex: 0 0 calc(3 * var(--report-font-size));
 }
 
 
@@ -643,11 +763,11 @@
 
 .lh-load-opportunity__sparkline {
   flex: 1;
-  margin-top: calc((var(--body-line-height) - var(--lh-sparkline-height)) / 2);
+  margin-top: calc((var(--report-line-height) - var(--sparkline-height)) / 2);
 }
 
 .lh-sparkline {
-  height: var(--lh-sparkline-height);
+  height: var(--sparkline-height);
   width: 100%;
 }
 
@@ -673,7 +793,6 @@
 /* Filmstrip */
 
 .lh-filmstrip-container {
-  padding: 0 var(--expandable-indent);
   /* smaller gap between metrics and filmstrip */
   margin: -8px auto 0 auto;
 }
@@ -691,7 +810,7 @@
 }
 
 .lh-filmstrip__thumbnail {
-  border: 1px solid var(--report-secondary-border-color);
+  border: 1px solid var(--report-border-color-secondary);
   max-height: 100px;
   max-width: 60px;
 }
@@ -699,22 +818,26 @@
 @media screen and (max-width: 750px) {
   .lh-filmstrip {
     flex-wrap: wrap;
-    justify-content: left;
   }
   .lh-filmstrip__frame {
-    margin: calc(var(--default-padding) / 3);
+    width: 20%;
+    margin-bottom: 5px;
+  }
+  .lh-filmstrip__thumbnail {
+    display: block;
+    margin: auto;
   }
 }
 
 /* Audit */
 
 .lh-audit {
-  border-bottom: 1px solid var(--report-secondary-border-color);
+  border-bottom: 1px solid var(--report-border-color-secondary);
 }
 
 /* Apply border-top to just the first audit. */
 .lh-audit {
-  border-top: 1px solid var(--report-secondary-border-color);
+  border-top: 1px solid var(--report-border-color-secondary);
 }
 .lh-audit ~ .lh-audit {
   border-top: none;
@@ -728,7 +851,8 @@
 /* Audit Group */
 
 .lh-audit-group {
-  margin-bottom: var(--audits-margin-bottom);
+  margin-bottom: var(--audit-group-margin-bottom);
+  position: relative;
 }
 
 .lh-audit-group__header::before {
@@ -739,6 +863,23 @@
   margin: var(--pwa-icon-margin);
   display: inline-block;
   vertical-align: middle;
+}
+
+/* Style the "over budget" columns red. */
+.lh-audit-group--budgets #performance-budget tbody tr td:nth-child(4),
+.lh-audit-group--budgets #performance-budget tbody tr td:nth-child(5),
+.lh-audit-group--budgets #timing-budget tbody tr td:nth-child(3) {
+  color: var(--color-red-700);
+}
+
+/* Align the "over budget request count" text to be close to the "over budget bytes" column. */
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(4){
+  text-align: right;
+}
+
+.lh-audit-group--budgets .lh-table {
+  width: 100%;
+  margin: 16px 0px 16px 0px;
 }
 
 .lh-audit-group--pwa-fast-reliable .lh-audit-group__header::before {
@@ -771,24 +912,27 @@
 .lh-audit-group__summary {
   display: flex;
   justify-content: space-between;
-  padding-right: var(--text-indent);
-  margin-top: calc(var(--section-padding) * 1.5);
-  margin-bottom: var(--section-padding);
+  margin-top: calc(var(--category-padding) * 1.5);
+  margin-bottom: var(--category-padding);
 }
 
 .lh-audit-group__itemcount {
-  color: var(--color-black-600);
+  color: var(--color-gray-600);
   font-weight: bold;
 }
 .lh-audit-group__header .lh-chevron {
-  margin-top: calc((var(--body-line-height) - 5px) / 2);
+  margin-top: calc((var(--report-line-height) - 5px) / 2);
 }
 
 .lh-audit-group__header {
-  font-size: var(--body-font-size);
-  margin: 0 0 var(--lh-audit-group-vpadding);
+  font-size: var(--report-font-size);
+  margin: 0 0 var(--audit-group-padding-vertical);
   /* When the header takes 100% width, the chevron becomes small. */
   max-width: calc(100% - var(--chevron-size));
+}
+/* max-width makes the metric toggle not flush. metrics doesn't have a chevron so unset. */
+.lh-audit-group--metrics .lh-audit-group__header {
+  max-width: unset;
 }
 
 .lh-audit-group__header span.lh-audit-group__title {
@@ -797,15 +941,16 @@
 
 .lh-audit-group__header span.lh-audit-group__itemcount {
   font-weight: bold;
-  color: var(--color-black-600);
+  color: var(--color-gray-600);
 }
 
 .lh-audit-group__header span.lh-audit-group__description {
   font-weight: 500;
-  color: var(--color-black-600);
+  color: var(--color-gray-600);
 }
 .lh-audit-group__header span.lh-audit-group__description::before {
   content: '—';
+  margin: 0px var(--audit-margin-horizontal);
 }
 
 .lh-clump > .lh-audit-group__header,
@@ -815,12 +960,13 @@
 .lh-audit-group--pwa-fast-reliable .lh-audit-group__header,
 .lh-audit-group--pwa-installable .lh-audit-group__header,
 .lh-audit-group--pwa-optimized .lh-audit-group__header {
-  margin-top: var(--lh-audit-group-vpadding);
+  margin-top: var(--audit-group-padding-vertical);
 }
 
 .lh-audit-explanation {
-  margin: var(--lh-audit-vpadding) 0 calc(var(--lh-audit-vpadding) / 2);
-  line-height: var(--caption-line-height);
+  margin: var(--audit-padding-vertical) 0 calc(var(--audit-padding-vertical) / 2) var(--audit-margin-horizontal);
+  line-height: var(--audit-explanation-line-height);
+  display: inline-block;
 }
 
 .lh-audit--fail .lh-audit-explanation {
@@ -828,22 +974,6 @@
 }
 
 /* Report */
-
-.lh-header-sticky {
-  /** TODO: Redesigned report has a small sticky header.
-  For now, disable the current sticky behavior. */
-  /* position: -webkit-sticky;
-  position: sticky; */
-  top: 0;
-  width: 100%;
-  min-width: var(--report-min-width);
-  z-index: 2;
-  will-change: transform;
-}
-.lh-header-plain {
-  margin-top: var(--section-padding);
-}
-
 .lh-list > div:not(:last-child) {
   padding-bottom: 20px;
 }
@@ -866,26 +996,36 @@
 .lh-code {
   white-space: normal;
   margin-top: 0;
-  font-size: 85%;
-  word-break: break-word;
+  font-size: var(--report-monospace-font-size);
 }
 
 .lh-warnings {
-  --item-margin: calc(var(--body-line-height) / 6);
-  border: 1px solid var(--color-average);
-  border-radius: 4px;
-  margin: var(--lh-audit-vpadding) 0;
-  padding: calc(var(--lh-audit-vpadding) / 2) var(--lh-audit-vpadding);
+  --item-margin: calc(var(--report-line-height) / 6);
+  color: var(--color-average);
+  margin: var(--audit-padding-vertical) 0;
+  padding: calc(var(--audit-padding-vertical) / 2) calc(var(--audit-description-padding-left));
+}
+.lh-warnings span {
+  font-weight: bold;
 }
 
 .lh-warnings--toplevel {
   --item-margin: calc(var(--header-line-height) / 4);
-  color: var(--secondary-text-color);
-  margin: var(--section-padding);
-  padding: var(--section-padding);
+  color: var(--toplevel-warning-text-color);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(var(--report-width) - var(--category-padding) * 2);
+  background-color: var(--toplevel-warning-background-color);
+  padding: var(--toplevel-warning-padding);
+  border-radius: 8px;
 }
+
+.lh-warnings__msg {
+  color: var(--toplevel-warning-message-text-color);
+  margin: 0;
+}
+
 .lh-warnings ul {
-  padding-left: calc(var(--section-padding) * 2);
   margin: 0;
 }
 .lh-warnings li {
@@ -905,26 +1045,142 @@
   border: 0;
 }
 
-.lh-gauge__wrapper {
-  padding: var(--score-container-padding);
+/* Gauge */
+
+.lh-gauge__wrapper--pass {
+  color: var(--color-pass);
+  fill: var(--color-pass);
+  stroke: var(--color-pass);
 }
+
+.lh-gauge__wrapper--average {
+  color: var(--color-average);
+  fill: var(--color-average);
+  stroke: var(--color-average);
+}
+
+.lh-gauge__wrapper--fail {
+  color: var(--color-fail);
+  fill: var(--color-fail);
+  stroke: var(--color-fail);
+}
+
+.lh-gauge {
+  stroke-linecap: round;
+  width: var(--gauge-circle-size);
+  height: var(--gauge-circle-size);
+}
+
+.lh-category .lh-gauge {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+}
+
+.lh-gauge-base {
+    opacity: 0.1;
+    stroke: var(--circle-background);
+}
+
+.lh-gauge-arc {
+    fill: none;
+    stroke: var(--circle-color);
+    transform-origin: 50% 50%;
+    animation: load-gauge var(--transition-length) ease forwards;
+    animation-delay: 250ms;
+}
+
+.lh-gauge__svg-wrapper {
+  position: relative;
+  height: var(--gauge-circle-size);
+}
+.lh-category .lh-gauge__svg-wrapper {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+}
+
+/* The plugin badge overlay */
+.lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+  width: var(--plugin-badge-size);
+  height: var(--plugin-badge-size);
+  background-color: var(--plugin-badge-background-color);
+  background-image: var(--plugin-icon-url);
+  background-repeat: no-repeat;
+  background-size: var(--plugin-icon-size);
+  background-position: 58% 50%;
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 0px;
+  display: block;
+  z-index: 100;
+  box-shadow: 0 0 4px rgba(0,0,0,.2);
+  border-radius: 25%;
+}
+.lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+  width: var(--plugin-badge-size-big);
+  height: var(--plugin-badge-size-big);
+}
+
+@keyframes load-gauge {
+  from { stroke-dasharray: 0 352; }
+}
+
+.lh-gauge__percentage {
+  width: 100%;
+  height: var(--gauge-circle-size);
+  position: absolute;
+  font-family: var(--report-font-family-monospace);
+  font-size: calc(var(--gauge-circle-size) * 0.34 + 1.3px);
+  line-height: 0;
+  text-align: center;
+  top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 2);
+}
+
+.lh-category .lh-gauge__percentage {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+  --gauge-percentage-font-size: var(--gauge-percentage-font-size-big);
+}
+
+.lh-gauge__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none;
+  padding: var(--score-container-padding);
+
+  --transition-length: 1s;
+
+  /* Contain the layout style paint & layers during animation*/
+  contain: content;
+  will-change: opacity; /* Only using for layer promotion */
+}
+
+.lh-gauge__label {
+  font-size: var(--gauge-label-font-size);
+  line-height: var(--gauge-label-line-height);
+  margin-top: 10px;
+  text-align: center;
+  color: var(--report-text-color);
+}
+
+/* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
+.lh-category .lh-gauge__label {
+  --gauge-label-font-size: var(--gauge-label-font-size-big);
+  --gauge-label-line-height: var(--gauge-label-line-height-big);
+  margin-top: 14px;
+}
+
 
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper,
 .lh-sticky-header .lh-gauge__wrapper,
 .lh-sticky-header .lh-gauge--pwa__wrapper {
-  width: var(--score-container-width);
-}
-
-.lh-scores-header .lh-gauge--pwa__wrapper {
-  /* Can remove when this bug is resolved: https://bugs.chromium.org/p/chromium/issues/detail?id=942097 */
-  will-change: transform;
+  width: var(--gauge-wrapper-width);
 }
 
 .lh-scorescale {
   display: inline-flex;
   margin: 12px auto 0 auto;
-  border: 1px solid var(--color-black-200);
+  border: 1px solid var(--color-gray-200);
   border-radius: 20px;
   padding: 8px 8px;
 }
@@ -933,7 +1189,7 @@
   display: flex;
   align-items: center;
   margin: 0 12px;
-  font-family: var(--monospace-font-family);
+  font-family: var(--report-font-family-monospace);
   white-space: nowrap;
 }
 
@@ -970,33 +1226,35 @@
 }
 
 .lh-category {
-  padding: var(--section-padding);
+  padding: var(--category-padding);
   max-width: var(--report-width);
   margin: 0 auto;
 }
 
 .lh-category-wrapper {
-  border-bottom: 1px solid var(--color-black-200);
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .lh-category-wrapper:first-of-type {
-  border-top: 1px solid var(--color-black-200);
+  border-top: 1px solid var(--color-gray-200);
 }
 
 /* section hash link jump should preserve fixed header
    https://css-tricks.com/hash-tag-links-padding/
 */
 .lh-category > .lh-permalink {
-  margin-top: calc((var(--report-header-height) + var(--default-padding)) * -1);
-  padding-bottom: calc(var(--report-header-height) + var(--default-padding));
+  --sticky-header-height: calc(var(--gauge-circle-size) + var(--score-container-padding) * 2);
+  --topbar-plus-header: calc(var(--topbar-height) + var(--sticky-header-height));
+  margin-top: calc(var(--topbar-plus-header) * -1);
+  padding-bottom: var(--topbar-plus-header);
   display: block;
   visibility: hidden;
 }
 
 .lh-category-header {
-  font-size: var(--header-font-size);
+  font-size: var(--category-header-font-size);
   min-height: var(--gauge-circle-size);
-  margin-bottom: var(--lh-section-vpadding);
+  margin-bottom: var(--section-padding-vertical);
 }
 
 .lh-category-header .lh-score__gauge {
@@ -1006,7 +1264,7 @@
 }
 
 .lh-category-header .lh-audit__title {
-  font-size: var(--header-font-size);
+  font-size: var(--category-header-font-size);
   line-height: var(--header-line-height);
 }
 
@@ -1060,29 +1318,40 @@
 }
 
 .lh-table {
-  --image-preview-size: 24px;
   border-collapse: collapse;
+  /* Can't assign padding to table, so shorten the width instead. */
+  width: calc(100% - var(--audit-description-padding-left));
 }
 
-.lh-table thead {
-  background-color: var(--lh-table-higlight-bg);
-}
 .lh-table thead th {
   font-weight: normal;
-  word-wrap: normal;
+  color: var(--color-gray-600);
+  /* See text-wrapping comment on .lh-container. */
+  word-break: normal;
 }
 
-.lh-table tbody tr:nth-child(even) {
-  background-color: var(--lh-table-higlight-bg);
+.lh-table tbody tr:nth-child(odd) {
+  background-color: var(--table-higlight-background-color);
 }
 
 .lh-table th,
 .lh-table td {
   padding: 8px 6px;
 }
+.lh-table th:first-child {
+  padding-left: 0;
+}
+.lh-table th:last-child {
+  padding-right: 0;
+}
+
+.lh-table tr {
+  vertical-align: baseline;
+}
 
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
 .lh-table-column--text,
+.lh-table-column--source-location,
 .lh-table-column--url,
 /* .lh-table-column--thumbnail, */
 /* .lh-table-column--empty,*/
@@ -1096,16 +1365,22 @@
 .lh-table-column--ms,
 .lh-table-column--numeric {
   text-align: right;
+  word-break: normal;
 }
 
 
-.lh-table-column--thumbnail {
-  width: calc(var(--image-preview-size) * 2);
+
+.lh-table .lh-table-column--thumbnail {
+  width: var(--image-preview-size);
+  padding: 0;
 }
 
 .lh-table-column--url {
   min-width: 250px;
-  white-space: nowrap;
+}
+
+.lh-table-column--text {
+  min-width: 80px;
 }
 
 /* Keep columns narrow if they follow the URL column */
@@ -1118,30 +1393,44 @@
   width: 12%;
 }
 
-.lh-text__url {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-.lh-text__url:hover {
-  text-decoration: underline dotted #999;
-  text-decoration-skip-ink: auto;
-}
-
-.lh-text__url > .lh-text, .lh-text__url-host {
-  display: inline-block;
+.lh-text__url-host {
+  display: inline;
 }
 
 .lh-text__url-host {
-  margin-left: calc(var(--body-font-size) / 2);
+  margin-left: calc(var(--report-font-size) / 2);
   opacity: 0.6;
   font-size: 90%
 }
 
 .lh-thumbnail {
-  height: var(--image-preview-size);
+  object-fit: cover;
   width: var(--image-preview-size);
-  object-fit: contain;
+  height: var(--image-preview-size);
+  display: block;
+}
+
+.lh-unknown pre {
+  overflow: scroll;
+  border: solid 1px var(--color-gray-200);
+}
+
+.lh-text__url > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lh-text__url > a:hover {
+  text-decoration: underline dotted #999;
+}
+
+.lh-sub-rows:not(:first-child) .lh-sub-row {
+  margin-left: 20px;
+  color: var(--color-gray-700);
+}
+.lh-sub-row {
+  margin-bottom: 0;
 }
 
 /* Chevron
@@ -1153,15 +1442,15 @@
   --chevron-angle-right: -42deg;
   width: var(--chevron-size);
   height: var(--chevron-size);
-  margin-top: calc((var(--body-line-height) - 12px) / 2);
+  margin-top: calc((var(--report-line-height) - 12px) / 2);
 }
 
 .lh-chevron__lines {
   transition: transform 0.4s;
-  transform: translateY(var(--body-line-height));
+  transform: translateY(var(--report-line-height));
 }
 .lh-chevron__line {
- stroke: var(--display-value-gray);
+ stroke: var(--chevron-line-stroke);
  stroke-width: var(--chevron-size);
  stroke-linecap: square;
  transform-origin: 50%;
@@ -1247,3 +1536,5 @@
   75% { opacity: 1; }
   100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); pointer-events: auto; }
 }
+
+/*# sourceURL=report-styles.css */

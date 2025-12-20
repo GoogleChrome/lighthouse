@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 /* globals self Util */
 
 /** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./details-renderer.js')} DetailsRenderer */
 
 class CriticalRequestChainRenderer {
   /**
@@ -84,9 +85,10 @@ class CriticalRequestChainRenderer {
    * @param {DOM} dom
    * @param {DocumentFragment} tmpl
    * @param {CRCSegment} segment
+   * @param {DetailsRenderer} detailsRenderer
    * @return {Node}
    */
-  static createChainNode(dom, tmpl, segment) {
+  static createChainNode(dom, tmpl, segment, detailsRenderer) {
     const chainsEl = dom.cloneTemplate('#tmpl-lh-crc__chains', tmpl);
 
     // Hovering over request shows full URL.
@@ -120,17 +122,17 @@ class CriticalRequestChainRenderer {
     }
 
     // Fill in url, host, and request size information.
-    const {file, hostname} = Util.parseURL(segment.node.request.url);
+    const url = segment.node.request.url;
+    const linkEl = detailsRenderer.renderTextURL(url);
     const treevalEl = dom.find('.crc-node__tree-value', chainsEl);
-    dom.find('.crc-node__tree-file', treevalEl).textContent = `${file}`;
-    dom.find('.crc-node__tree-hostname', treevalEl).textContent = hostname ? `(${hostname})` : '';
+    treevalEl.appendChild(linkEl);
 
     if (!segment.hasChildren) {
       const {startTime, endTime, transferSize} = segment.node.request;
       const span = dom.createElement('span', 'crc-node__chain-duration');
-      span.textContent = ' - ' + Util.formatMilliseconds((endTime - startTime) * 1000) + ', ';
+      span.textContent = ' - ' + Util.i18n.formatMilliseconds((endTime - startTime) * 1000) + ', ';
       const span2 = dom.createElement('span', 'crc-node__chain-duration');
-      span2.textContent = Util.formatBytesToKB(transferSize, 0.01);
+      span2.textContent = Util.i18n.formatBytesToKB(transferSize, 0.01);
 
       treevalEl.appendChild(span);
       treevalEl.appendChild(span2);
@@ -146,14 +148,15 @@ class CriticalRequestChainRenderer {
    * @param {CRCSegment} segment
    * @param {Element} elem Parent element.
    * @param {LH.Audit.Details.CriticalRequestChain} details
+   * @param {DetailsRenderer} detailsRenderer
    */
-  static buildTree(dom, tmpl, segment, elem, details) {
-    elem.appendChild(CriticalRequestChainRenderer.createChainNode(dom, tmpl, segment));
+  static buildTree(dom, tmpl, segment, elem, details, detailsRenderer) {
+    elem.appendChild(CRCRenderer.createChainNode(dom, tmpl, segment, detailsRenderer));
     if (segment.node.children) {
       for (const key of Object.keys(segment.node.children)) {
-        const childSegment = CriticalRequestChainRenderer.createSegment(segment.node.children, key,
+        const childSegment = CRCRenderer.createSegment(segment.node.children, key,
           segment.startTime, segment.transferSize, segment.treeMarkers, segment.isLastChild);
-        CriticalRequestChainRenderer.buildTree(dom, tmpl, childSegment, elem, details);
+        CRCRenderer.buildTree(dom, tmpl, childSegment, elem, details, detailsRenderer);
       }
     }
   }
@@ -162,30 +165,33 @@ class CriticalRequestChainRenderer {
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.CriticalRequestChain} details
+   * @param {DetailsRenderer} detailsRenderer
    * @return {Element}
    */
-  static render(dom, templateContext, details) {
+  static render(dom, templateContext, details, detailsRenderer) {
     const tmpl = dom.cloneTemplate('#tmpl-lh-crc', templateContext);
     const containerEl = dom.find('.lh-crc', tmpl);
 
     // Fill in top summary.
-    dom.find('.crc-initial-nav', tmpl).textContent = Util.UIStrings.crcInitialNavigation;
+    dom.find('.crc-initial-nav', tmpl).textContent = Util.i18n.strings.crcInitialNavigation;
     dom.find('.lh-crc__longest_duration_label', tmpl).textContent =
-        Util.UIStrings.crcLongestDurationLabel;
+        Util.i18n.strings.crcLongestDurationLabel;
     dom.find('.lh-crc__longest_duration', tmpl).textContent =
-        Util.formatMilliseconds(details.longestChain.duration);
+        Util.i18n.formatMilliseconds(details.longestChain.duration);
 
     // Construct visual tree.
-    const root = CriticalRequestChainRenderer.initTree(details.chains);
+    const root = CRCRenderer.initTree(details.chains);
     for (const key of Object.keys(root.tree)) {
-      const segment = CriticalRequestChainRenderer.createSegment(root.tree, key,
-          root.startTime, root.transferSize);
-      CriticalRequestChainRenderer.buildTree(dom, tmpl, segment, containerEl, details);
+      const segment = CRCRenderer.createSegment(root.tree, key, root.startTime, root.transferSize);
+      CRCRenderer.buildTree(dom, tmpl, segment, containerEl, details, detailsRenderer);
     }
 
     return dom.find('.lh-crc-container', tmpl);
   }
 }
+
+// Alias b/c the name is really long.
+const CRCRenderer = CriticalRequestChainRenderer;
 
 // Allow Node require()'ing.
 if (typeof module !== 'undefined' && module.exports) {

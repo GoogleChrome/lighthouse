@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -10,10 +10,11 @@
   */
 'use strict';
 
-const Gatherer = require('../gatherer');
-const URL = require('../../../lib/url-shim');
-const NetworkRequest = require('../../../lib/network-request');
-const Sentry = require('../../../lib/sentry');
+const log = require('lighthouse-logger');
+const Gatherer = require('../gatherer.js');
+const URL = require('../../../lib/url-shim.js');
+const NetworkRequest = require('../../../lib/network-request.js');
+const Sentry = require('../../../lib/sentry.js');
 const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
 
 // Image encoding can be slow and we don't want to spend forever on it.
@@ -45,7 +46,7 @@ class OptimizedImages extends Gatherer {
     /** @type {Set<string>} */
     const seenUrls = new Set();
     return networkRecords.reduce((prev, record) => {
-      // Skip records that we've seen before, never finished, or came from OOPIFs.
+      // Skip records that we've seen before, never finished, or came from child targets (OOPIFS).
       if (seenUrls.has(record.url) || !record.finished || record.sessionId) {
         return prev;
       }
@@ -124,6 +125,8 @@ class OptimizedImages extends Gatherer {
         const image = {failed: false, ...stats, ...record};
         results.push(image);
       } catch (err) {
+        log.warn('optimized-images', err.message);
+
         // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
         // want to tank the entire run due to a single image.
         Sentry.captureException(err, {

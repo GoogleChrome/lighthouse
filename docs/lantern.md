@@ -4,6 +4,10 @@
 
 Project Lantern is an ongoing effort to reduce the run time of Lighthouse and improve audit quality by modeling page activity and simulating browser execution. This document details the accuracy of these models and captures the expected natural variability.
 
+## Deep Dive
+
+[![Lantern Deep Dive](https://img.youtube.com/vi/0dkry1r49xw/0.jpg)](https://www.youtube.com/watch?v=0dkry1r49xw)
+
 ## Accuracy
 
 All of the following accuracy stats are reported on a set of 300 URLs sampled from the Alexa top 1000, HTTPArchive dataset, and miscellaneous ad landing pages. Median was collected for *9 runs* in one environment and compared to the median of *9 runs* in a second environment.

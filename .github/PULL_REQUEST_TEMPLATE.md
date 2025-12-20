@@ -1,4 +1,8 @@
-<!-- Thank you for submitting a pull request! -->
+<!--
+Thank you for submitting a pull request!
+See CONTRIBUTING.MD for help in getting a change landed.
+  https://github.com/GoogleChrome/lighthouse/blob/master/CONTRIBUTING.md
+-->
 
 **Summary**
 <!-- What kind of change does this PR introduce? -->

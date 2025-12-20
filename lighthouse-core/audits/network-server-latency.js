@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 
@@ -45,22 +45,22 @@ class NetworkServerLatency extends Audit {
 
     /** @type {number} */
     let maxLatency = 0;
-    /** @type {Array<{origin: string, serverReponseTime: number}>} */
+    /** @type {Array<{origin: string, serverResponseTime: number}>} */
     const results = [];
-    for (const [origin, serverReponseTime] of analysis.serverResponseTimeByOrigin.entries()) {
+    for (const [origin, serverResponseTime] of analysis.serverResponseTimeByOrigin.entries()) {
       // Ignore entries that don't look like real origins, like the __SUMMARY__ entry.
       if (!origin.startsWith('http')) continue;
 
-      maxLatency = Math.max(serverReponseTime, maxLatency);
-      results.push({origin, serverReponseTime});
+      maxLatency = Math.max(serverResponseTime, maxLatency);
+      results.push({origin, serverResponseTime});
     }
 
-    results.sort((a, b) => b.serverReponseTime - a.serverReponseTime);
+    results.sort((a, b) => b.serverResponseTime - a.serverResponseTime);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'serverReponseTime', itemType: 'ms', granularity: 1,
+      {key: 'serverResponseTime', itemType: 'ms', granularity: 1,
         text: str_(i18n.UIStrings.columnTimeSpent)},
     ];
 
@@ -69,6 +69,7 @@ class NetworkServerLatency extends Audit {
     return {
       score: Math.max(1 - (maxLatency / 500), 0),
       numericValue: maxLatency,
+      numericUnit: 'millisecond',
       displayValue: str_(i18n.UIStrings.ms, {timeInMs: maxLatency}),
       details: tableDetails,
     };

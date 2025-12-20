@@ -1,69 +1,81 @@
-# Goal
-The goal of this document is to explain how scoring works in Lighthouse and what to do to improve your Lighthouse scores across the four sections of the report.
+# Lighthouse Scores
 
-Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)
+## How is the Performance score calculated?
 
-![alt text](https://user-images.githubusercontent.com/39191/32397461-2d20c87a-c0a7-11e7-99d8-61576113a710.png)
-*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)*
+➡️ Please read [Lighthouse Performance Scoring at web.dev](https://web.dev/performance-scoring/).
 
-Note 2: receiving a **score of ?** in any Lighthouse category indicates an error occurred. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
+## How is the PWA (Progressive Web App) score calculated?
 
-# Performance
+The PWA category doesn't get a 0-100 score, but instead is evaluated in 3 separate groups (Fast and reliable, Installable, and PWA Optimized). In order to satisfy each grouping (and get the associated badge), every audit within the group must be passing.
 
-### What performance metrics does Lighthouse measure?
-Lighthouse measures the following performance metrics:
+![Lighthouse PWA badge - states](https://user-images.githubusercontent.com/39191/80662283-c292d280-8a45-11ea-84e8-7f8248657acf.png)
 
-- [First Contentful Paint](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint): first contentful paint is the first time the browser paints any content (text, image, canvas, etc) on the screen.
-- [First Meaningful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint): first meaningful paint is defined as when the browser first puts any “meaningful” element/set of “meaningful” elements on the screen. What is meaningful is determined from a series of heuristics.
-- [First CPU Idle](https://developers.google.com/web/tools/lighthouse/audits/first-interactive): first CPU idle is defined as the first point at which the page could respond quickly to input. It doesn't consider any point in time before first meaningful paint. The way this is implemented is primarily based on heuristics.
-*Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
-- [Time to Interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive): defined as the first point at which everything is loaded such that the page will quickly respond to any user input throughout the page.
-*Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
-- [Speed Index](https://developers.google.com/web/tools/lighthouse/audits/speed-index): Speed Index measures how quickly all above-the-fold content is painted on screen. The earlier the pixels are painted, the better you score on metric. Users want an experience where most of the content is shown on the screen during the first few moments of initiating the page load. Loading more content earlier makes your end user feel like the website is loading quickly, which contributes to a positive user experience. Therefore, the lower your Speed Index, the better.
-- [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency): this audit measures how fast your app is in responding to user input. Our benchmark is that the estimated input latency should be under 50 ms (see documentation [here](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency) as to why).
+Note on https redirects: some metrics in this category have issues with https redirects because of TLS-handshake errors. More specifically you will run into this when using the ```simplehttp2server``` npm package. Subsequent metrics will fail after the https redirects (see [#1217](https://github.com/GoogleChrome/lighthouse/issues/1217), [#5910](https://github.com/GoogleChrome/lighthouse/issues/5910)).
 
-*Some **variability** when running on real-world sites is to be expected as sites load different ads, scripts, and network conditions vary for each visit. Note that Lighthouse can especially experience inconsistent behaviors when it runs in the presence of anti-virus scanners, other extensions or programs that interfere with page load, and inconsistent ad behavior. Please try to run without anti-virus scanners or other extensions/programs to get the cleanest results, or alternatively, run Lighthouse on WebPageTest for the most consistent results [here](https://www.webpagetest.org/easy.php).*
+## How is the Best Practices score calculated?
 
-### How are the scores weighted?
-Lighthouse returns a performance score from 0-100 (technically returned as 0-1, but you can do the math ;). A score of 0 usually indicates an error with performance measurement (so file an issue in the Lighthouse repo if further debugging is needed), and 100 is the best possible ideal score (really hard to get). Usually, any score above a 90 gets you in the top ~5% of performant websites.
+All audits in the Best Practices category are equally weighted. Therefore, implementing each audit correctly will increase your overall score by ~6 points.
 
-The performance score is determined from the **performance metrics only**. The Opportunities/Diagnostics sections do not directly contribute to the performance score.
+## How is the SEO score calculated?
 
-The metric results are not weighted equally. Currently the weights are:
-
-* 3X - first contentful paint
-* 1X - first meaningful paint
-* 2X - first cpu idle
-* 5X - time to interactive
-* 4X - speed index
-* 0X - estimated input latency
-
-These weights are heuristics, and the Lighthouse team is working on formalizing the weighting system through more field data.
-
-### How do performance metrics get scored?
-Once Lighthouse is done gathering the raw performance metrics for your website (metrics reported in miliseconds), it converts them into a score by mapping the raw performance number to a number between 0-100 by looking where your raw performance metric falls on the Lighthouse scoring distribution. The Lighthouse scoring distribution is a log normal distribution that is derived from the performance metrics of real website performance data (see sample distribution [here](https://www.desmos.com/calculator/zrjq6v1ihi)).
-
-Once we finish computing the percentile equivalent of your raw performance score, we take the weighted average of all the performance metrics (per the weighting above). Finally, we apply a coloring to the score (green, orange, and red) depending on what "bucket" your score falls in. This maps to:
-- Red (poor score): 0-49
-- Orange (average): 50-89
-- Green (good): 90-100
-
-### What can developers do to improve their performance score?
-*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
-
-Lighthouse has a whole section in the report on improving your performance score under the “Opportunities” section. There are detailed suggestions and documentation that explains the different suggestions and how to implement them. Additionally, the diagnostics section lists additional guidance that developers can explore to further experiment and tweak with their performance.
+All audits in the SEO category are [equally weighted](https://github.com/GoogleChrome/lighthouse/blob/080c6b4b9fec6dfcaf8e0cd8d09c3224465e4fd3/lighthouse-core/config/default-config.js#L531-L547), with the exception ofStructured Data, which is an unscored manual audit. Therefore, implementing each audit correctly will increase your overall score by ~8 points.
 
 
-# PWA
-### How is the PWA score calculated?
-The PWA score is calculated based on the [Baseline PWA checklist](https://developers.google.com/web/progressive-web-apps/checklist#baseline), which lists 14 requirements. Lighthouse tests for 11 out of the 14 requirements automatically, with the other 3 being manual checks. Each of the 11 audits for the PWA section of the report is weighted equally, so implementing any of the audits correctly will increase your overall score by ~9 points.
+## How is the accessibility score calculated?
 
-*Note on https redirects*: some metrics in this category have issues with https redirects because of TLS-handshake errors. More specifically you will run into this when using the ```simplehttp2server``` npm package. Subsequent metrics will fail after the https redirects (see #1217, #5910)
+<!--
+  sum = auditRefs.reduce((sum, item) => sum += item.weight, 0);
+  auditRefs
+    .filter(a => a.weight)
+    .sort((a, b) => b.weight - a.weight)
+    .map(a => [undefined, a.id, `${(a.weight / sum * 100).toLocaleString(undefined, {maximumFractionDigits:1})}%`, undefined].join(' | '))
+    .join('\n')
+  -->
 
-# Accessibility
-### How is the accessibility score calculated?
-The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in [the scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page.
+The accessibility score is a weighted average. The specific weights, at the time of publishing, are [as follows](https://github.com/GoogleChrome/lighthouse/blob/080c6b4b9fec6dfcaf8e0cd8d09c3224465e4fd3/lighthouse-core/config/default-config.js#L450-L491):
 
-# Best Practices
-### How is the Best Practices score calculated?
-Each audit in the Best Practices section is equally weighted. Therefore, implementing each audit correctly will increase your overall score by ~6 points.
+| audit id | weight |
+|-|-|
+ | aria-allowed-attr | 4.2% |
+ | aria-hidden-body | 4.2% |
+ | aria-required-attr | 4.2% |
+ | aria-required-children | 4.2% |
+ | aria-required-parent | 4.2% |
+ | aria-roles | 4.2% |
+ | aria-valid-attr-value | 4.2% |
+ | aria-valid-attr | 4.2% |
+ | button-name | 4.2% |
+ | duplicate-id-aria | 4.2% |
+ | image-alt | 4.2% |
+ | input-image-alt | 4.2% |
+ | label | 4.2% |
+ | meta-refresh | 4.2% |
+ | meta-viewport | 4.2% |
+ | video-caption | 4.2% |
+ | video-description | 4.2% |
+ | accesskeys | 1.3% |
+ | aria-hidden-focus | 1.3% |
+ | aria-input-field-name | 1.3% |
+ | aria-toggle-field-name | 1.3% |
+ | bypass | 1.3% |
+ | color-contrast | 1.3% |
+ | definition-list | 1.3% |
+ | dlitem | 1.3% |
+ | document-title | 1.3% |
+ | duplicate-id-active | 1.3% |
+ | frame-title | 1.3% |
+ | html-has-lang | 1.3% |
+ | html-lang-valid | 1.3% |
+ | layout-table | 1.3% |
+ | link-name | 1.3% |
+ | list | 1.3% |
+ | listitem | 1.3% |
+ | object-alt | 1.3% |
+ | tabindex | 1.3% |
+ | td-headers-attr | 1.3% |
+ | th-has-data-cells | 1.3% |
+ | valid-lang | 1.3% |
+ | form-field-multiple-labels | 0.8% |
+ | heading-order | 0.8% |
+
+Each audit is a pass/fail, meaning there is no room for partial points for getting an audit half-right. For example, that means if half your buttons have screenreader friendly names, and half do not, you don't get "half" of the weighted average - you get a 0 because it needs to be implemented correctly *throughout* the page.

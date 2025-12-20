@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 -->
@@ -23,6 +23,16 @@
         role="alert"
         aria-checked="true">
       </div>
+    </section>
+    <p>aria-hidden-focus</p>
+    <section>
+      <div id="aria-hidden-focus" aria-hidden="true">
+        <button>Focusable Button</button>
+      </div>
+    </section>
+    <p>aria-input-field-name</p>
+    <section>
+      <div id="aria-input-field-name" role="textbox">text-in-a-box</div>
     </section>
     <p>aria-required-attr</p>
     <section>
@@ -68,10 +78,6 @@
         aria-checked="0">
       </div>
     </section>
-    <p>audio-caption</p>
-    <section>
-      <audio id="audio-caption"></audio>
-    </section>
     <p>button-name</p>
     <section>
       <button id="button-name"></button>
@@ -96,14 +102,31 @@
         <dd></dd>
       </div>
     </section>
-    <p>duplicate-id</p>
+    <p>duplicate-id-active</p>
     <section>
-      <div id="duplicate-id"></div>
-      <div id="duplicate-id"></div>
+      <textarea id="duplicate-id-active" aria-label="text1"></textarea>
+      <textarea id="duplicate-id-active" aria-label="text2"></textarea>
+    </section>
+    <p>duplicate-id-aria</p>
+    <section>
+      <div id="duplicate-id-aria" class="duplicate-id-aria"></span>
+      <div id="duplicate-id-aria"></div>
+      <div aria-labelledby="duplicate-id-aria"></div>
+    </section>
+    <p>form-field-multiple-labels</p>
+    <section>
+      <label for="form-field-multiple-labels" id="label1">label1</label>
+      <label for="form-field-multiple-labels">label2</label>
+      <input type="checkbox" id="form-field-multiple-labels" />
     </section>
     <p>frame-title</p>
     <section>
       <iframe id="frame-title"></iframe>
+    </section>
+    <p>heading-order</p>
+    <section>
+      <h1>top header</h1>
+      <h3>sub-sub-header</h3>
     </section>
     <p>image-alt</p>
     <section>

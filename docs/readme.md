@@ -15,7 +15,7 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
   return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
     opts.port = chrome.port;
     return lighthouse(url, opts, config).then(results => {
-      // use results.lhr for the JS-consumeable output
+      // use results.lhr for the JS-consumable output
       // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
       // use results.report for the HTML/JSON/CSV output as a string
       // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
@@ -46,7 +46,7 @@ const flags = {onlyCategories: ['performance']};
 launchChromeAndRunLighthouse(url, flags).then( // ...
 ```
 
-You can also craft your own config (e.g. [mixed-content-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/mixed-content-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
+You can also craft your own config (e.g. [experimental-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/experimental-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
 
 ### Differences from CLI flags
 
@@ -58,7 +58,7 @@ Note that some flag functionality is only available to the CLI. The set of share
 | `chromeFlags` | Ignored, Chrome is not launched for you. |
 | `outputPath` | Ignored, output is returned as string in `.report` property. |
 | `saveAssets` | Ignored, artifacts are returned in `.artifacts` property. |
-| `view` | Ignored, use the `opn` npm module if you want this functionality. |
+| `view` | Ignored, use the `open` npm module if you want this functionality. |
 | `enableErrorReporting` | Ignored, error reporting is always disabled for node. |
 | `listAllAudits` | Ignored, not relevant in programmatic use. |
 | `listTraceCategories` | Ignored, not relevant in programmatic use. |
@@ -92,16 +92,15 @@ In order to extend the Lighthouse configuration programmatically, you need to pa
   settings: {
     onlyAudits: [
       'first-meaningful-paint',
-      'speed-index-metric',
-      'estimated-input-latency',
-      'first-interactive',
-      'consistently-interactive',
+      'speed-index',
+      'first-cpu-idle',
+      'interactive',
     ],
   },
 }
 ```
 
-You can extend base configuration from either [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js) or [lighthouse:full](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/full-config.js). Alternatively, you can build up your own configuration from scratch to have complete control.
+You can extend base configuration from [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js), or you can build up your own configuration from scratch to have complete control.
 
 For more information on the types of config you can provide, see [Lighthouse Configuration](https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md).
 
@@ -114,6 +113,14 @@ instance with an open debugging port.
 1. Run `chrome-debug`. This will log the debugging port of your Chrome instance
 1. Navigate to your site and log in.
 1. In a separate terminal tab, run `lighthouse http://mysite.com --port port-number` using the port number from chrome-debug.
+
+## Testing on a site with an untrusted certificate
+
+When testing a site with an untrusted certificate, Chrome will be unable to load the page and so the Lighthouse report will mostly contain errors.
+
+If this certificate **is one you control** and is necessary for development (for instance, `localhost` with a self-signed certificate for local HTTP/2 testing), we recommend you _add the certificate to your locally-trusted certificate store_. In Chrome, see `Settings` > `Privacy and Security` > `Manage certificates` or consult instructions for adding to the certificate store in your operating system.
+
+Alternatively, you can instruct Chrome to ignore the invalid certificate by adding the Lighthouse CLI flag `--chrome-flags="--ignore-certificate-errors"`. However, you must be as careful with this flag as it's equivalent to browsing the web with TLS disabled. Any content loaded by the test page (e.g. third-party scripts or iframed ads) will *also* not be subject to certificate checks, [opening up avenues for MitM attacks](https://www.chromium.org/Home/chromium-security/education/tls#TOC-What-security-properties-does-TLS-give-me-). For these reasons, we recommend the earlier solution of adding the certificate to your local cert store.
 
 ## Testing on a mobile device
 

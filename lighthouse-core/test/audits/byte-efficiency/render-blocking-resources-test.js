@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,12 +7,12 @@
 
 const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
 
-const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
-const NetworkRequest = require('../../../lib/network-request');
-const assert = require('assert');
+const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
+const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
+const NetworkRequest = require('../../../lib/network-request.js');
+const assert = require('assert').strict;
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');

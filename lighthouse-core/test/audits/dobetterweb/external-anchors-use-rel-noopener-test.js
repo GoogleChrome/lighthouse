@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 const ExternalAnchorsAudit =
   require('../../../audits/dobetterweb/external-anchors-use-rel-noopener.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 const URL = 'https://google.com/test';
 
@@ -24,7 +24,6 @@ describe('External anchors use rel="noopener"', () => {
     });
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
-    assert.equal(auditResult.details.items.length, 0);
   });
 
   it('passes when links have a valid rel', () => {
@@ -38,7 +37,6 @@ describe('External anchors use rel="noopener"', () => {
     });
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
-    assert.equal(auditResult.details.items.length, 0);
   });
 
   it('passes when links do not use target=_blank', () => {
@@ -50,7 +48,6 @@ describe('External anchors use rel="noopener"', () => {
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.score, 1);
-    assert.equal(auditResult.details.items.length, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -81,25 +78,35 @@ describe('External anchors use rel="noopener"', () => {
   it('fails when links are from different hosts than the page host', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorElements: [
-        {href: 'https://example.com/test', target: '_blank', rel: 'nofollow'},
-        {href: 'https://example.com/test1', target: '_blank', rel: ''},
+        {
+          href: 'https://example.com/test',
+          target: '_blank',
+          rel: 'nofollow',
+          devtoolsNodePath: 'devtools',
+        },
+        {
+          href: 'https://example.com/test1',
+          target: '_blank',
+          rel: '',
+          devtoolsNodePath: 'nodepath',
+        },
       ],
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
-    assert.equal(auditResult.details.items.length, 2);
+    assert.equal(auditResult.details.items[0].node.type, 'node');
+    assert.equal(auditResult.details.items[0].node.path, 'devtools');
+    assert.equal(auditResult.details.items[1].node.type, 'node');
+    assert.equal(auditResult.details.items[1].node.path, 'nodepath');
   });
 
   it('fails when links have no href attribute', () => {
     const auditResult = ExternalAnchorsAudit.audit({
-      AnchorElements: [
-        {href: '', target: '_blank', rel: ''},
-      ],
+      AnchorElements: [{href: '', target: '_blank', rel: ''}],
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.score, 0);
-    assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items.length, 1);
     assert.ok(auditResult.warnings.length, 'includes warning');
   });
@@ -115,7 +122,6 @@ describe('External anchors use rel="noopener"', () => {
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.score, 0);
-    assert.equal(auditResult.details.items.length, 4);
     assert.equal(auditResult.details.items.length, 4);
     assert.equal(auditResult.warnings.length, 4);
   });

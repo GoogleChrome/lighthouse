@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,8 @@
 
 const NoVulnerableLibrariesAudit =
   require('../../../audits/dobetterweb/no-vulnerable-libraries.js');
-const assert = require('assert');
+const assert = require('assert').strict;
+const semver = require('semver');
 
 /* eslint-env jest */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
@@ -37,7 +38,7 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.extendedInfo.jsLibs.length, 3);
-    assert.equal(auditResult.details.items[0].highestSeverity, 'High');
+    expect(auditResult.details.items[0].highestSeverity).toBeDisplayString('High');
     assert.equal(auditResult.details.items[0].detectedLib.type, 'link');
     assert.equal(auditResult.details.items[0].detectedLib.text, 'angular@1.1.4');
     assert.equal(auditResult.details.items[0].detectedLib.url, 'https://snyk.io/vuln/npm:angular?lh=1.1.4&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit');
@@ -58,16 +59,11 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
       Stacks[0],
       mockSnykDb
     );
-    expect(vulns).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "library": "Badlib@3.0.0",
-    "numericSeverity": 2,
-    "severity": "medium",
-    "url": "https://snyk.io/vuln/badlibvuln:12345",
-  },
-]
-`);
+
+    expect(vulns[0].severity).toBeDisplayString('Medium');
+    assert.equal(vulns[0].library, 'Badlib@3.0.0');
+    assert.equal(vulns[0].numericSeverity, 2);
+    assert.equal(vulns[0].url, 'https://snyk.io/vuln/badlibvuln:12345');
   });
 
   it('handles ill-specified versions', () => {
@@ -102,5 +98,57 @@ Array [
       Stacks: [],
     });
     assert.equal(auditResult.score, 1);
+  });
+});
+
+describe('Snyk database', () => {
+  // https://github.com/npm/node-semver/issues/166#issuecomment-245990039
+  function hasUpperBound(rangeString) {
+    const range = new semver.Range(rangeString);
+    if (!range) return false;
+
+    // For every subset ...
+    for (const subset of range.set) {
+    // Upperbound exists if...
+
+    // < or <= is in one of the subset's clauses (= gets normalized to >= and <).
+      if (subset.some(comparator => comparator.operator && comparator.operator.match(/^</))) {
+        continue;
+      }
+
+      // Subset has a prerelease tag (operator will be empty string).
+      if (subset.length === 1 && subset[0].operator === '') {
+        continue;
+      }
+
+      // No upperbound for this subset.
+      return false;
+    }
+
+    return true;
+  }
+
+  it('hasUpperBound works as intended', () => {
+    assert.equal(hasUpperBound('<1.12.2'), true);
+    assert.equal(hasUpperBound('=1.12.2'), true);
+    assert.equal(hasUpperBound('>=1.12.3 <2.2.2'), true);
+    assert.equal(hasUpperBound('>=2.2.3 <3.0.0'), true);
+    assert.equal(hasUpperBound('>=3.0.0 <3.10.1 || =3.10.2'), true);
+
+    assert.equal(hasUpperBound('>1.12.2'), false);
+    assert.equal(hasUpperBound('>=1.12.2'), false);
+    assert.equal(hasUpperBound('*'), false);
+  });
+
+  it('every snyk vulnerability has an upper bound', () => {
+    for (const vulns of Object.values(NoVulnerableLibrariesAudit.snykDB.npm)) {
+      for (const vuln of vulns) {
+        for (const semver of vuln.semver.vulnerable) {
+          if (!hasUpperBound(semver)) {
+            assert.fail(`invalid semver: ${semver}. Must contain an upper bound`);
+          }
+        }
+      }
+    }
   });
 });

@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -29,10 +29,12 @@ class FirstContentfulPaint3G extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 75th and 95th percentiles HTTPArchive on Fast 3G -> multiply by 1.5 for RTT differential -> median and PODR
+      // 25th and 5th percentiles HTTPArchive on Fast 3G -> multiply by 1.5 for RTT differential -> median and PODR
+      // p10 is then derived from them.
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      scorePODR: 3000,
-      scoreMedian: 6000,
+      // https://www.desmos.com/calculator/fflcrsn9sj
+      p10: 3504,
+      median: 6000,
     };
   }
 
@@ -44,18 +46,18 @@ class FirstContentfulPaint3G extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    /** @type {LH.Config.Settings} */
+    /** @type {Immutable<LH.Config.Settings>} */
     const settings = {...context.settings, throttlingMethod: 'simulate', throttling: regular3G};
     const metricComputationData = {trace, devtoolsLog, settings};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
 
     return {
       score: Audit.computeLogNormalScore(
-        metricResult.timing,
-        context.options.scorePODR,
-        context.options.scoreMedian
+        {p10: context.options.p10, median: context.options.median},
+        metricResult.timing
       ),
       numericValue: metricResult.timing,
+      numericUnit: 'millisecond',
       displayValue: `${metricResult.timing}\xa0ms`,
     };
   }

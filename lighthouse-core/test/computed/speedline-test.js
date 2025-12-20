@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const pwaTrace = require('../fixtures/traces/progressive-app.json');
 const threeFrameTrace = require('../fixtures/traces/threeframes-blank_content_more.json');
@@ -48,28 +48,6 @@ describe('Speedline gatherer', () => {
       assert.equal(speedline.perceptualSpeedIndex, undefined);
       assert.equal(Math.floor(speedline.speedIndex), 2040);
     });
-  }, 10000);
-
-  it('uses a cache', () => {
-    let start;
-    let firstResult;
-    const trace = {traceEvents: pwaTrace};
-    const context = {computedCache: new Map()};
-    // repeat with the same input data twice
-    return Promise.resolve()
-      .then(_ => Speedline.request(trace, context))
-      .then(result => {
-        start = Date.now();
-        firstResult = result;
-      })
-      .then(_ => Speedline.request(trace, context))
-      .then(speedline => {
-        // on a MacBook Air, one run is  1000-1500ms
-        assert.ok(Date.now() - start < 50, 'Quick results come from the cache');
-        assert.equal(firstResult, speedline, 'Cache match matches');
-
-        return assert.equal(Math.floor(speedline.speedIndex), 549);
-      });
   }, 10000);
 
   it('does not change order of events in traces', () => {

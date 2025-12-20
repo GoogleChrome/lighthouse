@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -16,21 +16,23 @@ const fs = require('fs');
  */
 
 /**
-  * @param {string} result
+  * Transform an LHR into a proto-friendly, mostly-compatible LHR.
+  * @param {LH.Result} lhr
+  * @return {LH.Result}
   */
-function processForProto(result) {
+function processForProto(lhr) {
   /** @type {LH.Result} */
-  const reportJson = JSON.parse(result);
+  const reportJson = JSON.parse(JSON.stringify(lhr));
 
   // Clean up the configSettings
   // Note: This is not strictly required for conversion if protobuf parsing is set to
   // 'ignore unknown fields' in the language of conversion.
   if (reportJson.configSettings) {
     // The settings that are in both proto and LHR
-    const {emulatedFormFactor, locale, onlyCategories} = reportJson.configSettings;
+    const {emulatedFormFactor, locale, onlyCategories, channel} = reportJson.configSettings;
 
     // @ts-ignore - intentionally only a subset of settings.
-    reportJson.configSettings = {emulatedFormFactor, locale, onlyCategories};
+    reportJson.configSettings = {emulatedFormFactor, locale, onlyCategories, channel};
   }
 
   // Remove runtimeError if it is NO_ERROR
@@ -95,7 +97,7 @@ function processForProto(result) {
 
   removeStrings(reportJson);
 
-  return JSON.stringify(reportJson);
+  return reportJson;
 }
 
 // @ts-ignore claims always false, but this checks if cli or module
@@ -113,9 +115,9 @@ if (require.main === module) {
 
   if (input && output) {
     // process the file
-    const report = processForProto(fs.readFileSync(input, 'utf-8'));
+    const report = processForProto(JSON.parse(fs.readFileSync(input, 'utf-8')));
     // write to output from argv
-    fs.writeFileSync(output, report, 'utf-8');
+    fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
   }
 } else {
   module.exports = {

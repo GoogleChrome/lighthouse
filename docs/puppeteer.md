@@ -1,9 +1,6 @@
-# Recipes Puppeteer with Lighthouse
+# Using Puppeteer with Lighthouse
 
-**Note**: https://github.com/GoogleChrome/lighthouse/issues/3837 tracks the discussion for making Lighthouse work in concert with Puppeteer.
-Some things are possible today (login to a page using Puppeteer, audit it using Lighthouse) while others (A/B testing the perf of UI changes) are trickier or not yet possible.
-
-### Inject JS/CSS before the page loads
+### Option 1: Launch Chrome with Puppeteer and handoff to Lighthouse
 
 The example below shows how to inject CSS into the page before Lighthouse audits the page.
 A similar approach can be taken for injecting JavaScript.
@@ -60,7 +57,7 @@ await browser.close();
 })();
 ```
 
-### Connecting Puppeteer to a browser instance launched by chrome-launcher.
+### Option 2: Launch Chrome with Lighthouse/chrome-launcher and handoff to Puppeteer
 
 When using Lighthouse programmatically, you'll often use chrome-launcher to launch Chrome.
 Puppeteer can reconnect to this existing browser instance like so:
@@ -100,3 +97,10 @@ await chrome.kill();
 
 })();
 ```
+
+### [Using Puppeteer in a custom gatherer](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-gatherer-puppeteer)
+
+
+--------------
+
+**Note**: https://github.com/GoogleChrome/lighthouse/issues/3837 tracks the overall discussion for making Lighthouse work in concert with Puppeteer. Some things, like A/B testing the perf of UI changes, are tricky or not yet possible.

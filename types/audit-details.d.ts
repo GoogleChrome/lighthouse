@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -81,14 +81,21 @@ declare global {
         [p: string]: any;
       }
 
-      /** Possible types of values found within table items. */
-      type ItemValueTypes = 'bytes' | 'code' | 'link' | 'ms' | 'node' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
+      /** String enum of possible types of values found within table items. */
+      type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
-      // TODO(bckenny): unify Table/Opportunity headings and items on next breaking change.
+      /** Possible types of values found within table items. */
+      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
+
+      // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
+      // use that for all table-like audit details.
 
       export interface TableColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         text: string;
         /**
@@ -96,20 +103,28 @@ declare global {
          * those values will be primitives rendered as this type, but the values
          * could also be objects with their own type to override this field.
          */
-        itemType: ItemValueTypes;
+        itemType: ItemValueType;
+        /**
+         * Optional - defines an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+         */
+        subRows?: {key: string, itemType?: ItemValueType, displayUnit?: string, granularity?: number};
 
         displayUnit?: string;
         granularity?: number;
       }
 
-      export type TableItem = {
+      export interface TableItem {
         debugData?: DebugData;
-        [p: string]: string | number | boolean | undefined | DebugData | NodeValue | LinkValue | UrlValue | CodeValue;
+        [p: string]: undefined | ItemValue | ItemValue[];
       }
 
       export interface OpportunityColumnHeading {
-        /** The name of the property within items being described. */
-        key: string;
+        /**
+         * The name of the property within items being described.
+         * If null, subRows must be defined, and the first sub-row will be empty.
+         */
+        key: string|null;
         /** Readable text label of the field. */
         label: string;
         /**
@@ -117,20 +132,26 @@ declare global {
          * those values will be primitives rendered as this type, but the values
          * could also be objects with their own type to override this field.
          */
-        valueType: ItemValueTypes;
+        valueType: ItemValueType;
+        /**
+         * Optional - defines an inner table of values that correspond to this column.
+         * Key is required - if other properties are not provided, the value for the heading is used.
+         */
+        subRows?: {key: string, valueType?: ItemValueType, displayUnit?: string, granularity?: number};
 
         // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
         displayUnit?: string;
         granularity?: number;
       }
 
-      export interface OpportunityItem {
+      /** A more specific table element used for `opportunity` tables. */
+      export interface OpportunityItem extends TableItem {
         url: string;
         wastedBytes?: number;
         totalBytes?: number;
         wastedMs?: number;
         debugData?: DebugData;
-        [p: string]: number | boolean | string | undefined | DebugData;
+        [p: string]: undefined | ItemValue | ItemValue[];
       }
 
       /**
@@ -145,6 +166,7 @@ declare global {
       /**
        * A value used within a details object, intended to be displayed as a
        * link with text, regardless of the controlling heading's valueType.
+       * If URL is the empty string, fallsback to a basic `TextValue`.
        */
       export interface LinkValue {
         type: 'link',
@@ -160,7 +182,24 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
+        /** An HTML snippet used to identify the node. */
         snippet?: string;
+        /** A human-friendly text descriptor that's used to identify the node more quickly. */
+        nodeLabel?: string;
+      }
+
+      /**
+       * A value used within a details object, intended to be displayed as a URL
+       * encoded with line and column info (url:line:column).
+       */
+      export interface SourceLocationValue {
+        type: 'source-location';
+        /** urls from the network are always valid urls. otherwise, urls come from either a comment or header, and may not be well-formed. */
+        url: string;
+        /** 'network' when the url is the actual, observed resource url. 'comment' when the url comes from a sourceMapURL comment or X-SourceMap header */
+        urlProvider: 'network' | 'comment';
+        line: number;
+        column: number;
       }
 
       /**

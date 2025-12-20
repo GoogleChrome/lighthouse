@@ -1,90 +1,117 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Erişim anahtarları, kullanıcıların sayfanın bir bölümüne hızlıca odaklanmalarını sağlar. Gezinmenin düzgün bir şekilde gerçekleştirilebilmesi için her bir erişim anahtarının benzersiz olması gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
+    "message": "Erişim anahtarları, kullanıcıların sayfanın bir bölümüne hızlıca odaklanmalarını sağlar. Gezinmenin düzgün bir şekilde gerçekleştirilebilmesi için her bir erişim anahtarının benzersiz olması gerekir [Daha fazla bilgi](https://web.dev/accesskeys/)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
-    "message": "\"[accesskey]\" değerleri benzersiz değil"
+    "message": "`[accesskey]` değerleri benzersiz değil"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | title": {
-    "message": "\"[accesskey]\" değerleri benzersiz"
+    "message": "`[accesskey]` değerleri benzersiz"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Her ARIA \"rolü\", belirli bir \"aria-*\" özellik alt kümesini destekler. Bunların uyuşmazlığı, \"aria-*\" özelliklerinin geçersiz kılınmasına neden olur. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
+    "message": "Her ARIA `role`, belirli bir `aria-*` özellik alt kümesini destekler. Bunların eşleşmemesi `aria-*` özelliklerini geçersiz kılar. [Daha fazla bilgi](https://web.dev/aria-allowed-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
-    "message": "\"[aria-*]\" özellikleri, rolleriyle eşleşmiyor"
+    "message": "`[aria-*]` özellikleri, rolleriyle eşleşmiyor"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
-    "message": "\"[aria-*]\" özellikleri rolleriyle eşleşiyor"
+    "message": "`[aria-*]` özellikleri rolleriyle eşleşiyor"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Ekran okuyucular gibi yardımcı teknolojiler, `aria-hidden=\"true\"` öğesi dokümanın `<body>` kısmında ayarlandığında tutarsız çalışır. [Daha fazla bilgi](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Dokümanın `<body>` kısmında `[aria-hidden=\"true\"]` mevcut"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Dokümanın `<body>` kısmında `[aria-hidden=\"true\"]` mevcut değil"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "`[aria-hidden=\"true\"]` öğesi içindeki odaklanabilir alt öğeler, bu etkileşimli öğelerin ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına sunulmasını engeller. [Daha fazla bilgi](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` öğelerinde odaklanabilir alt öğe bulunuyor"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` öğelerinde odaklanabilir alt öğe bulunmuyor"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Bir giriş alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA giriş alanlarının erişilebilir özellikli adı yok"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA giriş alanları erişilebilir özellikli ada sahip"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Bazı ARIA rolleri, öğenin durumunu ekran okuyuculara açıklayan gerekli özelliklere sahiptir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
+    "message": "Bazı ARIA rolleri, öğenin durumunu ekran okuyuculara açıklayan gerekli özelliklere sahiptir. [Daha fazla bilgi](https://web.dev/aria-required-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
-    "message": "\"[role]\" rolleri gereken tüm \"[aria-*]\" özelliklerine sahip değil"
+    "message": "`[role]` rolleri gereken tüm `[aria-*]` özelliklerine sahip değil"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | title": {
-    "message": "\"[role]\"ler gereken tüm \"[aria-*]\" özelliklerine sahip"
+    "message": "`[role]` öğelerinin rolleri, gereken tüm`[aria-*]` özelliklerine sahip"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Bazı ARIA üst rollerinin amaçlanan erişilebilirlik işlevlerini gerçekleştirebilmek için belirli alt rolleri içermesi gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
+    "message": "Bazı ARIA üst rollerinin amaçlanan erişilebilirlik işlevlerini gerçekleştirebilmek için belirli alt rolleri içermesi gerekir. [Daha fazla bilgi](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Belirli alt \"[role]\" rolleri gerektiren, \"[role]\" rolüne sahip öğeler eksik."
+    "message": "ARIA `[role]` sahibi olup alt öğelerin belirli bir `[role]` içermesini gerektiren öğelerde bu gerekli alt öğelerin bazıları veya hiçbiri bulunmuyor."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "Belirli alt \"[role]\"leri gerektiren, \"[role]\"e sahip öğeler mevcut"
+    "message": "ARIA `[role]` sahibi olup alt öğelerin belirli bir `[role]` içermesini gerektiren öğelerde gerekli alt öğelerin hepsi bulunuyor."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Bazı ARIA alt rollerinin amaçlanan erişilebilirlik işlevlerini gerektiği gibi gerçekleştirebilmesi için belirli üst rollerin içinde bulunması gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
+    "message": "Bazı ARIA alt rollerinin amaçlanan erişilebilirlik işlevlerini gerektiği gibi gerçekleştirebilmesi için belirli üst rollerin içinde bulunması gerekir. [Daha fazla bilgi](https://web.dev/aria-required-parent/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
-    "message": "\"[role]\" rolleri gerekli üst öğelerinin içinde bulunmuyor"
+    "message": "`[role]` rolleri gerekli üst öğelerinin içinde bulunmuyor"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | title": {
-    "message": "\"[role]\"ler gerekli üst öğelerinin içinde bulunuyor"
+    "message": "`[role]` öğeleri gerekli üst öğelerinin içinde bulunuyor"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "ARIA rollerinin amaçlanan erişilebilirlik işlevlerini gerçekleştirebilmesi için geçerli değerlere sahip olması gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
+    "message": "ARIA rollerinin amaçlanan erişilebilirlik işlevlerini gerçekleştirebilmesi için geçerli değerlere sahip olması gerekir. [Daha fazla bilgi](https://web.dev/aria-roles/)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
-    "message": "\"[role]\" değerleri geçerli değil"
+    "message": "`[role]` değerleri geçerli değil"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
-    "message": "\"[role]\" değerleri geçerli"
+    "message": "`[role]` değerleri geçerli"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Bir açma/kapatma alanının erişilebilir özellikli bir adı yoksa ekran okuyucular bu alanı genel adla okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA açma/kapatma alanlarının erişilebilir özellikli adı yok"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA açma/kapatma alanları erişilebilir özellikli ada sahip"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Ekran okuyucular gibi yardımcı teknolojiler geçersiz değerlere sahip ARIA özelliklerini yorumlayamaz. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
+    "message": "Ekran okuyucular gibi yardımcı teknolojiler geçersiz değerlere sahip ARIA özelliklerini yorumlayamaz. [Daha fazla bilgi](https://web.dev/aria-valid-attr-value/)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
-    "message": "\"[aria-*]\" özellikleri geçerli değerlere sahip değil"
+    "message": "`[aria-*]` özellikleri geçerli değerlere sahip değil"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": {
-    "message": "\"[aria-*]\" özelliklerinin geçerli değerleri var"
+    "message": "`[aria-*]` özelliklerinin geçerli değerleri var"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Ekran okuyucular gibi yardımcı teknolojiler geçersiz adlara sahip ARIA özelliklerini yorumlayamaz. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
+    "message": "Ekran okuyucular gibi yardımcı teknolojiler geçersiz adlara sahip ARIA özelliklerini yorumlayamaz. [Daha fazla bilgi](https://web.dev/aria-valid-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
-    "message": "\"[aria-*]\" özellikleri geçerli değil veya yanlış yazılmış"
+    "message": "`[aria-*]` özellikleri geçerli değil veya yanlış yazılmış"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
-    "message": "\"[aria-*]\" özellikleri geçerli ve yanlış yazılmamış"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Altyazılar kimin konuştuğu, neler dediği gibi önemli bilgiler ve konuşma dışında başka bilgiler sağlayarak ses öğelerinin sağır veya işitme engelli kullanıcılar tarafından kullanılabilmesini sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "\"<audio>\" öğelerinde \"[kind=\"captions\"]\" içeren bir \"<track>\" öğesi bulunmuyor."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "\"<audio>\" öğelerinde \"[kind=\"captions\"]\" içeren bir \"<track>\" öğesi bulunuyor"
+    "message": "`[aria-*]` özellikleri geçerli ve yanlış yazılmamış"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Başarısız Öğeler"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "Bir düğmenin erişilebilir adı olmadığında ekran okuyucular onu \"düğme\" olarak duyurur ve düğme, ekran okuyuculara bel bağlayan kullanıcılar için kullanılamaz hale gelir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
+    "message": "Bir düğmenin erişilebilir özellikli bir adı yoksa ekran okuyucular bu düğmeyi yalnızca \"düğme\" olarak okuyacağı için bu, ekran okuyuculardan yararlanan kullanıcılar için yararlı olmaz. [Daha fazla bilgi](https://web.dev/button-name/)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "Düğmelerin erişilebilir adları yok"
@@ -93,7 +120,7 @@
     "message": "Düğmeler erişilebilir bir ada sahip"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Tekrar eden içeriği atlamanın yollarını eklemek, klavye kullanıcılarının sayfada daha verimli bir şekilde gezinmesini sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
+    "message": "Tekrar eden içeriği atlamanın yollarını eklemek, klavye kullanıcılarının sayfada daha verimli bir şekilde gezinmesini sağlar. [Daha fazla bilgi](https://web.dev/bypass/)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "Bu sayfa bir başlık, atlama bağlantısı veya önemli nokta bölgesi içermiyor"
@@ -102,7 +129,7 @@
     "message": "Sayfa bir başlık, atlama bağlantısı veya önemli nokta bölgesi içeriyor"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Birçok kullanıcı, düşük kontrastlı metni okumakta zorlanır veya okuyamaz. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
+    "message": "Birçok kullanıcı, düşük kontrastlı metni okumakta zorlanır veya okuyamaz. [Daha fazla bilgi](https://web.dev/color-contrast/)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Arka plan ve ön plan renkleri yeterli kontrast oranına sahip değil."
@@ -111,88 +138,115 @@
     "message": "Arka plan ve ön plan renkleri yeterli kontrast oranına sahip"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "Tanım listeleri gerektiği gibi işaretlenmediğinde ekran okuyucular kafa karışıklığına yol açan veya yanlış çıkışlar sunabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
+    "message": "Tanım listeleri gerektiği gibi işaretlenmediğinde ekran okuyucular kafa karışıklığına yol açan veya yanlış çıkışlar sunabilir. [Daha fazla bilgi](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "\"<dl>\"ler yalnızca gerektiği gibi sıralanmış \"<dt>\" ve \"<dd>\" gruplarını, \"<script>\" veya \"<template>\" öğelerini içermiyor."
+    "message": "`<dl>` öğeleri yalnızca gerektiği gibi sıralanmış `<dt>` ve `<dd>` gruplarını, `<script>`, `<template>` veya `<div>` öğelerini içermiyor."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "\"<dl>\"ler yalnızca gerektiği gibi sıralanmış \"<dt>\" ve \"<dd>\" gruplarını, \"<script>\" veya \"<template>\" öğelerini içeriyor."
+    "message": "`<dl>` öğeleri yalnızca gerektiği gibi sıralanmış `<dt>` ve `<dd>` gruplarını, `<script>`, `<template>` veya `<div>` öğelerini içeriyor."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Tanım listesi öğelerinin (\"<dt>\" ve \"<dd>\") ekran okuyucular tarafından düzgün bir şekilde duyurulabilmesi için üst \"<dl>\" öğesinin içine yerleştirilmesi gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
+    "message": "Tanım listesi öğelerinin (`<dt>` ve `<dd>`) ekran okuyucular tarafından düzgün bir şekilde duyurulabilmesi için üst `<dl>` öğesinin içine yerleştirilmesi gerekir. [Daha fazla bilgi](https://web.dev/dlitem/)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
-    "message": "Tanım listesi öğeleri \"<dl>\" öğeleri arasına yerleştirilmemiş"
+    "message": "Tanım listesi öğeleri `<dl>` öğeleri arasına yerleştirilmemiş"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | title": {
-    "message": "Tanım listesi öğeleri \"<dl>\" öğeleri arasına yerleştirilmiş"
+    "message": "Tanım listesi öğeleri `<dl>` öğeleri arasına yerleştirilmiş"
   },
   "lighthouse-core/audits/accessibility/document-title.js | description": {
-    "message": "Başlık, ekran okuyucu kullanıcılarına sayfayla ilgili genel bir fikir verir ve arama motoru kullanıcılarının bir sayfanın aramalarıyla ilgili olup olmadığını belirlemeleri açısından son derece önemlidir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/title)."
+    "message": "Başlık, ekran okuyucu kullanıcılarına sayfayla ilgili genel bir fikir verir ve arama motoru kullanıcılarının bir sayfanın aramalarıyla ilgili olup olmadığını belirlemeleri açısından son derece önemlidir. [Daha fazla bilgi](https://web.dev/document-title/)."
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
-    "message": "Dokümanın \"<title>\" öğesi yok"
+    "message": "Dokümanın `<title>` öğesi yok"
   },
   "lighthouse-core/audits/accessibility/document-title.js | title": {
-    "message": "Dokümanın \"<title>\" öğesi var"
+    "message": "Doküman geçerli bir `<title>` öğesi içeriyor"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Kimlik özelliğinin değeri benzersiz olmalıdır. Bunun nedeni, yardımcı teknolojilerin farkına varmadan diğer örnekleri atlamasını önlemektir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Odaklanabilir tüm öğelerde yardımcı teknolojilere görünür olmalarını sağlamak için benzersiz bir `id` olmalıdır. [Daha fazla bilgi](https://web.dev/duplicate-id-active/)."
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "Sayfadaki \"[id]\" özellikleri benzersiz değil"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Etkin, odaklanabilir öğelerdeki `[id]` özellikleri benzersiz değil"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "Sayfadaki \"[id]\" özellikleri benzersiz"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Etkin, odaklanabilir öğelerdeki `[id]` özellikleri benzersiz"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA kimliğinin değeri benzersiz olmalıdır. Bunun nedeni, yardımcı teknolojilerin farkına varmadan diğer örnekleri atlamasını önlemektir. [Daha fazla bilgi](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA kimlikleri benzersiz değil"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA kimlikleri benzersiz"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Birden çok etikete sahip form alanları etiketlerin ilkini, sonuncusunu veya tümünü kullanan ekran okuyucular gibi yardımcı teknolojiler tarafından karışıklık yaratacak şekilde okunabilir. [Daha fazla bilgi](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Form alanlarında birden çok etiket var"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Hiçbir form alanının birden fazla etiketi yok"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Ekran okuyucu kullanıcıları, çerçevelerin içeriklerinin açıklanması için çerçeve başlıklarından yararlanır. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
+    "message": "Ekran okuyucu kullanıcıları, çerçevelerin içeriklerinin açıklanması için çerçeve başlıklarından yararlanır. [Daha fazla bilgi](https://web.dev/frame-title/)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
-    "message": "\"<frame>\" veya \"<iframe>\" öğelerinin başlığı yok"
+    "message": "`<frame>` veya `<iframe>` öğelerinin başlığı yok"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
-    "message": "\"<frame>\" veya \"<iframe>\" öğelerinin başlığı var"
+    "message": "`<frame>` veya `<iframe>` öğesi bir başlığa sahip"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Düzey atlamayan gerektiği gibi sıralanmış başlıklar sayfanın anlamsal yapısını iletir. Bu şekilde yardımcı teknolojileri kullanırken gezinmeyi ve anlamayı kolaylaştırır. [Daha fazla bilgi](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Başlık öğeleri sırayla azalan düzende sıralı değil"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Başlık öğeleri sırayla azalan düzende sıralanmış görüntülenir"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "Sayfa bir lang özelliği belirtmezse, ekran okuyucu, sayfanın kullanıcı ekran okuyucuyu kurarken seçtiği varsayılan dilde olduğunu varsayar. Sayfa aslında varsayılan dilde değilse, ekran okuyucu, sayfanın metnini doğru bir şekilde duyurmayabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
+    "message": "Sayfa bir lang özelliği belirtmezse ekran okuyucu, sayfanın kullanıcı ekran okuyucuyu kurarken seçtiği varsayılan dilde olduğunu varsayar. Sayfa aslında varsayılan dilde değilse ekran okuyucu, sayfanın metnini doğru bir şekilde duyurmayabilir. [Daha fazla bilgi](https://web.dev/html-has-lang/)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
-    "message": "\"<html>\" öğesinin \"[lang]\" özelliği yok"
+    "message": "`<html>` öğesinin `[lang]` özelliği yok"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | title": {
-    "message": "\"<html>\" öğesinin \"[lang]\" özelliği var"
+    "message": "`<html>` öğesi `[lang]` özelliği içeriyor"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Geçerli bir [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) belirtilmesi, ekran okuyucuların metni düzgün bir şekilde duyurmasına yardımcı olur. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
+    "message": "Geçerli bir [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) belirtilmesi, ekran okuyucuların metni düzgün bir şekilde duyurmasına yardımcı olur. [Daha fazla bilgi](https://web.dev/html-lang-valid/)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
-    "message": "\"<html>\" öğesi, \"[lang]\" özelliği için geçerli değere sahip değil."
+    "message": "`<html>` öğesi, `[lang]` özelliği için geçerli bir değeri sahip değil."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | title": {
-    "message": "\"<html>\" öğesi, \"[lang]\" özelliği için geçerli bir değere sahip"
+    "message": "`<html>` öğesi, `[lang]` özelliği için geçerli bir değere sahip"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Bilgilendirme amaçlı öğelerin hedefi, kısa ve açıklayıcı alternatif metinler olmalıdır. Dekoratif öğeler boş bir alt özelliğiyle yoksayılabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
+    "message": "Bilgilendirme amaçlı öğelerin hedefi, kısa ve açıklayıcı alternatif metinler olmalıdır. Dekoratif öğeler boş bir alt özelliğiyle yok sayılabilir. [Daha fazla bilgi](https://web.dev/image-alt/)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
-    "message": "Resim öğelerinin \"[alt]\" özellikleri yok"
+    "message": "Resim öğelerinin `[alt]` özellikleri yok"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | title": {
-    "message": "Resim öğelerinin \"[alt]\" özellikleri var"
+    "message": "Resim öğelerinin `[alt]` özellikleri var"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "Bir resim \"<input>\" düğmesi olarak kullanılırken alternatif metin sağlamak, ekran okuyucu kullanıcılarının düğmenin amacını anlamalarına yardımcı olabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
+    "message": "Bir resim `<input>` düğmesi olarak kullanılırken alternatif metin sağlamak, ekran okuyucu kullanıcılarının düğmenin amacını anlamalarına yardımcı olabilir. [Daha fazla bilgi](https://web.dev/input-image-alt/)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
-    "message": "\"<input type=\"image\">\" öğelerinin \"[alt]\" metni yok"
+    "message": "`<input type=\"image\">` öğelerinin `[alt]` metni yok"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | title": {
-    "message": "\"<input type=\"image\">\" öğelerinin \"[alt]\" metni var"
+    "message": "`<input type=\"image\">` öğelerinin `[alt]` metni var"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Etiketler, form kontrollerinin ekran okuyucular gibi yardımcı teknolojiler tarafından düzgün bir şekilde duyurulmasını sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
+    "message": "Etiketler, form kontrollerinin ekran okuyucular gibi yardımcı teknolojiler tarafından düzgün bir şekilde duyurulmasını sağlar. [Daha fazla bilgi](https://web.dev/label/)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Form öğelerinin ilişkili etiketleri yok"
@@ -201,16 +255,16 @@
     "message": "Form öğelerinin ilişkili etiketleri var"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Düzen amaçlı kullanılan bir tablonun, veri öğeleri (ör. th veya başlık öğeleri ya da özet özelliği) içermemesi gerekir. Zira bu durum, ekran okuyucu kullanıcılarının kafa karıştırıcı bir deneyim yaşamalarına neden olabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
+    "message": "Düzen amaçlı kullanılan bir tablonun, veri öğeleri (ör. th veya başlık öğeleri ya da özet özelliği) içermemesi gerekir. Zira bu durum, ekran okuyucu kullanıcılarının kafa karıştırıcı bir deneyim yaşamalarına neden olabilir. [Daha fazla bilgi](https://web.dev/layout-table/)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Sunu amaçlı \"<table>\" öğeleri \"<th>\", \"<caption>\" veya \"[summary]\" özelliğini kullanmaktan kaçınmıyor."
+    "message": "Sunu amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınmıyor."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Sunum amaçlı \"<table>\" öğeleri \"<th>\", \"<caption>\" veya \"[summary]\" özelliğini kullanmaktan kaçınıyor."
+    "message": "Sunum amaçlı `<table>` öğeleri `<th>`, `<caption>` veya `[summary]` özelliğini kullanmaktan kaçınıyor."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Ayırt edilebilir, benzersiz ve odaklanılabilir bağlantı metni (ve bağlantı olarak kullanıldığında resimler için alternatif metin), ekran okuyucu kullanıcılarına daha iyi bir gezinme deneyimi sunar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
+    "message": "Ayırt edilebilir, benzersiz ve odaklanılabilir bağlantı metni (ve bağlantı olarak kullanıldığında resimler için alternatif metin), ekran okuyucu kullanıcılarına daha iyi bir gezinme deneyimi sunar. [Daha fazla bilgi](https://web.dev/link-name/)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Bağlantıların ayırt edilebilir adları yok"
@@ -219,103 +273,115 @@
     "message": "Bağlantıların ayırt edilebilir adları var"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Ekran okuyucular listeleri duyurmak için belirli bir yöntem kullanır. Liste yapısının gerektiği gibi olmasını sağlamak, ekran okuyucu çıkışının düzgün olmasına yardımcı olur. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
+    "message": "Ekran okuyucular listeleri duyurmak için belirli bir yöntem kullanır. Liste yapısının gerektiği gibi olmasını sağlamak, ekran okuyucu çıkışının düzgün olmasına yardımcı olur. [Daha fazla bilgi](https://web.dev/list/)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
-    "message": "Listeler yalnızca \"<li>\" öğelerini ve komut dosyası destekleyen öğeleri (\"<script>\" ve \"<template>\") içermiyor."
+    "message": "Listeler yalnızca `<li>` öğelerini ve komut dosyası destekleyen öğeleri (`<script>` ve `<template>`) içermiyor."
   },
   "lighthouse-core/audits/accessibility/list.js | title": {
-    "message": "Listeler yalnızca \"<li>\" öğelerini ve komut dosyası destekleyen öğeleri (\"<script>\" ve \"<template>\") içeriyor."
+    "message": "Listeler yalnızca `<li>` öğelerini ve komut dosyası destekleyen öğeleri (`<script>` ve `<template>`) içeriyor."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Ekran okuyucuların liste öğelerini (\"<li>\") düzgün bir şekilde duyurabilmesi için liste öğelerinin, üst \"<ul>\" veya \"<ol>\" öğesinde yer alması gerekir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
+    "message": "Ekran okuyucuların liste öğelerini (`<li>`) düzgün bir şekilde okuyabilmesi için liste öğelerinin, üst `<ul>` veya `<ol>` öğesinde yer alması gerekir. [Daha fazla bilgi](https://web.dev/listitem/)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "Liste öğeleri (\"<li>\"), \"<ul>\" veya \"<ol>\" üst öğelerinde yer almıyor."
+    "message": "Liste öğeleri (`<li>`), `<ul>` veya `<ol>` üst öğelerinde yer almıyor."
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "Liste öğeleri (\"<li>\"), \"<ul>\" veya \"<ol>\" üst öğelerinde yer alıyor"
+    "message": "Liste öğeleri (`<li>`), `<ul>` veya `<ol>` üst öğelerinde yer alıyor"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "Kullanıcılar bir sayfanın otomatik olarak yenileneceğini düşünmez ve bu işlem yeniden sayfanın üst tarafına odaklanılmasına neden olur. Bu durum, can sıkıcı veya kafa karışıklığına yol açan bir deneyime yol açabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
+    "message": "Kullanıcılar bir sayfanın otomatik olarak yenileneceğini düşünmez ve bu işlem yeniden sayfanın üst tarafına odaklanılmasına neden olur. Bu durum, can sıkıcı veya kafa karışıklığına yol açan bir deneyime yol açabilir. [Daha fazla bilgi](https://web.dev/meta-refresh/)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
-    "message": "Doküman \"<meta http-equiv=\"refresh\">\" kullanıyor"
+    "message": "Doküman `<meta http-equiv=\"refresh\">` kullanıyor"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | title": {
-    "message": "Doküman \"<meta http-equiv=\"refresh\">\" kullanmıyor"
+    "message": "Doküman `<meta http-equiv=\"refresh\">` öğesini kullanmıyor"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Yakınlaştırmanın devre dışı bırakılması, az gören ve bir web sayfasının içeriğini düzgün bir şekilde görebilmek için ekran büyütme özelliğinden yararlanan kullanıcılar için sorun teşkil eder. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
+    "message": "Yakınlaştırmanın devre dışı bırakılması, az gören ve bir web sayfasının içeriğini düzgün bir şekilde görebilmek için ekran büyütme özelliğinden yararlanan kullanıcılar için sorun teşkil eder. [Daha fazla bilgi](https://web.dev/meta-viewport/)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "\"[user-scalable=\"no\"]\", \"<meta name=\"viewport\">\" öğesinde kullanılmış veya \"[maximum-scale]\" özelliği 5'ten küçük."
+    "message": "`[user-scalable=\"no\"]`, `<meta name=\"viewport\">` öğesinde kullanılmış veya `[maximum-scale]` özelliği 5'ten küçük."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
-    "message": "\"[user-scalable=\"no\"]\", \"<meta name=\"viewport\">\" öğesinde kullanılmamış ve \"[maximum-scale]\" özelliği 5'ten küçük değil."
+    "message": "`[user-scalable=\"no\"]`, `<meta name=\"viewport\">` öğesinde kullanılmamış ve `[maximum-scale]` özelliği 5'ten küçük değil."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Ekran okuyucular metin dışı içeriği çeviremez. \"<object>\" öğelerine alternatif metin eklemek, ekran okuyucuların anlamı kullanıcılara iletmesine yardımcı olur. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
+    "message": "Ekran okuyucular metin dışı içeriği çeviremez. `<object>` öğelerine alternatif metin eklemek, ekran okuyucuların ilgili öğenin ne anlama geldiğini kullanıcılara söylemesine yardımcı olur. [Daha fazla bilgi](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "\"<object>\" öğelerinin \"[alt]\" metni yok"
+    "message": "`<object>` öğelerinin `[alt]` metni yok"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "\"<object>\" öğelerinin \"[alt]\" metni var"
+    "message": "`<object>` öğelerinin `[alt]` metni var"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "0'dan büyük bir değer, açık bir gezinme sıralamasını belirtir. Bu durum teknik olarak geçerli olsa da yardımcı teknolojilerden yararlanan kullanıcıların genellikle sinir bozucu deneyimler yaşamalarına neden olur. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
+    "message": "0'dan büyük bir değer, açık bir gezinme sıralamasını belirtir. Bu durum teknik olarak geçerli olsa da yardımcı teknolojilerden yararlanan kullanıcıların genellikle sinir bozucu deneyimler yaşamalarına neden olur. [Daha fazla bilgi](https://web.dev/tabindex/)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
-    "message": "Bazı öğeler 0'dan büyük bir \"[tabindex]\" değeri içeriyor"
+    "message": "Bazı öğeler 0'dan büyük bir `[tabindex]` değeri içeriyor"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | title": {
-    "message": "Hiçbir öğe 0'dan büyük \"[tabindex]\" değeri içermiyor"
+    "message": "Hiçbir öğe 0'dan büyük `[tabindex]` değeri içermiyor"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Ekran okuyucuların tablolarda daha kolay gezinmeyi sağlayan özellikleri vardır. \"[headers]\" özelliğini kullanan \"<td>\" hücrelerinin yalnızca aynı tablodaki diğer hücrelere atıfta bulunmasını sağlamak, ekran okuyucu kullanıcılarına daha iyi bir deneyim sunabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
+    "message": "Ekran okuyucuların tablolarda daha kolay gezinmeyi sağlayan özellikleri vardır. `[headers]` özelliğini kullanan`<td>` hücrelerinin yalnızca aynı tablodaki diğer hücrelere atıfta bulunmasını sağlamak, ekran okuyucu kullanıcılarına daha iyi bir deneyim sunabilir. [Daha fazla bilgi](https://web.dev/td-headers-attr/)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "\"<table>\" öğesinde olup \"[headers]\" özelliğini kullanan hücreler, aynı tablodaki diğer hücrelere atıfta bulunuyor."
+    "message": "`<table>` öğesinde olup `[headers]` özelliğini kullanan hücrelerin atıfta bulunduğu öğe `id` aynı tabloda yer almıyor."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "\"<table>\" öğesinde olup \"[headers]\" özelliğini kullanan hücreler yalnızca aynı tablodaki diğer hücrelere atıfta bulunuyor."
+    "message": "`<table>` öğesinde olup `[headers]` özelliğini kullanan hücreler, aynı tablodaki tablo hücrelerine atıfta bulunuyor."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Ekran okuyucuların tablolarda daha kolay gezinmeyi sağlayan özellikleri vardır. Tablo başlıklarının her zaman bazı hücre kümelerine atıfta bulunmasını sağlamak, ekran okuyucu kullanıcılarına daha iyi bir deneyim sunabilir. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
+    "message": "Ekran okuyucuların tablolarda daha kolay gezinmeyi sağlayan özellikleri vardır. Tablo başlıklarının her zaman bazı hücre kümelerine atıfta bulunmasını sağlamak, ekran okuyucu kullanıcılarına daha iyi bir deneyim sunabilir. [Daha fazla bilgi](https://web.dev/th-has-data-cells/)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
-    "message": "\"<th>\" öğelerinin ve \"[role=\"columnheader\"/\"rowheader\"]\" içeren öğelerin açıkladıkları veri hücreleri yok."
+    "message": "`<th>` öğelerinin ve `[role=\"columnheader\"/\"rowheader\"]` içeren öğelerin açıkladıkları veri hücreleri yok."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | title": {
-    "message": "\"<th>\" öğelerinin ve \"[role=\"columnheader\"/\"rowheader\"]\" içeren öğelerin açıkladıkları veri hücreleri var."
+    "message": "`<th>` öğelerinin ve`[role=\"columnheader\"/\"rowheader\"]` içeren öğelerin açıkladıkları veri hücreleri var."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Öğelerde geçerli bir [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) belirtilmesi, ekran okuyucunun metni doğru telaffuz etmesini sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
+    "message": "Öğelerde geçerli bir [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) belirtilmesi, ekran okuyucunun metni doğru telaffuz etmesini sağlar. [Daha fazla bilgi](https://web.dev/valid-lang/)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
-    "message": "\"[lang]\" özellikleri geçerli bir değere sahip değil"
+    "message": "`[lang]` özellikleri geçerli bir değere sahip değil"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | title": {
-    "message": "\"[lang]\" özellikleri geçerli bir değere sahip"
+    "message": "`[lang]` özellikleri geçerli bir değere sahip"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "Bir videoda altyazının yer alması sağır ve işitme engelli kullanıcıların videonun bilgilerine daha kolay erişmelerini sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
+    "message": "Bir videoda altyazının yer alması işitme engelli ve işitme zorluğuna sahip kullanıcıların videonun bilgilerine daha kolay erişmelerini sağlar. [Daha fazla bilgi](https://web.dev/video-caption/)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
-    "message": "\"<video>\" öğelerinde \"[kind=\"captions\"]\" içeren bir \"<track>\" öğesi bulunmuyor."
+    "message": "`<video>` öğelerinde `[kind=\"captions\"]` içeren bir `<track>` öğesi bulunmuyor."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
-    "message": "\"<video>\" öğelerinde \"[kind=\"captions\"]\" içeren bir \"<track>\" öğesi bulunuyor"
+    "message": "`<video>` öğelerinde `[kind=\"captions\"]`içeren bir `<track>` öğesi bulunuyor"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Sesli açıklamalar, videolarla ilgili olarak diyaloğun sağlayamayacağı bilgiler (ör. yüz ifadeleri ve sahneler) sağlar. [Daha fazla bilgi](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
+    "message": "Sesli açıklamalar, videolarla ilgili olarak diyaloğun sağlayamayacağı bilgiler (ör. yüz ifadeleri ve sahneler) sağlar. [Daha fazla bilgi](https://web.dev/video-description/)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "\"<video>\" öğelerinde \"[kind=\"description\"]\" içeren bir \"<track>\" öğesi bulunmuyor."
+    "message": "`<video>` öğelerinde `[kind=\"description\"]` içeren bir `<track>` öğesi bulunmuyor."
   },
   "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "\"<video>\" öğelerinde \"[kind=\"description\"]\" içeren bir \"<track>\" öğesi bulunuyor"
+    "message": "`<video>` öğelerinde `[kind=\"description\"]`içeren bir `<track>` öğesi bulunuyor"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | description": {
+    "message": "Kullanıcılar ana ekranlarına progresif web uygulaması eklerinde iOS'ta ideal görünüm için bir `apple-touch-icon` öğesi tanımlayın. Tanım, saydam olmayan bir 192 piksel (veya 180 piksel) kare PNG'ye götürmelidir. [Daha Fazla Bilgi](https://web.dev/apple-touch-icon/)."
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
+    "message": "Geçerli bir `apple-touch-icon` öğesi içermiyor"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
+    "message": "`apple-touch-icon-precomposed` güncel değil; `apple-touch-icon` tercih edilir."
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | title": {
+    "message": "Geçerli bir `apple-touch-icon` sunuyor"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome uzantıları bu sayfanın yükleme performansını olumsuz etkilemiştir. Sayfayı gizli modda veya uzantı içermeyen bir Chrome profilinden denetlemeyi deneyin."
@@ -330,7 +396,7 @@
     "message": "Toplam CPU Süresi"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
-    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı azaltma seçeneğini değerlendirin. Daha küçük JS yüklerinin sağlanmasının bu konuda yardımcı olduğunu fark edebilirsiniz. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
+    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltmayı düşünün. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir. [Daha fazla bilgi](https://web.dev/bootup-time)."
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
     "message": "JavaScript yürütme süresini azaltın"
@@ -338,29 +404,35 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript yürütme süresi"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için paketlerden büyük, yinelenen JavaScript modüllerini kaldırın. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "JavaScript paketlerindeki yinelenen modülleri kaldırın"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "Büyük GIF'ler, animasyonlu içeriğin sunulmasında verimli olmaz. Ağ veri miktarından tasarruf etmek üzere animasyonlar için MPEG4/WebM videoları ve statik resimler için GIF yerine PNG/WebP kullanma seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
+    "message": "Büyük GIF'ler, animasyonlu içeriğin sunulmasında verimli olmaz. Ağ veri miktarından tasarruf etmek üzere animasyonlar için MPEG4/WebM videoları ve statik resimler için GIF yerine PNG/WebP kullanma seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/efficient-animated-content)"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "Animasyonlu içerik için video biçimleri kullanın"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
-    "message": "Etkileşimli hale gelme süresini kısaltmak için ekran dışındaki ve gizli resimleri, tüm kritik kaynakların yüklenmesi bittikten sonra gecikmeli olarak yükleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)."
+    "message": "Etkileşim için hazır olma süresini kısaltmak için ekran dışı ve gizli resimleri, tüm kritik kaynakların yüklenmesi bittikten sonra gecikmeli olarak yükleme seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/offscreen-images)."
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Ekran dışındaki resimleri ertele"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Kaynaklar, sayfanızda ilk boyayı engelliyor. Kritik JS/CSS'yi satır içinde yayınlama ve kritik olmayan tüm JS/stilleri erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
+    "message": "Kaynaklar, sayfanızda ilk boyamayı engelliyor. Kritik JS/CSS'yi satır içinde yayınlama ve kritik olmayan tüm JS/stilleri erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/render-blocking-resources)."
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "Oluşturmayı engelleyen kaynakları ortadan kaldırın"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
-    "message": "Büyük ağ yüklerinin kullanıcılara maddi anlamda maliyeti vardır ve bu ağ yükleri, uzun yükleme süreleriyle yakından ilişkilidir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)."
+    "message": "Büyük ağ yükleri kullanıcılar için parasal maliyet anlamına gelir ve yükleme sürelerinin uzamasında yüksek bir etkiye sahiptir. [Daha fazla bilgi](https://web.dev/total-byte-weight)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "Toplam boyut: {totalBytes, number, bytes} KB"
+    "message": "Toplam boyut {totalBytes, number, bytes} KB'tı"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "Çok büyük ağ yüklerinden kaçının"
@@ -369,31 +441,31 @@
     "message": "Çok büyük ağ yüklerini önler"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | description": {
-    "message": "CSS dosyalarının küçültülmesi ağ yükü boyutlarını azaltabilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/minify-css)."
+    "message": "CSS dosyalarının küçültülmesi ağ yükü boyutlarını azaltabilir. [Daha fazla bilgi](https://web.dev/unminified-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": {
     "message": "CSS'yi küçültün"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "JavaScript dosyalarının küçültülmesi yük boyutlarını azaltabilir ve komut dosyası ayrıştırma süresini kısaltabilir. [Daha fazla bilgi](https://developers.google.com/speed/docs/insights/MinifyResources)."
+    "message": "JavaScript dosyalarının küçültülmesi yük boyutlarını azaltabilir ve komut dosyası ayrıştırma süresini kısaltabilir. [Daha fazla bilgi](https://web.dev/unminified-javascript)."
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "JavaScript'i küçült"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Ağ etkinliğinin gereksiz yere kullandığı bayt sayısını azaltmak için, kullanılmayan kuralları stil sayfalarından kaldırın ve ekranın üst kısmında içerik için kullanılmayan CSS'nin yüklenmesini erteleyin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "Ağ etkinliğinin gereksiz yere kullandığı bayt sayısını azaltmak için, kullanılmayan kuralları stil sayfalarından kaldırın ve ekranın üst kısmında içerik için kullanılmayan CSS'nin yüklenmesini erteleyin. [Daha fazla bilgi](https://web.dev/unused-css-rules)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "Kullanılmayan CSS'yi kaldırın"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için kullanılmayan JavaScript'i kaldırın."
+    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için kullanılmayan JavaScript'i kaldırın. [Daha fazla bilgi](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Kullanılmayan JavaScript'i kaldırın"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Uzun önbellek ömrü, sayfanızın tekrar ziyaret edilmesi sürecini hızlandırabilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)."
+    "message": "Uzun önbellek ömrü, sayfanızın tekrar ziyaret edilmesi sürecini hızlandırabilir. [Daha fazla bilgi](https://web.dev/uses-long-cache-ttl)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kaynak bulundu}other{# kaynak bulundu}}"
@@ -405,40 +477,109 @@
     "message": "Statik öğelerde verimli önbellek politikası kullanır"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "Optimize edilmiş resimler daha hızlı yüklenir ve daha az hücresel veri kullanır. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)."
+    "message": "Optimize edilmiş resimler daha hızlı yüklenir ve daha az hücresel veri kullanır. [Daha fazla bilgi](https://web.dev/uses-optimized-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Resimleri verimli bir şekilde kodlayın"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "Hücresel veriden tasarruf etmek ve yükleme süresini iyileştirmek için uygun boyutlu resimler sunun. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/oversized-images)."
+    "message": "Hücresel veriden tasarruf etmek ve yükleme süresini kısaltmak için uygun boyutlu resimler sunun. [Daha fazla bilgi](https://web.dev/uses-responsive-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | title": {
     "message": "Doğru boyuta sahip resimler"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Metne dayalı kaynaklar, toplam ağ baytı sayısını en aza indirmek için sıkıştırılarak (gizp, deflate veya brotli) yayınlanmalıdır. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "Metne dayalı kaynaklar, toplam ağ baytı sayısını en aza indirmek için sıkıştırılarak (gizp, deflate veya brotli) yayınlanmalıdır. [Daha fazla bilgi](https://web.dev/uses-text-compression)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Metin sıkıştırmayı etkinleştirin"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "JPEG 2000, JPEG XR ve WebP gibi resim biçimleri genellikle PNG veya JPEG'den daha iyi sıkıştırma sağlar. Böylece indirme işlemleri daha hızlı tamamlanır ve veri tüketimi daha az olur. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/webp)."
+    "message": "JPEG 2000, JPEG XR ve WebP gibi resim biçimleri genellikle PNG veya JPEG'den daha iyi sıkıştırma sağlar. Böylece indirme işlemleri daha hızlı tamamlanır ve veri tüketimi daha az olur. [Daha fazla bilgi](https://web.dev/uses-webp-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
     "message": "Resimleri yeni nesil biçimlerde yayınlayın"
   },
+  "lighthouse-core/audits/content-width.js | description": {
+    "message": "Uygulamanızın içeriğinin genişliği, görüntü alanının genişliğiyle eşleşmiyorsa uygulamanız mobil ekranlar için optimize edilmemiş olabilir. [Daha fazla bilgi](https://web.dev/content-width)."
+  },
+  "lighthouse-core/audits/content-width.js | explanation": {
+    "message": "{innerWidth} piksel görüntü alanı boyutu, {outerWidth} piksel pencere boyutuyla eşleşmiyor."
+  },
+  "lighthouse-core/audits/content-width.js | failureTitle": {
+    "message": "İçerik, görüntü alanı için doğru boyutlandırılmadı"
+  },
+  "lighthouse-core/audits/content-width.js | title": {
+    "message": "İçerik görüntü alanı için doğru boyutlandırıldı"
+  },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Aşağıdaki Kritik İstek Zincirleri, hangi kaynakların yüksek öncelikle yüklendiğini göstermektedir. Sayfa yüklemesini iyileştirmek için zincir uzunluğunu azaltma, kaynakların indirme boyutunu küçültme veya gereksiz kaynakların indirilmesini erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Aşağıdaki Kritik İstek Zincirleri, hangi kaynakların yüksek öncelikle yüklendiğini göstermektedir. Sayfa yüklemesini iyileştirmek için zincir uzunluğunu azaltma, kaynakların indirme boyutunu küçültme veya gereksiz kaynakların indirilmesini erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 zincir bulundu}other{# zincir bulundu}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Kritik İsteklerin Derinliğini En Aza İndirin"
+    "message": "Kritik istek zinciri oluşturmaktan kaçın"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Öğe"
+  "lighthouse-core/audits/deprecations.js | columnDeprecate": {
+    "message": "Kullanımdan Kaldırma / Uyarı"
+  },
+  "lighthouse-core/audits/deprecations.js | columnLine": {
+    "message": "Satır"
+  },
+  "lighthouse-core/audits/deprecations.js | description": {
+    "message": "Kullanımdan kaldırılan API'ler sonunda tarayıcıdan kaldırılacaktır. [Daha fazla bilgi](https://web.dev/deprecations)."
+  },
+  "lighthouse-core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 uyarı bulundu}other{# uyarı bulundu}}"
+  },
+  "lighthouse-core/audits/deprecations.js | failureTitle": {
+    "message": "Kullanımdan kaldırılan API'leri kullanıyor"
+  },
+  "lighthouse-core/audits/deprecations.js | title": {
+    "message": "Kullanımdan kaldırılan API'leri içermiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
+    "message": "Application Cache API'si kullanımdan kaldırılmıştır. [Daha fazla bilgi](https://web.dev/appcache-manifest)."
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
+    "message": "\"{AppCacheManifest}\" bulundu"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
+    "message": "Uygulama Önbelleği Kullanma"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
+    "message": "Uygulama Önbelleği Kullanılmıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "Karakter kodlama tanımlaması gerekiyor. Bu, HTML'nin ilk 1.024 baytı içinde veya İçerik Türü HTTP yanıt başlığında bir <meta> etiketi ile yapılabilir. [Daha fazla bilgi](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "Karakter kümesi tanımlaması eksik veya HTML'de çok geç gerçekleşiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "Karakter kümesini düzgün şekilde tanımlıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | description": {
+    "message": "Bir DOCTYPE belirlemek, tarayıcının Quirks moduna geçmesini önler. [Daha fazla bilgi](https://web.dev/doctype)."
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "DOCTYPE adı, küçük harf `html` dizesi olmalıdır"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "Doküman bir DOCTYPE içermelidir"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "Beklenen publicId boş bir dize olmalı"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "Beklenen systemId boş bir dize olmalı"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "Sayfada HTML DOCTYPE eksik, bu nedenle Quirks modunu tetikliyor"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | title": {
+    "message": "Sayfa HTML DOCTYPE içeriyor"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "İstatistik"
@@ -447,7 +588,7 @@
     "message": "Değer"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Tarayıcı mühendisleri, sayfaların yaklaşık olarak 1.500'den az DOM öğesi içermesini önerir. En iyisi, 32 öğeden ve 60 alt/üst öğeden az olan bir ağaç derinliğidir. Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) yol açabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow) oluşturabilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), neden olabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow) üretebilir. [Daha fazla bilgi](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 öğe}other{# öğe}}"
@@ -467,8 +608,137 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Aşırı büyük bir DOM boyutunu önler"
   },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "Başarısız Bağlantılar"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
+    "message": "Performansı artırmak ve güvenlik açıklarını önlemek için harici bağlantılara `rel=\"noopener\"` veya `rel=\"noreferrer\"` ekleyin. [Daha fazla bilgi](https://web.dev/external-anchors-use-rel-noopener)."
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
+    "message": "Çapraz kökenli hedeflere bağlantılar güvenli değildir"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
+    "message": "Çapraz kökenli hedeflere bağlantılar güvenli"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
+    "message": "Bağlantı için hedef belirlenemedi ({anchorHTML}). Köprü olarak kullanılmadıysa target=_blank öğesini kaldırmayı değerlendirin."
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "Kullanıcılar herhangi bir bağlam olmadan konum bilgilerini isteyen sitelere şüpheyle bakarlar veya bu istek karşısında şaşırırlar. Onun yerine isteği bir kullanıcı işlemine bağlamayı değerlendirin. [Daha fazla bilgi](https://web.dev/geolocation-on-start)."
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "Sayfa yüklemede coğrafi konum izni istiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "Sayfa yüklemede coğrafi konum izni istemiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "Sürüm"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "Sayfadaki tüm JavaScript kitaplıkları kullanıcı arabirimleri algılandı. [Daha fazla bilgi](https://web.dev/js-libraries)."
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "JavaScript kitaplıkları algılandı"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "`document.write()` aracılığıyla dinamik olarak enjekte edilen harici komut dosyaları, yavaş bağlantıdaki kullanıcılar için sayfa yüklemeyi onlarca saniye geciktirebilir. [Daha fazla bilgi](https://web.dev/no-document-write)."
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "`document.write()` kullanmaktan kaçının"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "`document.write()` öğesinden kaçınıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
+    "message": "En Yüksek Önem Derecesi"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
+    "message": "Kitaplık Sürümü"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
+    "message": "Güvenlik Açığı Sayısı"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
+    "message": "Bazı üçüncü taraf komut dosyaları, saldırganlar tarafından kolayca belirlenen ve istismar edilen bilinen güvenlik açıkları içerebilir. [Daha fazla bilgi](https://web.dev/no-vulnerable-libraries)."
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 güvenlik açığı algılandı}other{# güvenlik açığı algılandı}}"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
+    "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimi içeriyor"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
+    "message": "Yüksek"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
+    "message": "Düşük"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
+    "message": "Orta"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
+    "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimini önlüyor"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "Kullanıcılar herhangi bir bağlam olmadan bildirim göndermek isteyen sitelere şüpheyle bakarlar veya bu istek karşısında şaşırırlar. Onun yerine isteği kullanıcı hareketlerine bağlamayı değerlendirin. [Daha fazla bilgi](https://web.dev/notification-on-start)."
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "Sayfa yüklemede bildirim izni istiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "Sayfa yüklemede bildirim izni istemiyor"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
+    "message": "Başarısız Öğeler"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
+    "message": "Şifre yapıştırmanın engellenmesi, iyi güvenlik politikasına zarar verir. [Daha fazla bilgi](https://web.dev/password-inputs-can-be-pasted-into)."
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
+    "message": "Kullanıcıların şifre alanlarına yapıştırmalarını önler"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
+    "message": "Kullanıcıların şifre alanlarına yapıştırmalarına izin verir"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "Protokol"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2, HTTP/1.1'e kıyasla ikili başlıklar, çoğullama ve sunucu push mesajları dahil olmak üzere birçok avantaj sunar. [Daha fazla bilgi](https://web.dev/uses-http2)."
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 istek HTTP/2 üzerinden sunulmuyor}other{# istek HTTP/2 üzerinden sunulmuyor}}"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
+    "message": "Tüm kaynakları için HTTP/2 kullanmıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "Kendi kaynakları için HTTP/2 kullanıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "Sayfanızın kaydırma performansını artırmak için dokunma ve ve tekerlek etkinliği işleyicilerini `passive` olarak işaretlemeyi değerlendirin. [Daha fazla bilgi](https://web.dev/uses-passive-event-listeners)."
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "Kaydırma performansını artırmak için pasif işleyicileri kullanmıyor"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "Kaydırma performansını artırmak için pasif işleyicileri kullanıyor"
+  },
+  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
+    "message": "Açıklama"
+  },
+  "lighthouse-core/audits/errors-in-console.js | description": {
+    "message": "Konsola kaydedilen hatalar çözülmemiş problemleri belirtir Bunlar, ağ istek hatalarından ve diğer tarayıcı sorunlarından gelebilir. [Daha fazla bilgi](https://web.dev/errors-in-console)"
+  },
+  "lighthouse-core/audits/errors-in-console.js | failureTitle": {
+    "message": "Tarayıcı hataları konsola kaydedildi"
+  },
+  "lighthouse-core/audits/errors-in-console.js | title": {
+    "message": "Konsola tarayıcı hatası kaydedilmedi"
+  },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "Web yazı tipleri yüklenirken kullanıcının metni görebilmesini sağlamak için yazı tipi görüntüleme CSS özelliğinden yararlanın. [Daha fazla bilgi](https://developers.google.com/web/updates/2016/02/font-display)."
+    "message": "Web yazı tipleri yüklenirken kullanıcının metni görebilmesini sağlamak için yazı tipi görüntüleme CSS özelliğinden yararlanın. [Daha fazla bilgi](https://web.dev/font-display)."
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "Web yazı tipi yüklemesi sırasında metnin görünür halde kalmasını sağlayın"
@@ -476,14 +746,86 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Web yazı tipi yüklenirken tüm metin görünür halde kalır"
   },
+  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
+    "message": "Lighthouse, şu URL için yazı tipi görüntüleme değerini otomatik olarak kontrol edemedi: {fontURL}."
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "En Boy Oranı (Gerçek)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "En Boy Oranı (Görüntülenen)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | description": {
+    "message": "Resim görüntüleme boyutları doğal en boy oranıyla eşleşmeli. [Daha fazla bilgi](https://web.dev/image-aspect-ratio)."
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "Yanlış en boy oranına sahip resimler görüntülüyor"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | title": {
+    "message": "Resimleri doğru en boy oranıyla görüntülüyor"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
+    "message": "Geçersiz resim boyutlandırma bilgileri {url}"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "Gerçek boyut"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "Görüntülenen boyut"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "Beklenen boyut"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "Resmin doğal boyutları, resmin netliğini en üst düzeye çıkarmak için görüntü boyutu ve piksel oranı ile orantılı olmalıdır. [Daha fazla bilgi](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "Boyutu uygun olmayan resimleri görüntüler"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "Boyutu uygun olan resimleri görüntüler"
+  },
+  "lighthouse-core/audits/installable-manifest.js | description": {
+    "message": "Tarayıcılar proaktif olarak kullanıcılardan uygulamanızı ana ekranlarına eklemelerini isteyebilirler ve bu da daha yüksek etkileşim sağlayabilir. [Daha fazla bilgi](https://web.dev/installable-manifest)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | failureTitle": {
+    "message": "Web uygulaması manifest dosyası yüklenebilir olma gerekliliklerini karşılamıyor"
+  },
+  "lighthouse-core/audits/installable-manifest.js | title": {
+    "message": "Web uygulaması manifest dosyası yüklenebilir olma gereklerini karşılar"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "Güvenli olmayan URL"
+  },
+  "lighthouse-core/audits/is-on-https.js | description": {
+    "message": "Tüm siteler (hassas veriler işlemeyenler dahi) HTTPS ile korunmalıdır . HTTPS, izinsiz kişilerin uygulamanızla kullanıcılarınız arasındaki iletişime müdahale etmelerine veya pasif olarak dinlemelerini önler ayrıca HTTP/2 ve birçok yeni web platformu için ön koşuldur. [Daha fazla bilgi](https://web.dev/is-on-https)."
+  },
+  "lighthouse-core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{Güvenli olmayan 1 istek bulundu}other{Güvenli olmayan # istek bulundu}}"
+  },
+  "lighthouse-core/audits/is-on-https.js | failureTitle": {
+    "message": "HTTPS kullanmıyor"
+  },
+  "lighthouse-core/audits/is-on-https.js | title": {
+    "message": "HTTPS kullanıyor"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "Çoklu dolgular ve dönüşümler, eski tarayıcıların yeni JavaScript özelliklerini kullanmasını sağlar. Ancak, çoğu modern tarayıcılar için gerekli değildir. Eski tarayıcılara verilen desteği tutarken, modern tarayıcılara gönderilen kod miktarını azaltmak üzere modüllü/modülsüz özellik algılamayı kullanarak JavaScript paketiniz için modern bir komut dosyası dağıtım stratejisi kullanın. [Daha Fazla Bilgi](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "Eski JavaScript"
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Sayfaların hücresel ağ üzerinden hızlı bir şekilde yüklenmesi, mobil cihaz kullanıcılarının iyi bir deneyim yaşamalarını sağlar. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+    "message": "Sayfaların hücresel ağ üzerinden hızlı bir şekilde yüklenmesi, mobil cihaz kullanıcılarının iyi bir deneyim yaşamalarını sağlar. [Daha fazla bilgi](https://web.dev/load-fast-enough-for-pwa)."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Sayfanın etkileşime hazır hale gelmesi {timeInMs, number, seconds} saniye sürdü"
+    "message": "Etkileşimli hale gelme süresi: {timeInMs, number, seconds} sn."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Sayfanın simüle mobil ağda etkileşime hazır hale gelmesi {timeInMs, number, seconds} saniye sürdü"
+    "message": "Sayfanın simüle mobil ağda etkileşime hazır hale gelmesi {timeInMs, number, seconds} sn. sürdü"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
+    "message": "Sayfanız çok yavaş yükleniyor ve etkileşimli hale gelmesi 10 saniyeyi geçiyor. Nasıl iyileştireceğinizi öğrenmek için \"Performans\" bölümünde fırsatlara ve teşhise bakın."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Sayfalar mobil ağlarda yeterince hızlı yüklenmiyor"
@@ -495,7 +837,7 @@
     "message": "Kategori"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltma seçeneğini değerlendirin. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir."
+    "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltabilirsiniz. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir. [Daha fazla bilgi](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "Ana iş parçacığı çalışmasını en aza indir"
@@ -503,47 +845,62 @@
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Ana iş parçacığının çalışmasını en aza indirir"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Tahmini Giriş Gecikmesi, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms'nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
+    "message": "Mümkün olduğunca fazla sayıda kullanıcıya ulaşmak için sitelerin belli başlı her tarayıcıda çalışması gerekir. [Daha fazla bilgi](https://web.dev/pwa-cross-browser)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
-    "message": "Tahmini Giriş Gecikmesi"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
+    "message": "Site farklı tarayıcılarda çalışıyor"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
+    "message": "Her bir sayfaya URL aracılığıyla derin bağlantı verilebildiğinden ve URL'lerin sosyal medyada paylaşılabilmesi için benzersiz olduğundan emin olun. [Daha fazla bilgi](https://web.dev/pwa-each-page-has-url)."
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
+    "message": "Her sayfa bir URL'ye sahip"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
+    "message": "Yavaş ağlarda bile sağa sola dokundukça geçişlerin hızlı gerçekleştiği hissedilmelidir. Bu deneyim, kullanıcının performans algısının temelinde yatar. [Daha fazla bilgi](https://web.dev/pwa-page-transitions)."
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
+    "message": "Sayfa geçişleri ağda takılıyorlarmış gibi hissedilmiyor"
+  },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "Maskelenebilir simge, uygulama bir cihaza yüklenirken resmin sinemaskop hale gelmeden tüm şekli doldurmasını sağlar. [Daha fazla bilgi](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "Manifest dosyası maskelenebilir bir simge içermiyor"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "Manifest dosyası maskelenebilir simge içeriyor"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "Cumulative Layout Shift, görüntü alanı içindeki görünür öğelerin hareketini ölçer. [Daha fazla bilgi](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
+    "message": "Tahmini Giriş Gecikmesi, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms.nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://web.dev/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "İlk Zengin İçerikli Boyama, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "İlk Zengin İçerikli Boya"
+    "message": "İlk Zengin İçerikli Boyama, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://web.dev/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "İlk CPU Boşta metriği, sayfanın ana iş parçacığının girişi işlemek için yeterli olduğu ilk anı işaret eder. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "İlk CPU Boşta"
+    "message": "İlk CPU Boşta metriği, sayfanın ana iş parçacığının girişi işlemek için yeterli olduğu ilk anı işaret eder.  [Daha fazla bilgi](https://web.dev/first-cpu-idle)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "İlk Anlamlı Boya, bir sayfanın ana içeriğinin ne zaman görünür hale geldiğini ölçer. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "İlk Anlamlı Boya"
+    "message": "İlk Anlamlı Boyama, bir sayfanın ana içeriğinin ne zaman görünür hale geldiğini ölçer. [Daha fazla bilgi](https://web.dev/first-meaningful-paint)."
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "Etkileşime hazır olma süresi, sayfanın tamamen etkileşime hazır hale gelmesi için geçmesi gereken süreyi ifade eder. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "Etkileşime hazır olma süresi, sayfanın tamamen etkileşime hazır hale gelmesi için geçmesi gereken süreyi ifade eder. [Daha fazla bilgi](https://web.dev/interactive)."
   },
-  "lighthouse-core/audits/metrics/interactive.js | title": {
-    "message": "Etkileşim Süresi"
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Largest Contentful Paint, en büyük metnin veya resmin ekranda belirdiği zamanı işaret eder. [Daha Fazla Bilgi](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Kullanıcılarınızın karşılaşabileceği olası İlk Giriş Gecikmesi, en uzun görevin milisaniye cinsinden süresidir."
-  },
-  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "Maksimum Olası İlk Giriş Gecikmesi"
+    "message": "Kullanıcılarınızın karşılaşabileceği olası maksimum İlk Giriş Gecikmesi, en uzun görevin süresidir. [Daha fazla bilgi](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
-    "message": "Hız İndeksi, bir sayfa içeriğinin görsel olarak ne kadar hızlı doldurulabildiğini gösterir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
+    "message": "Hız Endeksi, bir sayfa içeriğinin görsel olarak ne kadar hızlı doldurulabildiğini gösterir. [Daha fazla bilgi](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Hız İndeksi"
+  "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
+    "message": "Görev süresi 50 ms.yi aştığında, FCP ile Etkileşime Hazır Olma Süresi arasındaki tüm dönemlerin milisaniye cinsinden toplamı. [Daha fazla bilgi](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Ağ gidiş dönüş sürelerinin (RTT) performans üzerinde büyük bir etkisi vardır. Kaynağa RTT'nin fazla olması, kullanıcıya daha yakın olan sunucuların performansı iyileştirebileceğinin göstergesidir. [Daha fazla bilgi](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -557,26 +914,68 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Sunucunun Arka Uç Gecikmeleri"
   },
+  "lighthouse-core/audits/offline-start-url.js | description": {
+    "message": "Hizmet çalışanı web uygulamanızın öngörülemeyen ağ koşullarında güvenilir olmasını sağlar. [Daha fazla bilgi](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Hizmet Çalışanında {url} sitesi yüklenirken hata oluştu, {statusCode} durum kodu alındı"
+  },
+  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
+    "message": "`start_url` çevrimdışıyken 200 koduyla yanıt vermiyor"
+  },
+  "lighthouse-core/audits/offline-start-url.js | title": {
+    "message": "`start_url` çevrimdışıyken 200 koduyla yanıt veriyor"
+  },
+  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
+    "message": "Lighthouse, manifest dosyasından `start_url` öğesini okuyamadı. Bu yüzden `start_url` dokümanın URL'si olarak kabul edildi. Hata mesajı: \"{manifestWarning}\"."
+  },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "Ağ isteklerinin miktarını ve büyüklüğünü, performans bütçesi tarafından belirlenen hedeflerin altında tutun. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
+    "message": "{count,plural, =1{1 istek}other{# istek}}"
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "Performans bütçesi"
+  },
+  "lighthouse-core/audits/redirects-http.js | description": {
+    "message": "Zaten HTTPS kurduysanız kullanıcılarınıza güvenli web özellikleri sağlayabilmek için tüm HTTP trafiğini HTTPS'ye yönlendirdiğinizden emin olun. [Daha fazla bilgi](https://web.dev/redirects-http)."
+  },
+  "lighthouse-core/audits/redirects-http.js | failureTitle": {
+    "message": "HTTP trafiğini HTTPS'ye yönlendirmiyor"
+  },
+  "lighthouse-core/audits/redirects-http.js | title": {
+    "message": "HTTP trafiğini HTTPS'ye yönlendiriyor"
+  },
   "lighthouse-core/audits/redirects.js | description": {
-    "message": "Yönlendirmeler, sayfanın yüklenmesinden önce ek gecikmelere neden olur. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
+    "message": "Yönlendirmeler, sayfanın yüklenmesinden önce ek gecikmelere neden olur. [Daha fazla bilgi](https://web.dev/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Birden çok sayfa yönlendirmesini önleyin"
   },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "Sayfa kaynaklarının miktarı ve büyüklüğü için bütçeler belirlemek üzere bir budget.json dosyası ekleyin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount,plural, =1{1 istek • {byteCount, number, bytes} KB}other{# istek • {byteCount, number, bytes} KB}}"
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "İstek sayısını az ve aktarma boyutlarını küçük tutun"
+  },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "Standart bağlantılar, arama sonuçlarında hangi URL'nin gösterileceğini belirtir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+    "message": "Standart bağlantılar, arama sonuçlarında hangi URL'nin gösterileceğini belirtir. [Daha fazla bilgi](https://web.dev/canonical)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
-    "message": "Birden fazla çakışan URL ({urlList}) var"
+    "message": "Birden fazla çakışan URL ({urlList})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Farklı bir alan adına ({url}) yönlendiriyor"
+    "message": "Farklı bir alan adına yönlendiriyor ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Geçersiz URL ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
-    "message": "Başka bir \"hreflang\" konumuna ({url}) yönlendiriyor"
+    "message": "Başka bir `hreflang` konumuna ({url}) yönlendiriyor"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
     "message": "Göreli URL ({url})"
@@ -585,25 +984,19 @@
     "message": "İçeriğe eşdeğer bir sayfanın yerine alan adının kök URL'sine (ana sayfa) yönlendiriyor"
   },
   "lighthouse-core/audits/seo/canonical.js | failureTitle": {
-    "message": "Doküman geçerli bir \"rel=canonical\" değeri içermiyor"
+    "message": "Doküman geçerli bir `rel=canonical` değeri içermiyor"
   },
   "lighthouse-core/audits/seo/canonical.js | title": {
-    "message": "Doküman geçerli bir \"rel=canonical\" değeri içeriyor"
+    "message": "Doküman geçerli bir `rel=canonical` öğesi içeriyor"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "12 pikselden küçük yazı tipi boyutları okunamayacak kadar küçüktür ve mobil cihaz kullanıcılarının içeriği okuyabilmek için parmaklarıyla sıkıştırma hareketi yaparak yakınlaştırmalarını gerektirir. Sayfanın %60'ından fazlasının en az 12 piksel boyutunda olmasını sağlamaya çalışın. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+    "message": "12 pikselden küçük yazı tipi boyutları okunamayacak kadar küçüktür ve mobil cihaz kullanıcılarının içeriği okuyabilmek için parmaklarıyla sıkıştırma hareketi yaparak yakınlaştırmalarını gerektirir. Sayfanın %60'ından fazlasının en az 12 piksel boyutunda olmasını sağlamaya çalışın. [Daha fazla bilgi](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} kadar okunabilir metin"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanation": {
-    "message": "Metnin {decimalProportion, number, extendedPercent} kadarı çok küçük."
-  },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Mobil ekranlar için optimize edilmiş görüntü alanı meta etiketi olmadığından metin okunaklı değil."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Metnin {decimalProportion, number, extendedPercent} kadarı çok küçük ({decimalProportionVisited, number, extendedPercent} örneği baz alınarak)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokümanda okunabilir yazı tipi boyutları kullanılmıyor"
@@ -612,16 +1005,16 @@
     "message": "Dokümanda okunabilir yazı tipi boyutları kullanılıyor"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "hreflang bağlantıları, arama motorlarına, belirli bir dildeki veya bölgedeki arama sonuçlarında bir sayfanın hangi sürümünün listeleneceğini bildirir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+    "message": "hreflang bağlantıları, arama motorlarına, belirli bir dildeki veya bölgedeki arama sonuçlarında bir sayfanın hangi sürümünün listeleneceğini bildirir. [Daha fazla bilgi](https://web.dev/hreflang)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
-    "message": "Doküman geçerli bir \"hreflang\" öğesi içermiyor"
+    "message": "Doküman geçerli bir `hreflang` öğesi içermiyor"
   },
   "lighthouse-core/audits/seo/hreflang.js | title": {
-    "message": "Doküman geçerli bir \"hreflang\" öğesi içeriyor"
+    "message": "Doküman geçerli bir `hreflang` öğesi içeriyor"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "Başarısız HTTP durum kodlarına sahip olan sayfalar düzgün bir şekilde dizine eklenmeyebilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+    "message": "Başarısız HTTP durum kodlarına sahip olan sayfalar düzgün bir şekilde dizine eklenmeyebilir. [Daha fazla bilgi](https://web.dev/http-status-code)."
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "Sayfa başarısız bir HTTP durum koduna sahip"
@@ -630,7 +1023,7 @@
     "message": "Sayfa başarılı bir HTTP durum koduna sahip"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "Sayfalarınız, tarama iznine sahip olmayan arama motorları tarafından arama sonuçlarına eklenemez. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    "message": "Sayfalarınız, tarama iznine sahip olmayan arama motorları tarafından arama sonuçlarına eklenemez. [Daha fazla bilgi](https://web.dev/is-crawable)."
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "Sayfanın dizine eklenmesi engellenmiş"
@@ -639,7 +1032,7 @@
     "message": "Sayfanın dizine eklenmesi engellenmemiş"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "Açıklayıcı bağlantı metni, arama motorlarının içeriğinizi anlamasına yardımcı olur. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+    "message": "Açıklayıcı bağlantı metni, arama motorlarının içeriğinizi anlamasına yardımcı olur. [Daha fazla bilgi](https://web.dev/link-text)."
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount,plural, =1{1 bağlantı bulundu}other{# bağlantı bulundu}}"
@@ -651,13 +1044,13 @@
     "message": "Bağlantılar açıklayıcı metin içeriyor"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "Yapılandırılmış verileri doğrulamak için [Yapılandırılmış Veri Test Aracı]'nı (https://search.google.com/structured-data/testing-tool/) ve [Structured Data Linter]'ı (http://linter.structured-data.org/) çalıştırın. [Daha fazla bilgi](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "Yapılandırılmış verileri doğrulamak için [Yapılandırılmış Veri Test Aracı](https://search.google.com/structured-data/testing-tool/)'nı ve [Structured Data Linter](http://linter.structured-data.org/)'ı çalıştırın. [Daha fazla bilgi](https://web.dev/structured-data)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "Yapılandırılmış veriler geçerli"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "Sayfa içeriğini kısa ve öz bir şekilde özetlemek amacıyla arama sonuçlarına meta tanımlar eklenebilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/description)."
+    "message": "Sayfa içeriğini kısa ve öz bir şekilde özetlemek amacıyla arama sonuçlarına meta tanımlar eklenebilir. [Daha fazla bilgi](https://web.dev/meta-description)."
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "Açıklama metni boş."
@@ -669,7 +1062,7 @@
     "message": "Doküman meta tanım içeriyor"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "Arama motorları eklenti içeriğini dizine ekleyemez. Ayrıca birçok cihaz eklentileri kısıtlar veya desteklemez. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+    "message": "Arama motorları eklenti içeriğini dizine ekleyemez. Ayrıca birçok cihaz eklentileri kısıtlar veya desteklemez. [Daha fazla bilgi](https://web.dev/plugins)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "Doküman, eklenti kullanıyor"
@@ -678,10 +1071,10 @@
     "message": "Doküman eklenti içermiyor"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "robots.txt dosyanız yanlış biçimlendirilmişse, tarayıcılar web sitenizin nasıl taranmasını veya dizine eklenmesini istediğinizi anlayamayabilir."
+    "message": "robots.txt dosyanız yanlış biçimlendirilmişse, tarayıcılar web sitenizin nasıl taranmasını veya dizine eklenmesini istediğinizi anlayamayabilir. [Daha fazla bilgi](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "robots.txt isteği şu HTTP durumunu döndürdü: {statusCode}"
+    "message": "Robots.txt isteği şu HTTP durumunu döndürdü: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount,plural, =1{1 hata bulundu}other{# hata bulundu}}"
@@ -696,7 +1089,7 @@
     "message": "robots.txt dosyası geçerli"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Düğmeler ve bağlantılar gibi etkileşimli öğelerin, başka öğelerle üst üste binmeden rahatlıkla dokunulabilecek kadar büyük olması (48x48 piksel) ve etrafında yeterli boşluk bulunması gerekir. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "Düğmeler ve bağlantılar gibi etkileşimli öğelerin, başka öğelerle üst üste binmeden rahatlıkla dokunulabilecek kadar büyük olması (48x48 piksel) ve etrafında yeterli boşluk bulunması gerekir. [Daha fazla bilgi](https://web.dev/tap-targets)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "Dokunma hedeflerinin {decimalProportion, number, percent} kadarı uygun boyutta"
@@ -710,41 +1103,86 @@
   "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
     "message": "Çakışan Hedef"
   },
-  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
-    "message": "Boyut"
-  },
   "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
     "message": "Dokunma Hedefi"
   },
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Dokunma hedefleri uygun boyutta"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "İlk Bayt Zamanı, sunucunuzun bir yanıt gönderme zamanını tanımlar. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
+  "lighthouse-core/audits/service-worker.js | description": {
+    "message": "Servis çalışanı, uygulamanızın çevrimdışı çalışma, ana ekrana ekleme ve push bildirimleri gibi pek çok Progresif Web Uygulaması özelliğini kullanmasını sağlayan teknolojidir. [Daha fazla bilgi](https://web.dev/service-worker)."
   },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "Root dokümanı {timeInMs, number, milliseconds} ms sürdü"
+  "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
+    "message": "Sayfa bir hizmet çalışanı tarafından kontrol ediliyor ancak manifest dosyası geçerli JSON olarak ayrışmadığından `start_url` bulunamadı"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Sunucu yanıt sürelerini kısaltın (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
+    "message": "Sayfa bir hizmet çalışanı tarafından kontrol ediliyor ancak `start_url` ({startUrl}) öğesi hizmet çalışanının kapsamında ({scopeUrl}) değil"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Sunucu yanıt süreleri düşük (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
+    "message": "Bu sayfa bir hizmet çalışanı tarafından yönetiliyor ancak manifest dosyası getirilmediğinden `start_url` öğesi bulunamadı."
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "Süre"
+  "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
+    "message": "Bu kaynak bir veya daha fazla hizmet çalışanına sahip ancak sayfa ({pageUrl}) kapsam içinde değil."
   },
-  "lighthouse-core/audits/user-timings.js | columnName": {
-    "message": "Ad"
+  "lighthouse-core/audits/service-worker.js | failureTitle": {
+    "message": "Sayfayı kontrol eden bir hizmet çalışanı ve `start_url` öğesi kaydedilmiyor"
   },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "Başlangıç Zamanı"
+  "lighthouse-core/audits/service-worker.js | title": {
+    "message": "Sayfayı kontrol eden bir hizmet çalışanı ve `start_url` öğesi kaydediliyor"
+  },
+  "lighthouse-core/audits/splash-screen.js | description": {
+    "message": "Temalı başlangıç ekranı, kullanıcılar uygulamanızı ana ekranlarında başlattığında yüksek kaliteli bir deneyim sağlar. [Daha fazla bilgi](https://web.dev/splash-screen)."
+  },
+  "lighthouse-core/audits/splash-screen.js | failureTitle": {
+    "message": "Özel başlangıç ekranı için yapılandırılmadı"
+  },
+  "lighthouse-core/audits/splash-screen.js | title": {
+    "message": "Özel başlangıç ekranı için yapılandırıldı"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | description": {
+    "message": "Sitenizle eşleşmesi için tarayıcı adres çubuğu temalı yapılabilir. [Daha fazla bilgi](https://web.dev/themed-omnibox)."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
+    "message": "Adres çubuğu için tema rengi ayarlamıyor."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | title": {
+    "message": "Adres çubuğu için tema rengi ayarlar."
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "Ana İleti Dizisi Engelleme Süresi"
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "Üçüncü Taraf"
+  },
+  "lighthouse-core/audits/third-party-summary.js | description": {
+    "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Yedekli üçüncü taraf sağlayıcıların sayısını sınırlayın ve öncelikle sayfanızın yüklenmesi tamamlandıktan sonra üçüncü taraf kodunu yükleyin. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+  },
+  "lighthouse-core/audits/third-party-summary.js | displayValue": {
+    "message": "Üçüncü taraf kodu, ana ileti dizisini {timeInMs, number, milliseconds} ms. süreyle engelledi"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "Üçüncü taraf kodun etkisini azaltın"
+  },
+  "lighthouse-core/audits/third-party-summary.js | title": {
+    "message": "Üçüncü taraf kullanımını en aza indirme"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Ölçüm"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrik"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Sitenizin performansını takip etmenize yardımcı olması için zamanlama bütçesi belirleyin. Performanslı siteler hızlı yüklenir ve kullanıcı giriş etkinliklerine hızlı yanıt verir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Zamanlama bütçesi"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "Tür"
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Önemli kullanıcı deneyimleri esnasında uygulamanızın gerçek dünya performansını ölçmek için uygulamanıza User Timing API'si ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Önemli kullanıcı deneyimleri esnasında uygulamanızın gerçek dünya performansını ölçmek için uygulamanıza User Timing API'si ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/user-timings)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kullanıcı zamanlaması}other{# kullanıcı zamanlaması}}"
@@ -753,22 +1191,61 @@
     "message": "Kullanıcı Zamanlaması işaretleri ve ölçüleri"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "\"{securityOrigin}\" için bir önceden bağlanma <link> bulundu ancak tarayıcı tarafından kullanılmadı. \"crossorigin\" özelliğini gerektiği gibi kullandığınızdan emin olun."
+    "message": "\"{securityOrigin}\" için bir önceden bağlanma <link> öğesi bulundu ancak tarayıcı tarafından kullanılmadı. `crossorigin` özelliğini gerektiği gibi kullandığınızdan emin olun."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Önemli üçüncü taraf kaynaklarına erken bağlantılar oluşturmak için önceden bağlanma veya DNS önceden getirme kaynak ipuçları ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Önemli üçüncü taraf kaynaklarına erken bağlantılar oluşturmak için `preconnect` veya `dns-prefetch` kaynak ipuçları ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://web.dev/uses-rel-preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Gerekli kaynaklara önceden bağlan"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "2'den fazla önceden bağlan bağlantısı bulundu. Önceden bağlanma bağlantıları az kullanılmalı ve sadece en önemli kaynaklar için tercih edilmelidir."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "\"{preloadURL}\" için bir önceden yükleme <link> bulundu ancak tarayıcı tarafından kullanılmadı. \"crossorigin\" özelliğini gerektiği gibi kullandığınızdan emin olun."
+    "message": "\"{preloadURL}\" için bir önceden yükleme <link> bulundu ancak tarayıcı tarafından kullanılmadı. `crossorigin` özelliğini gerektiği gibi kullandığınızdan emin olun."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
-    "message": "Şu anda istenen kaynakları sayfa yüklemenin sonraki aşamalarında getirmeye öncelik tanımak için <link rel=preload> öğesini kullanma seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/preload)."
+    "message": "Mevcut durumda sayfa yüklemesinden sonra istenen kaynakları daha önce getirmek için `<link rel=preload>` kullanmayı düşünün. [Daha fazla bilgi](https://web.dev/uses-rel-preload)."
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Önemli istekleri önceden yükleyin"
+  },
+  "lighthouse-core/audits/viewport.js | description": {
+    "message": "Uygulamanızı mobil ekranlar için optimize etmek üzere `<meta name=\"viewport\">` etiketi ekleyin. [Daha fazla bilgi](https://web.dev/viewport)."
+  },
+  "lighthouse-core/audits/viewport.js | explanationNoTag": {
+    "message": "`<meta name=\"viewport\">` etiketi bulunamadı"
+  },
+  "lighthouse-core/audits/viewport.js | failureTitle": {
+    "message": "`width` veya `initial-scale` değerleri olan bir `<meta name=\"viewport\">` etiketi yok"
+  },
+  "lighthouse-core/audits/viewport.js | title": {
+    "message": "`width` veya `initial-scale` değerleri olan bir `<meta name=\"viewport\">` etiketi var"
+  },
+  "lighthouse-core/audits/without-javascript.js | description": {
+    "message": "Uygulamanız, JavaScript devre dışı bırakıldığında bazı içerikler görüntülemelidir. Bu içerik, kullanıcıya uygulamayı kullanmak için JavaScript gerektiğini belirten bir uyarı bile olabilir. [Daha fazla bilgi](https://web.dev/without-javascript)."
+  },
+  "lighthouse-core/audits/without-javascript.js | explanation": {
+    "message": "Komut dosyaları kullanılamıyorsa sayfa gövdesi bazı içerikler oluşturmalıdır."
+  },
+  "lighthouse-core/audits/without-javascript.js | failureTitle": {
+    "message": "JavaScript kullanılamadığında ikame içerik sağlamıyor"
+  },
+  "lighthouse-core/audits/without-javascript.js | title": {
+    "message": "JavaScript kullanılamadığında bazı içerikler bulundurur"
+  },
+  "lighthouse-core/audits/works-offline.js | description": {
+    "message": "Progresif Web Uygulaması oluşturuyorsanız uygulamanızın çevrimdışı da çalışabilmesi için hizmet çalışanı kullanmayı düşünün. [Daha fazla bilgi](https://web.dev/works-offline)."
+  },
+  "lighthouse-core/audits/works-offline.js | failureTitle": {
+    "message": "Geçerli sayfa çevrimdışıyken 200 koduyla yanıt vermiyor"
+  },
+  "lighthouse-core/audits/works-offline.js | title": {
+    "message": "Geçerli sayfa çevrimdışıyken 200 koduyla yanıt veriyor"
+  },
+  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
+    "message": "Sayfa, test URL'niz ({requested}) \"{final}\" adresine yönlendirildiğinden çevrimdışı yüklenmiyor olabilir. Doğrudan ikinci URL'yi test etmeyi deneyin."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Bu fırsatlar, uygulamanızda ARIA kullanımının iyileştirilmesine olanak tanır. Bu da ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına daha iyi bir deneyim sunulmasını sağlayabilir."
@@ -827,8 +1304,17 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tablolar ve listeler"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "En İyi Uygulamalar"
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
+    "message": "Performans bütçeleri, sitenizin performansı için standartları belirler."
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupTitle": {
+    "message": "Bütçeler"
+  },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "Uygulamanızın performansı hakkında daha fazla bilgi."
+    "message": "Uygulamanızın performansı hakkında daha fazla bilgi. Bu sayılar Performan skoruna [doğrudan etki](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) etmezler."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "Teşhis"
@@ -840,7 +1326,7 @@
     "message": "İlk Boya İyileştirmeleri"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "Bu optimizasyonlar, sayfanızın yüklenmesini hızlandırabilir."
+    "message": "Bu öneriler, sayfanızın daha hızlı yüklenmesine yardımcı olabilir. Performan skoruna [doğrudan etki](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) etmezler."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Fırsatlar"
@@ -856,6 +1342,15 @@
   },
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performans"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
+    "message": "Bu denetimler, bir Progresif Web Uygulamasının çeşitli yönlerini doğrular. [Daha fazla bilgi](https://developers.google.com/web/progressive-web-apps/checklist)."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
+    "message": "Temel [Progresif Web Uygulaması Yapılacaklar Listesi](https://developers.google.com/web/progressive-web-apps/checklist) tarafından zorunlu tutulan bu denetimler, Lighthouse tarafından otomatik olarak kontrol edilmez. Bunlar skorunuzu etkilemez ancak manuel olarak doğrulamanız önemlidir."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
+    "message": "Progresif Web Uygulaması"
   },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "Hızlı ve güvenilir"
@@ -888,43 +1383,130 @@
     "message": "Tarama ve Dizine Ekleme"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Kullanıcıların sayfadaki içerikleri okumak üzere sıkıştırma hareketi yapmak veya yakınlaştırmak zorunda kalmamaları için sayfalarınızın mobil uyumlu olduğundan emin olun. [Daha fazla bilgi](https://developers.google.com/search/mobile-sites/)."
+    "message": "Kullanıcıların küçültme veya yakınlaştırma hareketi yapmadan sayfadaki içerikleri okuyabilmelerini sağlamak için sayfalarınızın mobil uyumlu olduğundan emin olun. [Daha fazla bilgi](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobil Uyumlu"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "Sayfa, test URL'niz ({requested}) {final} adresine yönlendirildiğinden beklendiği gibi yüklenmiyor olabilir. İkinci URL'yi doğrudan test etmeyi deneyin."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "Sayfa, zaman sınırı içinde bitmeyecek kadar yavaş yüklendi. Sonuçlar eksik olabilir."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL'yi Önbelleğe Alma"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
+    "message": "Konum"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnName": {
+    "message": "Ad"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Bütçe Aşımı"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
+    "message": "İstek Sayısı"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "Kaynak Boyutu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "Kaynak Türü"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "Boyut (KB)"
+    "message": "Boyut"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "Kaynak"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Harcanan Süre"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "Aktarım Boyutu"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potansiyel Tasarruflar (KB)"
+    "message": "Potansiyel Tasarruflar"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potansiyel Tasarruf (ms)"
+    "message": "Potansiyel Tasarruflar"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "Kümülatif Düzen Kayması"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB potansiyel tasarruf"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "{wastedMs, number, milliseconds} ms potansiyel tasarruf"
+    "message": "{wastedMs, number, milliseconds} ms. potansiyel tasarruf"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "Doküman"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Tahmini Giriş Gecikmesi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "İlk CPU Boşta"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "İlk Zengin İçerikli Boya"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "İlk Anlamlı Boya"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "Yazı tipi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "Resim"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Etkileşim Süresi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "Largest Contentful Paint"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Maksimum Olası İlk Giriş Gecikmesi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "Medya"
   },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
-    "message": "{timeInMs, number, milliseconds} ms"
+    "message": "{timeInMs, number, milliseconds} ms."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "Diğer"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "Komut dosyası"
   },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} sn."
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Hız İndeksi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "Stil Sayfası"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "Üçüncü taraf"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Toplam Engellenme Süresi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "Toplam"
+  },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
-    "message": "Sayfa yüklemenizin üzerine iz kaydedilirken bir sorun oluştu. Lütfen Lighthouse'u tekrar çalıştırın. ({errorCode})"
+    "message": "Sayfa yüklemenizin izlemesi kaydedilirken bir sorun oluştu. Lütfen Lighthouse'u tekrar çalıştırın. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | criTimeout": {
     "message": "İlk Hata Ayıklayıcı Protokolü bağlantısı beklenirken zaman aşımı oluştu."
@@ -935,8 +1517,14 @@
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "DNS sunucuları sağlanan alan adını çözümleyemedi."
   },
+  "lighthouse-core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "Zorunlu {artifactName} toplayıcı bir hatayla karşılaştı: {errorMessage}"
+  },
   "lighthouse-core/lib/lh-error.js | internalChromeError": {
     "message": "Dahili bir Chrome hatası oluştu. Lütfen Chrome'u yeniden başlatıp Lighthouse'u tekrar çalıştırmayı deneyin."
+  },
+  "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "Zorunlu {artifactName} toplayıcı çalışmadı."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse istediğiniz sayfayı güvenli bir şekilde yükleyemedi. Doğru URL'yi test ettiğinizden ve sunucunun tüm isteklere gerektiği gibi yanıt verdiğinden emin olun."
@@ -945,10 +1533,13 @@
     "message": "Sayfa yanıt vermeyi durdurduğu için Lighthouse istediğiniz URL'yi güvenli bir şekilde yükleyemedi."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "Sağladığınız URL, geçerli güvenlik kimlik bilgilerine sahip değil. {securityMessages}"
+    "message": "Sağladığınız URL, geçerli güvenlik sertifikasına sahip değil. {securityMessages}"
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome bir geçiş reklamıyla sayfa yüklemesini önledi. Doğru URL'yi test ettiğinizden ve sunucunun tüm isteklere gerektiği gibi yanıt verdiğinden emin olun."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
-    "message": "Lighthouse, istediğiniz sayfayı güvenli bir şekilde yükleyemedi. Doğru URL'yi test ettiğinizden ve sunucunun tüm isteklere gerektiği gibi yanıt verdiğinden emin olun. (Ayrıntılar: {errorDetails})"
+    "message": "Lighthouse istediğiniz sayfayı güvenli bir şekilde yükleyemedi. Doğru URL'yi test ettiğinizden ve sunucunun tüm isteklere gerektiği gibi yanıt verdiğinden emin olun. (Ayrıntılar: {errorDetails})"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
     "message": "Lighthouse istediğiniz sayfayı güvenli bir şekilde yükleyemedi. Doğru URL'yi test ettiğinizden ve sunucunun tüm isteklere gerektiği gibi yanıt verdiğinden emin olun. (Durum kodu: {statusCode})"
@@ -974,11 +1565,38 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "Maksimum kritik yol gecikmesi:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "JSON nesnesini kopyala"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "Koyu Temayı aç/kapat"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Yazdırma Genişletmesi"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "Yazdırma Özeti"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Gist olarak kaydet"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "HTML olarak kaydet"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "JSON nesnesi olarak kaydet"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "Görüntüleyicide aç"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Hata!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Bildirme hatası: denetim bilgisi yok"
+  },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "Sorun bildir"
   },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "Test Verileri"
@@ -1001,17 +1619,65 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Başarılı denetimler"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emülasyonlu Masaüstü"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emülasyonlu Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "Emülasyon yok"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "CPU/Bellek Gücü"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU kısıtlaması"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanal"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Cihaz"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Alınma Zamanı"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Ağ sınırlama"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Çalışma Zamanı Ayarları"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "Kullanıcı aracısı (ana makine)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Kullanıcı aracısı (ağ)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "Bilinmiyor"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Snippet'i daralt"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "Snippet'i genişlet"
   },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "3. taraf kaynaklarını göster"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "Ortam tarafından sağlandı"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Şu Lighthouse çalışmasını etkileyen sorunlar vardı:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Değerler tahminidir ve değişiklik gösterebilir."
+    "message": "Değerler tahminidir ve değişiklik gösterebilir. Performans skoru [sadece bu metriklere dayanır](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted)."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Kontrollerden geçti, ancak uyarılar var"
@@ -1019,46 +1685,130 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Uyarılar: "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Animasyonlu içerik için içerik ekran dışında kalırken CPU kullanımını en aza indirmek amacıyla [amp-anim](https://amp.dev/documentation/components/amp-anim/) kullanın."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "İlk görüntü alanının dışında otomatik olarak geç yüklenen görüntüleriniz için geçerli `amp-img` etiketleri kullandığınızdan emin olun. [Daha fazla bilgi](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[Sunucu tarafı oluşturucu AMP düzenleri](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) için [AMP Optimize Edici](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) gibi araçları kullanın."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Tüm stillerinizin desteklendiğinden emin olmak için [AMP belgelerine](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) bakın."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` öğesi, ekran boyutuna göre kullanılacak görüntü öğelerini belirtmek için `srcset` özelliğini destekler.  [Daha fazla bilgi](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Diğer tarayıcılar için uygun bir yedek belirtirken tüm `amp-img` bileşenlerinizin WebP biçimlerinde görüntülenmesi seçeneğini değerlendirin. [Daha fazla bilgi](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Çok büyük listeler oluşturuluyorsa Bileşen Geliştirme Kiti (CDK) ile sanal kaydırma seçeneğini düşünün. [Daha fazla bilgi](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "JavaScript paketlerinizin boyutunu en aza indirmek için [rota düzeyinde kod bölmeyi](https://web.dev/route-level-code-splitting-in-angular/) uygulayın. Ayrıca, [Angular hizmet çalışanı](https://web.dev/precaching-with-the-angular-service-worker/) ile öğeleri önbelleğe alma seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Angular KSA kullanıyorsanız derlemelerin üretim modunda oluşturulduğundan emin olun. [Daha fazla bilgi](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Angular KSA kullanıyorsanız paketlerinizi incelemek için üretim derlemenize kaynak eşlemelerini ekleyin. [Daha fazla bilgi](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Gezinmeyi hızlandırmak için rotaları önceden yükleyin. [Daha fazla bilgi](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Görüntü ayrılma noktalarını yönetmek için Bileşen Geliştirme Kiti'nde (CDK) `BreakpointObserver` yardımcı programını kullanmayı düşünün. [Daha fazla bilgi](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "JavaScript öğelerinizi grupluyorsanız [gruplayıcı](https://github.com/magento/baler) kullanmayı düşünün."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento'nun yerleşik [JavaScript gruplama ve küçültme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) özelliğini devre dışı bırakın ve bunun yerine [gruplayıcı](https://github.com/magento/baler/) kullanmayı düşünün."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[Özel yazı tipleri tanımlarken](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) `@font-display` öğesini belirtin."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ürün ve katalog şablonlarınızı, web platformunun [geç yükleme](https://web.dev/native-lazy-loading) özelliğinden yararlanacak şekilde değiştirme seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Mağazanızın Geliştirici ayarlarında \"CSS Dosyalarını Küçült\" seçeneğini etkinleştirin. [Daha fazla bilgi](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Statik içerik dağıtımından oluşturulan tüm JavaScript öğelerini küçültmek ve yerleşik küçültme özelliğini devre dışı bırakmak için [Terser](https://www.npmjs.com/package/terser)'ı kullanın."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento'nun yerleşik [JavaScript gruplama](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) özelliğini devre dışı bırakın."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Görüntüleri optimize etmek için [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image)'te çeşitli üçüncü taraf uzantılarını arama seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Önceden bağlanma veya DNS önceden getirme kaynak ipuçları, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` etiketleri, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Daha yeni görüntü biçimlerinden yararlanmak için [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp)'te çeşitli üçüncü taraf uzantılarını arama seçeneğini değerlendirin."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Sayfada çok sayıda yinelenen öğe oluşturuyorsanız, oluşturulan DOM düğümlerinin sayısını en aza indirmek için `react-window` gibi bir \"pencereleme\" kitaplığı ı düşünün. [Daha fazla bilgi](https://web.dev/virtualize-long-lists-react-window/). Ayrıca, çalışma zamanı performansını iyileştirmek için Efekt kancası kullanıyorsanız bazı bağımlılıklar değişinceye kadar [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) veya [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) ve [atlama efektleri](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) kullanarak gereksiz yeniden oluşturma sayısını en aza indirin."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "React Router kullanıyorsanız [rota gezinmeleri](https://reacttraining.com/react-router/web/api/Redirect) için `<Redirect>` bileşeninin kullanımını en aza indirin."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Derleme sisteminiz CSS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Derleme sisteminiz JS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Sunucu tarafında oluşturmuyorsanız `React.lazy()` ile [JavaScript paketlerinizi bölün](https://web.dev/code-splitting-suspense/). Aksi halde, [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) gibi bir üçüncü taraf kitaplığı kullanarak kodu bölün."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Bileşenlerinizin oluşturma performansını ölçmek için Profil Oluşturucu API'sinden yararlanan React Geliştirme Araçları Profil Oluşturucu'yu kullanın. [Daha fazla bilgi](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "GIF dosyanızı, HTML5 videosu olarak katıştırmak için kullanılabilmesini sağlayacak bir hizmete yüklemeyi düşünün."
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "Ekran dışı görüntüleri erteleme veya bu işlevselliği sağlayan bir temaya geçiş yapma olanağı veren bir [WordPress geç yükleme (lazy-load) eklentisi](https://wordpress.org/plugins/search/lazy+load/) yükleyin. Ayrıca [AMP eklentisini](https://wordpress.org/plugins/amp/) kullanmayı da düşünün."
+    "message": "Ekran dışı görüntüleri erteleme veya bu işlevselliği sağlayan bir temaya geçiş yapma olanağı veren bir [WordPress geç yükleme (lazy-load) eklentisi](https://wordpress.org/plugins/search/lazy+load/) yükleyin. Ayrıca [AMP eklentisini](https://wordpress.org/plugins/amp/) kullanmayı da değerlendirin."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "[Kritik öğeleri satır içi yapmanıza](https://wordpress.org/plugins/search/critical+css/) veya [daha az önemli kaynakları ertelemenize](https://wordpress.org/plugins/search/defer+css+javascript/) yardımcı olabilecek çeşitli WordPress eklentileri vardır. Bu eklentilerin sağlayacağı optimizasyonların tema veya eklentilerinizin özelliklerini bozabileceğine dikkat edin. Bunu engellemek için muhtemelen kodda değişiklik yapmanız gerekecektir."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Temalar, eklentiler ve sunucu özellikleri öğelerinin tümü sunucunun yanıt süresini etkiler. Bir optimizayon eklentisini dikkatle seçerek ve/veya sunucunuzu yeni sürüme geçirerek, daha ileri düzeyde optimize edilmiş bir tema bulmayı düşünün."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Yayın listelerinizde alıntılar göstermeyi (ör. daha fazla etiket kullanarak), belirli bir sayfada gösterilen yayınların sayısını azaltmayı, uzun yayınlarınızı birden fazla sayfaya bölmeyi veya yorumların geç yüklenmesi için bir eklenti kullanmayı düşünün."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "Çeşitli [WordPress eklentileri](https://wordpress.org/plugins/search/minify+css/) stillerinizi sıralayarak, küçülterek ve sıkıştırarak sitenizi hızlandırabilir. Ayrıca mümkünse bu sadeleştirmeyi yapmak için bir derleme işlemi kullanmak isteyebilirsiniz."
+    "message": "Çeşitli [WordPress eklentileri](https://wordpress.org/plugins/search/minify+css/) stillerinizi sıralayarak, küçülterek ve sıkıştırarak sitenizi hızlandırabilir. Ayrıca mümkünse bu küçültme yapmak için bir derleme işlemi kullanmak isteyebilirsiniz."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "Çeşitli [WordPress eklentileri](https://wordpress.org/plugins/search/minify+javascript/), komut dosyalarınızı sıralayarak, küçülterek ve sıkıştırarak sitenizi hızlandırabilir. Ayrıca mümkünse bu sadeleştirmeyi yapmak için bir derleme işlemi kullanmak isteyebilirsiniz."
+    "message": "Çeşitli [WordPress eklentileri](https://wordpress.org/plugins/search/minify+javascript/) komut dosyalarınızı sıralayarak, küçülterek ve sıkıştırarak sitenizi hızlandırabilir. Ayrıca mümkünse bu sadeleştirmeyi yapmak için bir derleme işlemi kullanmak isteyebilirsiniz."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "Sayfanızda kullanılmayan CSS'leri yükleyen [WordPress eklentilerinin](https://wordpress.org/plugins/) sayısını azaltmayı veya değiştirmeyi düşünün. Gereksiz CSS yükleyen eklentileri belirlemek için Chrome DevTools'da [kod kapsamını](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) çalıştırmayı düşünün. Sorumlu temayı/eklentiyi stil sayfasının URL'sinden belirleyebilirsiniz. Listede çok sayıda stil sayfasına sahip olan ve kod kapsamında çok sayıda kırmızı işaret taşıyan eklentileri arayın. Bir eklenti sadece sayfada gerçekten kullanılan bir stil sayfasını kuyruğa almalıdır."
+    "message": "Sayfanızda kullanılmayan CSS'ler yükleyen [WordPress eklentilerinin](https://wordpress.org/plugins/) sayısını azaltmayı veya değiştirmeyi düşünün. Gereksiz CSS ekleyen eklentileri belirlemek için Chrome Geliştirme Araçlarında [kod kapsamını](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) çalıştırmayı deneyin. Sorumlu temayı/eklentiyi stil sayfasının URL'sinden belirleyebilirsiniz. Listede çok sayıda stil sayfasına sahip olan ve kod kapsamında çok sayıda kırmızı işaret taşıyan eklentileri arayın. Bir eklenti sadece sayfada gerçekten kullanılan bir stil sayfasını kuyruğa almalıdır."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "Sayfanızda kullanılmayan JavaScript'ler yükleyen [WordPress eklentilerinin](https://wordpress.org/plugins/) sayısını azaltmayı veya değiştirmeyi düşünün. Gereksiz JS ekleyen eklentileri belirlemek için Chrome DevTools'da [kod kapsamını](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) çalıştırmayı düşünün. Sorumlu temayı/eklentiyi komut dosyasının URL'sinden belirleyebilirsiniz. Listede çok sayıda komut dosyasına sahip olan ve kod kapsamında çok sayıda kırmızı işaret taşıyan eklentileri arayın. Bir eklenti sadece sayfada gerçekten kullanılan bir komut dosyasını kuyruğa almalıdır."
+    "message": "Sayfanızda kullanılmayan JavaScript'ler yükleyen [WordPress eklentilerinin](https://wordpress.org/plugins/) sayısını azaltmayı veya değiştirmeyi değerlendirin. Gereksiz JS ekleyen eklentileri belirlemek için Chrome Geliştirme Araçlarında [kod kapsamını](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) çalıştırmayı düşünün. Sorumlu temayı/eklentiyi komut dosyasının URL'sinden belirleyebilirsiniz. Listede çok sayıda komut dosyasına sahip olan ve kod kapsamında çok sayıda kırmızı işaret taşıyan eklentileri arayın. Bir eklenti sadece sayfada gerçekten kullanılan bir komut dosyasını kuyruğa almalıdır."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPress'te Tarayıcı Önbelleği] (https://codex.wordpress.org/WordPress_Optimization#Browser_Caching) ile ilgili bilgi edinin."
+    "message": "[WordPress'te Tarayıcı Önbelleği](https://wordpress.org/support/article/optimization/#browser-caching) ile ilgili bilgi edinin."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "Kaliteden ödün vermeden resimlerinizi sıkıştıran bir [resim optimizasyonu WordPress eklentisi] (https://wordpress.org/plugins/search/optimize+images/) kullanmayı düşünün."
+    "message": "Kaliteden ödün vermeden resimlerinizi sıkıştıran bir [resim optimizasyonu WordPress eklentisi](https://wordpress.org/plugins/search/optimize+images/) kullanmayı değerlendirin."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Gerekli resim boyutlarının kullanılabilmesi için resimleri doğrudan [medya kitaplığından](https://codex.wordpress.org/Media_Library_Screen) yükleyin, ardından ideal resim boyutlarının kullanıldığından (esnek ayrılma noktası için olanlar dahil) emin olmak için resimleri medya kitaplığından ekleyin veya resim widget'ını kullanın. Boyutları kullanım için yeterli değilse \"Tam Boy\" resimler kullanmaktan kaçının. [Daha Fazla Bilgi](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Gerekli resim boyutlarının kullanılabilmesi için resimleri doğrudan [medya kitaplığından](https://wordpress.org/support/article/media-library-screen/) yükleyin, ardından ideal resim boyutlarının kullanıldığından (esnek ayrılma noktası için olanlar dahil) emin olmak için resimleri medya kitaplığından ekleyin veya resim widget'ını kullanın. Boyutları kullanım için yeterli değilse `Full Size` resimler kullanmaktan kaçının. [Daha fazla bilgi](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Web sunucunuzun yapılandırmasında metin sıkıştırmayı etkinleştirebilirsiniz."
   },
   "stack-packs/packs/wordpress.js | uses_webp_images": {
-    "message": "Yüklediğiniz resimleri ideal biçimlere otomatik olarak dönüştürecek bir [eklenti](https://wordpress.org/plugins/search/convert+webp/) veya hizmet kullanmayı düşünün."
+    "message": "Yüklediğiniz resimleri ideal biçimlere otomatik olarak dönüştürecek bir [eklenti](https://wordpress.org/plugins/search/convert+webp/) veya hizmet kullanmayı değerlendirin."
   }
 }

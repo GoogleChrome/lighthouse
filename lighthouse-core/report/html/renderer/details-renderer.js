@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ class DetailsRenderer {
    * @param {DOM} dom
    */
   constructor(dom) {
-    /** @type {DOM} */
     this._dom = dom;
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
@@ -53,7 +52,7 @@ class DetailsRenderer {
       case 'table':
         return this._renderTable(details);
       case 'criticalrequestchain':
-        return CriticalRequestChainRenderer.render(this._dom, this._templateContext, details);
+        return CriticalRequestChainRenderer.render(this._dom, this._templateContext, details, this);
       case 'opportunity':
         return this._renderTable(details);
 
@@ -61,14 +60,11 @@ class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
         return null;
-      // Fallback for old LHRs, where no type meant don't render.
-      case undefined:
-        return null;
 
       default: {
-        // @ts-ignore tsc thinks this unreachable, but ts-ignore for error message just in case.
-        const detailsType = details.type;
-        throw new Error(`Unknown type: ${detailsType}`);
+        // @ts-ignore tsc thinks this is unreachable, but be forward compatible
+        // with new unexpected detail types.
+        return this._renderUnknown(details.type, details);
       }
     }
   }
@@ -79,7 +75,7 @@ class DetailsRenderer {
    */
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'kb'
-    const value = Util.formatBytesToKB(details.value, details.granularity);
+    const value = Util.i18n.formatBytesToKB(details.value, details.granularity);
     return this._renderText(value);
   }
 
@@ -88,9 +84,9 @@ class DetailsRenderer {
    * @return {Element}
    */
   _renderMilliseconds(details) {
-    let value = Util.formatMilliseconds(details.value, details.granularity);
+    let value = Util.i18n.formatMilliseconds(details.value, details.granularity);
     if (details.displayUnit === 'duration') {
-      value = Util.formatDuration(details.value);
+      value = Util.i18n.formatDuration(details.value);
     }
 
     return this._renderText(value);
@@ -100,7 +96,7 @@ class DetailsRenderer {
    * @param {string} text
    * @return {HTMLElement}
    */
-  _renderTextURL(text) {
+  renderTextURL(text) {
     const url = text;
 
     let displayedPath;
@@ -116,7 +112,7 @@ class DetailsRenderer {
     }
 
     const element = this._dom.createElement('div', 'lh-text__url');
-    element.appendChild(this._renderText(displayedPath));
+    element.appendChild(this._renderLink({text: displayedPath, url}));
 
     if (displayedHost) {
       const hostElem = this._renderText(displayedHost);
@@ -133,14 +129,18 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.LinkValue} details
+   * @param {{text: string, url: string}} details
    * @return {Element}
    */
   _renderLink(details) {
     const allowedProtocols = ['https:', 'http:'];
-    const url = new URL(details.url);
-    if (!allowedProtocols.includes(url.protocol)) {
-      // Fall back to just the link text if protocol not allowed.
+    let url;
+    try {
+      url = new URL(details.url);
+    } catch (_) {}
+
+    if (!url || !allowedProtocols.includes(url.protocol)) {
+      // Fall back to just the link text if invalid or protocol not allowed.
       return this._renderText(details.text);
     }
 
@@ -168,6 +168,8 @@ class DetailsRenderer {
    * @return {Element}
    */
   _renderNumeric(text) {
+    // TODO: this should probably accept a number and call `formatNumber` instead of being identical
+    // to _renderText.
     const element = this._dom.createElement('div', 'lh-numeric');
     element.textContent = text;
     return element;
@@ -188,10 +190,26 @@ class DetailsRenderer {
   }
 
   /**
+   * @param {string} type
+   * @param {*} value
+   */
+  _renderUnknown(type, value) {
+    // eslint-disable-next-line no-console
+    console.error(`Unknown details type: ${type}`, value);
+    const element = this._dom.createElement('details', 'lh-unknown');
+    this._dom.createChildOf(element, 'summary').textContent =
+      `We don't know how to render audit details of type \`${type}\`. ` +
+      'The Lighthouse version that collected this data is likely newer than the Lighthouse ' +
+      'version of the report renderer. Expand for the raw JSON.';
+    this._dom.createChildOf(element, 'pre').textContent = JSON.stringify(value, null, 2);
+    return element;
+  }
+
+  /**
    * Render a details item value for embedding in a table. Renders the value
    * based on the heading's valueType, unless the value itself has a `type`
    * property to override it.
-   * @param {LH.Audit.Details.TableItem[string] | LH.Audit.Details.OpportunityItem[string]} value
+   * @param {LH.Audit.Details.ItemValue} value
    * @param {LH.Audit.Details.OpportunityColumnHeading} heading
    * @return {Element|null}
    */
@@ -213,11 +231,14 @@ class DetailsRenderer {
         case 'node': {
           return this.renderNode(value);
         }
+        case 'source-location': {
+          return this.renderSourceLocation(value);
+        }
         case 'url': {
-          return this._renderTextURL(value.value);
+          return this.renderTextURL(value.value);
         }
         default: {
-          throw new Error(`Unknown valueType: ${value.type}`);
+          return this._renderUnknown(value.type, value);
         }
       }
     }
@@ -226,7 +247,7 @@ class DetailsRenderer {
     switch (heading.valueType) {
       case 'bytes': {
         const numValue = Number(value);
-        return this._renderBytes({value: numValue, granularity: 1});
+        return this._renderBytes({value: numValue, granularity: heading.granularity});
       }
       case 'code': {
         const strValue = String(value);
@@ -259,14 +280,14 @@ class DetailsRenderer {
       case 'url': {
         const strValue = String(value);
         if (URL_PREFIXES.some(prefix => strValue.startsWith(prefix))) {
-          return this._renderTextURL(strValue);
+          return this.renderTextURL(strValue);
         } else {
           // Fall back to <pre> rendering if not actually a URL.
           return this._renderCode(strValue);
         }
       }
       default: {
-        throw new Error(`Unknown valueType: ${heading.valueType}`);
+        return this._renderUnknown(heading.valueType, value);
       }
     }
   }
@@ -276,22 +297,59 @@ class DetailsRenderer {
    * OpportunityColumnHeading type until we have all details use the same
    * heading format.
    * @param {LH.Audit.Details.Table|LH.Audit.Details.Opportunity} tableLike
-   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>} header
+   * @return {Array<LH.Audit.Details.OpportunityColumnHeading>}
    */
-  _getCanonicalizedTableHeadings(tableLike) {
+  _getCanonicalizedHeadingsFromTable(tableLike) {
     if (tableLike.type === 'opportunity') {
       return tableLike.headings;
     }
 
-    return tableLike.headings.map(heading => {
-      return {
-        key: heading.key,
-        label: heading.text,
-        valueType: heading.itemType,
-        displayUnit: heading.displayUnit,
-        granularity: heading.granularity,
-      };
-    });
+    return tableLike.headings.map(heading => this._getCanonicalizedHeading(heading));
+  }
+
+  /**
+   * Get the headings of a table-like details object, converted into the
+   * OpportunityColumnHeading type until we have all details use the same
+   * heading format.
+   * @param {LH.Audit.Details.TableColumnHeading} heading
+   * @return {LH.Audit.Details.OpportunityColumnHeading}
+   */
+  _getCanonicalizedHeading(heading) {
+    let subRows;
+    if (heading.subRows) {
+      // @ts-ignore: It's ok that there is no text.
+      subRows = this._getCanonicalizedHeading(heading.subRows);
+      if (!subRows.key) {
+        // eslint-disable-next-line no-console
+        console.warn('key should not be null');
+      }
+      subRows = {...subRows, key: subRows.key || ''};
+    }
+
+    return {
+      key: heading.key,
+      valueType: heading.itemType,
+      subRows,
+      label: heading.text,
+      displayUnit: heading.displayUnit,
+      granularity: heading.granularity,
+    };
+  }
+
+  /**
+   * @param {LH.Audit.Details.ItemValue[]} values
+   * @param {LH.Audit.Details.OpportunityColumnHeading} heading
+   * @return {Element}
+   */
+  _renderSubRows(values, heading) {
+    const subRowsElement = this._dom.createElement('div', 'lh-sub-rows');
+    for (const childValue of values) {
+      const subRowElement = this._renderTableValue(childValue, heading);
+      if (!subRowElement) continue;
+      subRowElement.classList.add('lh-sub-row');
+      subRowsElement.appendChild(subRowElement);
+    }
+    return subRowsElement;
   }
 
   /**
@@ -305,7 +363,7 @@ class DetailsRenderer {
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
     const theadTrElem = this._dom.createChildOf(theadElem, 'tr');
 
-    const headings = this._getCanonicalizedTableHeadings(details);
+    const headings = this._getCanonicalizedHeadingsFromTable(details);
 
     for (const heading of headings) {
       const valueType = heading.valueType || 'text';
@@ -319,12 +377,42 @@ class DetailsRenderer {
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of headings) {
-        const value = row[heading.key];
-        const valueElement = this._renderTableValue(value, heading);
+        const valueFragment = this._dom.createFragment();
 
-        if (valueElement) {
+        if (heading.key === null && !heading.subRows) {
+          // eslint-disable-next-line no-console
+          console.warn('A header with a null `key` should define `subRows`.');
+        }
+
+        if (heading.key === null) {
+          const emptyElement = this._dom.createElement('div');
+          emptyElement.innerHTML = '&nbsp;';
+          valueFragment.appendChild(emptyElement);
+        } else {
+          const value = row[heading.key];
+          const valueElement =
+            value !== undefined && !Array.isArray(value) && this._renderTableValue(value, heading);
+          if (valueElement) valueFragment.appendChild(valueElement);
+        }
+
+        if (heading.subRows) {
+          const subRowsHeading = {
+            key: heading.subRows.key,
+            valueType: heading.subRows.valueType || heading.valueType,
+            granularity: heading.subRows.granularity || heading.granularity,
+            displayUnit: heading.subRows.displayUnit || heading.displayUnit,
+            label: '',
+          };
+          const values = row[subRowsHeading.key];
+          if (Array.isArray(values)) {
+            const subRowsElement = this._renderSubRows(values, subRowsHeading);
+            valueFragment.appendChild(subRowsElement);
+          }
+        }
+
+        if (valueFragment.childElementCount) {
           const classes = `lh-table-column--${heading.valueType}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueFragment);
         } else {
           this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
         }
@@ -351,12 +439,19 @@ class DetailsRenderer {
   /**
    * @param {LH.Audit.Details.NodeValue} item
    * @return {Element}
-   * @protected
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');
+    if (item.nodeLabel) {
+      const nodeLabelEl = this._dom.createElement('div');
+      nodeLabelEl.textContent = item.nodeLabel;
+      element.appendChild(nodeLabelEl);
+    }
     if (item.snippet) {
-      element.textContent = item.snippet;
+      const snippetEl = this._dom.createElement('div');
+      snippetEl.classList.add('lh-node__snippet');
+      snippetEl.textContent = item.snippet;
+      element.appendChild(snippetEl);
     }
     if (item.selector) {
       element.title = item.selector;
@@ -364,6 +459,37 @@ class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+
+    return element;
+  }
+
+  /**
+   * @param {LH.Audit.Details.SourceLocationValue} item
+   * @return {Element|null}
+   * @protected
+   */
+  renderSourceLocation(item) {
+    if (!item.url) {
+      return null;
+    }
+
+    // Lines are shown as one-indexed.
+    const line = item.line + 1;
+    const column = item.column;
+
+    let element;
+    if (item.urlProvider === 'network') {
+      element = this.renderTextURL(item.url);
+      this._dom.find('a', element).textContent += `:${line}:${column}`;
+    } else {
+      element = this._renderText(`${item.url}:${line}:${column} (from sourceURL)`);
+    }
+
+    element.classList.add('lh-source-location');
+    element.setAttribute('data-source-url', item.url);
+    // DevTools expects zero-indexed lines.
+    element.setAttribute('data-source-line', String(item.line));
+    element.setAttribute('data-source-column', String(item.column));
     return element;
   }
 

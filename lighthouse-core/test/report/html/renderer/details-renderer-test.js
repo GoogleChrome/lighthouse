@@ -1,16 +1,16 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const Util = require('../../../../report/html/renderer/util.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const SnippetRenderer = require('../../../../report/html/renderer/snippet-renderer.js');
 const CrcDetailsRenderer = require('../../../../report/html/renderer/crc-details-renderer.js');
@@ -24,8 +24,8 @@ describe('DetailsRenderer', () => {
   let renderer;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CrcDetailsRenderer;
     global.SnippetRenderer = SnippetRenderer;
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
@@ -35,7 +35,7 @@ describe('DetailsRenderer', () => {
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.SnippetRenderer = undefined;
@@ -194,23 +194,18 @@ describe('DetailsRenderer', () => {
       assert.strictEqual(diagnosticEl, null);
     });
 
-    it('throws on unknown details type', () => {
+    it('renders an unknown details type', () => {
       // Disallowed by type system, but test that we get an error message out just in case.
       const details = {
         type: 'imaginary',
         items: 5,
       };
 
-      assert.throws(() => renderer.render(details), /^Error: Unknown type: imaginary$/);
-    });
-
-    it('supports old LHRs by not rendering when type is missing', () => {
-      // Disallowed by type system of current LH, but possible if trying to render an old LHR.
-      const details = {
-        timestamp: 15,
-      };
-
-      assert.strictEqual(renderer.render(details), null);
+      const el = renderer.render(details);
+      const summaryEl = el.querySelector('summary');
+      expect(summaryEl.textContent)
+        .toContain('We don\'t know how to render audit details of type `imaginary`');
+      assert.strictEqual(el.lastChild.textContent, JSON.stringify(details, null, 2));
     });
   });
 
@@ -355,6 +350,26 @@ describe('DetailsRenderer', () => {
       assert.equal(linkEl.textContent, linkText);
     });
 
+    it('renders link value as text if URL is invalid', () => {
+      const linkText = 'Invalid Link';
+      const linkUrl = 'link nonsense';
+      const link = {
+        type: 'link',
+        text: linkText,
+        url: linkUrl,
+      };
+      const details = {
+        type: 'table',
+        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        items: [{content: link}],
+      };
+
+      const el = renderer.render(details);
+      const linkEl = el.querySelector('td.lh-table-column--link > .lh-text');
+      assert.equal(linkEl.localName, 'div');
+      assert.equal(linkEl.textContent, linkText);
+    });
+
     it('renders node values', () => {
       const node = {
         type: 'node',
@@ -378,6 +393,56 @@ describe('DetailsRenderer', () => {
       assert.equal(nodeEl.getAttribute('data-snippet'), node.snippet);
     });
 
+    it('renders source-location values', () => {
+      const sourceLocation = {
+        type: 'source-location',
+        url: 'https://www.example.com/script.js',
+        urlProvider: 'network',
+        line: 10,
+        column: 5,
+      };
+      const details = {
+        type: 'table',
+        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        items: [{content: sourceLocation}],
+      };
+
+      const el = renderer.render(details);
+      const sourceLocationEl = el.querySelector('.lh-source-location');
+      const anchorEl = sourceLocationEl.querySelector('a');
+      assert.strictEqual(sourceLocationEl.localName, 'div');
+      assert.equal(anchorEl.href, 'https://www.example.com/script.js');
+      assert.equal(sourceLocationEl.textContent, '/script.js:11:5(www.example.com)');
+      assert.equal(sourceLocationEl.getAttribute('data-source-url'), sourceLocation.url);
+      assert.equal(sourceLocationEl.getAttribute('data-source-line'), `${sourceLocation.line}`);
+      assert.equal(sourceLocationEl.getAttribute('data-source-column'), `${sourceLocation.column}`);
+    });
+
+    it('renders source-location values that aren\'t network resources', () => {
+      const sourceLocation = {
+        type: 'source-location',
+        url: 'https://www.example.com/script.js',
+        urlProvider: 'comment',
+        line: 0,
+        column: 0,
+      };
+      const details = {
+        type: 'table',
+        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        items: [{content: sourceLocation}],
+      };
+
+      const el = renderer.render(details);
+      const sourceLocationEl = el.querySelector('.lh-source-location');
+      const anchorEl = sourceLocationEl.querySelector('a');
+      assert.ok(!anchorEl);
+      assert.strictEqual(sourceLocationEl.localName, 'div');
+      assert.equal(sourceLocationEl.textContent, 'https://www.example.com/script.js:1:0 (from sourceURL)');
+      assert.equal(sourceLocationEl.getAttribute('data-source-url'), sourceLocation.url);
+      assert.equal(sourceLocationEl.getAttribute('data-source-line'), `${sourceLocation.line}`);
+      assert.equal(sourceLocationEl.getAttribute('data-source-column'), `${sourceLocation.column}`);
+    });
+
     it('renders text URL values from a string', () => {
       const urlText = 'https://example.com/';
       const displayUrlText = 'https://example.com';
@@ -394,7 +459,10 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
       assert.equal(urlEl.dataset.url, urlText);
-      assert.ok(urlEl.firstChild.classList.contains('lh-text'));
+      assert.equal(urlEl.firstChild.nodeName, 'A');
+      assert.equal(urlEl.firstChild.href, urlText);
+      assert.equal(urlEl.firstChild.rel, 'noopener');
+      assert.equal(urlEl.firstChild.target, '_blank');
       assert.equal(urlEl.textContent, displayUrlText);
     });
 
@@ -419,7 +487,7 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
       assert.equal(urlEl.dataset.url, urlText);
-      assert.ok(urlEl.firstChild.classList.contains('lh-text'));
+      assert.equal(urlEl.firstChild.nodeName, 'A');
       assert.equal(urlEl.textContent, displayUrlText);
     });
 
@@ -437,7 +505,7 @@ describe('DetailsRenderer', () => {
       assert.strictEqual(codeItemEl.innerHTML, '<pre class="lh-code">invalid-url://example.com/</pre>');
     });
 
-    it('throws on unknown heading itemType', () => {
+    it('renders an unknown heading itemType', () => {
       // Disallowed by type system, but test that we get an error message out just in case.
       const details = {
         type: 'table',
@@ -445,10 +513,15 @@ describe('DetailsRenderer', () => {
         items: [{content: 'some string'}],
       };
 
-      assert.throws(() => renderer.render(details), /^Error: Unknown valueType: notRealValueType$/);
+      const el = renderer.render(details);
+      const unknownEl = el.querySelector('td.lh-table-column--notRealValueType .lh-unknown');
+      const summaryEl = unknownEl.querySelector('summary');
+      expect(summaryEl.textContent)
+        .toContain('We don\'t know how to render audit details of type `notRealValueType`');
+      assert.strictEqual(unknownEl.lastChild.textContent, '"some string"');
     });
 
-    it('throws on unknown item object type', () => {
+    it('renders an unknown item object type', () => {
       // Disallowed by type system, but test that we get an error message out just in case.
       const item = {
         type: 'imaginaryItem',
@@ -461,7 +534,12 @@ describe('DetailsRenderer', () => {
         items: [{content: item}],
       };
 
-      assert.throws(() => renderer.render(details), /^Error: Unknown valueType: imaginaryItem$/);
+      const el = renderer.render(details);
+      const unknownEl = el.querySelector('td.lh-table-column--url .lh-unknown');
+      const summaryEl = unknownEl.querySelector('summary');
+      expect(summaryEl.textContent)
+        .toContain('We don\'t know how to render audit details of type `imaginaryItem`');
+      assert.strictEqual(unknownEl.lastChild.textContent, JSON.stringify(item, null, 2));
     });
 
     it('uses the item\'s type over the heading type', () => {
@@ -470,7 +548,7 @@ describe('DetailsRenderer', () => {
         // itemType is overriden by code object
         headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
         items: [
-          {content: {type: 'code', value: 'code object'}},
+          {content: {type: 'code', value: 'https://codeobject.com'}},
           {content: 'https://example.com'},
         ],
       };
@@ -482,7 +560,7 @@ describe('DetailsRenderer', () => {
       const codeEl = itemElements[0].firstChild;
       assert.equal(codeEl.localName, 'pre');
       assert.ok(codeEl.classList.contains('lh-code'));
-      assert.equal(codeEl.textContent, 'code object');
+      assert.equal(codeEl.textContent, 'https://codeobject.com');
 
       // Second item uses the heading's specified type for the column.
       const urlEl = itemElements[1].firstChild;
@@ -490,6 +568,79 @@ describe('DetailsRenderer', () => {
       assert.ok(urlEl.classList.contains('lh-text__url'));
       assert.equal(urlEl.title, 'https://example.com');
       assert.equal(urlEl.textContent, 'https://example.com');
+    });
+
+    describe('subRows', () => {
+      it('renders', () => {
+        const details = {
+          type: 'table',
+          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources', itemType: 'code'}}],
+          items: [
+            {url: 'https://www.example.com', sources: ['a', 'b', 'c']},
+          ],
+        };
+
+        const el = renderer.render(details);
+        const columnElement = el.querySelector('td.lh-table-column--url');
+
+        // First element is the url.
+        const codeEl = columnElement.firstChild;
+        assert.equal(codeEl.localName, 'div');
+        assert.ok(codeEl.classList.contains('lh-text__url'));
+        assert.equal(codeEl.textContent, 'https://www.example.com');
+
+        // Second element lists the multiple values.
+        const subRowsEl = columnElement.children[1];
+        assert.equal(subRowsEl.localName, 'div');
+        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
+
+        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
+        assert.equal(multiValueEls[0].textContent, 'a');
+        assert.ok(multiValueEls[0].classList.contains('lh-code'));
+        assert.equal(multiValueEls[1].textContent, 'b');
+        assert.ok(multiValueEls[1].classList.contains('lh-code'));
+        assert.equal(multiValueEls[2].textContent, 'c');
+        assert.ok(multiValueEls[2].classList.contains('lh-code'));
+      });
+
+      it('renders, uses heading properties as fallback', () => {
+        const details = {
+          type: 'table',
+          headings: [{key: 'url', itemType: 'url', subRows: {key: 'sources'}}],
+          items: [
+            {
+              url: 'https://www.example.com',
+              sources: [
+                'https://www.a.com',
+                {type: 'code', value: 'https://www.b.com'},
+                'https://www.c.com',
+              ],
+            },
+          ],
+        };
+
+        const el = renderer.render(details);
+        const columnElement = el.querySelector('td.lh-table-column--url');
+
+        // First element is the url.
+        const codeEl = columnElement.firstChild;
+        assert.equal(codeEl.localName, 'div');
+        assert.ok(codeEl.classList.contains('lh-text__url'));
+        assert.equal(codeEl.textContent, 'https://www.example.com');
+
+        // Second element lists the multiple values.
+        const subRowsEl = columnElement.children[1];
+        assert.equal(subRowsEl.localName, 'div');
+        assert.ok(subRowsEl.classList.contains('lh-sub-rows'));
+
+        const multiValueEls = subRowsEl.querySelectorAll('.lh-sub-row');
+        assert.equal(multiValueEls[0].textContent, 'https://www.a.com');
+        assert.ok(multiValueEls[0].classList.contains('lh-text__url'));
+        assert.equal(multiValueEls[1].textContent, 'https://www.b.com');
+        assert.ok(multiValueEls[1].classList.contains('lh-code'));
+        assert.equal(multiValueEls[2].textContent, 'https://www.c.com');
+        assert.ok(multiValueEls[2].classList.contains('lh-text__url'));
+      });
     });
   });
 });

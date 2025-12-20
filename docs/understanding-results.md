@@ -12,7 +12,7 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 
 | Name | Description |
 | - | - |
-| lighthouseVersion | The version of Lighthouse with which this result were generated. |
+| lighthouseVersion | The version of Lighthouse with which this result was generated. |
 | fetchTime | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
 | requestedUrl | The URL that was supplied to Lighthouse and initially navigated to. |
@@ -22,16 +22,17 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 | [timing](#timing) | An object containing information about how long Lighthouse spent auditing. |
 | [categories](#categories) | An object containing the different categories, their scores, and references to the audits that comprise them. |
 | [categoryGroups](#category-groups) | An object containing the display groups of audits for the report. |
+| runtimeError | An object `{code: string, message: string};` providing a top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. |
+| runWarnings | Array of top-level warnings for this Lighthouse run. |
 
 ### Example
 ```json
 {
-  "lighthouseVersion": "2.4.0",
-  "fetchTime": "2017-10-05T20:50:54.185Z",
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3233.0 Safari/537.36",
+  "lighthouseVersion": "5.1.0",
+  "fetchTime": "2019-05-05T20:50:54.185Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
   "requestedUrl": "http://example.com",
   "finalUrl": "https://www.example.com/",
-  "score": 50,
   "audits": {...},
   "configSettings": {...},
   "timing": {...},
@@ -56,10 +57,10 @@ An object containing the results of the audits, keyed by their name.
 | warnings | <code>string[]&#124;undefined</code> | Messages identifying potentially invalid cases |
 | errorMessage | <code>string&#124;undefined</code> | A message set |
 | numericValue | <code>number&#124;undefined</code> | The unscored value determined by the audit. Typically this will match the score if there's no additional information to impart. For performance audits, this value is typically a number indicating the metric value. |
-| displayValue | `string` | The string to display in the report alongside audit results. If empty, nothing additional is shown. This is typically used to explain additional information such as the number and nature of failing items. |
-| score | <code>number</code> | The scored value determined by the audit as a number `0-1`, representing displayed scores of 0-100. |
-| scoreDisplayMode | <code>"binary"&#124;"numeric"&#124;"error"&#124;"manual"&#124;"notApplicable"&#124;"informative"</code> | A string identifying how the score should be interpreted for display i.e. is the audit pass/fail (score of 1 or 0), did it fail, should it be ignored, or are there shades of gray (scores between 0-1 inclusive). |
-| details | `Object` | Extra information found by the audit necessary for display. The structure of this object varies from audit to audit. The structure of this object is somewhat stable between minor version bumps as this object is used to render the HTML report. |
+| displayValue | <code>string&#124;undefined</code> | The string to display in the report alongside audit results. If empty, nothing additional is shown. This is typically used to explain additional information such as the number and nature of failing items. |
+| score | <code>number&#124;null</code> | The scored value determined by the audit provided in the numeric range `0-1`, or null if `scoreDisplayMode` indicates not scored. |
+| scoreDisplayMode | <code>"binary" &#124; "numeric" &#124; "error" &#124; "manual" &#124; "notApplicable" &#124; "informative"</code> | A string identifying how the score should be interpreted for display i.e. is the audit pass/fail (score of 1 or 0), did it fail, should it be ignored, or are there shades of gray (scores between 0-1 inclusive). If set as `informative`, `notApplicable`, `manual`, or `error`, then `score` will be null and should be ignored. |
+| details | `Object` | Extra information found by the audit necessary for display. The structure of this object varies from audit to audit. The [structure of this object](https://github.com/GoogleChrome/lighthouse/blob/master/types/audit-details.d.ts) is somewhat stable between minor version bumps as this object is used to render the HTML report. |
 
 
 ### Example
@@ -158,7 +159,7 @@ An array containing the different categories, their scores, and the results of t
 | id | `string` | The string identifier of the category. |
 | title | `string` | The human-friendly display name of the category. |
 | description | `string` | A brief description of the purpose of the category, supports markdown links. |
-| score | `string` | The overall score of the category, the weighted average of all its audits. |
+| score | `number` | The overall score of the category, the weighted average of all its audits. |
 | auditRefs | `AuditEntry[]` | An array of all the audit results in the category. |
 
 ### AuditEntry Properties

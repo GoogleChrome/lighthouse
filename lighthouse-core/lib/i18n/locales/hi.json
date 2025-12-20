@@ -1,51 +1,78 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "एक्सेस कुंजी से इस्तेमाल करने वाले पेज के किसी हिस्से पर तेज़ी से फ़ोकस कर सकते हैं. सही नेविगेशन के लिए, हर एक्सेस कुंजी सबसे अलग होनी चाहिए. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
+    "message": "ऐक्सेस कुंजी से उपयोगकर्ता तेज़ी से पेज के किसी भाग पर फ़ोकस कर सकते हैं. सही नेविगेशन के लिए, हर ऐक्सेस कुंजी सबसे अलग होनी चाहिए. [ज़्यादा जानें](https://web.dev/accesskeys/)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "`[accesskey]` मान सबसे अलग नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | title": {
-    "message": "`[accesskey]` मान सबसे अलग हैं"
+    "message": "`[accesskey]` के मान सबसे अलग हैं"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "`aria-*` विशेषताओं के खास सबसेट के लिए, हर ARIA `भूमिका` काम करती है. इनमें मिलान नहीं होने से `aria-*` विशेषताएं गलत हो जाती हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
+    "message": "हर एआरआईए `role`, `aria-*` विशेषताओं के खास सबसेट पर काम करती है. इनमें मिलान न होने पर `aria-*` विशेषताएं गलत हो जाती हैं. [ज़्यादा जानें](https://web.dev/aria-allowed-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
-    "message": "`[aria-*]` विशेषताओं का मिलान उनकी भूमिकाओं से नहीं होता है"
+    "message": "`[aria-*]` विशेषताएं और उनकी भूमिकाएं आपस में मेल नहीं खातीं"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
-    "message": "`[aria-*]` विशेषताओं के मिलान उनकी भूमिकाओं से होता है"
+    "message": "`[aria-*]` विशेषताएं और उनकी भूमिकाएं एक-दूसरे से मेल खाती हैं"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "जब `aria-hidden=\"true\"`, `<body>` दस्तावेज़ पर सेट होता है, तो स्क्रीन रीडर जैसी सहायक टेक्नोलॉजी हर समय एक जैसा काम नहीं करती हैं. [ज़्यादा जानें](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`<body>` दस्तावेज़ में `[aria-hidden=\"true\"]` मौजूद है"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`<body>` दस्तावेज़ में `[aria-hidden=\"true\"]` मौजूद नहीं है"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "किसी `[aria-hidden=\"true\"]` एलिमेंट में फ़ोकस करने लायक डिसेंडेंट की वजह से, स्क्रीन रीडर जैसी सहायक टेक्नोलॉजी का इस्तेमाल करने वाले लोग, ये एलिमेंट इस्तेमाल नहीं कर पाते. [ज़्यादा जानें](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` एलिमेंट में फ़ोकस करने लायक डिसेंडेंट हैं"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "`[aria-hidden=\"true\"]` एलिमेंट में फ़ोकस करने लायक डिसेंडेंट नहीं हैं"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "अगर किसी इनपुट फ़ील्ड का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता है, तो स्क्रीन रीडर उसे किसी सामान्य नाम से बुलाते हैं. इस वजह से, यह उनके लिए किसी काम का नहीं रहता जो स्क्रीन रीडर से ही टेक्स्ट पढ़ या समझ सकते हैं. [ज़्यादा जानें](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "ARIA इनपुट फ़ील्ड का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता हो"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "ARIA इनपुट फ़ील्ड के ऐसे नाम हैं जिन्हें ऐक्सेस किया जा सकता है"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "कुछ ARIA भूमिकाओं में ऐसी विशेषताओं की ज़रूरत होती है जो स्क्रीन रीडर को एलिमेंट की स्थिति बताती हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
+    "message": "कुछ ARIA भूमिकाओं में ऐसी विशेषताओं की ज़रूरत होती है जो स्क्रीन रीडर को एलिमेंट की स्थिति बताती हैं. [ज़्यादा जानें](https://web.dev/aria-required-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
-    "message": "`[role]` की ज़रूरी `[aria-*]` विशेषताएं नहीं हैं"
+    "message": "`[role]`s में सभी ज़रूरी `[aria-*]` विशेषताएं नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | title": {
-    "message": "`[role]`के पास ज़रूरी `[aria-*]` विशेषताएं हैं"
+    "message": "`[role]` के पास सभी ज़रूरी `[aria-*]` विशेषताएं हैं"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "कुछ ARIA पैरेंट भूमिकाओं में खास चाइल्ड भूमिकाएं होनी चाहिए ताकि वे तय किए गए सुलभता फ़ंक्शन कर सकें. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
+    "message": "कुछ ARIA पैरंट भूमिकाओं में खास चाइल्ड भूमिकाएं होनी चाहिए ताकि वे तय किए गए सुलभता फ़ंक्शन कर सकें. [ज़्यादा जानें](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "`[role]` वाले एलिमेंट जिन्हें खास चिल्ड्रन `[role]` की ज़रूरत होती है, वे मिल नहीं रहे हैं."
+    "message": "ARIA `[role]` वाले एलिमेंट में बच्चों के लिए खास `[role]` शामिल करने की ज़रूरत होती है. इन एलिमेंट में बच्चों के लिए कुछ या पूरी जानकारी नहीं है."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "`[role]` वाले एलिमेंट जिन्हें खास चिल्ड्रन `[role]`की ज़रूरत होती है, वे मिल नहीं रहे हैं."
+    "message": "ARIA `[role]` वाले एलिमेंट में बच्चों के लिए खास `[role]` शामिल करने की ज़रूरत होती है. इन एलिमेंट में बच्चों के लिए पूरी जानकारी है."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "कुछ ARIA चाइल्ड रोल अपने तय सुलभता फ़ंक्शन को ठीक से करें, इसके लिए उन्हें खास पैरेंट रोल में होना चाहिए. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
+    "message": "कुछ ARIA चाइल्ड रोल अपने तय सुलभता फ़ंक्शन को ठीक से कर पाएं. इसके लिए, उन्हें खास पैरंट रोल में शामिल होना चाहिए. [ज़्यादा जानें](https://web.dev/aria-required-parent/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
-    "message": "`[role]` अपने ज़रूरी अभिभावक एलिमेंट में नहीं हैं"
+    "message": "`[role]` अपने ज़रूरी पैरंट एलिमेंट में शामिल नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | title": {
-    "message": "`[role]` अपने ज़रूरी अभिभावक एलिमेंट में होते हैं"
+    "message": "`[role]`अपने लिए ज़रूरी पैरंट एलिमेंट में शामिल हैं."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "ARIA भूमिकाओं में सही मान होने चाहिए ताकि वे तय किए गए सुलभता फ़ंक्शन कर सकें. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
+    "message": "ARIA भूमिकाओं में सही मान होने चाहिए, ताकि वे तय किए गए सुलभता फ़ंक्शन कर सकें. [ज़्यादा जानें](https://web.dev/aria-roles/)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "`[role]` मान सही नहीं हैं"
@@ -53,47 +80,47 @@
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` मान सही हैं"
   },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "अगर किसी टॉगल फ़ील्ड का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता है, तो स्क्रीन रीडर उसे किसी सामान्य नाम से बुलाते हैं. इस वजह से यह उनके लिए किसी काम का नहीं रहता जो स्क्रीन रीडर से ही टेक्स्ट पढ़ या समझ सकते हैं. [ज़्यादा जानें](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "ARIA टॉगल फ़ील्ड का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता हो"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "ARIA टॉगल फ़ील्ड के ऐसे नाम हैं जिन्हें ऐक्सेस किया जा सकता है"
+  },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "स्क्रीन रीडर जैसी सहायक तकनीकें, गलत मानों वाली ARIA विशेषताओं को समझ नहीं सकतीं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
+    "message": "स्क्रीन रीडर जैसी सहायक तकनीक, गलत मानों वाली ARIA विशेषताओं को समझ नहीं सकतीं. [ज़्यादा जानें](https://web.dev/aria-valid-attr-value/)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "`[aria-*]` विशेषताओं में सही मान नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": {
-    "message": "`[aria-*]` विशेषताओं में सही मान हैं"
+    "message": "`[aria-*]` विशेषताओं के मान सही हैं"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "स्क्रीन रीडर जैसी सहायक तकनीकें, गलत नामों वाली ARIA विशेषताओं को समझ नहीं सकतीं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
+    "message": "स्क्रीन रीडर जैसी सहायक तकनीक, गलत नामों वाली ARIA विशेषताओं को समझ नहीं सकतीं. [ज़्यादा जानें](https://web.dev/aria-valid-attr/)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "`[aria-*]` विशेषताएं गलत हैं या उनकी वर्तनी गलत है"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": {
-    "message": "`[aria-*]` विशेषताएं मान्य हैं और उनकी वर्तनी गलत नहीं है"
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "कैप्शन, ऑडियो एलिमेंट को ऐसे इस्तेमाल करने वाले लोगों के लिए फ़ायदेमंद बनाते हैं, जो सुन नहीं पाते हैं या जिन्हें कम सुनाई देता है. साथ ही, ये कौन बा़त कर रहा है, वे क्या बोल रहे हैं, और बोली नहीं जाने वाली दूसरी जानकारी जैसी खास जानकारी भी देते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
-    "message": "`<audio>` एलिमेंट में `[kind=\"captions\"]` वाला `<track>` एलिमेंट नहीं है."
-  },
-  "lighthouse-core/audits/accessibility/audio-caption.js | title": {
-    "message": "`<audio>` एलिमेंट में `[kind=\"captions\"]` वाला `<track>` एलिमेंट है"
+    "message": "`[aria-*]` विशेषताएं सही हैं और उनकी वर्तनी गलत नहीं है"
   },
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
-    "message": "विफल रहने वाले एलिमेंट"
+    "message": "फ़ेल होने वाले एलिमेंट"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "बटन का एक्सेस करने लायक कोई नाम नहीं होने पर, स्क्रीन रीडर उसे \"बटन\" के रूप में बताते हैं. इस वजह से यह उन इस्तेमाल करने वालों के लिए बेकार हो जाता है जो स्क्रीन रीडर पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
+    "message": "अगर बटन का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता है, तो स्क्रीन रीडर उसे \"बटन\" के रूप में बताते हैं. इस वजह से यह उन इस्तेमाल करने वालों के लिए किसी काम का नहीं रहता जो स्क्रीन रीडर से ही टेक्स्ट पढ़ या समझ सकते हैं. [ज़्यादा जानें](https://web.dev/button-name/)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
-    "message": "बटन के नाम एक्सेस करने लायक नहीं हैं"
+    "message": "बटन के नाम ऐक्सेस करने लायक नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/button-name.js | title": {
     "message": "बटनों का एक सुलभता नाम है"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "दोहराव वाली सामग्री को नज़रअंदाज करके आगे बढ़ने के तरीके जोड़ने से, कीबोर्ड इस्तेमाल करने वाले लोग पेज पर ज़्यादा अच्छे से नेविगेट कर सकते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
+    "message": "दोहराव वाली सामग्री को नज़रअंदाज करके आगे बढ़ने के तरीके जोड़ने से, कीबोर्ड इस्तेमाल करने वाले लोग पेज पर ज़्यादा अच्छे से नेविगेट कर सकते हैं. [ज़्यादा जानें](https://web.dev/bypass/)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "पेज में 'हेडिंग', 'स्किप लिंक' या 'लैंडमार्क' क्षेत्र नहीं है"
@@ -102,7 +129,7 @@
     "message": "पेज में 'हेडिंग', 'स्किप लिंक' या 'लैंडमार्क' क्षेत्र हैं"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "कम-कंट्रास्ट वाला टेक्स्ट पढ़ना कई इस्तेमाल करने वालों के लिए कठिन या नामुमकिन हो जाता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
+    "message": "इस्तेमाल करने वाले कई लोगों के लिए कम कंट्रास्ट वाला टेक्स्ट पढ़ना मुश्किल या नामुमकिन होता है. [ज़्यादा जानें](https://web.dev/color-contrast/)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "बैकग्राउंड और फ़ोरग्राउंड रंगों में काफ़ी कंट्रास्ट अनुपात नहीं है."
@@ -111,88 +138,115 @@
     "message": "बैकग्राउंड और फ़ोरग्राउंड के रंगों का कंट्रास्ट अनुपात काफ़ी है"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "जब परिभाषा सूचियां ठीक से मार्क अप नहीं की जाती हैं, तो स्क्रीन रीडर उलझन भरे या गलत आउटपुट दे सकते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
+    "message": "जब परिभाषा सूचियां ठीक से मार्क अप नहीं की जातीं, तो स्क्रीन रीडर उलझन भरे या गलत आउटपुट दे सकते हैं. [ज़्यादा जानें](https://web.dev/definition-list/)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
-    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम में लगे `<dt>` और `<dd>` समूह, `<script>` या `<template>` एलिमेंट नहीं हैं."
+    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम में लगे `<dt>` और `<dd>` ग्रुप, `<script>`, `<template>` या `<div>` एलिमेंट नहीं हैं."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | title": {
-    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम में लगे `<dt>` और `<dd>` समूह, `<script>` या `<template>` एलिमेंट होते हैं."
+    "message": "`<dl>` में सिर्फ़ ठीक तरह से क्रम से लगे `<dt>` और `<dd>` ग्रुप, `<script>`, `<template>` या `<div>` एलिमेंट हैं."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "परिभाषा सूची आइटम (<dt>` और `<dd>`) को पैरेंट `<dl>` एलिमेंट में रैप होना चाहिए, ताकि यह पक्का किया जा सके कि स्क्रीन रीडर उन्हें ठीक तरीके से बोल सकते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
+    "message": "परिभाषा सूची आइटम (`<dt>` और `<dd>`) को पैरंट `<dl>` एलिमेंट में रैप किया जाना चाहिए, ताकि यह पक्का किया जा सके कि स्क्रीन रीडर उन्हें ठीक तरीके से बोल सकते हैं. [ज़्यादा जानें](https://web.dev/dlitem/)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
-    "message": "`<dl>` एलिमेंट में परिभाषा सूची के आइटम नहीं हैं"
+    "message": "परिभाषा सूची के आइटम `<dl>` एलिमेंट में रैप नहीं किए जाते"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | title": {
-    "message": "परिभाषा सूची के आइटम `<dl>` एलिमेंट में हैं"
+    "message": "परिभाषा सूची के आइटम `<dl>` एलिमेंट में रैप किए जाते हैं"
   },
   "lighthouse-core/audits/accessibility/document-title.js | description": {
-    "message": "शीर्षक से स्क्रीन रीडर उपयोगकर्ताओं को पेज की खास जानकारी मिलती है और खोज इंजन के उपयोगकर्ता यह तय करने में बहुत ज़्यादा भरोसा करते हैं कि कोई पेज उनकी खोज के संगत है या नहीं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/title)."
+    "message": "शीर्षक से स्क्रीन रीडर उपयोगकर्ताओं को पेज की खास जानकारी मिलती है. सर्च इंजन के उपयोगकर्ता शीर्षक के भरोसे यह तय करते हैं कि कोई पेज उनकी खोज के हिसाब से सही है या नहीं. [ज़्यादा जानें](https://web.dev/document-title/)."
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
-    "message": "दस्तावेज़ में `<title>` एलिमेंट नहीं है"
+    "message": "दस्तावेज़ में कोई `<title>` एलिमेंट नहीं है"
   },
   "lighthouse-core/audits/accessibility/document-title.js | title": {
-    "message": "दस्तावेज़ में `<title>` एलिमेंट है"
+    "message": "दस्तावेज़ में `<title>` एलिमेंट है"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "सहायक तकनीकों को दूसरे इंस्टेंस अनदेखा करने से रोकने के लिए, आईडी विशेषता का मान सबसे अलग होना चाहिए. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "फ़ोकस करने लायक सभी एलिमेंट में खास `id` होना चाहिए, ताकि यह पक्का किया जा सके कि वे सहायक टेक्नोलॉजी को दिख रहे हैं. [ज़्यादा जानें](https://web.dev/duplicate-id-active/)."
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
-    "message": "पेज पर `[id]` विशेषताएं सबसे अलग नहीं हैं"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "फ़ोकस करने लायक चालू एलिमेंट में `[id]` विशेषताएं खास नहीं हैं"
   },
-  "lighthouse-core/audits/accessibility/duplicate-id.js | title": {
-    "message": "पेज पर `[id]` विशेषताएं सबसे अलग हैं"
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "फ़ोकस करने लायक चालू एलिमेंट में `[id]` विशेषताएं खास हैं"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "ARIA आईडी का मान सबसे अलग होना चाहिए, ताकि सहायक टेक्नोलॉजी दूसरे इंस्टेंस को नज़रअंदाज़ न कर दें. [ज़्यादा जानें](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "ARIA आईडी खास नहीं हैं"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "ARIA आईडी खास हैं"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "एक से ज़्यादा लेबल वाले फ़ॉर्म फ़ील्ड का नाम, स्क्रीन रीडर जैसी सहायक टेक्नोलॉजी गलत तरीके से बोल सकती है. ये टेक्नोलॉजी सिर्फ़ पहला, आखिरी या सभी लेबल इस्तेमाल करती हैं. [ज़्यादा जानें](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "फ़ॉर्म फ़ील्ड के कई लेबल हैं"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "किसी भी फ़ॉर्म फ़ील्ड में एक से ज़्यादा लेबल नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "स्क्रीन रीडर इस्तेमाल करने वाले फ़्रेम की सामग्रियों के बारे में जानने के लिए फ़्रेम के शीर्षकों पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
+    "message": "स्क्रीन रीडर उपयोगकर्ता, फ़्रेम की सामग्री के बारे में जानने के लिए फ़्रेम के शीर्षकों का इस्तेमाल करते हैं. [ज़्यादा जानें](https://web.dev/frame-title/)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "`<frame>` या `<iframe>` एलिमेंट का कोई शीर्षक नहीं है"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
-    "message": "`<frame>` या `<iframe>` एलिमेंट में शीर्षक हैं"
+    "message": "`<frame>` या `<iframe>` एलिमेंट का एक शीर्षक है"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "सही क्रम में लगाई गई ऐसी हेडिंग जो लेवल को नहीं छोड़ती, पेज का सिमेंटिक स्ट्रक्चर दिखाती हैं. ऐसा होने से, सहायक टेक्नोलॉजी इस्तेमाल करते समय पेज पर एक जगह से दूसरी जगह जाना और उसे समझना आसान हो जाता है. [ज़्यादा जानें](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "हेडिंग एलिमेंट, कम होने वाले क्रम में नहीं हैं"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "हेडिंग एलिमेंट, कम होने वाले क्रम में दिखते हैं"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "अगर कोई पेज भाषा विशेषता तय नहीं करता है, तो स्क्रीन रीडर को लगता है कि पेज उस डिफ़ॉल्ट भाषा में है जो इस्तेमाल करने वाले ने स्क्रीन रीडर सेट अप करते समय चुनी थी. दरअसल, पेज अगर डिफ़ॉल्ट भाषा में नहीं होता है, तो स्क्रीन रीडर पेज का टेक्स्ट ठीक से नहीं बोल पाता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
+    "message": "अगर कोई पेज, भाषा विशेषता तय नहीं करता है, तो स्क्रीन रीडर को लगता है कि पेज उस डिफ़ॉल्ट भाषा में है जो उपयोगकर्ता ने स्क्रीन रीडर सेट अप करते समय चुनी थी. अगर वह पेज डिफ़ॉल्ट भाषा में नहीं है, तो शायद स्क्रीन रीडर, पेज का टेक्स्ट ठीक से न बोल पाए. [ज़्यादा जानें](https://web.dev/html-has-lang/)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
-    "message": "`<html>` एलिमेंट में एक `[lang]` विशेषता नहीं है"
+    "message": "`<html>` एलिमेंट में `[lang]` विशेषता नहीं है"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | title": {
-    "message": "`<html>` एलिमेंट में एक `[lang]` विशेषता है"
+    "message": "`<html>` एलिमेंट में `[lang]` विशेषता है"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "सही [BCP 47 भाषा](https://www.w3.org/International/questions/qa-choosing-language-tags#question) तय करने से स्क्रीन रीडर को टेक्स्ट ठीक से बोलने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
+    "message": "सही [BCP 47 भाषा ](https://www.w3.org/International/questions/qa-choosing-language-tags#question) तय करने से स्क्रीन रीडर को टेक्स्ट ठीक से बोलने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/html-lang-valid/)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
-    "message": "`<html>` एलिमेंट के पास इसकी `[lang]` विशेषता के लिए सही मान नहीं है."
+    "message": "`<html>` एलिमेंट के पास अपनी `[lang]`विशेषता के लिए कोई सही मान नहीं है."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | title": {
-    "message": "`<html>` एलिमेंट में इसकी `[lang]` विशेषता के लिए सही मान है"
+    "message": "`<html>` एलिमेंट के पास अपनी `[lang]` विशेषता के लिए एक सही मान है"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "जानकारी वाले एलिमेंट का मकसद छोटा, पूरी जानकारी देने वाला वैकल्पिक टेक्स्ट होना चाहिए. सजावटी एलिमेंट को एक खाली alt विशेषता के साथ अनदेखा किया जा सकता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
+    "message": "जानकारी वाले एलिमेंट का मकसद यह होना चाहिए कि उनमें छोटा और पूरी जानकारी देने वाला वैकल्पिक टेक्स्ट शामिल हो. डेकोरेटिव एलिमेंट, एक खाली ऑल्ट एट्रिब्यूट के साथ अनदेखे किया जा सकते हैं. [ज़्यादा जानें](https://web.dev/image-alt/)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "इमेज एलिमेंट में `[alt]` विशेषताएं नहीं हैं"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | title": {
-    "message": "इमेज एलिमेंट में `[alt]` विशेषताएं हैं"
+    "message": "इमेज एलिमेंट में `[alt]` विशेषताएं शामिल हैं"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "जब किसी इमेज का इस्तेमाल एक `<input>` बटन के रूप में हो रहा हो, तो वैकल्पिक टेक्स्ट देने से स्क्रीन रीडर इस्तेमाल करने वालों को बटन के बारे में समझने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
+    "message": "जब किसी इमेज को `<input>` बटन के रूप में इस्तेमाल किया जा रहा हो, तब वैकल्पिक टेक्स्ट देने से, स्क्रीन रीडर इस्तेमाल करने वाले लोगों को उस बटन के मकसद को समझने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/input-image-alt/)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "`<input type=\"image\">` एलिमेंट में `[alt]` टेक्स्ट नहीं है"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | title": {
-    "message": "`<input type=\"image\">` एलिमेंट में `[alt]` टेक्स्ट है"
+    "message": "`<input type=\"image\">` एलिमेंट में`[alt]` टेक्स्ट है"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "लेबल यह पक्का करते हैं कि स्क्रीन रीडर जैसी सहायक तकनीकें फ़ॉर्म नियंत्रणों को सही तरीके से बोलती हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
+    "message": "लेबल यह पक्का करते हैं कि स्क्रीन रीडर जैसी सहायक तकनीकें, फ़ॉर्म नियंत्रणों को सही तरीके से बोलें. [ज़्यादा जानें](https://web.dev/label/)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "फ़ॉर्म एलिमेंट में जुड़े हुए लेबल नहीं हैं"
@@ -201,16 +255,16 @@
     "message": "फ़ॉर्म एलिमेंट में सहभागी लेबल हैं"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "लेआउट के लिए इस्तेमाल की जाने वाली टेबल में th या कैप्शन वाले एलिमेंट जैसे डेटा एलिमेंट या सारांश विशेषता शामिल नहीं होनी चाहिए, क्योंकि इससे स्क्रीन रीडर इस्तेमाल करने वाले उलझन में पड़ सकते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
+    "message": "लेआउट के लिए इस्तेमाल की जाने वाली टेबल में th या कैप्शन वाले एलिमेंट जैसे, डेटा एलिमेंट या सारांश विशेषता शामिल नहीं होनी चाहिए, क्योंकि इससे स्क्रीन रीडर उपयोगकर्ताओं को उलझन हो सकती हैं. [ज़्यादा जानें](https://web.dev/layout-table/)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "प्रस्तुतिकरण `<table>` वाले तत्व `<th>`, `<caption>` या `[summary]` विशेषता के इस्तेमाल को अनदेखा नहीं कर सकते."
+    "message": "प्रज़ेंटेशन के लिए इस्तेमाल होने वाले `<table>`एलिमेंट में `<th>`, `<caption>` या `[summary]` विशेषता का इस्तेमाल होता है."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "प्रस्तुतिकरण `<table>` वाले एलिमेंट में `<th>`, `<caption>` या `[summary]` विशेषता के इस्तेमाल को अनदेखा किया गया है."
+    "message": "प्रज़ेंटेशन के लिए इस्तेमाल होने वाले `<table>`एलिमेंट में `<th>`, `<caption>` या `[summary]` विशेषता का इस्तेमाल नहीं होता."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "लिंक टेक्स्ट (और इमेज को लिंक की तरह इस्तेमाल किए जाने पर उनके लिए वैकल्पिक टेक्स्ट) समझने लायक, सबसे अलग, और फ़ोकस किए जा सकने वाला होना चाहिए. इससे स्क्रीन रीडर इस्तेमाल करने वालों का नेविगेशन अनुभव बेहतर बनता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
+    "message": "जो लिंक टेक्स्ट (और इमेज के लिए इस्तेमाल किया वैकल्पिक टेक्स्ट) समझने लायक, सबसे अलग, और फ़ोकस करने लायक है, उससे स्क्रीन रीडर उपयोगकर्ताओं का नेविगेशन अनुभव बेहतर बनता है. [ज़्यादा जानें](https://web.dev/link-name/)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "लिंक का समझने लायक नहीं है"
@@ -219,52 +273,52 @@
     "message": "लिंक का समझने लायक नाम है"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "स्क्रीन रीडर सूचियों को एक खास तरीके से बोलते हैं. सूची की सही बनावट पक्की करने से स्क्रीन रीडर को आउटपुट देने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
+    "message": "स्क्रीन रीडर, सूचियों को एक खास तरीके से बोलते हैं. सूची की सही बनावट पक्की करने से स्क्रीन रीडर को आउटपुट देने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/list/)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
-    "message": "सूचियों में सिर्फ़ `<li>`एलिमेंट और स्क्रिप्ट के साथ काम करने वाले एलिमेंट (`<script>` और `<template>`) ही शामिल नहीं हैं."
+    "message": "सूचियों में सिर्फ़ `<li>` एलिमेंट और स्क्रिप्ट के साथ काम करने वाले एलिमेंट (`<script>`और `<template>`) ही शामिल नहीं हैं."
   },
   "lighthouse-core/audits/accessibility/list.js | title": {
-    "message": "सूचियों में सिर्फ़ `<li>` एलिमेंट और स्क्रिप्ट के साथ काम करने वाले एलिमेंट (`<script>` और `<template>`) ही शामिल हैं."
+    "message": "सूची में सिर्फ़ `<li>` एलिमेंट और स्क्रिप्ट के साथ काम करने वाले एलिमेंट शामिल हैं (`<script>` और `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "स्क्रीन रीडर के लिए ज़रूरी है कि उनमें पैरेंट `<ul>` या `<ol>` में सूची आइटम (`<li>`) शामिल हों, ताकि उन्हें ठीक तरह से बोला जा सके. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
+    "message": "स्क्रीन रीडर के लिए ज़रूरी है कि उनमें `<ul>` या `<ol>` पैरंट में सूची आइटम (`<li>`) शामिल हों, ताकि उन्हें ठीक तरह से बोला जा सके. [ज़्यादा जानें](https://web.dev/listitem/)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "सूची वाले आइटम (`<li>`), `<ul>` या `<ol>` अभिभावक एलिमेंट में नहीं होते हैं."
+    "message": "सूची आइटम (`<li>`) `<ul>` या `<ol>` पैरंट एलिमेंट में शामिल नहीं हैं."
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "सूची वाले आइटम (`<li>`), `<ul>` या `<ol>` अभिभावक एलिमेंट में हैं"
+    "message": "सूची वाले आइटम (`<li>`) `<ul>` या `<ol>` पैरंट एलिमेंट में हैं"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "इस्तेमाल करने वालों को ऐसी उम्मीद नहीं होती है कि कोई पेज अपने आप रीफ़्रेश हो जाएगा और इसके बाद फ़ोकस वापस पेज के सबसे ऊपर चला जाएगा. ऐसा होने पर वे परेशानी या उलझन में पड़ सकते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
+    "message": "उपयोगकर्ताओं को ऐसी उम्मीद नहीं होती कि कोई पेज अपने आप रीफ़्रेश हो जाएगा. इसके बाद, फ़ोकस वापस पेज के सबसे ऊपर चला जाएगा. इससे उन्हें परेशानी या उलझन हो सकती है. [ज़्यादा जानें](https://web.dev/meta-refresh/)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
-    "message": "दस्तावेज़ `<meta http-equiv=\"refresh\">` का इस्तेमाल करता है"
+    "message": "यह दस्तावेज़ `<meta http-equiv=\"refresh\">` का इस्तेमाल करता है"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | title": {
-    "message": "यह दस्तावेज़ `<meta http-equiv=\"refresh\">` का इस्तेमाल नहीं करता है"
+    "message": "दस्तावेज़ `<meta http-equiv=\"refresh\">` का इस्तेमाल नहीं करते"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "ज़ूम की सुविधा बंद करने से इस्तेमाल करने वाले ऐसे लोगों को परेशानी होती है, जिन्हें कम दिखाई देता है. इस्तेमाल करने वाले ये लोग स्क्रीन बड़ी करके वेब पेज की सामग्रियों को ठीक से देख पाते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
+    "message": "ज़ूम करने की सुविधा को बंद करने से उन उपयोगकर्ताओं को परेशानी होती है जिन्हें कम दिखाई देता है. ऐसे उपयोगकर्ता वेब पेज की सामग्री को ठीक तरह से देखने के लिए स्क्रीन को बड़ा करते हैं. [ज़्यादा जानें](https://web.dev/meta-viewport/)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "`[user-scalable=\"no\"]` का इस्तेमाल `<meta name=\"viewport\">` एलिमेंट में किया जाता है या `[maximum-scale]` विशेषता पाँच से कम है."
+    "message": "`[user-scalable=\"no\"]` का इस्तेमाल `<meta name=\"viewport\">` एलिमेंट में किया जाता है या `[maximum-scale]`विशेषता पांच से कम है."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
-    "message": "`[user-scalable=\"no\"]` का इस्तेमाल `<meta name=\"viewport\">` एलिमेंट में नहीं किया जा सकता और `[maximum-scale]` विशेषता पाँच से कम नहीं है."
+    "message": "`[user-scalable=\"no\"]` का इस्तेमाल `<meta name=\"viewport\">` एलिमेंट में नहीं किया जाता और `[maximum-scale]`विशेषता पाँच से कम नहीं है."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "स्क्रीन रीडर ऐसी सामग्री का अनुवाद नहीं कर सकते जिसमें टेक्स्ट नहीं होता है. `<object>` एलिमेंट में वैकल्पिक टेक्स्ट शामिल करने से, स्क्रीन रीडर को इस्तेमाल करने वालों को मतलब समझाने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
+    "message": "स्क्रीन रीडर ऐसी सामग्री का अनुवाद नहीं कर सकते जिसमें टेक्स्ट नहीं है. `<object>` एलिमेंट में वैकल्पिक टेक्स्ट जोड़ने से, स्क्रीन रीडर आसानी से उपयोगकर्ताओं को बात का मतलब समझा सकते हैं. [ज़्यादा जानें](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "`<object>` एलिमेंट में `[alt]` टेक्स्ट नहीं है"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "`<object>` एलिमेंट में `[alt]` टेक्स्ट है"
+    "message": "`<object>` एलिमेंट में`[alt]` टेक्स्ट है"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "0 से ज़्यादा मान साफ़ तौर पर नेविगेशन क्रम को लागू करता है. हालांकि तकनीकी रूप से मान्य है. यह अक्सर ऐसे इस्तेमाल करने वालों को निराश करता है जो सहायक तकनीकों पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
+    "message": "0 से ज़्यादा मान साफ़ तौर पर नेविगेशन क्रम को लागू करता है. हालांकि, यह तकनीकी रूप से सही है, लेकिन यह अक्सर उन इस्तेमाल करने वालों को निराश करता है जो सहायक तकनीकों पर भरोसा करते हैं. [ज़्यादा जानें](https://web.dev/tabindex/)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "कुछ एलिमेंट का `[tabindex]` मान 0 से ज़्यादा होता है"
@@ -273,49 +327,61 @@
     "message": "किसी भी एलिमेंट का `[tabindex]` मान 0 से ज़्यादा नहीं हो सकता"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. `[headers]` विशेषता का इस्तेमाल करने वाले `<td>` सेल सिर्फ़ उसी टेबल में दूसरे सेल के बारे में बताते हैं, इसे पक्का करने पर स्क्रीन रीडर इस्तेमाल करने वालों को बेहतर अनुभव मिल सकता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
+    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. `[headers]` विशेषता का इस्तेमाल करके `<td>` सेल की मौजूदगी पक्की करने के लिए उसी टेबल में मौजूद दूसरे सेल का हवाला दिया जाता है. इससे स्क्रीन रीडर उपयोगकर्ताओं के अनुभव को बेहतर बनाया जा सकता है. [ज़्यादा जानें](https://web.dev/td-headers-attr/)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "`[headers]` विशेषता का इस्तेमाल करने वाले `<table>` एलिमेंट में मौजूद सेल, उसी टेबल में दूसरे सेल का हवाला देते हैं."
+    "message": "`<table>` एलिमेंट में शामिल सेल जिस `[headers]` विशेषता का इस्तेमाल करते हैं वे उस एलिमेंट `id` का हवाला देते हैं जाे उसी टेबल में शामिल नहीं हाेता."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "`<table>` विशेषता का इस्तेमाल करने वाले `[headers]` एलिमेंट में मौजूद सेल सिर्फ़ उसी टेबल के दूसरे सेल का हवाला देते हैं."
+    "message": "`<table>` एलिमेंट में शामिल सेल जो `[headers]` विशेषता का इस्तेमाल करते हैं वे सिर्फ़ उसी टेबल में शामिल सेल का हवाला देते हैं."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. अगर यह पक्का कर लिया जाए कि टेबल हेडर हमेशा सेल के कुछ सेट के बारे में बताते हैं, तो स्क्रीन रीडर इस्तेमाल करने वालों को बेहतर अनुभव मिल सकता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
+    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. यह पक्का करें कि टेबल हेडर हमेशा कुछ सेल के सेट के बारे में बताते हों. इससे स्क्रीन रीडर के उपयोगकर्ताओं को बेहतर अनुभव मिल सकता है. [ज़्यादा जानें](https://web.dev/th-has-data-cells/)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
-    "message": "`<th>` एलिमेंट और `[role=\"columnheader\"/\"rowheader\"]` वाले एलिमेंट के पास उनके बताए हुए डेटा सेल नहीं हैं."
+    "message": "`<th>` एलिमेंट और `[role=\"columnheader\"/\"rowheader\"]` वाले एलिमेंट में वे डेटा सेल मौजूद नहीं हैं जो उनके ब्यौरे में शामिल हैं."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | title": {
-    "message": "`<th>` एलिमेंट और `[role=\"columnheader\"/\"rowheader\"]` वाले एलिमेंट के पास उनके बताए हुए डेटा सेल हैं."
+    "message": "`<th>` एलिमेंट और `[role=\"columnheader\"/\"rowheader\"]` वाले एलिमेंट में वे डेटा सेल शामिल हैं जिनकी वे जानकारी देते हैं."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "एलिमेंट पर सही [BCP 47 भाषा](https://www.w3.org/International/questions/qa-choosing-language-tags#question) तय करने से यह पक्का करने में मदद मिलती है कि स्क्रीन रीडर ने टेक्स्ट को सही तरीके से बोला है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
+    "message": "एलिमेंट पर एक सही [BCP 47 भाषा ](https://www.w3.org/International/questions/qa-choosing-language-tags#question) तय करने से आप पक्का कर सकते हैं कि स्क्रीन रीडर, टेक्स्ट को सही से बोले. [ज़्यादा जानें](https://web.dev/valid-lang/)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "`[lang]` विशेषताओं का कोई सही मान नहीं है"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | title": {
-    "message": "`[lang]` विशेषताओं में सही मान है"
+    "message": "`[lang]` विशेषताओं का मान सही है"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "वीडियो में कैप्शन उपलब्ध कराने पर ऐसे इस्तेमाल करने वाले लोग जानकारी को आसानी से समझ सकते हैं, जो सुन नहीं पाते हैं और जिन्हें कम सुनाई देता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
+    "message": "वीडियो में कैप्शन उपलब्ध कराने पर वे उपयोगकर्ता आसानी से जानकारी समझ सकते हैं जो सुन नहीं पाते और जिन्हें कम सुनाई देता है. [ज़्यादा जानें](https://web.dev/video-caption/)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
-    "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाले `<track>` नहीं हैं."
+    "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाला कोई `<track>` एलिमेंट नहीं है."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
-    "message": "`<video>` एलिमेंट में `[kind=\"captions\"]`वाला `<track>` एलिमेंट है"
+    "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाला एक `<track>` एलिमेंट है"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "ऑडियो के ब्यौरे में वीडियो से जुड़ी काम की ऐसी जानकारी दी जाती है जो बातचीत से नहीं दी जा सकती, जैसे चेहरे के हावभाव और सीन. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
+    "message": "ऑडियो के ब्यौरे में वीडियो से जुड़ी काम की ऐसी जानकारी दी जाती है जो बातचीत से नहीं दी जा सकती. जैसे, चेहरे के हावभाव और सीन. [ज़्यादा जानें](https://web.dev/video-description/)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "`<video>` एलिमेंट में `[kind=\"description\"]`वाले `<track>` एलिमेंट शामिल नहीं हैं."
+    "message": "`<video>` एलिमेंट में `[kind=\"description\"]` वाला कोई `<track>` एलिमेंट नहीं है."
   },
   "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "`<video>` एलिमेंट में `[kind=\"description\"]` के साथ `<track>` एलिमेंट होता है"
+    "message": "`<video>` एलिमेंट में `[kind=\"description\"]` वाला एक `<track>` एलिमेंट है"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | description": {
+    "message": "उपयोगकर्ता जब होम स्क्रीन पर प्रगतिशील वेब ऐप्लिकेशन जोड़ें, तो iOS पर वह अच्छे से नज़र आए, इसके लिए `apple-touch-icon` तय करें. यह ज़रूरी है कि यह आइकॉन किसी ऐसे 192px (या 180px) के वर्गाकार PNG की तरफ़ इशारा करे जिसके आर-पार न देखा जा सके. [ज़्यादा जानें](https://web.dev/apple-touch-icon/)."
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
+    "message": "एक सही `apple-touch-icon` नहीं उपलब्ध कराता"
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
+    "message": "`apple-touch-icon-precomposed` पुराना हो गया है; `apple-touch-icon` को प्राथमिकता दी जाती है."
+  },
+  "lighthouse-core/audits/apple-touch-icon.js | title": {
+    "message": "एक सही `apple-touch-icon` देता है"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome एक्सटेंशन ने इस पेज के लोड परफ़ॉर्मेंस पर नकारात्मक रूप से असर डाला है. 'गुप्त मोड' में या बिना किसी एक्सटेंशन के Chrome प्रोफ़ाइल से पेज ऑडिट करके देखें."
@@ -330,7 +396,7 @@
     "message": "कुल सीपीयू समय"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
-    "message": "JS को पार्स करने, कंपाइल करने और एक्ज़ीक्यूट करने में लगने वाला समय कम करने पर विचार करें. आप पाएंगे कि इसके ज़रिए छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
+    "message": "JS को पार्स करने, कंपाइल करने, और एक्ज़ीक्यूट करने में लगने वाला समय कम करें. आप देखेंगे कि इसकी मदद से छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/bootup-time)."
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
     "message": "JavaScript क्रियान्वयन समय कम करें"
@@ -338,29 +404,35 @@
   "lighthouse-core/audits/bootup-time.js | title": {
     "message": "JavaScript क्रियान्वयन समय"
   },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | description": {
+    "message": "बंडल से बड़े और डुप्लीकेट JavaScript मॉड्यूल हटाएं. ऐसा करके, नेटवर्क गतिविधि में खर्च होने वाले गैर-ज़रूरी बाइट कम किए जा सकते हैं. "
+  },
+  "lighthouse-core/audits/byte-efficiency/duplicated-javascript.js | title": {
+    "message": "JavaScript बंडल में मौजूद डुप्लीकेट मॉड्यूल हटाएं"
+  },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "बड़े जीआईएफ़ ऐनिमेटेड सामग्री डिलीवर करने में नाकाफ़ी होते हैं. नेटवर्क बाइट बचाने के इरादे से जीआईएफ़ का इस्तेमाल करने के बजाय, ऐनिमेशन के लिए MPEG4/WebM वीडियो और स्थिर इमेज के लिए PNG/WebP का इस्तेमाल करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
+    "message": "बड़ी GIFs ऐनिमेशन वाली सामग्री डिलीवर नहीं कर सकते. नेटवर्क बाइट बचाने के लिए GIF का इस्तेमाल करने के बजाय, ऐनिमेशन के लिए MPEG4/WebM वीडियो और स्टैटिक इमेज के लिए PNG/WebP का इस्तेमाल करें. [ज़्यादा जानें](https://web.dev/efficient-animated-content)"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "ऐनिमेट की गई सामग्री के लिए वीडियो फ़ॉर्मेट का इस्तेमाल करें"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
-    "message": "इंटरेक्टिव में लगने वाला समय कम करने के लिए, सभी अहम संसाधन लोड हो जाने के बाद ऑफ़स्क्रीन और छिपी हुई इमेज को धीरे-धीरे लोड करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)."
+    "message": "इंटरैक्टिव में लगने वाला समय कम करने के लिए, सभी अहम संसाधन लोड हो जाने के बाद ऑफ़स्क्रीन और छिपी हुई इमेज को धीरे-धीरे लोड करें. [ज़्यादा जानें](https://web.dev/offscreen-images)."
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "ऑफ़स्क्रीन इमेज टालें"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "संसाधन आपके पेज के पहले पेंट को ब्लॉक कर रहे हैं. अहम JS/CSS इनलाइन वितरित करने और सभी गैर-अहम JS/शैलियों को टालने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
+    "message": "संसाधन आपके पेज का फ़र्स्ट पेंट ब्लॉक कर रहे हैं. ज़रूरी JS/सीएसएस इनलाइन डिलीवर करने और सभी गैर-ज़रूरी JS/शैलियों को टाल दें. [ज़्यादा जानें](https://web.dev/render-blocking-resources)."
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "रेंडर ब्लॉक करने वाले संसाधनों को खत्म करें"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
-    "message": "बड़े नेटवर्क वाले पेलोड के लिए उपयोगकर्ताओं को ज़्यादा रकम खर्च करनी पड़ती है और उन पर लोड होने में ज़्यादा समय भी लगता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)."
+    "message": "बड़े नेटवर्क वाले पेलोड के लिए उपयोगकर्ताओं को रकम खर्च करनी होती है. साथ ही, उन पर लोड होने में ज़्यादा समय भी लगता है. [ज़्यादा जानें](https://web.dev/total-byte-weight)."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
-    "message": "कुल आकार {totalBytes, number, bytes} केबी था"
+    "message": "कुल आकार {totalBytes, number, bytes} केबी था"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
     "message": "बहुत ज़्यादा नेटवर्क पेलोड से बचें"
@@ -369,31 +441,31 @@
     "message": "भारी नेटवर्क पेलोड से बचाता है"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | description": {
-    "message": "CSS फ़ाइलों का आकार कम करने से नेटवर्क पेलोड आकार कम किए जा सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/minify-css)."
+    "message": "CSS फ़ाइलों को छोटा करने से नेटवर्क पेलोड आकार कम किए जा सकते हैं. [ज़्यादा जानें](https://web.dev/unminified-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": {
     "message": "CSS कम करें"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "JavaScript फ़ाइलों को छोटा करने से पेलोड का आकार और स्क्रिप्ट पार्स करने का समय कम हो सकता है. [ज़्यादा जानें](https://developers.google.com/speed/docs/insights/MinifyResources)."
+    "message": "JavaScript फ़ाइलों को छोटा करने से पेलोड का आकार और स्क्रिप्ट पार्स करने में लगने वाला समय कम हो सकता है. [ज़्यादा जानें](https://web.dev/unminified-javascript)."
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "JavaScript का आकार कम करें"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "स्टाइल-शीट से इस्तेमाल नहीं किए गए नियमों को हटाएं और पेज के ऊपरी हिस्से की सामग्री के लिए इस्तेमाल नहीं होने वाले CSS को लोड होने से टालें. ऐसा करके, नेटवर्क गतिविधि में खर्च होने वाले गैर-ज़रूरी बाइट कम किए जा सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "स्टाइलशीट से इस्तेमाल न किए गए नियमों को हटाएं और पेज के ऊपरी हिस्से की सामग्री के लिए इस्तेमाल न होने वाले CSS को लोड होने से टालें. ऐसा करके, नेटवर्क गतिविधि में खर्च होने वाले गैर-ज़रूरी बाइट कम किए जा सकते हैं. [ज़्यादा जानें](https://web.dev/unused-css-rules)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "इस्तेमाल नहीं किए गए CSS को हटाएं"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "नेटवर्क गतिविधि में खर्च होने वाले बाइट में कमी करने के लिए इस्तेमाल नहीं किया गया JavaScript हटाएं."
+    "message": "अपना इंटरनेट डेटा बचाने के लिए, इस्तेमाल नहीं होने वाले JavaScript को हटाएं. [ज़्यादा जानें](https://web.dev/remove-unused-code/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "इस्तेमाल नहीं किया गया JavaScript हटाएं"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "लंबे कैश लाइफ़टाइम से आपके पेज पर दोहराए जाने वाले विज़िट की गति बढ़ सकती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)."
+    "message": "अगर कैश मेमोरी ज़्यादा समय तक रहेगी, तो लोगों के आपकी साइट पर लौटने की प्रक्रिया में तेज़ी आएगी. [ज़्यादा जानें](https://web.dev/uses-long-cache-ttl)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{1 संसाधन मिला}one{# संसाधन मिले}other{# संसाधन मिले}}"
@@ -405,40 +477,109 @@
     "message": "स्थिर एसेट पर कुशल कैश नीति का इस्तेमाल करता है"
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | description": {
-    "message": "ऑप्टिमाइज़ की गई इमेज तेज़ी से लोड होती हैं और इसमें कम सेल्युलर डेटा खर्च होता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)."
+    "message": "ऑप्टिमाइज़ की गई इमेज तेज़ी से लोड होती हैं. साथ ही, इसमें कम सेल्युलर डेटा खर्च होता है. [ज़्यादा जानें](https://web.dev/uses-optimized-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "इमेज को कुशलता से एन्कोड करें"
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
-    "message": "ऐसी इमेज ऑफ़र करें जिनका आकार सही हो ताकि सेल्युलर डेटा बचाया जा सके और लोड समय को बेहतर बनाया जा सके. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/oversized-images)."
+    "message": "ऐसी इमेज ऑफ़र करें जिनका आकार सही हो, ताकि सेल्युलर डेटा बचाया जा सके और लोड होने में लगने वाले समय को कम किया जा सके. [ज़्यादा जानें](https://web.dev/uses-responsive-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | title": {
     "message": "सही तरीके के आकार वाली इमेज"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "कुल नेटवर्क बाइट को कम से कम करने के लिए, लेख आधारित संसाधन कंप्रेशन (gzip, deflate या brotli) के साथ ऑफ़र किए जाने चाहिए. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "कुल नेटवर्क बाइट को कम से कम करने के लिए, टेक्स्ट आधारित संसाधन, कंप्रेशन (gzip, deflate या brotli) के साथ ऑफ़र किए जाने चाहिए. [ज़्यादा जानें](https://web.dev/uses-text-compression)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "लेख कंप्रेशन चालू करें"
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "JPEG 2000, JPEG XR और WebP जैसे इमेज फ़ॉर्मेट में अक्सर PNG या JPEG के मुकाबले बेहतर कंप्रेशन मिलता है, जिसका मतलब है कि डाउनलोड तेज़ी से होते हैं और इनमें कम डेटा खर्च होता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/webp)."
+    "message": "JPEG 2000, JPEG XR, और WebP जैसे इमेज फ़ॉर्मैट, ज़्यादातर PNG या JPEG से बेहतर कंप्रेस करते हैं जिससे उपयोगकर्ता कम डेटा खर्च करके तेज़ डाउनलोड कर सकते हैं. [ज़्यादा जानें](https://web.dev/uses-webp-images)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
     "message": "इमेज अगली जेनरेशन के फ़ॉर्मेट में ऑफ़र करें"
   },
+  "lighthouse-core/audits/content-width.js | description": {
+    "message": "अगर आपके ऐप्लिकेशन की सामग्री की चौड़ाई व्यूपोर्ट की चौड़ाई से मेल नहीं खाती है, तो आपका ऐप्लिकेशन मोबाइल स्क्रीन पर ऑप्टिमाइज़ नहीं किया जा सकेगा. [ज़्यादा जानें](https://web.dev/content-width)."
+  },
+  "lighthouse-core/audits/content-width.js | explanation": {
+    "message": "{innerWidth}px के व्यूपोर्ट का आकार {outerWidth}px की विंडो के आकार से मेल नहीं खाता है."
+  },
+  "lighthouse-core/audits/content-width.js | failureTitle": {
+    "message": "सामग्री का आकार व्यूपोर्ट (किसी वेब पेज के स्क्रीन पर दिखने वाले हिस्से) के मुताबिक नहीं है"
+  },
+  "lighthouse-core/audits/content-width.js | title": {
+    "message": "सामग्री का आकार व्यूपोर्ट (किसी वेब पेज के स्क्रीन पर दिखने वाले हिस्से) के मुताबिक है"
+  },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "नीचे दी गई अहम अनुरोध शृंखलाएं आपको वे संसाधन दिखाती हैं जो उच्च प्राथमिकता से भरपूर हैं. शृंखलाओं की अवधि कम करने पर विचार करें, जिससे संसाधनों का डाउनलोड आकार कम हो जाएगा या पेज लोड को बेहतर बनाने के लिए गैर-ज़रूरी संसाधनों का डाउनलोड टल जाएगा. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "नीचे दी गई अहम अनुरोध शृंखलाएं बताती हैं कि किन संसाधनों को ज़्यादा प्राथमिकता से लोड किया गया है. शृंखलाओं की अवधि कम करें. इससे संसाधनों का डाउनलोड आकार कम हो जाएगा या पेज लोड को बेहतर बनाने के लिए गैर-ज़रूरी संसाधनों का डाउनलोड टल जाएगा. [ज़्यादा जानें](https://web.dev/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 शृंखला मिली}one{# शृंखलाएं मिलीं}other{# शृंखलाएं मिलीं}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "अहम अनुरोधों की गहराई कम से कम करें"
+    "message": "गंभीर अनुरोधों की चेन न बनाएं"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "तत्व"
+  "lighthouse-core/audits/deprecations.js | columnDeprecate": {
+    "message": "रुक गया है / चेतावनी"
+  },
+  "lighthouse-core/audits/deprecations.js | columnLine": {
+    "message": "लाइन"
+  },
+  "lighthouse-core/audits/deprecations.js | description": {
+    "message": "काम न करने वाले एपीआई आपके ब्राउज़र से हटा दिए जाएंगे. [ज़्यादा जानें](https://web.dev/deprecations)."
+  },
+  "lighthouse-core/audits/deprecations.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 चेतावनी मिली}one{# चेतावनियां मिलीं}other{# चेतावनियां मिलीं}}"
+  },
+  "lighthouse-core/audits/deprecations.js | failureTitle": {
+    "message": "रुके हुए एपीआई का इस्तेमाल करता है"
+  },
+  "lighthouse-core/audits/deprecations.js | title": {
+    "message": "रुके हुई एपीआई का इस्तेमाल नहीं किया जाता"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
+    "message": "ऐप्लिकेशन की कैश मेमोरी अब काम नहीं करती. [ज़्यादा जानें](https://web.dev/appcache-manifest)."
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
+    "message": "\"{AppCacheManifest}\" मिल गया"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
+    "message": "ऐप्लिकेशन की कैश मेमोरी का इस्तेमाल किया जाता है"
+  },
+  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
+    "message": "ऐप्लिकेशन की कैश मेमोरी का इस्तेमाल नहीं किया जाता"
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | description": {
+    "message": "कैरेक्टर एन्कोडिंग सेट करने की ज़रूरत है. एचटीएमएल की पहली 1024 बाइट या सामग्री-प्रकार एचटीटीपी रिस्पॉन्स हेडर में <meta> टैग की मदद से ऐसा किया जा सकता है. [ज़्यादा जानें](https://www.w3.org/International/questions/qa-html-encoding-declarations)."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
+    "message": "एचटीएमएल में charset को सेट नहीं है या बहुत देरी से सेट किया गया है."
+  },
+  "lighthouse-core/audits/dobetterweb/charset.js | title": {
+    "message": "सही तरीके से सेट किया गया charset"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | description": {
+    "message": "doctype तय करने से, ब्राउज़र क्वर्क-मोड (पुराने वर्शन पर काम करने की सुविधा) पर स्विच नहीं करता है. [ज़्यादा जानें](https://web.dev/doctype)."
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
+    "message": "Doctype का नाम अंग्रेज़ी के छोटे अक्षरों वाली स्ट्रिंग `html` में होना चाहिए"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
+    "message": "दस्तावेज़ में doctype होना ज़रूरी है"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationPublicId": {
+    "message": "उम्मीद थी कि publicId खाली स्ट्रिंग होगी"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
+    "message": "उम्मीद थी कि systemId खाली स्ट्रिंग होगी"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
+    "message": "पेज में HTML doctype नहीं है जिसकी वजह से क्वर्क-मोड (पुराने वर्शन पर काम करने की सुविधा) ट्रिगर हो रही है"
+  },
+  "lighthouse-core/audits/dobetterweb/doctype.js | title": {
+    "message": "पेज में एचटीएमएल doctype है"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "आंकड़े"
@@ -447,7 +588,7 @@
     "message": "मान"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "ब्राउज़र इंजीनियर सुझाव देते हैं कि पेज में ~1,500 से कम DOM ऐलिमेंट होने चाहिए. सबसे सही आंकड़ा है 32 से कम ऐलिमेंट वाली ट्री डेप्थ और 60 से कम चिल्ड्रन/पेरेंट ऐलिमेंट. ज़्यादा बड़े DOM से मेमोरी का इस्तेमाल बढ़ सकता है, जिससे ज़्यादा लंबे [स्टाइल कैल्युलेशन](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) हो सकते हैं और इनसे महंगे [लेआउट रीफ़्लो](https://developers.google.com/speed/articles/reflow) बन सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "ज़्यादा बड़े डॉक्यूमेंट ऑब्जेक्ट मॉडल (DOM) से मेमोरी का इस्तेमाल बढ़ सकता है. इससे ज़्यादा लंबे [स्टाइल कैल्क्युलेशन](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) हो सकते हैं. साथ ही, महंगे [लेआउट रीफ़्लो](https://developers.google.com/speed/articles/reflow) बन सकते हैं. [ज़्यादा जानें](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 ऐलिमेंट}one{# ऐलिमेंट}other{# ऐलिमेंट}}"
@@ -467,8 +608,137 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "बहुत ज़्यादा बड़े DOM आकार से बचता है"
   },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
+    "message": "फ़ेल होने वाले एंकर"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
+    "message": "किसी बाहरी लिंक में `rel=\"noopener\"` या `rel=\"noreferrer\"` जोड़कर परफ़ॉर्मेंस बेहतर करें और सुरक्षा जोखिमों से बचें. [ज़्यादा जानें](https://web.dev/external-anchors-use-rel-noopener)."
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
+    "message": "जिन जगहों पर दो डोमेन से होकर जाना होता है वे सुरक्षित नहीं हैं"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
+    "message": "जिन जगहों पर दो डोमेन से होकर जाना होता है वे सुरक्षित हैं"
+  },
+  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
+    "message": "एंकर ({anchorHTML}) के भेजे जाने की जगह नहीं पता की जा सकी. अगर target=_blank का इस्तेमाल हाइपरलिंक की तरह नहीं हो रहा, तो इसे हटा दें."
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
+    "message": "उपयोगकर्ता ऐसी साइटों पर भरोसा नहीं करते या उनकी वजह से उलझन में रहते हैं जो बिना किसी संदर्भ के उनकी जगह की जानकारी पता करने का अनुरोध करती हैं. इसके बजाय, उपयोगकर्ता के जेस्चर के हिसाब से अनुरोध करें. [ज़्यादा जानें](https://web.dev/geolocation-on-start)."
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
+    "message": "पेज लोड पर भौगोलिक स्थान जानने का अनुरोध किया जाता है"
+  },
+  "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
+    "message": "पेज लोड पर भौगोलिक स्थान जानने की मंज़ूरी का अनुरोध नहीं किया जाता"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
+    "message": "वर्शन"
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
+    "message": "इस पेज पर पहचानी गई सभी फ़्रंट-एंड JavaScript लाइब्रेरी. [ज़्यादा जानें](https://web.dev/js-libraries)."
+  },
+  "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
+    "message": "पहचानी गई JavaScript लाइब्रेरी"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | description": {
+    "message": "धीमे कनेक्शन वाले उपयोगकर्ताओं के लिए, `document.write()` की दी गई बाहरी स्क्रिप्ट की वजह से पेज लोड होने में दस से ज़्यादा सेकंड की देरी हो सकती है. [ज़्यादा जानें](https://web.dev/no-document-write)."
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
+    "message": "`document.write()` से बचें"
+  },
+  "lighthouse-core/audits/dobetterweb/no-document-write.js | title": {
+    "message": "`document.write()` का इस्तेमाल नहीं किया जाता"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
+    "message": "सबसे ज़्यादा गंभीर"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
+    "message": "लाइब्रेरी वर्शन"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
+    "message": "जोखिम की संभावना की संख्या"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
+    "message": "तीसरे पक्ष की कुछ स्क्रिप्ट में सुरक्षा के ऐसे जोखिम हो सकते हैं जिनके बारे में लोगों को पता है. साथ ही, जिन्हें हमलावर आसानी से पहचानकर उनका फ़ायदा उठा सकते हैं. [ज़्यादा जानें](https://web.dev/no-vulnerable-libraries)."
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 जोखिम की संभावना का पता चला}one{# जोखिमों की संभावना का पता चला}other{# जोखिमों की संभावना का पता चला}}"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
+    "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल करता है जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
+    "message": "ज़्यादा"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
+    "message": "कम"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
+    "message": "मीडियम"
+  },
+  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
+    "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल नहीं करता जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": {
+    "message": "उपयोगकर्ता ऐसी साइटों पर भरोसा नहीं करते या उनकी वजह से उलझन में रहते हैं जो उन्हें बिना किसी संदर्भ के सूचनाएं भेजने का अनुरोध करती हैं. इसके बजाय, उपयोगकर्ता के जेस्चर के हिसाब से अनुरोध करें. [ज़्यादा जानें](https://web.dev/notification-on-start)."
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": {
+    "message": "पेज लोड पर सूचनाओं की अनुमति पाने का अनुरोध किया जाता है"
+  },
+  "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
+    "message": "पेज लोड पर सूचना भेजने की मंज़ूरी का अनुरोध नहीं किया जाता"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
+    "message": "फ़ेल होने वाले एलिमेंट"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
+    "message": "पासवर्ड वाले फ़ील्ड में कुछ कॉपी करके चिपकाने की सुविधा न लागू करने का मतलब है एक अच्छी सुरक्षा नीति को कमज़ोर समझना. [ज़्यादा जानें](https://web.dev/password-inputs-can-be-pasted-into)."
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
+    "message": "इस्तेमाल करने वालों को पासवर्ड फ़ील्ड में पहले से कॉपी की गई जानकारी चिपकाने से रोकता है"
+  },
+  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
+    "message": "इस्तेमाल करने वालों को पासवर्ड फ़ील्ड में पहले से कॉपी की गई जानकारी चिपकाने देता है"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": {
+    "message": "प्रोटोकॉल"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
+    "message": "HTTP/2 , HTTP/1.1 से ज़्यादा फ़ायदे ऑफ़र करता है जिनमें बाइनरी हैडर, मल्टीप्लेक्सिंग, और सर्वर पुश शामिल हैं. [ज़्यादा जानें](https://web.dev/uses-http2)."
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 अनुरोध HTTP/2 से सर्व नहीं किया गया}one{# अनुरोध HTTP/2 से सर्व नहीं किए गए}other{# अनुरोध HTTP/2 से सर्व नहीं किए गए}}"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": {
+    "message": "अपने सभी संसाधनों के लिए HTTP/2 का इस्तेमाल नहीं करता"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-http2.js | title": {
+    "message": "अपने संसाधन के लिए HTTP/2 का इस्तेमाल किया जाता है"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
+    "message": "अपने 'टच एंड व्हील' घटना श्रोता पर `passive` का निशान लगाएं, ताकि आपके पेज की स्क्रोल परफ़ॉर्मेंस को बेहतर किया जा सके. [ज़्यादा जानें](https://web.dev/uses-passive-event-listeners)."
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
+    "message": "स्क्रोल परफ़ॉर्मेंस बेहतर करने के लिए पैसिव श्रोताओं का इस्तेमाल नहीं करता"
+  },
+  "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
+    "message": "पैसिव श्रोताओं की मदद से स्क्रोल परफ़ॉर्मेंस बेहतर की जाती है"
+  },
+  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
+    "message": "ब्यौरा"
+  },
+  "lighthouse-core/audits/errors-in-console.js | description": {
+    "message": "कंसोल में लॉग की गई गड़बड़ियां उन मुश्किलों की तरफ़ इशारा करती हैं जिनका समाधान किया जाना अभी बाकी है. ये गड़बड़ियां, नेटवर्क अनुरोधों के काम न करने और ब्राउज़र से जुड़ी दूसरी वजहों से हो सकती हैं. [ज़्यादा जानें](https://web.dev/errors-in-console)"
+  },
+  "lighthouse-core/audits/errors-in-console.js | failureTitle": {
+    "message": "ब्राउज़र की गड़बड़ियां कंसोल में लॉग की गईं"
+  },
+  "lighthouse-core/audits/errors-in-console.js | title": {
+    "message": "ब्राउज़र की किसी गड़बड़ी को कंसोल में लॉग नहीं किया गया"
+  },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "यह पक्का करने के लिए फ़ॉन्ट-डिसप्ले CSS फ़ीचर का फ़ायदा उठाएं कि वेबफ़ॉन्ट लोड होने के दौरान उपयोगकर्ता को लेख दिखाई देता रहे. [ज़्यादा जानें](https://developers.google.com/web/updates/2016/02/font-display)."
+    "message": "यह पक्का करने के लिए कि वेबफ़ॉन्ट लोड होने के दौरान उपयोगकर्ता को टेक्स्ट दिखाई देता रहे, फ़ॉन्ट-डिसप्ले सीएसएस फ़ीचर का फ़ायदा लें. [ज़्यादा जानें](https://web.dev/font-display)."
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "पक्का करें कि वेबफ़ॉन्ट लोड होने के दौरान लेख दिखाई देता रहे"
@@ -476,14 +746,86 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "वेबफ़ॉन्ट लोड होने के दौरान सभी लेख दिखाई देते रहते हैं"
   },
+  "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
+    "message": "Lighthouse इस यूआरएल के लिए, फ़ॉन्ट-डिसप्ले की अपने आप जांच नहीं कर सका: {fontURL}"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
+    "message": "चौड़ाई-ऊंचाई का अनुपात (असल)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | columnDisplayed": {
+    "message": "चौड़ाई-ऊंचाई का अनुपात (डिसप्ले किया गया)"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | description": {
+    "message": "इमेज डिसप्ले डाइमेंशन, चौड़ाई-ऊंचाई के अनुपात जितने होने चाहिए. [ज़्यादा जानें](https://web.dev/image-aspect-ratio)."
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": {
+    "message": "चौड़ाई-ऊंचाई के गलत अनुपात वाली इमेज दिखाता है"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | title": {
+    "message": "चौड़ाई-ऊंचाई के सही अनुपात वाली इमेज दिखाता है"
+  },
+  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
+    "message": "इमेज के आकार की जानकारी गलत है {url}"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnActual": {
+    "message": "इमेज का असल साइज़"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": {
+    "message": "इमेज का दिखाया गया साइज़"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | columnExpected": {
+    "message": "इमेज का अनुमानित साइज़"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | description": {
+    "message": "इमेज का डाइमेंशन उसके डिसप्ले साइज़ और पिक्सल के अनुपात में होना चाहिए, ताकि वह ज़्यादा से ज़्यादा साफ़ दिख सके. [ज़्यादा जानें](https://web.dev/image-size-responsive)."
+  },
+  "lighthouse-core/audits/image-size-responsive.js | failureTitle": {
+    "message": "पेज पर दिख रही इमेज का साइज़ ठीक नहीं है"
+  },
+  "lighthouse-core/audits/image-size-responsive.js | title": {
+    "message": "पेज पर दिख रही इमेज का साइज़ ठीक है"
+  },
+  "lighthouse-core/audits/installable-manifest.js | description": {
+    "message": "ब्राउज़र अपनी ओर से उपयोगकर्ताओं को आपके ऐप्लिकेशन को उनकी होमस्क्रीन पर जोड़ने का सुझाव दे सकते हैं. इससे उपयोगकर्ताओं के साथ बेहतर तरीके से जुड़ने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/installable-manifest)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | failureTitle": {
+    "message": "वेब ऐप्लिकेशन का मेनिफ़ेस्ट, इंस्टॉल करने की ज़रूरतों को पूरा नहीं करता है"
+  },
+  "lighthouse-core/audits/installable-manifest.js | title": {
+    "message": "वेब ऐप्लिकेशन का मेनिफ़ेस्ट, इंस्टॉल करने की ज़रूरतों को पूरा करता है"
+  },
+  "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
+    "message": "असुरक्षित यूआरएल"
+  },
+  "lighthouse-core/audits/is-on-https.js | description": {
+    "message": "सभी साइटों को HTTPS से सुरक्षित किया जाना चाहिए, चाहे उनमें संवेदनशील डेटा हो या नहीं. HTTPS की वजह से अनचाहे लोग (घुसपैठिये), आपके ऐप्लिकेशन और उसके उपयोगकर्ताओं के बीच होने वाली बातों को न तो सुन पाएंगे और न ही उसके साथ किसी तरह की छेड़खानी कर पाएंगे. HTTP/2 और कई नए वेब प्लेटफ़ॉर्म एपीआई पर इस सुविधा के बिना साइटें नहीं बनाई जा सकतीं. [ज़्यादा जानें](https://web.dev/is-on-https)."
+  },
+  "lighthouse-core/audits/is-on-https.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 असुरक्षित अनुरोध मिला}one{# असुरक्षित अनुरोध मिले}other{# असुरक्षित अनुरोध मिले}}"
+  },
+  "lighthouse-core/audits/is-on-https.js | failureTitle": {
+    "message": "HTTPS का इस्तेमाल नहीं किया जाता"
+  },
+  "lighthouse-core/audits/is-on-https.js | title": {
+    "message": "HTTPS का इस्तेमाल करता है"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "पॉलिफ़िल और ट्रांसफ़ॉर्म की मदद से पुराने ब्राउज़र पर नई JavaScript सुविधाओं का इस्तेमाल किया जा सकता है. हालांकि, नए ब्राउज़र के लिए इनमें से कई की ज़रूरत नहीं है. बंडल किए गए JavaScript के लिए, मॉड्यूल/नोमॉड्यूल सुविधा पहचान टूल का इस्तेमाल करके नई स्क्रिप्ट डिप्लॉयमेंट रणनीति अपनाएं. इससे नए ब्राउज़र पर कोड भेजने की संख्या कम करने और पुराने ब्राउज़र को चालू रखने में मदद मिलती है. [ज़्यादा जानें](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "पुराना JavaScript"
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "सेल्युलर नेटवर्क पर तेज़ी से पेज लोड होने की सुविधा से मोबाइल इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+    "message": "सेल्युलर नेटवर्क पर तेज़ी से पेज लोड होने की सुविधा से मोबाइल इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://web.dev/load-fast-enough-for-pwa)."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "{timeInMs, number, seconds} सेकंड में इंटरैक्टिव"
+    "message": "इंटरैक्शन {timeInMs, number, seconds} से. में शुरू हुआ"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "{timeInMs, number, seconds} सेकंड में सिम्युलेट किए गए मोबाइल नेटवर्क पर इंटरैक्टिव"
+    "message": "{timeInMs, number, seconds} से. में सिम्युलेट किए गए मोबाइल नेटवर्क पर इंटरैक्शन शुरू हुआ"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
+    "message": "आपका पेज बहुत धीरे लोड होता है और 10 सेकंड में इंटरैक्टिव नहीं होता है. सुधार करने के तरीके जानने के लिए \"परफ़ॉर्मेंस\" सेक्शन में अवसरों पर नज़र डालें और गड़बड़ी की जानकारी लें."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "मोबाइल नेटवर्क पर पेज लोड होने की गति ज़रूरत के मुताबिक तेज़ नहीं है"
@@ -495,7 +837,7 @@
     "message": "श्रेणी"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "JS को पार्स करने, कंपाइल करने और एक्ज़ीक्यूट करने में लगने वाला समय कम करने पर विचार करें. आप देखेंगे कि इसके ज़रिए छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है."
+    "message": "JS को पार्स करने, कंपाइल करने, और एक्ज़ीक्यूट करने में लगने वाला समय कम करें. इससे, छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है. [ज़्यादा जानें](https://web.dev/mainthread-work-breakdown)"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "मुख्य थ्रेड के काम को कम करना"
@@ -503,80 +845,137 @@
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "मुख्य थ्रेड के काम को कम करता है"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "अंदाजन इनपुट देरी इस बात का अनुमान होता है कि पेज लोड होने की सबसे व्यस्त 5 सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में, मिलीसेकंड में कितना समय लगेगा. अगर इंतज़ार का समय 50 मिलीसेकंड से ज़्यादा है, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
+    "message": "ज़्यादा से ज़्यादा उपयोगकर्ताओं तक पहुंचने के लिए, साइटों का सभी प्रमुख ब्राउज़र पर काम करना ज़रूरी है. [ज़्यादा जानें](https://web.dev/pwa-cross-browser)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
-    "message": "अनुमानित इनपुट प्रतीक्षा समय"
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
+    "message": "यह वेबसाइट अलग-अलग ब्राउज़र पर काम करती है"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
+    "message": "पक्का करें कि हर पेज को यूआरएल के ज़रिए डीप लिंक किया जा सकता हो. साथ ही, वे ऐसे खास यूआरएल हों जिन्हें सोशल मीडिया पर शेयर किया जा सकता है. [ज़्यादा जानें](https://web.dev/pwa-each-page-has-url)."
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
+    "message": "हर पेज का एक यूआरएल होता है"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
+    "message": "नेटवर्क धीमा होने पर भी वेब ऐप्लिकेशन में टैप करने पर ट्रांज़िशन की रफ़्तार तेज़ महसूस होनी चाहिए. इससे उपयाेगकर्ता की नज़र में आपके पेज की परफ़ॉर्मेंस अच्छी रहेगी. [ज़्यादा जानें](https://web.dev/pwa-page-transitions)."
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
+    "message": "पेज ट्रांज़िशन को देखकर ऐसा नहीं लगना चाहिए जैसे कि वे नेटवर्क लोड होने का इंतज़ार कर रहे हैं"
+  },
+  "lighthouse-core/audits/maskable-icon.js | description": {
+    "message": "मास्क का इस्तेमाल किए जा सकने वाले आइकॉन से यह पक्का किया जाता है कि डिवाइस पर ऐप्लिकेशन इंस्टॉल करते समय, लेटरबॉक्स किए बिना इमेज पूरी जगह पर दिखती है. [ज़्यादा जानें](https://web.dev/maskable-icon/)."
+  },
+  "lighthouse-core/audits/maskable-icon.js | failureTitle": {
+    "message": "मेनिफ़ेस्ट में ऐसा कोई भी आइकॉन नहीं मिला जिसके लिए मास्क का इस्तेमाल किया जा सके"
+  },
+  "lighthouse-core/audits/maskable-icon.js | title": {
+    "message": "मेनिफ़ेस्ट में ऐसा आइकॉन है जिसके लिए मास्क का इस्तेमाल किया जा सकता है"
+  },
+  "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
+    "message": "कुल लेआउट शिफ़्ट, व्यूपोर्ट में दिखने वाले एलिमेंट की हलचल बताता है. [ज़्यादा जानें](https://web.dev/cls)."
+  },
+  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
+    "message": "इनपुट के इंतज़ार के समय का अंदाज़ा, इस बात से लगाया जाता है कि पेज लोड होने की सबसे व्यस्त पांच सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में कितना समय लगेगा. इस समय का हिसाब मिलीसेकंड में लगाया जाता है. अगर इंतज़ार का समय 50 मिलीसेकंड से ज़्यादा हो, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://web.dev/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "फ़र्स्ट कॉन्टेंटफ़ुल पेंट वह समय चिह्नित करता है जब पहले लेख या इमेज को पेंट किया गया हो. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "उपयोगी सामग्री वाला पहला पेंट"
+    "message": "फ़र्स्ट कॉन्टेंटफ़ुल पेंट से उस समय का पता चलता है जब पहले टेक्स्ट या इमेज को पेंट किया गया था. [ज़्यादा जानें](https://web.dev/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "इस्तेमाल में नहीं पहला सीपीयू (CPU), वह पहला समय चिह्नित करता है जब पेज का मुख्य थ्रेड इनपुट को संभालने के लिए काफ़ी होता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "पहला सीपीयू (CPU) इस्तेमाल में नहीं"
+    "message": "इस्तेमाल में न होने वाले पहले सीपीयू (CPU) का आंकड़ा उस समय के बारे में बताता है जब पेज का मुख्य थ्रेड पहली बार इनपुट को संभालने के लिए काफ़ी होता है.  [ज़्यादा जानें](https://web.dev/first-cpu-idle)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "पहला सार्थक पेंट उस समय का मापन करता है जब किसी पेज की शुरुआती सामग्री दिखाई देती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
-  },
-  "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "पहला सार्थक पेंट"
+    "message": "फ़र्स्ट मीनिंगफ़ुल पेंट, पेज की मुख्य सामग्री दिखाई देने का समय बताता है. [ज़्यादा जानें](https://web.dev/first-meaningful-paint)."
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "इंटरैक्टिव में लगने वाला समय वह समय है जितनी देर में पेज पूरी तरह से इंटरैक्टिव हो जाता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "इंटरैक्टिव में लगने वाला समय, वह समय है जितनी देर में पेज पूरी तरह से इंटरैक्टिव हो जाता है. [ज़्यादा जानें](https://web.dev/interactive)."
   },
-  "lighthouse-core/audits/metrics/interactive.js | title": {
-    "message": "इंटरएक्टिव में लगने वाला समय"
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "सबसे बड़ी सामग्री को पेंट करने का आंकड़ा, उस टेक्स्ट या इमेज को पेंट करने में लगे समय को बताता है. [ज़्यादा जानें](https://web.dev/lighthouse-largest-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "मिलीसेकंड में बताई जाने वाली सबसे लंबे टास्क की पहली संभावित इनपुट देरी. आपके इस्तेमाल करने वालों को यह समस्या आ सकती है."
-  },
-  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "ज़्यादा से ज़्यादा संभावित एफ़आईडी"
+    "message": "आपके उपयोगकर्ताओं को अनुभव होने वाले संभावित फ़र्स्ट इनपुट डिले में सबसे लंबे टास्क की अवधि शामिल होती है. [ज़्यादा जानें](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
-    "message": "गति इंडेक्स दिखाता है कि किसी पेज की सामग्री विज़ुअल रूप से कितनी तेज़ी से पॉपुलेट होती हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
+    "message": "स्पीड इंडेक्स से पता चलता है कि किसी पेज की सामग्री, विज़ुअल रूप से कितनी तेज़ी से डाली गई है. [ज़्यादा जानें](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "गति इंडेक्स"
+  "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
+    "message": "टास्क में 50 मि. से. से ज़्यादा होने पर एफ़सीपी और इंटरैक्टिव में लगने वाले कुल समय को मिलीसेकंड में बताया जाता है. [ज़्यादा जानें](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
-    "message": "नेटवर्क के 'दोतरफ़ा यात्रा के समय' (आरटीटी) का परफ़ॉर्मेंस पर बहुत गहरा असर होता है. शुरुआत की जगह पर आरटीटी ज़्यादा होने से यह पता चलता है कि अगर सर्वर इस्तेमाल करने वालों के करीब होंगे, तो परफ़ॉर्मेंस बेहतर हो सकती है. [ज़्यादा जानें](https://hpbn.co/primer-on-latency-and-bandwidth/)."
+    "message": "नेटवर्क के 'दोतरफ़ा यात्रा के समय' (आरटीटी) का परफ़ॉर्मेंस पर बहुत गहरा असर होता है. शुरुआत की जगह पर आरटीटी ज़्यादा होने से यह पता चलता है कि अगर सर्वर इस्तेमाल करने वालों के करीब होंगे, तो परफ़ॉर्मेंस बेहतर हो सकती है. [ज़्यादा जानें](https://hpbn.co/primer-on-latency-and-bandwidth/)."
   },
   "lighthouse-core/audits/network-rtt.js | title": {
     "message": "नेटवर्क का दोतरफ़ा यात्रा का समय"
   },
   "lighthouse-core/audits/network-server-latency.js | description": {
-    "message": "सर्वर के इंतज़ार के समय का असर वेब परफ़ॉर्मेंस पर पड़ सकता है. शुरुआत की जगह के सर्वर का इंतज़ार का समय ज़्यादा होने से यह पता चलता है कि सर्वर ओवरलोड हो गया है या उसकी बैकएंड परफ़ॉर्मेंस खराब है. [ज़्यादा जानें](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
+    "message": "सर्वर के इंतज़ार के समय का असर वेब परफ़ॉर्मेंस पर हो सकता है. शुरुआती जगह के सर्वर के 'इंतज़ार का समय' ज़्यादा होने से यह पता चलता है कि सर्वर ओवरलोड हो गया है या उसकी बैकएंड परफ़ॉर्मेंस खराब है. [ज़्यादा जानें](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
   },
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "सर्वर बैकएंड के इंतज़ार का समय"
   },
+  "lighthouse-core/audits/offline-start-url.js | description": {
+    "message": "सर्विस वर्कर की वजह से आपका वेब ऐप्लिकेशन ऑनलाइन, ऑफ़लाइन, और रुक-रुककर चलने वाले नेटवर्क जैसी स्थितियों में भी अच्छे ढंग से काम करता है. [ज़्यादा जानें](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "सर्विस वर्कर में {url} लोड करने में गड़बड़ी हुई, {statusCode} स्थिति कोड मिला"
+  },
+  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
+    "message": "`start_url` ऑफ़लाइन होने पर, \"200\" कोड का जवाब नहीं देता है"
+  },
+  "lighthouse-core/audits/offline-start-url.js | title": {
+    "message": "`start_url` ऑफ़लाइन होने पर, \"200\" कोड का जवाब देता है"
+  },
+  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
+    "message": "Lighthouse, मेनिफ़ेस्ट फ़ाइल से `start_url` को नहीं ढूंढ सका. इसी वजह से, `start_url` को दस्तावेज़ का यूआरएल मान लिया गया. गड़बड़ी का मैसेज: '{manifestWarning}'."
+  },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "नेटवर्क अनुरोधों की संख्या और उनकी क्वालिटी, आपको दिए गए परफ़ॉर्मेंस बजट की ओर से सेट किए गए लक्ष्यों के हिसाब से होनी चाहिए. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
+    "message": "{count,plural, =1{अनुरोध}one{# अनुरोध}other{# अनुरोध}}"
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "परफ़ॉर्मेंस बजट"
+  },
+  "lighthouse-core/audits/redirects-http.js | description": {
+    "message": "अगर आप एचटीटीपीएस पहले ही सेट अप कर चुके हैं, तो पक्का करें कि अपने सभी उपयोगकर्ताओं के लिए सुरक्षित वेब फ़ीचर चालू करने के मकसद से आप सभी एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट करें. [ज़्यादा जानें](https://web.dev/redirects-http)."
+  },
+  "lighthouse-core/audits/redirects-http.js | failureTitle": {
+    "message": "वेब पेज, एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट नहीं करता है"
+  },
+  "lighthouse-core/audits/redirects-http.js | title": {
+    "message": "वेब पेज, एचटीटीपी ट्रैफ़िक को एचटीटीपीएस पर रीडायरेक्ट करता है"
+  },
   "lighthouse-core/audits/redirects.js | description": {
-    "message": "'रीडायरेक्ट' पेज लोड किए जाने से पहले और ज़्यादा प्रतीक्षा जोड़ता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
+    "message": "रीडायरेक्ट की वजह से पेज के लोड होने से लगने वाला समय और बढ़ जाता है. [ज़्यादा जानें](https://web.dev/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "एक से ज़्यादा पेज रीडायरेक्ट करने से बचें"
   },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "पेज संसाधनों की संख्या और आकार के बजट सेट करने के लिए, एक budget.json फ़ाइल जोड़ें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount,plural, =1{1 अनुरोध • {byteCount, number, bytes} केबी}one{# अनुरोध • {byteCount, number, bytes} केबी}other{# अनुरोध • {byteCount, number, bytes} केबी}}"
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "अनुरोधों की संख्या कम और ट्रांसफ़र का आकार छोटा रखें"
+  },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "कैननिकल लिंक, खोज नतीजों में दिखाए जाने वाले यूआरएल के बारे में बताते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+    "message": "कैननिकल लिंक, खोज नतीजों में दिखाए जाने वाले यूआरएल के बारे में बताते हैं. [ज़्यादा जानें](https://web.dev/canonical)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
-    "message": "कई विरोधी यूआरएल हैं ({urlList})"
+    "message": "कई कॉन्फ़्लिक्टिंग यूआरएल हैं ({urlList})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "किसी अलग डोमेन पर ले जाता है ({url})"
+    "message": "किसी दूसरे डोमेन की तरफ़ इशारा करता है ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "गलत यूआरएल ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
-    "message": "किसी दूसरी `hreflang` जगह पर ले जाता है ({url})"
+    "message": "किसी दूसरी `hreflang` जगह वाली विशेषता ({url}) की तरफ़ इशारा करता है"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
     "message": "मिलता-जुलता यूआरएल ({url})"
@@ -585,25 +984,19 @@
     "message": "मिलती-जुलती सामग्री वाले पेज पर ले जाने के बजाय डोमेन के रूट यूआरएल (होम पेज) पर ले जाता है"
   },
   "lighthouse-core/audits/seo/canonical.js | failureTitle": {
-    "message": "दस्तावेज़ में सही `rel=canonical` नहीं है"
+    "message": "दस्तावेज़ में सही `rel=canonical` नहीं है"
   },
   "lighthouse-core/audits/seo/canonical.js | title": {
-    "message": "दस्तावेज़ में सही `rel=canonical` है"
+    "message": "दस्तावेज़ में सही `rel=canonical` शामिल है"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "पढ़ने के नज़रिए से 12px से कम आकार वाले फ़ॉन्ट काफ़ी छोटे होते हैं. ऐसा होने पर, मोबाइल से वेबसाइट पर आने वालों को पढ़ने के लिए “पिंच करके ज़ूम करना” होगा. पेज का 60% से ज़्यादा टेक्स्ट 12px का या उससे बड़े आकार में रखने की कोशिश करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+    "message": "पढ़ने के नज़रिए से, 12px से कम आकार वाले फ़ॉन्ट काफ़ी छोटे होते हैं. ऐसा होने पर, मोबाइल से वेबसाइट पर आने वालों को पढ़ने के लिए “पिंच करके ज़ूम करना” होगा. कोशिश करें कि पेज का 60% से ज़्यादा टेक्स्ट 12px या उससे बड़े आकार का हो. [ज़्यादा जानें](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} टेक्स्ट पढ़ने लायक है"
   },
-  "lighthouse-core/audits/seo/font-size.js | explanation": {
-    "message": "{decimalProportion, number, extendedPercent} टेक्स्ट काफ़ी छोटा है."
-  },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "मोबाइल स्क्रीन के लिए कोई व्यूपोर्ट मेटा टैग ऑप्टिमाइज़ नहीं किए जाने की वजह से टेक्स्ट पढ़ने लायक नहीं है."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} टेक्स्ट काफ़ी छोटा है ({decimalProportionVisited, number, extendedPercent} नमूने के आधार पर)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "दस्तावेज़ पढ़ने लायक फ़ॉन्ट आकारों का इस्तेमाल नहीं करता है"
@@ -612,16 +1005,16 @@
     "message": "दस्तावेज़ पढ़ने लायक फ़ॉन्ट आकारों का इस्तेमाल करता है"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "hreflang लिंक से सर्च इंजन को यह पता चलता है कि किसी खास भाषा या क्षेत्र के लिए पेज के किस वर्शन को खोज नतीजों में रखना चाहिए. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+    "message": "hreflang लिंक से सर्च इंजन को यह पता चलता है कि किसी खास भाषा या क्षेत्र के लिए पेज के किस वर्शन को खोज नतीजों में रखना चाहिए. [ज़्यादा जानें](https://web.dev/hreflang)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "दस्तावेज़ में सही `hreflang` नहीं है"
   },
   "lighthouse-core/audits/seo/hreflang.js | title": {
-    "message": "दस्तावेज़ में सही `hreflang` है"
+    "message": "दस्तावेज़ में सही `hreflang` शामिल है"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "ऐसे पेज ठीक से इंडेक्स नहीं किए जा सकते जिनमें काम नहीं करने वाले एचटीटीपी स्थिति कोड होते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+    "message": "ऐसे पेज ठीक से इंडेक्स नहीं किए जा सकते जिनमें काम न करने वाले एचटीटीपी स्टेटस कोड हों. [ज़्यादा जानें](https://web.dev/http-status-code)."
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "पेज में काम नहीं करने वाला एचटीटीपी स्थिति कोड है"
@@ -630,7 +1023,7 @@
     "message": "पेज में काम करने वाला एचटीटीपी स्थिति कोड है"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "अगर सर्च इंजन के पास आपके पेज क्रॉल करने की मंज़ूरी नहीं होती है, तो वे खोज नतीजों में आपके पेज शामिल नहीं कर पाएंगे. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    "message": "अगर सर्च इंजन के पास आपके पेज क्रॉल करने की मंज़ूरी नहीं होती, तो वे खोज नतीजों में आपके पेज शामिल नहीं कर पाएंगे. [ज़्यादा जानें](https://web.dev/is-crawable)."
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "पेज को इंडेक्स करने से ब्लॉक किया गया है"
@@ -639,7 +1032,7 @@
     "message": "पेज को इंडेक्स करने से ब्लॉक नहीं किया गया है"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "लिंक की पूरी जानकारी देने वाले टेक्स्ट की मदद से सर्च इंजन आपकी सामग्री के बारे में समझ पाते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+    "message": "लिंक की पूरी जानकारी देने वाले टेक्स्ट की मदद से सर्च इंजन आपकी सामग्री के बारे में समझ पाते हैं. [ज़्यादा जानें](https://web.dev/link-text)."
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount,plural, =1{1 लिंक मिला}one{# लिंक मिले}other{# लिंक मिले}}"
@@ -651,13 +1044,13 @@
     "message": "लिंक में पूरी जानकारी देने वाला टेक्स्ट है"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "स्ट्रक्चर्ड डेटा की पुष्टि करने के लिए [स्ट्रक्चर्ड डेटा टेस्टिंग टूल](https://search.google.com/structured-data/testing-tool/) और [स्ट्रक्चर्ड डेटा लिंटर](http://linter.structured-data.org/) चलाएं. [ज़्यादा जानें](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "स्ट्रक्चर्ड डेटा की पुष्टि करने के लिए [स्ट्रक्चर्ड डेटा टेस्टिंग टूल](https://search.google.com/structured-data/testing-tool/) और [ स्ट्रक्चर्ड डेटा लिंटर](http://linter.structured-data.org/) चलाएं. [ज़्यादा जानें](https://web.dev/structured-data)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "स्ट्रक्चर्ड डेटा सही है"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "खोज नतीजों में संक्षिप्त विवरण शामिल हो सकते हैं ताकि पेज सामग्री के बारे में थोड़े शब्दों में खास जानकारी दी जा सके. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/description)."
+    "message": "खोज नतीजों में मुख्य जानकारी शामिल हो सकती है, ताकि पेज सामग्री के बारे में थोड़े शब्दों में खास जानकारी दी जा सके. [ज़्यादा जानें](https://web.dev/meta-description)."
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "ब्यौरे का टेक्स्ट खाली है."
@@ -669,7 +1062,7 @@
     "message": "दस्तावेज़ में संक्षिप्त विवरण है"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "सर्च इंजन प्लग इन की सामग्री इंडेक्स नहीं कर सकते. साथ ही, कई डिवाइस प्लग इन पर पाबंदी लगाते हैं या वे उन पर काम नहीं करते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+    "message": "सर्च इंजन प्लग इन की सामग्री इंडेक्स नहीं कर सकते. साथ ही, कई डिवाइस प्लग इन पर पाबंदी लगाते हैं या वे उन पर काम नहीं करते. [ज़्यादा जानें](https://web.dev/plugins)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "दस्तावेज़ प्लग इन का इस्तेमाल करता है"
@@ -678,7 +1071,7 @@
     "message": "दस्तावेज़ प्लग इन से बचता है"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "अगर आपकी robots.txt फ़ाइल सही नहीं है, तो क्रॉलर यह नहीं समझ पाएंगे कि आप अपनी वेबसाइट को किस तरह क्रॉल या इंडेक्स करना चाहते हैं."
+    "message": "अगर आपकी robots.txt फ़ाइल सही नहीं है, तो क्रॉलर यह नहीं समझ पाएंगे कि आप अपनी वेबसाइट को किस तरह क्रॉल या इंडेक्स करना चाहते हैं. [ज़्यादा जानें](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "robots.txt के अनुरोध ने यह एचटीटीपी स्थिति लौटाई है: {statusCode}"
@@ -696,10 +1089,10 @@
     "message": "robots.txt सही है"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "बटन और लिंक जैसे इंटरैक्टिव एलिमेंट ज़रूरत के मुताबिक आकार वाले (48x48px) होने चाहिए और इनके आसपास जगह होनी चाहिए. ऐसा करने से, दूसरे एलिमेंट ओवरलैप किए बिना आसानी से उन पर टैप किया जा सकेगा. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "बटन और लिंक जैसे इंटरैक्टिव एलिमेंट, आकार में बड़े (48x48px) होने चाहिए और इनके आस-पास बड़ी जगह होनी चाहिए. ऐसा करने से, दूसरे एलिमेंट को ओवरलैप किए बिना आसानी से उन पर टैप किया जा सकेगा. [ज़्यादा जानें](https://web.dev/tap-targets)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
-    "message": "टैप की जाने वाली {decimalProportion, number, percent} जगहें सही आकार में हैं"
+    "message": "{decimalProportion, number, percent} टैप की जाने वाली जगहें सही आकार में हैं"
   },
   "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
     "message": "मोबाइल स्क्रीन के लिए कोई व्यूपोर्ट मेटा टैग ऑप्टिमाइज़ नहीं किए जाने की वजह से टैप की जाने वाली जगहें काफ़ी छोटी हैं"
@@ -710,41 +1103,86 @@
   "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
     "message": "ओवरलैप करने वाली जगह"
   },
-  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
-    "message": "आकार"
-  },
   "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
     "message": "टैप की जाने वाली जगह"
   },
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "टैप की जाने वाली जगहें सही आकार में हैं"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | description": {
-    "message": "पहली बाइट का समय, उस समय की पहचान करता है जब आपका सर्वर कोई जवाब भेजता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
+  "lighthouse-core/audits/service-worker.js | description": {
+    "message": "सर्विस वर्कर एक ऐसी तकनीक है जो आपके ऐप्लिकेशन के लिए कई प्रगतिशील वेब ऐप्लिकेशन फ़ीचर जैसे कि ऑफ़लाइन, होमस्क्रीन पर जोड़ें, और पुश नोटिफ़िकेशन को चालू करती है. [ज़्यादा जानें](https://web.dev/service-worker)."
   },
-  "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "रूट दस्तावेज़ को {timeInMs, number, milliseconds} मिलीसेकंड लगे"
+  "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
+    "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, कोई `start_url` नहीं मिला, क्योंकि मेनिफ़ेस्ट को मान्य JSON के रूप में पार्स नहीं किया जा सका"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "सर्वर प्रतिक्रिया समय घटाएं (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
+    "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, `start_url` ({startUrl}) सर्विस वर्कर के दायरे में नहीं है ({scopeUrl})"
   },
-  "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "सर्वर के जवाब देने के समय धीमे हैं (TTFB)"
+  "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
+    "message": "इस पेज का नियंत्रण सर्विस वर्कर के पास है. हालांकि, कोई `start_url` नहीं मिला, क्योंकि किसी पेज पर कोई मेनिफ़ेस्ट ही नहीं था."
   },
-  "lighthouse-core/audits/user-timings.js | columnDuration": {
-    "message": "कुल समय"
+  "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
+    "message": "यहां पर एक या ज़्यादा सर्विस वर्कर हैं. हालांकि, पेज ({pageUrl}) दायरे में नहीं है."
   },
-  "lighthouse-core/audits/user-timings.js | columnName": {
-    "message": "नाम"
+  "lighthouse-core/audits/service-worker.js | failureTitle": {
+    "message": "किसी ऐसे सर्विस वर्कर को रजिस्टर नहीं करता जो पेज और `start_url` को नियंत्रित करता है"
   },
-  "lighthouse-core/audits/user-timings.js | columnStartTime": {
-    "message": "शुरुआत का समय"
+  "lighthouse-core/audits/service-worker.js | title": {
+    "message": "किसी ऐसे सर्विस वर्कर को रजिस्टर करता है जो पेज और `start_url` को नियंत्रित करता है"
+  },
+  "lighthouse-core/audits/splash-screen.js | description": {
+    "message": "उपयोगकर्ता जब अपनी होमस्क्रीन से आपका ऐप्लिकेशन लॉन्च करते हैं, तो थीम वाली स्प्लैश स्क्रीन की वजह से इस्तेमाल करने वालों को अच्छा अनुभव मिलता है. [ज़्यादा जानें](https://web.dev/splash-screen)."
+  },
+  "lighthouse-core/audits/splash-screen.js | failureTitle": {
+    "message": "पसंद के मुताबिक स्प्लैश स्क्रीन के लिए कॉन्फ़िगर नहीं किया गया"
+  },
+  "lighthouse-core/audits/splash-screen.js | title": {
+    "message": "पसंद के मुताबिक स्प्लैश स्क्रीन के लिए कॉन्फ़िगर किया गया"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | description": {
+    "message": "ब्राउज़र के 'पता बार' की थीम ऐसी हो सकती है जो आपकी वेबसाइट से मेल खाए. [ज़्यादा जानें](https://web.dev/themed-omnibox)."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
+    "message": "'पता बार' के लिए थीम का रंग सेट नहीं करता है."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | title": {
+    "message": "'पता बार' के लिए थीम का रंग सेट करता है."
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "मुख्य थ्रेड ब्लॉक होने का समय"
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
+    "message": "तीसरा पक्ष"
+  },
+  "lighthouse-core/audits/third-party-summary.js | description": {
+    "message": "तीसरे पक्ष के कोड आपके पेज की लोड परफ़ॉर्मेंस पर गहरा असर कर सकते हैं. ऐसी तीसरे-पक्ष की सेवा देने वाली कंपनियों का इस्तेमाल ज़्यादा न करें जिनके कोड अब आपके काम के नहीं हैं. साथ ही, तीसरे पक्ष का कोड तब लोड करें जब आपके पेज पर मुख्य लोडिंग का काम पूरा हो गया हो. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
+  },
+  "lighthouse-core/audits/third-party-summary.js | displayValue": {
+    "message": "तीसरे पक्ष के कोड ने {timeInMs, number, milliseconds} एमएस के लिए मुख्य थ्रेड को ब्लॉक कर दिया है"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "तीसरे पक्ष के कोड का असर कम करें"
+  },
+  "lighthouse-core/audits/third-party-summary.js | title": {
+    "message": "तीसरे पक्ष के इस्तेमाल को कम करें"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "माप"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "मेट्रिक"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "अपनी साइट की परफ़ॉर्मेस पर नज़र रखने के लिए टाइमिंग बजट सेट करें. अच्छा परफ़ॉर्म करने वाली साइटें जल्दी लोड होती हैं. साथ ही, उपयोगकर्ताओं के इनपुट इवेंट का जल्दी जवाब देती हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "टाइमिंग बजट"
   },
   "lighthouse-core/audits/user-timings.js | columnType": {
     "message": "प्रकार"
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "प्रमुख उपयोगकर्ता अनुभवों के दौरान, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को 'उपयोगकर्ता समय API (एपीआई)' के ज़रिए तैयार करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "मुख्य उपयोगकर्ता अनुभवों के दौरान, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को 'उपयोगकर्ता समय एपीआई' की मदद से तैयार करें. [ज़्यादा जानें](https://web.dev/user-timings)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 उपयोगकर्ता समय}one{# उपयोगकर्ता समय}other{# उपयोगकर्ता समय}}"
@@ -753,22 +1191,61 @@
     "message": "उपयोगकर्ता समय अंक और मापन"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "\"{securityOrigin}\" के लिए एक पहले से कनेक्ट <link> मिला, लेकिन ब्राउज़र ने इस्तेमाल नहीं किया था. यह जाँचें कि आप `crossorigin` विशेषता का इस्तेमाल ठीक से कर रहे हैं."
+    "message": "\"{securityOrigin}\" के लिए पहले से कनेक्ट किया गया <link> मिला, लेकिन ब्राउज़र ने इसका इस्तेमाल नहीं किया था. यह पक्का कर लें कि आप `crossorigin` विशेषता का इस्तेमाल ठीक से कर रहे हैं."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "तीसरे पक्ष के अहम मूल से जल्दी कनेक्शन बनाने के लिए प्री-कनेक्ट या dns-प्रीफ़ेच संसाधन संकेत जोड़ने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "तीसरे पक्ष से जल्दी कनेक्शन बनाने के लिए `preconnect` या `dns-prefetch` संसाधन संकेत जोड़ें. [ज़्यादा जानें](https://web.dev/uses-rel-preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "ज़रूरी मूल से प्री-कनेक्ट करें"
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
+    "message": "पहले से कनेक्ट किए गए दो से ज़्यादा लिंक पाए गए. पहले से कनेक्ट किए गए लिंक का इस्तेमाल सिर्फ़ अहम कनेक्शन के लिए सावधानी के साथ किया जाना चाहिए."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "\"{preloadURL}\" के लिए पहले से लोड <link> मिला, लेकिन ब्राउज़र ने इस्तेमाल नहीं किया था. यह जाँचें कि आप `crossorigin` विशेषता का इस्तेमाल ठीक से कर रहे हैं."
+    "message": "\"{preloadURL}\" के लिए पहले से लोड किया गया <link> मिला, लेकिन ब्राउज़र ने इसका इस्तेमाल नहीं किया था. यह पक्का कर लें कि आप `crossorigin` विशेषता का इस्तेमाल ठीक से कर रहे हैं."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
-    "message": "ऐसे संसाधन फ़ेच करने को प्राथमिकता देने के लिए <link rel=preload> का इस्तेमाल करने पर विचार करें जिनका फ़िलहाल पेज लोड में बाद में अनुरोध किया गया है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/preload)."
+    "message": "`<link rel=preload>` का इस्तेमाल करके उन संसाधनों को पाने को प्राथमिकता दें जिन्हें फ़िलहाल पेज लोड में 'बाद में चाहिए होंगे' का दर्जा दिया गया है. [ज़्यादा जानें](https://web.dev/uses-rel-preload)."
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "प्रमुख अनुरोधों को पहले से लोड करें"
+  },
+  "lighthouse-core/audits/viewport.js | description": {
+    "message": "अपने ऐप्लिकेशन को किसी भी मोबाइल स्क्रीन पर ऑप्टिमाइज़ करने के लिए `<meta name=\"viewport\">` टैग जोड़ें. [ज़्यादा जानें](https://web.dev/viewport)."
+  },
+  "lighthouse-core/audits/viewport.js | explanationNoTag": {
+    "message": "कोई `<meta name=\"viewport\">` टैग नहीं मिला"
+  },
+  "lighthouse-core/audits/viewport.js | failureTitle": {
+    "message": "वेब पेज पर कोई `width` या `initial-scale` वाला `<meta name=\"viewport\">` टैग नहीं है"
+  },
+  "lighthouse-core/audits/viewport.js | title": {
+    "message": "वेब पेज पर `width` या `initial-scale` वाला `<meta name=\"viewport\">` टैग है"
+  },
+  "lighthouse-core/audits/without-javascript.js | description": {
+    "message": "JavaScript बंद होने पर भी आपके ऐप्लिकेशन की कुछ सामग्री दिखाई देनी चाहिए. भले ही वह उपयोगकर्ता को दी जाने वाली एक चेतावनी हो कि ऐप्लिकेशन को इस्तेमाल करने के लिए JavaScript ज़रूरी है. [ज़्यादा जानें](https://web.dev/without-javascript)."
+  },
+  "lighthouse-core/audits/without-javascript.js | explanation": {
+    "message": "अगर इसकी स्क्रिप्ट उपलब्ध नहीं हैं, तो पेज के मुख्य हिस्से को कुछ सामग्री रेंडर करनी चाहिए या उसकी इमेज बनानी चाहिए."
+  },
+  "lighthouse-core/audits/without-javascript.js | failureTitle": {
+    "message": "यह वेब पेज, JavaScript उपलब्ध न होने पर फ़ॉलबैक सामग्री मुहैया नहीं कराता है"
+  },
+  "lighthouse-core/audits/without-javascript.js | title": {
+    "message": "यह वेब पेज, JavaScript उपलब्ध नहीं होने पर कुछ सामग्री दिखाता है"
+  },
+  "lighthouse-core/audits/works-offline.js | description": {
+    "message": "अगर आप एक प्रगतिशील वेब ऐप्लिकेशन बना रहे हैं, तो सर्विस वर्कर का इस्तेमाल करें, ताकि आपका ऐप्लिकेशन ऑफ़लाइन भी काम कर सके. [ज़्यादा जानें](https://web.dev/works-offline)."
+  },
+  "lighthouse-core/audits/works-offline.js | failureTitle": {
+    "message": "ऑफ़लाइन होने पर, मौजूदा पेज \"200\" कोड का जवाब नहीं देता है"
+  },
+  "lighthouse-core/audits/works-offline.js | title": {
+    "message": "ऑफ़लाइन होने पर, मौजूदा पेज \"200\" कोड का जवाब देता है"
+  },
+  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
+    "message": "ऐसा हो सकता है कि ऑफ़लाइन होने पर पेज इसलिए लोड नहीं हो रहा है, क्योंकि आपका टेस्ट यूआरएल ({requested}) को \"{final}\" की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए सीधे दूसरा यूआरएल आज़माएं."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "ये आपके ऐप्लिकेशन में ARIA के इस्तेमाल को बेहतर बनाने के अवसर हैं, जिससे उपयोगकर्ताओं का स्क्रीन रीडर जैसी सहायक तकनीक का अनुभव बेहतर हो सकता है."
@@ -789,10 +1266,10 @@
     "message": "सबसे अच्छे तरीके"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
-    "message": "ये जाँच [आपके वेब ऐप्लिकेशन की सुलभता को बेहतर बनाने](https://developers.google.com/web/fundamentals/accessibility) के अवसर हाइलाइट करती हैं. सिर्फ़ कुछ चुनिंदा सुलभता समस्याओं का अपने आप पता लगाया जा सकता है, इसलिए आपको खुद ही टेस्ट करने का भी सुझाव दिया जाता है."
+    "message": "ये सभी जांच आपको [आपके वेब ऐप्लिकेशन की सुलभता बेहतर करने](https://developers.google.com/web/fundamentals/accessibility) के अवसर देती हैं. सुलभता गड़बड़ियों के सिर्फ़ एक उपसेट के बारे में अपने आप पता लगाया जा सकता है, इसलिए हम मैन्युअल टेस्टिंग का सुझाव देते हैं."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
-    "message": "ये आइटम ऐसे मामलों में भी काम करते हैं जहां अपने आप काम करने वाला टेस्टिंग टूल नाकाम रहता है. हमारी मार्गदर्शिका में जाकर [सुलभता समीक्षा करने](https://developers.google.com/web/fundamentals/accessibility/how-to-review) के बारे में ज़्यादा जानें."
+    "message": "ये आइटम ऐसे मामलों में भी काम करते हैं जहां अपने आप काम करने वाला टेस्टिंग टूल नाकाम रहता है. हमारी गाइड में जाकर [सुलभता समीक्षा करने](https://developers.google.com/web/fundamentals/accessibility/how-to-review) के बारे में ज़्यादा जानें."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "सुलभता"
@@ -827,8 +1304,17 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "टेबल और सूचियां"
   },
+  "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
+    "message": "सबसे अच्छे तरीके"
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
+    "message": "परफ़ॉर्मेंस बजट बनाकर आप अपनी साइट की परफ़ॉर्मेंस के मानक तय करते हैं."
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupTitle": {
+    "message": "बजट"
+  },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "आपके ऐप्लिकेशन के परफ़ॉर्मेंस के बारे में ज़्यादा जानकारी."
+    "message": "आपके ऐप्लिकेशन के परफ़ॉर्मेंस के बारे में ज़्यादा जानकारी. इन आंकड़ों का परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) नहीं पड़ता."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "निदान"
@@ -840,7 +1326,7 @@
     "message": "पहले पेंट के सुधार"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "इन ऑप्टिमाइज़ेशन से आपका पेज लोड होने की गति बढ़ सकती है."
+    "message": "इन सुझावों से आप अपने पेज को तेज़ी से लोड करा सकते हैं. इनसे आपके परफ़ॉर्मेंस स्कोर पर [सीधा असर](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) नहीं होगा."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "अवसर"
@@ -857,6 +1343,15 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "परफ़ॉर्मेंस"
   },
+  "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
+    "message": "ये जांच प्रगतिशील वेब ऐप्लिकेशन के पहलुओं की पुष्टि करती हैं. [ज़्यादा जानें](https://developers.google.com/web/progressive-web-apps/checklist)."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
+    "message": "इस तरह की जांच, बेसलाइन [PWA चेकलिस्ट](https://developers.google.com/web/progressive-web-apps/checklist) के लिए ज़रूरी हैं, लेकिन Lighthouse इनकी जांच अपने आप नहीं करता है. वे आपके स्कोर पर असर नहीं डालते हैं, लेकिन इनकी मैन्युअल तरीके से पुष्टि करना ज़रूरी है."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
+    "message": "प्रगतिशील वेब ऐप्लिकेशन"
+  },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "तेज़ और भरोसेमंद"
   },
@@ -867,7 +1362,7 @@
     "message": "PWA ऑप्टिमाइज़ किया गया"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "ये जाँच पक्का करती हैं कि आपका पेज सर्च इंजन के नतीजे रैंक करने के लिए ऑप्टिमाइज़ किया हुआ है. दूसरी वजहों से Lighthouse जाँच नहीं करता है. इसका असर आपकी खोज की रैंकिंग पर पड़ सकता है. [ज़्यादा जानें](https://support.google.com/webmasters/answer/35769)."
+    "message": "ये जांच पक्का करती हैं कि आपका पेज, सर्च इंजन के नतीजे रैंक करने के लिए ऑप्टिमाइज़ किया हुआ है. दूसरी वजहों से Lighthouse जांच नहीं करता है. इसका असर आपकी खोज की रैंकिंग पर हो सकता है. [ज़्यादा जानें](https://support.google.com/webmasters/answer/35769)."
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "SEO के दूसरे सबसे अच्छे तरीके देखने के लिए अपनी साइट पर पुष्टि करने वाले ये और भी टूल चलाएं."
@@ -882,61 +1377,154 @@
     "message": "सामग्री से जुड़े सबसे अच्छे तरीके"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "खोज नतीजों में दिखाई देने के लिए, क्रॉलर को आपके ऐप्लिकेशन का एक्सेस चाहिए."
+    "message": "खोज नतीजों में दिखाई देने के लिए, क्रॉलर को आपके ऐप्लिकेशन का ऐक्सेस चाहिए."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
     "message": "क्रॉल करना और इंडेक्स करना"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "यह पक्का करें कि आपके पेज मोबाइल फ़्रेंडली हों. इससे सामग्री वाले पेज पढ़ने के लिए उपयोगकर्ताओं को पिंच या ज़ूम नहीं करना पड़ेगा. [ज़्यादा जानें](https://developers.google.com/search/mobile-sites/)."
+    "message": "यह पक्का करें कि आपके पेज मोबाइल फ़्रेंडली हों. इससे सामग्री वाले पेज पढ़ने के लिए उपयोगकर्ताओं को पिंच या ज़ूम नहीं करना पड़ेगा. [ज़्यादा जानें](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "मोबाइल फ़्रेंडली"
   },
+  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+    "message": "शायद पेज उम्मीद के मुताबिक लोड नहीं हो रहा है, क्योंकि आपके टेस्ट यूआरएल ({requested}) को {final} की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए दूसरा यूआरएल आज़माएं."
+  },
+  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+    "message": "धीरे लोड होने की वजह से, पेज तय समयसीमा में पूरी तरह लोड नहीं हो पाया. नतीजे अधूरे हो सकते हैं."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "कैश TTL"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
+    "message": "जगह की जानकारी"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnName": {
+    "message": "नाम"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "बजट से ज़्यादा"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
+    "message": "अनुरोध"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": {
+    "message": "संसाधन का साइज़"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "संसाधन का प्रकार"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "आकार (केबी)"
+    "message": "आकार"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnSource": {
+    "message": "स्रोत"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "बिताया गया समय"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "ट्रांसफ़र आकार"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "यूआरएल"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "हो सकने वाली बचत (केबी)"
+    "message": "संभावित बचत"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "हो सकने वाली बचत (‍मिली सेकंड)"
+    "message": "संभावित बचत"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": {
+    "message": "कॉम्युलेटिव लेआउट शिफ़्ट"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
-    "message": "{wastedBytes, number, bytes} केबी की हो सकने वाली बचत"
+    "message": "{wastedBytes, number, bytes} केबी की संभावित बचत"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
-    "message": "{wastedMs, number, milliseconds} मिलीसेकंड की हो सकने वाली बचत"
+    "message": "{wastedMs, number, milliseconds} मि. से. की संभावित बचत"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "दस्तावेज़"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "अनुमानित इनपुट प्रतीक्षा समय"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "पहला सीपीयू (CPU) इस्तेमाल में नहीं"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "उपयोगी सामग्री वाला पहला पेंट"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "पहला सार्थक पेंट"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "फ़ॉन्ट"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "इमेज"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "इंटरएक्टिव में लगने वाला समय"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
+    "message": "सबसे बड़ी सामग्री को पेंट करने का आंकड़ा"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "सबसे ज़्यादा संभावित फ़र्स्ट इनपुट डिले"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "मीडिया"
   },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
-    "message": "{timeInMs, number, milliseconds} मिलीसेकंड"
+    "message": "{timeInMs, number, milliseconds} मि.से."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "कोई दूसरा विकल्प"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "स्क्रिप्ट"
   },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
-    "message": "{timeInMs, number, seconds} सेकंड"
+    "message": "{timeInMs, number, seconds} से."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "गति इंडेक्स"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "स्टाइलशीट"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "तीसरा पक्ष"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "ब्लॉक होने का कुल समय"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "कुल"
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
-    "message": "आपके पेज लोड में ट्रेस की रिकॉर्डिंग करते समय कुछ गलत हुआ. कृपया Lighthouse को फिर से चलाएं. ({errorCode})"
+    "message": "आपके पेज लोड में ट्रेस की रिकॉर्डिंग करते समय कोई गड़बड़ी हुई. कृपया Lighthouse को फिर से चलाएं. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | criTimeout": {
     "message": "शुरुआती डीबगर प्रोटोकॉल कनेक्शन का इंतज़ार करते हुए समय खत्म हो गया."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
-    "message": "Chrome पेज लोड के दौरान कोई भी स्क्रीन शॉट इकट्ठा नहीं करता है. कृपया पक्का करें कि पेज पर सामग्री दिखाई दे रही है और तब Lighthouse को फिर से चलाकर देखें. ({errorCode})"
+    "message": "Chrome ने पेज लोड के दौरान कोई भी स्क्रीन शॉट इकट्ठा नहीं किया. कृपया पक्का करें कि पेज पर सामग्री दिखाई दे रही है. इसके बाद, Lighthouse को फिर से चलाकर देखें. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "DNS सर्वर दिए गए डोमेन को हल नहीं कर सका."
   },
+  "lighthouse-core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "ज़रूरी {artifactName} इकट्ठा करने वाला संसाधन चलाने में गड़बड़ी हुई: {errorMessage}"
+  },
   "lighthouse-core/lib/lh-error.js | internalChromeError": {
     "message": "एक अंदरूनी Chrome गड़बड़ी हुई. कृपया Chrome को रीस्टार्ट करें और Lighthouse को फिर से चलाकर देखें."
+  },
+  "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "ज़रूरी {artifactName} इकट्ठा करने वाला संसाधन नहीं चलाया जा सका."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse आपका अनुरोध किया गया पेज ठीक से लोड नहीं कर सका. पक्का करें कि आप सही यूआरएल को टेस्ट कर रहे हैं और सर्वर सभी अनुरोधों के लिए ठीक से काम कर रहा है."
@@ -945,7 +1533,10 @@
     "message": "Lighthouse उस यूआरएल को भरोसेमंद रूप से लोड नहीं कर सका जिसका आपने अनुरोध किया था क्योंकि पेज ने काम करना बंद कर दिया था."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "आपके दिए गए यूआरएल के लिए सही सुरक्षा क्रेडेंशियल नहीं हैं. {securityMessages}"
+    "message": "आपके दिए यूआरएल में सही सुरक्षा सर्टिफ़िकेट नहीं है. {securityMessages}"
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome ने वे पेज लोड नहीं किए जिन पर अचानक दिखने वाले विज्ञापन होते हैं. पक्का करें कि आप सही यूआरएल को टेस्ट कर रहे हैं और सर्वर सभी अनुरोधों के लिए ठीक से काम कर रहा है."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse आपका अनुरोध किया गया पेज ठीक से लोड नहीं कर सका. पक्का करें कि आप सही यूआरएल को टेस्ट कर रहे हैं और सर्वर सभी अनुरोधों के लिए ठीक से काम कर रहा है. (जानकारी: {errorDetails})"
@@ -954,10 +1545,10 @@
     "message": "Lighthouse आपका अनुरोध किया गया पेज ठीक से लोड नहीं कर सका. पक्का करें कि आप सही यूआरएल को टेस्ट कर रहे हैं और सर्वर सभी अनुरोधों के लिए ठीक से काम कर रहा है. (स्थिति कोड: {statusCode})"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadTookTooLong": {
-    "message": "आपके पेज को लोड होने में बहुत ज़्यादा समय लगा. अपने पेज के लोड होने का समय कम करने के लिए, कृपया रिपोर्ट में दिए गए अवसरों का फ़ायदा उठाएं. इसके बाद, Lighthouse को फिर से चलाकर देखें. ({errorCode})"
+    "message": "आपके पेज को लोड होने में बहुत ज़्यादा समय लगा. अपने पेज के लोड होने का समय कम करने के लिए, कृपया रिपोर्ट में दिए गए अवसरों का फ़ायदा लें. इसके बाद, Lighthouse को फिर से चलाकर देखें. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | protocolTimeout": {
-    "message": "DevTools प्रोटोकॉल जवाब के लिए इंतज़ार का समय, तय समय से ज़्यादा हो गया है. (तरीका: {protocolMethod})"
+    "message": "DevTools प्रोटोकॉल जवाब के लिए इंतज़ार का समय, तय समय से ज़्यादा हो गया है. (तरीका:{protocolMethod})"
   },
   "lighthouse-core/lib/lh-error.js | requestContentTimeout": {
     "message": "संसाधन की सामग्री लाने में दिए गए समय से ज़्यादा समय लगा"
@@ -974,17 +1565,44 @@
   "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
     "message": "पाथ का ज़्यादा से ज़्यादा अहम प्रतीक्षा समय:"
   },
+  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
+    "message": "JSON कॉपी करें"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
+    "message": "गहरे रंग वाली थीम को टॉगल करें"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
+    "message": "प्रिंट को बड़ा किया गया"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
+    "message": "प्रिंट के बारे में खास जानकारी"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
+    "message": "Gist के रूप में सेव करें"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
+    "message": "एचटीएमएल के रूप में सेव करें"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
+    "message": "JSON के रूप में सेव करें"
+  },
+  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
+    "message": "व्यूअर में खोलें"
+  },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "गड़बड़ी!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "गड़बड़ी की रिपोर्ट करें: कोई ऑडिट जानकारी नहीं"
   },
+  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
+    "message": "समस्या की रिपोर्ट करें"
+  },
   "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
     "message": "किसी नई या दुबारा जाँची जाने वाली ऐप्लिकेशन के लिए तैयार किया गया डेटा"
   },
   "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) प्रतियोगी मोबाइल नेटवर्क पर मौजूदा पेज के आंकड़े. मान अनुमानित हैं और इनमें अंतर हो सकता है."
+    "message": "एम्युलेट किए गए मोबाइल नेटवर्क पर मौजूद पेज का [Lighthouse](https://developers.google.com/web/tools/lighthouse/) विश्लेषण. मान अनुमान के हिसाब से लिखे गए हैं और इनमें अंतर हो सकता है."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "मैन्युअल रूप से देखे जाने वाले और ज़्यादा आइटम"
@@ -1001,17 +1619,65 @@
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "पास हुए ऑडिट"
   },
+  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "एम्युलेट किया गया डेस्कटॉप"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
+    "message": "एम्युलेट किया गया Moto G4"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
+    "message": "कोई भी एम्युलेशन नहीं"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "सीपीयू/मेमोरी पावर"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "सीपीयू थ्रॉटलिंग"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
+    "message": "चैनल"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
+    "message": "डिवाइस"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Lighthouse के चलाए जाने का समय"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "नेटवर्क थ्रॉटलिंग"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
+    "message": "रनटाइम सेटिंग"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
+    "message": "उपयोगकर्ता एजेंट (होस्ट)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "उपयोगकर्ता एजेंट (नेटवर्क)"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
+    "message": "यूआरएल"
+  },
+  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
+    "message": "अज्ञात"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "स्निपेट को छोटा करें"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "स्निपेट को बड़ा करें"
   },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "तीसरे पक्ष के संसाधन दिखाएं"
+  },
+  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
+    "message": "रनटाइम एनवायरमेंट से मिला"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "कुछ समस्याएं आने के कारण Lighthouse के इस रन पर असर पड़ा है:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "मान अनुमानित हैं और इनमें अंतर हो सकता है."
+    "message": "मान अनुमान के हिसाब से लिखे गए हैं और इनमें अंतर हो सकता है. परफ़ॉर्मेंस स्कोर सिर्फ़ [इन मेट्रिक पर आधारित ](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) होता है."
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "चेतावनियों के साथ पास हुए ऑडिट"
@@ -1019,46 +1685,130 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "चेतावनियां: "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "ऐनिमेशन वाली सामग्री के लिए, [amp-anim](https://amp.dev/documentation/components/amp-anim/) का इस्तेमाल करें. इससे सामग्री के ऑफ़स्क्रीन होने पर सीपीयू का इस्तेमाल कम होगा."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "पक्का करें कि आप अपनी उन इमेज के लिए सही `amp-img` टैग इस्तेमाल कर रहे हैं, जो पहले व्यूपोर्ट के बाहर अपने-आप धीमी रफ़्तार से लोड होते हैं. [ज़्यादा जानें](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "[एएमपी लेआउट को सर्वर-साइड पर रेंडर करने](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) के लिए, [एएमपी ऑप्टिमाइज़र](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) जैसे टूल इस्तेमाल करें."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "[एएमपी दस्तावेज़](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) देखें और पक्का करें कि आपके सभी स्टाइल इसके साथ काम करते हैं."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "`amp-img` एलिमेंट, `srcset` एट्रिब्यूट के साथ काम करता है और यह बताता है कि अलग-अलग साइज़ की स्क्रीन के हिसाब से किन इमेज एसेट का इस्तेमाल किया जाए.  [ज़्यादा जानें](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "अपने सभी `amp-img` कॉम्पोनेंट को WebP फ़ॉर्मैट में दिखाएं. साथ ही, दूसरे ब्राउज़र के लिए सही फ़ॉलबैक तय करें. [ज़्यादा जानें](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "अगर बहुत बड़ी सूचियां रेंडर की जा रही हैं, तो कॉम्पोनेंट डेवलपमेंट किट (सीडीके) के साथ इसे वर्चुअल तरीके से स्क्रोल करें. [ज़्यादा जानें](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "अपने JavaScript बंडलों को छोटा करने के लिए, [रूट-लेवल पर कोड को अलग-अलग करने की सुविधा](https://web.dev/route-level-code-splitting-in-angular/) लागू करें. साथ ही, [Angular सर्विस वर्कर](https://web.dev/precaching-with-the-angular-service-worker/) की मदद से एसेट को पहले से कैश मेमोरी में सेव करें."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "अगर आप Angular CLI का इस्तेमाल कर रहे हैं, तो पक्का करें कि बिल्ड, प्रोडक्शन मोड में जनरेट किए गए हैं. [ज़्यादा जानें](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "अगर आप Angular CLI इस्तेमाल कर रहे हैं, तो अपने बंडलों की जांच करने के लिए प्रोडक्शन बिल्ड में स्रोत मैप जोड़ें. [ज़्यादा जानें](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "नेविगेशन की रफ़्तार बढ़ाने के लिए रूट समय से पहले लोड करें. [ज़्यादा जानें](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "इमेज ब्रेकपॉइंट प्रबंधित करने के लिए, कॉम्पोनेंट डेवलपमेंट किट (सीडीके) में `BreakpointObserver` सुविधा का इस्तेमाल करें. [ज़्यादा जानें](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "अगर आप अपने JavaScript एसेट का बंडल नहीं बना रहे हैं, तो [baler](https://github.com/magento/baler) का इस्तेमाल करें."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Magento की डिफ़ॉल्ट [JavaScript बंडलिंग और छोटा करने की सुविधा](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) बंद करें. इसके बजाय, [baler](https://github.com/magento/baler/) का इस्तेमाल करें."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "[पसंद के मुताबिक फ़ॉन्ट बनाते समय](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), `@font-display` तय करें."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "वेब प्लैटफ़ॉर्म की [धीमे लोड होने](https://web.dev/native-lazy-loading) की सुविधा का इस्तेमाल करने के लिए, अपने उत्पाद और कैटलॉग टेम्प्लेट में बदलाव करें."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "अपने स्टोर की डेवलपर सेटिंग में, \"सीएसएस फ़ाइलें छोटी करें\" विकल्प चालू करें. [ज़्यादा जानें](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "स्टैटिक कॉन्टेंट डिप्लॉयमेंट से मिले सभी JavaScript एसेट को छोटा करने के लिए, [Terser](https://www.npmjs.com/package/terser) का इस्तेमाल करें. साथ ही, छोटा करने की डिफ़ॉल्ट सुविधा को बंद करें."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Magento की डिफ़ॉल्ट [JavaScript बंडलिंग](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) बंद करें."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "तीसरे पक्ष के कई तरह के एक्सटेंशन [Magento मार्केटप्लेस](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) में खोजें, ताकि आप इमेज ऑप्टिमाइज़ कर सकें."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "[किसी थीम के लेआउट में बदलाव करके](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) Preconnect या dns-prefetch संसाधन संकेत जोड़े जा सकते हैं."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "`<link rel=preload>` टैग, [किसी थीम के लेआउट में बदलाव करके](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) जोड़े जा सकते हैं."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "तीसरे पक्ष के कई तरह के एक्सटेंशन [Magento मार्केटप्लेस](https://marketplace.magento.com/catalogsearch/result/?q=webp) में खोजें, ताकि आप नए इमेज फ़ॉर्मैट का फ़ायदा पा सकें."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "अगर आप पेज पर कई एलिमेंट एक से ज़्यादा बार रेंडर कर रहे हैं, तो बनाए गए DOM नोड की संख्या कम करने के लिए `react-window` जैसी \"छोटी विंडो वाली\" लाइब्रेरी का इस्तेमाल करें. [ज़्यादा जानें](https://web.dev/virtualize-long-lists-react-window/). इसके अलावा, ज़रूरी न होने पर बार-बार रेंडर करने से बचने के लिए, [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) या [React.memo](https://reactjs.org/docs/react-api.html#reactmemo), और [इफ़ेक्ट छोड़ें](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) का इस्तेमाल करें. ऐसा तब तक करें, जब तक कुछ और करने की ज़रूरत न हो. साथ ही, जब आप रनटाइम परफ़ॉर्मेंस बेहतर करने के लिए इफ़ेक्ट हुक का इस्तेमाल कर रहे हों."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "अगर आप React Router इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "अगर आपका बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने-आप छोटा कर रहा है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "अगर आपका बिल्ड सिस्टम आपकी JS फ़ाइलों को अपने-आप छोटा करता है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "अगर आप सर्वर-साइड पर रेंडर नहीं कर रहे हैं, तो `React.lazy()` के साथ [अपने JavaScript बंडलों को अलग-अलग करें](https://web.dev/code-splitting-suspense/). इसके अलावा, आप तीसरे पक्ष की लाइब्रेरी का इस्तेमाल करके कोड को अलग-अलग कर सकते हैं, जैसे कि [वे कॉम्पोनेंट जो लोड हो सकते हैं](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "React DevTools प्रोफ़ाइलर इस्तेमाल करें. यह आपके कॉम्पोनेंट की रेंडरिंग परफ़ॉर्मेंस मापने के लिए प्रोफ़ाइलर एपीआई का इस्तेमाल करता है. [ज़्यादा जानें](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "किसी ऐसी सेवा में अपनी GIF अपलोड करने पर विचार करें जो उसे HTML5 वीडियो में एम्बेड करने के लिए उपलब्ध कराएगी."
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "ऐसा [धीमे लोड होने वाले WordPress प्लगइन](https://wordpress.org/plugins/search/lazy+load/) इंस्टॉल करें जिससे किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा हो. अगर नहीं, तो किसी ऐसी थीम पर जाएं जो यह फ़ंक्शन मुहैया कराती हो. साथ ही, [एएमपी प्लगइन](https://wordpress.org/plugins/amp/) का इस्तेमाल करने पर विचार करें."
+    "message": "ऐसा [धीमे लोड होने वाले WordPress प्लग इन](https://wordpress.org/plugins/search/lazy+load/) इंस्टॉल करें जिसमें किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा हो. अगर नहीं, तो किसी ऐसी थीम पर जाएं जो यह सुविधा मुहैया कराती हो. साथ ही, [एएमपी प्लग इन](https://wordpress.org/plugins/amp/) का इस्तेमाल करें."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
-    "message": "ऐसे कई WordPress प्लगइन हैं जो [इनलाइन क्रिटिकल एसेट](https://wordpress.org/plugins/search/critical+css/) या [defer less important resources](https://wordpress.org/plugins/search/defer+css+javascript/) में आपकी मदद कर सकते हैं. ध्यान रखें कि इन प्लगइन से मिलने वाला ऑप्टिमाइज़ेशन आपकी थीम या प्लगइन की सुविधाएं बिगाड़ सकता है, इसलिए आपको कोड में बदलाव करने पड़ सकते हैं."
-  },
-  "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "थीम, प्लगइन, और सर्वर की खास बातें सर्वर से जवाब मिलने के समय में योगदान करती हैं. ज़्यादा ऑप्टिमाइज़ की हुई थीम ढूंढने, एक ऑप्टिमाइज़ेशन प्लगइन को सावधानी से चुनने, और/या अपना सर्वर अपग्रेड करने पर विचार करें."
+    "message": "ऐसे कई WordPress प्लग इन हैं जो [क्रिटिकल एसेट इनलाइन करने ](https://wordpress.org/plugins/search/critical+css/) या [कम ज़रूरी संसाधनों को डेफ़र करने](https://wordpress.org/plugins/search/defer+css+javascript/) में आपकी मदद कर सकते हैं. ध्यान रखें कि ऐसी प्लग इन से मिलने वाले ऑप्टिमाइज़ेशन आपकी थीम या प्लग इन की सुविधाएं बिगाड़ सकते हैं. इसलिए, आपको कोड में बदलावों को करने की ज़रुरत हो सकती है."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "अपनी पोस्ट सूचियों में खास हिस्से दिखाने पर विचार करें (जैसे 'ज़्यादा' टैग से), किसी पेज पर दिखाई गई पोस्ट की संख्या घटाने, अपनी लंबी पोस्ट को कई पेज में बाँटने या फिर टिप्पणियों को धीरे-धीरे लोड करने वाले प्लगइन का इस्तेमाल करने पर विचार करें."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "कई [WordPress plugins](https://wordpress.org/plugins/search/minify+css/) आपकी शैलियों की शृंखला बनाकर, उनमें काट-छांट करके, और कंप्रेस करके आपकी साइट की गति बढ़ा सकते हैं. हो सकता है कि आप काट-छांट करने की इस प्रक्रिया के लिए एक बिल्ड प्रोसेस का इस्तेमाल भी करना चाहें, अगर ऐसा करना मुमकिन हो."
+    "message": "कई [WordPress प्लग इन](https://wordpress.org/plugins/search/minify+css/) आपकी साइट की गति को बढ़ा सकते हैं. ऐसा करने के लिए वे आपके स्टाइल को जोड़ते हैं, उन्हें छोटा करते हैं, और कंप्रेस करते हैं. ऐसा हो सकता है कि आप काट-छांट करने के लिए, एक बिल्ड प्रोसेस का इस्तेमाल भी करना चाहें, अगर ऐसा करना मुमकिन हो."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "कई [WordPress प्लगइन](https://wordpress.org/plugins/search/minify+javascript/) आपकी स्क्रिप्ट की शृंखला बनाकर, उनमें काट-छांट करके, और कंप्रेस करके आपकी साइट की गति बढ़ा सकते हैं. हो सकता है कि आप काट-छांट करने की इस प्रक्रिया के लिए एक बिल्ड प्रोसेस का इस्तेमाल भी करना चाहें, अगर ऐसा करना मुमकिन हो."
+    "message": "कई [WordPress प्लग इन](https://wordpress.org/plugins/search/minify+javascript/) आपकी साइट की गति को बढ़ा सकते हैं. ऐसा करने के लिए वह आपकी स्क्रिप्ट को जोड़ते हैं, उन्हें छोटा करते हैं, और कंप्रेस करते हैं. ऐसा हो सकता है कि आप काट-छांट करने की इस प्रक्रिया के लिए, एक बिल्ड प्रोसेस का इस्तेमाल भी करना चाहें, अगर ऐसा करना मुमकिन हो."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "अपने पेज में इस्तेमाल नहीं किए गए सीएसएस लोड करके [WordPress प्लगइन](https://wordpress.org/plugins/) की संख्या घटाने या बदलने पर विचार करें. ऐसे प्लगइन की पहचान करने के लिए जो असंगत सीएसएस जोड़ रहे हैं, Chrome DevTools में [कोड कवरेज](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर देखें. आप स्टाइल शीट के यूआरएल से थीम/प्लगइन की पहचान कर सकते हैं. ऐसे प्लगइन खोजें जिनके पास उस सूची की कई स्टाइल शीट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लगइन को स्टाइल शीट तभी एन्क्यू करनी चाहिए अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
+    "message": "उन [WordPress प्लग इन](https://wordpress.org/plugins/) की संख्या कम करके या स्विच करके देखें जो आपके पेज में ऐसी सीएसएस लोड कर रहे हैं जिसका कभी इस्तेमाल नहीं हुआ. Chrome DevTools में [कोड कवरेज](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर उन प्लग इन की पहचान करें जो आपके पेज में गैर-ज़रूरी सीएसएस जोड़ रहे हैं. आप स्क्रिप्ट के यूआरएल से पहचान सकते हैं कि ऐसा किस थीम/प्लग इन ने किया. ऐसे प्लग इन खोजें जिनके पास उस सूची की कई स्टाइल शीट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लग इन को स्क्रिप्ट तभी क्यू में लगानी चाहिए, अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "अपने पेज में इस्तेमाल नहीं किए गए JavaScript को लोड करने के लिए [WordPress प्लगइन] (https://wordpress.org/plugins/) की संख्या घटाने या बदलने पर विचार करें. ऐसे प्लगइन की पहचान करने के लिए, जो असंगत JS जोड़ रहे हैं, Chrome DevTools में [कोड कवरेज] (https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर देखें. आप स्क्रिप्ट के यूआरएल से ज़िम्मेदार थीम/प्लगइन की पहचान कर सकते हैं. ऐसे प्लगइन खोजें जिनके पास उस सूची में कई स्क्रिप्ट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लगइन को स्क्रिप्ट तभी एन्क्यू करना चाहिए अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
+    "message": "उन [WordPress प्लग इन](https://wordpress.org/plugins/) की संख्या कम करके या स्विच करके देखें जो आपके पेज में ऐसी JavaScript लोड कर रहे हैं जिसका कभी इस्तेमाल नहीं हुआ. Chrome DevTools में [कोड कवरेज](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर उन प्लग इन की पहचान करें जो आपके पेज में गैर-ज़रूरी JS जोड़ रहे हैं. आप स्क्रिप्ट के यूआरएल से पहचान सकते हैं कि ऐसा किस थीम/प्लग इन ने किया. ऐसे प्लग इन खोजें जिनके पास उस सूची में कई स्क्रिप्ट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लग इन को स्क्रिप्ट तभी क्यू में लगानी चाहिए, अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPress में ब्राउज़र कैशिंग](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching) के बारे में पढ़ें."
+    "message": "[WordPress में ब्राउज़र कैशिंग](https://wordpress.org/support/article/optimization/#browser-caching) के बारे में पढ़ें."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "ऐसे [इमेज ऑप्टिमाइज़ेशन WordPress प्लगइन](https://wordpress.org/plugins/search/optimize+images/) का इस्तेमाल करने पर विचार करें, जो आपकी क्वालिटी बरकरार रखते हुए आपकी इमेज कंप्रेस करता है."
+    "message": "ऐसे [इमेज ऑप्टिमाइज़ेशन WordPress प्लग इन](https://wordpress.org/plugins/search/optimize+images/) का इस्तेमाल करें जो आपकी क्वालिटी बरकरार रखते हुए आपकी इमेज कंप्रेस करता है."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "सीधे [मीडिया लाइब्रेरी](https://codex.wordpress.org/Media_Library_Screen) के ज़रिए इमेज अपलोड करें ताकि यह पक्का हो जाए कि ज़रूरी इमेज आकार उपलब्ध हैं. इसके बाद उन्हें मीडिया गैलरी से शामिल करें या इमेज विजेट का इस्तेमाल करके यह पक्का करें कि सबसे सही इमेज आकार का इस्तेमाल किया गया है (इनमें जवाबदेह ब्रेकपॉइंट के लिए इमेज आकार भी शामिल हैं). `पूरे आकार` वाली इमेज तब तक इस्तेमाल न करें जब तक कि उनके इस्तेमाल के लिए डाइमेंशन सही न हों. [ज़्यादा जानें](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "[मीडिया लाइब्रेरी](https://wordpress.org/support/article/media-library-screen/) की मदद से इमेज सीधे अपलोड करें, ताकि आप यह पक्का कर सकें कि आपके पास इमेज के वे आकार मौजूद हैं जिनकी आपको ज़रूरत पड़ेगी. इसके बाद, उन्हें डालने के लिए मीडिया लाइब्रेरी या इमेज विजेट का इस्तेमाल करें, ताकि आप यह पक्का कर सकें कि सबसे बेहतर इमेज आकारों का इस्तेमाल किया गया है (इसमें जवाब देने वाले ब्रेकपॉइंट की इमेज भी शामिल हैं). `Full Size` इमेज का इस्तेमाल तब तक न करें जब तक डाइमेंशन उनके इस्तेमाल के हिसाब से ठीक न हों. [ज़्यादा जानें](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "आप अपने वेब सर्वर कॉन्फ़िगरेशन में टेक्स्ट कंप्रेस करने की सुविधा चालू कर सकते हैं."
   },
   "stack-packs/packs/wordpress.js | uses_webp_images": {
-    "message": "ऐसे [प्लगइन](https://wordpress.org/plugins/search/convert+webp/) या सेवा का इस्तेमाल करने पर विचार करें जो आपकी अपलोड की गई इमेज को अपने आप ही सबसे सही फ़ॉर्मैट में बदल देगी."
+    "message": "ऐसे [प्लग इन](https://wordpress.org/plugins/search/convert+webp/) या सेवा का इस्तेमाल करें जो आपकी अपलोड की गई इमेज को अपने आप ही सबसे सही फ़ॉर्मैट में बदल देगी."
   }
 }

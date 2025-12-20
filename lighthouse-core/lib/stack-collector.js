@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -17,10 +17,11 @@ const fs = require('fs');
 const libDetectorSource = fs.readFileSync(
   require.resolve('js-library-detector/library/libraries.js'), 'utf8');
 
-/** @typedef {false | {version: string|null}} JSLibraryDetectorTestResult */
+/** @typedef {false | {version: string|number|null}} JSLibraryDetectorTestResult */
 /**
  * @typedef JSLibraryDetectorTest
- * @property {string} icon Essentially an id, useful if no npm name is detected.
+ * @property {string} id
+ * @property {string} icon
  * @property {string} url
  * @property {string|null} npm npm module name, if applicable to library.
  * @property {function(Window): JSLibraryDetectorTestResult | Promise<JSLibraryDetectorTestResult>} test Returns false if library is not present, otherwise returns an object that contains the library version (set to null if the version is not detected).
@@ -28,9 +29,9 @@ const libDetectorSource = fs.readFileSync(
 
 /**
  * @typedef JSLibrary
+ * @property {string} id
  * @property {string} name
- * @property {string} icon
- * @property {string|null} version
+ * @property {string|number|null} version
  * @property {string|null} npm
  */
 
@@ -46,15 +47,15 @@ async function detectLibraries() {
   // see https://github.com/HTTPArchive/httparchive/issues/77#issuecomment-291320900
   /** @type {Record<string, JSLibraryDetectorTest>} */
   // @ts-ignore - injected libDetectorSource var
-  const libraryDetectorTests = d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests; // eslint-disable-line 
+  const libraryDetectorTests = d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests; // eslint-disable-line
 
   for (const [name, lib] of Object.entries(libraryDetectorTests)) {
     try {
       const result = await lib.test(window);
       if (result) {
         libraries.push({
+          id: lib.id,
           name: name,
-          icon: lib.icon,
           version: result.version,
           npm: lib.npm,
         });
@@ -80,9 +81,9 @@ async function collectStacks(passContext) {
 
   return jsLibraries.map(lib => ({
     detector: /** @type {'js'} */ ('js'),
-    id: lib.npm || lib.icon,
+    id: lib.id,
     name: lib.name,
-    version: lib.version || undefined,
+    version: typeof lib.version === 'number' ? String(lib.version) : (lib.version || undefined),
     npm: lib.npm || undefined,
   }));
 }

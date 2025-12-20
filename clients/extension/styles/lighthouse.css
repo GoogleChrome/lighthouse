@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -19,8 +19,11 @@
 }
 
 :root {
-  --lh-blue-color: #304ffe;
-  --lh-bg-color: #f5f5f5;
+  --color-bg: white;
+  --color-blue: #0535C1;
+  --font-size: 14px;
+  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
 }
 
 * {
@@ -30,181 +33,152 @@
 html, body {
   padding: 0;
   margin: 0;
-  width: 390px;
-  height: 200px;
-  background-color: var(--lh-bg-color);
+  width: 270px;
+  background-color: var(--color-bg);
   color: #212121;
+  font-family: var(--report-font-family);
+  font-size: var(--font-size);
+  line-height: 18px;
+  user-select: none;
 }
 
-.header {
-  padding: 26px;
-  display: flex;
-  flex: 1;
+body {
+  padding: 16px;
+}
+
+.hidden {
+  display: none;
 }
 
 .header__icon {
-  margin-right: 16px;
+  margin: 2px auto 0;
 }
 
-.header-titles {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.errormsg {
+  color: var(--color-blue);
+  font-weight: 500;
+  text-align: center;
 }
-
-.header-titles__main {
-  margin: 0;
-  font-family: 'Roboto', Arial, sans-serif;
-  color: currentColor;
-  font-weight: 300;
-  margin-bottom: 4px;
-}
-
-.header-titles__url {
-  margin: 0;
-  font-size: 14px;
-  opacity: 0.74;
-  color: currentColor;
-  font-family: 'Roboto', Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.header-titles__throttling {
-  position: relative;
-  margin-top: 5px;
-  padding-left: 20px;
-}
-
-.header-titles__throttling input {
-  position: absolute;
-  left: 0;
-}
-
-.main {
-  height: 70px;
-  display: flex;
-  padding: 16px;
-  background-color: var(--lh-blue-color);
-  justify-content: space-around;
-  align-items: flex-end;
+.errormsg:empty {
+  display: none;
 }
 
 .button {
-  cursor: pointer;
-  font-family: 'Roboto', Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: var(--report-font-family);
   font-weight: 500;
-  font-size: 12px;
+  font-size: var(--font-size);
+  background-color: transparent;
   border: none;
-  color: #fff;
-  background-color: #2979ff;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-  border-radius: 2px;
-  padding: 7px 12px 5px 12px
+  cursor: pointer;
+}
+.button:focus {
+  outline: none;
 }
 
 .button--generate {
+  -webkit-font-smoothing: antialiased;
+  border: 1px solid transparent;
+  color: var(--color-bg);
+  margin: 8px auto;
+  padding: 6px 14px 6px 14px;
+  border-radius: 13px;
+  background-color: var(--color-blue);
+  transition: 0.1s all;
+}
+.button--generate:hover {
+  background-color: #042790;
+  border: 1px solid #0535C1;
+}
+.button--generate:disabled {
+  background-color: #cccccc;
+  border: none;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.section {
+  display: grid;
+  justify-content: center;
+}
+
+.section:first-child {
+  border-bottom: solid 1px lightgray;
+  padding-bottom: 10px;
+}
+
+.section-header {
+  font-size: var(--font-size);
   font-weight: 500;
-  font-size: 16px;
-  padding: 8px 16px 10px 16px;
-  align-self: stretched;
-  margin-left: auto;
+  margin-bottom: 5px;
+}
+
+.section--description {
+  font-size: 14px;
+  color: grey;
+}
+
+.devtools-shortcut {
+  font-family: var(--report-font-family-monospace);
 }
 
 .button--configure {
-  margin-right: auto;
-}
-
-.button--ok {
-  margin: 0 auto;
-}
-
-.button--report-error {
-  background-color: rgba(239, 83, 80, 0.81);
-  text-decoration: none;
-  padding: 3px 5px;
-  font-size: .8em;
-  text-align: center;
-  display: block;
-  margin-top: 5px;
-}
-
-.subpage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--lh-bg-color);
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  will-change: opacity;
-  transition: opacity 0.150s cubic-bezier(0,0,0.41,1);
-  text-align: center;
-  padding: 16px;
-}
-
-.subpage--visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.status {
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #fff;
-}
-
-.subpage--visible.status .lighthouse-effects__wrapper {
-  animation-play-state: running;
-}
-
-.status__msg {
-  font-size: 16px;
-  margin-top: 16px;
-}
-
-.status__logo img {
-  height: 200px;
-  width: auto;
-}
-
-.feedback {
-  background-color: var(--lh-blue-color);
   position: absolute;
-  color: #fff;
-  bottom: 10px;
-  left: 14px; /* 16px - 2px of shadow from the options button */
-  width: 180px;
-  line-height: 1.45;
+  top: 15px;
+  right: 10px;
+  color: rgb(71, 71, 71);
+}
+.main--options-visible .button--configure {
+  color: var(--color-blue);
+}
+.button--configure:disabled {
+  color: grey;
+  cursor: not-allowed;
 }
 
-.feedback-error {
-  font-size: .9em;
-  min-height: 38px;
+.psi-disclaimer {
+  font-size: 12px;
+  text-align: center;
+  color: grey;
 }
 
-/* 1. scrollbar when extension is too small */
-.options {
-  overflow: auto; /* [1] */
-  display: block;
-  text-align: left;
+.psi-disclaimer a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .options__title {
-  font-weight: 300;
+  font-size: var(--font-size);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.section--options label {
+  display: flex;
+  align-items: center;
+}
+
+.section--options input {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 8px;
 }
 
 .options__list {
   padding: 0;
+  margin: 0;
   list-style-type: none;
+}
+
+/* Visibility stuff */
+
+.section--options {
+  display: none;
+}
+
+.main--options-visible + .section--options {
+  display: block;
+}
+
+.main--options-visible .section--devtools-info {
+  display: none;
 }

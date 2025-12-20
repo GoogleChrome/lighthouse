@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,6 +9,7 @@ module.exports = {
   // start with google standard style
   //     https://github.com/google/eslint-config-google/blob/master/index.js
   extends: ['eslint:recommended', 'google'],
+  plugins: ['eslint-plugin-local-rules'], // include custom rules
   env: {
     node: true,
     es6: true,
@@ -49,7 +50,7 @@ module.exports = {
     'no-unused-vars': [2, {
       vars: 'all',
       args: 'after-used',
-      argsIgnorePattern: '(^reject$|^_$)',
+      argsIgnorePattern: '(^reject$|^_+$)',
       varsIgnorePattern: '(^_$)',
     }],
     'space-infix-ops': 2,
@@ -64,11 +65,22 @@ module.exports = {
       functions: 'never',
     }],
 
+    // Custom lighthouse rules
+    'local-rules/require-file-extension': 2,
+
     // Disabled rules
     'require-jsdoc': 0,
     'valid-jsdoc': 0,
     'arrow-parens': 0,
   },
+  overrides: [
+    {
+      files: ['lighthouse-cli/test/smokehouse/**/*expectations.js'],
+      rules: {
+        'max-len': 0,
+      },
+    },
+  ],
   parserOptions: {
     ecmaVersion: 2018,
     ecmaFeatures: {

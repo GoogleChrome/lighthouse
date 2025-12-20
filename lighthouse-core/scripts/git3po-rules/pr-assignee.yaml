@@ -1,0 +1,22 @@
+# Assign the first requested reviewer
+repo: GoogleChrome/lighthouse
+pullRequests: true
+filters:
+  - type: issue
+    criteria:
+      state: open
+      createdAt:
+        # we started the single-reviewer policy around 2/1/2020
+        $gt: '%%date(feb 1 2020)%%'
+      'assignees.length':
+        $eq: 0
+      'reviewers.length':
+        $eq: 1
+  - type: label
+    label: chillin ❄
+    negate: true
+actions:
+  - type: add_assignee
+    login: '%%reviewer%%'
+  - type: add_label
+    label: waiting4reviewer

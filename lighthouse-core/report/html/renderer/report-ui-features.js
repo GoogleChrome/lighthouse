@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@
 /* eslint-env browser */
 
 /**
- * @fileoverview Adds export button, print, and other dynamic functionality to
+ * @fileoverview Adds tools button, print, and other dynamic functionality to
  * the report.
  */
 
 /* globals getFilenamePrefix Util */
 
-/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./dom')} DOM */
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -46,10 +46,12 @@ class ReportUIFeatures {
     this._dom = dom;
     /** @type {Document} */
     this._document = this._dom.document();
+    /** @type {ParentNode} */
+    this._templateContext = this._dom.document();
+    /** @type {DropDown} */
+    this._dropDown = new DropDown(this._dom);
     /** @type {boolean} */
     this._copyAttempt = false;
-    /** @type {HTMLElement} */
-    this.exportButton; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.topbarEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
@@ -61,11 +63,8 @@ class ReportUIFeatures {
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
-    this.onExportButtonClick = this.onExportButtonClick.bind(this);
-    this.onExport = this.onExport.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onDropDownMenuClick = this.onDropDownMenuClick.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
-    this.onChevronClick = this.onChevronClick.bind(this);
     this.collapseAllDetails = this.collapseAllDetails.bind(this);
     this.expandAllDetails = this.expandAllDetails.bind(this);
     this._toggleDarkTheme = this._toggleDarkTheme.bind(this);
@@ -73,27 +72,117 @@ class ReportUIFeatures {
   }
 
   /**
-   * Adds export button, print, and other functionality to the report. The method
+   * Adds tools button, print, and other functionality to the report. The method
    * should be called whenever the report needs to be re-rendered.
    * @param {LH.Result} report
    */
   initFeatures(report) {
-    if (this._dom.isDevTools()) return;
-
     this.json = report;
+
     this._setupMediaQueryListeners();
-    this._setupSmoothScroll();
-    this._setupExportButton();
+    this._dropDown.setup(this.onDropDownMenuClick);
     this._setupThirdPartyFilter();
-    this._setupStickyHeaderElements();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
-    this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-    window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
-    topbarLogo.addEventListener('click', this._toggleDarkTheme);
+    topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
+
+    let turnOffTheLights = false;
+    // Do not query the system preferences for DevTools - DevTools should only apply dark theme
+    // if dark is selected in the settings panel.
+    if (!this._dom.isDevTools() && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      turnOffTheLights = true;
+    }
+
+    // Fireworks.
+    const scoresAll100 = Object.values(report.categories).every(cat => cat.score === 1);
+    const hasAllCoreCategories =
+      Object.keys(report.categories).filter(id => !Util.isPluginCategory(id)).length >= 5;
+    if (scoresAll100 && hasAllCoreCategories) {
+      turnOffTheLights = true;
+      this._enableFireworks();
+    }
+
+    if (turnOffTheLights) {
+      this._toggleDarkTheme(true);
+    }
+
+    // There is only a sticky header when at least 2 categories are present.
+    if (Object.keys(this.json.categories).length >= 2) {
+      this._setupStickyHeaderElements();
+      const containerEl = this._dom.find('.lh-container', this._document);
+      const elToAddScrollListener = this._getScrollParent(containerEl);
+      elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+
+      // Use ResizeObserver where available.
+      // TODO: there is an issue with incorrect position numbers and, as a result, performance
+      // issues due to layout thrashing.
+      // See https://github.com/GoogleChrome/lighthouse/pull/9023/files#r288822287 for details.
+      // For now, limit to DevTools.
+      if (this._dom.isDevTools()) {
+        const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
+        resizeObserver.observe(containerEl);
+      } else {
+        window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      }
+    }
+
+    // Show the metric descriptions by default when there is an error.
+    const hasMetricError = report.categories.performance && report.categories.performance.auditRefs
+      .some(audit => Boolean(audit.group === 'metrics' && report.audits[audit.id].errorMessage));
+    if (hasMetricError) {
+      const toggleInputEl = /** @type {HTMLInputElement} */ (
+        this._dom.find('.lh-metrics-toggle__input', this._document));
+      toggleInputEl.checked = true;
+    }
+
+    // Fill in all i18n data.
+    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
+      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
+      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
+      node.textContent = Util.i18n.strings[i18nAttr];
+    }
+  }
+
+  /**
+   * Define a custom element for <templates> to be extracted from. For example:
+   *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
+   * @param {ParentNode} context
+   */
+  setTemplateContext(context) {
+    this._templateContext = context;
+  }
+
+  /**
+   * Finds the first scrollable ancestor of `element`. Falls back to the document.
+   * @param {HTMLElement} element
+   * @return {Node}
+   */
+  _getScrollParent(element) {
+    const {overflowY} = window.getComputedStyle(element);
+    const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
+
+    if (isScrollable) {
+      return element;
+    }
+
+    if (element.parentElement) {
+      return this._getScrollParent(element.parentElement);
+    }
+
+    return document;
+  }
+
+  _enableFireworks() {
+    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    scoresContainer.classList.add('score100');
+    scoresContainer.addEventListener('click', _ => {
+      scoresContainer.classList.toggle('fireworks-paused');
+    });
   }
 
   /**
@@ -114,17 +203,6 @@ class ReportUIFeatures {
     this.onMediaQueryChange(mediaQuery);
   }
 
-  _setupSmoothScroll() {
-    for (const el of this._dom.findAll('a.lh-gauge__wrapper', this._document)) {
-      const anchorElement = /** @type {HTMLAnchorElement} */ (el);
-      anchorElement.addEventListener('click', e => {
-        e.preventDefault();
-        window.history.pushState({}, '', anchorElement.hash);
-        this._dom.find(anchorElement.hash, this._document).scrollIntoView({behavior: 'smooth'});
-      });
-    }
-  }
-
   /**
    * Handle media query change events.
    * @param {MediaQueryList|MediaQueryListEvent} mql
@@ -134,26 +212,24 @@ class ReportUIFeatures {
     root.classList.toggle('lh-narrow', mql.matches);
   }
 
-  _setupExportButton() {
-    this.exportButton = this._dom.find('.lh-export__button', this._document);
-    this.exportButton.addEventListener('click', this.onExportButtonClick);
-
-    const dropdown = this._dom.find('.lh-export__dropdown', this._document);
-    dropdown.addEventListener('click', this.onExport);
-  }
-
   _setupThirdPartyFilter() {
     // Some audits should not display the third party filter option.
     const thirdPartyFilterAuditExclusions = [
       // This audit deals explicitly with third party resources.
       'uses-rel-preconnect',
     ];
+    // Some audits should hide third party by default.
+    const thirdPartyFilterAuditHideByDefault = [
+      // Only first party resources are actionable.
+      'legacy-javascript',
+    ];
 
     // Get all tables with a text url column.
     /** @type {Array<HTMLTableElement>} */
     const tables = Array.from(this._document.querySelectorAll('.lh-table'));
     const tablesWithUrls = tables
-      .filter(el => el.querySelector('td.lh-table-column--url'))
+      .filter(el =>
+        el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))
       .filter(el => {
         const containingAudit = el.closest('.lh-audit');
         if (!containingAudit) throw new Error('.lh-table not within audit');
@@ -161,18 +237,18 @@ class ReportUIFeatures {
       });
 
     tablesWithUrls.forEach((tableEl, index) => {
-      const thirdPartyRows = this._getThirdPartyRows(tableEl, this.json.finalUrl);
-      // No 3rd parties, no checkbox!
-      if (!thirdPartyRows.size) return;
+      const rowEls = getTableRows(tableEl);
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
 
       // create input box
-      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._document);
-      const filterInput = this._dom.find('input', filterTemplate);
+      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
+      const filterInput =
+        /** @type {HTMLInputElement} */ (this._dom.find('input', filterTemplate));
       const id = `lh-3p-filter-label--${index}`;
 
       filterInput.id = id;
       filterInput.addEventListener('change', e => {
-        // Remove rows from the dom and keep track of them to readd on uncheck.
+        // Remove rows from the dom and keep track of them to re-add on uncheck.
         // Why removing instead of hiding? To keep nth-child(even) background-colors working.
         if (e.target instanceof HTMLInputElement && !e.target.checked) {
           for (const row of thirdPartyRows.values()) {
@@ -191,48 +267,74 @@ class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.UIStrings.thirdPartyResourcesLabel;
+          Util.i18n.strings.thirdPartyResourcesLabel;
 
-      // Finally, add checkbox to the DOM.
+      const allThirdParty = thirdPartyRows.size === rowEls.length;
+      const allFirstParty = !thirdPartyRows.size;
+
+      // If all or none of the rows are 3rd party, disable the checkbox.
+      if (allThirdParty || allFirstParty) {
+        filterInput.disabled = true;
+        filterInput.checked = allThirdParty;
+      }
+
+      // Add checkbox to the DOM.
       if (!tableEl.parentNode) return; // Keep tsc happy.
       tableEl.parentNode.insertBefore(filterTemplate, tableEl);
+
+      // Hide third-party rows for some audits by default.
+      const containingAudit = tableEl.closest('.lh-audit');
+      if (!containingAudit) throw new Error('.lh-table not within audit');
+      if (thirdPartyFilterAuditHideByDefault.includes(containingAudit.id) && !allThirdParty) {
+        filterInput.click();
+      }
     });
   }
 
   /**
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns a Map of those rows, mapping from row index to row Element.
-   * @param {HTMLTableElement} el
+   * @param {HTMLElement[]} rowEls
    * @param {string} finalUrl
-   * @return {Map<number, HTMLTableRowElement>}
+   * @return {Map<number, HTMLElement>}
    */
-  _getThirdPartyRows(el, finalUrl) {
-    const urlItems = this._dom.findAll('.lh-text__url', el);
+  _getThirdPartyRows(rowEls, finalUrl) {
+    /** @type {Map<number, HTMLElement>} */
+    const thirdPartyRows = new Map();
     const finalUrlRootDomain = Util.getRootDomain(finalUrl);
 
-    /** @type {Map<number, HTMLTableRowElement>} */
-    const thirdPartyRows = new Map();
-    for (const urlItem of urlItems) {
-      const datasetUrl = urlItem.dataset.url;
-      if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
-      if (!isThirdParty) continue;
+    rowEls.forEach((rowEl, rowPosition) => {
+      /** @type {HTMLElement|null} */
+      const urlItem = rowEl.querySelector('.lh-text__url');
+      if (!urlItem) return;
 
-      const urlRowEl = urlItem.closest('tr');
-      if (urlRowEl) {
-        const rowPosition = getTableRows(el).indexOf(urlRowEl);
-        thirdPartyRows.set(rowPosition, urlRowEl);
-      }
-    }
+      const datasetUrl = urlItem.dataset.url;
+      if (!datasetUrl) return;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      if (!isThirdParty) return;
+
+      thirdPartyRows.set(Number(rowPosition), rowEl);
+    });
 
     return thirdPartyRows;
+  }
+
+  /**
+   * From a table, finds and returns URL items.
+   * @param {HTMLTableElement} tableEl
+   * @return {Array<HTMLElement>}
+   */
+  _getUrlItems(tableEl) {
+    return this._dom.findAll('.lh-text__url', tableEl);
   }
 
   _setupStickyHeaderElements() {
     this.topbarEl = this._dom.find('.lh-topbar', this._document);
     this.scoreScaleEl = this._dom.find('.lh-scorescale', this._document);
     this.stickyHeaderEl = this._dom.find('.lh-sticky-header', this._document);
-    this.highlightEl = this._dom.find('.lh-highlighter', this._document);
+
+    // Highlighter will be absolutely positioned at first gauge, then transformed on scroll.
+    this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
   }
 
   /**
@@ -241,7 +343,7 @@ class ReportUIFeatures {
    */
   onCopy(e) {
     // Only handle copy button presses (e.g. ignore the user copying page text).
-    if (this._copyAttempt) {
+    if (this._copyAttempt && e.clipboardData) {
       // We want to write our own data to the clipboard, not the user's text selection.
       e.preventDefault();
       e.clipboardData.setData('text/plain', JSON.stringify(this.json, null, 2));
@@ -283,46 +385,21 @@ class ReportUIFeatures {
     }
   }
 
-  onChevronClick() {
-    const toggle = this._dom.find('.lh-config__settings-toggle', this._document);
-
-    if (toggle.hasAttribute('open')) {
-      toggle.removeAttribute('open');
-    } else {
-      toggle.setAttribute('open', 'true');
-    }
-  }
-
-  closeExportDropdown() {
-    this.exportButton.classList.remove('active');
-  }
-
-  /**
-   * Click handler for export button.
-   * @param {Event} e
-   */
-  onExportButtonClick(e) {
-    e.preventDefault();
-    const el = /** @type {Element} */ (e.target);
-    el.classList.toggle('active');
-    this._document.addEventListener('keydown', this.onKeyDown);
-  }
-
   /**
    * Resets the state of page before capturing the page for export.
    * When the user opens the exported HTML page, certain UI elements should
    * be in their closed state (not opened) and the templates should be unstamped.
    */
   _resetUIState() {
-    this.closeExportDropdown();
+    this._dropDown.close();
     this._dom.resetTemplates();
   }
 
   /**
-   * Handler for "export as" button.
+   * Handler for tool button.
    * @param {Event} e
    */
-  onExport(e) {
+  onDropDownMenuClick(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -337,13 +414,11 @@ class ReportUIFeatures {
         break;
       case 'print-summary':
         this.collapseAllDetails();
-        this.closeExportDropdown();
-        self.print();
+        this._print();
         break;
       case 'print-expanded':
         this.expandAllDetails();
-        this.closeExportDropdown();
-        self.print();
+        this._print();
         break;
       case 'save-json': {
         const jsonStr = JSON.stringify(this.json, null, 2);
@@ -370,20 +445,17 @@ class ReportUIFeatures {
         this.saveAsGist();
         break;
       }
+      case 'toggle-dark': {
+        this._toggleDarkTheme();
+        break;
+      }
     }
 
-    this.closeExportDropdown();
-    this._document.removeEventListener('keydown', this.onKeyDown);
+    this._dropDown.close();
   }
 
-  /**
-   * Keydown handler for the document.
-   * @param {KeyboardEvent} e
-   */
-  onKeyDown(e) {
-    if (e.keyCode === 27) { // ESC
-      this.closeExportDropdown();
-    }
+  _print() {
+    self.print();
   }
 
   /**
@@ -393,7 +465,7 @@ class ReportUIFeatures {
   onKeyUp(e) {
     // Ctrl+P - Expands audit details when user prints via keyboard shortcut.
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) {
-      this.closeExportDropdown();
+      this._dropDown.close();
     }
   }
 
@@ -517,9 +589,18 @@ class ReportUIFeatures {
 
   /**
    * @private
+   * @param {boolean} [force]
    */
-  _toggleDarkTheme() {
-    this._document.body.classList.toggle('dark');
+  _toggleDarkTheme(force) {
+    const el = this._dom.find('.lh-vars', this._document);
+    // This seems unnecessary, but in DevTools, passing "undefined" as the second
+    // parameter acts like passing "false".
+    // https://github.com/ChromeDevTools/devtools-frontend/blob/dd6a6d4153647c2a4203c327c595692c5e0a4256/front_end/dom_extension/DOMExtension.js#L809-L819
+    if (typeof force === 'undefined') {
+      el.classList.toggle('dark');
+    } else {
+      el.classList.toggle('dark', force);
+    }
   }
 
   _updateStickyHeaderOnScroll() {
@@ -539,11 +620,217 @@ class ReportUIFeatures {
     // Category order matches gauge order in sticky header.
     const gaugeWrapperEls = this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper');
     const gaugeToHighlight = gaugeWrapperEls[highlightIndex];
-    const offset = gaugeToHighlight.getBoundingClientRect().left + 'px';
+    const origin = gaugeWrapperEls[0].getBoundingClientRect().left;
+    const offset = gaugeToHighlight.getBoundingClientRect().left - origin;
 
     // Mutate at end to avoid layout thrashing.
+    this.highlightEl.style.transform = `translate(${offset}px)`;
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
-    this.highlightEl.style.left = offset;
+  }
+}
+
+class DropDown {
+  /**
+   * @param {DOM} dom
+   */
+  constructor(dom) {
+    /** @type {DOM} */
+    this._dom = dom;
+    /** @type {HTMLElement} */
+    this._toggleEl; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLElement} */
+    this._menuEl; // eslint-disable-line no-unused-expressions
+
+    this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
+    this.onToggleClick = this.onToggleClick.bind(this);
+    this.onToggleKeydown = this.onToggleKeydown.bind(this);
+    this.onMenuFocusOut = this.onMenuFocusOut.bind(this);
+    this.onMenuKeydown = this.onMenuKeydown.bind(this);
+
+    this._getNextMenuItem = this._getNextMenuItem.bind(this);
+    this._getNextSelectableNode = this._getNextSelectableNode.bind(this);
+    this._getPreviousMenuItem = this._getPreviousMenuItem.bind(this);
+  }
+
+  /**
+   * @param {function(MouseEvent): any} menuClickHandler
+   */
+  setup(menuClickHandler) {
+    this._toggleEl = this._dom.find('.lh-tools__button', this._dom.document());
+    this._toggleEl.addEventListener('click', this.onToggleClick);
+    this._toggleEl.addEventListener('keydown', this.onToggleKeydown);
+
+    this._menuEl = this._dom.find('.lh-tools__dropdown', this._dom.document());
+    this._menuEl.addEventListener('keydown', this.onMenuKeydown);
+    this._menuEl.addEventListener('click', menuClickHandler);
+  }
+
+  close() {
+    this._toggleEl.classList.remove('active');
+    this._toggleEl.setAttribute('aria-expanded', 'false');
+    if (this._menuEl.contains(this._dom.document().activeElement)) {
+      // Refocus on the tools button if the drop down last had focus
+      this._toggleEl.focus();
+    }
+    this._menuEl.removeEventListener('focusout', this.onMenuFocusOut);
+    this._dom.document().removeEventListener('keydown', this.onDocumentKeyDown);
+  }
+
+  /**
+   * @param {HTMLElement} firstFocusElement
+   */
+  open(firstFocusElement) {
+    if (this._toggleEl.classList.contains('active')) {
+      // If the drop down is already open focus on the element
+      firstFocusElement.focus();
+    } else {
+      // Wait for drop down transition to complete so options are focusable.
+      this._menuEl.addEventListener('transitionend', () => {
+        firstFocusElement.focus();
+      }, {once: true});
+    }
+
+    this._toggleEl.classList.add('active');
+    this._toggleEl.setAttribute('aria-expanded', 'true');
+    this._menuEl.addEventListener('focusout', this.onMenuFocusOut);
+    this._dom.document().addEventListener('keydown', this.onDocumentKeyDown);
+  }
+
+  /**
+   * Click handler for tools button.
+   * @param {Event} e
+   */
+  onToggleClick(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (this._toggleEl.classList.contains('active')) {
+      this.close();
+    } else {
+      this.open(this._getNextMenuItem());
+    }
+  }
+
+  /**
+   * Handler for tool button.
+   * @param {KeyboardEvent} e
+   */
+  onToggleKeydown(e) {
+    switch (e.code) {
+      case 'ArrowUp':
+        e.preventDefault();
+        this.open(this._getPreviousMenuItem());
+        break;
+      case 'ArrowDown':
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        this.open(this._getNextMenuItem());
+        break;
+      default:
+       // no op
+    }
+  }
+
+  /**
+   * Handler for tool DropDown.
+   * @param {KeyboardEvent} e
+   */
+  onMenuKeydown(e) {
+    const el = /** @type {?HTMLElement} */ (e.target);
+
+    switch (e.code) {
+      case 'ArrowUp':
+        e.preventDefault();
+        this._getPreviousMenuItem(el).focus();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        this._getNextMenuItem(el).focus();
+        break;
+      case 'Home':
+        e.preventDefault();
+        this._getNextMenuItem().focus();
+        break;
+      case 'End':
+        e.preventDefault();
+        this._getPreviousMenuItem().focus();
+        break;
+      default:
+       // no op
+    }
+  }
+
+  /**
+   * Keydown handler for the document.
+   * @param {KeyboardEvent} e
+   */
+  onDocumentKeyDown(e) {
+    if (e.keyCode === 27) { // ESC
+      this.close();
+    }
+  }
+
+  /**
+   * Focus out handler for the drop down menu.
+   * @param {FocusEvent} e
+   */
+  onMenuFocusOut(e) {
+    const focusedEl = /** @type {?HTMLElement} */ (e.relatedTarget);
+
+    if (!this._menuEl.contains(focusedEl)) {
+      this.close();
+    }
+  }
+
+  /**
+   * @param {Array<Node>} allNodes
+   * @param {?Node=} startNode
+   * @returns {Node}
+   */
+  _getNextSelectableNode(allNodes, startNode) {
+    const nodes = allNodes.filter((node) => {
+      if (!(node instanceof HTMLElement)) {
+        return false;
+      }
+
+      // 'Save as Gist' option may be disabled.
+      if (node.hasAttribute('disabled')) {
+        return false;
+      }
+
+      // 'Save as Gist' option may have display none.
+      if (window.getComputedStyle(node).display === 'none') {
+        return false;
+      }
+
+      return true;
+    });
+
+    let nextIndex = startNode ? (nodes.indexOf(startNode) + 1) : 0;
+    if (nextIndex >= nodes.length) {
+      nextIndex = 0;
+    }
+
+    return nodes[nextIndex];
+  }
+
+  /**
+   * @param {?Element=} startEl
+   * @returns {HTMLElement}
+   */
+  _getNextMenuItem(startEl) {
+    const nodes = Array.from(this._menuEl.childNodes);
+    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
+  }
+
+  /**
+   * @param {?Element=} startEl
+   * @returns {HTMLElement}
+   */
+  _getPreviousMenuItem(startEl) {
+    const nodes = Array.from(this._menuEl.childNodes).reverse();
+    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
   }
 }
 
