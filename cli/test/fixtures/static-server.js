@@ -225,7 +225,7 @@ class Server {
 
     function readFileCallback(err, file) {
       if (err) {
-        console.error(`Unable to read local file ${absoluteFilePath}:`, err);
+        console.error('Unable to read local file %s:', absoluteFilePath, err);
         return sendResponse(500, '500 - Internal Server Error');
       }
       sendResponse(200, file);
