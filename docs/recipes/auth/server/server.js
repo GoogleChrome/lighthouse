@@ -17,6 +17,7 @@ import createError from 'http-errors';
 import express from 'express';
 import morgan from 'morgan';
 import session from 'express-session';
+import csrf from 'csurf';
 
 const moduleDir = path.dirname(url.fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(moduleDir, 'public');
@@ -31,6 +32,18 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
 }));
+
+app.use(csrf());
+
+// Make CSRF token available to any downstream handlers if needed.
+app.use((req, res, next) => {
+  try {
+    res.locals.csrfToken = req.csrfToken();
+  } catch (e) {
+    // If csrfToken is not available for this request, proceed without setting it.
+  }
+  next();
+});
 
 app.get('/dashboard', (req, res) => {
   if (req.session.user) {

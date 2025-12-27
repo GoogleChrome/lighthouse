@@ -304,10 +304,10 @@ function aggregateResults(name) {
  * @param {Array<{key: string, name: string}>} results
  */
 function filter(results) {
-  const includeFilter = argv.filter ? new RegExp(argv.filter, 'i') : null;
+  const includeFilter = argv.filter ? String(argv.filter).toLowerCase() : null;
 
   return results.filter(result => {
-    if (includeFilter && !includeFilter.test(result.key)) {
+    if (includeFilter && !result.key.toLowerCase().includes(includeFilter)) {
       return false;
     }
 
