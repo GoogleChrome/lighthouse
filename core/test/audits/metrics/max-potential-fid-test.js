@@ -74,6 +74,7 @@ describe('Max Potential FID', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const context = {
       settings: {throttlingMethod: 'devtools'},
@@ -138,6 +139,7 @@ describe('Max Potential FID', () => {
       DevtoolsLog: devtoolsLog,
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
     const context = {
       settings: {throttlingMethod: 'devtools'},

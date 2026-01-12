@@ -54,8 +54,9 @@ class LCPBreakdown {
       };
     }
 
-    const {trace, settings, SourceMaps} = data;
-    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
+    const {trace, settings, SourceMaps, HostDPR} = data;
+    const navInsights =
+      await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
     const lcpBreakdown = navInsights.model.LCPBreakdown;
     if (lcpBreakdown instanceof Error) {
       throw new LighthouseError(LighthouseError.errors.NO_LCP, {}, {cause: lcpBreakdown});
@@ -80,7 +81,7 @@ class LCPBreakdown {
 
 const LCPBreakdownComputed = makeComputedArtifact(
   LCPBreakdown,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {LCPBreakdownComputed as LCPBreakdown};
 

@@ -35,6 +35,6 @@ class FirstContentfulPaint extends NavigationMetric {
 
 const FirstContentfulPaintComputed = makeComputedArtifact(
   FirstContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {FirstContentfulPaintComputed as FirstContentfulPaint};

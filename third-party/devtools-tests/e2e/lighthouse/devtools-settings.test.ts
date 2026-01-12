@@ -1,19 +1,19 @@
 // Copyright 2022 The Chromium Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 import {assert} from 'chai';
-import * as path from 'path';
+import * as path from 'node:path';
 
+import type * as SDK from '../../../front_end/core/sdk/sdk.js';
 import {expectError} from '../../conductor/events.js';
-import {openDeviceToolbar, selectDevice} from '../../e2e/helpers/emulation-helpers.js';
+import {openDeviceToolbar, selectDevice} from '../helpers/emulation-helpers.js';
 import {
   clickStartButton,
   getTargetViewport,
   navigateToLighthouseTab,
   selectCategories,
   waitForResult,
-} from '../../e2e/helpers/lighthouse-helpers.js';
+} from '../helpers/lighthouse-helpers.js';
 import type {DevToolsPage} from '../shared/frontend-helper.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
@@ -38,16 +38,20 @@ function expectErrors() {
   expectError(/Protocol Error: the message with wrong session id/);
   expectError(/Protocol Error: the message with wrong session id/);
 }
-// Start blocking *.css
-// Ideally this would be done with UI manipulation, but it'd be less reliable AND
-// the designated tests in network-request-blocking-panel_test.ts are skipped by default due to flakiness.
+/**
+ * Start blocking *.css
+ * Ideally this would be done with UI manipulation, but it'd be less reliable AND
+ * the designated tests in network-request-blocking-panel.test.ts are skipped by default due to flakiness.
+ **/
 async function blockCss(devToolsPage: DevToolsPage) {
-  await devToolsPage.evaluate(`(async () => {
-        const SDK = await import('./core/sdk/sdk.js');
-        const networkManager = SDK.NetworkManager.MultitargetNetworkManager.instance();
-        networkManager.setBlockingEnabled(true);
-        networkManager.setBlockedPatterns([{enabled: true, url: '*.css'}]);
-      })()`);
+  await devToolsPage.evaluate(async () => {
+    // @ts-expect-error executed from DevTools
+    const SDKModule: typeof SDK = await import('./core/sdk/sdk.js');
+    const networkManager = SDKModule.NetworkManager.MultitargetNetworkManager.instance();
+    networkManager.requestConditions.conditionsEnabled = true;
+    networkManager.requestConditions.add(
+        SDKModule.NetworkManager.RequestCondition.createFromSetting({enabled: true, url: '*.css'}));
+  });
 }
 
 describe('DevTools', function() {
@@ -55,7 +59,8 @@ describe('DevTools', function() {
   this.timeout(60_000);
 
   describe('request blocking', () => {
-    it('is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
+    // https://crbug.com/466057104 the feature roll has make this test fail
+    it.skip('[crbug.com/466057104] is respected during a lighthouse run', async ({devToolsPage, inspectedPage}) => {
       expectErrors();
       await blockCss(devToolsPage);
       await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);

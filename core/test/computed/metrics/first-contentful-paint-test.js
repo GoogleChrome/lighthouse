@@ -21,7 +21,8 @@ describe('Metrics: FCP', () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], simulator: null},
+      // eslint-disable-next-line max-len
+      {trace, devtoolsLog, gatherContext, settings, URL, SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     expect({
@@ -40,7 +41,7 @@ describe('Metrics: FCP', () => {
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
       // eslint-disable-next-line max-len
-      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
+      {trace, devtoolsLog, gatherContext, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     await expect(result).toMatchInlineSnapshot(`
@@ -56,7 +57,7 @@ Object {
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
       // eslint-disable-next-line max-len
-      {gatherContext, trace, devtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], simulator: null},
+      {gatherContext, trace, devtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLog), SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     await expect(result).toMatchInlineSnapshot(`

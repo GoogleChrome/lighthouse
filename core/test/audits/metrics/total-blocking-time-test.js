@@ -22,6 +22,7 @@ function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
     DevtoolsLog: devtoolsLog,
     URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     SourceMaps: [],
+    HostDPR: 1,
   };
 }
 

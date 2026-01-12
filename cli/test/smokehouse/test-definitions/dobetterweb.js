@@ -351,42 +351,42 @@ const expectations = {
         score: '<0.5',
         metricSavings: {LCP: '>2000'},
         details: {
-          debugData: {wastedBytes: '>1200000'},
+          debugData: {wastedBytes: '>1100000'},
           items: [
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-rotating.gif',
               totalBytes: 934285,
-              wastedBytes: 682028,
+              wastedBytes: '682028 +/- 10000',
               subItems: {items: [{reason: /Using video formats instead of GIFs/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar1', // filename is a lie...
               totalBytes: 112710,
-              wastedBytes: 112418,
+              wastedBytes: '111815 +/- 10000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr2',
               totalBytes: 112710,
-              wastedBytes: 111152,
+              wastedBytes: '107937 +/- 10000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?iar2',
               totalBytes: 112710,
-              wastedBytes: 111152,
+              wastedBytes: '107937 +/- 10000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg?isr3',
               totalBytes: 112710,
-              wastedBytes: 98684,
+              wastedBytes: '69754 +/- 30000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-1024x680.jpg',
               totalBytes: 112710,
-              wastedBytes: 98684,
+              wastedBytes: '69754 +/- 30000',
               subItems: {items: [{reason: /This image file is larger than it needs to be \(1024x678\) for its displayed dimensions/}]},
             },
           ],

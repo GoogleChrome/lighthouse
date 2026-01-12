@@ -24,6 +24,7 @@ describe('Performance: bootup-time audit', () => {
       URL: getURLArtifactFromDevtoolsLog(acceptableDevtoolsLogs),
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     });
     const settings = JSON.parse(JSON.stringify(defaultSettings));
     settings.throttlingMethod = 'devtools';

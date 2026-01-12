@@ -35,7 +35,7 @@ class ServerResponseTime extends Audit {
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       guidanceLevel: 1,
-      requiredArtifacts: ['Trace', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'SourceMaps', 'HostDPR'],
       scoreDisplayMode: Audit.SCORING_MODES.METRIC_SAVINGS,
     };
   }
@@ -48,8 +48,9 @@ class ServerResponseTime extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const trace = artifacts.Trace;
-    const SourceMaps = artifacts.SourceMaps;
-    const navInsights = await NavigationInsights.request({trace, settings, SourceMaps}, context);
+    const {SourceMaps, HostDPR} = artifacts;
+    const navInsights =
+      await NavigationInsights.request({trace, settings, SourceMaps, HostDPR}, context);
     const responseTime = navInsights.model.DocumentLatency.data?.serverResponseTime;
     const url = navInsights.model.DocumentLatency.data?.documentRequest?.args.data.url;
 

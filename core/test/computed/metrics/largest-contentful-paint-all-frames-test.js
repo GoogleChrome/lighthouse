@@ -24,7 +24,7 @@ describe('Metrics: LCP from all frames', () => {
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], simulator: null},
+      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     // TODO: Implement lantern solution for LCP all frames.
@@ -36,7 +36,7 @@ describe('Metrics: LCP from all frames', () => {
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], simulator: null},
+      {gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogAllFrames), SourceMaps: [], HostDPR: 1, simulator: null},
       context);
 
     assert.equal(Math.round(result.timing), 683);
@@ -48,7 +48,7 @@ describe('Metrics: LCP from all frames', () => {
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(invalidDevtoolsLog), SourceMaps: [], simulator: null},
+      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings, URL: getURLArtifactFromDevtoolsLog(invalidDevtoolsLog), SourceMaps: [], HostDPR: 1, simulator: null},
       context
     );
     await expect(resultPromise).rejects.toThrow('NO_LCP_ALL_FRAMES');
@@ -59,7 +59,7 @@ describe('Metrics: LCP from all frames', () => {
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(
       // eslint-disable-next-line max-len
-      {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogMainFrame), SourceMaps: [], simulator: null},
+      {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings, URL: getURLArtifactFromDevtoolsLog(devtoolsLogMainFrame), SourceMaps: [], HostDPR: 1, simulator: null},
       context
     );
     await expect(result).toMatchInlineSnapshot(`

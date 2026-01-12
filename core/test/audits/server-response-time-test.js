@@ -25,6 +25,7 @@ describe('Performance: server-response-time audit', () => {
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {computedCache: new Map(), settings: {}};
@@ -56,6 +57,7 @@ describe('Performance: server-response-time audit', () => {
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {computedCache: new Map(), settings: {}};
@@ -86,6 +88,7 @@ describe('Performance: server-response-time audit', () => {
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {computedCache: new Map(), settings: {}};
@@ -108,6 +111,7 @@ describe('Performance: server-response-time audit', () => {
       URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
       SourceMaps: [],
+      HostDPR: 1,
     };
 
     const context = {computedCache: new Map(), settings: {}};

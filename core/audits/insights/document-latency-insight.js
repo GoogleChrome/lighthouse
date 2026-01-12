@@ -24,7 +24,7 @@ class DocumentLatencyInsight extends Audit {
       failureTitle: str_(UIStrings.title),
       description: str_(UIStrings.description),
       guidanceLevel: 3,
-      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps'],
+      requiredArtifacts: ['Trace', 'TraceElements', 'SourceMaps', 'HostDPR'],
       replacesAudits: ['redirects', 'server-response-time', 'uses-text-compression'],
     };
   }

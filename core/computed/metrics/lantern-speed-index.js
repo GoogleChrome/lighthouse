@@ -40,6 +40,6 @@ class LanternSpeedIndex extends Lantern.Metrics.SpeedIndex {
 
 const LanternSpeedIndexComputed = makeComputedArtifact(
   LanternSpeedIndex,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL', 'SourceMaps', 'HostDPR']
 );
 export {LanternSpeedIndexComputed as LanternSpeedIndex};

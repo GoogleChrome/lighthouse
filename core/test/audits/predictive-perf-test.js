@@ -23,6 +23,7 @@ describe('Performance: predictive performance audit', () => {
       Trace: acceptableTrace,
       DevtoolsLog: acceptableDevToolsLog,
       SourceMaps: [],
+      HostDPR: 1,
     };
     const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
