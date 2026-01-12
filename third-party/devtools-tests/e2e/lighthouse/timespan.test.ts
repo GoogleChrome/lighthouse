@@ -17,9 +17,7 @@ import {
   setThrottlingMethod,
   waitForResult,
   waitForTimespanStarted,
-} from '../../e2e/helpers/lighthouse-helpers.js';
-import type {DevToolsPage} from '../shared/frontend-helper.js';
-import type {InspectedPage} from '../shared/target-helper.js';
+} from '../helpers/lighthouse-helpers.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
@@ -42,10 +40,7 @@ describe('Timespan', function() {
     this.timeout(60_000);
   }
 
-  it('successfully returns a Lighthouse report for user interactions', async ({devToolsPage, inspectedPage}: {
-                                                                         devToolsPage: DevToolsPage,
-                                                                         inspectedPage: InspectedPage,
-                                                                       }) => {
+  it('successfully returns a Lighthouse report for user interactions', async ({devToolsPage, inspectedPage}) => {
     expectErrors();
 
     await navigateToLighthouseTab('lighthouse/hello.html', devToolsPage, inspectedPage);
