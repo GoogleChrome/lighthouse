@@ -13,7 +13,7 @@ import {
   registerServiceWorker,
   selectMode,
   waitForResult,
-} from '../../e2e/helpers/lighthouse-helpers.js';
+} from '../helpers/lighthouse-helpers.js';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.

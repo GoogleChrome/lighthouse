@@ -439,7 +439,7 @@ const expectations = {
                 'selector': 'body > section > div#color-contrast',
                 'snippet': '<div id="color-contrast" style="background-color: red; color: pink;">',
                 // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), and the px-converted units may have variable precision, so use \d+.\d+.
-                'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d+.\d+pt \(\d+.\d+px\), font weight: normal\). Expected contrast ratio of 3:1$/,
+                'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d+\.\d+pt \([\d.]+px\), font weight: normal\)\. Expected contrast ratio of 4.5:1$/,
                 'nodeLabel': 'Hello',
               },
             },

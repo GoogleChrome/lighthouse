@@ -19,10 +19,12 @@ import {
   setThrottlingMethod,
   setToolbarCheckboxWithText,
   waitForResult,
-} from '../../e2e/helpers/lighthouse-helpers.js';
+} from '../helpers/lighthouse-helpers.js';
 
-// This test will fail (by default) in headful mode, as the target page never gets painted.
-// To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
+/**
+ * This test will fail (by default) in headful mode, as the target page never gets painted.
+ * To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
+ **/
 function expectErrors() {
   // https://github.com/GoogleChrome/lighthouse/issues/14572
   expectError(/Request CacheStorage\.requestCacheNames failed/);
@@ -48,8 +50,7 @@ describe('Navigation', function() {
     consoleLog.push(e.text());
   };
 
-  // Flaky Lighthouse report
-  it.skip('[crbug.com/445332283] successfully returns a Lighthouse report', async ({devToolsPage, inspectedPage}) => {
+  it('successfully returns a Lighthouse report', async ({devToolsPage, inspectedPage}) => {
     devToolsPage.page.on('console', consoleListener);
     try {
       expectErrors();
@@ -109,7 +110,7 @@ describe('Navigation', function() {
       assert.deepEqual(failedAudits.map(audit => audit.id), [
         'document-title',
         'html-has-lang',
-        'render-blocking-resources',
+        'landmark-one-main',
         'meta-description',
         'network-dependency-tree-insight',
         'render-blocking-insight',
@@ -130,14 +131,9 @@ describe('Navigation', function() {
 
       await navigateToLighthouseTab(undefined, devToolsPage, inspectedPage);
 
-      await reportEl.$eval('.lh-button-insight-toggle', el => (el as HTMLElement).click());
-
-      // Test element link behavior
-      // TODO: fix report flakiness: the button referenced below is most of the time rendered as HTML code
-      // rather than a UI button.
-      const lcpElementAudit =
-          await devToolsPage.waitForElementWithTextContent('Largest Contentful Paint element', reportEl);
-      await lcpElementAudit.click();
+      // Test .lh-node is linkified to Elements panel.
+      const lcpBreakdownAudit = await devToolsPage.waitForElementWithTextContent('LCP breakdown', reportEl);
+      await lcpBreakdownAudit.click();
       const lcpElementLink = await devToolsPage.waitForElementWithTextContent('button');
       await lcpElementLink.click();
 
@@ -169,7 +165,7 @@ describe('Navigation', function() {
       assert.strictEqual(frontendAuditDivs.length, iframeAuditDivs.length);
 
       // Ensure service worker was cleared.
-      assert.strictEqual(await getServiceWorkerCount(), 0);
+      assert.strictEqual(await getServiceWorkerCount(inspectedPage), 0);
     } catch (e) {
       console.error(consoleLog.join('\n'));
       throw e;
