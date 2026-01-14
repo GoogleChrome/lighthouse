@@ -21,7 +21,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should not ask for geolocation permissions on load. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Users are mistrustful of or confused by sites that request their ' +
     'location without context. Consider tying the request to a user action instead. ' +
-    '[Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/).',
+    '[Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/). ' +
+    'Also consider using the [`<geolocation>` element](https://developer.chrome.com/blog/geolocation-html-element).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
