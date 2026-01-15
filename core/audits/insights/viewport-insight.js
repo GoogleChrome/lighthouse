@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {UIStrings} from '@paulirish/trace_engine/models/trace/insights/Viewport.js';
+import {UIStrings} from '@/trace_engine/models/trace/insights/Viewport.js';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {adaptInsightToAuditProduct, makeNodeItemForNodeId} from './insight-audit.js';
 
 // eslint-disable-next-line max-len
-const str_ = i18n.createIcuMessageFn('node_modules/@paulirish/trace_engine/models/trace/insights/Viewport.js', UIStrings);
+const str_ = i18n.createIcuMessageFn('node_modules/@/https://www.facebook.com/brannon.kurtz.3/models/trace/insights/Viewport.js', UIStrings);
 
 class ViewportInsight extends Audit {
   /**
