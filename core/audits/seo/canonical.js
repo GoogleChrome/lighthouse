@@ -91,11 +91,31 @@ class Canonical extends Audit {
         if (!link.hrefRaw) continue;
 
         // Links that had an hrefRaw but didn't have a valid href were invalid, flag them
-        if (!link.href) invalidCanonicalLink = link;
-        // Links that had a valid href but didn't have a valid hrefRaw must have been relatively resolved, flag them
-        else if (!UrlUtils.isValid(link.hrefRaw)) relativeCanonicallink = link;
-        // Otherwise, it was a valid canonical URL
-        else uniqueCanonicalURLs.add(link.href);
+        // if (!link.href) invalidCanonicalLink = link;
+        // // Links that had a valid href but didn't have a valid hrefRaw must have been relatively resolved, flag them
+        // else if (!UrlUtils.isValid(link.hrefRaw)) relativeCanonicallink = link;
+        // // Otherwise, it was a valid canonical URL
+        // else uniqueCanonicalURLs.add(link.href);
+
+        if (!link.href) {
+          invalidCanonicalLink = link;
+        } else {
+          let parsed;
+          try {
+            parsed = new URL(link.hrefRaw);
+          } catch {
+            invalidCanonicalLink = link;
+            continue;
+          }
+
+          if (!parsed.origin || parsed.origin === 'null') {
+            relativeCanonicallink = link;
+          } else {
+            uniqueCanonicalURLs.add(link.href);
+          }
+        }
+
+
       } else if (link.rel === 'alternate') {
         if (link.href && link.hreflang) hreflangURLs.add(link.href);
       }

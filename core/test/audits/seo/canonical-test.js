@@ -103,6 +103,33 @@ describe('SEO: Document has valid canonical link', () => {
     });
   });
 
+  it('fails when canonical url is invalid', async () => {
+  const mainDocumentUrl = 'https://example.com/';
+  const mainResource = {url: mainDocumentUrl};
+  const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+
+  const artifacts = {
+    DevtoolsLog: devtoolsLog,
+    URL: {mainDocumentUrl},
+    LinkElements: [
+      link({
+        rel: 'canonical',
+        source: 'headers',
+        href: null,
+        hrefRaw: 'example.com',
+      }),
+    ],
+  };
+
+  const context = createContext();
+  const result = await Canonical.audit(artifacts, context);
+
+  expect(result.score).toBe(0);
+  expect(result.explanation)
+    .toContain('Invalid URL');
+});
+
+
   it('fails when canonical points to a different hreflang', () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {url: mainDocumentUrl};
