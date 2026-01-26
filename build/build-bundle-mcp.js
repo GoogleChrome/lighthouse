@@ -78,7 +78,7 @@ async function buildBundle(entryPath, distPath) {
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
   /** @type {Array<string>} */
-  const includedGatherers = allGatherers.filter(gatherer => gatherer === 'snapshot');
+  const includedGatherers = allGatherers.filter(gatherer => gatherer === 'snapshot' || gatherer === 'accessibility.js');
   /** @type {Array<string>} */
   const includedAudits = allAudits.filter(audit => {
     return audit.includes('accessibility');
@@ -89,6 +89,8 @@ async function buildBundle(entryPath, distPath) {
     ...includedAudits.map(audit => `../audits/${audit}`),
     '../computed/speedline.js',
     '../computed/metrics/timing-summary.js',
+    '../computed/entity-classification.js',
+    '../computed/trace-engine-result.js',
   ];
 
   // Include plugins.
@@ -193,6 +195,52 @@ async function buildBundle(entryPath, distPath) {
   shimsObj['../computed/metrics/timing-summary'] = timingSummaryShim;
   // Also add absolute path version
   shimsObj[`${LH_ROOT}/core/computed/metrics/timing-summary.js`] = timingSummaryShim;
+
+  const entityClassificationShim = `
+    import {makeComputedArtifact} from './computed-artifact.js';
+    class EntityClassification {
+      static async compute_() {
+        return {
+          entityByUrl: new Map(),
+          urlsByEntity: new Map(),
+          firstParty: undefined,
+          isFirstParty: () => false,
+        };
+      }
+    }
+    const EntityClassificationComputed = makeComputedArtifact(EntityClassification, null);
+    export {EntityClassificationComputed as EntityClassification};
+  `;
+  shimsObj['../computed/entity-classification.js'] = entityClassificationShim;
+  shimsObj['../computed/entity-classification'] = entityClassificationShim;
+  shimsObj[`${LH_ROOT}/core/computed/entity-classification.js`] = entityClassificationShim;
+
+  const traceEngineResultShim = `
+    import {makeComputedArtifact} from './computed-artifact.js';
+    class TraceEngineResult {
+      static async compute_() {
+        return {
+          data: {},
+          insights: new Map(),
+        };
+      }
+    }
+    const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
+    export {TraceEngineResultComputed as TraceEngineResult};
+  `;
+  shimsObj['../computed/trace-engine-result.js'] = traceEngineResultShim;
+  shimsObj['../computed/trace-engine-result'] = traceEngineResultShim;
+  shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = traceEngineResultShim;
+
+  shimsObj['@paulirish/trace_engine'] = 'export const LanternComputationData = {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/lantern.js'] = 'export * from "./core/core.js"; export * from "./graph/graph.js"; export * from "./metrics/metrics.js"; export * from "./simulation/simulation.js"; export * from "./types/types.js";';
+  // Ensure the sub-paths also exist or are shimmed
+  const emptyExport = 'export default {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = emptyExport;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = emptyExport;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = emptyExport;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = emptyExport;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = emptyExport;
 
   // Create shims for filtered-out gatherers to prevent dynamic import failures
   for (const gatherer of filteredOutGatherers) {
