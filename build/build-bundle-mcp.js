@@ -233,14 +233,31 @@ async function buildBundle(entryPath, distPath) {
   shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = traceEngineResultShim;
 
   shimsObj['@paulirish/trace_engine'] = 'export const LanternComputationData = {};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/lantern.js'] = 'export * from "./core/core.js"; export * from "./graph/graph.js"; export * from "./metrics/metrics.js"; export * from "./simulation/simulation.js"; export * from "./types/types.js";';
-  // Ensure the sub-paths also exist or are shimmed
-  const emptyExport = 'export default {};';
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = emptyExport;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = emptyExport;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = emptyExport;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = emptyExport;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = emptyExport;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/lantern.js'] = `
+    import * as Core from "./core/core.js";
+    import * as Graph from "./graph/graph.js";
+    import * as Metrics from "./metrics/metrics.js";
+    import * as Simulation from "./simulation/simulation.js";
+    import * as Types from "./types/types.js";
+    export {Core, Graph, Metrics, Simulation, Types};
+  `;
+  // Ensure the sub-paths also exist or are shimmed with necessary named exports
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = 'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}}; export const LanternError = class extends Error {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = 'export const PageDependencyGraph = {getNetworkInitiators: () => []}; export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = 'export default {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = `
+    export const Constants = {
+      throttling: {
+        mobileSlow4G: {rttMs: 150, throughputKbps: 1638.4, requestLatencyMs: 562.5, downloadThroughputKbps: 1474.56, uploadThroughputKbps: 675, cpuSlowdownMultiplier: 4},
+        desktopDense4G: {rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1, requestLatencyMs: 0, downloadThroughputKbps: 0, uploadThroughputKbps: 0},
+      }
+    };
+    export class Simulator {
+      static createSimulator() { return new Simulator(); }
+      static get allNodeTimings() { return new Map(); }
+    }
+  `;
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/types/types.js'] = 'export default {};';
 
   // Create shims for filtered-out gatherers to prevent dynamic import failures
   for (const gatherer of filteredOutGatherers) {
@@ -251,7 +268,8 @@ async function buildBundle(entryPath, distPath) {
     const shimCode = `
       import BaseGatherer from '${relativeBaseGatherer}';
       class ShimGatherer extends BaseGatherer {
-        meta = {supportedModes: []};
+        meta = {supportedModes: ['navigation', 'timespan', 'snapshot']};
+        static getDefaultTraceCategories() { return []; }
         getArtifact() {
           return undefined;
         }
@@ -290,10 +308,10 @@ async function buildBundle(entryPath, distPath) {
     shimsObj[auditPath] = shimCode;
   }
 
-  console.log('shims');
-  Object.entries(shimsObj).forEach(([key, value]) => {
-    console.log(`- ${key.padEnd(50)}: ${value.length} chars`, value.slice(0, 60).replace(/\n/g, '') + (value.length > 60 ? '...' : ''));
-  });
+  // console.log('shims');
+  // Object.entries(shimsObj).forEach(([key, value]) => {
+  //   console.log(`- ${key.padEnd(50)}: ${value.length} chars`, value.slice(0, 60).replace(/\n/g, '') + (value.length > 60 ? '...' : ''));
+  // });
 
   // console.log('shims: ', Object.keys(shimsObj));
 
