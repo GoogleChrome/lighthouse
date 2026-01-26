@@ -12,6 +12,7 @@ import {createRequire} from 'module';
 import esbuild from 'esbuild';
 import builtin from 'builtin-modules';
 
+import {LH_ROOT} from '../shared/root.js';
 import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 
 /**
@@ -280,11 +281,16 @@ function umd(moduleName) {
 
 /**
  * @param {string} id
+ * @param {string} shimDir
  * @return {string}
  */
-function generateAuditShim(id) {
+function generateAuditShim(id, shimDir) {
+  const auditPath = path.resolve(LH_ROOT, 'core/audits/audit.js');
+  let relativePath = path.relative(shimDir, auditPath);
+  if (!relativePath.startsWith('.')) relativePath = './' + relativePath;
+
   return `
-import {Audit} from './audit.js';
+import {Audit} from '${relativePath}';
 class ShimAudit extends Audit {
   static get meta() {
     return {
@@ -305,11 +311,16 @@ export default ShimAudit;
 
 /**
  * @param {string} id
+ * @param {string} shimDir
  * @return {string}
  */
-function generateGathererShim(id) {
+function generateGathererShim(id, shimDir) {
+  const gathererPath = path.resolve(LH_ROOT, 'core/gather/base-gatherer.js');
+  let relativePath = path.relative(shimDir, gathererPath);
+  if (!relativePath.startsWith('.')) relativePath = './' + relativePath;
+
   return `
-import BaseGatherer from '../base-gatherer.js';
+import BaseGatherer from '${relativePath}';
 class ShimGatherer extends BaseGatherer {
   meta = {supportedModes: ['navigation', 'timespan', 'snapshot']};
   static getDefaultTraceCategories() { return []; }
@@ -335,30 +346,36 @@ function lighthouseShimPlugin(options) {
     name: 'lh-shim',
     setup(build) {
       // Intercept audits
-      build.onResolve({filter: /core\/audits\/.*\.js$/}, args => {
-        // args.path could be absolute or relative
+      build.onResolve({filter: /audits\/.*\.js$/}, args => {
+        if (args.path.endsWith('/audit.js') || args.path === './audit.js') return;
         const isIncluded = includedAudits.some(p => args.path.includes(p));
-        if (isIncluded || args.path.endsWith('audit.js')) return;
+        if (isIncluded) return;
 
-        return {path: args.path, namespace: 'lh-audit-shim'};
+        // Resolve to absolute path to ensure we have a consistent base for shimDir
+        const absolutePath = path.resolve(args.resolveDir, args.path);
+        return {path: absolutePath, namespace: 'lh-audit-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-audit-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        return {contents: generateAuditShim(id), loader: 'js', resolveDir: path.dirname(args.path)};
+        const shimDir = path.dirname(args.path);
+        return {contents: generateAuditShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
 
       // Intercept gatherers
-      build.onResolve({filter: /core\/gather\/gatherers\/.*\.js$/}, args => {
+      build.onResolve({filter: /gatherers\/.*\.js$/}, args => {
+        if (args.path.endsWith('/base-gatherer.js') || args.path === '../base-gatherer.js') return;
         const isIncluded = includedGatherers.some(p => args.path.includes(p));
         if (isIncluded) return;
 
-        return {path: args.path, namespace: 'lh-gatherer-shim'};
+        const absolutePath = path.resolve(args.resolveDir, args.path);
+        return {path: absolutePath, namespace: 'lh-gatherer-shim'};
       });
 
       build.onLoad({filter: /.*/, namespace: 'lh-gatherer-shim'}, args => {
         const id = path.basename(args.path, '.js');
-        return {contents: generateGathererShim(id), loader: 'js', resolveDir: path.dirname(args.path)};
+        const shimDir = path.dirname(args.path);
+        return {contents: generateGathererShim(id, shimDir), loader: 'js', resolveDir: shimDir};
       });
     },
   };

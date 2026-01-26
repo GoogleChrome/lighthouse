@@ -77,7 +77,9 @@ async function buildBundle(entryPath, distPath) {
 
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
+  /** @type {string[]} */
   const includedGatherers = allGatherers.filter(gatherer => gatherer === 'snapshot' || gatherer === 'accessibility.js');
+  /** @type {string[]} */
   const includedAudits = allAudits.filter(audit => audit.includes('accessibility'));
 
   const dynamicModulePaths = [
