@@ -168,7 +168,10 @@ async function buildBundle(entryPath, distPath) {
   `;
   shimsObj[`${LH_ROOT}/core/computed/trace-engine-result.js`] = `
     import {makeComputedArtifact} from './computed-artifact.js';
-    export class TraceEngineResult { static async compute_() { return {data: {}, insights: new Map()}; } }
+    export class TraceEngineResult {
+      static async compute_() { return {data: {}, insights: new Map()}; }
+      static localizeFunction(str, fn) { return fn; }
+    }
     export const TraceEngineResultComputed = makeComputedArtifact(TraceEngineResult, null);
   `;
 
@@ -187,7 +190,7 @@ async function buildBundle(entryPath, distPath) {
     import * as Types from "./types/types.js";
     export {Core, Graph, Metrics, Simulation, Types};
   `;
-  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = 'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}}; export const LanternError = class extends Error {};';
+  shimsObj['@paulirish/trace_engine/models/trace/lantern/core/core.js'] = 'export const NetworkAnalyzer = {analyze: () => ({}), findResourceForUrl: () => {}, resolveRedirects: r => r, findMainResource: r => r[0]}; export const LanternError = class extends Error {};';
   shimsObj['@paulirish/trace_engine/models/trace/lantern/graph/graph.js'] = 'export const PageDependencyGraph = {getNetworkInitiators: () => []}; export const BaseNode = {types: {NETWORK: "network", CPU: "cpu"}};';
   shimsObj['@paulirish/trace_engine/models/trace/lantern/metrics/metrics.js'] = `
     export class FirstContentfulPaint {}
@@ -197,6 +200,7 @@ async function buildBundle(entryPath, distPath) {
     export class FirstMeaningfulPaint {}
     export class TotalBlockingTime {}
     export class MaxPotentialFID {}
+    export const TBTUtils = {calculateSumOfBlockingTime: () => 0};
   `;
   shimsObj['@paulirish/trace_engine/models/trace/lantern/simulation/simulation.js'] = `
     export const Constants = {

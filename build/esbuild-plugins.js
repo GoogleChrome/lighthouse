@@ -336,7 +336,7 @@ function lighthouseShimPlugin(options) {
     setup(build) {
       // Intercept audits
       build.onResolve({filter: /core\/audits\/.*\.js$/}, args => {
-        const fileName = path.basename(args.path, '.js');
+        // args.path could be absolute or relative
         const isIncluded = includedAudits.some(p => args.path.includes(p));
         if (isIncluded || args.path.endsWith('audit.js')) return;
 
