@@ -148,31 +148,31 @@ async function buildBundle(entryPath, distPath) {
     shimsObj[modulePath] = 'export default {}';
   }
 
-  // Shim speedline-core to prevent fs require issues (it's only used by non-accessibility audits)
-  const speedlineCoreShim = `
-    export default function speedline() {
-      throw new Error('speedline-core is not available in this bundle');
-    }
-  `;
-  shimsObj['speedline-core'] = speedlineCoreShim;
+  // // Shim speedline-core to prevent fs require issues (it's only used by non-accessibility audits)
+  // const speedlineCoreShim = `
+  //   export default function speedline() {
+  //     throw new Error('speedline-core is not available in this bundle');
+  //   }
+  // `;
+  // shimsObj['speedline-core'] = speedlineCoreShim;
 
-  // Shim computed metrics that depend on speedline-core (only used by filtered-out audits)
-  // Add both with and without .js extension to ensure replaceModules plugin catches them
-  const speedlineShim = `
-    import {makeComputedArtifact} from './computed-artifact.js';
-    import {LighthouseError} from '../lib/lh-error.js';
-    class Speedline {
-      static async compute_() {
-        throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
-      }
-    }
-    const SpeedlineComputed = makeComputedArtifact(Speedline, null);
-    export {SpeedlineComputed as Speedline};
-  `;
-  shimsObj['../computed/speedline.js'] = speedlineShim;
-  shimsObj['../computed/speedline'] = speedlineShim;
-  // Also add absolute path version
-  shimsObj[`${LH_ROOT}/core/computed/speedline.js`] = speedlineShim;
+  // // Shim computed metrics that depend on speedline-core (only used by filtered-out audits)
+  // // Add both with and without .js extension to ensure replaceModules plugin catches them
+  // const speedlineShim = `
+  //   import {makeComputedArtifact} from './computed-artifact.js';
+  //   import {LighthouseError} from '../lib/lh-error.js';
+  //   class Speedline {
+  //     static async compute_() {
+  //       throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
+  //     }
+  //   }
+  //   const SpeedlineComputed = makeComputedArtifact(Speedline, null);
+  //   export {SpeedlineComputed as Speedline};
+  // `;
+  // shimsObj['../computed/speedline.js'] = speedlineShim;
+  // shimsObj['../computed/speedline'] = speedlineShim;
+  // // Also add absolute path version
+  // shimsObj[`${LH_ROOT}/core/computed/speedline.js`] = speedlineShim;
 
   const timingSummaryShim = `
     import {makeComputedArtifact} from '../computed-artifact.js';
@@ -241,6 +241,13 @@ async function buildBundle(entryPath, distPath) {
     shimsObj[auditPath] = shimCode;
     shimsObj[pathNoExt] = shimCode;
   }
+
+  console.log('shims');
+  Object.entries(shimsObj).forEach(([key, value]) => {
+    console.log(`- ${key.padEnd(50)}: ${value.length} chars`, value.slice(0, 60).replace(/\n/g, '') + (value.length > 60 ? '...' : ''));
+  });
+
+  // console.log('shims: ', Object.keys(shimsObj));
 
   await esbuild.build({
     entryPoints: [entryPath],
