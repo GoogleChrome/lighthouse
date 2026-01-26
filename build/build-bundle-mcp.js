@@ -87,6 +87,8 @@ async function buildBundle(entryPath, distPath) {
   const dynamicModulePaths = [
     ...includedGatherers.map(gatherer => `../gather/gatherers/${gatherer}`),
     ...includedAudits.map(audit => `../audits/${audit}`),
+    '../computed/speedline.js',
+    '../computed/metrics/timing-summary.js',
   ];
 
   // Include plugins.
@@ -148,31 +150,31 @@ async function buildBundle(entryPath, distPath) {
     shimsObj[modulePath] = 'export default {}';
   }
 
-  // // Shim speedline-core to prevent fs require issues (it's only used by non-accessibility audits)
-  // const speedlineCoreShim = `
-  //   export default function speedline() {
-  //     throw new Error('speedline-core is not available in this bundle');
-  //   }
-  // `;
-  // shimsObj['speedline-core'] = speedlineCoreShim;
+  // Shim speedline-core to prevent fs require issues (it's only used by non-accessibility audits)
+  const speedlineCoreShim = `
+    export default function speedline() {
+      throw new Error('speedline-core is not available in this bundle');
+    }
+  `;
+  shimsObj['speedline-core'] = speedlineCoreShim;
 
-  // // Shim computed metrics that depend on speedline-core (only used by filtered-out audits)
-  // // Add both with and without .js extension to ensure replaceModules plugin catches them
-  // const speedlineShim = `
-  //   import {makeComputedArtifact} from './computed-artifact.js';
-  //   import {LighthouseError} from '../lib/lh-error.js';
-  //   class Speedline {
-  //     static async compute_() {
-  //       throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
-  //     }
-  //   }
-  //   const SpeedlineComputed = makeComputedArtifact(Speedline, null);
-  //   export {SpeedlineComputed as Speedline};
-  // `;
-  // shimsObj['../computed/speedline.js'] = speedlineShim;
-  // shimsObj['../computed/speedline'] = speedlineShim;
-  // // Also add absolute path version
-  // shimsObj[`${LH_ROOT}/core/computed/speedline.js`] = speedlineShim;
+  // Shim computed metrics that depend on speedline-core (only used by filtered-out audits)
+  // Add both with and without .js extension to ensure replaceModules plugin catches them
+  const speedlineShim = `
+    import {makeComputedArtifact} from './computed-artifact.js';
+    import {LighthouseError} from '../lib/lh-error.js';
+    class Speedline {
+      static async compute_() {
+        throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
+      }
+    }
+    const SpeedlineComputed = makeComputedArtifact(Speedline, null);
+    export {SpeedlineComputed as Speedline};
+  `;
+  shimsObj['../computed/speedline.js'] = speedlineShim;
+  shimsObj['../computed/speedline'] = speedlineShim;
+  // Also add absolute path version
+  shimsObj[`${LH_ROOT}/core/computed/speedline.js`] = speedlineShim;
 
   const timingSummaryShim = `
     import {makeComputedArtifact} from '../computed-artifact.js';
@@ -193,12 +195,13 @@ async function buildBundle(entryPath, distPath) {
   shimsObj[`${LH_ROOT}/core/computed/metrics/timing-summary.js`] = timingSummaryShim;
 
   // Create shims for filtered-out gatherers to prevent dynamic import failures
-  // Add both with and without .js extension to ensure replaceModules plugin catches them
   for (const gatherer of filteredOutGatherers) {
-    const gathererPath = `../gather/gatherers/${gatherer}`;
-    const pathNoExt = gathererPath.replace('.js', '');
+    const gathererPath = path.resolve(LH_ROOT, 'core/gather/gatherers', gatherer);
+    let relativeBaseGatherer = path.relative(path.dirname(gathererPath), path.resolve(LH_ROOT, 'core/gather/base-gatherer.js'));
+    if (!relativeBaseGatherer.startsWith('.')) relativeBaseGatherer = './' + relativeBaseGatherer;
+
     const shimCode = `
-      import BaseGatherer from '../gather/base-gatherer.js';
+      import BaseGatherer from '${relativeBaseGatherer}';
       class ShimGatherer extends BaseGatherer {
         meta = {supportedModes: []};
         getArtifact() {
@@ -207,20 +210,19 @@ async function buildBundle(entryPath, distPath) {
       }
       export default ShimGatherer;
     `;
-    // Add both versions - replaceModules plugin will resolve and match them
     shimsObj[gathererPath] = shimCode;
-    shimsObj[pathNoExt] = shimCode;
   }
 
   // Create shims for filtered-out audits to prevent dynamic import failures
-  // Add both with and without .js extension to ensure replaceModules plugin catches them
   for (const audit of filteredOutAudits) {
-    const auditPath = `../audits/${audit}`;
-    const pathNoExt = auditPath.replace('.js', '');
+    const auditPath = path.resolve(LH_ROOT, 'core/audits', audit);
+    let relativeAuditBase = path.relative(path.dirname(auditPath), path.resolve(LH_ROOT, 'core/audits/audit.js'));
+    if (!relativeAuditBase.startsWith('.')) relativeAuditBase = './' + relativeAuditBase;
+
     // Extract audit ID from path (e.g., 'accessibility/image-alt.js' -> 'image-alt')
     const auditId = audit.replace(/^.*\//, '').replace('.js', '');
     const shimCode = `
-      import {Audit} from '../audits/audit.js';
+      import {Audit} from '${relativeAuditBase}';
       class ShimAudit extends Audit {
         static get meta() {
           return {
@@ -237,9 +239,7 @@ async function buildBundle(entryPath, distPath) {
       }
       export default ShimAudit;
     `;
-    // Add both versions - replaceModules plugin will resolve and match them
     shimsObj[auditPath] = shimCode;
-    shimsObj[pathNoExt] = shimCode;
   }
 
   console.log('shims');
